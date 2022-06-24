@@ -9,7 +9,7 @@ part 'activity.freezed.dart';
 
 part 'activity.g.dart';
 
-enum ActivityStatus { unknown, live, archived }
+enum ActivityStatus { unknown, pending, live, archived }
 
 @freezed
 class Activity with _$Activity {
@@ -17,7 +17,8 @@ class Activity with _$Activity {
     required String id,
     required String name,
     @SessionStatusConverter() ActivityStatus? status,
-    @MyDateTimeConverter() required DateTime createdOn,
+    @MyDateTimeConverter() DateTime? createdOn,
+    @MyDateTimeConverter() required DateTime requestedOn,
   }) = _Activity;
 
   factory Activity.fromJson(Map<String, Object?> json) =>

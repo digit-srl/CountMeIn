@@ -12,76 +12,50 @@ part of 'user.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-MUUserDTO _$MUUserDTOFromJson(Map<String, dynamic> json) {
-  return _MUUserDTO.fromJson(json);
+AuthUserDTO _$AuthUserDTOFromJson(Map<String, dynamic> json) {
+  return _AuthUserDTO.fromJson(json);
 }
 
 /// @nodoc
-class _$MUUserDTOTearOff {
-  const _$MUUserDTOTearOff();
-
-  _MUUserDTO call(
-      {required String uid,
-      required String name,
-      required String surname,
-      required String email,
-      required bool emailVerified,
-      required DateTime createdAt}) {
-    return _MUUserDTO(
-      uid: uid,
-      name: name,
-      surname: surname,
-      email: email,
-      emailVerified: emailVerified,
-      createdAt: createdAt,
-    );
-  }
-
-  MUUserDTO fromJson(Map<String, Object?> json) {
-    return MUUserDTO.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MUUserDTO = _$MUUserDTOTearOff();
-
-/// @nodoc
-mixin _$MUUserDTO {
+mixin _$AuthUserDTO {
   String get uid => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get surname => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  List<String> get activityIds => throw _privateConstructorUsedError;
   bool get emailVerified => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $MUUserDTOCopyWith<MUUserDTO> get copyWith =>
+  $AuthUserDTOCopyWith<AuthUserDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MUUserDTOCopyWith<$Res> {
-  factory $MUUserDTOCopyWith(MUUserDTO value, $Res Function(MUUserDTO) then) =
-      _$MUUserDTOCopyWithImpl<$Res>;
+abstract class $AuthUserDTOCopyWith<$Res> {
+  factory $AuthUserDTOCopyWith(
+          AuthUserDTO value, $Res Function(AuthUserDTO) then) =
+      _$AuthUserDTOCopyWithImpl<$Res>;
   $Res call(
       {String uid,
       String name,
       String surname,
       String email,
+      List<String> activityIds,
       bool emailVerified,
       DateTime createdAt});
 }
 
 /// @nodoc
-class _$MUUserDTOCopyWithImpl<$Res> implements $MUUserDTOCopyWith<$Res> {
-  _$MUUserDTOCopyWithImpl(this._value, this._then);
+class _$AuthUserDTOCopyWithImpl<$Res> implements $AuthUserDTOCopyWith<$Res> {
+  _$AuthUserDTOCopyWithImpl(this._value, this._then);
 
-  final MUUserDTO _value;
+  final AuthUserDTO _value;
   // ignore: unused_field
-  final $Res Function(MUUserDTO) _then;
+  final $Res Function(AuthUserDTO) _then;
 
   @override
   $Res call({
@@ -89,6 +63,7 @@ class _$MUUserDTOCopyWithImpl<$Res> implements $MUUserDTOCopyWith<$Res> {
     Object? name = freezed,
     Object? surname = freezed,
     Object? email = freezed,
+    Object? activityIds = freezed,
     Object? emailVerified = freezed,
     Object? createdAt = freezed,
   }) {
@@ -109,6 +84,10 @@ class _$MUUserDTOCopyWithImpl<$Res> implements $MUUserDTOCopyWith<$Res> {
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      activityIds: activityIds == freezed
+          ? _value.activityIds
+          : activityIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       emailVerified: emailVerified == freezed
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
@@ -122,28 +101,31 @@ class _$MUUserDTOCopyWithImpl<$Res> implements $MUUserDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$MUUserDTOCopyWith<$Res> implements $MUUserDTOCopyWith<$Res> {
-  factory _$MUUserDTOCopyWith(
-          _MUUserDTO value, $Res Function(_MUUserDTO) then) =
-      __$MUUserDTOCopyWithImpl<$Res>;
+abstract class _$$_AuthUserDTOCopyWith<$Res>
+    implements $AuthUserDTOCopyWith<$Res> {
+  factory _$$_AuthUserDTOCopyWith(
+          _$_AuthUserDTO value, $Res Function(_$_AuthUserDTO) then) =
+      __$$_AuthUserDTOCopyWithImpl<$Res>;
   @override
   $Res call(
       {String uid,
       String name,
       String surname,
       String email,
+      List<String> activityIds,
       bool emailVerified,
       DateTime createdAt});
 }
 
 /// @nodoc
-class __$MUUserDTOCopyWithImpl<$Res> extends _$MUUserDTOCopyWithImpl<$Res>
-    implements _$MUUserDTOCopyWith<$Res> {
-  __$MUUserDTOCopyWithImpl(_MUUserDTO _value, $Res Function(_MUUserDTO) _then)
-      : super(_value, (v) => _then(v as _MUUserDTO));
+class __$$_AuthUserDTOCopyWithImpl<$Res> extends _$AuthUserDTOCopyWithImpl<$Res>
+    implements _$$_AuthUserDTOCopyWith<$Res> {
+  __$$_AuthUserDTOCopyWithImpl(
+      _$_AuthUserDTO _value, $Res Function(_$_AuthUserDTO) _then)
+      : super(_value, (v) => _then(v as _$_AuthUserDTO));
 
   @override
-  _MUUserDTO get _value => super._value as _MUUserDTO;
+  _$_AuthUserDTO get _value => super._value as _$_AuthUserDTO;
 
   @override
   $Res call({
@@ -151,10 +133,11 @@ class __$MUUserDTOCopyWithImpl<$Res> extends _$MUUserDTOCopyWithImpl<$Res>
     Object? name = freezed,
     Object? surname = freezed,
     Object? email = freezed,
+    Object? activityIds = freezed,
     Object? emailVerified = freezed,
     Object? createdAt = freezed,
   }) {
-    return _then(_MUUserDTO(
+    return _then(_$_AuthUserDTO(
       uid: uid == freezed
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -171,6 +154,10 @@ class __$MUUserDTOCopyWithImpl<$Res> extends _$MUUserDTOCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      activityIds: activityIds == freezed
+          ? _value._activityIds
+          : activityIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       emailVerified: emailVerified == freezed
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
@@ -185,17 +172,19 @@ class __$MUUserDTOCopyWithImpl<$Res> extends _$MUUserDTOCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MUUserDTO implements _MUUserDTO {
-  const _$_MUUserDTO(
+class _$_AuthUserDTO implements _AuthUserDTO {
+  const _$_AuthUserDTO(
       {required this.uid,
       required this.name,
       required this.surname,
       required this.email,
+      required final List<String> activityIds,
       required this.emailVerified,
-      required this.createdAt});
+      required this.createdAt})
+      : _activityIds = activityIds;
 
-  factory _$_MUUserDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_MUUserDTOFromJson(json);
+  factory _$_AuthUserDTO.fromJson(Map<String, dynamic> json) =>
+      _$$_AuthUserDTOFromJson(json);
 
   @override
   final String uid;
@@ -205,6 +194,13 @@ class _$_MUUserDTO implements _MUUserDTO {
   final String surname;
   @override
   final String email;
+  final List<String> _activityIds;
+  @override
+  List<String> get activityIds {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_activityIds);
+  }
+
   @override
   final bool emailVerified;
   @override
@@ -212,23 +208,26 @@ class _$_MUUserDTO implements _MUUserDTO {
 
   @override
   String toString() {
-    return 'MUUserDTO(uid: $uid, name: $name, surname: $surname, email: $email, emailVerified: $emailVerified, createdAt: $createdAt)';
+    return 'AuthUserDTO(uid: $uid, name: $name, surname: $surname, email: $email, activityIds: $activityIds, emailVerified: $emailVerified, createdAt: $createdAt)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MUUserDTO &&
+            other is _$_AuthUserDTO &&
             const DeepCollectionEquality().equals(other.uid, uid) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.surname, surname) &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality()
+                .equals(other._activityIds, _activityIds) &&
+            const DeepCollectionEquality()
                 .equals(other.emailVerified, emailVerified) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -236,46 +235,50 @@ class _$_MUUserDTO implements _MUUserDTO {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(surname),
       const DeepCollectionEquality().hash(email),
+      const DeepCollectionEquality().hash(_activityIds),
       const DeepCollectionEquality().hash(emailVerified),
       const DeepCollectionEquality().hash(createdAt));
 
   @JsonKey(ignore: true)
   @override
-  _$MUUserDTOCopyWith<_MUUserDTO> get copyWith =>
-      __$MUUserDTOCopyWithImpl<_MUUserDTO>(this, _$identity);
+  _$$_AuthUserDTOCopyWith<_$_AuthUserDTO> get copyWith =>
+      __$$_AuthUserDTOCopyWithImpl<_$_AuthUserDTO>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MUUserDTOToJson(this);
+    return _$$_AuthUserDTOToJson(this);
   }
 }
 
-abstract class _MUUserDTO implements MUUserDTO {
-  const factory _MUUserDTO(
-      {required String uid,
-      required String name,
-      required String surname,
-      required String email,
-      required bool emailVerified,
-      required DateTime createdAt}) = _$_MUUserDTO;
+abstract class _AuthUserDTO implements AuthUserDTO {
+  const factory _AuthUserDTO(
+      {required final String uid,
+      required final String name,
+      required final String surname,
+      required final String email,
+      required final List<String> activityIds,
+      required final bool emailVerified,
+      required final DateTime createdAt}) = _$_AuthUserDTO;
 
-  factory _MUUserDTO.fromJson(Map<String, dynamic> json) =
-      _$_MUUserDTO.fromJson;
+  factory _AuthUserDTO.fromJson(Map<String, dynamic> json) =
+      _$_AuthUserDTO.fromJson;
 
   @override
-  String get uid;
+  String get uid => throw _privateConstructorUsedError;
   @override
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
-  String get surname;
+  String get surname => throw _privateConstructorUsedError;
   @override
-  String get email;
+  String get email => throw _privateConstructorUsedError;
   @override
-  bool get emailVerified;
+  List<String> get activityIds => throw _privateConstructorUsedError;
   @override
-  DateTime get createdAt;
+  bool get emailVerified => throw _privateConstructorUsedError;
+  @override
+  DateTime get createdAt => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$MUUserDTOCopyWith<_MUUserDTO> get copyWith =>
+  _$$_AuthUserDTOCopyWith<_$_AuthUserDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }

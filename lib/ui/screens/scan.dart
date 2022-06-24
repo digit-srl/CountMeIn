@@ -14,7 +14,7 @@ import 'package:countmein/ui/screens/admin.dart';
 import '../../cloud.dart';
 import '../../constants.dart';
 import '../../domain/entities/event_ids.dart';
-import '../../domain/entities/user.dart';
+import '../../domain/entities/user_card.dart';
 import 'package:soundpool/soundpool.dart';
 
 // uof%gian marco%di francesco%DFRGMR89M02I348U%uof
@@ -45,7 +45,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
   bool processing = false;
   final list = <String>[];
 
-  User? lastUSer;
+  UserCard? lastUSer;
 
   late EventIds ids;
 
@@ -117,7 +117,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                   pool.play(soundId!);
                                 }
 
-                                final user = User(
+                                final user = UserCard(
                                   name: name,
                                   surname: surname,
                                   cf: cf,
@@ -144,7 +144,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                       position: ToastPosition.bottom);
                                 });*/
 
-                                Cloud.usersCollection(
+                                Cloud.eventUsersCollection(
                                         widget.activityId, widget.eventId)
                                     .doc(user.id)
                                     .set(user.toJson(), SetOptions(merge: true))

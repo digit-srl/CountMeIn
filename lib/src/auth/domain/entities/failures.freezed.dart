@@ -12,26 +12,11 @@ part of 'failures.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$AuthFailureTearOff {
-  const _$AuthFailureTearOff();
-
-  AuthUnknownFailure unknown({String description = 'Unknown error'}) {
-    return AuthUnknownFailure(
-      description: description,
-    );
-  }
-}
-
-/// @nodoc
-const $AuthFailure = _$AuthFailureTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$AuthFailure {
   String get description => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String description) unknown,
@@ -100,31 +85,31 @@ class _$AuthFailureCopyWithImpl<$Res> implements $AuthFailureCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $AuthUnknownFailureCopyWith<$Res>
+abstract class _$$AuthUnknownFailureCopyWith<$Res>
     implements $AuthFailureCopyWith<$Res> {
-  factory $AuthUnknownFailureCopyWith(
-          AuthUnknownFailure value, $Res Function(AuthUnknownFailure) then) =
-      _$AuthUnknownFailureCopyWithImpl<$Res>;
+  factory _$$AuthUnknownFailureCopyWith(_$AuthUnknownFailure value,
+          $Res Function(_$AuthUnknownFailure) then) =
+      __$$AuthUnknownFailureCopyWithImpl<$Res>;
   @override
   $Res call({String description});
 }
 
 /// @nodoc
-class _$AuthUnknownFailureCopyWithImpl<$Res>
+class __$$AuthUnknownFailureCopyWithImpl<$Res>
     extends _$AuthFailureCopyWithImpl<$Res>
-    implements $AuthUnknownFailureCopyWith<$Res> {
-  _$AuthUnknownFailureCopyWithImpl(
-      AuthUnknownFailure _value, $Res Function(AuthUnknownFailure) _then)
-      : super(_value, (v) => _then(v as AuthUnknownFailure));
+    implements _$$AuthUnknownFailureCopyWith<$Res> {
+  __$$AuthUnknownFailureCopyWithImpl(
+      _$AuthUnknownFailure _value, $Res Function(_$AuthUnknownFailure) _then)
+      : super(_value, (v) => _then(v as _$AuthUnknownFailure));
 
   @override
-  AuthUnknownFailure get _value => super._value as AuthUnknownFailure;
+  _$AuthUnknownFailure get _value => super._value as _$AuthUnknownFailure;
 
   @override
   $Res call({
     Object? description = freezed,
   }) {
-    return _then(AuthUnknownFailure(
+    return _then(_$AuthUnknownFailure(
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -138,8 +123,8 @@ class _$AuthUnknownFailureCopyWithImpl<$Res>
 class _$AuthUnknownFailure implements AuthUnknownFailure {
   const _$AuthUnknownFailure({this.description = 'Unknown error'});
 
-  @JsonKey()
   @override
+  @JsonKey()
   final String description;
 
   @override
@@ -151,7 +136,7 @@ class _$AuthUnknownFailure implements AuthUnknownFailure {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is AuthUnknownFailure &&
+            other is _$AuthUnknownFailure &&
             const DeepCollectionEquality()
                 .equals(other.description, description));
   }
@@ -162,8 +147,9 @@ class _$AuthUnknownFailure implements AuthUnknownFailure {
 
   @JsonKey(ignore: true)
   @override
-  $AuthUnknownFailureCopyWith<AuthUnknownFailure> get copyWith =>
-      _$AuthUnknownFailureCopyWithImpl<AuthUnknownFailure>(this, _$identity);
+  _$$AuthUnknownFailureCopyWith<_$AuthUnknownFailure> get copyWith =>
+      __$$AuthUnknownFailureCopyWithImpl<_$AuthUnknownFailure>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -223,12 +209,13 @@ class _$AuthUnknownFailure implements AuthUnknownFailure {
 }
 
 abstract class AuthUnknownFailure implements AuthFailure {
-  const factory AuthUnknownFailure({String description}) = _$AuthUnknownFailure;
+  const factory AuthUnknownFailure({final String description}) =
+      _$AuthUnknownFailure;
 
   @override
-  String get description;
+  String get description => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  $AuthUnknownFailureCopyWith<AuthUnknownFailure> get copyWith =>
+  _$$AuthUnknownFailureCopyWith<_$AuthUnknownFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -18,12 +18,12 @@ final signUpErrorProvider = StateProvider.autoDispose<SignUpException?>((ref) {
 });
 
 final _userProvider =
-    StreamProvider.family<MUUser?, String>((ref, userId) async* {
+    StreamProvider.family<AuthUser?, String>((ref, userId) async* {
   final stream = Cloud.credentialsCollection.doc(userId).snapshots();
   await for (final doc in stream) {
     final data = doc.data();
     if (doc.exists && data != null) {
-      final userDto = MUUserDTO.fromJson(data);
+      final userDto = AuthUserDTO.fromJson(data);
       yield userDto.toDomain();
     } else {
       yield null;
@@ -39,10 +39,10 @@ final authStateProvider = Provider<AuthState>((ref) {
           if (!user.emailVerified) {
             return EmailNotVerified(user);
           } else {
-            final muUserAsync = ref.watch(_userProvider(user.uid));
-            return muUserAsync.when(data: (data){
+            final AuthUserAsync = ref.watch(_userProvider(user.uid));
+            return AuthUserAsync.when(data: (data){
               if (data != null) {
-                return AuthState.authenticated(muUserAsync.asData!.value!);
+                return AuthState.authenticated(AuthUserAsync.asData!.value!);
               }else{
                 return const Unautenticated();
               }

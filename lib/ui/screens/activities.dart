@@ -5,6 +5,7 @@ import 'package:oktoast/oktoast.dart';
 
 import '../../cloud.dart';
 import '../../constants.dart';
+import '../../domain/entities/activity.dart';
 import '../../domain/entities/session.dart';
 import '../../utils.dart';
 import '../widgets/add_session_dialog.dart';
@@ -12,14 +13,14 @@ import '../widgets/loading.dart';
 import 'admin.dart';
 import 'event_details.dart';
 
-final activitiesStreamProvider = StreamProvider<List<Session>>((ref) async* {
+final activitiesStreamProvider = StreamProvider<List<Activity>>((ref) async* {
   final stream = Cloud.activitiesCollection
-      .where('status', isEqualTo: enumToString(SessionsStatus.live))
+      .where('status', isEqualTo: enumToString(ActivityStatus.live))
       .snapshots();
 
   await for (final snap in stream) {
     final list = snap.docs.map((doc) {
-      final s = Session.fromJson(doc.data());
+      final s = Activity.fromJson(doc.data());
       return s;
     }).toList();
     yield list;

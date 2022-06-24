@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/user.dart';
+import '../../domain/entities/user_card.dart';
 
 class UserDetailsScreen extends StatelessWidget {
   static const routeName = '/userDetails';
 
-  final User user;
+  final UserCard user;
 
   const UserDetailsScreen({Key? key, required this.user}) : super(key: key);
 

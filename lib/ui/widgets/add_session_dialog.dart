@@ -1,3 +1,4 @@
+import 'package:countmein/domain/entities/activity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -6,6 +7,8 @@ import 'package:uuid/uuid.dart';
 
 import '../../domain/entities/session.dart';
 import '../screens/home.dart';
+import '../validators.dart';
+import 'my_text_field.dart';
 
 final nameControllerProvider = Provider<TextEditingController>((ref) {
   final c = TextEditingController();
@@ -69,11 +72,11 @@ class AddSessionDialog extends ConsumerWidget {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     final eventId = const Uuid().v4();
-                    final s = Session(
+                    final s = Event(
                         id: eventId,
                         createdOn: DateTime.now(),
                         name: nameController.text.trim(),
-                        status: SessionsStatus.live
+                        status: EventStatus.live
                         // prefix: prefixController.text.trim(),
                         );
                     Cloud.eventDoc(activityId, eventId).set(s.toJson());

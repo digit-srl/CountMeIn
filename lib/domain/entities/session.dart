@@ -8,34 +8,34 @@ part 'session.freezed.dart';
 
 part 'session.g.dart';
 
-enum SessionsStatus { unknown, live, archived }
+enum EventStatus { unknown, live, archived }
 
 @freezed
-class Session with _$Session {
-  const factory Session({
+class Event with _$Event {
+  const factory Event({
     required String id,
     required String name,
-    @SessionStatusConverter() SessionsStatus? status,
+    @EventStatusConverter() EventStatus? status,
     @MyDateTimeConverter() required DateTime createdOn,
-  }) = _Session;
+  }) = _Event;
 
-  factory Session.fromJson(Map<String, Object?> json) =>
-      _$SessionFromJson(json);
+  factory Event.fromJson(Map<String, Object?> json) =>
+      _$EventFromJson(json);
 }
 
 
 
-class SessionStatusConverter implements JsonConverter<SessionsStatus, String> {
-  const SessionStatusConverter();
+class EventStatusConverter implements JsonConverter<EventStatus, String> {
+  const EventStatusConverter();
 
   @override
-  SessionsStatus fromJson(String? status) {
+  EventStatus fromJson(String? status) {
     if(status == null){
-      return SessionsStatus.unknown;
+      return EventStatus.unknown;
     }
-    return enumFromString(status, SessionsStatus.values);
+    return enumFromString(status, EventStatus.values);
   }
 
   @override
-  String toJson(SessionsStatus status) => enumToString(status);
+  String toJson(EventStatus status) => enumToString(status);
 }

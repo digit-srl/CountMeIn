@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'user.dart';
+part of 'user_card.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,43 +14,46 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-User _$UserFromJson(Map<String, dynamic> json) {
-  return _User.fromJson(json);
+UserCard _$UserCardFromJson(Map<String, dynamic> json) {
+  return _UserCard.fromJson(json);
 }
 
 /// @nodoc
-mixin _$User {
+mixin _$UserCard {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get surname => throw _privateConstructorUsedError;
   String get cf => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get addedOn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
+  $UserCardCopyWith<UserCard> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserCopyWith<$Res> {
-  factory $UserCopyWith(User value, $Res Function(User) then) =
-      _$UserCopyWithImpl<$Res>;
+abstract class $UserCardCopyWith<$Res> {
+  factory $UserCardCopyWith(UserCard value, $Res Function(UserCard) then) =
+      _$UserCardCopyWithImpl<$Res>;
   $Res call(
       {String id,
       String name,
       String surname,
       String cf,
+      String? email,
       @MyDateTimeConverter() DateTime? addedOn});
 }
 
 /// @nodoc
-class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._value, this._then);
+class _$UserCardCopyWithImpl<$Res> implements $UserCardCopyWith<$Res> {
+  _$UserCardCopyWithImpl(this._value, this._then);
 
-  final User _value;
+  final UserCard _value;
   // ignore: unused_field
-  final $Res Function(User) _then;
+  final $Res Function(UserCard) _then;
 
   @override
   $Res call({
@@ -58,6 +61,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? name = freezed,
     Object? surname = freezed,
     Object? cf = freezed,
+    Object? email = freezed,
     Object? addedOn = freezed,
   }) {
     return _then(_value.copyWith(
@@ -77,6 +81,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       addedOn: addedOn == freezed
           ? _value.addedOn
           : addedOn // ignore: cast_nullable_to_non_nullable
@@ -86,26 +94,29 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$$_UserCopyWith(_$_User value, $Res Function(_$_User) then) =
-      __$$_UserCopyWithImpl<$Res>;
+abstract class _$$_UserCardCopyWith<$Res> implements $UserCardCopyWith<$Res> {
+  factory _$$_UserCardCopyWith(
+          _$_UserCard value, $Res Function(_$_UserCard) then) =
+      __$$_UserCardCopyWithImpl<$Res>;
   @override
   $Res call(
       {String id,
       String name,
       String surname,
       String cf,
+      String? email,
       @MyDateTimeConverter() DateTime? addedOn});
 }
 
 /// @nodoc
-class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
-    implements _$$_UserCopyWith<$Res> {
-  __$$_UserCopyWithImpl(_$_User _value, $Res Function(_$_User) _then)
-      : super(_value, (v) => _then(v as _$_User));
+class __$$_UserCardCopyWithImpl<$Res> extends _$UserCardCopyWithImpl<$Res>
+    implements _$$_UserCardCopyWith<$Res> {
+  __$$_UserCardCopyWithImpl(
+      _$_UserCard _value, $Res Function(_$_UserCard) _then)
+      : super(_value, (v) => _then(v as _$_UserCard));
 
   @override
-  _$_User get _value => super._value as _$_User;
+  _$_UserCard get _value => super._value as _$_UserCard;
 
   @override
   $Res call({
@@ -113,9 +124,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? name = freezed,
     Object? surname = freezed,
     Object? cf = freezed,
+    Object? email = freezed,
     Object? addedOn = freezed,
   }) {
-    return _then(_$_User(
+    return _then(_$_UserCard(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -132,6 +144,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       addedOn: addedOn == freezed
           ? _value.addedOn
           : addedOn // ignore: cast_nullable_to_non_nullable
@@ -142,15 +158,17 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_User implements _User {
-  const _$_User(
+class _$_UserCard implements _UserCard {
+  const _$_UserCard(
       {required this.id,
       required this.name,
       required this.surname,
       required this.cf,
+      this.email,
       @MyDateTimeConverter() this.addedOn});
 
-  factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
+  factory _$_UserCard.fromJson(Map<String, dynamic> json) =>
+      _$$_UserCardFromJson(json);
 
   @override
   final String id;
@@ -161,23 +179,26 @@ class _$_User implements _User {
   @override
   final String cf;
   @override
+  final String? email;
+  @override
   @MyDateTimeConverter()
   final DateTime? addedOn;
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, surname: $surname, cf: $cf, addedOn: $addedOn)';
+    return 'UserCard(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, addedOn: $addedOn)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_User &&
+            other is _$_UserCard &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.surname, surname) &&
             const DeepCollectionEquality().equals(other.cf, cf) &&
+            const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.addedOn, addedOn));
   }
 
@@ -189,28 +210,30 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(surname),
       const DeepCollectionEquality().hash(cf),
+      const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(addedOn));
 
   @JsonKey(ignore: true)
   @override
-  _$$_UserCopyWith<_$_User> get copyWith =>
-      __$$_UserCopyWithImpl<_$_User>(this, _$identity);
+  _$$_UserCardCopyWith<_$_UserCard> get copyWith =>
+      __$$_UserCardCopyWithImpl<_$_UserCard>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserToJson(this);
+    return _$$_UserCardToJson(this);
   }
 }
 
-abstract class _User implements User {
-  const factory _User(
+abstract class _UserCard implements UserCard {
+  const factory _UserCard(
       {required final String id,
       required final String name,
       required final String surname,
       required final String cf,
-      @MyDateTimeConverter() final DateTime? addedOn}) = _$_User;
+      final String? email,
+      @MyDateTimeConverter() final DateTime? addedOn}) = _$_UserCard;
 
-  factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
+  factory _UserCard.fromJson(Map<String, dynamic> json) = _$_UserCard.fromJson;
 
   @override
   String get id => throw _privateConstructorUsedError;
@@ -221,9 +244,12 @@ abstract class _User implements User {
   @override
   String get cf => throw _privateConstructorUsedError;
   @override
+  String? get email => throw _privateConstructorUsedError;
+  @override
   @MyDateTimeConverter()
   DateTime? get addedOn => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;
+  _$$_UserCardCopyWith<_$_UserCard> get copyWith =>
+      throw _privateConstructorUsedError;
 }

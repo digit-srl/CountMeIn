@@ -6,24 +6,23 @@ part of 'session.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Session _$$_SessionFromJson(Map<String, dynamic> json) => _$_Session(
+_$_Event _$$_EventFromJson(Map<String, dynamic> json) => _$_Event(
       id: json['id'] as String,
       name: json['name'] as String,
-      status: $enumDecodeNullable(_$SessionsStatusEnumMap, json['status']),
+      status: $enumDecodeNullable(_$EventStatusEnumMap, json['status']),
       createdOn:
           const MyDateTimeConverter().fromJson(json['createdOn'] as Timestamp),
     );
 
-Map<String, dynamic> _$$_SessionToJson(_$_Session instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$_EventToJson(_$_Event instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'status': _$SessionsStatusEnumMap[instance.status],
+      'status': _$EventStatusEnumMap[instance.status],
       'createdOn': const MyDateTimeConverter().toJson(instance.createdOn),
     };
 
-const _$SessionsStatusEnumMap = {
-  SessionsStatus.unknown: 'unknown',
-  SessionsStatus.live: 'live',
-  SessionsStatus.archived: 'archived',
+const _$EventStatusEnumMap = {
+  EventStatus.unknown: 'unknown',
+  EventStatus.live: 'live',
+  EventStatus.archived: 'archived',
 };

@@ -15,15 +15,31 @@ class UserCard with _$UserCard {
     required String name,
     required String surname,
     required String cf,
+    String? email,
     @MyDateTimeConverter() DateTime? addedOn,
   }) = _UserCard;
 
-  factory UserCard.fromJson(Map<String, Object?> json) => _$UserCardFromJson(json);
+  factory UserCard.fromJson(Map<String, Object?> json) =>
+      _$UserCardFromJson(json);
 }
 
 extension UserCardX on UserCard {
-  String qrCode(String sessionId) =>
-      '$qrCodePrefix%$id%$name%$surname%$cf%$sessionId%$qrCodePrefix';
+  String qrCode(String activityId) =>
+      '$qrCodePrefix%$id%$name%$surname%$cf%$activityId%$qrCodePrefix';
+
+  String qrCodeUrl(activityId) {
+    final params = <String, String>{};
+    //params['id'] = id;
+    params['name'] = name;
+    params['surname'] = surname;
+    params['cf'] = cf;
+    params['aId'] = activityId;
+    if (email != null) {
+      params['email'] = email!;
+    }
+    final uri = Uri.https(baseUrl, '/myaccount/$id', params);
+    return uri.toString();
+  }
 
   String get fullName => '$name $surname';
 

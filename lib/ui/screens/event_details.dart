@@ -11,16 +11,17 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:countmein/cloud.dart';
 import 'package:countmein/ui/screens/scan.dart';
-import 'package:countmein/ui/screens/user_details.dart';
 
 import '../../constants.dart';
+import '../../domain/entities/activity.dart';
 import '../../domain/entities/event_ids.dart';
 import '../../domain/entities/session.dart';
-import '../../domain/entities/user.dart';
+import '../../domain/entities/user_card.dart';
 import '../../utils.dart';
 import '../widgets/add_session_dialog.dart';
 import '../widgets/loading.dart';
 import 'admin.dart';
+import 'admin_user_details.dart';
 import 'user_event.dart';
 
 class EventDetailsScreen extends ConsumerStatefulWidget {
@@ -68,7 +69,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
       appBar: AppBar(
         title: Text(eventState.asData?.value.name ?? ''),
         actions: [
-          if (eventState is AsyncData<Session>) ...[
+          if (eventState is AsyncData<Event>) ...[
             IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () {
@@ -202,7 +203,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
     );
   }
 
-  Future<File?> getCsv(List<User> users, String eventName) async {
+  Future<File?> getCsv(List<UserCard> users, String eventName) async {
     try {
       final filename = eventName.replaceAll(' ', '_').toLowerCase();
       final statuses = await [
@@ -263,7 +264,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
           );
         });
     if (answer ?? false) {
-      Cloud.usersCollection(widget.activityId, widget.eventId)
+      Cloud.eventUsersCollection(widget.activityId, widget.eventId)
           .doc(userId)
           .delete();
     }

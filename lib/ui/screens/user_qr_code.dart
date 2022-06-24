@@ -5,13 +5,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:countmein/domain/entities/session.dart';
 import 'dart:ui' as ui;
-import '../../domain/entities/user.dart';
+import '../../domain/entities/activity.dart';
+import '../../domain/entities/user_card.dart';
 
 class UserQRCodeScreen extends ConsumerWidget {
-  final User user;
-  final Session session;
+  final UserCard user;
+  final Activity session;
 
   const UserQRCodeScreen({
     Key? key,
@@ -34,7 +34,7 @@ class UserQRCodeScreen extends ConsumerWidget {
           const SizedBox(height: 16),
           UserCardDialog(
             user: user,
-            session: session,
+            activity: session,
           ),
           Center(
             child: TextButton(
@@ -63,10 +63,10 @@ class UserQRCodeScreen extends ConsumerWidget {
 }
 
 class UserCardDialog extends StatefulWidget {
-  final User user;
-  final Session session;
+  final UserCard user;
+  final Activity activity;
 
-  const UserCardDialog({Key? key, required this.user, required this.session})
+  const UserCardDialog({Key? key, required this.user, required this.activity})
       : super(key: key);
 
   @override
@@ -102,7 +102,7 @@ class _UserCardDialogState extends State<UserCardDialog> {
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Text(
-                            widget.session.name,
+                            widget.activity.name,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -114,7 +114,7 @@ class _UserCardDialogState extends State<UserCardDialog> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   QrImage(
-                                    data: widget.user.qrCode(widget.session.id),
+                                    data: widget.user.qrCodeUrl(widget.activity.id),
                                     version: QrVersions.auto,
                                   ),
                                   const SizedBox(width: 16),

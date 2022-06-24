@@ -1,4 +1,5 @@
 import 'package:countmein/domain/entities/event_ids.dart';
+import 'package:countmein/ui/screens/user_register_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -6,17 +7,18 @@ import 'package:countmein/cloud.dart';
 import 'package:countmein/ui/screens/user_qr_code.dart';
 import 'package:countmein/ui/widgets/loading.dart';
 
+import '../../domain/entities/activity.dart';
 import '../../domain/entities/session.dart';
-import '../../domain/entities/user.dart';
+import '../../domain/entities/user_card.dart';
 import 'home.dart';
 
-final eventStreamProvider =
-StreamProvider.family<Session, String>((ref, activityId) async* {
+final activityStreamProvider =
+StreamProvider.family<Activity, String>((ref, activityId) async* {
   final eventStream = Cloud.activitiesCollection.doc(activityId).snapshots();
   await for (final snap in eventStream) {
     final data = snap.data();
     if (snap.exists && data != null) {
-      yield Session.fromJson(data);
+      yield Activity.fromJson(data);
     }
   }
 });
@@ -33,7 +35,7 @@ class UserEventScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final eventState = ref.watch(eventStreamProvider(activityId));
+    final eventState = ref.watch(activityStreamProvider(activityId));
     return eventState.when(
         data: (data) {
           return ValueListenableBuilder<Box<dynamic>>(
@@ -44,11 +46,11 @@ class UserEventScreen extends ConsumerWidget {
                   final userMap = Map<String, dynamic>.from(userJson);
                   return UserQRCodeScreen(
                     session: data,
-                    user: User.fromJson(userMap),
+                    user: UserCard.fromJson(userMap),
                   );
                 }
                 return UserFormScreen(
-                  session: data,
+                  activity: data,
                 );
               });
         },

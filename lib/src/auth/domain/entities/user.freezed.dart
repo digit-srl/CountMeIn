@@ -12,66 +12,44 @@ part of 'user.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$MUUserTearOff {
-  const _$MUUserTearOff();
-
-  _MUUser call(
-      {required String uid,
-      required String name,
-      required String surname,
-      required String email,
-      required bool emailVerified,
-      required DateTime createdAt}) {
-    return _MUUser(
-      uid: uid,
-      name: name,
-      surname: surname,
-      email: email,
-      emailVerified: emailVerified,
-      createdAt: createdAt,
-    );
-  }
-}
-
-/// @nodoc
-const $MUUser = _$MUUserTearOff();
-
-/// @nodoc
-mixin _$MUUser {
+mixin _$AuthUser {
   String get uid => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get surname => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  List<String> get activityIds => throw _privateConstructorUsedError;
   bool get emailVerified => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $MUUserCopyWith<MUUser> get copyWith => throw _privateConstructorUsedError;
+  $AuthUserCopyWith<AuthUser> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MUUserCopyWith<$Res> {
-  factory $MUUserCopyWith(MUUser value, $Res Function(MUUser) then) =
-      _$MUUserCopyWithImpl<$Res>;
+abstract class $AuthUserCopyWith<$Res> {
+  factory $AuthUserCopyWith(AuthUser value, $Res Function(AuthUser) then) =
+      _$AuthUserCopyWithImpl<$Res>;
   $Res call(
       {String uid,
       String name,
       String surname,
       String email,
+      List<String> activityIds,
       bool emailVerified,
       DateTime createdAt});
 }
 
 /// @nodoc
-class _$MUUserCopyWithImpl<$Res> implements $MUUserCopyWith<$Res> {
-  _$MUUserCopyWithImpl(this._value, this._then);
+class _$AuthUserCopyWithImpl<$Res> implements $AuthUserCopyWith<$Res> {
+  _$AuthUserCopyWithImpl(this._value, this._then);
 
-  final MUUser _value;
+  final AuthUser _value;
   // ignore: unused_field
-  final $Res Function(MUUser) _then;
+  final $Res Function(AuthUser) _then;
 
   @override
   $Res call({
@@ -79,6 +57,7 @@ class _$MUUserCopyWithImpl<$Res> implements $MUUserCopyWith<$Res> {
     Object? name = freezed,
     Object? surname = freezed,
     Object? email = freezed,
+    Object? activityIds = freezed,
     Object? emailVerified = freezed,
     Object? createdAt = freezed,
   }) {
@@ -99,6 +78,10 @@ class _$MUUserCopyWithImpl<$Res> implements $MUUserCopyWith<$Res> {
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      activityIds: activityIds == freezed
+          ? _value.activityIds
+          : activityIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       emailVerified: emailVerified == freezed
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
@@ -112,27 +95,30 @@ class _$MUUserCopyWithImpl<$Res> implements $MUUserCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$MUUserCopyWith<$Res> implements $MUUserCopyWith<$Res> {
-  factory _$MUUserCopyWith(_MUUser value, $Res Function(_MUUser) then) =
-      __$MUUserCopyWithImpl<$Res>;
+abstract class _$$_AuthUserCopyWith<$Res> implements $AuthUserCopyWith<$Res> {
+  factory _$$_AuthUserCopyWith(
+          _$_AuthUser value, $Res Function(_$_AuthUser) then) =
+      __$$_AuthUserCopyWithImpl<$Res>;
   @override
   $Res call(
       {String uid,
       String name,
       String surname,
       String email,
+      List<String> activityIds,
       bool emailVerified,
       DateTime createdAt});
 }
 
 /// @nodoc
-class __$MUUserCopyWithImpl<$Res> extends _$MUUserCopyWithImpl<$Res>
-    implements _$MUUserCopyWith<$Res> {
-  __$MUUserCopyWithImpl(_MUUser _value, $Res Function(_MUUser) _then)
-      : super(_value, (v) => _then(v as _MUUser));
+class __$$_AuthUserCopyWithImpl<$Res> extends _$AuthUserCopyWithImpl<$Res>
+    implements _$$_AuthUserCopyWith<$Res> {
+  __$$_AuthUserCopyWithImpl(
+      _$_AuthUser _value, $Res Function(_$_AuthUser) _then)
+      : super(_value, (v) => _then(v as _$_AuthUser));
 
   @override
-  _MUUser get _value => super._value as _MUUser;
+  _$_AuthUser get _value => super._value as _$_AuthUser;
 
   @override
   $Res call({
@@ -140,10 +126,11 @@ class __$MUUserCopyWithImpl<$Res> extends _$MUUserCopyWithImpl<$Res>
     Object? name = freezed,
     Object? surname = freezed,
     Object? email = freezed,
+    Object? activityIds = freezed,
     Object? emailVerified = freezed,
     Object? createdAt = freezed,
   }) {
-    return _then(_MUUser(
+    return _then(_$_AuthUser(
       uid: uid == freezed
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -160,6 +147,10 @@ class __$MUUserCopyWithImpl<$Res> extends _$MUUserCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      activityIds: activityIds == freezed
+          ? _value._activityIds
+          : activityIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       emailVerified: emailVerified == freezed
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
@@ -174,14 +165,16 @@ class __$MUUserCopyWithImpl<$Res> extends _$MUUserCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MUUser implements _MUUser {
-  const _$_MUUser(
+class _$_AuthUser implements _AuthUser {
+  const _$_AuthUser(
       {required this.uid,
       required this.name,
       required this.surname,
       required this.email,
+      required final List<String> activityIds,
       required this.emailVerified,
-      required this.createdAt});
+      required this.createdAt})
+      : _activityIds = activityIds;
 
   @override
   final String uid;
@@ -191,6 +184,13 @@ class _$_MUUser implements _MUUser {
   final String surname;
   @override
   final String email;
+  final List<String> _activityIds;
+  @override
+  List<String> get activityIds {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_activityIds);
+  }
+
   @override
   final bool emailVerified;
   @override
@@ -198,18 +198,20 @@ class _$_MUUser implements _MUUser {
 
   @override
   String toString() {
-    return 'MUUser(uid: $uid, name: $name, surname: $surname, email: $email, emailVerified: $emailVerified, createdAt: $createdAt)';
+    return 'AuthUser(uid: $uid, name: $name, surname: $surname, email: $email, activityIds: $activityIds, emailVerified: $emailVerified, createdAt: $createdAt)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MUUser &&
+            other is _$_AuthUser &&
             const DeepCollectionEquality().equals(other.uid, uid) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.surname, surname) &&
             const DeepCollectionEquality().equals(other.email, email) &&
+            const DeepCollectionEquality()
+                .equals(other._activityIds, _activityIds) &&
             const DeepCollectionEquality()
                 .equals(other.emailVerified, emailVerified) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt));
@@ -222,37 +224,42 @@ class _$_MUUser implements _MUUser {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(surname),
       const DeepCollectionEquality().hash(email),
+      const DeepCollectionEquality().hash(_activityIds),
       const DeepCollectionEquality().hash(emailVerified),
       const DeepCollectionEquality().hash(createdAt));
 
   @JsonKey(ignore: true)
   @override
-  _$MUUserCopyWith<_MUUser> get copyWith =>
-      __$MUUserCopyWithImpl<_MUUser>(this, _$identity);
+  _$$_AuthUserCopyWith<_$_AuthUser> get copyWith =>
+      __$$_AuthUserCopyWithImpl<_$_AuthUser>(this, _$identity);
 }
 
-abstract class _MUUser implements MUUser {
-  const factory _MUUser(
-      {required String uid,
-      required String name,
-      required String surname,
-      required String email,
-      required bool emailVerified,
-      required DateTime createdAt}) = _$_MUUser;
+abstract class _AuthUser implements AuthUser {
+  const factory _AuthUser(
+      {required final String uid,
+      required final String name,
+      required final String surname,
+      required final String email,
+      required final List<String> activityIds,
+      required final bool emailVerified,
+      required final DateTime createdAt}) = _$_AuthUser;
 
   @override
-  String get uid;
+  String get uid => throw _privateConstructorUsedError;
   @override
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
-  String get surname;
+  String get surname => throw _privateConstructorUsedError;
   @override
-  String get email;
+  String get email => throw _privateConstructorUsedError;
   @override
-  bool get emailVerified;
+  List<String> get activityIds => throw _privateConstructorUsedError;
   @override
-  DateTime get createdAt;
+  bool get emailVerified => throw _privateConstructorUsedError;
+  @override
+  DateTime get createdAt => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$MUUserCopyWith<_MUUser> get copyWith => throw _privateConstructorUsedError;
+  _$$_AuthUserCopyWith<_$_AuthUser> get copyWith =>
+      throw _privateConstructorUsedError;
 }

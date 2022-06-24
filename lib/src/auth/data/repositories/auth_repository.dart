@@ -9,9 +9,9 @@ class AuthRepository extends IAuthRepository {
   @override
   Future<void> signIn(String email, String password) async {
     try {
-      final userCredential = await FirebaseAuth.instance
+      final AuthUser = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      print(userCredential.user);
+      print(AuthUser.user);
     } on FirebaseAuthException catch (ex) {
       throw SignInException.fromFirebaseException(ex);
     }
@@ -21,25 +21,25 @@ class AuthRepository extends IAuthRepository {
   Future<void> signUp(
       String name, String surname, String email, String password) async {
     try {
-      final userCredential = await FirebaseAuth.instance
+      final AuthUser = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      if (userCredential.user != null && !userCredential.user!.emailVerified) {
+      if (AuthUser.user != null && !AuthUser.user!.emailVerified) {
         print('user not verififed send email');
-        userCredential.user!.sendEmailVerification();
+        AuthUser.user!.sendEmailVerification();
       }
 
-      if (userCredential.user != null) {
-        final muUser = MUUserDTO(
-          uid: userCredential.user!.uid,
+      if (AuthUser.user != null) {
+        final authUser = AuthUserDTO(
+          uid: AuthUser.user!.uid,
           name: name,
           surname: surname,
           email: email,
           createdAt: DateTime.now().toUtc(),
-          emailVerified: false,
+          emailVerified: false, activityIds: [],
         );
-        await Cloud.credentialsCollection.doc(userCredential.user!.uid).set(muUser.toJson());
+        await Cloud.credentialsCollection.doc(AuthUser.user!.uid).set(authUser.toJson());
       } else {
-        print('user is null from usercredential');
+        print('user is null from AuthUser');
       }
     } on FirebaseAuthException catch (ex) {
       throw SignUpException.fromFirebaseException(ex);

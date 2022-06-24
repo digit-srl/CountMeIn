@@ -14,42 +14,42 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Session _$SessionFromJson(Map<String, dynamic> json) {
-  return _Session.fromJson(json);
+Event _$EventFromJson(Map<String, dynamic> json) {
+  return _Event.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Session {
+mixin _$Event {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  @SessionStatusConverter()
-  SessionsStatus? get status => throw _privateConstructorUsedError;
+  @EventStatusConverter()
+  EventStatus? get status => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime get createdOn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SessionCopyWith<Session> get copyWith => throw _privateConstructorUsedError;
+  $EventCopyWith<Event> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SessionCopyWith<$Res> {
-  factory $SessionCopyWith(Session value, $Res Function(Session) then) =
-      _$SessionCopyWithImpl<$Res>;
+abstract class $EventCopyWith<$Res> {
+  factory $EventCopyWith(Event value, $Res Function(Event) then) =
+      _$EventCopyWithImpl<$Res>;
   $Res call(
       {String id,
       String name,
-      @SessionStatusConverter() SessionsStatus? status,
+      @EventStatusConverter() EventStatus? status,
       @MyDateTimeConverter() DateTime createdOn});
 }
 
 /// @nodoc
-class _$SessionCopyWithImpl<$Res> implements $SessionCopyWith<$Res> {
-  _$SessionCopyWithImpl(this._value, this._then);
+class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
+  _$EventCopyWithImpl(this._value, this._then);
 
-  final Session _value;
+  final Event _value;
   // ignore: unused_field
-  final $Res Function(Session) _then;
+  final $Res Function(Event) _then;
 
   @override
   $Res call({
@@ -70,7 +70,7 @@ class _$SessionCopyWithImpl<$Res> implements $SessionCopyWith<$Res> {
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as SessionsStatus?,
+              as EventStatus?,
       createdOn: createdOn == freezed
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -80,26 +80,25 @@ class _$SessionCopyWithImpl<$Res> implements $SessionCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_SessionCopyWith<$Res> implements $SessionCopyWith<$Res> {
-  factory _$$_SessionCopyWith(
-          _$_Session value, $Res Function(_$_Session) then) =
-      __$$_SessionCopyWithImpl<$Res>;
+abstract class _$$_EventCopyWith<$Res> implements $EventCopyWith<$Res> {
+  factory _$$_EventCopyWith(_$_Event value, $Res Function(_$_Event) then) =
+      __$$_EventCopyWithImpl<$Res>;
   @override
   $Res call(
       {String id,
       String name,
-      @SessionStatusConverter() SessionsStatus? status,
+      @EventStatusConverter() EventStatus? status,
       @MyDateTimeConverter() DateTime createdOn});
 }
 
 /// @nodoc
-class __$$_SessionCopyWithImpl<$Res> extends _$SessionCopyWithImpl<$Res>
-    implements _$$_SessionCopyWith<$Res> {
-  __$$_SessionCopyWithImpl(_$_Session _value, $Res Function(_$_Session) _then)
-      : super(_value, (v) => _then(v as _$_Session));
+class __$$_EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
+    implements _$$_EventCopyWith<$Res> {
+  __$$_EventCopyWithImpl(_$_Event _value, $Res Function(_$_Event) _then)
+      : super(_value, (v) => _then(v as _$_Event));
 
   @override
-  _$_Session get _value => super._value as _$_Session;
+  _$_Event get _value => super._value as _$_Event;
 
   @override
   $Res call({
@@ -108,7 +107,7 @@ class __$$_SessionCopyWithImpl<$Res> extends _$SessionCopyWithImpl<$Res>
     Object? status = freezed,
     Object? createdOn = freezed,
   }) {
-    return _then(_$_Session(
+    return _then(_$_Event(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -120,7 +119,7 @@ class __$$_SessionCopyWithImpl<$Res> extends _$SessionCopyWithImpl<$Res>
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as SessionsStatus?,
+              as EventStatus?,
       createdOn: createdOn == freezed
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -131,37 +130,37 @@ class __$$_SessionCopyWithImpl<$Res> extends _$SessionCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Session implements _Session {
-  const _$_Session(
+class _$_Event implements _Event {
+  const _$_Event(
       {required this.id,
       required this.name,
-      @SessionStatusConverter() this.status,
+      @EventStatusConverter() this.status,
       @MyDateTimeConverter() required this.createdOn});
 
-  factory _$_Session.fromJson(Map<String, dynamic> json) =>
-      _$$_SessionFromJson(json);
+  factory _$_Event.fromJson(Map<String, dynamic> json) =>
+      _$$_EventFromJson(json);
 
   @override
   final String id;
   @override
   final String name;
   @override
-  @SessionStatusConverter()
-  final SessionsStatus? status;
+  @EventStatusConverter()
+  final EventStatus? status;
   @override
   @MyDateTimeConverter()
   final DateTime createdOn;
 
   @override
   String toString() {
-    return 'Session(id: $id, name: $name, status: $status, createdOn: $createdOn)';
+    return 'Event(id: $id, name: $name, status: $status, createdOn: $createdOn)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Session &&
+            other is _$_Event &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.status, status) &&
@@ -179,36 +178,36 @@ class _$_Session implements _Session {
 
   @JsonKey(ignore: true)
   @override
-  _$$_SessionCopyWith<_$_Session> get copyWith =>
-      __$$_SessionCopyWithImpl<_$_Session>(this, _$identity);
+  _$$_EventCopyWith<_$_Event> get copyWith =>
+      __$$_EventCopyWithImpl<_$_Event>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SessionToJson(this);
+    return _$$_EventToJson(this);
   }
 }
 
-abstract class _Session implements Session {
-  const factory _Session(
+abstract class _Event implements Event {
+  const factory _Event(
       {required final String id,
       required final String name,
-      @SessionStatusConverter() final SessionsStatus? status,
-      @MyDateTimeConverter() required final DateTime createdOn}) = _$_Session;
+      @EventStatusConverter() final EventStatus? status,
+      @MyDateTimeConverter() required final DateTime createdOn}) = _$_Event;
 
-  factory _Session.fromJson(Map<String, dynamic> json) = _$_Session.fromJson;
+  factory _Event.fromJson(Map<String, dynamic> json) = _$_Event.fromJson;
 
   @override
   String get id => throw _privateConstructorUsedError;
   @override
   String get name => throw _privateConstructorUsedError;
   @override
-  @SessionStatusConverter()
-  SessionsStatus? get status => throw _privateConstructorUsedError;
+  @EventStatusConverter()
+  EventStatus? get status => throw _privateConstructorUsedError;
   @override
   @MyDateTimeConverter()
   DateTime get createdOn => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_SessionCopyWith<_$_Session> get copyWith =>
+  _$$_EventCopyWith<_$_Event> get copyWith =>
       throw _privateConstructorUsedError;
 }

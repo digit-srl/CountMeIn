@@ -3,29 +3,31 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user.freezed.dart';
 
 @freezed
-class MUUser with _$MUUser {
-  const factory MUUser({
+class AuthUser with _$AuthUser {
+  const factory AuthUser({
     required String uid,
     required String name,
     required String surname,
     required String email,
+    required List<String> activityIds,
     required bool emailVerified,
     required DateTime createdAt,
-  }) = _MUUser;
+  }) = _AuthUser;
 
-  factory MUUser.signUp(String name, String surname, String email, String uid) {
-    return MUUser(
+/*  factory AuthUser.signUp(String name, String surname, String email, String uid) {
+    return AuthUser(
       uid: uid,
       name: name,
       surname: surname,
       email: email,
       emailVerified: false,
+      activityIds: [],
       createdAt: DateTime.now().toUtc(),
     );
-  }
+  }*/
 }
 
-extension MUUserX on MUUser {
+extension AuthUserX on AuthUser {
   String get firstNameLetters {
     return '${name[0]}${surname[0]}'.toUpperCase();
   }

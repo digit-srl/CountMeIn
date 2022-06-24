@@ -3,26 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:countmein/cloud.dart';
 
+import '../../domain/entities/activity.dart';
 import '../../domain/entities/event_ids.dart';
 import '../../domain/entities/session.dart';
-import '../../domain/entities/user.dart';
+import '../../domain/entities/user_card.dart';
 import '../../utils.dart';
 
 final adminProvider =
-    StateNotifierProvider<AdminNotifier, AsyncValue<List<Session>>>((ref) {
+    StateNotifierProvider<AdminNotifier, AsyncValue<List<Activity>>>((ref) {
   return AdminNotifier();
 });
 
 final eventsStreamProvider =
-    StreamProvider.family<List<Session>, String>((ref, activityId) async* {
+    StreamProvider.family<List<Event>, String>((ref, activityId) async* {
   final stream = Cloud.eventsCollection(activityId)
-      .where('status', isEqualTo: enumToString(SessionsStatus.live))
+      .where('status', isEqualTo: enumToString(ActivityStatus.live))
       // .orderBy('field')
       .snapshots();
 
   await for (final snap in stream) {
     final list = snap.docs.map((doc) {
-      final s = Session.fromJson(doc.data());
+      final s = Event.fromJson(doc.data());
       return s;
     }).toList();
     yield list;
@@ -30,7 +31,7 @@ final eventsStreamProvider =
 });
 
 final eventProvider =
-    Provider.family<AsyncValue<Session>, List<String>>((ref, ids) {
+    Provider.family<AsyncValue<Event>, List<String>>((ref, ids) {
   final activityId = ids[0];
   final eventId = ids[1];
   return ref
@@ -46,20 +47,20 @@ enum FilterOrder {
 final orderFilterProvider = StateProvider<FilterOrder>((ref) => FilterOrder.byDate);
 
 final usersStreamProvider =
-    StreamProvider.family<List<User>, EventIds>((ref, ids) async* {
-  final stream = Cloud.usersCollection(ids.activityId, ids.eventId).snapshots();
+    StreamProvider.family<List<UserCard>, EventIds>((ref, ids) async* {
+  final stream = Cloud.eventUsersCollection(ids.activityId, ids.eventId).snapshots();
 
   await for (final snap in stream) {
     print('event: ${ids.eventId} => ${snap.docs.length} users');
     final list = snap.docs.map((doc) {
-      final s = User.fromJson(doc.data());
+      final s = UserCard.fromJson(doc.data());
       return s;
     }).toList();
     yield list;
   }
 });
 
-class AdminNotifier extends StateNotifier<AsyncValue<List<Session>>> {
+class AdminNotifier extends StateNotifier<AsyncValue<List<Activity>>> {
   AdminNotifier() : super(const AsyncLoading());
 }
 

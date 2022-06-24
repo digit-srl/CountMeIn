@@ -38,9 +38,9 @@ dependencies:
   #State management
   flutter_riverpod: ^1.0.4
   hooks_riverpod:
+  flutter_hooks: ^0.18.5+1
   freezed_annotation:
   json_annotation:
-  flutter_hooks: ^0.18.5
 
   #UI
   mobile_scanner: ^2.0.0

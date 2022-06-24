@@ -25,7 +25,9 @@ mixin _$Activity {
   @SessionStatusConverter()
   ActivityStatus? get status => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
-  DateTime get createdOn => throw _privateConstructorUsedError;
+  DateTime? get createdOn => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
+  DateTime get requestedOn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +43,8 @@ abstract class $ActivityCopyWith<$Res> {
       {String id,
       String name,
       @SessionStatusConverter() ActivityStatus? status,
-      @MyDateTimeConverter() DateTime createdOn});
+      @MyDateTimeConverter() DateTime? createdOn,
+      @MyDateTimeConverter() DateTime requestedOn});
 }
 
 /// @nodoc
@@ -58,6 +61,7 @@ class _$ActivityCopyWithImpl<$Res> implements $ActivityCopyWith<$Res> {
     Object? name = freezed,
     Object? status = freezed,
     Object? createdOn = freezed,
+    Object? requestedOn = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -75,6 +79,10 @@ class _$ActivityCopyWithImpl<$Res> implements $ActivityCopyWith<$Res> {
       createdOn: createdOn == freezed
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      requestedOn: requestedOn == freezed
+          ? _value.requestedOn
+          : requestedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
   }
@@ -90,7 +98,8 @@ abstract class _$$_ActivityCopyWith<$Res> implements $ActivityCopyWith<$Res> {
       {String id,
       String name,
       @SessionStatusConverter() ActivityStatus? status,
-      @MyDateTimeConverter() DateTime createdOn});
+      @MyDateTimeConverter() DateTime? createdOn,
+      @MyDateTimeConverter() DateTime requestedOn});
 }
 
 /// @nodoc
@@ -109,6 +118,7 @@ class __$$_ActivityCopyWithImpl<$Res> extends _$ActivityCopyWithImpl<$Res>
     Object? name = freezed,
     Object? status = freezed,
     Object? createdOn = freezed,
+    Object? requestedOn = freezed,
   }) {
     return _then(_$_Activity(
       id: id == freezed
@@ -126,6 +136,10 @@ class __$$_ActivityCopyWithImpl<$Res> extends _$ActivityCopyWithImpl<$Res>
       createdOn: createdOn == freezed
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      requestedOn: requestedOn == freezed
+          ? _value.requestedOn
+          : requestedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
   }
@@ -138,7 +152,8 @@ class _$_Activity implements _Activity {
       {required this.id,
       required this.name,
       @SessionStatusConverter() this.status,
-      @MyDateTimeConverter() required this.createdOn});
+      @MyDateTimeConverter() this.createdOn,
+      @MyDateTimeConverter() required this.requestedOn});
 
   factory _$_Activity.fromJson(Map<String, dynamic> json) =>
       _$$_ActivityFromJson(json);
@@ -152,11 +167,14 @@ class _$_Activity implements _Activity {
   final ActivityStatus? status;
   @override
   @MyDateTimeConverter()
-  final DateTime createdOn;
+  final DateTime? createdOn;
+  @override
+  @MyDateTimeConverter()
+  final DateTime requestedOn;
 
   @override
   String toString() {
-    return 'Activity(id: $id, name: $name, status: $status, createdOn: $createdOn)';
+    return 'Activity(id: $id, name: $name, status: $status, createdOn: $createdOn, requestedOn: $requestedOn)';
   }
 
   @override
@@ -167,7 +185,9 @@ class _$_Activity implements _Activity {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.createdOn, createdOn));
+            const DeepCollectionEquality().equals(other.createdOn, createdOn) &&
+            const DeepCollectionEquality()
+                .equals(other.requestedOn, requestedOn));
   }
 
   @JsonKey(ignore: true)
@@ -177,7 +197,8 @@ class _$_Activity implements _Activity {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(createdOn));
+      const DeepCollectionEquality().hash(createdOn),
+      const DeepCollectionEquality().hash(requestedOn));
 
   @JsonKey(ignore: true)
   @override
@@ -192,10 +213,12 @@ class _$_Activity implements _Activity {
 
 abstract class _Activity implements Activity {
   const factory _Activity(
-      {required final String id,
-      required final String name,
-      @SessionStatusConverter() final ActivityStatus? status,
-      @MyDateTimeConverter() required final DateTime createdOn}) = _$_Activity;
+          {required final String id,
+          required final String name,
+          @SessionStatusConverter() final ActivityStatus? status,
+          @MyDateTimeConverter() final DateTime? createdOn,
+          @MyDateTimeConverter() required final DateTime requestedOn}) =
+      _$_Activity;
 
   factory _Activity.fromJson(Map<String, dynamic> json) = _$_Activity.fromJson;
 
@@ -208,7 +231,10 @@ abstract class _Activity implements Activity {
   ActivityStatus? get status => throw _privateConstructorUsedError;
   @override
   @MyDateTimeConverter()
-  DateTime get createdOn => throw _privateConstructorUsedError;
+  DateTime? get createdOn => throw _privateConstructorUsedError;
+  @override
+  @MyDateTimeConverter()
+  DateTime get requestedOn => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ActivityCopyWith<_$_Activity> get copyWith =>
