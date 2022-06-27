@@ -102,24 +102,45 @@ class UserFormScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 32),
                 ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         final name = nameController.text.trim();
                         final surname = surnameController.text.trim();
                         final email = emailController.text.trim();
                         final cf = cfController.text.trim().toUpperCase();
-                        final user = UserCard(
+                        var user = UserCard(
+                          id: const Uuid().v4(),
                           name: name,
                           surname: surname,
                           cf: cf,
-                          id: const Uuid().v4(),
                           email: email,
+                          addedOn: DateTime.now(),
                         );
-                        Cloud.usersCollection.doc(user.id).set(user.toJson());
+
+                        final snap = await Cloud.usersCollection
+                            .where('email', isEqualTo: user.email)
+                            .limit(1)
+                            .get();
+                        if (snap.docs.isNotEmpty) {
+                          final userOnFirestore =
+                              UserCard.fromJson(snap.docs.first.data());
+                          user = user.copyWith(
+                            id: userOnFirestore.id,
+                            addedOn: userOnFirestore.addedOn,
+                          );
+                        } else {
+                          Cloud.usersCollection.doc(user.id).set(user.toJson());
+                        }
+
                         Hive.box('user').put('myUser', user.toJson());
                       }
                     },
                     child: const Text('Iscriviti')),
+                const SizedBox(height: 16),
+                TextButton(
+                    onPressed: () {},
+                    child: Text('Recupera una precedente iscrizione')),
+                const SizedBox(height: 16),
               ],
             ),
           ),

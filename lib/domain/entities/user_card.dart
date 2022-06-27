@@ -21,6 +21,29 @@ class UserCard with _$UserCard {
 
   factory UserCard.fromJson(Map<String, Object?> json) =>
       _$UserCardFromJson(json);
+
+  factory UserCard.fromOldQrCode(String code) {
+    final split = code.split('%');
+
+    print(split);
+    print(split.length);
+    if (split.length != 7) {
+      throw Exception();
+    }
+    final userId = split[1];
+    final name = split[2];
+    final surname = split[3];
+    final cf = split[4];
+    final activityId = split[5];
+
+    return UserCard(
+      name: name,
+      surname: surname,
+      cf: cf,
+      id: userId,
+      addedOn: DateTime.now(),
+    );
+  }
 }
 
 extension UserCardX on UserCard {
@@ -37,7 +60,7 @@ extension UserCardX on UserCard {
     if (email != null) {
       params['email'] = email!;
     }
-    final uri = Uri.https(baseUrl, '/myaccount/$id', params);
+    final uri = Uri.https(authority, '/profile/$id', params);
     return uri.toString();
   }
 

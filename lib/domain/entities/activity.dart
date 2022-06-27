@@ -16,8 +16,9 @@ class Activity with _$Activity {
   const factory Activity({
     required String id,
     required String name,
-    @SessionStatusConverter() ActivityStatus? status,
-    @MyDateTimeConverter() DateTime? createdOn,
+    @Default(false) bool acceptPassepartout,
+    @ActivityStatusConverter() ActivityStatus? status,
+    @MyDateTimeConverter() required DateTime createdOn,
     @MyDateTimeConverter() required DateTime requestedOn,
   }) = _Activity;
 
@@ -25,8 +26,8 @@ class Activity with _$Activity {
       _$ActivityFromJson(json);
 }
 
-class SessionStatusConverter implements JsonConverter<ActivityStatus, String> {
-  const SessionStatusConverter();
+class ActivityStatusConverter implements JsonConverter<ActivityStatus, String> {
+  const ActivityStatusConverter();
 
   @override
   ActivityStatus fromJson(String? status) {

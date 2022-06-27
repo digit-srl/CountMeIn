@@ -13,9 +13,12 @@ import 'package:countmein/ui/screens/admin.dart';
 
 import '../../cloud.dart';
 import '../../constants.dart';
+import '../../domain/entities/activity.dart';
 import '../../domain/entities/event_ids.dart';
 import '../../domain/entities/user_card.dart';
 import 'package:soundpool/soundpool.dart';
+
+import '../../domain/entities/user_qr_code.dart';
 
 // uof%gian marco%di francesco%DFRGMR89M02I348U%uof
 
@@ -26,12 +29,12 @@ final usersCountProvider =
 
 class ScanScreen extends ConsumerStatefulWidget {
   final String eventId;
-  final String activityId;
+  final Activity activity;
 
   const ScanScreen({
     Key? key,
     required this.eventId,
-    required this.activityId,
+    required this.activity,
   }) : super(key: key);
 
   @override
@@ -52,7 +55,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
   @override
   void initState() {
     super.initState();
-    ids = EventIds(activityId: widget.activityId, eventId: widget.eventId);
+    ids = EventIds(activityId: widget.activity.id, eventId: widget.eventId);
     loadSound();
   }
 
@@ -93,37 +96,21 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
 
                         if (processing) return;
 
-                        if (data != null &&
-                            data.startsWith(qrCodePrefix) &&
-                            data.endsWith(qrCodePrefix)) {
+                        if (data != null) {
                           print('detected data');
 
-                          final split = data.split('%');
-                          if (split.length == 7) {
-                            print(split);
-                            print(split.length);
-                            final userId = split[1];
-                            final name = split[2];
-                            final surname = split[3];
-                            final cf = split[4];
-                            final activityId = split[5];
+                          try {
+                            final userQrCode = UserQrCode.fromOldQrCode(data);
 
-                            print('activityId: $activityId');
-
-                            if (activityId == widget.activityId) {
-                              if (!list.contains(userId)) {
+                            if (userQrCode.activityId == widget.activity.id ||
+                                (widget.activity.acceptPassepartout &&
+                                    userQrCode.activityId ==
+                                        'wom-count-me-in')) {
+                              if (!list.contains(userQrCode.id)) {
                                 processing = true;
                                 if (soundId != null) {
                                   pool.play(soundId!);
                                 }
-
-                                final user = UserCard(
-                                  name: name,
-                                  surname: surname,
-                                  cf: cf,
-                                  id: userId,
-                                  addedOn: DateTime.now(),
-                                );
 
                                 /*   Future.delayed(Duration(seconds: 3), () {
                                   setState(() {
@@ -144,8 +131,9 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                       position: ToastPosition.bottom);
                                 });*/
 
+                                final user = userQrCode.toUserCard();
                                 Cloud.eventUsersCollection(
-                                        widget.activityId, widget.eventId)
+                                        widget.activity.id, widget.eventId)
                                     .doc(user.id)
                                     .set(user.toJson(), SetOptions(merge: true))
                                     .then((value) {
@@ -153,14 +141,15 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                     result = barcode;
                                     lastUSer = user;
                                   });
-                                  Future.delayed(Duration(seconds: 1), () {
+                                  Future.delayed(const Duration(seconds: 1),
+                                      () {
                                     setState(() {
                                       result = null;
                                       lastUSer = null;
                                     });
                                   });
                                   processing = false;
-                                  list.add(userId);
+                                  list.add(userQrCode.id);
 
                                   showToast(
                                       '${user.name} ${user.surname} aggiunto al database',
@@ -173,6 +162,10 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                 //     position: ToastPosition.bottom);
                               }
                             }
+                          } catch (ex) {
+                            processing = false;
+                            showToast('QR-Code non valido',
+                                position: ToastPosition.bottom);
                           }
                         }
                       }),

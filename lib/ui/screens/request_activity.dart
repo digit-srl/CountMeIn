@@ -91,6 +91,7 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
       name: activityName,
       status: ActivityStatus.pending,
       requestedOn: DateTime.now(),
+      createdOn: DateTime.now()
     );
     await Cloud.activityRequests.doc(activity.id).set(activity.toJson());
   }

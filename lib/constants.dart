@@ -6,4 +6,5 @@ const flavor = String.fromEnvironment('DEFINE_FLAVOR') == 'collab'
 
 final isMaster = flavor == AppFlavor.master;
 const qrCodePrefix = 'cmi';
-const baseUrl = 'https://comein.digit.srl';
+const authority = 'cmi.digit.srl';
+const baseUrl = 'https://$authority';

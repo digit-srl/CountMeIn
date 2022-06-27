@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:countmein/ui/screens/activities.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,12 +48,12 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
     ids = EventIds(activityId: widget.activityId, eventId: widget.eventId);
   }
 
-  _goToScan() {
+  _goToScan(Activity activity) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (c) => ScanScreen(
           eventId: widget.eventId,
-          activityId: widget.activityId,
+          activity: activity,
         ),
       ),
     );
@@ -62,6 +63,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
   Widget build(BuildContext context) {
     final eventState =
         ref.watch(eventProvider([widget.activityId, widget.eventId]));
+    final activityState= ref.watch(activityProvider(widget.activityId));
     final usersState = ref.watch(usersStreamProvider(ids));
 
     final hasData = usersState is AsyncData;
@@ -69,11 +71,11 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
       appBar: AppBar(
         title: Text(eventState.asData?.value.name ?? ''),
         actions: [
-          if (eventState is AsyncData<Event>) ...[
+          if (eventState is AsyncData<Event> && activityState is AsyncData<Activity>) ...[
             IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () {
-                  _goToScan();
+                  _goToScan(activityState.asData!.value);
                   /*showModalBottomSheet(
                       context: context,
                       builder: (context) {

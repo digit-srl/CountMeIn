@@ -36,11 +36,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform(flavor),
   );
-
-  if (kDebugMode) {
-    await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-    FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-  }
+  //
+  // if (kDebugMode) {
+  //   await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  //   FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+  // }
 
   if (kIsWeb) {
     await FirebaseFirestore.instance

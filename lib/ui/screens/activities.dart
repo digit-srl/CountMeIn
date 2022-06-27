@@ -27,12 +27,18 @@ final activitiesStreamProvider = StreamProvider<List<Activity>>((ref) async* {
   }
 });
 
+final activityProvider =
+    Provider.family<AsyncValue<Activity>, String>((ref, activityId) {
+  return ref.watch(activitiesStreamProvider).whenData(
+      (value) => value.firstWhere((element) => element.id == activityId));
+});
+
 class ActivitiesScreen extends ConsumerWidget {
   const ActivitiesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final eventsState = ref.watch(activitiesStreamProvider);
+    final activitiesState = ref.watch(activitiesStreamProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Attività'),
@@ -51,7 +57,7 @@ class ActivitiesScreen extends ConsumerWidget {
                 }),
         ],*/
       ),
-      body: eventsState.when(
+      body: activitiesState.when(
         data: (list) {
           if (list.isEmpty) {
             return const Center(
