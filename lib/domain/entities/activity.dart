@@ -16,7 +16,9 @@ class Activity with _$Activity {
   const factory Activity({
     required String id,
     required String name,
+    String? domainRequirement,
     @Default(false) bool acceptPassepartout,
+    @Default(false) bool releaseWom,
     @ActivityStatusConverter() ActivityStatus? status,
     @MyDateTimeConverter() required DateTime createdOn,
     @MyDateTimeConverter() required DateTime requestedOn,

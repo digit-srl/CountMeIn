@@ -25,8 +25,10 @@ mixin _$UserCard {
   String get surname => throw _privateConstructorUsedError;
   String get cf => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  String? get secret => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get addedOn => throw _privateConstructorUsedError;
+  bool get emailVerified => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +46,9 @@ abstract class $UserCardCopyWith<$Res> {
       String surname,
       String cf,
       String? email,
-      @MyDateTimeConverter() DateTime? addedOn});
+      String? secret,
+      @MyDateTimeConverter() DateTime? addedOn,
+      bool emailVerified});
 }
 
 /// @nodoc
@@ -62,7 +66,9 @@ class _$UserCardCopyWithImpl<$Res> implements $UserCardCopyWith<$Res> {
     Object? surname = freezed,
     Object? cf = freezed,
     Object? email = freezed,
+    Object? secret = freezed,
     Object? addedOn = freezed,
+    Object? emailVerified = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -85,10 +91,18 @@ class _$UserCardCopyWithImpl<$Res> implements $UserCardCopyWith<$Res> {
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      secret: secret == freezed
+          ? _value.secret
+          : secret // ignore: cast_nullable_to_non_nullable
+              as String?,
       addedOn: addedOn == freezed
           ? _value.addedOn
           : addedOn // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      emailVerified: emailVerified == freezed
+          ? _value.emailVerified
+          : emailVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -105,7 +119,9 @@ abstract class _$$_UserCardCopyWith<$Res> implements $UserCardCopyWith<$Res> {
       String surname,
       String cf,
       String? email,
-      @MyDateTimeConverter() DateTime? addedOn});
+      String? secret,
+      @MyDateTimeConverter() DateTime? addedOn,
+      bool emailVerified});
 }
 
 /// @nodoc
@@ -125,7 +141,9 @@ class __$$_UserCardCopyWithImpl<$Res> extends _$UserCardCopyWithImpl<$Res>
     Object? surname = freezed,
     Object? cf = freezed,
     Object? email = freezed,
+    Object? secret = freezed,
     Object? addedOn = freezed,
+    Object? emailVerified = freezed,
   }) {
     return _then(_$_UserCard(
       id: id == freezed
@@ -148,10 +166,18 @@ class __$$_UserCardCopyWithImpl<$Res> extends _$UserCardCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      secret: secret == freezed
+          ? _value.secret
+          : secret // ignore: cast_nullable_to_non_nullable
+              as String?,
       addedOn: addedOn == freezed
           ? _value.addedOn
           : addedOn // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      emailVerified: emailVerified == freezed
+          ? _value.emailVerified
+          : emailVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -165,7 +191,9 @@ class _$_UserCard implements _UserCard {
       required this.surname,
       required this.cf,
       this.email,
-      @MyDateTimeConverter() this.addedOn});
+      this.secret,
+      @MyDateTimeConverter() this.addedOn,
+      this.emailVerified = false});
 
   factory _$_UserCard.fromJson(Map<String, dynamic> json) =>
       _$$_UserCardFromJson(json);
@@ -181,12 +209,17 @@ class _$_UserCard implements _UserCard {
   @override
   final String? email;
   @override
+  final String? secret;
+  @override
   @MyDateTimeConverter()
   final DateTime? addedOn;
+  @override
+  @JsonKey()
+  final bool emailVerified;
 
   @override
   String toString() {
-    return 'UserCard(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, addedOn: $addedOn)';
+    return 'UserCard(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, secret: $secret, addedOn: $addedOn, emailVerified: $emailVerified)';
   }
 
   @override
@@ -199,7 +232,10 @@ class _$_UserCard implements _UserCard {
             const DeepCollectionEquality().equals(other.surname, surname) &&
             const DeepCollectionEquality().equals(other.cf, cf) &&
             const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.addedOn, addedOn));
+            const DeepCollectionEquality().equals(other.secret, secret) &&
+            const DeepCollectionEquality().equals(other.addedOn, addedOn) &&
+            const DeepCollectionEquality()
+                .equals(other.emailVerified, emailVerified));
   }
 
   @JsonKey(ignore: true)
@@ -211,7 +247,9 @@ class _$_UserCard implements _UserCard {
       const DeepCollectionEquality().hash(surname),
       const DeepCollectionEquality().hash(cf),
       const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(addedOn));
+      const DeepCollectionEquality().hash(secret),
+      const DeepCollectionEquality().hash(addedOn),
+      const DeepCollectionEquality().hash(emailVerified));
 
   @JsonKey(ignore: true)
   @override
@@ -231,7 +269,9 @@ abstract class _UserCard implements UserCard {
       required final String surname,
       required final String cf,
       final String? email,
-      @MyDateTimeConverter() final DateTime? addedOn}) = _$_UserCard;
+      final String? secret,
+      @MyDateTimeConverter() final DateTime? addedOn,
+      final bool emailVerified}) = _$_UserCard;
 
   factory _UserCard.fromJson(Map<String, dynamic> json) = _$_UserCard.fromJson;
 
@@ -246,8 +286,12 @@ abstract class _UserCard implements UserCard {
   @override
   String? get email => throw _privateConstructorUsedError;
   @override
+  String? get secret => throw _privateConstructorUsedError;
+  @override
   @MyDateTimeConverter()
   DateTime? get addedOn => throw _privateConstructorUsedError;
+  @override
+  bool get emailVerified => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_UserCardCopyWith<_$_UserCard> get copyWith =>

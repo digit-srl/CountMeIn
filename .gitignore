@@ -47,3 +47,5 @@ app.*.map.json
 /android/app/release
 /.fvm/
 /lib/firebase_options.dart
+/node_modules/
+/emulator_backup/

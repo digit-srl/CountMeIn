@@ -22,7 +22,9 @@ Activity _$ActivityFromJson(Map<String, dynamic> json) {
 mixin _$Activity {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String? get domainRequirement => throw _privateConstructorUsedError;
   bool get acceptPassepartout => throw _privateConstructorUsedError;
+  bool get releaseWom => throw _privateConstructorUsedError;
   @ActivityStatusConverter()
   ActivityStatus? get status => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
@@ -43,7 +45,9 @@ abstract class $ActivityCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
+      String? domainRequirement,
       bool acceptPassepartout,
+      bool releaseWom,
       @ActivityStatusConverter() ActivityStatus? status,
       @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime requestedOn});
@@ -61,7 +65,9 @@ class _$ActivityCopyWithImpl<$Res> implements $ActivityCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? domainRequirement = freezed,
     Object? acceptPassepartout = freezed,
+    Object? releaseWom = freezed,
     Object? status = freezed,
     Object? createdOn = freezed,
     Object? requestedOn = freezed,
@@ -75,9 +81,17 @@ class _$ActivityCopyWithImpl<$Res> implements $ActivityCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      domainRequirement: domainRequirement == freezed
+          ? _value.domainRequirement
+          : domainRequirement // ignore: cast_nullable_to_non_nullable
+              as String?,
       acceptPassepartout: acceptPassepartout == freezed
           ? _value.acceptPassepartout
           : acceptPassepartout // ignore: cast_nullable_to_non_nullable
+              as bool,
+      releaseWom: releaseWom == freezed
+          ? _value.releaseWom
+          : releaseWom // ignore: cast_nullable_to_non_nullable
               as bool,
       status: status == freezed
           ? _value.status
@@ -104,7 +118,9 @@ abstract class _$$_ActivityCopyWith<$Res> implements $ActivityCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
+      String? domainRequirement,
       bool acceptPassepartout,
+      bool releaseWom,
       @ActivityStatusConverter() ActivityStatus? status,
       @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime requestedOn});
@@ -124,7 +140,9 @@ class __$$_ActivityCopyWithImpl<$Res> extends _$ActivityCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? domainRequirement = freezed,
     Object? acceptPassepartout = freezed,
+    Object? releaseWom = freezed,
     Object? status = freezed,
     Object? createdOn = freezed,
     Object? requestedOn = freezed,
@@ -138,9 +156,17 @@ class __$$_ActivityCopyWithImpl<$Res> extends _$ActivityCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      domainRequirement: domainRequirement == freezed
+          ? _value.domainRequirement
+          : domainRequirement // ignore: cast_nullable_to_non_nullable
+              as String?,
       acceptPassepartout: acceptPassepartout == freezed
           ? _value.acceptPassepartout
           : acceptPassepartout // ignore: cast_nullable_to_non_nullable
+              as bool,
+      releaseWom: releaseWom == freezed
+          ? _value.releaseWom
+          : releaseWom // ignore: cast_nullable_to_non_nullable
               as bool,
       status: status == freezed
           ? _value.status
@@ -164,7 +190,9 @@ class _$_Activity implements _Activity {
   const _$_Activity(
       {required this.id,
       required this.name,
+      this.domainRequirement,
       this.acceptPassepartout = false,
+      this.releaseWom = false,
       @ActivityStatusConverter() this.status,
       @MyDateTimeConverter() required this.createdOn,
       @MyDateTimeConverter() required this.requestedOn});
@@ -177,8 +205,13 @@ class _$_Activity implements _Activity {
   @override
   final String name;
   @override
+  final String? domainRequirement;
+  @override
   @JsonKey()
   final bool acceptPassepartout;
+  @override
+  @JsonKey()
+  final bool releaseWom;
   @override
   @ActivityStatusConverter()
   final ActivityStatus? status;
@@ -191,7 +224,7 @@ class _$_Activity implements _Activity {
 
   @override
   String toString() {
-    return 'Activity(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, status: $status, createdOn: $createdOn, requestedOn: $requestedOn)';
+    return 'Activity(id: $id, name: $name, domainRequirement: $domainRequirement, acceptPassepartout: $acceptPassepartout, releaseWom: $releaseWom, status: $status, createdOn: $createdOn, requestedOn: $requestedOn)';
   }
 
   @override
@@ -202,7 +235,11 @@ class _$_Activity implements _Activity {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
+                .equals(other.domainRequirement, domainRequirement) &&
+            const DeepCollectionEquality()
                 .equals(other.acceptPassepartout, acceptPassepartout) &&
+            const DeepCollectionEquality()
+                .equals(other.releaseWom, releaseWom) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.createdOn, createdOn) &&
             const DeepCollectionEquality()
@@ -215,7 +252,9 @@ class _$_Activity implements _Activity {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(domainRequirement),
       const DeepCollectionEquality().hash(acceptPassepartout),
+      const DeepCollectionEquality().hash(releaseWom),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(createdOn),
       const DeepCollectionEquality().hash(requestedOn));
@@ -235,7 +274,9 @@ abstract class _Activity implements Activity {
   const factory _Activity(
           {required final String id,
           required final String name,
+          final String? domainRequirement,
           final bool acceptPassepartout,
+          final bool releaseWom,
           @ActivityStatusConverter() final ActivityStatus? status,
           @MyDateTimeConverter() required final DateTime createdOn,
           @MyDateTimeConverter() required final DateTime requestedOn}) =
@@ -248,7 +289,11 @@ abstract class _Activity implements Activity {
   @override
   String get name => throw _privateConstructorUsedError;
   @override
+  String? get domainRequirement => throw _privateConstructorUsedError;
+  @override
   bool get acceptPassepartout => throw _privateConstructorUsedError;
+  @override
+  bool get releaseWom => throw _privateConstructorUsedError;
   @override
   @ActivityStatusConverter()
   ActivityStatus? get status => throw _privateConstructorUsedError;

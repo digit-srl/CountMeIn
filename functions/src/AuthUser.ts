@@ -20,12 +20,12 @@ export class AuthUser {
   emailVerified: boolean;
 
   constructor(
-    uid: string,
-    name: string,
-    surname: string,
-    email: string,
-    activityIds: string[],
-    emailVerified: boolean
+      uid: string,
+      name: string,
+      surname: string,
+      email: string,
+      activityIds: string[],
+      emailVerified: boolean
   ) {
     this.uid = uid;
     this.name = name;

@@ -12,9 +12,11 @@ _$_UserCard _$$_UserCardFromJson(Map<String, dynamic> json) => _$_UserCard(
       surname: json['surname'] as String,
       cf: json['cf'] as String,
       email: json['email'] as String?,
+      secret: json['secret'] as String?,
       addedOn: json['addedOn'] == null
           ? null
           : DateTime.parse(json['addedOn'] as String),
+      emailVerified: json['emailVerified'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_UserCardToJson(_$_UserCard instance) =>
@@ -24,5 +26,7 @@ Map<String, dynamic> _$$_UserCardToJson(_$_UserCard instance) =>
       'surname': instance.surname,
       'cf': instance.cf,
       'email': instance.email,
+      'secret': instance.secret,
       'addedOn': instance.addedOn?.toIso8601String(),
+      'emailVerified': instance.emailVerified,
     };

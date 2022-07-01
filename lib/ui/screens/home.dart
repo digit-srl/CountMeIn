@@ -5,11 +5,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:countmein/ui/screens/user_qr_code.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../constants.dart';
 import '../../domain/entities/session.dart';
 import '../../domain/entities/user_card.dart';
 import 'admin.dart';
@@ -33,6 +35,9 @@ class HomeScreen extends StatelessWidget {
               'Count Me In',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
+           /* ElevatedButton(onPressed: (){
+              context.go('/activity/$passepartoutActivityId');
+            }, child: Text('vai all evento')),*/
             FutureBuilder(
               future: PackageInfo.fromPlatform(),
               builder: (c, AsyncSnapshot<PackageInfo> snap) {

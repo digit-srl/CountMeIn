@@ -16,7 +16,9 @@ class UserCard with _$UserCard {
     required String surname,
     required String cf,
     String? email,
+    String? secret,
     @MyDateTimeConverter() DateTime? addedOn,
+    @Default(false) bool emailVerified,
   }) = _UserCard;
 
   factory UserCard.fromJson(Map<String, Object?> json) =>

@@ -8,3 +8,4 @@ final isMaster = flavor == AppFlavor.master;
 const qrCodePrefix = 'cmi';
 const authority = 'cmi.digit.srl';
 const baseUrl = 'https://$authority';
+const passepartoutActivityId = 'wom-count-me-in';
