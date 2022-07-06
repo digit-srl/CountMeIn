@@ -1,3 +1,6 @@
+import 'package:countmein/domain/entities/date_time_converter.dart';
+import 'package:countmein/utils.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' show Timestamp;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../domain/entities/user.dart';
@@ -15,7 +18,8 @@ class AuthUserDTO with _$AuthUserDTO {
     required String email,
     required List<String> activityIds,
     required bool emailVerified,
-    required DateTime createdAt,
+    @MyDateTimeConverter() required DateTime createdAt,
+    String? role,
   }) = _AuthUserDTO;
 
   factory AuthUserDTO.fromJson(Map<String, dynamic> json) =>
@@ -31,6 +35,7 @@ extension AuthUserDTOX on AuthUserDTO {
       email: email,
       emailVerified: emailVerified,
       createdAt: createdAt, activityIds: [],
+      role: enumFromString(role ?? 'unknown', UserRole.values),
     );
   }
 }

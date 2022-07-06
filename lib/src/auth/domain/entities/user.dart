@@ -2,6 +2,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
 
+
+enum UserRole {
+  owner,
+  collaborator,
+  unknown,
+}
+
 @freezed
 class AuthUser with _$AuthUser {
   const factory AuthUser({
@@ -12,6 +19,7 @@ class AuthUser with _$AuthUser {
     required List<String> activityIds,
     required bool emailVerified,
     required DateTime createdAt,
+    required UserRole role,
   }) = _AuthUser;
 
 /*  factory AuthUser.signUp(String name, String surname, String email, String uid) {

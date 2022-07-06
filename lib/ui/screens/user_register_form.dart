@@ -11,7 +11,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 import '../../src/common/mu_styles.dart';
 import '../../cloud.dart';
-import '../../domain/entities/activity.dart';
+import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/user_card.dart';
 import '../validators.dart';
 import '../widgets/my_text_field.dart';
@@ -52,7 +52,7 @@ final emailControllerProvider =
 });
 
 class UserFormScreen extends ConsumerWidget {
-  final Activity activity;
+  final CMIProvider activity;
 
   UserFormScreen({
     Key? key,
@@ -73,7 +73,10 @@ class UserFormScreen extends ConsumerWidget {
           previous is UserRegisteringInitial &&
           next is UserRegisteringLoading) {
         showDialog(
-            context: context, builder: (c) => const Dialog(child: UserRegisteringDialog(),));
+            context: context,
+            builder: (c) => const Dialog(
+                  child: UserRegisteringDialog(),
+                ));
       } else if (next is UserRegisteringUserCardSentByEmail) {
         nameController.clear();
         surnameController.clear();
@@ -131,14 +134,13 @@ class UserFormScreen extends ConsumerWidget {
                         final cf = cfController.text.trim().toUpperCase();
 
                         var user = UserCard(
-                          id: const Uuid().v4(),
-                          name: name,
-                          surname: surname,
-                          cf: cf,
-                          email: email,
-                          addedOn: DateTime.now(),
-                          secret: Uuid().v4().substring(0,8)
-                        );
+                            id: const Uuid().v4(),
+                            name: name,
+                            surname: surname,
+                            cf: cf,
+                            email: email,
+                            addedOn: DateTime.now(),
+                            secret: const Uuid().v4().substring(0, 8));
 
                         ref
                             .read(userRegisteringProvider.notifier)
@@ -147,10 +149,10 @@ class UserFormScreen extends ConsumerWidget {
                     },
                     child: const Text('Iscriviti')),
                 const SizedBox(height: 16),
-                TextButton(
-                    onPressed: () {},
-                    child: const Text('Recupera una precedente iscrizione')),
-                const SizedBox(height: 16),
+                // TextButton(
+                //     onPressed: () {},
+                //     child: const Text('Recupera una precedente iscrizione')),
+                // const SizedBox(height: 16),
               ],
             ),
           ),
@@ -170,8 +172,10 @@ class UserRegisteringDialog extends ConsumerWidget {
       padding: const EdgeInsets.all(16),
       duration: const Duration(milliseconds: 300),
       child: registeringState.when(
-        initial: () => const LoadingWidget(),
-        loading: () => const LoadingWidget(),
+        initial: () =>
+            const SizedBox(height: 100, width: 100, child: LoadingWidget()),
+        loading: () =>
+            const SizedBox(height: 100, width: 100, child: LoadingWidget()),
         userCardSentByEmail: (email) {
           return EasyRichText(
             "Potrai scaricare il tuo tesserino dall'email che abbiamo inviato all'indirizzo $email. ",

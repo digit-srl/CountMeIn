@@ -9,11 +9,14 @@ class AuthRepository extends IAuthRepository {
   @override
   Future<void> signIn(String email, String password) async {
     try {
-      final AuthUser = await FirebaseAuth.instance
+      final userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      print(AuthUser.user);
+      print(userCredential.user);
     } on FirebaseAuthException catch (ex) {
       throw SignInException.fromFirebaseException(ex);
+    } catch (ex) {
+      print(ex);
+      throw UnknownException();
     }
   }
 
@@ -21,26 +24,29 @@ class AuthRepository extends IAuthRepository {
   Future<void> signUp(
       String name, String surname, String email, String password) async {
     try {
-      final AuthUser = await FirebaseAuth.instance
+      /*final authUser = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      if (AuthUser.user != null && !AuthUser.user!.emailVerified) {
+      if (authUser.user != null && !authUser.user!.emailVerified) {
         print('user not verififed send email');
-        AuthUser.user!.sendEmailVerification();
+        authUser.user!.sendEmailVerification();
       }
 
-      if (AuthUser.user != null) {
+      if (authUser.user != null) {
         final authUser = AuthUserDTO(
-          uid: AuthUser.user!.uid,
+          uid: authUser.user!.uid,
           name: name,
           surname: surname,
           email: email,
           createdAt: DateTime.now().toUtc(),
-          emailVerified: false, activityIds: [],
+          emailVerified: false,
+          activityIds: [],
         );
-        await Cloud.credentialsCollection.doc(AuthUser.user!.uid).set(authUser.toJson());
+        await Cloud.credentialsCollection
+            .doc(authUser.user!.uid)
+            .set(authUser.toJson());
       } else {
         print('user is null from AuthUser');
-      }
+      }*/
     } on FirebaseAuthException catch (ex) {
       throw SignUpException.fromFirebaseException(ex);
     } catch (ex) {

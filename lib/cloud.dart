@@ -4,27 +4,24 @@ class Cloud {
   static CollectionReference<Map<String, dynamic>> credentialsCollection =
       FirebaseFirestore.instance.collection('credentials');
 
-  static CollectionReference<Map<String, dynamic>> activityRequests =
-      FirebaseFirestore.instance.collection('activityRequests');
+  static CollectionReference<Map<String, dynamic>> providerRequests =
+      FirebaseFirestore.instance.collection('providerRequests');
 
   static CollectionReference<Map<String, dynamic>> eventsCollection(
-          String activityId) =>
-      activitiesCollection.doc(activityId).collection('events');
-
-  // static final CollectionReference<Map<String, dynamic>> eventsCollection =
-  //     FirebaseFirestore.instance.collection('events');
+          String providerId) =>
+      providerCollection.doc(providerId).collection('events');
 
   static final CollectionReference<Map<String, dynamic>> usersCollection =
       FirebaseFirestore.instance.collection('users');
 
-  static final CollectionReference<Map<String, dynamic>> activitiesCollection =
-      FirebaseFirestore.instance.collection('activities');
+  static final CollectionReference<Map<String, dynamic>> providerCollection =
+      FirebaseFirestore.instance.collection('providers');
 
   static CollectionReference<Map<String, dynamic>> eventUsersCollection(
-          String activityId, String eventId) =>
-      eventsCollection(activityId).doc(eventId).collection('users');
+          String providerId, String eventId) =>
+      eventsCollection(providerId).doc(eventId).collection('users');
 
   static DocumentReference<Map<String, dynamic>> eventDoc(
-          String activityId, String eventId) =>
-      eventsCollection(activityId).doc(eventId);
+          String providerId, String eventId) =>
+      eventsCollection(providerId).doc(eventId);
 }

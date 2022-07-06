@@ -27,6 +27,7 @@ class MUTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
       child: TextFormField(
+        autofillHints: [AutofillHints.email],
         controller: controller,
         validator: validator,
         enabled: enabled,

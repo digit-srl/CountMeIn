@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:countmein/src/auth/ui/screens/auht_gate.dart';
+import 'package:countmein/src/auth/ui/screens/auth.dart';
 import 'package:countmein/ui/screens/activities.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +26,18 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!kIsWeb && !Platform.isMacOS) {
-      return const ActivitiesScreen();
+      return const AuthGate();
     }
+
+    return Container();
+  }
+}
+
+class HomeWebScreen extends StatelessWidget {
+  const HomeWebScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(
@@ -35,7 +47,7 @@ class HomeScreen extends StatelessWidget {
               'Count Me In',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
-           /* ElevatedButton(onPressed: (){
+            /* ElevatedButton(onPressed: (){
               context.go('/activity/$passepartoutActivityId');
             }, child: Text('vai all evento')),*/
             FutureBuilder(
@@ -48,6 +60,5 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-    return Container();
   }
 }

@@ -1,4 +1,4 @@
-import 'package:countmein/domain/entities/activity.dart';
+import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_field_validator/form_field_validator.dart';

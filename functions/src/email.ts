@@ -23,10 +23,8 @@ export function sendEmail(
   json: string,
   attachment: any
 ) {
-  console.log(process.env);
-  console.log(mg.domains);
   const data = {
-    from: "Count Me In NoReply <no-reply@activeviewer.it>",
+    from: "Count Me In NoReply <no-reply@digit.srl>",
     to: to,
     subject: subject,
     template: template,
@@ -40,7 +38,7 @@ export function sendEmail(
   return mg.messages
     .create(process.env.MG_DOMAIN ?? "", data)
     .then((msg: any) => {
-      console.log(msg);
+      console.log("email inviata " + msg);
       return true;
     }) // logs response data
     .catch((err: any) => {
@@ -76,13 +74,15 @@ export function sendUserCardEmail(
   fullName: string,
   email: string,
   cf: string,
-  buffer: Buffer
+  buffer: Buffer,
+  providerName: string
 ) {
   const emails = [email];
 
   const json = JSON.stringify({
     fullName: fullName,
     cf: cf,
+    provider: providerName,
   });
 
   const filename = "tesserino.png";
@@ -105,4 +105,43 @@ export function sendUserCardEmail(
       console.log(err);
       throw new functions.https.HttpsError("aborted", err);
     });
+}
+
+// "fullName": "test_fullName",
+// "verificationUrl": "test_verificationUrl"
+export function sendResetPasswordEmail(
+  fullName: string,
+  email: string,
+  oobCode: string
+) {
+  const emails = [email];
+
+  const url =
+    "https://cmi.digit.srl/reset?n=" + fullName + "&oobCode=" + oobCode;
+
+  const json = JSON.stringify({
+    fullName: fullName,
+    url: url,
+  });
+
+  return sendEmail(emails, "Reset password", "reset_password", json, []);
+}
+
+// "fullName": "test_fullName",
+// "verificationUrl": "test_verificationUrl"
+export function sendWomEmail(
+  link: string,
+  womCount: number,
+  email: string,
+  pin: string
+) {
+  const emails = [email];
+
+  const json = JSON.stringify({
+    link: link,
+    womCount: womCount,
+    pin: pin,
+  });
+
+  return sendEmail(emails, "Ecco i tuoi wom", "wom_template", json, []);
 }

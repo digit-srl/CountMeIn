@@ -7,24 +7,13 @@ import 'package:countmein/cloud.dart';
 import 'package:countmein/ui/screens/user_qr_code.dart';
 import 'package:countmein/ui/widgets/loading.dart';
 
-import '../../domain/entities/activity.dart';
+import '../../application/activity_notifier.dart';
+import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/session.dart';
 import '../../domain/entities/user_card.dart';
 import 'home.dart';
 
-final activityStreamProvider =
-    StreamProvider.family<Activity, String>((ref, activityId) async* {
-  final eventStream = Cloud.activitiesCollection.doc(activityId).snapshots();
-  await for (final snap in eventStream) {
-    final data = snap.data();
-    if (snap.exists && data != null) {
-      print(data);
-      yield Activity.fromJson(data);
-    } else {
-      print('error');
-    }
-  }
-});
+
 
 class UserEventScreen extends ConsumerWidget {
   static const routeName = '/event';

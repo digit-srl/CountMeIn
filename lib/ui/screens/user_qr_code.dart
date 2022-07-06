@@ -6,12 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:ui' as ui;
-import '../../domain/entities/activity.dart';
+import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/user_card.dart';
 
 class UserQRCodeScreen extends ConsumerWidget {
   final UserCard user;
-  final Activity session;
+  final CMIProvider session;
 
   const UserQRCodeScreen({
     Key? key,
@@ -64,7 +64,7 @@ class UserQRCodeScreen extends ConsumerWidget {
 
 class UserCardDialog extends StatefulWidget {
   final UserCard user;
-  final Activity activity;
+  final CMIProvider activity;
 
   const UserCardDialog({Key? key, required this.user, required this.activity})
       : super(key: key);

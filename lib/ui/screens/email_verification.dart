@@ -29,7 +29,12 @@ class _EmailVerificationScreenState
     return Scaffold(
       body: Center(
         child: verificationState.when(
-          verified: () => Text('verified'),
+          verified: () => Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+                'Il tuo indirizzo email è stato verificato. Riceverai a breve il tuo tesserino.\n'
+                    'Your email address has been properly verified. You\'ll receive your badge shortly.'),
+          ),
           userNotExist: () => Text('userNotExist'),
           invalidData: () => Text('invalidData'),
           loading: () => LoadingWidget(),

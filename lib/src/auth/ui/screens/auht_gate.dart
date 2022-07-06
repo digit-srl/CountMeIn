@@ -1,5 +1,7 @@
+
 import 'package:countmein/src/auth/ui/screens/sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:countmein/ui/screens/activities.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,16 +18,22 @@ class AuthGate extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    if(!kIsWeb){
+      return HomeWebScreen();
+    }
+
+    // return ActivitiesScreen();
     final authState = ref.watch(authStateProvider);
     return authState.when(
       authenticated: (firebaseUser) {
-        return HomeScreen();
+        return ActivitiesScreen(userId: firebaseUser.uid,);
       },
-      loading: () => LoadingWidget(),
+      loading: () => const LoadingWidget(),
       unauthenticated: () => SignInScreen(),
       emailNotVerified: (firebaseUser) =>
           Scaffold(body: EmailNotVerifiedScreen(firebaseUser: firebaseUser)),
-      error: (err, stack) => ErrorScreen(),
+      error: (err, stack) => ErrorScreen(exception: err,),
     );
   }
 }

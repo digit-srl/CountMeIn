@@ -1,5 +1,8 @@
 import 'package:countmein/domain/entities/user_card.dart';
+import 'package:countmein/src/auth/ui/screens/auht_gate.dart';
+import 'package:countmein/src/auth/ui/screens/reset_password.dart';
 import 'package:countmein/ui/screens/email_verification.dart';
+import 'package:countmein/ui/screens/new_event_form.dart';
 import 'package:countmein/ui/screens/request_activity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,8 +20,14 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
     routes: [
       GoRoute(
-        path: HomeScreen.routeName,
-        builder: (context, state) => const HomeScreen(),
+        path: AuthGate.routeName,
+        builder: (context, state) => const AuthGate(),
+      ),
+      GoRoute(
+        path: '${NewEventFormScreen.routeName}/:activityId',
+        builder: (context, state) => NewEventFormScreen(
+          activityId: state.params['activityId']!,
+        ),
       ),
       GoRoute(
         path: ActivityRequestScreen.routeName,
@@ -37,7 +46,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
-        path: '/activity/:activityId',
+        path: '/provider/:activityId',
         builder: (context, state) {
           return UserEventScreen(
             activityId: state.params['activityId']!,
@@ -48,6 +57,21 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: UserDetailsScreen.routeName,
         builder: (context, state) {
           return UserDetailsScreen(user: state.extra! as UserCard);
+        },
+      ),
+      GoRoute(
+        path: ResetPasswordScreen.routeName,
+        builder: (context, state) {
+          final url = state.queryParams['u'];
+          final oobCode = state.queryParams['oobCode'];
+          final name = state.queryParams['n'];
+          if (oobCode == null) {
+            return ErrorScreen();
+          }
+          return ResetPasswordScreen(
+            oobCode: oobCode,
+            fullName: name ?? 'name',
+          );
         },
       ),
       GoRoute(
@@ -71,7 +95,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
 
       if (isEventRoute) {
         print('is event route');
-        return state.subloc.replaceFirst('/event', '/activity');
+        return state.subloc.replaceFirst('/event', '/provider');
         return '/activities/${state.params['id']!}';
       }
 
@@ -97,6 +121,7 @@ class MyApp extends ConsumerWidget {
     return OKToast(
       child: MaterialApp.router(
         theme: theme,
+        routeInformationProvider: router.routeInformationProvider,
         routeInformationParser: router.routeInformationParser,
         routerDelegate: router.routerDelegate,
       ),

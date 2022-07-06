@@ -7,6 +7,7 @@ class SignInException extends MUException {
   SignInException() : super('SignInException', '');
 
   factory SignInException.fromFirebaseException(FirebaseAuthException ex) {
+
     switch (ex.code) {
       case 'invalid-email':
       case 'wrong-password':

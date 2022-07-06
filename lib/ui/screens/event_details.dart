@@ -13,8 +13,9 @@ import 'package:share_plus/share_plus.dart';
 import 'package:countmein/cloud.dart';
 import 'package:countmein/ui/screens/scan.dart';
 
+import '../../application/activity_notifier.dart';
 import '../../constants.dart';
-import '../../domain/entities/activity.dart';
+import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/event_ids.dart';
 import '../../domain/entities/session.dart';
 import '../../domain/entities/user_card.dart';
@@ -48,7 +49,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
     ids = EventIds(activityId: widget.activityId, eventId: widget.eventId);
   }
 
-  _goToScan(Activity activity) {
+  _goToScan(CMIProvider activity) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (c) => ScanScreen(
@@ -63,7 +64,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
   Widget build(BuildContext context) {
     final eventState =
         ref.watch(eventProvider([widget.activityId, widget.eventId]));
-    final activityState= ref.watch(activityProvider(widget.activityId));
+    final activityState= ref.watch(activityStreamProvider(widget.activityId));
     final usersState = ref.watch(usersStreamProvider(ids));
 
     final hasData = usersState is AsyncData;
@@ -71,7 +72,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
       appBar: AppBar(
         title: Text(eventState.asData?.value.name ?? ''),
         actions: [
-          if (eventState is AsyncData<Event> && activityState is AsyncData<Activity>) ...[
+          if (eventState is AsyncData<Event> && activityState is AsyncData<CMIProvider>) ...[
             IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () {

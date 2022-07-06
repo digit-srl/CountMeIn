@@ -13,7 +13,7 @@ import 'package:countmein/ui/screens/admin.dart';
 
 import '../../cloud.dart';
 import '../../constants.dart';
-import '../../domain/entities/activity.dart';
+import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/event_ids.dart';
 import '../../domain/entities/user_card.dart';
 import 'package:soundpool/soundpool.dart';
@@ -29,7 +29,7 @@ final usersCountProvider =
 
 class ScanScreen extends ConsumerStatefulWidget {
   final String eventId;
-  final Activity activity;
+  final CMIProvider activity;
 
   const ScanScreen({
     Key? key,

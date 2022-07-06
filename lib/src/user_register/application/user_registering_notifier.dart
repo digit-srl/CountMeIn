@@ -1,4 +1,4 @@
-import 'package:countmein/domain/entities/activity.dart';
+import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:countmein/domain/entities/user_card.dart';
 import 'package:countmein/src/user_register/application/user_registering_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,7 +14,7 @@ final userRegisteringProvider = StateNotifierProvider.autoDispose<
 class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
   UserRegisteringNotifier() : super(const UserRegisteringInitial());
 
-  Future<void> register(Activity activity, UserCard user) async {
+  Future<void> register(CMIProvider activity, UserCard user) async {
     try {
       state = const UserRegisteringLoading();
       //TODO if email is null

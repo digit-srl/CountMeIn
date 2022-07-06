@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:countmein/cloud.dart';
 
-import '../../domain/entities/activity.dart';
+import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/event_ids.dart';
 import '../../domain/entities/session.dart';
 import '../../domain/entities/user_card.dart';
 import '../../utils.dart';
 
 final adminProvider =
-    StateNotifierProvider<AdminNotifier, AsyncValue<List<Activity>>>((ref) {
+    StateNotifierProvider<AdminNotifier, AsyncValue<List<CMIProvider>>>((ref) {
   return AdminNotifier();
 });
 
 final eventsStreamProvider =
     StreamProvider.family<List<Event>, String>((ref, activityId) async* {
   final stream = Cloud.eventsCollection(activityId)
-      .where('status', isEqualTo: enumToString(ActivityStatus.live))
+      .where('status', isEqualTo: enumToString(CMIProviderStatus.live))
       // .orderBy('field')
       .snapshots();
 
@@ -60,7 +60,7 @@ final usersStreamProvider =
   }
 });
 
-class AdminNotifier extends StateNotifier<AsyncValue<List<Activity>>> {
+class AdminNotifier extends StateNotifier<AsyncValue<List<CMIProvider>>> {
   AdminNotifier() : super(const AsyncLoading());
 }
 

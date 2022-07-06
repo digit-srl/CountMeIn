@@ -15,6 +15,7 @@ class Event with _$Event {
   const factory Event({
     required String id,
     required String name,
+    int? womCount,
     @EventStatusConverter() EventStatus? status,
     @MyDateTimeConverter() required DateTime createdOn,
   }) = _Event;

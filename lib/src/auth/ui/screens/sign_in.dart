@@ -28,9 +28,9 @@ final emailValidator = MultiValidator([
 
 final passwordValidator = MultiValidator([
   RequiredValidator(errorText: 'Password is required'),
-  MinLengthValidator(8, errorText: 'password must be at least 8 digits long'),
-  PatternValidator(r'(?=.*?[#?!@$%^&*-])',
-      errorText: 'passwords must have at least one special character')
+  MinLengthValidator(6, errorText: 'password must be at least 8 digits long'),
+/*  PatternValidator(r'(?=.*?[#?!@$%^&*-])',
+      errorText: 'passwords must have at least one special character')*/
 ]);
 
 class SignInScreen extends HookConsumerWidget {
@@ -44,9 +44,9 @@ class SignInScreen extends HookConsumerWidget {
     print('$email, $password');
     try {
      final result =  await ref.read(signInNotifierProvider.notifier).signIn(email, password);
-     if(result){
-       ref.read(goRouterProvider).pop();
-     }
+     // if(result){
+     //   ref.read(goRouterProvider).pop();
+     // }
     } on SignInException catch (ex) {
       print(ex);
     }
@@ -109,48 +109,48 @@ class SignInScreen extends HookConsumerWidget {
                 },
               ),
               const SizedBox(height: 16),
-              EasyRichText(
-                "Non hai un account? Registrati",
-                defaultStyle: Theme.of(context).textTheme.bodyText1,
-                patternList: [
-                  EasyRichTextPattern(
-                      targetString: 'Registrati',
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          context.push(SignUpScreen.routeName);
-                        },
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.bold
-                          .underline),
-                ],
-              ),
-               const SizedBox(height: 8),
-              EasyRichText(
-                "Hai dimenticato la password? Clicca qui",
-                defaultStyle: Theme.of(context).textTheme.bodyText1,
-                patternList: [
-                  // EasyRichTextPattern(
-                  //   targetString: 'https://pub.dev/packages/easy_rich_text',
-                  //   urlType: 'web',
-                  //   style: TextStyle(
-                  //     decoration: TextDecoration.underline,
-                  //   ),
-                  // ),
-                  EasyRichTextPattern(
-                      targetString: 'qui',
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          print('password dimenticata');
-                        },
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.bold
-                          .underline),
-                ],
-              ),
+              // EasyRichText(
+              //   "Non hai un account? Registrati",
+              //   defaultStyle: Theme.of(context).textTheme.bodyText1,
+              //   patternList: [
+              //     EasyRichTextPattern(
+              //         targetString: 'Registrati',
+              //         recognizer: TapGestureRecognizer()
+              //           ..onTap = () {
+              //             context.push(SignUpScreen.routeName);
+              //           },
+              //         style: Theme.of(context)
+              //             .textTheme
+              //             .bodyText1
+              //             ?.bold
+              //             .underline),
+              //   ],
+              // ),
+              //  const SizedBox(height: 8),
+              // EasyRichText(
+              //   "Hai dimenticato la password? Clicca qui",
+              //   defaultStyle: Theme.of(context).textTheme.bodyText1,
+              //   patternList: [
+              //     // EasyRichTextPattern(
+              //     //   targetString: 'https://pub.dev/packages/easy_rich_text',
+              //     //   urlType: 'web',
+              //     //   style: TextStyle(
+              //     //     decoration: TextDecoration.underline,
+              //     //   ),
+              //     // ),
+              //     EasyRichTextPattern(
+              //         targetString: 'qui',
+              //         recognizer: TapGestureRecognizer()
+              //           ..onTap = () {
+              //             print('password dimenticata');
+              //           },
+              //         style: Theme.of(context)
+              //             .textTheme
+              //             .bodyText1
+              //             ?.bold
+              //             .underline),
+              //   ],
+              // ),
             ],
           ),
         ),

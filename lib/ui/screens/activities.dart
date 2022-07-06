@@ -5,7 +5,7 @@ import 'package:oktoast/oktoast.dart';
 
 import '../../cloud.dart';
 import '../../constants.dart';
-import '../../domain/entities/activity.dart';
+import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/session.dart';
 import '../../utils.dart';
 import '../widgets/add_session_dialog.dart';
@@ -13,32 +13,49 @@ import '../widgets/loading.dart';
 import 'admin.dart';
 import 'event_details.dart';
 
-final activitiesStreamProvider = StreamProvider<List<Activity>>((ref) async* {
-  final stream = Cloud.activitiesCollection
-      .where('status', isEqualTo: enumToString(ActivityStatus.live))
+final activitiesStreamProvider =
+    StreamProvider.family<List<CMIProvider>, String>((ref, userId) async* {
+
+
+      print('get acttivities for userId: $userId');
+  final stream = Cloud.providerCollection
+      .where('status', isEqualTo: enumToString(CMIProviderStatus.live))
+      .where('managers', arrayContains: userId)
       .snapshots();
 
   await for (final snap in stream) {
     final list = snap.docs.map((doc) {
-      final s = Activity.fromJson(doc.data());
+      final s = CMIProvider.fromJson(doc.data());
       return s;
     }).toList();
     yield list;
   }
 });
 
-final activityProvider =
-    Provider.family<AsyncValue<Activity>, String>((ref, activityId) {
-  return ref.watch(activitiesStreamProvider).whenData(
-      (value) => value.firstWhere((element) => element.id == activityId));
-});
+class ActivityRequest {
+  final String userId;
+  final String activityId;
+
+  ActivityRequest(this.userId, this.activityId);
+}
+
+/*final activityProvider =
+    Provider.family<AsyncValue<Activity>, ActivityRequest>((ref, request) {
+  return ref.watch(activitiesStreamProvider(request.userId)).whenData((value) =>
+      value.firstWhere((element) => element.id == request.activityId));
+});*/
 
 class ActivitiesScreen extends ConsumerWidget {
-  const ActivitiesScreen({Key? key}) : super(key: key);
+  final String userId;
+
+  const ActivitiesScreen({
+    Key? key,
+    required this.userId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activitiesState = ref.watch(activitiesStreamProvider);
+    final activitiesState = ref.watch(activitiesStreamProvider(userId));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Attività'),

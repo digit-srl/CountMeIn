@@ -23,6 +23,7 @@ mixin _$AuthUser {
   List<String> get activityIds => throw _privateConstructorUsedError;
   bool get emailVerified => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
+  UserRole get role => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthUserCopyWith<AuthUser> get copyWith =>
@@ -40,7 +41,8 @@ abstract class $AuthUserCopyWith<$Res> {
       String email,
       List<String> activityIds,
       bool emailVerified,
-      DateTime createdAt});
+      DateTime createdAt,
+      UserRole role});
 }
 
 /// @nodoc
@@ -60,6 +62,7 @@ class _$AuthUserCopyWithImpl<$Res> implements $AuthUserCopyWith<$Res> {
     Object? activityIds = freezed,
     Object? emailVerified = freezed,
     Object? createdAt = freezed,
+    Object? role = freezed,
   }) {
     return _then(_value.copyWith(
       uid: uid == freezed
@@ -90,6 +93,10 @@ class _$AuthUserCopyWithImpl<$Res> implements $AuthUserCopyWith<$Res> {
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as UserRole,
     ));
   }
 }
@@ -107,7 +114,8 @@ abstract class _$$_AuthUserCopyWith<$Res> implements $AuthUserCopyWith<$Res> {
       String email,
       List<String> activityIds,
       bool emailVerified,
-      DateTime createdAt});
+      DateTime createdAt,
+      UserRole role});
 }
 
 /// @nodoc
@@ -129,6 +137,7 @@ class __$$_AuthUserCopyWithImpl<$Res> extends _$AuthUserCopyWithImpl<$Res>
     Object? activityIds = freezed,
     Object? emailVerified = freezed,
     Object? createdAt = freezed,
+    Object? role = freezed,
   }) {
     return _then(_$_AuthUser(
       uid: uid == freezed
@@ -159,6 +168,10 @@ class __$$_AuthUserCopyWithImpl<$Res> extends _$AuthUserCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as UserRole,
     ));
   }
 }
@@ -173,7 +186,8 @@ class _$_AuthUser implements _AuthUser {
       required this.email,
       required final List<String> activityIds,
       required this.emailVerified,
-      required this.createdAt})
+      required this.createdAt,
+      required this.role})
       : _activityIds = activityIds;
 
   @override
@@ -195,10 +209,12 @@ class _$_AuthUser implements _AuthUser {
   final bool emailVerified;
   @override
   final DateTime createdAt;
+  @override
+  final UserRole role;
 
   @override
   String toString() {
-    return 'AuthUser(uid: $uid, name: $name, surname: $surname, email: $email, activityIds: $activityIds, emailVerified: $emailVerified, createdAt: $createdAt)';
+    return 'AuthUser(uid: $uid, name: $name, surname: $surname, email: $email, activityIds: $activityIds, emailVerified: $emailVerified, createdAt: $createdAt, role: $role)';
   }
 
   @override
@@ -214,7 +230,8 @@ class _$_AuthUser implements _AuthUser {
                 .equals(other._activityIds, _activityIds) &&
             const DeepCollectionEquality()
                 .equals(other.emailVerified, emailVerified) &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt));
+            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
+            const DeepCollectionEquality().equals(other.role, role));
   }
 
   @override
@@ -226,7 +243,8 @@ class _$_AuthUser implements _AuthUser {
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(_activityIds),
       const DeepCollectionEquality().hash(emailVerified),
-      const DeepCollectionEquality().hash(createdAt));
+      const DeepCollectionEquality().hash(createdAt),
+      const DeepCollectionEquality().hash(role));
 
   @JsonKey(ignore: true)
   @override
@@ -242,7 +260,8 @@ abstract class _AuthUser implements AuthUser {
       required final String email,
       required final List<String> activityIds,
       required final bool emailVerified,
-      required final DateTime createdAt}) = _$_AuthUser;
+      required final DateTime createdAt,
+      required final UserRole role}) = _$_AuthUser;
 
   @override
   String get uid => throw _privateConstructorUsedError;
@@ -258,6 +277,8 @@ abstract class _AuthUser implements AuthUser {
   bool get emailVerified => throw _privateConstructorUsedError;
   @override
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @override
+  UserRole get role => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_AuthUserCopyWith<_$_AuthUser> get copyWith =>

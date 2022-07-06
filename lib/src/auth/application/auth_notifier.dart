@@ -18,42 +18,68 @@ final signUpErrorProvider = StateProvider.autoDispose<SignUpException?>((ref) {
 });
 
 final _userProvider =
-    StreamProvider.family<AuthUser?, String>((ref, userId) async* {
+    StreamProvider.family<Map<String, dynamic>?, String>((ref, userId) async* {
   final stream = Cloud.credentialsCollection.doc(userId).snapshots();
   await for (final doc in stream) {
     final data = doc.data();
     if (doc.exists && data != null) {
-      final userDto = AuthUserDTO.fromJson(data);
-      yield userDto.toDomain();
+      // final userDto = AuthUserDTO.fromJson(data);
+      yield data;
     } else {
       yield null;
     }
   }
 });
 
-final authStateProvider = Provider<AuthState>((ref) {
+final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
   final userAsync = ref.watch(_authStateChangesProvider);
-  return userAsync.when(
-      data: (user) {
-        if (user != null) {
-          if (!user.emailVerified) {
-            return EmailNotVerified(user);
-          } else {
-            final AuthUserAsync = ref.watch(_userProvider(user.uid));
-            return AuthUserAsync.when(data: (data){
-              if (data != null) {
-                return AuthState.authenticated(AuthUserAsync.asData!.value!);
-              }else{
-                return const Unautenticated();
-              }
-            }, error: (err,stack)=>AuthError(err,stack), loading: ()=>const AuthLoading());
-          }
+  yield* userAsync.when(
+    data: (user) async* {
+      if (user != null) {
+        if (!user.emailVerified) {
+          yield EmailNotVerified(user);
         } else {
-          return const Unautenticated();
+          final userFromFirestore = ref.watch(_userProvider(user.uid));
+          yield* userFromFirestore.when(
+            data: (data) async* {
+              if (data != null) {
+                final idToken = await user.getIdTokenResult();
+                final map = <String, dynamic>{};
+                map.addAll(data);
+                map['role'] = idToken.claims?['role'];
+                final dto = AuthUserDTO.fromJson(map);
+                yield AuthState.authenticated(dto.toDomain());
+              } else {
+                yield Unautenticated();
+              }
+            },
+            error: (err, stack) async* {
+              yield AuthError(err, stack);
+            },
+            loading: () async* {
+              yield const AuthLoading();
+            },
+          );
         }
-      },
-      error: (err, stack) => AuthError(err, stack),
-      loading: () => const AuthLoading());
+      } else {
+        yield const Unautenticated();
+      }
+    },
+    error: (err, stack) async* {
+      yield AuthError(err, stack);
+    },
+    loading: () async* {
+      yield const AuthLoading();
+    },
+  );
+});
+
+final authStateProvider = Provider<AuthState>((ref) {
+  return ref.watch(authStateStreamProvider).when(
+        data: (state) => state,
+        error: (err, stack) => AuthState.error(err, stack),
+        loading: () => const AuthState.loading(),
+      );
 });
 
 final _authStateChangesProvider = StreamProvider<User?>((ref) {
@@ -67,6 +93,57 @@ final userIdProvider = Provider<String?>((ref) {
   }
   return null;
 });
+
+/*
+final authStateProvider =
+    StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
+  final userAsync = ref.watch(_authStateChangesProvider);
+  return AuthStateNotifier(const AuthState.loading(), userAsync.asData?.value);
+});
+
+class AuthStateNotifier extends StateNotifier<AuthState> {
+  final AuthState initialState;
+  final User? user;
+
+  AuthStateNotifier(this.initialState, this.user) : super(initialState) {
+    _init();
+  }
+
+  _init() async{
+    if (user != null) {
+      if (!user!.emailVerified) {
+        return EmailNotVerified(user!);
+      } else {
+        final idToken = await user!.getIdTokenResult();
+        final userFromFirestore = ref.watch(_userProvider(user.uid));
+        return userFromFirestore.when(
+            data: (data) {
+              if (data != null) {
+                final map = <String,dynamic>{};
+                map.addAll(data);
+                map['role'] =
+                final dto = AuthUserDTO.fromJson(map);
+                return AuthState.authenticated(dto.toDomain());
+              } else {
+                return const Unautenticated();
+              }
+            },
+            error: (err, stack) => AuthError(err, stack),
+            loading: () => const AuthLoading());
+      }
+    } else {
+      return const Unautenticated();
+    }
+
+    if(user!= null){
+      if(!user!.emailVerified){
+        state = Email
+      }
+    }else{
+      state = const AuthState.loading();
+    }
+  }
+}*/
 
 /*class AuthChangeNotifier extends ChangeNotifier {
   bool _isLogged = false;

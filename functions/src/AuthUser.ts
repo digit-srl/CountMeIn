@@ -18,14 +18,16 @@ export class AuthUser {
   email: string;
   activityIds: string[];
   emailVerified: boolean;
+  role: string;
 
   constructor(
-      uid: string,
-      name: string,
-      surname: string,
-      email: string,
-      activityIds: string[],
-      emailVerified: boolean
+    uid: string,
+    name: string,
+    surname: string,
+    email: string,
+    activityIds: string[],
+    emailVerified: boolean,
+    role: string
   ) {
     this.uid = uid;
     this.name = name;
@@ -33,6 +35,7 @@ export class AuthUser {
     this.email = email;
     this.activityIds = activityIds;
     this.emailVerified = emailVerified;
+    this.role = role;
   }
 
   toJson() {
@@ -43,6 +46,7 @@ export class AuthUser {
       email: this.email,
       activityIds: this.activityIds,
       emailVerified: this.emailVerified,
+      role: this.role,
     };
   }
 }

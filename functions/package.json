@@ -15,6 +15,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "body-parser": "^1.20.0",
     "canvas": "^2.9.3",
     "dotenv": "^16.0.1",
     "firebase-admin": "^10.0.2",
