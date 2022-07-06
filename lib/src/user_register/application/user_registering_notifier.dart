@@ -26,15 +26,17 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
         if (snap.docs.isNotEmpty) {
           final userOnFirestore = UserCard.fromJson(snap.docs.first.data());
           if (userOnFirestore.email == null) {
+            //TODO gestire errore
             return;
           }
           if (userOnFirestore.emailVerified) {
-            await sendUserCardByEmail();
+            await sendUserCardByEmail(
+                userOnFirestore.id, activity.id, activity.name);
             state = UserRegisteringUserCardSentByEmail(
                 email: userOnFirestore.email!);
           } else {
             await sendVerificationEmail();
-            state = UserRegisteringVerificationEmailSent(
+            state = UserRegisteringVerificationEmailSent(newUser:false,
                 email: userOnFirestore.email!);
           }
           // final u = user.copyWith(
@@ -45,8 +47,8 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
           if (user.email == null) return;
           await Cloud.usersCollection.doc(user.id).set({
             ...user.toJson(),
-            'activityId':activity.id,
-            'activityName':activity.name,
+            'providerId': activity.id,
+            'providerName': activity.name,
           });
           await sendVerificationEmail();
           state = UserRegisteringVerificationEmailSent(
@@ -66,5 +68,10 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
 
   sendVerificationEmail() async {}
 
-  sendUserCardByEmail() async {}
+  Future sendUserCardByEmail(
+      String userId, String providerId, String providerName) async {
+    await Cloud.usersCollection
+        .doc(userId)
+        .update({'providerName': providerName, "providerId": providerId});
+  }
 }

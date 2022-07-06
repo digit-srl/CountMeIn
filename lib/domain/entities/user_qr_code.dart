@@ -59,14 +59,14 @@ class UserQrCode with _$UserQrCode {
       if (params.containsKey('name') &&
           params.containsKey('surname') &&
           params.containsKey('cf') &&
-          params.containsKey('email') &&
+          // params.containsKey('email') &&
           params.containsKey('aId')) {
         return UserQrCode(
           id: userId,
           name: params['name'] as String,
           surname: params['surname'] as String,
           cf: params['cf'] as String,
-          email: params['email'] as String,
+          // email: params['email'] as String,
           activityId: params['aId'] as String,
         );
       } else {

@@ -101,7 +101,7 @@ export const onUserCreated = functions
   .region("europe-west3")
   .firestore.document("users/{docId}")
   .onCreate((snap, context) => {
-    const user = snap.data();
+    const user: FirebaseFirestore.DocumentData = snap.data();
 
     console.log("new user crated " + user.email);
 
@@ -122,6 +122,8 @@ export const onUserVerificationDone = functions
     // e.g. {'name': 'Marie', 'age': 66}
     const user: FirebaseFirestore.DocumentData = change.after.data();
     const secret = user.secret;
+    const providerName = user.providerName;
+    const providerId = user.providerName;
     const emailVerified = user.emailVerified;
 
     // ...or the previous value before this update
@@ -129,10 +131,41 @@ export const onUserVerificationDone = functions
     const previousEmailVerified = previousValue.emailVerified;
 
     if (secret === undefined || secret === null) {
-      if (previousEmailVerified == false && emailVerified === true) {
+      if (
+        previousEmailVerified == false &&
+        emailVerified === true &&
+        providerName !== null &&
+        providerId !== null
+      ) {
         return sendUserCard(user)
           .then(() => {
             console.log("send user card complete");
+            db.collection("users").doc(user.id).update({
+              providerId: null,
+              providerName: null,
+            });
+            return null;
+          })
+          .catch((err: any) => {
+            console.log(err);
+            throw new functions.https.HttpsError("aborted", err);
+          });
+      } else if (
+        previousEmailVerified == true &&
+        emailVerified == true &&
+        providerName !== null &&
+        providerId !== null
+      ) {
+        console.log(
+          "user already registered, this is a new subscriber for other provider"
+        );
+        return sendUserCard(user)
+          .then(() => {
+            console.log("send user card complete");
+            db.collection("users").doc(user.id).update({
+              providerId: null,
+              providerName: null,
+            });
             return null;
           })
           .catch((err: any) => {
@@ -151,7 +184,7 @@ async function sendUserCard(data: FirebaseFirestore.DocumentData) {
   const fullName = name + " " + surname;
   const cf = data.cf;
   const email = data.email;
-  const activityName = data.activityName;
+  const activityName = data.providerName;
   const activityId = data.providerId;
   const url =
     "https://cmi.digit.srl/profile/" +
@@ -164,9 +197,9 @@ async function sendUserCard(data: FirebaseFirestore.DocumentData) {
     "&cf=" +
     cf +
     "&pId=" +
-    activityId +
-    "&email=" +
-    email;
+    activityId;
+  //"&email=" +
+  //email;
 
   const buffer = await draw.drawUserCard(
     activityName,
@@ -407,6 +440,7 @@ export const createNewActivity = functions
     }
   );
 
+//TODO Remove in live
 export const verifyEmail = functions
   .region("europe-west3")
   .https.onRequest(

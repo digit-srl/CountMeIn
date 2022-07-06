@@ -190,9 +190,10 @@ class UserRegisteringDialog extends ConsumerWidget {
         },
         verificationEmailSent: (bool newUser, String email) {
           return EasyRichText(
-            "Abbiamo inviato una email di verifica all'indirizzo $email. "
+            newUser ? "Abbiamo inviato una email di verifica all'indirizzo $email. "
             "Una volta verificata la tua identità riceverai una mail con il tuo tesserino.\n\n"
-            "Non ha ricevuto la nostra email di verifica? Invia di nuovo",
+            "Non ha ricevuto la nostra email di verifica? Invia di nuovo" :
+            "Non hai ancora verificato la tua email $email, controlla la tua casella postale e completa la verifica",
             defaultStyle: Theme.of(context).textTheme.bodyText1,
             patternList: [
               EasyRichTextPattern(
