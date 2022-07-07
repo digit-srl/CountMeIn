@@ -24,9 +24,9 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const AuthGate(),
       ),
       GoRoute(
-        path: '${NewEventFormScreen.routeName}/:activityId',
+        path: '${NewEventFormScreen.routeName}/:providerId',
         builder: (context, state) => NewEventFormScreen(
-          activityId: state.params['activityId']!,
+          providerId: state.params['providerId']!,
         ),
       ),
       GoRoute(

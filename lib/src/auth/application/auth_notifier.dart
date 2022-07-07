@@ -43,14 +43,14 @@ final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
           yield* userFromFirestore.when(
             data: (data) async* {
               if (data != null) {
-                final idToken = await user.getIdTokenResult();
+                /*final idToken = await user.getIdTokenResult();
                 final map = <String, dynamic>{};
                 map.addAll(data);
-                map['role'] = idToken.claims?['role'];
-                final dto = AuthUserDTO.fromJson(map);
+                map['role'] = idToken.claims?['role'];*/
+                final dto = AuthUserDTO.fromJson(data);
                 yield AuthState.authenticated(dto.toDomain());
               } else {
-                yield Unautenticated();
+                yield const Unautenticated();
               }
             },
             error: (err, stack) async* {
@@ -80,6 +80,17 @@ final authStateProvider = Provider<AuthState>((ref) {
         error: (err, stack) => AuthState.error(err, stack),
         loading: () => const AuthState.loading(),
       );
+});
+
+final userRoleProvider = Provider.family<UserRole, String>((ref, providerId) {
+  final state = ref.watch(authStateProvider);
+  if (state is Authenticated) {
+    final role = state.user.providersRole[providerId];
+    if (role != null) {
+      return role;
+    }
+  }
+  return UserRole.unknown;
 });
 
 final _authStateChangesProvider = StreamProvider<User?>((ref) {

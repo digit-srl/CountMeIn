@@ -16,10 +16,9 @@ class AuthUserDTO with _$AuthUserDTO {
     required String name,
     required String surname,
     required String email,
-    required List<String> activityIds,
     required bool emailVerified,
-    @MyDateTimeConverter() required DateTime createdAt,
-    String? role,
+    Map<String, String>? providersRole,
+    @MyDateTimeConverter() required DateTime createdOn,
   }) = _AuthUserDTO;
 
   factory AuthUserDTO.fromJson(Map<String, dynamic> json) =>
@@ -34,8 +33,10 @@ extension AuthUserDTOX on AuthUserDTO {
       surname: surname,
       email: email,
       emailVerified: emailVerified,
-      createdAt: createdAt, activityIds: [],
-      role: enumFromString(role ?? 'unknown', UserRole.values),
+      createdOn: createdOn,
+      providersRole: providersRole?.map((key, value) =>
+              MapEntry(key, enumFromString(value, UserRole.values))) ??
+          <String, UserRole>{},
     );
   }
 }

@@ -5,7 +5,7 @@ import * as QRCode from "qrcode";
 import path = require("path");
 
 // add the code below
-module.exports = { drawUserCard };
+module.exports = { drawUserCard, getQrCode };
 
 export async function drawUserCard(
   eventTitle: string,
@@ -64,5 +64,18 @@ export async function drawUserCard(
       .createPNGStream()
       .pipe(fs.createWriteStream(path.join(__dirname, "image-src-svg.png")));
 */
+  return canvas.toBuffer("image/png");
+}
+
+export async function getQrCode(value: string) {
+  const height = 600;
+  const width = height;
+  const canvas = Canvas.createCanvas(width, height);
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "black";
+  const qrCode = await QRCode.toCanvas(canvas, value || "", { margin: 1 });
+  ctx.drawImage(qrCode, height, width);
   return canvas.toBuffer("image/png");
 }

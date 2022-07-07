@@ -5,14 +5,16 @@ class MyTextField extends StatelessWidget {
   final String? hintText;
   final String? Function(String?)? validator;
   final TextCapitalization? textCapitalization;
+  final TextInputType? keyboardType;
 
-  const MyTextField(
-      {Key? key,
-        this.controller,
-        this.hintText,
-        this.validator,
-        this.textCapitalization})
-      : super(key: key);
+  const MyTextField({
+    Key? key,
+    this.controller,
+    this.hintText,
+    this.validator,
+    this.keyboardType,
+    this.textCapitalization,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class MyTextField extends StatelessWidget {
       controller: controller,
       validator: validator,
       textCapitalization: textCapitalization ?? TextCapitalization.none,
+      keyboardType: keyboardType,
       decoration: InputDecoration(
           hintText: hintText, border: const OutlineInputBorder()),
     );

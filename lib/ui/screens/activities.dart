@@ -1,23 +1,25 @@
+import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
 
 import '../../cloud.dart';
 import '../../constants.dart';
 import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/session.dart';
+import '../../src/auth/application/auth_notifier.dart';
 import '../../utils.dart';
 import '../widgets/add_session_dialog.dart';
 import '../widgets/loading.dart';
 import 'admin.dart';
 import 'event_details.dart';
+import 'new_event_form.dart';
 
 final activitiesStreamProvider =
     StreamProvider.family<List<CMIProvider>, String>((ref, userId) async* {
-
-
-      print('get acttivities for userId: $userId');
+  print('get acttivities for userId: $userId');
   final stream = Cloud.providerCollection
       .where('status', isEqualTo: enumToString(CMIProviderStatus.live))
       .where('managers', arrayContains: userId)
@@ -97,7 +99,7 @@ class ActivitiesScreen extends ConsumerWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (c) => ActivityScreen(
-                          activityId: activity.id,
+                          providerId: activity.id,
                         ),
                       ),
                     );
@@ -117,11 +119,11 @@ class ActivitiesScreen extends ConsumerWidget {
 }
 
 class ActivityScreen extends ConsumerStatefulWidget {
-  final String activityId;
+  final String providerId;
 
   const ActivityScreen({
     Key? key,
-    required this.activityId,
+    required this.providerId,
   }) : super(key: key);
 
   @override
@@ -131,16 +133,21 @@ class ActivityScreen extends ConsumerStatefulWidget {
 class _ActivityScreenState extends ConsumerState<ActivityScreen> {
   @override
   Widget build(BuildContext context) {
-    final eventsState = ref.watch(eventsStreamProvider(widget.activityId));
+    final eventsState = ref.watch(eventsStreamProvider(widget.providerId));
+    final userRole = ref.watch(userRoleProvider(widget.providerId));
+    final isOwner = userRole == UserRole.owner;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Eventi'),
         actions: [
-          if (isMaster)
+          if (isOwner)
             IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () async {
-                  showDialog(
+                  context.push(
+                    '${NewEventFormScreen.routeName}/${widget.providerId}',
+                  );
+                  /* showDialog(
                       context: context,
                       builder: (c) {
                         return Dialog(
@@ -148,13 +155,13 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
                             activityId: widget.activityId,
                           ),
                         );
-                      });
+                      });*/
                 }),
           IconButton(
               icon: const Icon(Icons.copy),
               onPressed: () {
                 Clipboard.setData(ClipboardData(
-                    text: '$baseUrl/activity/${widget.activityId}'));
+                    text: '$baseUrl/provider/${widget.providerId}'));
                 showToast('Url evento copiato negli appunti',
                     position: ToastPosition.bottom);
               }),
@@ -176,7 +183,7 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
                   title: Text(event.name),
                   subtitle: Text(event.id),
                   leading: Text('${index + 1}'),
-                  trailing: isMaster
+                  trailing: isOwner
                       ? IconButton(
                           icon: const Icon(Icons.delete),
                           color: Colors.red,
@@ -188,7 +195,7 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (c) => EventDetailsScreen(
-                          activityId: widget.activityId,
+                          activityId: widget.providerId,
                           eventId: event.id,
                         ),
                       ),

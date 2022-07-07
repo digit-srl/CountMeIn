@@ -105,7 +105,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                             if (userQrCode.activityId == widget.activity.id ||
                                 (widget.activity.acceptPassepartout &&
                                     userQrCode.activityId ==
-                                        'wom-count-me-in')) {
+                                        'countmein')) {
                               if (!list.contains(userQrCode.id)) {
                                 processing = true;
                                 if (soundId != null) {

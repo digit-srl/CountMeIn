@@ -16,9 +16,10 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
 
   Future<void> register(CMIProvider activity, UserCard user) async {
     try {
-      state = const UserRegisteringLoading();
+
       //TODO if email is null
       if (activity.releaseWom) {
+        state = const UserRegisteringLoading();
         final snap = await Cloud.usersCollection
             .where('email', isEqualTo: user.email)
             .limit(1)

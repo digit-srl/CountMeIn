@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/ui/screens/activities.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/event_ids.dart';
 import '../../domain/entities/session.dart';
 import '../../domain/entities/user_card.dart';
+import '../../src/auth/domain/entities/user.dart';
 import '../../utils.dart';
 import '../widgets/add_session_dialog.dart';
 import '../widgets/loading.dart';
@@ -66,7 +68,8 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
         ref.watch(eventProvider([widget.activityId, widget.eventId]));
     final activityState= ref.watch(activityStreamProvider(widget.activityId));
     final usersState = ref.watch(usersStreamProvider(ids));
-
+    final role = ref.watch(userRoleProvider(widget.activityId));
+    final isOwner = role == UserRole.owner;
     final hasData = usersState is AsyncData;
     return Scaffold(
       appBar: AppBar(
@@ -137,7 +140,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                       title: Text(user.fullName),
                       subtitle: Text(user.cf),
                       leading: Text('${index + 1}'),
-                      trailing: isMaster
+                      trailing: isOwner
                           ? IconButton(
                               icon: const Icon(Icons.delete),
                               color: Colors.red,

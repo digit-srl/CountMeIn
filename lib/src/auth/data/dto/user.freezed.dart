@@ -24,11 +24,10 @@ mixin _$AuthUserDTO {
   String get name => throw _privateConstructorUsedError;
   String get surname => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
-  List<String> get activityIds => throw _privateConstructorUsedError;
   bool get emailVerified => throw _privateConstructorUsedError;
+  Map<String, String>? get providersRole => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  String? get role => throw _privateConstructorUsedError;
+  DateTime get createdOn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,10 +45,9 @@ abstract class $AuthUserDTOCopyWith<$Res> {
       String name,
       String surname,
       String email,
-      List<String> activityIds,
       bool emailVerified,
-      @MyDateTimeConverter() DateTime createdAt,
-      String? role});
+      Map<String, String>? providersRole,
+      @MyDateTimeConverter() DateTime createdOn});
 }
 
 /// @nodoc
@@ -66,10 +64,9 @@ class _$AuthUserDTOCopyWithImpl<$Res> implements $AuthUserDTOCopyWith<$Res> {
     Object? name = freezed,
     Object? surname = freezed,
     Object? email = freezed,
-    Object? activityIds = freezed,
     Object? emailVerified = freezed,
-    Object? createdAt = freezed,
-    Object? role = freezed,
+    Object? providersRole = freezed,
+    Object? createdOn = freezed,
   }) {
     return _then(_value.copyWith(
       uid: uid == freezed
@@ -88,22 +85,18 @@ class _$AuthUserDTOCopyWithImpl<$Res> implements $AuthUserDTOCopyWith<$Res> {
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      activityIds: activityIds == freezed
-          ? _value.activityIds
-          : activityIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       emailVerified: emailVerified == freezed
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool,
-      createdAt: createdAt == freezed
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
+      providersRole: providersRole == freezed
+          ? _value.providersRole
+          : providersRole // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      createdOn: createdOn == freezed
+          ? _value.createdOn
+          : createdOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      role: role == freezed
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -120,10 +113,9 @@ abstract class _$$_AuthUserDTOCopyWith<$Res>
       String name,
       String surname,
       String email,
-      List<String> activityIds,
       bool emailVerified,
-      @MyDateTimeConverter() DateTime createdAt,
-      String? role});
+      Map<String, String>? providersRole,
+      @MyDateTimeConverter() DateTime createdOn});
 }
 
 /// @nodoc
@@ -142,10 +134,9 @@ class __$$_AuthUserDTOCopyWithImpl<$Res> extends _$AuthUserDTOCopyWithImpl<$Res>
     Object? name = freezed,
     Object? surname = freezed,
     Object? email = freezed,
-    Object? activityIds = freezed,
     Object? emailVerified = freezed,
-    Object? createdAt = freezed,
-    Object? role = freezed,
+    Object? providersRole = freezed,
+    Object? createdOn = freezed,
   }) {
     return _then(_$_AuthUserDTO(
       uid: uid == freezed
@@ -164,22 +155,18 @@ class __$$_AuthUserDTOCopyWithImpl<$Res> extends _$AuthUserDTOCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      activityIds: activityIds == freezed
-          ? _value._activityIds
-          : activityIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       emailVerified: emailVerified == freezed
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool,
-      createdAt: createdAt == freezed
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
+      providersRole: providersRole == freezed
+          ? _value._providersRole
+          : providersRole // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      createdOn: createdOn == freezed
+          ? _value.createdOn
+          : createdOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      role: role == freezed
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -192,11 +179,10 @@ class _$_AuthUserDTO implements _AuthUserDTO {
       required this.name,
       required this.surname,
       required this.email,
-      required final List<String> activityIds,
       required this.emailVerified,
-      @MyDateTimeConverter() required this.createdAt,
-      this.role})
-      : _activityIds = activityIds;
+      final Map<String, String>? providersRole,
+      @MyDateTimeConverter() required this.createdOn})
+      : _providersRole = providersRole;
 
   factory _$_AuthUserDTO.fromJson(Map<String, dynamic> json) =>
       _$$_AuthUserDTOFromJson(json);
@@ -209,24 +195,24 @@ class _$_AuthUserDTO implements _AuthUserDTO {
   final String surname;
   @override
   final String email;
-  final List<String> _activityIds;
   @override
-  List<String> get activityIds {
+  final bool emailVerified;
+  final Map<String, String>? _providersRole;
+  @override
+  Map<String, String>? get providersRole {
+    final value = _providersRole;
+    if (value == null) return null;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_activityIds);
+    return EqualUnmodifiableMapView(value);
   }
 
   @override
-  final bool emailVerified;
-  @override
   @MyDateTimeConverter()
-  final DateTime createdAt;
-  @override
-  final String? role;
+  final DateTime createdOn;
 
   @override
   String toString() {
-    return 'AuthUserDTO(uid: $uid, name: $name, surname: $surname, email: $email, activityIds: $activityIds, emailVerified: $emailVerified, createdAt: $createdAt, role: $role)';
+    return 'AuthUserDTO(uid: $uid, name: $name, surname: $surname, email: $email, emailVerified: $emailVerified, providersRole: $providersRole, createdOn: $createdOn)';
   }
 
   @override
@@ -239,11 +225,10 @@ class _$_AuthUserDTO implements _AuthUserDTO {
             const DeepCollectionEquality().equals(other.surname, surname) &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality()
-                .equals(other._activityIds, _activityIds) &&
-            const DeepCollectionEquality()
                 .equals(other.emailVerified, emailVerified) &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality().equals(other.role, role));
+            const DeepCollectionEquality()
+                .equals(other._providersRole, _providersRole) &&
+            const DeepCollectionEquality().equals(other.createdOn, createdOn));
   }
 
   @JsonKey(ignore: true)
@@ -254,10 +239,9 @@ class _$_AuthUserDTO implements _AuthUserDTO {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(surname),
       const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(_activityIds),
       const DeepCollectionEquality().hash(emailVerified),
-      const DeepCollectionEquality().hash(createdAt),
-      const DeepCollectionEquality().hash(role));
+      const DeepCollectionEquality().hash(_providersRole),
+      const DeepCollectionEquality().hash(createdOn));
 
   @JsonKey(ignore: true)
   @override
@@ -272,14 +256,14 @@ class _$_AuthUserDTO implements _AuthUserDTO {
 
 abstract class _AuthUserDTO implements AuthUserDTO {
   const factory _AuthUserDTO(
-      {required final String uid,
-      required final String name,
-      required final String surname,
-      required final String email,
-      required final List<String> activityIds,
-      required final bool emailVerified,
-      @MyDateTimeConverter() required final DateTime createdAt,
-      final String? role}) = _$_AuthUserDTO;
+          {required final String uid,
+          required final String name,
+          required final String surname,
+          required final String email,
+          required final bool emailVerified,
+          final Map<String, String>? providersRole,
+          @MyDateTimeConverter() required final DateTime createdOn}) =
+      _$_AuthUserDTO;
 
   factory _AuthUserDTO.fromJson(Map<String, dynamic> json) =
       _$_AuthUserDTO.fromJson;
@@ -293,14 +277,12 @@ abstract class _AuthUserDTO implements AuthUserDTO {
   @override
   String get email => throw _privateConstructorUsedError;
   @override
-  List<String> get activityIds => throw _privateConstructorUsedError;
-  @override
   bool get emailVerified => throw _privateConstructorUsedError;
   @override
-  @MyDateTimeConverter()
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  Map<String, String>? get providersRole => throw _privateConstructorUsedError;
   @override
-  String? get role => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
+  DateTime get createdOn => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_AuthUserDTOCopyWith<_$_AuthUserDTO> get copyWith =>

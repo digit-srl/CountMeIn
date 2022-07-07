@@ -12,13 +12,12 @@ _$_AuthUserDTO _$$_AuthUserDTOFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       surname: json['surname'] as String,
       email: json['email'] as String,
-      activityIds: (json['activityIds'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
       emailVerified: json['emailVerified'] as bool,
-      createdAt:
-          const MyDateTimeConverter().fromJson(json['createdAt'] as Timestamp),
-      role: json['role'] as String?,
+      providersRole: (json['providersRole'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      createdOn:
+          const MyDateTimeConverter().fromJson(json['createdOn'] as Timestamp),
     );
 
 Map<String, dynamic> _$$_AuthUserDTOToJson(_$_AuthUserDTO instance) =>
@@ -27,8 +26,7 @@ Map<String, dynamic> _$$_AuthUserDTOToJson(_$_AuthUserDTO instance) =>
       'name': instance.name,
       'surname': instance.surname,
       'email': instance.email,
-      'activityIds': instance.activityIds,
       'emailVerified': instance.emailVerified,
-      'createdAt': const MyDateTimeConverter().toJson(instance.createdAt),
-      'role': instance.role,
+      'providersRole': instance.providersRole,
+      'createdOn': const MyDateTimeConverter().toJson(instance.createdOn),
     };

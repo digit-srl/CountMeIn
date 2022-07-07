@@ -134,13 +134,14 @@ class UserFormScreen extends ConsumerWidget {
                         final cf = cfController.text.trim().toUpperCase();
 
                         var user = UserCard(
-                            id: const Uuid().v4(),
-                            name: name,
-                            surname: surname,
-                            cf: cf,
-                            email: email,
-                            addedOn: DateTime.now(),
-                            secret: const Uuid().v4().substring(0, 8));
+                          id: const Uuid().v4(),
+                          name: name,
+                          surname: surname,
+                          cf: cf,
+                          email: email,
+                          addedOn: DateTime.now(),
+                          secret: const Uuid().v4().substring(0, 8),
+                        );
 
                         ref
                             .read(userRegisteringProvider.notifier)
@@ -190,10 +191,11 @@ class UserRegisteringDialog extends ConsumerWidget {
         },
         verificationEmailSent: (bool newUser, String email) {
           return EasyRichText(
-            newUser ? "Abbiamo inviato una email di verifica all'indirizzo $email. "
-            "Una volta verificata la tua identità riceverai una mail con il tuo tesserino.\n\n"
-            "Non ha ricevuto la nostra email di verifica? Invia di nuovo" :
-            "Non hai ancora verificato la tua email $email, controlla la tua casella postale e completa la verifica",
+            newUser
+                ? "Abbiamo inviato una email di verifica all'indirizzo $email. "
+                    "Una volta verificata la tua identità riceverai una mail con il tuo tesserino.\n\n"
+                    "Non ha ricevuto la nostra email di verifica? Invia di nuovo"
+                : "Non hai ancora verificato la tua email $email, controlla la tua casella postale e completa la verifica",
             defaultStyle: Theme.of(context).textTheme.bodyText1,
             patternList: [
               EasyRichTextPattern(

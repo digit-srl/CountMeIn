@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-
+const draw = require("./draw");
 import formData = require("form-data");
 import Mailgun from "mailgun.js";
 const mailgun = new Mailgun(formData);
@@ -21,15 +21,17 @@ export function sendEmail(
   subject: string,
   template: string,
   json: string,
-  attachment: any
+  attachment: any,
+  inline: any
 ) {
   const data = {
-    from: "Count Me In NoReply <no-reply@digit.srl>",
+    from: "CountMeIn <no-reply@digit.srl>",
     to: to,
     subject: subject,
     template: template,
     "h:X-Mailgun-Variables": json,
     attachment: attachment,
+    inline: inline,
     // "recipient-variables": recipient,
   };
 
@@ -64,7 +66,14 @@ export function sendVerificationEmail(
     verificationUrl: url,
   });
 
-  return sendEmail(emails, "Verifica email", "email_verification", json, []);
+  return sendEmail(
+    emails,
+    "Verifica email",
+    "email_verification",
+    json,
+    [],
+    null
+  );
 }
 
 // "fullName"
@@ -96,7 +105,8 @@ export function sendUserCardEmail(
     "Il tuo tesserino",
     "card_template",
     json,
-    attachment
+    attachment,
+    null
   )
     .then(() => {
       return true;
@@ -124,24 +134,53 @@ export function sendResetPasswordEmail(
     url: url,
   });
 
-  return sendEmail(emails, "Reset password", "reset_password", json, []);
+  return sendEmail(emails, "Reset password", "reset_password", json, [], null);
 }
 
 // "fullName": "test_fullName",
 // "verificationUrl": "test_verificationUrl"
-export function sendWomEmail(
+export async function sendWomEmail(
   link: string,
   womCount: number,
   email: string,
-  pin: string
+  pin: string,
+  userName: string,
+  providerName: string,
+  eventName: string
 ) {
   const emails = [email];
+
+  if (link === undefined || link === null) {
+    throw Error("link is " + link);
+  }
+
+  if (pin === undefined || pin === null) {
+    throw Error("pin is " + pin);
+  }
+
+  const filename = "wom.png";
+  const buffer = await draw.getQrCode(link);
+  const attachment = {
+    data: buffer,
+    filename: filename,
+  };
 
   const json = JSON.stringify({
     link: link,
     womCount: womCount,
     pin: pin,
+    provider: providerName,
+    event: eventName,
+    user: userName,
   });
 
-  return sendEmail(emails, "Ecco i tuoi wom", "wom_template", json, []);
+  console.log(json);
+  return sendEmail(
+    emails,
+    "Ecco i tuoi wom",
+    "wom_template",
+    json,
+    null,
+    attachment
+  );
 }

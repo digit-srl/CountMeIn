@@ -1,17 +1,12 @@
-import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/ui/screens/user_register_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:countmein/cloud.dart';
 import 'package:countmein/ui/screens/user_qr_code.dart';
 import 'package:countmein/ui/widgets/loading.dart';
 
 import '../../application/activity_notifier.dart';
-import '../../domain/entities/cmi_provider.dart';
-import '../../domain/entities/session.dart';
 import '../../domain/entities/user_card.dart';
-import 'home.dart';
 
 
 
@@ -30,6 +25,11 @@ class UserEventScreen extends ConsumerWidget {
     final eventState = ref.watch(activityStreamProvider(activityId));
     return eventState.when(
         data: (data) {
+          if(data.releaseWom){
+            return UserFormScreen(
+              activity: data,
+            );
+          }
           return ValueListenableBuilder<Box<dynamic>>(
               valueListenable: Hive.box('user').listenable(),
               builder: (context, box, child) {

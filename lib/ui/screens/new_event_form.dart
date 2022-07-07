@@ -3,18 +3,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:countmein/cloud.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../domain/entities/session.dart';
 import '../validators.dart';
 import '../widgets/my_text_field.dart';
-
-final prefixValidator = MultiValidator([
-  RequiredValidator(errorText: 'Questo campo è obbligatorio'),
-  MinLengthValidator(3, errorText: 'Devi inserire 3 caratteri'),
-  MaxLengthValidator(3, errorText: 'Devi inserire 3 caratteri'),
-  // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
-]);
 
 final womValidator = MultiValidator([
   RequiredValidator(errorText: 'Questo campo è obbligatorio'),
@@ -25,13 +19,13 @@ final womValidator = MultiValidator([
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
 ]);
 
-class NewEventFormScreen extends ConsumerWidget {
+class NewEventFormScreen extends HookConsumerWidget {
   static const String routeName = "/newEventForm";
-  final String activityId;
+  final String providerId;
 
   NewEventFormScreen({
     Key? key,
-    required this.activityId,
+    required this.providerId,
   }) : super(key: key);
   final _formKey = GlobalKey<FormState>();
 
@@ -47,7 +41,7 @@ class NewEventFormScreen extends ConsumerWidget {
           key: _formKey,
           child: ListView(
             children: [
-              Text('Crea un nuovo evento'),
+              Text('Crea un nuovo evento',style: Theme.of(context).textTheme.headline4,),
               const SizedBox(height: 16),
               MyTextField(
                 controller: nameController,
@@ -57,8 +51,9 @@ class NewEventFormScreen extends ConsumerWidget {
               const SizedBox(height: 16),
               MyTextField(
                 controller: womController,
+                keyboardType: TextInputType.number,
                 hintText: 'Quanti wom rilasciare?',
-                validator: prefixValidator,
+                validator: womValidator,
               ),
               const SizedBox(height: 16),
               ElevatedButton(
@@ -72,7 +67,7 @@ class NewEventFormScreen extends ConsumerWidget {
                         status: EventStatus.live,
                         womCount: int.tryParse(womController.text.trim()),
                         );
-                    Cloud.eventDoc(activityId, eventId).set(s.toJson());
+                    Cloud.eventDoc(providerId, eventId).set(s.toJson());
                     Navigator.of(context).pop();
                   }
                 },

@@ -114,7 +114,7 @@ class _UserCardDialogState extends State<UserCardDialog> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   QrImage(
-                                    data: widget.user.qrCodeUrl(widget.activity.id),
+                                    data: widget.user.qrCode(widget.activity.id),
                                     version: QrVersions.auto,
                                   ),
                                   const SizedBox(width: 16),

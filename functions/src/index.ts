@@ -8,7 +8,8 @@ const draw = require("./draw");
 import * as dotenv from "dotenv";
 dotenv.config();
 const db = admin.firestore();
-
+//const cors = require("cors")({ origin: true });
+const axios = require("axios").default;
 /*
 export const drawCard = functions.region('europe-west3').https.onRequest((request, response) => {
   const a = new AuthUser("", "", "", "", [], true);
@@ -56,7 +57,7 @@ export const onActivityRequested = functions
   .region("europe-west3")
   .firestore.document("providerRequests/{docId}")
   .onCreate((snap, context) => {
-    const activity = snap.data();
+    const activity: FirebaseFirestore.DocumentData = snap.data();
 
     console.log("new provider requested" + activity.name);
     console.log("new provider requested");
@@ -65,36 +66,99 @@ export const onActivityRequested = functions
 export const onUserCheckIn = functions
   .region("europe-west3")
   .firestore.document("providers/{providerId}/events/{eventId}/users/{userId}")
-  .onUpdate(async (snap, context) => {
-    const user = snap.after.data();
-    console.log("user check in name: " + user.name + " " + user.id);
+  .onCreate(async (snap, context) => {
+    try {
+      const eventId = context.params.eventId;
+      const providerId = context.params.providerId;
+      const userId = context.params.userId;
 
-    if (user.id === undefined || user.id === null) {
-      console.log("user id undefined ");
-      return;
+      const s = snap;
+      const user: FirebaseFirestore.DocumentData = s.data();
+      console.log("user check in name: " + user.name + " " + user.id);
+
+      if (user.id === undefined || user.id === null) {
+        console.log("user id undefined ");
+        return null;
+      }
+
+      const providerDoc: FirebaseFirestore.DocumentData = await db
+        .collection("providers")
+        .doc(providerId)
+        .get();
+
+      if (!providerDoc.data().releaseWom) {
+        console.log("this provider not release wom to user : " + userId);
+        return;
+      }
+      const id = user.id;
+      const userDoc: FirebaseFirestore.DocumentData = await db
+        .collection("users")
+        .doc(id)
+        .get();
+      const userData = userDoc.data();
+      const email = userData.email;
+      //console.log(userData);
+      if (email === undefined || email === null) {
+        console.log("STOP user not exist email undefined ");
+        return null;
+      }
+
+      console.log("user exist email " + userData.email);
+      const eventDoc: FirebaseFirestore.DocumentData = await db
+        .collection("providers")
+        .doc(providerId)
+        .collection("events")
+        .doc(eventId)
+        .get();
+
+      const eventName = eventDoc.data().name;
+      console.log(eventName);
+      const womCount = eventDoc.data().womCount;
+      if (womCount === undefined || womCount === null || womCount == 0) {
+        console.log("STOP wom count is " + womCount);
+        return;
+      }
+      const apiKey = providerDoc.data().apiKey;
+      const aim = providerDoc.data().aim;
+      const data = {
+        apiKey: apiKey,
+        womCount: womCount,
+        lat: 0.0,
+        long: 0.0,
+        aim: aim,
+      };
+      console.log(data);
+
+      const headers = {
+        "X-SuperSecret-Key": process.env.SECRET_HEADER_KEY,
+      };
+
+      const response = await axios.post(
+        process.env.WOM_SERVICE_DOMAIN + "/vouchers",
+        data,
+        {
+          headers: headers,
+        }
+      );
+      console.log(response.status);
+      const link = response.data.womLink;
+      const pin = response.data.womPassword;
+
+      const providerName = providerDoc.data().name;
+      return Email.sendWomEmail(
+        link,
+        womCount,
+        email,
+        pin,
+        user.name,
+        providerName,
+        eventName
+      );
+    } catch (ex) {
+      console.log("onUpdateCheckIn failed");
+      console.log(ex);
+      return null;
     }
-
-    const id = user.id;
-    const userDoc: FirebaseFirestore.DocumentData = await db
-      .collection("users")
-      .doc(id)
-      .get();
-    const userData = userDoc.data();
-    const email = userData.email;
-    //console.log(userData);
-    if (email === undefined || email === null) {
-      console.log("user not exist email undefined ");
-      return;
-    }
-
-    console.log("user exist email " + userData.email);
-
-    //API WOM
-
-    const link = "link";
-    const womCount = 30;
-    const pin = "1234";
-    return Email.sendWomEmail(link, womCount, email, pin);
   });
 
 export const onUserCreated = functions
@@ -334,7 +398,7 @@ export const crateNewUser = functions
       const email = data.email;
       const name = data.name;
       const surname = data.surname;
-      const providerId = data.providerId;
+      //const providerId = data.providerId;
       const role = data.role;
       const fullName = name + " " + surname;
 
@@ -346,7 +410,7 @@ export const crateNewUser = functions
       try {
         const user = await admin.auth().createUser({
           email: email,
-          emailVerified: false,
+          emailVerified: true,
           password: "123456",
           displayName: fullName,
         });
@@ -357,16 +421,15 @@ export const crateNewUser = functions
           name,
           surname,
           email,
-          [providerId],
           user.emailVerified,
           role
         );
 
-        await admin.auth().setCustomUserClaims(user.uid, {
-          role: role,
-        });
+        //await admin.auth().setCustomUserClaims(user.uid, {
+        //  role: role,
+        //});
         await db.doc("credentials" + "/" + user.uid).set(authUser.toJson());
-        //await generateAndSendResetPasswordEmail(fullName, email);
+        await generateAndSendResetPasswordEmail(fullName, email);
         response.status(200).end();
       } catch (error) {
         console.log(error);
@@ -472,3 +535,18 @@ export const verifyEmail = functions
       }
     }
   );
+
+/*
+export const moveUrbino = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      const activity = await db
+        .collection("providers")
+        .doc("wom-count-me-in")
+        .get();
+
+      await db.collection("providers").doc("countmein").set(activity.data());
+    }
+  );
+*/

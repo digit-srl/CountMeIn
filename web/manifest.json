@@ -2,7 +2,7 @@
     "name": "Count Me In",
     "short_name": "Count Me In",
     "start_url": ".",
-    "display": "standalone",
+    "display": "browser",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
     "description": "A new project.",

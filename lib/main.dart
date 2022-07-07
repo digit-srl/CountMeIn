@@ -31,8 +31,8 @@ void main() async {
   );
 
   if (kDebugMode) {
-    await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-    FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8082);
+    // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+    // FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8082);
   }
 
   if (kIsWeb) {

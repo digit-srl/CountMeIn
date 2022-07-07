@@ -19,7 +19,7 @@ class AuthGate extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    if(!kIsWeb){
+    if(kIsWeb){
       return HomeWebScreen();
     }
 

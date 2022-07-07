@@ -16,7 +16,6 @@ export class AuthUser {
   name: string;
   surname: string;
   email: string;
-  activityIds: string[];
   emailVerified: boolean;
   role: string;
 
@@ -25,7 +24,6 @@ export class AuthUser {
     name: string,
     surname: string,
     email: string,
-    activityIds: string[],
     emailVerified: boolean,
     role: string
   ) {
@@ -33,7 +31,6 @@ export class AuthUser {
     this.name = name;
     this.surname = surname;
     this.email = email;
-    this.activityIds = activityIds;
     this.emailVerified = emailVerified;
     this.role = role;
   }
@@ -44,7 +41,6 @@ export class AuthUser {
       surname: this.surname,
       name: this.name,
       email: this.email,
-      activityIds: this.activityIds,
       emailVerified: this.emailVerified,
       role: this.role,
     };
