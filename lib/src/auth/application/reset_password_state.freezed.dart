@@ -19,6 +19,7 @@ mixin _$ResetPasswordState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() data,
+    required TResult Function() complete,
     required TResult Function(ResetPasswordException exception)
         firebaseException,
     required TResult Function() weakPassword,
@@ -29,6 +30,7 @@ mixin _$ResetPasswordState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? data,
+    TResult Function()? complete,
     TResult Function(ResetPasswordException exception)? firebaseException,
     TResult Function()? weakPassword,
     TResult Function()? loading,
@@ -38,6 +40,7 @@ mixin _$ResetPasswordState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? data,
+    TResult Function()? complete,
     TResult Function(ResetPasswordException exception)? firebaseException,
     TResult Function()? weakPassword,
     TResult Function()? loading,
@@ -48,6 +51,7 @@ mixin _$ResetPasswordState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ResetPasswordData value) data,
+    required TResult Function(ResetPasswordComplete value) complete,
     required TResult Function(ResetPasswordFirebaseException value)
         firebaseException,
     required TResult Function(ResetPasswordWeakPassword value) weakPassword,
@@ -58,6 +62,7 @@ mixin _$ResetPasswordState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
     TResult Function(ResetPasswordFirebaseException value)? firebaseException,
     TResult Function(ResetPasswordWeakPassword value)? weakPassword,
     TResult Function(ResetPasswordLoading value)? loading,
@@ -67,6 +72,7 @@ mixin _$ResetPasswordState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
     TResult Function(ResetPasswordFirebaseException value)? firebaseException,
     TResult Function(ResetPasswordWeakPassword value)? weakPassword,
     TResult Function(ResetPasswordLoading value)? loading,
@@ -135,6 +141,7 @@ class _$ResetPasswordData implements ResetPasswordData {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() data,
+    required TResult Function() complete,
     required TResult Function(ResetPasswordException exception)
         firebaseException,
     required TResult Function() weakPassword,
@@ -148,6 +155,7 @@ class _$ResetPasswordData implements ResetPasswordData {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? data,
+    TResult Function()? complete,
     TResult Function(ResetPasswordException exception)? firebaseException,
     TResult Function()? weakPassword,
     TResult Function()? loading,
@@ -160,6 +168,7 @@ class _$ResetPasswordData implements ResetPasswordData {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? data,
+    TResult Function()? complete,
     TResult Function(ResetPasswordException exception)? firebaseException,
     TResult Function()? weakPassword,
     TResult Function()? loading,
@@ -176,6 +185,7 @@ class _$ResetPasswordData implements ResetPasswordData {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ResetPasswordData value) data,
+    required TResult Function(ResetPasswordComplete value) complete,
     required TResult Function(ResetPasswordFirebaseException value)
         firebaseException,
     required TResult Function(ResetPasswordWeakPassword value) weakPassword,
@@ -189,6 +199,7 @@ class _$ResetPasswordData implements ResetPasswordData {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
     TResult Function(ResetPasswordFirebaseException value)? firebaseException,
     TResult Function(ResetPasswordWeakPassword value)? weakPassword,
     TResult Function(ResetPasswordLoading value)? loading,
@@ -201,6 +212,7 @@ class _$ResetPasswordData implements ResetPasswordData {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
     TResult Function(ResetPasswordFirebaseException value)? firebaseException,
     TResult Function(ResetPasswordWeakPassword value)? weakPassword,
     TResult Function(ResetPasswordLoading value)? loading,
@@ -216,6 +228,137 @@ class _$ResetPasswordData implements ResetPasswordData {
 
 abstract class ResetPasswordData implements ResetPasswordState {
   const factory ResetPasswordData() = _$ResetPasswordData;
+}
+
+/// @nodoc
+abstract class _$$ResetPasswordCompleteCopyWith<$Res> {
+  factory _$$ResetPasswordCompleteCopyWith(_$ResetPasswordComplete value,
+          $Res Function(_$ResetPasswordComplete) then) =
+      __$$ResetPasswordCompleteCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ResetPasswordCompleteCopyWithImpl<$Res>
+    extends _$ResetPasswordStateCopyWithImpl<$Res>
+    implements _$$ResetPasswordCompleteCopyWith<$Res> {
+  __$$ResetPasswordCompleteCopyWithImpl(_$ResetPasswordComplete _value,
+      $Res Function(_$ResetPasswordComplete) _then)
+      : super(_value, (v) => _then(v as _$ResetPasswordComplete));
+
+  @override
+  _$ResetPasswordComplete get _value => super._value as _$ResetPasswordComplete;
+}
+
+/// @nodoc
+
+class _$ResetPasswordComplete implements ResetPasswordComplete {
+  const _$ResetPasswordComplete();
+
+  @override
+  String toString() {
+    return 'ResetPasswordState.complete()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ResetPasswordComplete);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() data,
+    required TResult Function() complete,
+    required TResult Function(ResetPasswordException exception)
+        firebaseException,
+    required TResult Function() weakPassword,
+    required TResult Function() loading,
+    required TResult Function(Object error, StackTrace st) error,
+  }) {
+    return complete();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? data,
+    TResult Function()? complete,
+    TResult Function(ResetPasswordException exception)? firebaseException,
+    TResult Function()? weakPassword,
+    TResult Function()? loading,
+    TResult Function(Object error, StackTrace st)? error,
+  }) {
+    return complete?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? data,
+    TResult Function()? complete,
+    TResult Function(ResetPasswordException exception)? firebaseException,
+    TResult Function()? weakPassword,
+    TResult Function()? loading,
+    TResult Function(Object error, StackTrace st)? error,
+    required TResult orElse(),
+  }) {
+    if (complete != null) {
+      return complete();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ResetPasswordData value) data,
+    required TResult Function(ResetPasswordComplete value) complete,
+    required TResult Function(ResetPasswordFirebaseException value)
+        firebaseException,
+    required TResult Function(ResetPasswordWeakPassword value) weakPassword,
+    required TResult Function(ResetPasswordLoading value) loading,
+    required TResult Function(ResetPasswordError value) error,
+  }) {
+    return complete(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
+    TResult Function(ResetPasswordFirebaseException value)? firebaseException,
+    TResult Function(ResetPasswordWeakPassword value)? weakPassword,
+    TResult Function(ResetPasswordLoading value)? loading,
+    TResult Function(ResetPasswordError value)? error,
+  }) {
+    return complete?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
+    TResult Function(ResetPasswordFirebaseException value)? firebaseException,
+    TResult Function(ResetPasswordWeakPassword value)? weakPassword,
+    TResult Function(ResetPasswordLoading value)? loading,
+    TResult Function(ResetPasswordError value)? error,
+    required TResult orElse(),
+  }) {
+    if (complete != null) {
+      return complete(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ResetPasswordComplete implements ResetPasswordState {
+  const factory ResetPasswordComplete() = _$ResetPasswordComplete;
 }
 
 /// @nodoc
@@ -298,6 +441,7 @@ class _$ResetPasswordFirebaseException
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() data,
+    required TResult Function() complete,
     required TResult Function(ResetPasswordException exception)
         firebaseException,
     required TResult Function() weakPassword,
@@ -311,6 +455,7 @@ class _$ResetPasswordFirebaseException
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? data,
+    TResult Function()? complete,
     TResult Function(ResetPasswordException exception)? firebaseException,
     TResult Function()? weakPassword,
     TResult Function()? loading,
@@ -323,6 +468,7 @@ class _$ResetPasswordFirebaseException
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? data,
+    TResult Function()? complete,
     TResult Function(ResetPasswordException exception)? firebaseException,
     TResult Function()? weakPassword,
     TResult Function()? loading,
@@ -339,6 +485,7 @@ class _$ResetPasswordFirebaseException
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ResetPasswordData value) data,
+    required TResult Function(ResetPasswordComplete value) complete,
     required TResult Function(ResetPasswordFirebaseException value)
         firebaseException,
     required TResult Function(ResetPasswordWeakPassword value) weakPassword,
@@ -352,6 +499,7 @@ class _$ResetPasswordFirebaseException
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
     TResult Function(ResetPasswordFirebaseException value)? firebaseException,
     TResult Function(ResetPasswordWeakPassword value)? weakPassword,
     TResult Function(ResetPasswordLoading value)? loading,
@@ -364,6 +512,7 @@ class _$ResetPasswordFirebaseException
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
     TResult Function(ResetPasswordFirebaseException value)? firebaseException,
     TResult Function(ResetPasswordWeakPassword value)? weakPassword,
     TResult Function(ResetPasswordLoading value)? loading,
@@ -433,6 +582,7 @@ class _$ResetPasswordWeakPassword implements ResetPasswordWeakPassword {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() data,
+    required TResult Function() complete,
     required TResult Function(ResetPasswordException exception)
         firebaseException,
     required TResult Function() weakPassword,
@@ -446,6 +596,7 @@ class _$ResetPasswordWeakPassword implements ResetPasswordWeakPassword {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? data,
+    TResult Function()? complete,
     TResult Function(ResetPasswordException exception)? firebaseException,
     TResult Function()? weakPassword,
     TResult Function()? loading,
@@ -458,6 +609,7 @@ class _$ResetPasswordWeakPassword implements ResetPasswordWeakPassword {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? data,
+    TResult Function()? complete,
     TResult Function(ResetPasswordException exception)? firebaseException,
     TResult Function()? weakPassword,
     TResult Function()? loading,
@@ -474,6 +626,7 @@ class _$ResetPasswordWeakPassword implements ResetPasswordWeakPassword {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ResetPasswordData value) data,
+    required TResult Function(ResetPasswordComplete value) complete,
     required TResult Function(ResetPasswordFirebaseException value)
         firebaseException,
     required TResult Function(ResetPasswordWeakPassword value) weakPassword,
@@ -487,6 +640,7 @@ class _$ResetPasswordWeakPassword implements ResetPasswordWeakPassword {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
     TResult Function(ResetPasswordFirebaseException value)? firebaseException,
     TResult Function(ResetPasswordWeakPassword value)? weakPassword,
     TResult Function(ResetPasswordLoading value)? loading,
@@ -499,6 +653,7 @@ class _$ResetPasswordWeakPassword implements ResetPasswordWeakPassword {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
     TResult Function(ResetPasswordFirebaseException value)? firebaseException,
     TResult Function(ResetPasswordWeakPassword value)? weakPassword,
     TResult Function(ResetPasswordLoading value)? loading,
@@ -558,6 +713,7 @@ class _$ResetPasswordLoading implements ResetPasswordLoading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() data,
+    required TResult Function() complete,
     required TResult Function(ResetPasswordException exception)
         firebaseException,
     required TResult Function() weakPassword,
@@ -571,6 +727,7 @@ class _$ResetPasswordLoading implements ResetPasswordLoading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? data,
+    TResult Function()? complete,
     TResult Function(ResetPasswordException exception)? firebaseException,
     TResult Function()? weakPassword,
     TResult Function()? loading,
@@ -583,6 +740,7 @@ class _$ResetPasswordLoading implements ResetPasswordLoading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? data,
+    TResult Function()? complete,
     TResult Function(ResetPasswordException exception)? firebaseException,
     TResult Function()? weakPassword,
     TResult Function()? loading,
@@ -599,6 +757,7 @@ class _$ResetPasswordLoading implements ResetPasswordLoading {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ResetPasswordData value) data,
+    required TResult Function(ResetPasswordComplete value) complete,
     required TResult Function(ResetPasswordFirebaseException value)
         firebaseException,
     required TResult Function(ResetPasswordWeakPassword value) weakPassword,
@@ -612,6 +771,7 @@ class _$ResetPasswordLoading implements ResetPasswordLoading {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
     TResult Function(ResetPasswordFirebaseException value)? firebaseException,
     TResult Function(ResetPasswordWeakPassword value)? weakPassword,
     TResult Function(ResetPasswordLoading value)? loading,
@@ -624,6 +784,7 @@ class _$ResetPasswordLoading implements ResetPasswordLoading {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
     TResult Function(ResetPasswordFirebaseException value)? firebaseException,
     TResult Function(ResetPasswordWeakPassword value)? weakPassword,
     TResult Function(ResetPasswordLoading value)? loading,
@@ -718,6 +879,7 @@ class _$ResetPasswordError implements ResetPasswordError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() data,
+    required TResult Function() complete,
     required TResult Function(ResetPasswordException exception)
         firebaseException,
     required TResult Function() weakPassword,
@@ -731,6 +893,7 @@ class _$ResetPasswordError implements ResetPasswordError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? data,
+    TResult Function()? complete,
     TResult Function(ResetPasswordException exception)? firebaseException,
     TResult Function()? weakPassword,
     TResult Function()? loading,
@@ -743,6 +906,7 @@ class _$ResetPasswordError implements ResetPasswordError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? data,
+    TResult Function()? complete,
     TResult Function(ResetPasswordException exception)? firebaseException,
     TResult Function()? weakPassword,
     TResult Function()? loading,
@@ -759,6 +923,7 @@ class _$ResetPasswordError implements ResetPasswordError {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ResetPasswordData value) data,
+    required TResult Function(ResetPasswordComplete value) complete,
     required TResult Function(ResetPasswordFirebaseException value)
         firebaseException,
     required TResult Function(ResetPasswordWeakPassword value) weakPassword,
@@ -772,6 +937,7 @@ class _$ResetPasswordError implements ResetPasswordError {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
     TResult Function(ResetPasswordFirebaseException value)? firebaseException,
     TResult Function(ResetPasswordWeakPassword value)? weakPassword,
     TResult Function(ResetPasswordLoading value)? loading,
@@ -784,6 +950,7 @@ class _$ResetPasswordError implements ResetPasswordError {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ResetPasswordData value)? data,
+    TResult Function(ResetPasswordComplete value)? complete,
     TResult Function(ResetPasswordFirebaseException value)? firebaseException,
     TResult Function(ResetPasswordWeakPassword value)? weakPassword,
     TResult Function(ResetPasswordLoading value)? loading,

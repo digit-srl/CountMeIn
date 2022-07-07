@@ -5,6 +5,7 @@ part 'reset_password_state.freezed.dart';
 @freezed
 class ResetPasswordState with _$ResetPasswordState {
   const factory ResetPasswordState.data() = ResetPasswordData;
+  const factory ResetPasswordState.complete() = ResetPasswordComplete;
 
   const factory ResetPasswordState.firebaseException(
       ResetPasswordException exception) = ResetPasswordFirebaseException;

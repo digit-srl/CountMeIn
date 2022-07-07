@@ -131,7 +131,7 @@ export function sendResetPasswordEmail(
 
   const json = JSON.stringify({
     fullName: fullName,
-    url: url,
+    url: encodeURI(url),
   });
 
   return sendEmail(emails, "Reset password", "reset_password", json, [], null);

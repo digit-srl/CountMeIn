@@ -35,43 +35,52 @@ class ResetPasswordScreen extends HookConsumerWidget {
     final controller = useTextEditingController();
     final state = ref.watch(resetPasswordProvider(oobCode));
     return Scaffold(
-      body: state.when(
-        data: () {
-          return Center(
-            child: Column(
-              children: [
-                Text(
-                  fullName,
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
-                MUTextField(
-                  controller: controller,
-                  hintText: 'Inserisci la nuova password',
-                  validator: passwordValidator,
-                ),
-                MUButton(
-                  text: 'Reimposta',
-                  onPressed: () async {
-                    final newPassword = controller.text.trim();
-                    ref
-                        .read(resetPasswordProvider(oobCode).notifier)
-                        .confirmNewPassword(newPassword);
-                  },
-                )
-              ],
+      body: Center(
+        child: Card(
+          child: Container(
+            constraints: BoxConstraints(maxWidth: 500,maxHeight: 500),
+            padding: const EdgeInsets.all(16.0),
+            child: state.when(
+              complete: () {
+                return Text('La password è stata reimpostata correttamente');
+              },
+              data: () {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      fullName,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    MUTextField(
+                      controller: controller,
+                      hintText: 'Inserisci la nuova password',
+                      validator: passwordValidator,
+                    ),
+                     const SizedBox(height: 16),
+                    MUButton(
+                      text: 'Reimposta',
+                      onPressed: () async {
+                        final newPassword = controller.text.trim();
+                        ref
+                            .read(resetPasswordProvider(oobCode).notifier)
+                            .confirmNewPassword(newPassword);
+                      },
+                    )
+                  ],
+                );
+              },
+              firebaseException: (ex) {
+                return Text(ex.message);
+              },
+              loading: () => LoadingWidget(),
+              error: (e, s) => ErrorScreen(exception: e,),
+              weakPassword: () {
+                return Text('password troppo debole');
+              },
             ),
-          );
-        },
-        firebaseException: (ex) {
-          return Text(ex.message);
-        },
-        loading: () => LoadingWidget(),
-        error: (e, s) => ErrorScreen(),
-        weakPassword: () {
-          return Center(
-            child: Text('password troppo debole'),
-          );
-        },
+          ),
+        ),
       ),
     );
   }
