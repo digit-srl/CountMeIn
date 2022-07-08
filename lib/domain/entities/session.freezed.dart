@@ -23,6 +23,7 @@ mixin _$Event {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int? get womCount => throw _privateConstructorUsedError;
+  bool get isOpen => throw _privateConstructorUsedError;
   @EventStatusConverter()
   EventStatus? get status => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
@@ -41,6 +42,7 @@ abstract class $EventCopyWith<$Res> {
       {String id,
       String name,
       int? womCount,
+      bool isOpen,
       @EventStatusConverter() EventStatus? status,
       @MyDateTimeConverter() DateTime createdOn});
 }
@@ -58,6 +60,7 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
     Object? id = freezed,
     Object? name = freezed,
     Object? womCount = freezed,
+    Object? isOpen = freezed,
     Object? status = freezed,
     Object? createdOn = freezed,
   }) {
@@ -74,6 +77,10 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
           ? _value.womCount
           : womCount // ignore: cast_nullable_to_non_nullable
               as int?,
+      isOpen: isOpen == freezed
+          ? _value.isOpen
+          : isOpen // ignore: cast_nullable_to_non_nullable
+              as bool,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -95,6 +102,7 @@ abstract class _$$_EventCopyWith<$Res> implements $EventCopyWith<$Res> {
       {String id,
       String name,
       int? womCount,
+      bool isOpen,
       @EventStatusConverter() EventStatus? status,
       @MyDateTimeConverter() DateTime createdOn});
 }
@@ -113,6 +121,7 @@ class __$$_EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
     Object? womCount = freezed,
+    Object? isOpen = freezed,
     Object? status = freezed,
     Object? createdOn = freezed,
   }) {
@@ -129,6 +138,10 @@ class __$$_EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
           ? _value.womCount
           : womCount // ignore: cast_nullable_to_non_nullable
               as int?,
+      isOpen: isOpen == freezed
+          ? _value.isOpen
+          : isOpen // ignore: cast_nullable_to_non_nullable
+              as bool,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -148,6 +161,7 @@ class _$_Event implements _Event {
       {required this.id,
       required this.name,
       this.womCount,
+      this.isOpen = true,
       @EventStatusConverter() this.status,
       @MyDateTimeConverter() required this.createdOn});
 
@@ -161,6 +175,9 @@ class _$_Event implements _Event {
   @override
   final int? womCount;
   @override
+  @JsonKey()
+  final bool isOpen;
+  @override
   @EventStatusConverter()
   final EventStatus? status;
   @override
@@ -169,7 +186,7 @@ class _$_Event implements _Event {
 
   @override
   String toString() {
-    return 'Event(id: $id, name: $name, womCount: $womCount, status: $status, createdOn: $createdOn)';
+    return 'Event(id: $id, name: $name, womCount: $womCount, isOpen: $isOpen, status: $status, createdOn: $createdOn)';
   }
 
   @override
@@ -180,6 +197,7 @@ class _$_Event implements _Event {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.womCount, womCount) &&
+            const DeepCollectionEquality().equals(other.isOpen, isOpen) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.createdOn, createdOn));
   }
@@ -191,6 +209,7 @@ class _$_Event implements _Event {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(womCount),
+      const DeepCollectionEquality().hash(isOpen),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(createdOn));
 
@@ -210,6 +229,7 @@ abstract class _Event implements Event {
       {required final String id,
       required final String name,
       final int? womCount,
+      final bool isOpen,
       @EventStatusConverter() final EventStatus? status,
       @MyDateTimeConverter() required final DateTime createdOn}) = _$_Event;
 
@@ -221,6 +241,8 @@ abstract class _Event implements Event {
   String get name => throw _privateConstructorUsedError;
   @override
   int? get womCount => throw _privateConstructorUsedError;
+  @override
+  bool get isOpen => throw _privateConstructorUsedError;
   @override
   @EventStatusConverter()
   EventStatus? get status => throw _privateConstructorUsedError;

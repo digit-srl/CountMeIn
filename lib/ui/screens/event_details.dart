@@ -29,12 +29,12 @@ import 'admin_user_details.dart';
 import 'user_event.dart';
 
 class EventDetailsScreen extends ConsumerStatefulWidget {
-  final String eventId;
+  final Event event;
   final String activityId;
 
   const EventDetailsScreen({
     Key? key,
-    required this.eventId,
+    required this.event,
     required this.activityId,
   }) : super(key: key);
 
@@ -48,14 +48,14 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    ids = EventIds(activityId: widget.activityId, eventId: widget.eventId);
+    ids = EventIds(activityId: widget.activityId, eventId: widget.event.id);
   }
 
   _goToScan(CMIProvider activity) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (c) => ScanScreen(
-          eventId: widget.eventId,
+          eventId: widget.event.id,
           activity: activity,
         ),
       ),
@@ -65,8 +65,8 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final eventState =
-        ref.watch(eventProvider([widget.activityId, widget.eventId]));
-    final activityState= ref.watch(activityStreamProvider(widget.activityId));
+        ref.watch(eventProvider([widget.activityId, widget.event.id]));
+    final activityState = ref.watch(activityStreamProvider(widget.activityId));
     final usersState = ref.watch(usersStreamProvider(ids));
     final role = ref.watch(userRoleProvider(widget.activityId));
     final isOwner = role == UserRole.owner;
@@ -75,48 +75,13 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
       appBar: AppBar(
         title: Text(eventState.asData?.value.name ?? ''),
         actions: [
-          if (eventState is AsyncData<Event> && activityState is AsyncData<CMIProvider>) ...[
+          if (eventState is AsyncData<Event> &&
+              activityState is AsyncData<CMIProvider> &&
+              widget.event.isOpen) ...[
             IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () {
                   _goToScan(activityState.asData!.value);
-                  /*showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                      return Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                      ItemSelection(
-                      icon: Icons.camera,
-                      onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                      builder: (c) => ScanScreen(
-                      sessionId: widget.eventId,
-                      ),
-                      ),
-                      );
-                      },
-                      text: 'Scansiona Qr Code',
-                      ),
-                      ItemSelection(
-                      icon: Icons.add,
-                      onPressed: () {
-                      // final users = Hive.box<User>('user_${widget.session.id}');
-                      // users.add(User('ciao', 'proa', 'sdfgh', Uuid().v1()));
-                      // widget.session.users.add(
-                      //     User('ciao', 'proa', 'sdfgh', Uuid().v1()));
-                      // widget.session.save();
-                      },
-                      text: 'Aggiungi manualmente',
-                      )
-                      ],
-                      ),
-                      );
-                      });
-                   */
                 }),
           ]
         ],
@@ -125,7 +90,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
         data: (list) {
           return list.isEmpty
               ? const Center(
-                  child: const Text(
+                  child: Text(
                     'Non ci sono utenti per questo evento',
                   ),
                 )
@@ -138,7 +103,10 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                         context.push(UserDetailsScreen.routeName, extra: user);
                       },
                       title: Text(user.fullName),
-                      subtitle: Text(user.cf),
+                      subtitle: Text(
+                        user.cf,
+                        style: Theme.of(context).textTheme.caption,
+                      ),
                       leading: Text('${index + 1}'),
                       trailing: isOwner
                           ? IconButton(
@@ -270,7 +238,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
           );
         });
     if (answer ?? false) {
-      Cloud.eventUsersCollection(widget.activityId, widget.eventId)
+      Cloud.eventUsersCollection(widget.activityId, widget.event.id)
           .doc(userId)
           .delete();
     }

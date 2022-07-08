@@ -10,6 +10,7 @@ _$_Event _$$_EventFromJson(Map<String, dynamic> json) => _$_Event(
       id: json['id'] as String,
       name: json['name'] as String,
       womCount: json['womCount'] as int?,
+      isOpen: json['isOpen'] as bool? ?? true,
       status: $enumDecodeNullable(_$EventStatusEnumMap, json['status']),
       createdOn:
           const MyDateTimeConverter().fromJson(json['createdOn'] as Timestamp),
@@ -19,6 +20,7 @@ Map<String, dynamic> _$$_EventToJson(_$_Event instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'womCount': instance.womCount,
+      'isOpen': instance.isOpen,
       'status': _$EventStatusEnumMap[instance.status],
       'createdOn': const MyDateTimeConverter().toJson(instance.createdOn),
     };

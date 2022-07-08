@@ -16,6 +16,7 @@ class Event with _$Event {
     required String id,
     required String name,
     int? womCount,
+    @Default(true) bool isOpen,
     @EventStatusConverter() EventStatus? status,
     @MyDateTimeConverter() required DateTime createdOn,
   }) = _Event;

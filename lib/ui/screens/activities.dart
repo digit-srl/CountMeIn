@@ -84,28 +84,31 @@ class ActivitiesScreen extends ConsumerWidget {
             );
           }
           return ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: list.length,
-              itemBuilder: (c, index) {
-                final activity = list[index];
-                return ListTile(
-                  title: Text(
-                    activity.name,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
-                  subtitle: Text(activity.id),
-                  // leading: Text('${index + 1}'),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (c) => ActivityScreen(
-                          providerId: activity.id,
-                        ),
+            padding: const EdgeInsets.all(16),
+            itemCount: list.length,
+            itemBuilder: (c, index) {
+              final provider = list[index];
+              return ListTile(
+                title: Text(
+                  provider.name,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+                subtitle: Text(provider.id),
+                // leading: Text('${index + 1}'),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (c) => ActivityScreen(
+                        providerId: provider.id,
+                        providerName: provider.name,
                       ),
-                    );
-                  },
-                );
-              });
+                    ),
+                  );
+                },
+              );
+            },
+          );
         },
         error: (err, stack) {
           return Text(err.toString());
@@ -114,16 +117,16 @@ class ActivitiesScreen extends ConsumerWidget {
       ),
     );
   }
-
-  void _deleteActivity(BuildContext context, String id, String name) {}
 }
 
 class ActivityScreen extends ConsumerStatefulWidget {
   final String providerId;
+  final String providerName;
 
   const ActivityScreen({
     Key? key,
     required this.providerId,
+    required this.providerName,
   }) : super(key: key);
 
   @override
@@ -138,16 +141,16 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
     final isOwner = userRole == UserRole.owner;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Eventi'),
+        title: Text(widget.providerName),
         actions: [
           if (isOwner)
             IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () async {
-                  context.push(
-                    '${NewEventFormScreen.routeName}/${widget.providerId}',
-                  );
-                  /* showDialog(
+              icon: const Icon(Icons.add),
+              onPressed: () async {
+                context.push(
+                  '${NewEventFormScreen.routeName}/${widget.providerId}',
+                );
+                /* showDialog(
                       context: context,
                       builder: (c) {
                         return Dialog(
@@ -156,7 +159,8 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
                           ),
                         );
                       });*/
-                }),
+              },
+            ),
           IconButton(
               icon: const Icon(Icons.copy),
               onPressed: () {
@@ -179,28 +183,71 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
               itemCount: list.length,
               itemBuilder: (c, index) {
                 final event = list[index];
-                return ListTile(
-                  title: Text(event.name),
-                  subtitle: Text(event.id),
-                  leading: Text('${index + 1}'),
-                  trailing: isOwner
-                      ? IconButton(
-                          icon: const Icon(Icons.delete),
-                          color: Colors.red,
-                          onPressed: () {
-                            // _deleteEvent(context, event.id, event.name);
-                          })
-                      : null,
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (c) => EventDetailsScreen(
-                          activityId: widget.providerId,
-                          eventId: event.id,
+                return Card(
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  child: ListTile(
+                    title: Text(event.name),
+                    subtitle: isOwner
+                        ? Row(
+                            children: [
+                              const Text('Aperto'),
+                              Switch(
+                                value: event.isOpen,
+                                onChanged: (bool value) async {
+                                  if (!value) {
+                                    final answer = await ask(context,
+                                        'Vuoi chiudere l\'evento ${event.name}');
+                                    if (answer ?? false) {
+                                      Cloud.eventDoc(
+                                              widget.providerId, event.id)
+                                          .update({'isOpen': value});
+                                    }
+                                  } else {
+                                    Cloud.eventDoc(widget.providerId, event.id)
+                                        .update({'isOpen': value});
+                                  }
+                                },
+                              ),
+                              const Spacer(),
+                              IconButton(
+                                icon: const Icon(Icons.delete),
+                                color: Colors.red,
+                                onPressed: () {
+                                  _deleteEvent(context, widget.providerId,
+                                      event.id, event.name);
+                                },
+                              ),
+                            ],
+                          )
+                        : null,
+                    // subtitle: Text(
+                    //   event.id,
+                    //   style: Theme.of(context).textTheme.caption,
+                    // ),
+                    leading: Text('${index + 1}'),
+                    /*trailing: isOwner
+                        ?
+                              IconButton(
+                                icon: const Icon(Icons.delete),
+                                color: Colors.red,
+                                onPressed: () {
+                                  _deleteEvent(context, widget.providerId,
+                                      event.id, event.name);
+                                },
+                              )
+
+                        : null,*/
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (c) => EventDetailsScreen(
+                            activityId: widget.providerId,
+                            event: event,
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 );
               });
         },
@@ -210,5 +257,21 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
         loading: () => const LoadingWidget(),
       ),
     );
+  }
+
+  _deleteEvent(
+    BuildContext context,
+    String providerId,
+    String eventId,
+    String eventName,
+  ) async {
+    final answer = await ask(context, 'Vuoi eliminare l\'evento $eventName');
+    if (answer ?? false) {
+      try {
+        await Cloud.eventDoc(providerId, eventId).delete();
+      } catch (ex) {
+        print(ex);
+      }
+    }
   }
 }
