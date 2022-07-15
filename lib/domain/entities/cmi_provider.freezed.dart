@@ -22,13 +22,17 @@ CMIProvider _$CMIProviderFromJson(Map<String, dynamic> json) {
 mixin _$CMIProvider {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String get adminName => throw _privateConstructorUsedError;
+  String get adminSurname => throw _privateConstructorUsedError;
+  String get adminEmail => throw _privateConstructorUsedError;
+  String? get womApiKey => throw _privateConstructorUsedError;
+  List<String>? get aims => throw _privateConstructorUsedError;
   String? get domainRequirement => throw _privateConstructorUsedError;
-  bool get acceptPassepartout => throw _privateConstructorUsedError;
   bool get releaseWom => throw _privateConstructorUsedError;
   @CMIProviderStatusConverter()
   CMIProviderStatus? get status => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
-  DateTime get createdOn => throw _privateConstructorUsedError;
+  DateTime? get createdOn => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime get requestedOn => throw _privateConstructorUsedError;
 
@@ -46,11 +50,15 @@ abstract class $CMIProviderCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
+      String adminName,
+      String adminSurname,
+      String adminEmail,
+      String? womApiKey,
+      List<String>? aims,
       String? domainRequirement,
-      bool acceptPassepartout,
       bool releaseWom,
       @CMIProviderStatusConverter() CMIProviderStatus? status,
-      @MyDateTimeConverter() DateTime createdOn,
+      @MyDateTimeConverter() DateTime? createdOn,
       @MyDateTimeConverter() DateTime requestedOn});
 }
 
@@ -66,8 +74,12 @@ class _$CMIProviderCopyWithImpl<$Res> implements $CMIProviderCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? adminName = freezed,
+    Object? adminSurname = freezed,
+    Object? adminEmail = freezed,
+    Object? womApiKey = freezed,
+    Object? aims = freezed,
     Object? domainRequirement = freezed,
-    Object? acceptPassepartout = freezed,
     Object? releaseWom = freezed,
     Object? status = freezed,
     Object? createdOn = freezed,
@@ -82,14 +94,30 @@ class _$CMIProviderCopyWithImpl<$Res> implements $CMIProviderCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      adminName: adminName == freezed
+          ? _value.adminName
+          : adminName // ignore: cast_nullable_to_non_nullable
+              as String,
+      adminSurname: adminSurname == freezed
+          ? _value.adminSurname
+          : adminSurname // ignore: cast_nullable_to_non_nullable
+              as String,
+      adminEmail: adminEmail == freezed
+          ? _value.adminEmail
+          : adminEmail // ignore: cast_nullable_to_non_nullable
+              as String,
+      womApiKey: womApiKey == freezed
+          ? _value.womApiKey
+          : womApiKey // ignore: cast_nullable_to_non_nullable
+              as String?,
+      aims: aims == freezed
+          ? _value.aims
+          : aims // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       domainRequirement: domainRequirement == freezed
           ? _value.domainRequirement
           : domainRequirement // ignore: cast_nullable_to_non_nullable
               as String?,
-      acceptPassepartout: acceptPassepartout == freezed
-          ? _value.acceptPassepartout
-          : acceptPassepartout // ignore: cast_nullable_to_non_nullable
-              as bool,
       releaseWom: releaseWom == freezed
           ? _value.releaseWom
           : releaseWom // ignore: cast_nullable_to_non_nullable
@@ -101,7 +129,7 @@ class _$CMIProviderCopyWithImpl<$Res> implements $CMIProviderCopyWith<$Res> {
       createdOn: createdOn == freezed
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       requestedOn: requestedOn == freezed
           ? _value.requestedOn
           : requestedOn // ignore: cast_nullable_to_non_nullable
@@ -120,11 +148,15 @@ abstract class _$$_CMIProviderCopyWith<$Res>
   $Res call(
       {String id,
       String name,
+      String adminName,
+      String adminSurname,
+      String adminEmail,
+      String? womApiKey,
+      List<String>? aims,
       String? domainRequirement,
-      bool acceptPassepartout,
       bool releaseWom,
       @CMIProviderStatusConverter() CMIProviderStatus? status,
-      @MyDateTimeConverter() DateTime createdOn,
+      @MyDateTimeConverter() DateTime? createdOn,
       @MyDateTimeConverter() DateTime requestedOn});
 }
 
@@ -142,8 +174,12 @@ class __$$_CMIProviderCopyWithImpl<$Res> extends _$CMIProviderCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? adminName = freezed,
+    Object? adminSurname = freezed,
+    Object? adminEmail = freezed,
+    Object? womApiKey = freezed,
+    Object? aims = freezed,
     Object? domainRequirement = freezed,
-    Object? acceptPassepartout = freezed,
     Object? releaseWom = freezed,
     Object? status = freezed,
     Object? createdOn = freezed,
@@ -158,14 +194,30 @@ class __$$_CMIProviderCopyWithImpl<$Res> extends _$CMIProviderCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      adminName: adminName == freezed
+          ? _value.adminName
+          : adminName // ignore: cast_nullable_to_non_nullable
+              as String,
+      adminSurname: adminSurname == freezed
+          ? _value.adminSurname
+          : adminSurname // ignore: cast_nullable_to_non_nullable
+              as String,
+      adminEmail: adminEmail == freezed
+          ? _value.adminEmail
+          : adminEmail // ignore: cast_nullable_to_non_nullable
+              as String,
+      womApiKey: womApiKey == freezed
+          ? _value.womApiKey
+          : womApiKey // ignore: cast_nullable_to_non_nullable
+              as String?,
+      aims: aims == freezed
+          ? _value._aims
+          : aims // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       domainRequirement: domainRequirement == freezed
           ? _value.domainRequirement
           : domainRequirement // ignore: cast_nullable_to_non_nullable
               as String?,
-      acceptPassepartout: acceptPassepartout == freezed
-          ? _value.acceptPassepartout
-          : acceptPassepartout // ignore: cast_nullable_to_non_nullable
-              as bool,
       releaseWom: releaseWom == freezed
           ? _value.releaseWom
           : releaseWom // ignore: cast_nullable_to_non_nullable
@@ -177,7 +229,7 @@ class __$$_CMIProviderCopyWithImpl<$Res> extends _$CMIProviderCopyWithImpl<$Res>
       createdOn: createdOn == freezed
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       requestedOn: requestedOn == freezed
           ? _value.requestedOn
           : requestedOn // ignore: cast_nullable_to_non_nullable
@@ -192,12 +244,17 @@ class _$_CMIProvider implements _CMIProvider {
   const _$_CMIProvider(
       {required this.id,
       required this.name,
+      required this.adminName,
+      required this.adminSurname,
+      required this.adminEmail,
+      this.womApiKey,
+      final List<String>? aims,
       this.domainRequirement,
-      this.acceptPassepartout = false,
       this.releaseWom = false,
       @CMIProviderStatusConverter() this.status,
-      @MyDateTimeConverter() required this.createdOn,
-      @MyDateTimeConverter() required this.requestedOn});
+      @MyDateTimeConverter() this.createdOn,
+      @MyDateTimeConverter() required this.requestedOn})
+      : _aims = aims;
 
   factory _$_CMIProvider.fromJson(Map<String, dynamic> json) =>
       _$$_CMIProviderFromJson(json);
@@ -207,10 +264,24 @@ class _$_CMIProvider implements _CMIProvider {
   @override
   final String name;
   @override
-  final String? domainRequirement;
+  final String adminName;
   @override
-  @JsonKey()
-  final bool acceptPassepartout;
+  final String adminSurname;
+  @override
+  final String adminEmail;
+  @override
+  final String? womApiKey;
+  final List<String>? _aims;
+  @override
+  List<String>? get aims {
+    final value = _aims;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final String? domainRequirement;
   @override
   @JsonKey()
   final bool releaseWom;
@@ -219,14 +290,14 @@ class _$_CMIProvider implements _CMIProvider {
   final CMIProviderStatus? status;
   @override
   @MyDateTimeConverter()
-  final DateTime createdOn;
+  final DateTime? createdOn;
   @override
   @MyDateTimeConverter()
   final DateTime requestedOn;
 
   @override
   String toString() {
-    return 'CMIProvider(id: $id, name: $name, domainRequirement: $domainRequirement, acceptPassepartout: $acceptPassepartout, releaseWom: $releaseWom, status: $status, createdOn: $createdOn, requestedOn: $requestedOn)';
+    return 'CMIProvider(id: $id, name: $name, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, womApiKey: $womApiKey, aims: $aims, domainRequirement: $domainRequirement, releaseWom: $releaseWom, status: $status, createdOn: $createdOn, requestedOn: $requestedOn)';
   }
 
   @override
@@ -236,10 +307,15 @@ class _$_CMIProvider implements _CMIProvider {
             other is _$_CMIProvider &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.adminName, adminName) &&
+            const DeepCollectionEquality()
+                .equals(other.adminSurname, adminSurname) &&
+            const DeepCollectionEquality()
+                .equals(other.adminEmail, adminEmail) &&
+            const DeepCollectionEquality().equals(other.womApiKey, womApiKey) &&
+            const DeepCollectionEquality().equals(other._aims, _aims) &&
             const DeepCollectionEquality()
                 .equals(other.domainRequirement, domainRequirement) &&
-            const DeepCollectionEquality()
-                .equals(other.acceptPassepartout, acceptPassepartout) &&
             const DeepCollectionEquality()
                 .equals(other.releaseWom, releaseWom) &&
             const DeepCollectionEquality().equals(other.status, status) &&
@@ -254,8 +330,12 @@ class _$_CMIProvider implements _CMIProvider {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(adminName),
+      const DeepCollectionEquality().hash(adminSurname),
+      const DeepCollectionEquality().hash(adminEmail),
+      const DeepCollectionEquality().hash(womApiKey),
+      const DeepCollectionEquality().hash(_aims),
       const DeepCollectionEquality().hash(domainRequirement),
-      const DeepCollectionEquality().hash(acceptPassepartout),
       const DeepCollectionEquality().hash(releaseWom),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(createdOn),
@@ -276,11 +356,15 @@ abstract class _CMIProvider implements CMIProvider {
   const factory _CMIProvider(
           {required final String id,
           required final String name,
+          required final String adminName,
+          required final String adminSurname,
+          required final String adminEmail,
+          final String? womApiKey,
+          final List<String>? aims,
           final String? domainRequirement,
-          final bool acceptPassepartout,
           final bool releaseWom,
           @CMIProviderStatusConverter() final CMIProviderStatus? status,
-          @MyDateTimeConverter() required final DateTime createdOn,
+          @MyDateTimeConverter() final DateTime? createdOn,
           @MyDateTimeConverter() required final DateTime requestedOn}) =
       _$_CMIProvider;
 
@@ -288,24 +372,32 @@ abstract class _CMIProvider implements CMIProvider {
       _$_CMIProvider.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String? get domainRequirement => throw _privateConstructorUsedError;
+  String get adminName;
   @override
-  bool get acceptPassepartout => throw _privateConstructorUsedError;
+  String get adminSurname;
   @override
-  bool get releaseWom => throw _privateConstructorUsedError;
+  String get adminEmail;
+  @override
+  String? get womApiKey;
+  @override
+  List<String>? get aims;
+  @override
+  String? get domainRequirement;
+  @override
+  bool get releaseWom;
   @override
   @CMIProviderStatusConverter()
-  CMIProviderStatus? get status => throw _privateConstructorUsedError;
+  CMIProviderStatus? get status;
   @override
   @MyDateTimeConverter()
-  DateTime get createdOn => throw _privateConstructorUsedError;
+  DateTime? get createdOn;
   @override
   @MyDateTimeConverter()
-  DateTime get requestedOn => throw _privateConstructorUsedError;
+  DateTime get requestedOn;
   @override
   @JsonKey(ignore: true)
   _$$_CMIProviderCopyWith<_$_CMIProvider> get copyWith =>

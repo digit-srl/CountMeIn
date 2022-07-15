@@ -401,8 +401,8 @@ abstract class UserRegisteringVerificationEmailSent
       {final bool newUser,
       required final String email}) = _$UserRegisteringVerificationEmailSent;
 
-  bool get newUser => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
+  bool get newUser;
+  String get email;
   @JsonKey(ignore: true)
   _$$UserRegisteringVerificationEmailSentCopyWith<
           _$UserRegisteringVerificationEmailSent>
@@ -569,7 +569,7 @@ abstract class UserRegisteringUserCardSentByEmail
   const factory UserRegisteringUserCardSentByEmail(
       {required final String email}) = _$UserRegisteringUserCardSentByEmail;
 
-  String get email => throw _privateConstructorUsedError;
+  String get email;
   @JsonKey(ignore: true)
   _$$UserRegisteringUserCardSentByEmailCopyWith<
           _$UserRegisteringUserCardSentByEmail>
@@ -870,8 +870,8 @@ abstract class UserRegisteringError implements UserRegisteringState {
   const factory UserRegisteringError(final Object error, final StackTrace st) =
       _$UserRegisteringError;
 
-  Object get error => throw _privateConstructorUsedError;
-  StackTrace get st => throw _privateConstructorUsedError;
+  Object get error;
+  StackTrace get st;
   @JsonKey(ignore: true)
   _$$UserRegisteringErrorCopyWith<_$UserRegisteringError> get copyWith =>
       throw _privateConstructorUsedError;

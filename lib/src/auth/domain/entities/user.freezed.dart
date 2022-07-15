@@ -244,19 +244,19 @@ abstract class _AuthUser implements AuthUser {
       required final Map<String, UserRole> providersRole}) = _$_AuthUser;
 
   @override
-  String get uid => throw _privateConstructorUsedError;
+  String get uid;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String get surname => throw _privateConstructorUsedError;
+  String get surname;
   @override
-  String get email => throw _privateConstructorUsedError;
+  String get email;
   @override
-  bool get emailVerified => throw _privateConstructorUsedError;
+  bool get emailVerified;
   @override
-  DateTime get createdOn => throw _privateConstructorUsedError;
+  DateTime get createdOn;
   @override
-  Map<String, UserRole> get providersRole => throw _privateConstructorUsedError;
+  Map<String, UserRole> get providersRole;
   @override
   @JsonKey(ignore: true)
   _$$_AuthUserCopyWith<_$_AuthUser> get copyWith =>

@@ -16,11 +16,15 @@ class CMIProvider with _$CMIProvider {
   const factory CMIProvider({
     required String id,
     required String name,
+    required String adminName,
+    required String adminSurname,
+    required String adminEmail,
+    String? womApiKey,
+    List<String>? aims,
     String? domainRequirement,
-    @Default(false) bool acceptPassepartout,
     @Default(false) bool releaseWom,
     @CMIProviderStatusConverter() CMIProviderStatus? status,
-    @MyDateTimeConverter() required DateTime createdOn,
+    @MyDateTimeConverter() DateTime? createdOn,
     @MyDateTimeConverter() required DateTime requestedOn,
   }) = _CMIProvider;
 
@@ -41,4 +45,8 @@ class CMIProviderStatusConverter implements JsonConverter<CMIProviderStatus, Str
 
   @override
   String toJson(CMIProviderStatus status) => enumToString(status);
+}
+
+extension CMIProviderX on CMIProvider{
+  String get adminFullName => '$adminName $adminSurname';
 }

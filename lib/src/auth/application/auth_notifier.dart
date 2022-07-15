@@ -190,6 +190,20 @@ class SignInNotifier extends StateNotifier<bool> {
       return false;
     }
   }
+
+
+  signOut()async{
+    try {
+      await read(authRepositoryProvider).signOut();
+      // authChangeNotifier.isLogged = true;
+      state = false;
+      return true;
+    } on SignInException catch (ex) {
+      print(ex);
+      state = false;
+      return false;
+    }
+  }
 }
 
 final signUpNotifierProvider =

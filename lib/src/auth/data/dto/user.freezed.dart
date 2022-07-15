@@ -269,20 +269,20 @@ abstract class _AuthUserDTO implements AuthUserDTO {
       _$_AuthUserDTO.fromJson;
 
   @override
-  String get uid => throw _privateConstructorUsedError;
+  String get uid;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String get surname => throw _privateConstructorUsedError;
+  String get surname;
   @override
-  String get email => throw _privateConstructorUsedError;
+  String get email;
   @override
-  bool get emailVerified => throw _privateConstructorUsedError;
+  bool get emailVerified;
   @override
-  Map<String, String>? get providersRole => throw _privateConstructorUsedError;
+  Map<String, String>? get providersRole;
   @override
   @MyDateTimeConverter()
-  DateTime get createdOn => throw _privateConstructorUsedError;
+  DateTime get createdOn;
   @override
   @JsonKey(ignore: true)
   _$$_AuthUserDTOCopyWith<_$_AuthUserDTO> get copyWith =>

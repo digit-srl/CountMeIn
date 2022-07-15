@@ -15,6 +15,7 @@ class Event with _$Event {
   const factory Event({
     required String id,
     required String name,
+    @Default(true) bool acceptPassepartout,
     int? womCount,
     @Default(true) bool isOpen,
     @EventStatusConverter() EventStatus? status,

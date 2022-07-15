@@ -22,6 +22,7 @@ Event _$EventFromJson(Map<String, dynamic> json) {
 mixin _$Event {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  bool get acceptPassepartout => throw _privateConstructorUsedError;
   int? get womCount => throw _privateConstructorUsedError;
   bool get isOpen => throw _privateConstructorUsedError;
   @EventStatusConverter()
@@ -41,6 +42,7 @@ abstract class $EventCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
+      bool acceptPassepartout,
       int? womCount,
       bool isOpen,
       @EventStatusConverter() EventStatus? status,
@@ -59,6 +61,7 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? acceptPassepartout = freezed,
     Object? womCount = freezed,
     Object? isOpen = freezed,
     Object? status = freezed,
@@ -73,6 +76,10 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      acceptPassepartout: acceptPassepartout == freezed
+          ? _value.acceptPassepartout
+          : acceptPassepartout // ignore: cast_nullable_to_non_nullable
+              as bool,
       womCount: womCount == freezed
           ? _value.womCount
           : womCount // ignore: cast_nullable_to_non_nullable
@@ -101,6 +108,7 @@ abstract class _$$_EventCopyWith<$Res> implements $EventCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
+      bool acceptPassepartout,
       int? womCount,
       bool isOpen,
       @EventStatusConverter() EventStatus? status,
@@ -120,6 +128,7 @@ class __$$_EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? acceptPassepartout = freezed,
     Object? womCount = freezed,
     Object? isOpen = freezed,
     Object? status = freezed,
@@ -134,6 +143,10 @@ class __$$_EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      acceptPassepartout: acceptPassepartout == freezed
+          ? _value.acceptPassepartout
+          : acceptPassepartout // ignore: cast_nullable_to_non_nullable
+              as bool,
       womCount: womCount == freezed
           ? _value.womCount
           : womCount // ignore: cast_nullable_to_non_nullable
@@ -160,6 +173,7 @@ class _$_Event implements _Event {
   const _$_Event(
       {required this.id,
       required this.name,
+      this.acceptPassepartout = true,
       this.womCount,
       this.isOpen = true,
       @EventStatusConverter() this.status,
@@ -172,6 +186,9 @@ class _$_Event implements _Event {
   final String id;
   @override
   final String name;
+  @override
+  @JsonKey()
+  final bool acceptPassepartout;
   @override
   final int? womCount;
   @override
@@ -186,7 +203,7 @@ class _$_Event implements _Event {
 
   @override
   String toString() {
-    return 'Event(id: $id, name: $name, womCount: $womCount, isOpen: $isOpen, status: $status, createdOn: $createdOn)';
+    return 'Event(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, womCount: $womCount, isOpen: $isOpen, status: $status, createdOn: $createdOn)';
   }
 
   @override
@@ -196,6 +213,8 @@ class _$_Event implements _Event {
             other is _$_Event &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.acceptPassepartout, acceptPassepartout) &&
             const DeepCollectionEquality().equals(other.womCount, womCount) &&
             const DeepCollectionEquality().equals(other.isOpen, isOpen) &&
             const DeepCollectionEquality().equals(other.status, status) &&
@@ -208,6 +227,7 @@ class _$_Event implements _Event {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(acceptPassepartout),
       const DeepCollectionEquality().hash(womCount),
       const DeepCollectionEquality().hash(isOpen),
       const DeepCollectionEquality().hash(status),
@@ -228,6 +248,7 @@ abstract class _Event implements Event {
   const factory _Event(
       {required final String id,
       required final String name,
+      final bool acceptPassepartout,
       final int? womCount,
       final bool isOpen,
       @EventStatusConverter() final EventStatus? status,
@@ -236,19 +257,21 @@ abstract class _Event implements Event {
   factory _Event.fromJson(Map<String, dynamic> json) = _$_Event.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  int? get womCount => throw _privateConstructorUsedError;
+  bool get acceptPassepartout;
   @override
-  bool get isOpen => throw _privateConstructorUsedError;
+  int? get womCount;
+  @override
+  bool get isOpen;
   @override
   @EventStatusConverter()
-  EventStatus? get status => throw _privateConstructorUsedError;
+  EventStatus? get status;
   @override
   @MyDateTimeConverter()
-  DateTime get createdOn => throw _privateConstructorUsedError;
+  DateTime get createdOn;
   @override
   @JsonKey(ignore: true)
   _$$_EventCopyWith<_$_Event> get copyWith =>

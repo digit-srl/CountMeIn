@@ -111,4 +111,6 @@ extension TextSyleX on TextStyle {
 
   TextStyle get underline =>
       this.copyWith(decoration: TextDecoration.underline);
+
+  TextStyle get white => this.copyWith(color: Colors.white);
 }

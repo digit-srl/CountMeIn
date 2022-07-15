@@ -213,7 +213,7 @@ abstract class AuthUnknownFailure implements AuthFailure {
       _$AuthUnknownFailure;
 
   @override
-  String get description => throw _privateConstructorUsedError;
+  String get description;
   @override
   @JsonKey(ignore: true)
   _$$AuthUnknownFailureCopyWith<_$AuthUnknownFailure> get copyWith =>

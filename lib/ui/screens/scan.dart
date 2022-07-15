@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,9 +11,9 @@ import 'package:oktoast/oktoast.dart';
 import 'package:countmein/ui/screens/admin.dart';
 
 import '../../cloud.dart';
-import '../../constants.dart';
 import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/event_ids.dart';
+import '../../domain/entities/session.dart';
 import '../../domain/entities/user_card.dart';
 import 'package:soundpool/soundpool.dart';
 
@@ -28,12 +27,12 @@ final usersCountProvider =
 });
 
 class ScanScreen extends ConsumerStatefulWidget {
-  final String eventId;
+  final Event event;
   final CMIProvider activity;
 
   const ScanScreen({
     Key? key,
-    required this.eventId,
+    required this.event,
     required this.activity,
   }) : super(key: key);
 
@@ -52,10 +51,12 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
 
   late EventIds ids;
 
+  String get eventId => widget.event.id;
+
   @override
   void initState() {
     super.initState();
-    ids = EventIds(activityId: widget.activity.id, eventId: widget.eventId);
+    ids = EventIds(activityId: widget.activity.id, eventId: eventId);
     loadSound();
   }
 
@@ -103,9 +104,8 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                             final userQrCode = UserQrCode.fromOldQrCode(data);
 
                             if (userQrCode.activityId == widget.activity.id ||
-                                (widget.activity.acceptPassepartout &&
-                                    userQrCode.activityId ==
-                                        'countmein')) {
+                                (widget.event.acceptPassepartout &&
+                                    userQrCode.activityId == 'countmein')) {
                               if (!list.contains(userQrCode.id)) {
                                 processing = true;
                                 if (soundId != null) {
@@ -133,7 +133,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
 
                                 final user = userQrCode.toUserCard();
                                 Cloud.eventUsersCollection(
-                                        widget.activity.id, widget.eventId)
+                                        widget.activity.id, eventId)
                                     .doc(user.id)
                                     .set(user.toJson(), SetOptions(merge: true))
                                     .then((value) {

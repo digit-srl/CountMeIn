@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
 import 'package:countmein/src/auth/ui/screens/auht_gate.dart';
 import 'package:countmein/src/auth/ui/screens/auth.dart';
+import 'package:countmein/src/common/ui/widgets/my_button.dart';
 import 'package:countmein/ui/screens/activities.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +41,19 @@ class HomeWebScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        actions: [
+          Center(
+              child: MUButton(
+            text: 'Dashboard',
+            onPressed: () {
+              context.push(AdminDashboardScreen.routeName);
+            },
+          )),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

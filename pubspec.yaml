@@ -37,10 +37,10 @@ dependencies:
 
   #State management
   flutter_riverpod: ^1.0.4
-  hooks_riverpod:
+  hooks_riverpod: ^1.0.4
   flutter_hooks: ^0.18.5+1
-  freezed_annotation:
-  json_annotation:
+  freezed_annotation: ^2.0.3
+  json_annotation: ^4.6.0
 
   #UI
   mobile_scanner: ^2.0.0
@@ -50,6 +50,7 @@ dependencies:
   loading_overlay:
   easy_rich_text:
   cool_alert:
+  badges:
 
   #Utils
   uuid:
@@ -74,11 +75,11 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.1
   hive_generator:
-  build_runner:
-  freezed: ^2.0.3+1
-  json_serializable:
+  build_runner: ^2.2.0
+  freezed: ^2.0.5
+  json_serializable: ^6.3.1
   soundpool: ^2.3.0
 
 # For information on the generic Dart part of this file, see the

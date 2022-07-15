@@ -1,3 +1,4 @@
+/*
 import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -76,7 +77,9 @@ class AddSessionDialog extends ConsumerWidget {
                         id: eventId,
                         createdOn: DateTime.now(),
                         name: nameController.text.trim(),
-                        status: EventStatus.live
+                        status: EventStatus.live,
+                        acceptPassepartout: true
+
                         // prefix: prefixController.text.trim(),
                         );
                     Cloud.eventDoc(activityId, eventId).set(s.toJson());
@@ -90,3 +93,4 @@ class AddSessionDialog extends ConsumerWidget {
     );
   }
 }
+*/

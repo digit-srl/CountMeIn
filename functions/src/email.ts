@@ -184,3 +184,51 @@ export async function sendWomEmail(
     attachment
   );
 }
+
+export async function sendNewActivityRequested(
+  providerName: string,
+  adminEmail: string,
+  adminFullname: string
+) {
+  const emails = ["info@digit.srl", "difrancescogianmarco@gmail.com"];
+
+  const json = JSON.stringify({
+    adminFullname: adminFullname,
+    provider: providerName,
+    adminEmail: adminEmail,
+  });
+
+  console.log(json);
+  return sendEmail(
+    emails,
+    "Nuovo Provider in attesa di verifica",
+    "new_provider",
+    json,
+    null,
+    null
+  );
+}
+
+export async function sendWelcomeNewProvider(
+  providerName: string,
+  adminEmail: string,
+  adminFullname: string
+) {
+  const emails = [adminEmail];
+
+  const json = JSON.stringify({
+    adminFullname: adminFullname,
+    provider: providerName,
+    adminEmail: adminEmail,
+  });
+
+  console.log(json);
+  return sendEmail(
+    emails,
+    "Nuovo Provider in attesa di verifica",
+    "welcome_new_provider",
+    json,
+    null,
+    null
+  );
+}

@@ -756,8 +756,8 @@ abstract class EmailVerificationError implements EmailVerificationState {
   const factory EmailVerificationError(
       final Object error, final StackTrace st) = _$EmailVerificationError;
 
-  Object get error => throw _privateConstructorUsedError;
-  StackTrace get st => throw _privateConstructorUsedError;
+  Object get error;
+  StackTrace get st;
   @JsonKey(ignore: true)
   _$$EmailVerificationErrorCopyWith<_$EmailVerificationError> get copyWith =>
       throw _privateConstructorUsedError;
@@ -891,9 +891,9 @@ abstract class _EmailVerificationData implements EmailVerificationData {
       required final String userId}) = _$_EmailVerificationData;
 
   @override
-  String get secret => throw _privateConstructorUsedError;
+  String get secret;
   @override
-  String get userId => throw _privateConstructorUsedError;
+  String get userId;
   @override
   @JsonKey(ignore: true)
   _$$_EmailVerificationDataCopyWith<_$_EmailVerificationData> get copyWith =>

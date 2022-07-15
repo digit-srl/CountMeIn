@@ -243,7 +243,7 @@ class _$Authenticated implements Authenticated {
 abstract class Authenticated implements AuthState {
   const factory Authenticated(final AuthUser user) = _$Authenticated;
 
-  AuthUser get user => throw _privateConstructorUsedError;
+  AuthUser get user;
   @JsonKey(ignore: true)
   _$$AuthenticatedCopyWith<_$Authenticated> get copyWith =>
       throw _privateConstructorUsedError;
@@ -639,7 +639,7 @@ class _$EmailNotVerified implements EmailNotVerified {
 abstract class EmailNotVerified implements AuthState {
   const factory EmailNotVerified(final User user) = _$EmailNotVerified;
 
-  User get user => throw _privateConstructorUsedError;
+  User get user;
   @JsonKey(ignore: true)
   _$$EmailNotVerifiedCopyWith<_$EmailNotVerified> get copyWith =>
       throw _privateConstructorUsedError;
@@ -801,8 +801,8 @@ abstract class AuthError implements AuthState {
   const factory AuthError(final Object err, final StackTrace? stack) =
       _$AuthError;
 
-  Object get err => throw _privateConstructorUsedError;
-  StackTrace? get stack => throw _privateConstructorUsedError;
+  Object get err;
+  StackTrace? get stack;
   @JsonKey(ignore: true)
   _$$AuthErrorCopyWith<_$AuthError> get copyWith =>
       throw _privateConstructorUsedError;

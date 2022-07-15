@@ -14,10 +14,14 @@ final womValidator = MultiValidator([
   RequiredValidator(errorText: 'Questo campo è obbligatorio'),
   RangeValidator(
       min: 1,
-      max: 50,
+      max: 1000,
       errorText: 'Il valore deve essere compresto tra 1 e 100'),
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
 ]);
+
+final acceptPassepartoutProvider = StateProvider.autoDispose<bool>((ref) {
+  return true;
+});
 
 class NewEventFormScreen extends HookConsumerWidget {
   static const String routeName = "/newEventForm";
@@ -33,6 +37,7 @@ class NewEventFormScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final nameController = useTextEditingController();
     final womController = useTextEditingController();
+    final acceptPassepartout = ref.watch(acceptPassepartoutProvider);
 
     return Scaffold(
       body: Padding(
@@ -41,7 +46,10 @@ class NewEventFormScreen extends HookConsumerWidget {
           key: _formKey,
           child: ListView(
             children: [
-              Text('Crea un nuovo evento',style: Theme.of(context).textTheme.headline4,),
+              Text(
+                'Crea un nuovo evento',
+                style: Theme.of(context).textTheme.headline4,
+              ),
               const SizedBox(height: 16),
               MyTextField(
                 controller: nameController,
@@ -61,12 +69,13 @@ class NewEventFormScreen extends HookConsumerWidget {
                   if (_formKey.currentState!.validate()) {
                     final eventId = const Uuid().v4();
                     final s = Event(
-                        id: eventId,
-                        createdOn: DateTime.now(),
-                        name: nameController.text.trim(),
-                        status: EventStatus.live,
-                        womCount: int.tryParse(womController.text.trim()),
-                        );
+                      id: eventId,
+                      createdOn: DateTime.now(),
+                      name: nameController.text.trim(),
+                      status: EventStatus.live,
+                      womCount: int.tryParse(womController.text.trim()),
+                      acceptPassepartout: acceptPassepartout,
+                    );
                     Cloud.eventDoc(providerId, eventId).set(s.toJson());
                     Navigator.of(context).pop();
                   }

@@ -276,22 +276,22 @@ abstract class _UserCard implements UserCard {
   factory _UserCard.fromJson(Map<String, dynamic> json) = _$_UserCard.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String get surname => throw _privateConstructorUsedError;
+  String get surname;
   @override
-  String get cf => throw _privateConstructorUsedError;
+  String get cf;
   @override
-  String? get email => throw _privateConstructorUsedError;
+  String? get email;
   @override
-  String? get secret => throw _privateConstructorUsedError;
+  String? get secret;
   @override
   @MyDateTimeConverter()
-  DateTime? get addedOn => throw _privateConstructorUsedError;
+  DateTime? get addedOn;
   @override
-  bool get emailVerified => throw _privateConstructorUsedError;
+  bool get emailVerified;
   @override
   @JsonKey(ignore: true)
   _$$_UserCardCopyWith<_$_UserCard> get copyWith =>

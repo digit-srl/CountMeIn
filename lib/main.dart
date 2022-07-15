@@ -22,6 +22,7 @@ enum AppFlavor { master, collab }
 // fvm flutter build apk --dart-define=DEFINE_APP_NAME=+CountMeInMaster --dart-define=DEFINE_APP_SUFFIX=.master --dart-define=DEFINE_FLAVOR=master
 // fvm flutter build apk --dart-define=DEFINE_APP_NAME=CountMeIn --dart-define=DEFINE_APP_SUFFIX=.collab --dart-define=DEFINE_FLAVOR=collab
 // firebase emulators:start --import=./emulator_backup --export-on-exit
+// lsof -i tcp:8082
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,8 +32,9 @@ void main() async {
   );
 
   if (kDebugMode) {
-    // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-    // FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8082);
+    final d = "0.0.0.0";
+    await FirebaseAuth.instance.useAuthEmulator(d, 9099);
+    FirebaseFirestore.instance.useFirestoreEmulator(d, 8082);
   }
 
   if (kIsWeb) {

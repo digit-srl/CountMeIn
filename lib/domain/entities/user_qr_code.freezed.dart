@@ -238,17 +238,17 @@ abstract class _UserQrCode implements UserQrCode {
       _$_UserQrCode.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String get surname => throw _privateConstructorUsedError;
+  String get surname;
   @override
-  String get cf => throw _privateConstructorUsedError;
+  String get cf;
   @override
-  String get activityId => throw _privateConstructorUsedError;
+  String get activityId;
   @override
-  String? get email => throw _privateConstructorUsedError;
+  String? get email;
   @override
   @JsonKey(ignore: true)
   _$$_UserQrCodeCopyWith<_$_UserQrCode> get copyWith =>

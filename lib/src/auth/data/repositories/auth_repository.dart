@@ -53,4 +53,16 @@ class AuthRepository extends IAuthRepository {
       throw UnknownException();
     }
   }
+
+  @override
+  Future<void> signOut()async {
+    try {
+       await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (ex) {
+      throw SignInException.fromFirebaseException(ex);
+    } catch (ex) {
+      print(ex);
+      throw UnknownException();
+    }
+  }
 }

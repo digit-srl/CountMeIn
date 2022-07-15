@@ -1,4 +1,9 @@
+import 'package:countmein/domain/entities/cmi_provider.dart';
+import 'package:countmein/domain/entities/cmi_provider_request.dart';
 import 'package:countmein/domain/entities/user_card.dart';
+import 'package:countmein/router.dart';
+import 'package:countmein/src/admin/ui/screens/admin_pending_providers.dart';
+import 'package:countmein/src/admin/ui/screens/admin_provider_handler.dart';
 import 'package:countmein/src/auth/ui/screens/auht_gate.dart';
 import 'package:countmein/src/auth/ui/screens/reset_password.dart';
 import 'package:countmein/ui/screens/email_verification.dart';
@@ -10,18 +15,43 @@ import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
 
 import 'constants.dart';
+import 'src/admin/ui/screens/admin_dashboard.dart';
+import 'src/admin/ui/screens/admin_providers.dart';
 import 'ui/screens/admin_user_details.dart';
 import 'ui/screens/error.dart';
 import 'ui/screens/home.dart';
 import 'ui/screens/user_console.dart';
 import 'ui/screens/user_event.dart';
-
+/*
 final goRouterProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
+    initialLocation: AuthGate.routeName,
     routes: [
       GoRoute(
         path: AuthGate.routeName,
         builder: (context, state) => const AuthGate(),
+      ),
+      GoRoute(
+        path: AdminDashboardScreen.routeName,
+        builder: (context, state) => const AdminDashboardScreen(),
+      ),
+      GoRoute(
+        path: AdminPendingProvidersScreen.routeName,
+        builder: (context, state) => AdminPendingProvidersScreen(
+
+        ),
+      ),
+      GoRoute(
+        path: AdminProvidersScreen.routeName,
+        builder: (context, state) => AdminProvidersScreen(
+
+        ),
+      ),
+      GoRoute(
+        path: AdminProviderHandlerScreen.routeName,
+        builder: (context, state) => AdminProviderHandlerScreen(
+          provider: state.extra as CMIProvider,
+        ),
       ),
       GoRoute(
         path: '${NewEventFormScreen.routeName}/:providerId',
@@ -83,10 +113,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           );
         },
       ),
-      /*GoRoute(
+      *//*GoRoute(
         path: '/page2',
         builder: (context, state) => const Page2Screen(),
-      ),*/
+      ),*//*
     ], // redirect to the login page if the user is not logged in
     redirect: (state) {
       print(state.location);
@@ -102,13 +132,12 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       // no need to redirect at all
       return null;
     },
-    initialLocation: HomeScreen.routeName,
     errorBuilder: (context, state) => ErrorScreen(
       exception: state.error,
     ),
   );
   return router;
-});
+});*/
 
 class MyApp extends ConsumerWidget {
   // const MyApp({Key? key}) : super(key: key);
@@ -117,7 +146,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme =
         ThemeData(colorSchemeSeed: isMaster ? Colors.blue : Colors.green);
-    final router = ref.watch(goRouterProvider);
+    final router = ref.watch(routerProvider);
     return OKToast(
       child: MaterialApp.router(
         theme: theme,

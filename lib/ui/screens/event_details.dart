@@ -55,7 +55,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (c) => ScanScreen(
-          eventId: widget.event.id,
+          event: widget.event,
           activity: activity,
         ),
       ),

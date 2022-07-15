@@ -531,7 +531,7 @@ abstract class ResetPasswordFirebaseException implements ResetPasswordState {
           final ResetPasswordException exception) =
       _$ResetPasswordFirebaseException;
 
-  ResetPasswordException get exception => throw _privateConstructorUsedError;
+  ResetPasswordException get exception;
   @JsonKey(ignore: true)
   _$$ResetPasswordFirebaseExceptionCopyWith<_$ResetPasswordFirebaseException>
       get copyWith => throw _privateConstructorUsedError;
@@ -968,8 +968,8 @@ abstract class ResetPasswordError implements ResetPasswordState {
   const factory ResetPasswordError(final Object error, final StackTrace st) =
       _$ResetPasswordError;
 
-  Object get error => throw _privateConstructorUsedError;
-  StackTrace get st => throw _privateConstructorUsedError;
+  Object get error;
+  StackTrace get st;
   @JsonKey(ignore: true)
   _$$ResetPasswordErrorCopyWith<_$ResetPasswordError> get copyWith =>
       throw _privateConstructorUsedError;

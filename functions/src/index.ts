@@ -58,9 +58,40 @@ export const onActivityRequested = functions
   .firestore.document("providerRequests/{docId}")
   .onCreate((snap, context) => {
     const activity: FirebaseFirestore.DocumentData = snap.data();
+    const name = activity.adminName + " " + activity.adminSurname;
+    console.log(
+      "new provider requested" +
+        name +
+        " " +
+        activity.name +
+        " " +
+        activity.adminEmail
+    );
 
-    console.log("new provider requested" + activity.name);
-    console.log("new provider requested");
+    return Email.sendNewActivityRequested(
+      activity.name,
+      activity.adminEmail,
+      name
+    );
+  });
+
+export const onActivityCreated = functions
+  .region("europe-west3")
+  .firestore.document("providers/{docId}")
+  .onCreate(async (snap, context) => {
+    const provider: FirebaseFirestore.DocumentData = snap.data();
+
+    const email = provider.adminEmail;
+    const surname = provider.adminSurname;
+    const name = provider.adminName;
+    const fullName = name + " " + surname;
+
+    console.log(
+      "new provider created" + name + " " + provider.name + " " + email
+    );
+
+    await createNewAdminForProvider(name, surname, email);
+    await Email.sendWelcomeNewProvider(provider.name, email, fullName);
   });
 
 export const onUserCheckIn = functions
@@ -399,8 +430,6 @@ export const crateNewUser = functions
       const name = data.name;
       const surname = data.surname;
       //const providerId = data.providerId;
-      const role = data.role;
-      const fullName = name + " " + surname;
 
       if (email === undefined || email === null || email === "") {
         response.status(400).send("invalid userId");
@@ -408,28 +437,7 @@ export const crateNewUser = functions
       }
 
       try {
-        const user = await admin.auth().createUser({
-          email: email,
-          emailVerified: true,
-          password: "123456",
-          displayName: fullName,
-        });
-        console.log("user created " + user.uid);
-
-        const authUser = new AuthUser(
-          user.uid,
-          name,
-          surname,
-          email,
-          user.emailVerified,
-          role
-        );
-
-        //await admin.auth().setCustomUserClaims(user.uid, {
-        //  role: role,
-        //});
-        await db.doc("credentials" + "/" + user.uid).set(authUser.toJson());
-        await generateAndSendResetPasswordEmail(fullName, email);
+        await createNewAdminForProvider(name, surname, email);
         response.status(200).end();
       } catch (error) {
         console.log(error);
@@ -437,6 +445,35 @@ export const crateNewUser = functions
       }
     }
   );
+
+async function createNewAdminForProvider(
+  name: string,
+  surname: string,
+  email: string
+) {
+  const fullName = name + " " + surname;
+  const user = await admin.auth().createUser({
+    email: email,
+    emailVerified: true,
+    password: "123456",
+    displayName: fullName,
+  });
+  console.log("user created " + user.uid);
+
+  const authUser = new AuthUser(
+    user.uid,
+    name,
+    surname,
+    email,
+    user.emailVerified
+  );
+
+  //await admin.auth().setCustomUserClaims(user.uid, {
+  //  role: role,
+  //});
+  await db.doc("credentials" + "/" + user.uid).set(authUser.toJson());
+  //await generateAndSendResetPasswordEmail(fullName, email);
+}
 
 async function generateAndSendResetPasswordEmail(
   fullName: string,
@@ -466,7 +503,7 @@ async function generateAndSendResetPasswordEmail(
   }
 }
 
-export const createNewActivity = functions
+export const createNewProvider = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {

@@ -137,9 +137,9 @@ abstract class _EventIds implements EventIds {
       required final String eventId}) = _$_EventIds;
 
   @override
-  String get activityId => throw _privateConstructorUsedError;
+  String get activityId;
   @override
-  String get eventId => throw _privateConstructorUsedError;
+  String get eventId;
   @override
   @JsonKey(ignore: true)
   _$$_EventIdsCopyWith<_$_EventIds> get copyWith =>
