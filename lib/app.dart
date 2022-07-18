@@ -9,6 +9,7 @@ import 'package:countmein/src/auth/ui/screens/reset_password.dart';
 import 'package:countmein/ui/screens/email_verification.dart';
 import 'package:countmein/ui/screens/new_event_form.dart';
 import 'package:countmein/ui/screens/request_activity.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -22,6 +23,7 @@ import 'ui/screens/error.dart';
 import 'ui/screens/home.dart';
 import 'ui/screens/user_console.dart';
 import 'ui/screens/user_event.dart';
+
 /*
 final goRouterProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
@@ -113,10 +115,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           );
         },
       ),
-      *//*GoRoute(
+      */ /*GoRoute(
         path: '/page2',
         builder: (context, state) => const Page2Screen(),
-      ),*//*
+      ),*/ /*
     ], // redirect to the login page if the user is not logged in
     redirect: (state) {
       print(state.location);
@@ -144,12 +146,41 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme =
-        ThemeData(colorSchemeSeed: isMaster ? Colors.blue : Colors.green);
     final router = ref.watch(routerProvider);
     return OKToast(
       child: MaterialApp.router(
-        theme: theme,
+        theme: FlexThemeData.light(
+          scheme: FlexScheme.deepBlue,
+          surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
+          blendLevel: 20,
+          appBarOpacity: 0.95,
+          subThemesData: const FlexSubThemesData(
+            blendOnLevel: 20,
+            blendOnColors: false,
+          ),
+          useMaterial3ErrorColors: true,
+          visualDensity: FlexColorScheme.comfortablePlatformDensity,
+          useMaterial3: true,
+          // To use the playground font, add GoogleFonts package and uncomment
+          // fontFamily: GoogleFonts.notoSans().fontFamily,
+        ),
+        darkTheme: FlexThemeData.dark(
+          colors: FlexColor.schemes[FlexScheme.deepBlue]!
+              .light.defaultError.toDark(10, true),
+          surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
+          blendLevel: 15,
+          appBarStyle: FlexAppBarStyle.background,
+          appBarOpacity: 0.90,
+          subThemesData: const FlexSubThemesData(
+            blendOnLevel: 30,
+          ),
+          useMaterial3ErrorColors: true,
+          visualDensity: FlexColorScheme.comfortablePlatformDensity,
+          useMaterial3: true,
+          // To use the playground font, add GoogleFonts package and uncomment
+          // fontFamily: GoogleFonts.notoSans().fontFamily,
+        ),
+        themeMode: ThemeMode.system,
         routeInformationProvider: router.routeInformationProvider,
         routeInformationParser: router.routeInformationParser,
         routerDelegate: router.routerDelegate,

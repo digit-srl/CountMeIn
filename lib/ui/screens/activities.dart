@@ -138,7 +138,7 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
   Widget build(BuildContext context) {
     final eventsState = ref.watch(eventsStreamProvider(widget.providerId));
     final userRole = ref.watch(userRoleProvider(widget.providerId));
-    final isOwner = userRole == UserRole.owner;
+    final isOwner = userRole == UserRole.admin;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.providerName),
@@ -241,7 +241,7 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (c) => EventDetailsScreen(
-                            activityId: widget.providerId,
+                            providerId: widget.providerId,
                             event: event,
                           ),
                         ),

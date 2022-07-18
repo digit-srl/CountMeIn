@@ -1,13 +1,20 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
-class CMIContainer extends StatelessWidget {
+class CMICard extends StatelessWidget {
   final Widget child;
   final IconData? iconBadge;
   final Function()? onTap;
+  final EdgeInsetsGeometry? margin;
+  final bool inverseColor;
 
-  const CMIContainer(
-      {Key? key, required this.child, this.iconBadge, this.onTap})
+  const CMICard(
+      {Key? key,
+      required this.child,
+      this.iconBadge,
+      this.onTap,
+      this.margin,
+      this.inverseColor = false})
       : super(key: key);
 
   @override
@@ -17,18 +24,24 @@ class CMIContainer extends StatelessWidget {
       showBadge: iconBadge != null,
       badgeContent: iconBadge != null
           ? Icon(
-        iconBadge,
-        color: Colors.white,
-      )
+              iconBadge,
+              color: Colors.white,
+            )
           : null,
       child: InkWell(
         onTap: onTap,
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.grey[850], borderRadius: BorderRadius.circular(16)),
-          child: Center(child: child),
+        child: Card(
+          color: inverseColor
+              ? Theme.of(context).colorScheme.inversePrimary
+              : null,
+          margin: margin,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Center(child: child),
+          ),
         ),
       ),
     );
   }
+//Colors.grey[850]
 }

@@ -29,13 +29,15 @@ import 'admin_user_details.dart';
 import 'user_event.dart';
 
 class EventDetailsScreen extends ConsumerStatefulWidget {
+  static const String routeName = '/eventDetails';
+
   final Event event;
-  final String activityId;
+  final String providerId;
 
   const EventDetailsScreen({
     Key? key,
     required this.event,
-    required this.activityId,
+    required this.providerId,
   }) : super(key: key);
 
   @override
@@ -48,7 +50,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    ids = EventIds(activityId: widget.activityId, eventId: widget.event.id);
+    ids = EventIds(activityId: widget.providerId, eventId: widget.event.id);
   }
 
   _goToScan(CMIProvider activity) {
@@ -65,11 +67,11 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final eventState =
-        ref.watch(eventProvider([widget.activityId, widget.event.id]));
-    final activityState = ref.watch(activityStreamProvider(widget.activityId));
+        ref.watch(eventProvider([widget.providerId, widget.event.id]));
+    final activityState = ref.watch(activityStreamProvider(widget.providerId));
     final usersState = ref.watch(usersStreamProvider(ids));
-    final role = ref.watch(userRoleProvider(widget.activityId));
-    final isOwner = role == UserRole.owner;
+    final role = ref.watch(userRoleProvider(widget.providerId));
+    final isOwner = role == UserRole.admin;
     final hasData = usersState is AsyncData;
     return Scaffold(
       appBar: AppBar(
@@ -238,7 +240,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
           );
         });
     if (answer ?? false) {
-      Cloud.eventUsersCollection(widget.activityId, widget.event.id)
+      Cloud.eventUsersCollection(widget.providerId, widget.event.id)
           .doc(userId)
           .delete();
     }

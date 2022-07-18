@@ -19,7 +19,7 @@ class CMIProvider with _$CMIProvider {
     required String adminName,
     required String adminSurname,
     required String adminEmail,
-    String? womApiKey,
+    String? apiKey,
     List<String>? aims,
     String? domainRequirement,
     @Default(false) bool releaseWom,

@@ -5,6 +5,7 @@ import '../../../../domain/entities/cmi_provider.dart';
 import '../../../common/ui/widgets/cmi_container.dart';
 import '../screens/admin_provider_handler.dart';
 import '../../../common/mu_styles.dart';
+
 class GridProvidersWidget extends StatelessWidget {
 
   final List<CMIProvider> providers;
@@ -23,13 +24,13 @@ class GridProvidersWidget extends StatelessWidget {
       ),
       itemBuilder: (BuildContext context, int index) {
         final p = providers[index];
-        return CMIContainer(
+        return CMICard(
           onTap: () {
             context.push(AdminProviderHandlerScreen.routeName, extra: p);
           },
           child: Text(
             p.name,
-            style: Theme.of(context).textTheme.subtitle1?.white,
+            // style: Theme.of(context).textTheme.subtitle1,
           ),
         );
       },

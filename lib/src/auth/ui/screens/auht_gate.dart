@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:countmein/src/auth/ui/screens/sign_in.dart';
 import 'package:countmein/ui/screens/activities.dart';
 import 'package:flutter/foundation.dart';
@@ -19,7 +21,7 @@ class AuthGate extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    if(kIsWeb){
+    if(kIsWeb || Platform.isMacOS){
       return HomeWebScreen();
     }
 

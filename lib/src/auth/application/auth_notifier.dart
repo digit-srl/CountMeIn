@@ -43,11 +43,11 @@ final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
           yield* userFromFirestore.when(
             data: (data) async* {
               if (data != null) {
-                /*final idToken = await user.getIdTokenResult();
+                final idToken = await user.getIdTokenResult();
                 final map = <String, dynamic>{};
                 map.addAll(data);
-                map['role'] = idToken.claims?['role'];*/
-                final dto = AuthUserDTO.fromJson(data);
+                map['role'] = idToken.claims?['role'];
+                final dto = AuthUserDTO.fromJson(map);
                 yield AuthState.authenticated(dto.toDomain());
               } else {
                 yield const Unautenticated();
@@ -79,6 +79,13 @@ final authStateProvider = Provider<AuthState>((ref) {
         data: (state) => state,
         error: (err, stack) => AuthState.error(err, stack),
         loading: () => const AuthState.loading(),
+      );
+});
+
+final authUserRoleProvider = Provider<PlatformRole>((ref) {
+  return ref.watch(authStateProvider).maybeWhen(
+        authenticated: (user) => user.role,
+        orElse: () => PlatformRole.unknown,
       );
 });
 
@@ -191,8 +198,14 @@ class SignInNotifier extends StateNotifier<bool> {
     }
   }
 
+  @override
+  set state(bool value) {
+    if (mounted) {
+      super.state = value;
+    }
+  }
 
-  signOut()async{
+  signOut() async {
     try {
       await read(authRepositoryProvider).signOut();
       // authChangeNotifier.isLogged = true;

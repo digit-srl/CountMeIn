@@ -13,7 +13,7 @@ class ActiveProviders extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(activeProvidersStreamProvider);
     final data = state.asData?.value;
-    return CMIContainer(
+    return CMICard(
       onTap: data != null && data.isNotEmpty
           ? () {
               context.push(AdminProvidersScreen.routeName, extra: data);
@@ -23,7 +23,7 @@ class ActiveProviders extends ConsumerWidget {
           ? const CircularProgressIndicator()
           : Text(
               '${data.length} Providers',
-              style: Theme.of(context).textTheme.subtitle1?.white,
+              style: Theme.of(context).textTheme.subtitle1,
             ),
     );
   }

@@ -1,3 +1,5 @@
+import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
+import 'package:countmein/ui/screens/request_activity.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -40,13 +42,15 @@ class SignInScreen extends HookConsumerWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  _signIn(String email, String password, WidgetRef ref)async {
+  _signIn(String email, String password, WidgetRef ref) async {
     print('$email, $password');
     try {
-     final result =  await ref.read(signInNotifierProvider.notifier).signIn(email, password);
-     // if(result){
-     //   ref.read(goRouterProvider).pop();
-     // }
+      final result = await ref
+          .read(signInNotifierProvider.notifier)
+          .signIn(email, password);
+      // if(result){
+      //   ref.read(goRouterProvider).pop();
+      // }
     } on SignInException catch (ex) {
       print(ex);
     }
@@ -61,97 +65,108 @@ class SignInScreen extends HookConsumerWidget {
       appBar: AppBar(),
       body: LoadingOverlay(
         isLoading: isLoading,
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              /*SignInButton(
-                Buttons.Facebook,
-                text: 'Continua con Facebook',
-                onPressed: () {},
+        child: Center(
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 600, maxHeight: 400),
+            child: CMICard(
+              child: Form(
+                key: _formKey,
+                child: ListView(
+                  children: [
+                    Text(
+                      'Accedi',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    /*SignInButton(
+                      Buttons.Facebook,
+                      text: 'Continua con Facebook',
+                      onPressed: () {},
+                    ),
+                    const SizedBox(height: 16),
+                    SignInButton(
+                      Buttons.Google,
+                      text: 'Continua con Google',
+                      onPressed: () {},
+                    ),
+                    const SizedBox(height: 16),
+                    SignInButton(
+                      Buttons.Apple,
+                      text: 'Continua con Apple',
+                      onPressed: () {},
+                    ),
+                    const SizedBox(height: 24),
+                    Center(child: Text('oppure')),
+                    const SizedBox(height: 8),*/
+                    MUTextField(
+                      controller: emailController,
+                      labelText: 'Email',
+                      validator: emailValidator,
+                    ),
+                    MUTextField(
+                      controller: passwordController,
+                      labelText: 'Password',
+                      validator: passwordValidator,
+                    ),
+                    const SizedBox(height: 32),
+                    Center(
+                      child: MUButton(
+                        text: 'Accedi',
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            final email = emailController.text.trim();
+                            final password = passwordController.text.trim();
+                            _signIn(email, password, ref);
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    EasyRichText(
+                      "Vuoi registrare un tuo provider? Clicca qui",
+                      defaultStyle: Theme.of(context).textTheme.bodyText1,
+                      patternList: [
+                        EasyRichTextPattern(
+                            targetString: 'qui',
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                context.push(ActivityRequestScreen.routeName);
+                              },
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.bold
+                                .underline),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    // EasyRichText(
+                    //   "Hai dimenticato la password? Clicca qui",
+                    //   defaultStyle: Theme.of(context).textTheme.bodyText1,
+                    //   patternList: [
+                    //     // EasyRichTextPattern(
+                    //     //   targetString: 'https://pub.dev/packages/easy_rich_text',
+                    //     //   urlType: 'web',
+                    //     //   style: TextStyle(
+                    //     //     decoration: TextDecoration.underline,
+                    //     //   ),
+                    //     // ),
+                    //     EasyRichTextPattern(
+                    //         targetString: 'qui',
+                    //         recognizer: TapGestureRecognizer()
+                    //           ..onTap = () {
+                    //             print('password dimenticata');
+                    //           },
+                    //         style: Theme.of(context)
+                    //             .textTheme
+                    //             .bodyText1
+                    //             ?.bold
+                    //             .underline),
+                    //   ],
+                    // ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 16),
-              SignInButton(
-                Buttons.Google,
-                text: 'Continua con Google',
-                onPressed: () {},
-              ),
-              const SizedBox(height: 16),
-              SignInButton(
-                Buttons.Apple,
-                text: 'Continua con Apple',
-                onPressed: () {},
-              ),
-              const SizedBox(height: 24),
-              Center(child: Text('oppure')),
-              const SizedBox(height: 8),*/
-              MUTextField(
-                controller: emailController,
-                labelText: 'Email',
-                validator: emailValidator,
-              ),
-              MUTextField(
-                controller: passwordController,
-                labelText: 'Password',
-                validator: passwordValidator,
-              ),
-              const SizedBox(height: 32),
-              MUButton(
-                text: 'sign in',
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    final email = emailController.text.trim();
-                    final password = passwordController.text.trim();
-                    _signIn(email, password, ref);
-
-                  }
-                },
-              ),
-              const SizedBox(height: 16),
-              // EasyRichText(
-              //   "Non hai un account? Registrati",
-              //   defaultStyle: Theme.of(context).textTheme.bodyText1,
-              //   patternList: [
-              //     EasyRichTextPattern(
-              //         targetString: 'Registrati',
-              //         recognizer: TapGestureRecognizer()
-              //           ..onTap = () {
-              //             context.push(SignUpScreen.routeName);
-              //           },
-              //         style: Theme.of(context)
-              //             .textTheme
-              //             .bodyText1
-              //             ?.bold
-              //             .underline),
-              //   ],
-              // ),
-              //  const SizedBox(height: 8),
-              // EasyRichText(
-              //   "Hai dimenticato la password? Clicca qui",
-              //   defaultStyle: Theme.of(context).textTheme.bodyText1,
-              //   patternList: [
-              //     // EasyRichTextPattern(
-              //     //   targetString: 'https://pub.dev/packages/easy_rich_text',
-              //     //   urlType: 'web',
-              //     //   style: TextStyle(
-              //     //     decoration: TextDecoration.underline,
-              //     //   ),
-              //     // ),
-              //     EasyRichTextPattern(
-              //         targetString: 'qui',
-              //         recognizer: TapGestureRecognizer()
-              //           ..onTap = () {
-              //             print('password dimenticata');
-              //           },
-              //         style: Theme.of(context)
-              //             .textTheme
-              //             .bodyText1
-              //             ?.bold
-              //             .underline),
-              //   ],
-              // ),
-            ],
+            ),
           ),
         ),
       ),

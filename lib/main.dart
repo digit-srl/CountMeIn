@@ -33,8 +33,8 @@ void main() async {
 
   if (kDebugMode) {
     final d = "0.0.0.0";
-    await FirebaseAuth.instance.useAuthEmulator(d, 9099);
-    FirebaseFirestore.instance.useFirestoreEmulator(d, 8082);
+    // await FirebaseAuth.instance.useAuthEmulator(d, 9099);
+    // FirebaseFirestore.instance.useFirestoreEmulator(d, 8082);
   }
 
   if (kIsWeb) {

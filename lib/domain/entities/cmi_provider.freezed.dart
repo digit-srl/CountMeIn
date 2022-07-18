@@ -25,7 +25,7 @@ mixin _$CMIProvider {
   String get adminName => throw _privateConstructorUsedError;
   String get adminSurname => throw _privateConstructorUsedError;
   String get adminEmail => throw _privateConstructorUsedError;
-  String? get womApiKey => throw _privateConstructorUsedError;
+  String? get apiKey => throw _privateConstructorUsedError;
   List<String>? get aims => throw _privateConstructorUsedError;
   String? get domainRequirement => throw _privateConstructorUsedError;
   bool get releaseWom => throw _privateConstructorUsedError;
@@ -53,7 +53,7 @@ abstract class $CMIProviderCopyWith<$Res> {
       String adminName,
       String adminSurname,
       String adminEmail,
-      String? womApiKey,
+      String? apiKey,
       List<String>? aims,
       String? domainRequirement,
       bool releaseWom,
@@ -77,7 +77,7 @@ class _$CMIProviderCopyWithImpl<$Res> implements $CMIProviderCopyWith<$Res> {
     Object? adminName = freezed,
     Object? adminSurname = freezed,
     Object? adminEmail = freezed,
-    Object? womApiKey = freezed,
+    Object? apiKey = freezed,
     Object? aims = freezed,
     Object? domainRequirement = freezed,
     Object? releaseWom = freezed,
@@ -106,9 +106,9 @@ class _$CMIProviderCopyWithImpl<$Res> implements $CMIProviderCopyWith<$Res> {
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
-      womApiKey: womApiKey == freezed
-          ? _value.womApiKey
-          : womApiKey // ignore: cast_nullable_to_non_nullable
+      apiKey: apiKey == freezed
+          ? _value.apiKey
+          : apiKey // ignore: cast_nullable_to_non_nullable
               as String?,
       aims: aims == freezed
           ? _value.aims
@@ -151,7 +151,7 @@ abstract class _$$_CMIProviderCopyWith<$Res>
       String adminName,
       String adminSurname,
       String adminEmail,
-      String? womApiKey,
+      String? apiKey,
       List<String>? aims,
       String? domainRequirement,
       bool releaseWom,
@@ -177,7 +177,7 @@ class __$$_CMIProviderCopyWithImpl<$Res> extends _$CMIProviderCopyWithImpl<$Res>
     Object? adminName = freezed,
     Object? adminSurname = freezed,
     Object? adminEmail = freezed,
-    Object? womApiKey = freezed,
+    Object? apiKey = freezed,
     Object? aims = freezed,
     Object? domainRequirement = freezed,
     Object? releaseWom = freezed,
@@ -206,9 +206,9 @@ class __$$_CMIProviderCopyWithImpl<$Res> extends _$CMIProviderCopyWithImpl<$Res>
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
-      womApiKey: womApiKey == freezed
-          ? _value.womApiKey
-          : womApiKey // ignore: cast_nullable_to_non_nullable
+      apiKey: apiKey == freezed
+          ? _value.apiKey
+          : apiKey // ignore: cast_nullable_to_non_nullable
               as String?,
       aims: aims == freezed
           ? _value._aims
@@ -247,7 +247,7 @@ class _$_CMIProvider implements _CMIProvider {
       required this.adminName,
       required this.adminSurname,
       required this.adminEmail,
-      this.womApiKey,
+      this.apiKey,
       final List<String>? aims,
       this.domainRequirement,
       this.releaseWom = false,
@@ -270,7 +270,7 @@ class _$_CMIProvider implements _CMIProvider {
   @override
   final String adminEmail;
   @override
-  final String? womApiKey;
+  final String? apiKey;
   final List<String>? _aims;
   @override
   List<String>? get aims {
@@ -297,7 +297,7 @@ class _$_CMIProvider implements _CMIProvider {
 
   @override
   String toString() {
-    return 'CMIProvider(id: $id, name: $name, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, womApiKey: $womApiKey, aims: $aims, domainRequirement: $domainRequirement, releaseWom: $releaseWom, status: $status, createdOn: $createdOn, requestedOn: $requestedOn)';
+    return 'CMIProvider(id: $id, name: $name, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, apiKey: $apiKey, aims: $aims, domainRequirement: $domainRequirement, releaseWom: $releaseWom, status: $status, createdOn: $createdOn, requestedOn: $requestedOn)';
   }
 
   @override
@@ -312,7 +312,7 @@ class _$_CMIProvider implements _CMIProvider {
                 .equals(other.adminSurname, adminSurname) &&
             const DeepCollectionEquality()
                 .equals(other.adminEmail, adminEmail) &&
-            const DeepCollectionEquality().equals(other.womApiKey, womApiKey) &&
+            const DeepCollectionEquality().equals(other.apiKey, apiKey) &&
             const DeepCollectionEquality().equals(other._aims, _aims) &&
             const DeepCollectionEquality()
                 .equals(other.domainRequirement, domainRequirement) &&
@@ -333,7 +333,7 @@ class _$_CMIProvider implements _CMIProvider {
       const DeepCollectionEquality().hash(adminName),
       const DeepCollectionEquality().hash(adminSurname),
       const DeepCollectionEquality().hash(adminEmail),
-      const DeepCollectionEquality().hash(womApiKey),
+      const DeepCollectionEquality().hash(apiKey),
       const DeepCollectionEquality().hash(_aims),
       const DeepCollectionEquality().hash(domainRequirement),
       const DeepCollectionEquality().hash(releaseWom),
@@ -359,7 +359,7 @@ abstract class _CMIProvider implements CMIProvider {
           required final String adminName,
           required final String adminSurname,
           required final String adminEmail,
-          final String? womApiKey,
+          final String? apiKey,
           final List<String>? aims,
           final String? domainRequirement,
           final bool releaseWom,
@@ -382,7 +382,7 @@ abstract class _CMIProvider implements CMIProvider {
   @override
   String get adminEmail;
   @override
-  String? get womApiKey;
+  String? get apiKey;
   @override
   List<String>? get aims;
   @override

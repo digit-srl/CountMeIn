@@ -39,7 +39,7 @@ dependencies:
   flutter_riverpod: ^1.0.4
   hooks_riverpod: ^1.0.4
   flutter_hooks: ^0.18.5+1
-  freezed_annotation: ^2.0.3
+  freezed_annotation: ^2.1.0
   json_annotation: ^4.6.0
 
   #UI
@@ -51,6 +51,7 @@ dependencies:
   easy_rich_text:
   cool_alert:
   badges:
+  flex_color_scheme:
 
   #Utils
   uuid:
@@ -63,6 +64,8 @@ dependencies:
   url_strategy: ^0.2.0
   flutter_file_saver: ^0.5.1
   package_info_plus: ^1.4.2
+  dart_wom_connector:
+    path: /Users/gianmarcodifrancesco/Work/Digit/Dart/dart_wom_connector
   file_saver:
     git: https://github.com/incrediblezayed/file_saver
 

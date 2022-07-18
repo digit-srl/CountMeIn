@@ -1,5 +1,6 @@
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
+import 'package:countmein/ui/screens/event_details.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -74,7 +75,7 @@ class RouterNotifier extends ChangeNotifier {
   String? _redirectLogic(GoRouterState state) {
     print(state.location);
     print(state.subloc);
-    final isEventRoute = state.subloc.startsWith('/event');
+    final isEventRoute = state.subloc.startsWith('/event/');
 
     if (isEventRoute) {
       print('is event route');
@@ -83,14 +84,16 @@ class RouterNotifier extends ChangeNotifier {
 
     final authState = _ref.read(authStateProvider);
     final isGoingToHome = state.subloc == '/';
-    if(isGoingToHome){
+    final isGoingToActivityRequest =
+        state.subloc == ActivityRequestScreen.routeName;
+    if (isGoingToHome || isGoingToActivityRequest) {
       return null;
     }
     // From here we can use the state and implement our custom logic
     final isGoingToDashboard = state.subloc == AdminDashboardScreen.routeName;
     final isGoingToSignIn = state.subloc == SignInScreen.routeName;
 
-     final fromp = state.subloc == '/' ? '' : '?from=${state.subloc}';
+    final fromp = state.subloc == '/' ? '' : '?from=${state.subloc}';
 
     if (authState is Unautenticated) {
       return isGoingToSignIn ? null : '${SignInScreen.routeName}$fromp';
@@ -100,7 +103,6 @@ class RouterNotifier extends ChangeNotifier {
     // if the user is logged in, send them where they were going before (or
     // home if they weren't going anywhere)
     if (isGoingToSignIn) return state.queryParams['from'] ?? '/';
-
 
     // There's no need for a redirect at this point.
     return null;
@@ -160,6 +162,16 @@ class RouterNotifier extends ChangeNotifier {
           builder: (context, state) {
             return UserEventScreen(
               activityId: state.params['activityId']!,
+            );
+          },
+        ),
+        GoRoute(
+          path: EventDetailsScreen.routeName,
+          builder: (context, state) {
+            final list = state.extra as List<dynamic>;
+            return EventDetailsScreen(
+              event: list[0],
+              providerId: list[1],
             );
           },
         ),

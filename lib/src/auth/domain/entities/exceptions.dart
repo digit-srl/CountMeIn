@@ -9,6 +9,8 @@ class SignInException extends MUException {
   factory SignInException.fromFirebaseException(FirebaseAuthException ex) {
 
     switch (ex.code) {
+      case 'network-request-failed':
+        return NetworkRequestFailed();
       case 'invalid-email':
       case 'wrong-password':
         return InvalidEmailOrPasswordException();
@@ -27,6 +29,8 @@ class InvalidEmailOrPasswordException extends SignInException {}
 class UserNotFoundException extends SignInException {}
 
 class UserDisabledException extends SignInException {}
+
+class NetworkRequestFailed extends SignInException {}
 
 class UnknownException extends SignInException {}
 

@@ -2,9 +2,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
 
+enum PlatformRole {
+  cmi,
+  unknown
+}
 
 enum UserRole {
-  owner,
+  admin,
   collaborator,
   unknown,
 }
@@ -18,6 +22,7 @@ class AuthUser with _$AuthUser {
     required String email,
     required bool emailVerified,
     required DateTime createdOn,
+    required PlatformRole role,
     required Map<String,UserRole> providersRole
   }) = _AuthUser;
 

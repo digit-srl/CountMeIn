@@ -21,6 +21,7 @@ class AdminProvidersScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(activeProvidersStreamProvider);
     return Scaffold(
+      appBar: AppBar(title: Text('Providers'),),
       body: state.when(
         data: (providers) => GridProvidersWidget(providers: providers),
         error: (err, st) => ErrorScreen(

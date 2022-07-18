@@ -13,7 +13,7 @@ class PendingProviders extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(pendingProvidersStreamProvider);
     final data = state.asData?.value;
-    return CMIContainer(
+    return CMICard(
       onTap: data != null && data.isNotEmpty
           ? () {
         context.push(AdminPendingProvidersScreen.routeName, extra: data);
@@ -25,7 +25,7 @@ class PendingProviders extends ConsumerWidget {
           ? const CircularProgressIndicator()
           : Text(
         '${data.length} Provider da validare',
-        style: Theme.of(context).textTheme.subtitle1?.white,
+        style: Theme.of(context).textTheme.subtitle1,
       ),
     );
   }

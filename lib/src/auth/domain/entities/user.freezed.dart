@@ -22,6 +22,7 @@ mixin _$AuthUser {
   String get email => throw _privateConstructorUsedError;
   bool get emailVerified => throw _privateConstructorUsedError;
   DateTime get createdOn => throw _privateConstructorUsedError;
+  PlatformRole get role => throw _privateConstructorUsedError;
   Map<String, UserRole> get providersRole => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -40,6 +41,7 @@ abstract class $AuthUserCopyWith<$Res> {
       String email,
       bool emailVerified,
       DateTime createdOn,
+      PlatformRole role,
       Map<String, UserRole> providersRole});
 }
 
@@ -59,6 +61,7 @@ class _$AuthUserCopyWithImpl<$Res> implements $AuthUserCopyWith<$Res> {
     Object? email = freezed,
     Object? emailVerified = freezed,
     Object? createdOn = freezed,
+    Object? role = freezed,
     Object? providersRole = freezed,
   }) {
     return _then(_value.copyWith(
@@ -86,6 +89,10 @@ class _$AuthUserCopyWithImpl<$Res> implements $AuthUserCopyWith<$Res> {
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as PlatformRole,
       providersRole: providersRole == freezed
           ? _value.providersRole
           : providersRole // ignore: cast_nullable_to_non_nullable
@@ -107,6 +114,7 @@ abstract class _$$_AuthUserCopyWith<$Res> implements $AuthUserCopyWith<$Res> {
       String email,
       bool emailVerified,
       DateTime createdOn,
+      PlatformRole role,
       Map<String, UserRole> providersRole});
 }
 
@@ -128,6 +136,7 @@ class __$$_AuthUserCopyWithImpl<$Res> extends _$AuthUserCopyWithImpl<$Res>
     Object? email = freezed,
     Object? emailVerified = freezed,
     Object? createdOn = freezed,
+    Object? role = freezed,
     Object? providersRole = freezed,
   }) {
     return _then(_$_AuthUser(
@@ -155,6 +164,10 @@ class __$$_AuthUserCopyWithImpl<$Res> extends _$AuthUserCopyWithImpl<$Res>
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as PlatformRole,
       providersRole: providersRole == freezed
           ? _value._providersRole
           : providersRole // ignore: cast_nullable_to_non_nullable
@@ -173,6 +186,7 @@ class _$_AuthUser implements _AuthUser {
       required this.email,
       required this.emailVerified,
       required this.createdOn,
+      required this.role,
       required final Map<String, UserRole> providersRole})
       : _providersRole = providersRole;
 
@@ -188,6 +202,8 @@ class _$_AuthUser implements _AuthUser {
   final bool emailVerified;
   @override
   final DateTime createdOn;
+  @override
+  final PlatformRole role;
   final Map<String, UserRole> _providersRole;
   @override
   Map<String, UserRole> get providersRole {
@@ -197,7 +213,7 @@ class _$_AuthUser implements _AuthUser {
 
   @override
   String toString() {
-    return 'AuthUser(uid: $uid, name: $name, surname: $surname, email: $email, emailVerified: $emailVerified, createdOn: $createdOn, providersRole: $providersRole)';
+    return 'AuthUser(uid: $uid, name: $name, surname: $surname, email: $email, emailVerified: $emailVerified, createdOn: $createdOn, role: $role, providersRole: $providersRole)';
   }
 
   @override
@@ -212,6 +228,7 @@ class _$_AuthUser implements _AuthUser {
             const DeepCollectionEquality()
                 .equals(other.emailVerified, emailVerified) &&
             const DeepCollectionEquality().equals(other.createdOn, createdOn) &&
+            const DeepCollectionEquality().equals(other.role, role) &&
             const DeepCollectionEquality()
                 .equals(other._providersRole, _providersRole));
   }
@@ -225,6 +242,7 @@ class _$_AuthUser implements _AuthUser {
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(emailVerified),
       const DeepCollectionEquality().hash(createdOn),
+      const DeepCollectionEquality().hash(role),
       const DeepCollectionEquality().hash(_providersRole));
 
   @JsonKey(ignore: true)
@@ -241,6 +259,7 @@ abstract class _AuthUser implements AuthUser {
       required final String email,
       required final bool emailVerified,
       required final DateTime createdOn,
+      required final PlatformRole role,
       required final Map<String, UserRole> providersRole}) = _$_AuthUser;
 
   @override
@@ -255,6 +274,8 @@ abstract class _AuthUser implements AuthUser {
   bool get emailVerified;
   @override
   DateTime get createdOn;
+  @override
+  PlatformRole get role;
   @override
   Map<String, UserRole> get providersRole;
   @override

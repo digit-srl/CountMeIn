@@ -42,16 +42,15 @@ class HomeWebScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.white,
         actions: [
           Center(
-              child: MUButton(
-            text: 'Dashboard',
-            onPressed: () {
-              context.push(AdminDashboardScreen.routeName);
-            },
-          )),
+            child: MUButton(
+              text: 'Dashboard',
+              onPressed: () {
+                context.push(AdminDashboardScreen.routeName);
+              },
+            ),
+          ),
         ],
       ),
       body: Center(
