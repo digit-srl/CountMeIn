@@ -46,6 +46,8 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
     final nameController = useTextEditingController();
     final surnameController = useTextEditingController();
     final emailController = useTextEditingController();
+    final adminCfController = useTextEditingController();
+    final cfController = useTextEditingController();
     final providerNameController = useTextEditingController();
     final restrictionDomainController = useTextEditingController();
     final releaseWom = ref.watch(releaseWomProvider);
@@ -81,14 +83,24 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
                           labelText: 'Cognome Amministratore',
                           validator: textValidator,
                         ),
+
                         MUTextField(
                           controller: emailController,
                           labelText: 'Email Amministatore',
                           validator: emailValidator,
+                        ),MUTextField(
+                          controller: cfController,
+                          labelText: 'C.F. Amministratore',
+                          validator: textValidator,
                         ),
                         MUTextField(
                           controller: providerNameController,
                           labelText: 'Nome Provider',
+                          validator: textValidator,
+                        ),
+                        MUTextField(
+                          controller: cfController,
+                          labelText: 'P. Iva o CF',
                           validator: textValidator,
                         ),
                         MUTextField(

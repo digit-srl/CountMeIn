@@ -20,7 +20,7 @@ import '../../domain/entities/session.dart';
 import '../../domain/entities/user_card.dart';
 import 'admin.dart';
 
-class HomeScreen extends StatelessWidget {
+/*class HomeScreen extends StatelessWidget {
   static const routeName = '/';
 
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
 
     return Container();
   }
-}
+}*/
 
 class HomeWebScreen extends StatelessWidget {
   const HomeWebScreen({Key? key}) : super(key: key);

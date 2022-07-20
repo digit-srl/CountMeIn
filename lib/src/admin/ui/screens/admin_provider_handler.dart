@@ -3,6 +3,7 @@ import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
+import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +11,9 @@ import 'package:go_router/go_router.dart';
 import '../../../../ui/screens/event_details.dart';
 import '../../../common/mu_styles.dart';
 import '../../../../domain/entities/session.dart';
+import '../../../common/ui/widgets/my_button.dart';
 import '../widgets/info_text.dart';
+import '../widgets/managers_handler_dialog.dart';
 
 class AdminProviderHandlerScreen extends ConsumerWidget {
   static const String routeName = '/adminProviderHandler';
@@ -60,6 +63,35 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                   label: 'Aims',
                   value: provider.aims?.join('-'),
                 ),
+                InfoText2(
+                    label: 'Managers',
+                    value: Row(
+                      children: [
+                        if (provider.managers != null)
+                          ...provider.managers!.values
+                              .map((e) => Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Chip(label: Text(e.name)),
+                                  ))
+                              .toList(),
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: provider.managers != null
+                              ? () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (c) {
+                                      return Dialog(
+                                        child: ManagersHandlerDialog(
+                                            provider: provider),
+                                      );
+                                    },
+                                  );
+                                }
+                              : null,
+                        )
+                      ],
+                    )),
                 if (provider.status == CMIProviderStatus.pending &&
                     platformUserRole == PlatformRole.cmi)
                   ElevatedButton(

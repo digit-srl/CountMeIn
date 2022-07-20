@@ -34,7 +34,7 @@ class AuthGate extends ConsumerWidget {
       loading: () => const LoadingWidget(),
       unauthenticated: () => SignInScreen(),
       emailNotVerified: (firebaseUser) =>
-          Scaffold(body: EmailNotVerifiedScreen(firebaseUser: firebaseUser)),
+          Scaffold(body: EmailNotVerifiedScreen()),
       error: (err, stack) => ErrorScreen(exception: err,),
     );
   }

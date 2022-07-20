@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import '../../../../app.dart';
@@ -48,6 +49,8 @@ class SignInScreen extends HookConsumerWidget {
       final result = await ref
           .read(signInNotifierProvider.notifier)
           .signIn(email, password);
+      Hive.box('user').put('email',email);
+      Hive.box('user').put('password',password);
       // if(result){
       //   ref.read(goRouterProvider).pop();
       // }
@@ -58,8 +61,8 @@ class SignInScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final emailController = useTextEditingController();
-    final passwordController = useTextEditingController();
+    final emailController = useTextEditingController(text: Hive.box('user').get('email'));
+    final passwordController = useTextEditingController(text: Hive.box('user').get('password'));
     final isLoading = ref.watch(signInNotifierProvider);
     return Scaffold(
       appBar: AppBar(),

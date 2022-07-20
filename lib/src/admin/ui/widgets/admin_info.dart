@@ -14,6 +14,7 @@ class AdminInfoWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authUserState = ref.watch(authStateProvider);
     final user = authUserState is Authenticated ? authUserState.user : null;
+    print(user);
     return CMICard(
       margin: const EdgeInsets.all(16),
       child: Column(

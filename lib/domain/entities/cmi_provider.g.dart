@@ -13,6 +13,10 @@ _$_CMIProvider _$$_CMIProviderFromJson(Map<String, dynamic> json) =>
       adminName: json['adminName'] as String,
       adminSurname: json['adminSurname'] as String,
       adminEmail: json['adminEmail'] as String,
+      managers: (json['managers'] as Map<String, dynamic>?)?.map(
+        (k, e) =>
+            MapEntry(k, ProviderManagerDTO.fromJson(e as Map<String, dynamic>)),
+      ),
       apiKey: json['apiKey'] as String?,
       aims: (json['aims'] as List<dynamic>?)?.map((e) => e as String).toList(),
       domainRequirement: json['domainRequirement'] as String?,
@@ -32,6 +36,7 @@ Map<String, dynamic> _$$_CMIProviderToJson(_$_CMIProvider instance) =>
       'adminName': instance.adminName,
       'adminSurname': instance.adminSurname,
       'adminEmail': instance.adminEmail,
+      'managers': instance.managers,
       'apiKey': instance.apiKey,
       'aims': instance.aims,
       'domainRequirement': instance.domainRequirement,
@@ -54,3 +59,21 @@ Json? _$JsonConverterToJson<Json, Value>(
   Json? Function(Value value) toJson,
 ) =>
     value == null ? null : toJson(value);
+
+_$_ProviderManagerDTO _$$_ProviderManagerDTOFromJson(
+        Map<String, dynamic> json) =>
+    _$_ProviderManagerDTO(
+      name: json['name'] as String,
+      invitedOn: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['invitedOn'], const MyDateTimeConverter().fromJson),
+      status: const ManagerStatusConverter().fromJson(json['status'] as String),
+    );
+
+Map<String, dynamic> _$$_ProviderManagerDTOToJson(
+        _$_ProviderManagerDTO instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'invitedOn': _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.invitedOn, const MyDateTimeConverter().toJson),
+      'status': const ManagerStatusConverter().toJson(instance.status),
+    };

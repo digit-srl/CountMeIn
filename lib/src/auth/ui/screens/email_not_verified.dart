@@ -2,9 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class EmailNotVerifiedScreen extends StatelessWidget {
-  final User firebaseUser;
 
-  const EmailNotVerifiedScreen({Key? key, required this.firebaseUser})
+  const EmailNotVerifiedScreen({Key? key})
       : super(key: key);
 
   @override
@@ -14,7 +13,6 @@ class EmailNotVerifiedScreen extends StatelessWidget {
         const Text('EmailNotVerified'),
         ElevatedButton(
             onPressed: () {
-              print(firebaseUser.emailVerified);
               FirebaseAuth.instance.currentUser?.reload();
             },
             child: const Text('RELOAD')),

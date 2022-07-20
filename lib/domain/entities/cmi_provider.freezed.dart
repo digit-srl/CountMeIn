@@ -25,6 +25,8 @@ mixin _$CMIProvider {
   String get adminName => throw _privateConstructorUsedError;
   String get adminSurname => throw _privateConstructorUsedError;
   String get adminEmail => throw _privateConstructorUsedError;
+  Map<String, ProviderManagerDTO>? get managers =>
+      throw _privateConstructorUsedError;
   String? get apiKey => throw _privateConstructorUsedError;
   List<String>? get aims => throw _privateConstructorUsedError;
   String? get domainRequirement => throw _privateConstructorUsedError;
@@ -53,6 +55,7 @@ abstract class $CMIProviderCopyWith<$Res> {
       String adminName,
       String adminSurname,
       String adminEmail,
+      Map<String, ProviderManagerDTO>? managers,
       String? apiKey,
       List<String>? aims,
       String? domainRequirement,
@@ -77,6 +80,7 @@ class _$CMIProviderCopyWithImpl<$Res> implements $CMIProviderCopyWith<$Res> {
     Object? adminName = freezed,
     Object? adminSurname = freezed,
     Object? adminEmail = freezed,
+    Object? managers = freezed,
     Object? apiKey = freezed,
     Object? aims = freezed,
     Object? domainRequirement = freezed,
@@ -106,6 +110,10 @@ class _$CMIProviderCopyWithImpl<$Res> implements $CMIProviderCopyWith<$Res> {
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
+      managers: managers == freezed
+          ? _value.managers
+          : managers // ignore: cast_nullable_to_non_nullable
+              as Map<String, ProviderManagerDTO>?,
       apiKey: apiKey == freezed
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
@@ -151,6 +159,7 @@ abstract class _$$_CMIProviderCopyWith<$Res>
       String adminName,
       String adminSurname,
       String adminEmail,
+      Map<String, ProviderManagerDTO>? managers,
       String? apiKey,
       List<String>? aims,
       String? domainRequirement,
@@ -177,6 +186,7 @@ class __$$_CMIProviderCopyWithImpl<$Res> extends _$CMIProviderCopyWithImpl<$Res>
     Object? adminName = freezed,
     Object? adminSurname = freezed,
     Object? adminEmail = freezed,
+    Object? managers = freezed,
     Object? apiKey = freezed,
     Object? aims = freezed,
     Object? domainRequirement = freezed,
@@ -206,6 +216,10 @@ class __$$_CMIProviderCopyWithImpl<$Res> extends _$CMIProviderCopyWithImpl<$Res>
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
+      managers: managers == freezed
+          ? _value._managers
+          : managers // ignore: cast_nullable_to_non_nullable
+              as Map<String, ProviderManagerDTO>?,
       apiKey: apiKey == freezed
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
@@ -247,6 +261,7 @@ class _$_CMIProvider implements _CMIProvider {
       required this.adminName,
       required this.adminSurname,
       required this.adminEmail,
+      final Map<String, ProviderManagerDTO>? managers,
       this.apiKey,
       final List<String>? aims,
       this.domainRequirement,
@@ -254,7 +269,8 @@ class _$_CMIProvider implements _CMIProvider {
       @CMIProviderStatusConverter() this.status,
       @MyDateTimeConverter() this.createdOn,
       @MyDateTimeConverter() required this.requestedOn})
-      : _aims = aims;
+      : _managers = managers,
+        _aims = aims;
 
   factory _$_CMIProvider.fromJson(Map<String, dynamic> json) =>
       _$$_CMIProviderFromJson(json);
@@ -269,6 +285,15 @@ class _$_CMIProvider implements _CMIProvider {
   final String adminSurname;
   @override
   final String adminEmail;
+  final Map<String, ProviderManagerDTO>? _managers;
+  @override
+  Map<String, ProviderManagerDTO>? get managers {
+    final value = _managers;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
   final String? apiKey;
   final List<String>? _aims;
@@ -297,7 +322,7 @@ class _$_CMIProvider implements _CMIProvider {
 
   @override
   String toString() {
-    return 'CMIProvider(id: $id, name: $name, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, apiKey: $apiKey, aims: $aims, domainRequirement: $domainRequirement, releaseWom: $releaseWom, status: $status, createdOn: $createdOn, requestedOn: $requestedOn)';
+    return 'CMIProvider(id: $id, name: $name, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, managers: $managers, apiKey: $apiKey, aims: $aims, domainRequirement: $domainRequirement, releaseWom: $releaseWom, status: $status, createdOn: $createdOn, requestedOn: $requestedOn)';
   }
 
   @override
@@ -312,6 +337,7 @@ class _$_CMIProvider implements _CMIProvider {
                 .equals(other.adminSurname, adminSurname) &&
             const DeepCollectionEquality()
                 .equals(other.adminEmail, adminEmail) &&
+            const DeepCollectionEquality().equals(other._managers, _managers) &&
             const DeepCollectionEquality().equals(other.apiKey, apiKey) &&
             const DeepCollectionEquality().equals(other._aims, _aims) &&
             const DeepCollectionEquality()
@@ -333,6 +359,7 @@ class _$_CMIProvider implements _CMIProvider {
       const DeepCollectionEquality().hash(adminName),
       const DeepCollectionEquality().hash(adminSurname),
       const DeepCollectionEquality().hash(adminEmail),
+      const DeepCollectionEquality().hash(_managers),
       const DeepCollectionEquality().hash(apiKey),
       const DeepCollectionEquality().hash(_aims),
       const DeepCollectionEquality().hash(domainRequirement),
@@ -359,6 +386,7 @@ abstract class _CMIProvider implements CMIProvider {
           required final String adminName,
           required final String adminSurname,
           required final String adminEmail,
+          final Map<String, ProviderManagerDTO>? managers,
           final String? apiKey,
           final List<String>? aims,
           final String? domainRequirement,
@@ -382,6 +410,8 @@ abstract class _CMIProvider implements CMIProvider {
   @override
   String get adminEmail;
   @override
+  Map<String, ProviderManagerDTO>? get managers;
+  @override
   String? get apiKey;
   @override
   List<String>? get aims;
@@ -401,5 +431,193 @@ abstract class _CMIProvider implements CMIProvider {
   @override
   @JsonKey(ignore: true)
   _$$_CMIProviderCopyWith<_$_CMIProvider> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ProviderManagerDTO _$ProviderManagerDTOFromJson(Map<String, dynamic> json) {
+  return _ProviderManagerDTO.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ProviderManagerDTO {
+  String get name => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
+  DateTime? get invitedOn => throw _privateConstructorUsedError;
+  @ManagerStatusConverter()
+  ProviderManagerStatus get status => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ProviderManagerDTOCopyWith<ProviderManagerDTO> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ProviderManagerDTOCopyWith<$Res> {
+  factory $ProviderManagerDTOCopyWith(
+          ProviderManagerDTO value, $Res Function(ProviderManagerDTO) then) =
+      _$ProviderManagerDTOCopyWithImpl<$Res>;
+  $Res call(
+      {String name,
+      @MyDateTimeConverter() DateTime? invitedOn,
+      @ManagerStatusConverter() ProviderManagerStatus status});
+}
+
+/// @nodoc
+class _$ProviderManagerDTOCopyWithImpl<$Res>
+    implements $ProviderManagerDTOCopyWith<$Res> {
+  _$ProviderManagerDTOCopyWithImpl(this._value, this._then);
+
+  final ProviderManagerDTO _value;
+  // ignore: unused_field
+  final $Res Function(ProviderManagerDTO) _then;
+
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? invitedOn = freezed,
+    Object? status = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      invitedOn: invitedOn == freezed
+          ? _value.invitedOn
+          : invitedOn // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ProviderManagerStatus,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_ProviderManagerDTOCopyWith<$Res>
+    implements $ProviderManagerDTOCopyWith<$Res> {
+  factory _$$_ProviderManagerDTOCopyWith(_$_ProviderManagerDTO value,
+          $Res Function(_$_ProviderManagerDTO) then) =
+      __$$_ProviderManagerDTOCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String name,
+      @MyDateTimeConverter() DateTime? invitedOn,
+      @ManagerStatusConverter() ProviderManagerStatus status});
+}
+
+/// @nodoc
+class __$$_ProviderManagerDTOCopyWithImpl<$Res>
+    extends _$ProviderManagerDTOCopyWithImpl<$Res>
+    implements _$$_ProviderManagerDTOCopyWith<$Res> {
+  __$$_ProviderManagerDTOCopyWithImpl(
+      _$_ProviderManagerDTO _value, $Res Function(_$_ProviderManagerDTO) _then)
+      : super(_value, (v) => _then(v as _$_ProviderManagerDTO));
+
+  @override
+  _$_ProviderManagerDTO get _value => super._value as _$_ProviderManagerDTO;
+
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? invitedOn = freezed,
+    Object? status = freezed,
+  }) {
+    return _then(_$_ProviderManagerDTO(
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      invitedOn: invitedOn == freezed
+          ? _value.invitedOn
+          : invitedOn // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ProviderManagerStatus,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ProviderManagerDTO implements _ProviderManagerDTO {
+  const _$_ProviderManagerDTO(
+      {required this.name,
+      @MyDateTimeConverter() this.invitedOn,
+      @ManagerStatusConverter() required this.status});
+
+  factory _$_ProviderManagerDTO.fromJson(Map<String, dynamic> json) =>
+      _$$_ProviderManagerDTOFromJson(json);
+
+  @override
+  final String name;
+  @override
+  @MyDateTimeConverter()
+  final DateTime? invitedOn;
+  @override
+  @ManagerStatusConverter()
+  final ProviderManagerStatus status;
+
+  @override
+  String toString() {
+    return 'ProviderManagerDTO(name: $name, invitedOn: $invitedOn, status: $status)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ProviderManagerDTO &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.invitedOn, invitedOn) &&
+            const DeepCollectionEquality().equals(other.status, status));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(invitedOn),
+      const DeepCollectionEquality().hash(status));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_ProviderManagerDTOCopyWith<_$_ProviderManagerDTO> get copyWith =>
+      __$$_ProviderManagerDTOCopyWithImpl<_$_ProviderManagerDTO>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ProviderManagerDTOToJson(this);
+  }
+}
+
+abstract class _ProviderManagerDTO implements ProviderManagerDTO {
+  const factory _ProviderManagerDTO(
+      {required final String name,
+      @MyDateTimeConverter()
+          final DateTime? invitedOn,
+      @ManagerStatusConverter()
+          required final ProviderManagerStatus status}) = _$_ProviderManagerDTO;
+
+  factory _ProviderManagerDTO.fromJson(Map<String, dynamic> json) =
+      _$_ProviderManagerDTO.fromJson;
+
+  @override
+  String get name;
+  @override
+  @MyDateTimeConverter()
+  DateTime? get invitedOn;
+  @override
+  @ManagerStatusConverter()
+  ProviderManagerStatus get status;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ProviderManagerDTOCopyWith<_$_ProviderManagerDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }
