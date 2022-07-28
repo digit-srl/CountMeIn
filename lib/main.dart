@@ -38,12 +38,13 @@ void main() async {
   }
 
   if (kIsWeb) {
-    await FirebaseFirestore.instance
-        .enablePersistence(const PersistenceSettings(synchronizeTabs: true));
+    // await FirebaseFirestore.instance
+    //     .enablePersistence(const PersistenceSettings(synchronizeTabs: true));
   } else {
     FirebaseFirestore.instance.settings =
         const Settings(persistenceEnabled: false);
   }
+
   await Hive.openBox('user');
   setPathUrlStrategy();
   runApp(ProviderScope(child: MyApp()));

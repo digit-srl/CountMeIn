@@ -17,6 +17,7 @@ export class AuthUser {
   surname: string;
   email: string;
   emailVerified: boolean;
+  //providersRole: Map<string, string>;
 
   constructor(
     uid: string,
@@ -24,12 +25,14 @@ export class AuthUser {
     surname: string,
     email: string,
     emailVerified: boolean
+    //providersRole: Map<string, string>
   ) {
     this.uid = uid;
     this.name = name;
     this.surname = surname;
     this.email = email;
     this.emailVerified = emailVerified;
+    //this.providersRole = providersRole;
   }
 
   toJson() {
@@ -39,6 +42,7 @@ export class AuthUser {
       name: this.name,
       email: this.email,
       emailVerified: this.emailVerified,
+      //providersRole: this.providersRole,
     };
   }
 }

@@ -34,25 +34,26 @@ final activeProvidersStreamProvider =
   if (authUserState is Authenticated) {
     final user = authUserState.user;
     var query = Cloud.providerCollection.where('status', isEqualTo: 'live');
-    if(user.role !=  PlatformRole.cmi){
+    if (user.role != PlatformRole.cmi) {
       // query = query.where('managers', arrayContains: user.uid);
-      query = query.where('managers.${user.uid}.status', isEqualTo: 'active');
+      query = query.where('managers.${user.uid}.id', isEqualTo: user.uid);
     }
     final stream = query.snapshots();
 
     await for (final snap in stream) {
-      try {
-        print('${snap.docs.length} providers trovati');
-        final list = snap.docs.map((doc) {
-          final s = CMIProvider.fromJson(doc.data());
-          return s;
-        }).toList();
-        yield list;
-      } catch (ex, st) {
-        print(ex);
-        print(st);
-        yield <CMIProvider>[];
+      print('${snap.docs.length} providers trovati');
+      final list = <CMIProvider>[];
+      for (int i = 0; i < snap.docs.length; i++) {
+        final d = snap.docs[i].data();
+        try {
+          final s = CMIProvider.fromJson(d);
+          list.add(s);
+        } catch (ex, st) {
+          print(ex);
+          print(st);
+        }
       }
+      yield list;
     }
   } else {
     print('user is not authenticated');

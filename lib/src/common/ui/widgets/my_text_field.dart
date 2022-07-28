@@ -8,6 +8,7 @@ class MUTextField extends StatelessWidget {
   final bool? enabled;
   final int? maxLines;
   final int? minLines;
+  final double? paddingTop;
   final TextInputType? keyboardType;
 
   const MUTextField({
@@ -19,13 +20,14 @@ class MUTextField extends StatelessWidget {
     this.enabled = true,
     this.maxLines,
     this.minLines,
+    this.paddingTop,
     this.keyboardType,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
+      padding: EdgeInsets.only(top: paddingTop ?? 16.0),
       child: TextFormField(
         autofillHints: [AutofillHints.email],
         controller: controller,

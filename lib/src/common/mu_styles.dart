@@ -107,10 +107,10 @@ final darkTheme = ThemeData(
 );
 
 extension TextSyleX on TextStyle {
-  TextStyle get bold => this.copyWith(fontWeight: FontWeight.bold);
+  TextStyle get bold => copyWith(fontWeight: FontWeight.bold);
 
   TextStyle get underline =>
-      this.copyWith(decoration: TextDecoration.underline);
+      copyWith(decoration: TextDecoration.underline);
 
-  TextStyle get white => this.copyWith(color: Colors.white);
+  TextStyle get white => copyWith(color: Colors.white);
 }

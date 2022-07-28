@@ -13,7 +13,6 @@ import 'admin_dashboard.dart';
 class AdminProvidersScreen extends ConsumerWidget {
   static const String routeName = '/adminProviders';
 
-
   const AdminProvidersScreen({Key? key})
       : super(key: key);
 

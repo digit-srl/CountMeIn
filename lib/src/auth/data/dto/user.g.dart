@@ -14,9 +14,6 @@ _$_AuthUserDTO _$$_AuthUserDTOFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String,
       emailVerified: json['emailVerified'] as bool,
       role: const CMIRoleConverter().fromJson(json['role'] as String?),
-      providersRole: (json['providersRole'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
-      ),
       createdOn:
           const MyDateTimeConverter().fromJson(json['createdOn'] as Timestamp),
     );
@@ -29,6 +26,5 @@ Map<String, dynamic> _$$_AuthUserDTOToJson(_$_AuthUserDTO instance) =>
       'email': instance.email,
       'emailVerified': instance.emailVerified,
       'role': const CMIRoleConverter().toJson(instance.role),
-      'providersRole': instance.providersRole,
       'createdOn': const MyDateTimeConverter().toJson(instance.createdOn),
     };

@@ -26,8 +26,8 @@ mixin _$AuthUserDTO {
   String get email => throw _privateConstructorUsedError;
   bool get emailVerified => throw _privateConstructorUsedError;
   @CMIRoleConverter()
-  PlatformRole get role => throw _privateConstructorUsedError;
-  Map<String, String>? get providersRole => throw _privateConstructorUsedError;
+  PlatformRole get role =>
+      throw _privateConstructorUsedError; // Map<String, String>? providersRole,
   @MyDateTimeConverter()
   DateTime get createdOn => throw _privateConstructorUsedError;
 
@@ -49,7 +49,6 @@ abstract class $AuthUserDTOCopyWith<$Res> {
       String email,
       bool emailVerified,
       @CMIRoleConverter() PlatformRole role,
-      Map<String, String>? providersRole,
       @MyDateTimeConverter() DateTime createdOn});
 }
 
@@ -69,7 +68,6 @@ class _$AuthUserDTOCopyWithImpl<$Res> implements $AuthUserDTOCopyWith<$Res> {
     Object? email = freezed,
     Object? emailVerified = freezed,
     Object? role = freezed,
-    Object? providersRole = freezed,
     Object? createdOn = freezed,
   }) {
     return _then(_value.copyWith(
@@ -97,10 +95,6 @@ class _$AuthUserDTOCopyWithImpl<$Res> implements $AuthUserDTOCopyWith<$Res> {
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as PlatformRole,
-      providersRole: providersRole == freezed
-          ? _value.providersRole
-          : providersRole // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>?,
       createdOn: createdOn == freezed
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -123,7 +117,6 @@ abstract class _$$_AuthUserDTOCopyWith<$Res>
       String email,
       bool emailVerified,
       @CMIRoleConverter() PlatformRole role,
-      Map<String, String>? providersRole,
       @MyDateTimeConverter() DateTime createdOn});
 }
 
@@ -145,7 +138,6 @@ class __$$_AuthUserDTOCopyWithImpl<$Res> extends _$AuthUserDTOCopyWithImpl<$Res>
     Object? email = freezed,
     Object? emailVerified = freezed,
     Object? role = freezed,
-    Object? providersRole = freezed,
     Object? createdOn = freezed,
   }) {
     return _then(_$_AuthUserDTO(
@@ -173,10 +165,6 @@ class __$$_AuthUserDTOCopyWithImpl<$Res> extends _$AuthUserDTOCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as PlatformRole,
-      providersRole: providersRole == freezed
-          ? _value._providersRole
-          : providersRole // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>?,
       createdOn: createdOn == freezed
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -195,9 +183,7 @@ class _$_AuthUserDTO implements _AuthUserDTO {
       required this.email,
       required this.emailVerified,
       @CMIRoleConverter() required this.role,
-      final Map<String, String>? providersRole,
-      @MyDateTimeConverter() required this.createdOn})
-      : _providersRole = providersRole;
+      @MyDateTimeConverter() required this.createdOn});
 
   factory _$_AuthUserDTO.fromJson(Map<String, dynamic> json) =>
       _$$_AuthUserDTOFromJson(json);
@@ -215,22 +201,14 @@ class _$_AuthUserDTO implements _AuthUserDTO {
   @override
   @CMIRoleConverter()
   final PlatformRole role;
-  final Map<String, String>? _providersRole;
-  @override
-  Map<String, String>? get providersRole {
-    final value = _providersRole;
-    if (value == null) return null;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
-  }
-
+// Map<String, String>? providersRole,
   @override
   @MyDateTimeConverter()
   final DateTime createdOn;
 
   @override
   String toString() {
-    return 'AuthUserDTO(uid: $uid, name: $name, surname: $surname, email: $email, emailVerified: $emailVerified, role: $role, providersRole: $providersRole, createdOn: $createdOn)';
+    return 'AuthUserDTO(uid: $uid, name: $name, surname: $surname, email: $email, emailVerified: $emailVerified, role: $role, createdOn: $createdOn)';
   }
 
   @override
@@ -245,8 +223,6 @@ class _$_AuthUserDTO implements _AuthUserDTO {
             const DeepCollectionEquality()
                 .equals(other.emailVerified, emailVerified) &&
             const DeepCollectionEquality().equals(other.role, role) &&
-            const DeepCollectionEquality()
-                .equals(other._providersRole, _providersRole) &&
             const DeepCollectionEquality().equals(other.createdOn, createdOn));
   }
 
@@ -260,7 +236,6 @@ class _$_AuthUserDTO implements _AuthUserDTO {
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(emailVerified),
       const DeepCollectionEquality().hash(role),
-      const DeepCollectionEquality().hash(_providersRole),
       const DeepCollectionEquality().hash(createdOn));
 
   @JsonKey(ignore: true)
@@ -282,7 +257,6 @@ abstract class _AuthUserDTO implements AuthUserDTO {
           required final String email,
           required final bool emailVerified,
           @CMIRoleConverter() required final PlatformRole role,
-          final Map<String, String>? providersRole,
           @MyDateTimeConverter() required final DateTime createdOn}) =
       _$_AuthUserDTO;
 
@@ -302,9 +276,7 @@ abstract class _AuthUserDTO implements AuthUserDTO {
   @override
   @CMIRoleConverter()
   PlatformRole get role;
-  @override
-  Map<String, String>? get providersRole;
-  @override
+  @override // Map<String, String>? providersRole,
   @MyDateTimeConverter()
   DateTime get createdOn;
   @override

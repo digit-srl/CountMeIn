@@ -1,0 +1,89 @@
+import 'package:countmein/utils.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
+import '../../../constants.dart';
+import 'confirm_invite_state.dart';
+
+final dioProvider = Provider<Dio>((ref) {
+  final dio = Dio();
+  dio.interceptors.add(
+    PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      error: true,
+      compact: true,
+      maxWidth: 90,
+    ),
+  );
+  return dio;
+});
+
+final confirmInviteProvider = StateNotifierProvider.autoDispose
+    .family<ConfirmInviteNotifier, ConfirmInviteState, InviteRequest>(
+        (ref, request) {
+      return ConfirmInviteNotifier(request, ref.read);
+    });
+
+class ConfirmInviteNotifier extends StateNotifier<ConfirmInviteState> {
+  final InviteRequest request;
+  final Reader read;
+
+  ConfirmInviteNotifier(this.request, this.read)
+      : super(const ConfirmInviteLoading()) {
+    init();
+  }
+
+  init() async {
+    if (request.userId == null) {
+      state = const NewUser();
+    } else {
+      state = const UserAlreadyRegistered();
+    }
+  }
+
+  void confirmInviteNewUser(String name, String surname, String email,
+      String cf) {}
+
+  void confirmInvite({String? name, String? surname, String? cf}) async {
+    final data = <String, dynamic>{};
+    final currentState = state;
+    state = const ConfirmInviteLoading();
+    if (currentState is UserAlreadyRegistered) {
+      data.addAll({
+        'secret': request.secret,
+        'inviteId': request.inviteId,
+        'providerId': request.providerId,
+      });
+    } else if (currentState is NewUser) {
+      data.addAll({
+        'secret': request.secret,
+        'inviteId': request.inviteId,
+        'providerId': request.providerId,
+        'name': name,
+        'surname': surname,
+        'cf': cf
+      });
+    }
+
+    //http://localhost:5003/count-me-in-ef93b/europe-west3/confirmPendingInvite
+    try {
+      final url =
+          '$functionBaseUrl/confirmPendingInvite';
+      final res = await read(dioProvider).post(url,
+          data: data);
+      final map = Map.from(res.data);
+      final status =
+      enumFromString(map['status'], ConfirmInviteResponseStatus.values);
+      print(status);
+      state = ConfirmResponse(status);
+    } catch (ex, st) {
+      print(ex);
+      print(st);
+      state = ConfirmInviteError(ex, st);
+    }
+  }
+}

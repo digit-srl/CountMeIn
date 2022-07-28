@@ -20,3 +20,20 @@ class CMIRoleConverter implements JsonConverter<PlatformRole, String?> {
   @override
   String toJson(PlatformRole role) => enumToString(role);
 }
+
+class UserRoleConverter implements JsonConverter<UserRole, String?> {
+  const UserRoleConverter();
+
+  @override
+  UserRole fromJson(String? role) {
+    if (role == null) return UserRole.unknown;
+    try {
+      return enumFromString(role, UserRole.values);
+    } catch (ex) {
+      return UserRole.unknown;
+    }
+  }
+
+  @override
+  String toJson(UserRole role) => enumToString(role);
+}

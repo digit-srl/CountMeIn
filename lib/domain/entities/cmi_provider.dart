@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart' show Timestamp;
 import 'package:countmein/domain/entities/session.dart';
+import 'package:countmein/src/auth/data/dto/cmi_role_converter.dart';
 import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart' show Color, Colors;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../src/auth/domain/entities/user.dart';
 import 'date_time_converter.dart';
 
 part 'cmi_provider.freezed.dart';
@@ -11,7 +13,7 @@ part 'cmi_provider.freezed.dart';
 part 'cmi_provider.g.dart';
 
 enum CMIProviderStatus { unknown, pending, live, archived }
-enum ProviderManagerStatus { unknown, pending, active, }
+enum ProviderManagerStatus { unknown, pending, completed, deleted, expired}
 
 @freezed
 class CMIProvider with _$CMIProvider {
@@ -21,7 +23,7 @@ class CMIProvider with _$CMIProvider {
     required String adminName,
     required String adminSurname,
     required String adminEmail,
-    Map<String,ProviderManagerDTO>? managers,
+    Map<String,ProviderManager>? managers,
     String? apiKey,
     List<String>? aims,
     String? domainRequirement,
@@ -49,15 +51,33 @@ class ProviderManagersDTO with _$ProviderManagersDTO {
 */
 
 @freezed
-class ProviderManagerDTO with _$ProviderManagerDTO {
-  const factory ProviderManagerDTO({
+class PendingProviderManager with _$PendingProviderManager {
+  const factory PendingProviderManager({
+    required String id,
+    @UserRoleConverter() required UserRole role,
     required String name,
-    @MyDateTimeConverter() DateTime? invitedOn,
+    required String secret,
+    required String providerName,
+    required String email,
+    @MyDateTimeConverter() required DateTime invitedOn,
     @ManagerStatusConverter() required ProviderManagerStatus status,
-  }) = _ProviderManagerDTO;
+  }) = _PendingProviderManager;
 
-  factory ProviderManagerDTO.fromJson(Map<String, Object?> json) =>
-      _$ProviderManagerDTOFromJson(json);
+  factory PendingProviderManager.fromJson(Map<String, Object?> json) =>
+      _$PendingProviderManagerFromJson(json);
+}
+
+@freezed
+class ProviderManager with _$ProviderManager {
+  const factory ProviderManager({
+    required String id,
+    required String name,
+    required String email,
+    @UserRoleConverter() required UserRole role,
+  }) = _ProviderManager;
+
+  factory ProviderManager.fromJson(Map<String, Object?> json) =>
+      _$ProviderManagerFromJson(json);
 }
 
 class CMIProviderStatusConverter implements JsonConverter<CMIProviderStatus, String> {
@@ -100,8 +120,12 @@ extension ProviderManagerStatusX on ProviderManagerStatus{
       case ProviderManagerStatus.unknown:
         return Colors.grey;
       case ProviderManagerStatus.pending:
+        return Colors.pinkAccent;
+      case ProviderManagerStatus.expired:
         return Colors.orange;
-      case ProviderManagerStatus.active:
+      case ProviderManagerStatus.deleted:
+        return Colors.red;
+      case ProviderManagerStatus.completed:
         return Colors.green;
     }
   }

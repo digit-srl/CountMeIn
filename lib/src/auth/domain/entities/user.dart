@@ -23,7 +23,7 @@ class AuthUser with _$AuthUser {
     required bool emailVerified,
     required DateTime createdOn,
     required PlatformRole role,
-    required Map<String,UserRole> providersRole
+    // required Map<String,UserRole> providersRole
   }) = _AuthUser;
 
 /*  factory AuthUser.signUp(String name, String surname, String email, String uid) {

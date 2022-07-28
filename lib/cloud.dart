@@ -17,6 +17,9 @@ class Cloud {
   static final CollectionReference<Map<String, dynamic>> providerCollection =
       FirebaseFirestore.instance.collection('providers');
 
+  static CollectionReference<Map<String, dynamic>> pendingInviteCollection(String providerId) =>
+  providerCollection.doc(providerId).collection('pendingInvite');
+
   static CollectionReference<Map<String, dynamic>> eventUsersCollection(
           String providerId, String eventId) =>
       eventsCollection(providerId).doc(eventId).collection('users');

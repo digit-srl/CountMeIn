@@ -63,7 +63,7 @@ export function sendVerificationEmail(
 
   const json = JSON.stringify({
     fullName: fullName,
-    verificationUrl: url,
+    verificationUrl: encodeURI(url),
   });
 
   return sendEmail(
@@ -202,7 +202,7 @@ export async function sendNewActivityRequested(
   return sendEmail(
     emails,
     "Nuovo Provider in attesa di verifica",
-    "new_provider",
+    "new_provider_request",
     json,
     null,
     null
@@ -212,21 +212,51 @@ export async function sendNewActivityRequested(
 export async function sendWelcomeNewProvider(
   providerName: string,
   adminEmail: string,
-  adminFullname: string
+  adminFullName: string,
+  role: string
 ) {
   const emails = [adminEmail];
 
   const json = JSON.stringify({
-    adminFullname: adminFullname,
+    adminFullName: adminFullName,
     provider: providerName,
     adminEmail: adminEmail,
+    role: role,
   });
 
   console.log(json);
   return sendEmail(
     emails,
-    "Nuovo Provider in attesa di verifica",
+    "Ora sei parte di " + providerName,
     "welcome_new_provider",
+    json,
+    null,
+    null
+  );
+}
+
+export async function sendInvite(
+  providerName: string,
+  adminFullname: string,
+  email: string,
+  role: string,
+  link: string
+) {
+  const emails = [email];
+
+  const json = JSON.stringify({
+    adminFullname: adminFullname,
+    provider: providerName,
+    email: email,
+    role: role,
+    link: encodeURI(link),
+  });
+
+  console.log(json);
+  return sendEmail(
+    emails,
+    "Invito gestione " + providerName,
+    "invite_to_manage_provider",
     json,
     null,
     null

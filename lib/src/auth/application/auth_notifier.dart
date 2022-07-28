@@ -48,12 +48,14 @@ final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
                 map.addAll(data);
                 map['role'] = idToken.claims?['role'];
                 final dto = AuthUserDTO.fromJson(map);
-                yield AuthState.authenticated(dto.toDomain());
+                final u = dto.toDomain();
+                yield AuthState.authenticated(u);
               } else {
                 yield const Unautenticated();
               }
             },
             error: (err, stack) async* {
+              print(stack);
               yield AuthError(err, stack);
             },
             loading: () async* {
@@ -90,13 +92,13 @@ final authUserRoleProvider = Provider<PlatformRole>((ref) {
 });
 
 final userRoleProvider = Provider.family<UserRole, String>((ref, providerId) {
-  final state = ref.watch(authStateProvider);
+  /*final state = ref.watch(authStateProvider);
   if (state is Authenticated) {
     final role = state.user.providersRole[providerId];
     if (role != null) {
       return role;
     }
-  }
+  }*/
   return UserRole.unknown;
 });
 

@@ -1,5 +1,8 @@
+import 'package:countmein/src/admin/application/confirm_invite_state.dart';
+import 'package:countmein/src/admin/ui/screens/managers.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
+import 'package:countmein/src/auth/ui/screens/invite_form_confirm.dart';
 import 'package:countmein/ui/screens/event_details.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -84,16 +87,23 @@ class RouterNotifier extends ChangeNotifier {
 
     final authState = _ref.read(authStateProvider);
     final isGoingToHome = state.subloc == '/';
+    final isGoingConfirmInvite =
+        state.subloc == InviteFormConfirmScreen.routeName;
+    final isGoingToResetPassword =
+        state.subloc == ResetPasswordScreen.routeName;
     final isGoingToActivityRequest =
         state.subloc == ActivityRequestScreen.routeName;
-    if (isGoingToHome || isGoingToActivityRequest) {
+    if (isGoingToHome ||
+        isGoingToActivityRequest ||
+        isGoingConfirmInvite ||
+        isGoingToResetPassword) {
       return null;
     }
     // From here we can use the state and implement our custom logic
     final isGoingToDashboard = state.subloc == AdminDashboardScreen.routeName;
     final isGoingToSignIn = state.subloc == SignInScreen.routeName;
 
-    final fromp = state.subloc == '/' ? '' : '?from=${state.subloc}';
+    final fromp = state.subloc == '/' ? '' : '?from=${state.location}';
 
     if (authState is Unautenticated) {
       return isGoingToSignIn ? null : '${SignInScreen.routeName}$fromp';
@@ -118,8 +128,33 @@ class RouterNotifier extends ChangeNotifier {
           builder: (context, state) => SignInScreen(),
         ),
         GoRoute(
+          path: InviteFormConfirmScreen.routeName,
+          builder: (context, state) {
+            final providerId = state.queryParams['p'] as String;
+            final inviteId = state.queryParams['i'] as String;
+            final secret = state.queryParams['s'] as String;
+            final providerName = state.queryParams['n'] as String?;
+            final userId = state.queryParams['u'] as String?;
+            return InviteFormConfirmScreen(
+              request: InviteRequest(
+                providerId: providerId,
+                inviteId: inviteId,
+                secret: secret,
+                userId: userId,
+                providerName: providerName ?? 'Provider',
+              ),
+            );
+          },
+        ),
+        GoRoute(
           path: AdminDashboardScreen.routeName,
           builder: (context, state) => const AdminDashboardScreen(),
+        ),
+        GoRoute(
+          path: ManagersHandlerScreen.routeName,
+          builder: (context, state) => ManagersHandlerScreen(
+            provider: state.extra as CMIProvider,
+          ),
         ),
         GoRoute(
           path: AdminPendingProvidersScreen.routeName,

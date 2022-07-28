@@ -13,7 +13,7 @@ import '../../../common/mu_styles.dart';
 import '../../../../domain/entities/session.dart';
 import '../../../common/ui/widgets/my_button.dart';
 import '../widgets/info_text.dart';
-import '../widgets/managers_handler_dialog.dart';
+import 'managers.dart';
 
 class AdminProviderHandlerScreen extends ConsumerWidget {
   static const String routeName = '/adminProviderHandler';
@@ -65,20 +65,15 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                 ),
                 InfoText2(
                     label: 'Managers',
-                    value: Row(
-                      children: [
-                        if (provider.managers != null)
-                          ...provider.managers!.values
-                              .map((e) => Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Chip(label: Text(e.name)),
-                                  ))
-                              .toList(),
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: provider.managers != null
-                              ? () {
-                                  showDialog(
+                    labelWidget: IconButton(
+                      icon: Icon((provider.managers?.isEmpty ?? true)
+                          ? Icons.add
+                          : Icons.edit),
+                      onPressed: provider.managers != null
+                          ? () {
+                              context.push(ManagersHandlerScreen.routeName,
+                                  extra: provider);
+                              /* showDialog(
                                     context: context,
                                     builder: (c) {
                                       return Dialog(
@@ -86,10 +81,30 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                                             provider: provider),
                                       );
                                     },
-                                  );
-                                }
-                              : null,
-                        )
+                                  );*/
+                            }
+                          : null,
+                    ),
+                    value: Wrap(
+                      children: [
+                        if (provider.managers != null)
+                          ...provider.managers!.values
+                              .map(
+                                (e) => Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Tooltip(
+                                    message: e.email,
+                                    child: Chip(
+                                      label: Text(
+                                        e.name,
+                                        style:
+                                            Theme.of(context).textTheme.caption,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
                       ],
                     )),
                 if (provider.status == CMIProviderStatus.pending &&

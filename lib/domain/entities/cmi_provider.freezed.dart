@@ -25,7 +25,7 @@ mixin _$CMIProvider {
   String get adminName => throw _privateConstructorUsedError;
   String get adminSurname => throw _privateConstructorUsedError;
   String get adminEmail => throw _privateConstructorUsedError;
-  Map<String, ProviderManagerDTO>? get managers =>
+  Map<String, ProviderManager>? get managers =>
       throw _privateConstructorUsedError;
   String? get apiKey => throw _privateConstructorUsedError;
   List<String>? get aims => throw _privateConstructorUsedError;
@@ -55,7 +55,7 @@ abstract class $CMIProviderCopyWith<$Res> {
       String adminName,
       String adminSurname,
       String adminEmail,
-      Map<String, ProviderManagerDTO>? managers,
+      Map<String, ProviderManager>? managers,
       String? apiKey,
       List<String>? aims,
       String? domainRequirement,
@@ -113,7 +113,7 @@ class _$CMIProviderCopyWithImpl<$Res> implements $CMIProviderCopyWith<$Res> {
       managers: managers == freezed
           ? _value.managers
           : managers // ignore: cast_nullable_to_non_nullable
-              as Map<String, ProviderManagerDTO>?,
+              as Map<String, ProviderManager>?,
       apiKey: apiKey == freezed
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
@@ -159,7 +159,7 @@ abstract class _$$_CMIProviderCopyWith<$Res>
       String adminName,
       String adminSurname,
       String adminEmail,
-      Map<String, ProviderManagerDTO>? managers,
+      Map<String, ProviderManager>? managers,
       String? apiKey,
       List<String>? aims,
       String? domainRequirement,
@@ -219,7 +219,7 @@ class __$$_CMIProviderCopyWithImpl<$Res> extends _$CMIProviderCopyWithImpl<$Res>
       managers: managers == freezed
           ? _value._managers
           : managers // ignore: cast_nullable_to_non_nullable
-              as Map<String, ProviderManagerDTO>?,
+              as Map<String, ProviderManager>?,
       apiKey: apiKey == freezed
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
@@ -261,7 +261,7 @@ class _$_CMIProvider implements _CMIProvider {
       required this.adminName,
       required this.adminSurname,
       required this.adminEmail,
-      final Map<String, ProviderManagerDTO>? managers,
+      final Map<String, ProviderManager>? managers,
       this.apiKey,
       final List<String>? aims,
       this.domainRequirement,
@@ -285,9 +285,9 @@ class _$_CMIProvider implements _CMIProvider {
   final String adminSurname;
   @override
   final String adminEmail;
-  final Map<String, ProviderManagerDTO>? _managers;
+  final Map<String, ProviderManager>? _managers;
   @override
-  Map<String, ProviderManagerDTO>? get managers {
+  Map<String, ProviderManager>? get managers {
     final value = _managers;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
@@ -386,7 +386,7 @@ abstract class _CMIProvider implements CMIProvider {
           required final String adminName,
           required final String adminSurname,
           required final String adminEmail,
-          final Map<String, ProviderManagerDTO>? managers,
+          final Map<String, ProviderManager>? managers,
           final String? apiKey,
           final List<String>? aims,
           final String? domainRequirement,
@@ -410,7 +410,7 @@ abstract class _CMIProvider implements CMIProvider {
   @override
   String get adminEmail;
   @override
-  Map<String, ProviderManagerDTO>? get managers;
+  Map<String, ProviderManager>? get managers;
   @override
   String? get apiKey;
   @override
@@ -434,59 +434,96 @@ abstract class _CMIProvider implements CMIProvider {
       throw _privateConstructorUsedError;
 }
 
-ProviderManagerDTO _$ProviderManagerDTOFromJson(Map<String, dynamic> json) {
-  return _ProviderManagerDTO.fromJson(json);
+PendingProviderManager _$PendingProviderManagerFromJson(
+    Map<String, dynamic> json) {
+  return _PendingProviderManager.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ProviderManagerDTO {
+mixin _$PendingProviderManager {
+  String get id => throw _privateConstructorUsedError;
+  @UserRoleConverter()
+  UserRole get role => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String get secret => throw _privateConstructorUsedError;
+  String get providerName => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
-  DateTime? get invitedOn => throw _privateConstructorUsedError;
+  DateTime get invitedOn => throw _privateConstructorUsedError;
   @ManagerStatusConverter()
   ProviderManagerStatus get status => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ProviderManagerDTOCopyWith<ProviderManagerDTO> get copyWith =>
+  $PendingProviderManagerCopyWith<PendingProviderManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProviderManagerDTOCopyWith<$Res> {
-  factory $ProviderManagerDTOCopyWith(
-          ProviderManagerDTO value, $Res Function(ProviderManagerDTO) then) =
-      _$ProviderManagerDTOCopyWithImpl<$Res>;
+abstract class $PendingProviderManagerCopyWith<$Res> {
+  factory $PendingProviderManagerCopyWith(PendingProviderManager value,
+          $Res Function(PendingProviderManager) then) =
+      _$PendingProviderManagerCopyWithImpl<$Res>;
   $Res call(
-      {String name,
-      @MyDateTimeConverter() DateTime? invitedOn,
+      {String id,
+      @UserRoleConverter() UserRole role,
+      String name,
+      String secret,
+      String providerName,
+      String email,
+      @MyDateTimeConverter() DateTime invitedOn,
       @ManagerStatusConverter() ProviderManagerStatus status});
 }
 
 /// @nodoc
-class _$ProviderManagerDTOCopyWithImpl<$Res>
-    implements $ProviderManagerDTOCopyWith<$Res> {
-  _$ProviderManagerDTOCopyWithImpl(this._value, this._then);
+class _$PendingProviderManagerCopyWithImpl<$Res>
+    implements $PendingProviderManagerCopyWith<$Res> {
+  _$PendingProviderManagerCopyWithImpl(this._value, this._then);
 
-  final ProviderManagerDTO _value;
+  final PendingProviderManager _value;
   // ignore: unused_field
-  final $Res Function(ProviderManagerDTO) _then;
+  final $Res Function(PendingProviderManager) _then;
 
   @override
   $Res call({
+    Object? id = freezed,
+    Object? role = freezed,
     Object? name = freezed,
+    Object? secret = freezed,
+    Object? providerName = freezed,
+    Object? email = freezed,
     Object? invitedOn = freezed,
     Object? status = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as UserRole,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      secret: secret == freezed
+          ? _value.secret
+          : secret // ignore: cast_nullable_to_non_nullable
+              as String,
+      providerName: providerName == freezed
+          ? _value.providerName
+          : providerName // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
       invitedOn: invitedOn == freezed
           ? _value.invitedOn
           : invitedOn // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -496,44 +533,75 @@ class _$ProviderManagerDTOCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_ProviderManagerDTOCopyWith<$Res>
-    implements $ProviderManagerDTOCopyWith<$Res> {
-  factory _$$_ProviderManagerDTOCopyWith(_$_ProviderManagerDTO value,
-          $Res Function(_$_ProviderManagerDTO) then) =
-      __$$_ProviderManagerDTOCopyWithImpl<$Res>;
+abstract class _$$_PendingProviderManagerCopyWith<$Res>
+    implements $PendingProviderManagerCopyWith<$Res> {
+  factory _$$_PendingProviderManagerCopyWith(_$_PendingProviderManager value,
+          $Res Function(_$_PendingProviderManager) then) =
+      __$$_PendingProviderManagerCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String name,
-      @MyDateTimeConverter() DateTime? invitedOn,
+      {String id,
+      @UserRoleConverter() UserRole role,
+      String name,
+      String secret,
+      String providerName,
+      String email,
+      @MyDateTimeConverter() DateTime invitedOn,
       @ManagerStatusConverter() ProviderManagerStatus status});
 }
 
 /// @nodoc
-class __$$_ProviderManagerDTOCopyWithImpl<$Res>
-    extends _$ProviderManagerDTOCopyWithImpl<$Res>
-    implements _$$_ProviderManagerDTOCopyWith<$Res> {
-  __$$_ProviderManagerDTOCopyWithImpl(
-      _$_ProviderManagerDTO _value, $Res Function(_$_ProviderManagerDTO) _then)
-      : super(_value, (v) => _then(v as _$_ProviderManagerDTO));
+class __$$_PendingProviderManagerCopyWithImpl<$Res>
+    extends _$PendingProviderManagerCopyWithImpl<$Res>
+    implements _$$_PendingProviderManagerCopyWith<$Res> {
+  __$$_PendingProviderManagerCopyWithImpl(_$_PendingProviderManager _value,
+      $Res Function(_$_PendingProviderManager) _then)
+      : super(_value, (v) => _then(v as _$_PendingProviderManager));
 
   @override
-  _$_ProviderManagerDTO get _value => super._value as _$_ProviderManagerDTO;
+  _$_PendingProviderManager get _value =>
+      super._value as _$_PendingProviderManager;
 
   @override
   $Res call({
+    Object? id = freezed,
+    Object? role = freezed,
     Object? name = freezed,
+    Object? secret = freezed,
+    Object? providerName = freezed,
+    Object? email = freezed,
     Object? invitedOn = freezed,
     Object? status = freezed,
   }) {
-    return _then(_$_ProviderManagerDTO(
+    return _then(_$_PendingProviderManager(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as UserRole,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      secret: secret == freezed
+          ? _value.secret
+          : secret // ignore: cast_nullable_to_non_nullable
+              as String,
+      providerName: providerName == freezed
+          ? _value.providerName
+          : providerName // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
       invitedOn: invitedOn == freezed
           ? _value.invitedOn
           : invitedOn // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -544,35 +612,57 @@ class __$$_ProviderManagerDTOCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ProviderManagerDTO implements _ProviderManagerDTO {
-  const _$_ProviderManagerDTO(
-      {required this.name,
-      @MyDateTimeConverter() this.invitedOn,
+class _$_PendingProviderManager implements _PendingProviderManager {
+  const _$_PendingProviderManager(
+      {required this.id,
+      @UserRoleConverter() required this.role,
+      required this.name,
+      required this.secret,
+      required this.providerName,
+      required this.email,
+      @MyDateTimeConverter() required this.invitedOn,
       @ManagerStatusConverter() required this.status});
 
-  factory _$_ProviderManagerDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_ProviderManagerDTOFromJson(json);
+  factory _$_PendingProviderManager.fromJson(Map<String, dynamic> json) =>
+      _$$_PendingProviderManagerFromJson(json);
 
+  @override
+  final String id;
+  @override
+  @UserRoleConverter()
+  final UserRole role;
   @override
   final String name;
   @override
+  final String secret;
+  @override
+  final String providerName;
+  @override
+  final String email;
+  @override
   @MyDateTimeConverter()
-  final DateTime? invitedOn;
+  final DateTime invitedOn;
   @override
   @ManagerStatusConverter()
   final ProviderManagerStatus status;
 
   @override
   String toString() {
-    return 'ProviderManagerDTO(name: $name, invitedOn: $invitedOn, status: $status)';
+    return 'PendingProviderManager(id: $id, role: $role, name: $name, secret: $secret, providerName: $providerName, email: $email, invitedOn: $invitedOn, status: $status)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ProviderManagerDTO &&
+            other is _$_PendingProviderManager &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.role, role) &&
             const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.secret, secret) &&
+            const DeepCollectionEquality()
+                .equals(other.providerName, providerName) &&
+            const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.invitedOn, invitedOn) &&
             const DeepCollectionEquality().equals(other.status, status));
   }
@@ -581,43 +671,269 @@ class _$_ProviderManagerDTO implements _ProviderManagerDTO {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(role),
       const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(secret),
+      const DeepCollectionEquality().hash(providerName),
+      const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(invitedOn),
       const DeepCollectionEquality().hash(status));
 
   @JsonKey(ignore: true)
   @override
-  _$$_ProviderManagerDTOCopyWith<_$_ProviderManagerDTO> get copyWith =>
-      __$$_ProviderManagerDTOCopyWithImpl<_$_ProviderManagerDTO>(
+  _$$_PendingProviderManagerCopyWith<_$_PendingProviderManager> get copyWith =>
+      __$$_PendingProviderManagerCopyWithImpl<_$_PendingProviderManager>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ProviderManagerDTOToJson(this);
+    return _$$_PendingProviderManagerToJson(this);
   }
 }
 
-abstract class _ProviderManagerDTO implements ProviderManagerDTO {
-  const factory _ProviderManagerDTO(
-      {required final String name,
-      @MyDateTimeConverter()
-          final DateTime? invitedOn,
-      @ManagerStatusConverter()
-          required final ProviderManagerStatus status}) = _$_ProviderManagerDTO;
+abstract class _PendingProviderManager implements PendingProviderManager {
+  const factory _PendingProviderManager(
+          {required final String id,
+          @UserRoleConverter()
+              required final UserRole role,
+          required final String name,
+          required final String secret,
+          required final String providerName,
+          required final String email,
+          @MyDateTimeConverter()
+              required final DateTime invitedOn,
+          @ManagerStatusConverter()
+              required final ProviderManagerStatus status}) =
+      _$_PendingProviderManager;
 
-  factory _ProviderManagerDTO.fromJson(Map<String, dynamic> json) =
-      _$_ProviderManagerDTO.fromJson;
+  factory _PendingProviderManager.fromJson(Map<String, dynamic> json) =
+      _$_PendingProviderManager.fromJson;
 
+  @override
+  String get id;
+  @override
+  @UserRoleConverter()
+  UserRole get role;
   @override
   String get name;
   @override
+  String get secret;
+  @override
+  String get providerName;
+  @override
+  String get email;
+  @override
   @MyDateTimeConverter()
-  DateTime? get invitedOn;
+  DateTime get invitedOn;
   @override
   @ManagerStatusConverter()
   ProviderManagerStatus get status;
   @override
   @JsonKey(ignore: true)
-  _$$_ProviderManagerDTOCopyWith<_$_ProviderManagerDTO> get copyWith =>
+  _$$_PendingProviderManagerCopyWith<_$_PendingProviderManager> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ProviderManager _$ProviderManagerFromJson(Map<String, dynamic> json) {
+  return _ProviderManager.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ProviderManager {
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  @UserRoleConverter()
+  UserRole get role => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ProviderManagerCopyWith<ProviderManager> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ProviderManagerCopyWith<$Res> {
+  factory $ProviderManagerCopyWith(
+          ProviderManager value, $Res Function(ProviderManager) then) =
+      _$ProviderManagerCopyWithImpl<$Res>;
+  $Res call(
+      {String id,
+      String name,
+      String email,
+      @UserRoleConverter() UserRole role});
+}
+
+/// @nodoc
+class _$ProviderManagerCopyWithImpl<$Res>
+    implements $ProviderManagerCopyWith<$Res> {
+  _$ProviderManagerCopyWithImpl(this._value, this._then);
+
+  final ProviderManager _value;
+  // ignore: unused_field
+  final $Res Function(ProviderManager) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? email = freezed,
+    Object? role = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as UserRole,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_ProviderManagerCopyWith<$Res>
+    implements $ProviderManagerCopyWith<$Res> {
+  factory _$$_ProviderManagerCopyWith(
+          _$_ProviderManager value, $Res Function(_$_ProviderManager) then) =
+      __$$_ProviderManagerCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String id,
+      String name,
+      String email,
+      @UserRoleConverter() UserRole role});
+}
+
+/// @nodoc
+class __$$_ProviderManagerCopyWithImpl<$Res>
+    extends _$ProviderManagerCopyWithImpl<$Res>
+    implements _$$_ProviderManagerCopyWith<$Res> {
+  __$$_ProviderManagerCopyWithImpl(
+      _$_ProviderManager _value, $Res Function(_$_ProviderManager) _then)
+      : super(_value, (v) => _then(v as _$_ProviderManager));
+
+  @override
+  _$_ProviderManager get _value => super._value as _$_ProviderManager;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? email = freezed,
+    Object? role = freezed,
+  }) {
+    return _then(_$_ProviderManager(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as UserRole,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ProviderManager implements _ProviderManager {
+  const _$_ProviderManager(
+      {required this.id,
+      required this.name,
+      required this.email,
+      @UserRoleConverter() required this.role});
+
+  factory _$_ProviderManager.fromJson(Map<String, dynamic> json) =>
+      _$$_ProviderManagerFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String name;
+  @override
+  final String email;
+  @override
+  @UserRoleConverter()
+  final UserRole role;
+
+  @override
+  String toString() {
+    return 'ProviderManager(id: $id, name: $name, email: $email, role: $role)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ProviderManager &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.email, email) &&
+            const DeepCollectionEquality().equals(other.role, role));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(email),
+      const DeepCollectionEquality().hash(role));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_ProviderManagerCopyWith<_$_ProviderManager> get copyWith =>
+      __$$_ProviderManagerCopyWithImpl<_$_ProviderManager>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ProviderManagerToJson(this);
+  }
+}
+
+abstract class _ProviderManager implements ProviderManager {
+  const factory _ProviderManager(
+      {required final String id,
+      required final String name,
+      required final String email,
+      @UserRoleConverter() required final UserRole role}) = _$_ProviderManager;
+
+  factory _ProviderManager.fromJson(Map<String, dynamic> json) =
+      _$_ProviderManager.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get name;
+  @override
+  String get email;
+  @override
+  @UserRoleConverter()
+  UserRole get role;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ProviderManagerCopyWith<_$_ProviderManager> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -15,7 +15,7 @@ _$_CMIProvider _$$_CMIProviderFromJson(Map<String, dynamic> json) =>
       adminEmail: json['adminEmail'] as String,
       managers: (json['managers'] as Map<String, dynamic>?)?.map(
         (k, e) =>
-            MapEntry(k, ProviderManagerDTO.fromJson(e as Map<String, dynamic>)),
+            MapEntry(k, ProviderManager.fromJson(e as Map<String, dynamic>)),
       ),
       apiKey: json['apiKey'] as String?,
       aims: (json['aims'] as List<dynamic>?)?.map((e) => e as String).toList(),
@@ -60,20 +60,45 @@ Json? _$JsonConverterToJson<Json, Value>(
 ) =>
     value == null ? null : toJson(value);
 
-_$_ProviderManagerDTO _$$_ProviderManagerDTOFromJson(
+_$_PendingProviderManager _$$_PendingProviderManagerFromJson(
         Map<String, dynamic> json) =>
-    _$_ProviderManagerDTO(
+    _$_PendingProviderManager(
+      id: json['id'] as String,
+      role: const UserRoleConverter().fromJson(json['role'] as String?),
       name: json['name'] as String,
-      invitedOn: _$JsonConverterFromJson<Timestamp, DateTime>(
-          json['invitedOn'], const MyDateTimeConverter().fromJson),
+      secret: json['secret'] as String,
+      providerName: json['providerName'] as String,
+      email: json['email'] as String,
+      invitedOn:
+          const MyDateTimeConverter().fromJson(json['invitedOn'] as Timestamp),
       status: const ManagerStatusConverter().fromJson(json['status'] as String),
     );
 
-Map<String, dynamic> _$$_ProviderManagerDTOToJson(
-        _$_ProviderManagerDTO instance) =>
+Map<String, dynamic> _$$_PendingProviderManagerToJson(
+        _$_PendingProviderManager instance) =>
     <String, dynamic>{
+      'id': instance.id,
+      'role': const UserRoleConverter().toJson(instance.role),
       'name': instance.name,
-      'invitedOn': _$JsonConverterToJson<Timestamp, DateTime>(
-          instance.invitedOn, const MyDateTimeConverter().toJson),
+      'secret': instance.secret,
+      'providerName': instance.providerName,
+      'email': instance.email,
+      'invitedOn': const MyDateTimeConverter().toJson(instance.invitedOn),
       'status': const ManagerStatusConverter().toJson(instance.status),
+    };
+
+_$_ProviderManager _$$_ProviderManagerFromJson(Map<String, dynamic> json) =>
+    _$_ProviderManager(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      email: json['email'] as String,
+      role: const UserRoleConverter().fromJson(json['role'] as String?),
+    );
+
+Map<String, dynamic> _$$_ProviderManagerToJson(_$_ProviderManager instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'email': instance.email,
+      'role': const UserRoleConverter().toJson(instance.role),
     };

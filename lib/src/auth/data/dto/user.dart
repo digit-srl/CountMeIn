@@ -19,7 +19,7 @@ class AuthUserDTO with _$AuthUserDTO {
     required String email,
     required bool emailVerified,
     @CMIRoleConverter() required PlatformRole role,
-    Map<String, String>? providersRole,
+    // Map<String, String>? providersRole,
     @MyDateTimeConverter() required DateTime createdOn,
   }) = _AuthUserDTO;
 
@@ -37,9 +37,9 @@ extension AuthUserDTOX on AuthUserDTO {
       emailVerified: emailVerified,
       createdOn: createdOn,
       role: role,
-      providersRole: providersRole?.map((key, value) =>
-              MapEntry(key, enumFromString(value, UserRole.values))) ??
-          <String, UserRole>{},
+      // providersRole: providersRole?.map((key, value) =>
+      //         MapEntry(key, enumFromString(value, UserRole.values))) ??
+      //     <String, UserRole>{},
     );
   }
 }

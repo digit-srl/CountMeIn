@@ -36,10 +36,10 @@ extension ResetPasswordExceptionX on ResetPasswordException {
   String get message {
     return when(
       unknown: () => 'Errore sconosciuto',
-      expired: () => '',
-      userDisabled: () => '',
-      userNotFound: () => '',
-      invalidCode: () => '',
+      expired: () => 'expired',
+      userDisabled: () => 'userDisabled',
+      userNotFound: () => 'userNotFound',
+      invalidCode: () => 'Invalid OTP code',
     );
   }
 }

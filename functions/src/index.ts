@@ -1,4 +1,3 @@
-import { AuthUser } from "./AuthUser";
 import * as functions from "firebase-functions";
 const admin = require("firebase-admin");
 admin.initializeApp();
@@ -8,8 +7,9 @@ const draw = require("./draw");
 import * as dotenv from "dotenv";
 dotenv.config();
 const db = admin.firestore();
-//const cors = require("cors")({ origin: true });
 const axios = require("axios").default;
+const cors = require("cors")({ origin: true });
+
 /*
 export const drawCard = functions.region('europe-west3').https.onRequest((request, response) => {
   const a = new AuthUser("", "", "", "", [], true);
@@ -81,17 +81,26 @@ export const onActivityCreated = functions
   .onCreate(async (snap, context) => {
     const provider: FirebaseFirestore.DocumentData = snap.data();
 
+    const providerId = provider.id;
     const email = provider.adminEmail;
     const surname = provider.adminSurname;
     const name = provider.adminName;
+    const cf = provider.adminCf;
     const fullName = name + " " + surname;
 
     console.log(
       "new provider created" + name + " " + provider.name + " " + email
     );
 
-    await createNewAdminForProvider(name, surname, email);
-    await Email.sendWelcomeNewProvider(provider.name, email, fullName);
+    await createNewAdminForProvider(
+      name,
+      surname,
+      email,
+      "admin",
+      providerId,
+      cf
+    );
+    await Email.sendWelcomeNewProvider(provider.name, email, fullName, "admin");
   });
 
 export const onUserCheckIn = functions
@@ -414,6 +423,7 @@ export const sendResetPasswordEmail = functions
     }
   );
 
+// Only for testing
 export const crateNewUser = functions
   .region("europe-west3")
   .https.onRequest(
@@ -437,7 +447,14 @@ export const crateNewUser = functions
       }
 
       try {
-        await createNewAdminForProvider(name, surname, email);
+        await createNewAdminForProvider(
+          name,
+          surname,
+          email,
+          "admin",
+          "",
+          "DFRGMR89M02i348U"
+        );
         response.status(200).end();
       } catch (error) {
         console.log(error);
@@ -449,8 +466,11 @@ export const crateNewUser = functions
 async function createNewAdminForProvider(
   name: string,
   surname: string,
-  email: string
-) {
+  email: string,
+  role: string,
+  providerId: string,
+  cf: string
+): Promise<string> {
   const fullName = name + " " + surname;
   const user = await admin.auth().createUser({
     email: email,
@@ -460,19 +480,25 @@ async function createNewAdminForProvider(
   });
   console.log("user created " + user.uid);
 
-  const authUser = new AuthUser(
-    user.uid,
-    name,
-    surname,
-    email,
-    user.emailVerified
-  );
+  let map = new Map<string, string>();
+  map.set(providerId, role);
+
+  let jsonObject = Object.fromEntries(map);
 
   //await admin.auth().setCustomUserClaims(user.uid, {
   //  role: role,
   //});
-  await db.doc("credentials" + "/" + user.uid).set(authUser.toJson());
+  await db.doc("credentials" + "/" + user.uid).set({
+    uid: user.uid,
+    surname: surname,
+    name: name,
+    email: email,
+    emailVerified: user.emailVerified,
+    providersRole: jsonObject,
+    cf: cf,
+  });
   //await generateAndSendResetPasswordEmail(fullName, email);
+  return user.uid;
 }
 
 async function generateAndSendResetPasswordEmail(
@@ -503,6 +529,7 @@ async function generateAndSendResetPasswordEmail(
   }
 }
 
+//Only for testing
 export const createNewProvider = functions
   .region("europe-west3")
   .https.onRequest(
@@ -517,6 +544,8 @@ export const createNewProvider = functions
       const data = request.body;
       //const acceptPassepartout = data.acceptPassepartout;
       const name = data.name;
+      const surname = data.surname;
+      const email = data.email;
       //const releaseWom = data.releaseWom;
       //const status = data.status;
 
@@ -526,12 +555,14 @@ export const createNewProvider = functions
       }
 
       try {
-        /*const data = {
-          acceptPassepartout: acceptPassepartout,
-          name: name,
-          releaseWom: releaseWom,
-        };*/
-        await db.collection("providers").doc().set(data);
+        await createNewAdminForProvider(
+          name,
+          surname,
+          email,
+          "admin",
+          "",
+          "DFRGMR89M02I348U"
+        );
         response.status(200).end();
       } catch (error) {
         console.log(error);
@@ -540,7 +571,7 @@ export const createNewProvider = functions
     }
   );
 
-//TODO Remove in live
+//Only for testing
 export const verifyEmail = functions
   .region("europe-west3")
   .https.onRequest(
@@ -573,17 +604,253 @@ export const verifyEmail = functions
     }
   );
 
+// Saves a message to the Firebase Realtime Database but sanitizes the text by removing swearwords.
+export const confirmPendingInvite = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      cors(request, response, async () => {
+        if (request.method !== "POST") {
+          response.status(403).send("Forbidden!");
+          return;
+        }
+
+        const data = request.body;
+        console.log("confirmPendingInvite");
+        const inviteId: string = data.inviteId;
+        const secret = data.secret;
+        const providerId: string = data.providerId;
+
+        if (
+          inviteId === undefined ||
+          inviteId === null ||
+          providerId === undefined ||
+          providerId === null ||
+          secret === undefined ||
+          secret === null
+        ) {
+          throw new functions.https.HttpsError(
+            "invalid-argument",
+            "inviteId: " +
+              inviteId +
+              " secret: " +
+              secret +
+              " providerId: " +
+              providerId
+          );
+        }
+
+        console.log("confirmPendingInvite: arguments ok");
+        const invite = await db
+          .collection("providers")
+          .doc(providerId)
+          .collection("pendingInvite")
+          .doc(inviteId)
+          .get();
+
+        const inviteData = invite.data();
+        const status = inviteData.status;
+        if (status === "completed") {
+          response
+            .send({
+              status: "alreadyConfirmed",
+            })
+            .end();
+          return;
+        } else if (status === "deleted") {
+          response
+            .send({
+              status: "deletedFromOwner",
+            })
+            .end();
+          return;
+        }
+
+        const secretOnDb = inviteData.secret;
+        const email = inviteData.email;
+        var fullName = inviteData.fullName;
+        console.log(inviteData);
+
+        const role: string = inviteData.role;
+
+        if (secretOnDb !== secret) {
+          console.log("invite secret: " + secretOnDb + " != " + secret);
+          throw new functions.https.HttpsError(
+            "permission-denied",
+            "The secret is different!"
+          );
+        }
+
+        console.log("confirmPendingInvite: secret ok");
+        var userId = inviteData.userId;
+        const name = data.name;
+        const surname = data.surname;
+        const cf = data.cf;
+
+        // New user
+        if (userId === undefined || userId === null) {
+          console.log("confirmPendingInvite: new user");
+          if (
+            name === undefined ||
+            name === null ||
+            surname === undefined ||
+            surname === null ||
+            cf === undefined ||
+            cf === null
+          ) {
+            throw new functions.https.HttpsError(
+              "invalid-argument",
+              "name: " + name + " surname: " + surname + " cf: " + cf
+            );
+          }
+          fullName = name + " " + surname;
+
+          userId = await createNewAdminForProvider(
+            name,
+            surname,
+            email,
+            role,
+            providerId,
+            cf
+          );
+        }
+
+        //TODO  controlla che l utente esista veramente
+
+        let map = {
+          id: userId,
+          role: role,
+          email: email,
+          name: fullName,
+        };
+        let managers = new Map<string, Object>();
+        managers.set("managers." + userId, map);
+        let jManagers = Object.fromEntries(managers);
+
+        console.log("updating managers");
+
+        console.log(jManagers);
+
+        await db.doc("providers" + "/" + providerId).update(jManagers);
+        await db
+          .collection("providers")
+          .doc(providerId)
+          .collection("pendingInvite")
+          .doc(inviteId)
+          .update({
+            status: "completed",
+          });
+        await Email.sendWelcomeNewProvider(
+          inviteData.providerName,
+          email,
+          fullName,
+          role
+        );
+        response
+          .send({
+            status: "completed",
+          })
+          .end();
+
+        //let map = new Map<string, string>();
+        //map.set("providersRole." + invite.userId, role);
+        //let jsonObject = Object.fromEntries(map);
+
+        /*return db
+        .doc("credentials" + "/" + invite.userId)
+        .update(jsonObject)
+        .then(() => {
+          return {
+            status: "completed",
+          };
+        });*/
+      });
+    }
+  );
+
 /*
 export const moveUrbino = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {
-      const activity = await db
-        .collection("providers")
-        .doc("wom-count-me-in")
-        .get();
+      const id = "asdfghjk";
 
-      await db.collection("providers").doc("countmein").set(activity.data());
+      let map = new Map<string, string>();
+      map.set("providersRole." + id, "role");
+
+      let jsonObject = Object.fromEntries(map);
+
+      db.collection("credentials")
+        .doc("dMqwaz96B8N7qZD6C5SFQSlO9PhX")
+        .update(jsonObject);
+
+      //await db.collection("providers").doc("countmein").set(activity.data());
     }
   );
-*/
+
+  */
+
+export const onInviteToCollaborate = functions
+  .region("europe-west3")
+  .firestore.document("providers/{providerId}/pendingInvite/{inviteId}")
+  .onCreate(async (snap, context) => {
+    const inviteId = context.params.inviteId;
+    const providerId = context.params.providerId;
+    const invite: FirebaseFirestore.DocumentData = snap.data();
+
+    const role = invite.role;
+    const email = invite.email;
+    const providerName = invite.providerName;
+    const fullName = invite.name;
+    console.log(
+      "new invite to collaborate " +
+        providerName +
+        " " +
+        fullName +
+        " " +
+        role +
+        " " +
+        email
+    );
+
+    // TODO check that all field is valid
+
+    const requestRef = db
+      .collection("providers")
+      .doc(providerId)
+      .collection("pendingInvite")
+      .doc(inviteId);
+    var secret = Math.random().toString(36).slice(-8);
+
+    await requestRef.update({
+      secret: secret,
+    });
+
+    var url: string =
+      "https://cmi.digit.srl/confirmInvite?i=" +
+      inviteId +
+      "&s=" +
+      secret +
+      "&p=" +
+      providerId +
+      "&n=" +
+      providerName;
+
+    try {
+      const user = await admin.auth().getUserByEmail(email);
+      await requestRef.update({
+        userId: user.uid,
+        fullName: user.displayName,
+      });
+      url = url + "&u=" + user.uid;
+      console.log("user exist");
+    } catch (err) {
+      console.log(err);
+      //if (err.code === "auth/user-not-found") {
+      // User doesn't exist yet, create it...
+      // }
+    }
+
+    console.log(url);
+    return Email.sendInvite(providerName, fullName, email, role, url);
+  });

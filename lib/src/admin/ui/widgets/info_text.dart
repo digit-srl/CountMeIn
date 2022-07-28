@@ -60,6 +60,7 @@ class InfoText2 extends StatelessWidget {
   final Widget value;
   final bool copyable;
   final Widget? iconButton;
+  final Widget? labelWidget;
 
   const InfoText2({
     Key? key,
@@ -67,6 +68,7 @@ class InfoText2 extends StatelessWidget {
     required this.value,
     this.copyable = false,
     this.iconButton,
+    this.labelWidget,
   }) : super(key: key);
 
   @override
@@ -77,16 +79,21 @@ class InfoText2 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            label,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1
-                ?.copyWith(color: Colors.grey),
+          Row(
+            children: [
+              Text(
+                label,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(color: Colors.grey),
+              ),
+              if (labelWidget != null) labelWidget!
+            ],
           ),
           const SizedBox(height: 4),
           value,
-       /*   Row(
+          /*   Row(
             children: [
               Text(
                 value ?? '-',

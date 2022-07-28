@@ -9,28 +9,25 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_overlay/loading_overlay.dart';
-import '../../../../app.dart';
-import '../../../../main.dart';
 import '../../../common/ui/widgets/my_button.dart';
 import '../../../common/ui/widgets/my_text_field.dart';
 import '../../../common/mu_styles.dart';
 import '../../application/auth_notifier.dart';
 import '../../domain/entities/exceptions.dart';
-import 'sign_up.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 final textValidator = MultiValidator([
-  RequiredValidator(errorText: 'Field required'),
+  RequiredValidator(errorText: 'Campo obbligatorio'),
   MinLengthValidator(3, errorText: 'Il testo deve essere > di 3 caratteri'),
 ]);
 
 final emailValidator = MultiValidator([
-  RequiredValidator(errorText: 'Email is required'),
+  RequiredValidator(errorText: 'Campo obbligatorio'),
   EmailValidator(errorText: 'enter a valid email address')
 ]);
 
 final passwordValidator = MultiValidator([
-  RequiredValidator(errorText: 'Password is required'),
+  RequiredValidator(errorText: 'Campo obbligatorio'),
   MinLengthValidator(6, errorText: 'password must be at least 8 digits long'),
 /*  PatternValidator(r'(?=.*?[#?!@$%^&*-])',
       errorText: 'passwords must have at least one special character')*/
