@@ -1,3 +1,4 @@
+import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,38 +21,32 @@ class AdminDashboardScreen extends ConsumerWidget {
     final authState = ref.watch(authStateProvider);
     final isEmailNotVerified = authState is EmailNotVerified;
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          TextButton(
-              onPressed: () async {
-                await ref.read(signInNotifierProvider.notifier).signOut();
-                // context.push();
-              },
-              child: Text('Logout'))
-        ],
+      appBar: const AdminAppBar(
+        title: 'Dashboard',
+        goToHome: false,
       ),
       // backgroundColor: Colors.black,
       body: isEmailNotVerified
           ? const EmailNotVerifiedScreen()
           : ListView(
+        children: [
+          const AdminInfoWidget(),
+          if (platformUserRole != UserRole.unknown)
+            GridView.count(
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(16),
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 16,
+              crossAxisCount: 4,
+              childAspectRatio: 4 / 3,
               children: [
-                const AdminInfoWidget(),
-                if (platformUserRole != UserRole.unknown)
-                  GridView.count(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(16),
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 16,
-                    crossAxisCount: 4,
-                    childAspectRatio: 4 / 3,
-                    children: [
-                      const ActiveProviders(),
-                      if (platformUserRole == PlatformRole.cmi)
-                        const PendingProviders(),
-                    ],
-                  ),
+                const ActiveProviders(),
+                if (platformUserRole == PlatformRole.cmi)
+                  const PendingProviders(),
               ],
             ),
+        ],
+      ),
     );
   }
 }

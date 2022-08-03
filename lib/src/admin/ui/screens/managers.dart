@@ -1,4 +1,5 @@
 import 'package:countmein/domain/entities/cmi_provider.dart';
+import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/auth/ui/screens/sign_in.dart';
@@ -66,8 +67,8 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
     final state = ref.watch(pendingInviteStreamProvider(widget.provider.id));
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Managers'),
+      appBar: AdminAppBar(
+        title: 'Managers',
       ),
       body: Center(
         child: Container(

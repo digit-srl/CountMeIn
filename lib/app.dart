@@ -1,28 +1,8 @@
-import 'package:countmein/domain/entities/cmi_provider.dart';
-import 'package:countmein/domain/entities/cmi_provider_request.dart';
-import 'package:countmein/domain/entities/user_card.dart';
 import 'package:countmein/router.dart';
-import 'package:countmein/src/admin/ui/screens/admin_pending_providers.dart';
-import 'package:countmein/src/admin/ui/screens/admin_provider_handler.dart';
-import 'package:countmein/src/auth/ui/screens/auht_gate.dart';
-import 'package:countmein/src/auth/ui/screens/reset_password.dart';
-import 'package:countmein/ui/screens/email_verification.dart';
-import 'package:countmein/ui/screens/new_event_form.dart';
-import 'package:countmein/ui/screens/request_activity.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
-
-import 'constants.dart';
-import 'src/admin/ui/screens/admin_dashboard.dart';
-import 'src/admin/ui/screens/admin_providers.dart';
-import 'ui/screens/admin_user_details.dart';
-import 'ui/screens/error.dart';
-import 'ui/screens/home.dart';
-import 'ui/screens/user_console.dart';
-import 'ui/screens/user_event.dart';
 
 /*
 final goRouterProvider = Provider<GoRouter>((ref) {

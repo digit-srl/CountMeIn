@@ -1,3 +1,4 @@
+import 'package:countmein/src/admin/ui/screens/new_event.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,14 +9,11 @@ import 'package:oktoast/oktoast.dart';
 import '../../cloud.dart';
 import '../../constants.dart';
 import '../../domain/entities/cmi_provider.dart';
-import '../../domain/entities/session.dart';
 import '../../src/auth/application/auth_notifier.dart';
 import '../../utils.dart';
-import '../widgets/add_session_dialog.dart';
 import '../widgets/loading.dart';
 import 'admin.dart';
 import 'event_details.dart';
-import 'new_event_form.dart';
 
 final activitiesStreamProvider =
     StreamProvider.family<List<CMIProvider>, String>((ref, userId) async* {
@@ -242,7 +240,7 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
                         MaterialPageRoute(
                           builder: (c) => EventDetailsScreen(
                             providerId: widget.providerId,
-                            event: event,
+                            eventId: event.id,
                           ),
                         ),
                       );

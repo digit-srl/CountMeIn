@@ -1,5 +1,7 @@
 import 'package:countmein/src/admin/application/confirm_invite_state.dart';
+import 'package:countmein/src/admin/ui/screens/event_users.dart';
 import 'package:countmein/src/admin/ui/screens/managers.dart';
+import 'package:countmein/src/admin/ui/screens/new_event.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/auth/ui/screens/invite_form_confirm.dart';
@@ -14,7 +16,6 @@ import 'package:countmein/src/admin/ui/screens/admin_provider_handler.dart';
 import 'package:countmein/src/auth/ui/screens/auht_gate.dart';
 import 'package:countmein/src/auth/ui/screens/reset_password.dart';
 import 'package:countmein/ui/screens/email_verification.dart';
-import 'package:countmein/ui/screens/new_event_form.dart';
 import 'package:countmein/ui/screens/request_activity.dart';
 import 'package:flutter/material.dart';
 
@@ -165,10 +166,15 @@ class RouterNotifier extends ChangeNotifier {
           builder: (context, state) => AdminProvidersScreen(),
         ),
         GoRoute(
-          path: AdminProviderHandlerScreen.routeName,
-          builder: (context, state) => AdminProviderHandlerScreen(
-            provider: state.extra as CMIProvider,
-          ),
+          // name: AdminProviderHandlerScreen.routeName,
+          path: '${AdminProviderHandlerScreen.routeName}/:providerId',
+          builder: (context, state) {
+
+            return AdminProviderHandlerScreen(
+              providerId: state.params['providerId'] as String,
+              extraProvider: state.extra as CMIProvider?,
+            );
+          }
         ),
         GoRoute(
           path: '${NewEventFormScreen.routeName}/:providerId',
@@ -201,12 +207,24 @@ class RouterNotifier extends ChangeNotifier {
           },
         ),
         GoRoute(
-          path: EventDetailsScreen.routeName,
+          path: '${EventDetailsScreen.routeName}/:providerId/:eventId',
           builder: (context, state) {
-            final list = state.extra as List<dynamic>;
+            final eventId = state.params['eventId'] as String;
+            final providerId = state.params['providerId'] as String;
             return EventDetailsScreen(
-              event: list[0],
-              providerId: list[1],
+              eventId: eventId,
+              providerId: providerId,
+            );
+          },
+        ),
+        GoRoute(
+          path: '${EventUsersScreen.routeName}/:providerId/:eventId',
+          builder: (context, state) {
+            final eventId = state.params['eventId'] as String;
+            final providerId = state.params['providerId'] as String;
+            return EventUsersScreen(
+              eventId: eventId,
+              providerId: providerId,
             );
           },
         ),

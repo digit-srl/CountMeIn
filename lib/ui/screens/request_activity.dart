@@ -1,5 +1,7 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:countmein/cloud.dart';
+import 'package:countmein/domain/entities/cmi_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../src/common/mu_styles.dart';
 import 'package:dart_wom_connector/dart_wom_connector.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
@@ -27,6 +29,26 @@ final releaseWomProvider = StateProvider.autoDispose<bool>((ref) {
 
 final womIntegrationProvider = StateProvider.autoDispose<bool>((ref) {
   return false;
+});
+
+final selectedInstrumentProvider = StateProvider<Instrument?>((ref) {
+  return null;
+});
+
+final womPasswordControllerProvider = Provider<TextEditingController>((ref) {
+  final c = TextEditingController();
+  ref.onDispose(() {
+    c.dispose();
+  });
+  return c;
+});
+
+final womEmailControllerProvider = Provider<TextEditingController>((ref) {
+  final c = TextEditingController();
+  ref.onDispose(() {
+    c.dispose();
+  });
+  return c;
 });
 
 class ActivityRequestScreen extends StatefulHookConsumerWidget {
@@ -128,11 +150,12 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
                                       .read(acceptPolicyProvider.notifier)
                                       .state = v;
                                 }),
-                             const SizedBox(width: 16),
+                            const SizedBox(width: 16),
                             Flexible(
                               child: EasyRichText(
                                 'Accetta l\'informativa per richiedere l\'attivazione di un nuovo provider',
-                                defaultStyle: Theme.of(context).textTheme.caption,
+                                defaultStyle:
+                                    Theme.of(context).textTheme.caption,
                                 patternList: [
                                   EasyRichTextPattern(
                                       targetString: 'informativa',
@@ -154,27 +177,35 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
                         Center(
                           child: MUButton(
                             text: 'Richiedi attivazione',
-                            onPressed: acceptPolicy ? () {
-                              if (_formKey.currentState!.validate()) {
-                                final name = nameController.text.trim();
-                                final surname = surnameController.text.trim();
-                                final email = emailController.text.trim();
-                                final activityName =
-                                    providerNameController.text.trim();
-                                final restrictionDomain =
-                                    restrictionDomainController.text.trim();
-                                _signUp(
-                                  ref,
-                                  context,
-                                  name,
-                                  surname,
-                                  email,
-                                  activityName,
-                                  restrictionDomain,
-                                  releaseWom,
-                                );
-                              }
-                            } : null,
+                            onPressed: acceptPolicy
+                                ? () {
+                                    if (_formKey.currentState!.validate()) {
+                                      final name = nameController.text.trim();
+                                      final surname =
+                                          surnameController.text.trim();
+                                      final email = emailController.text.trim();
+                                      final activityName =
+                                          providerNameController.text.trim();
+                                      final restrictionDomain =
+                                          restrictionDomainController.text
+                                              .trim();
+
+                                      final selectedInstrument =
+                                          ref.read(selectedInstrumentProvider);
+                                      _signUp(
+                                        ref,
+                                        context,
+                                        name,
+                                        surname,
+                                        email,
+                                        activityName,
+                                        restrictionDomain,
+                                        releaseWom,
+                                        selectedInstrument,
+                                      );
+                                    }
+                                  }
+                                : null,
                           ),
                         ),
                       ],
@@ -195,21 +226,40 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
     String name,
     String surname,
     String email,
-    String activityName,
+    String providerName,
     String restrictionDomain,
     bool releaseWom,
+    Instrument? instrument,
   ) async {
-    final activity = CMIProviderRequest(
-      id: const Uuid().v4(),
-      providerName: activityName,
-      adminEmail: email,
-      adminName: name,
-      adminSurname: surname,
-      requestedOn: DateTime.now(),
-      domainRequirement: restrictionDomain,
-      releaseWom: releaseWom,
-    );
     try {
+      String? apiKey;
+      if (instrument != null) {
+        final u = ref.read(womEmailControllerProvider).text.trim();
+        final p = ref.read(womPasswordControllerProvider).text.trim();
+
+        apiKey = await InstrumentClient.createNewApiKey(
+          u,
+          p,
+          'dev.wom.social',
+          'cmi-wom-integration',
+          instrument.id,
+        );
+      }
+
+      final activity = CMIProviderRequest(
+        id: const Uuid().v4(),
+        name: providerName,
+        adminEmail: email,
+        adminName: name,
+        adminSurname: surname,
+        requestedOn: DateTime.now(),
+        domainRequirement: restrictionDomain,
+        releaseWom: releaseWom,
+        womApiKey: apiKey,
+        aims: instrument?.enabledAims.toList() ?? <String>[],
+        status: CMIProviderStatus.pending,
+      );
+
       setState(() {
         isLoading = true;
       });
@@ -217,7 +267,13 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
       setState(() {
         isLoading = false;
       });
-      CoolAlert.show(context: context, type: CoolAlertType.success);
+      if (mounted) {
+        context.pop();
+        CoolAlert.show(
+            context: context,
+            type: CoolAlertType.success,
+            text: 'La richiesta è stata inviata con successo!');
+      }
     } catch (ex) {
       print(ex);
     }
@@ -237,10 +293,11 @@ class _WomIntegrationPanelState extends ConsumerState<WomIntegrationPanel> {
   @override
   Widget build(BuildContext context) {
     final womIntegration = ref.watch(womIntegrationProvider);
-    final womEmailController = useTextEditingController();
-    final womPasswordController = useTextEditingController();
+    final womEmailController = ref.watch(womEmailControllerProvider);
+    final womPasswordController = ref.watch(womPasswordControllerProvider);
     final instrumentUser = useState<InstrumentUser?>(null);
-    final selectedInstrument = useState<Instrument?>(null);
+    final loading = useState<bool>(false);
+    final selectedInstrument = ref.watch(selectedInstrumentProvider);
 
     return CMICard(
       inverseColor: true,
@@ -265,28 +322,44 @@ class _WomIntegrationPanelState extends ConsumerState<WomIntegrationPanel> {
           const Text(
               'Se sei già proprietario di un Instrument puoi collegare le due piattaforme'),
           if (womIntegration)
-            if (instrumentUser.value != null) ...[
+            if (loading.value)
+              SizedBox(
+                width: 200,
+                height: 200,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            else if (instrumentUser.value != null) ...[
               const SizedBox(height: 16),
-              DropdownButton<Instrument>(
-                underline: const Divider(),
-                value: selectedInstrument.value,
-                hint: const Text('Seleziona instrument'),
-                items: instrumentUser.value!.instruments
-                    .map((e) => DropdownMenuItem(value: e, child: Text(e.name)))
-                    .toList(),
-                onChanged: (instrument) {
-                  setState(() {
-                    selectedInstrument.value = instrument;
-                  });
-                },
+              InputDecorator(
+                decoration: InputDecoration(),
+                child: DropdownButton<Instrument>(
+                  isDense: true,
+                  isExpanded: true,
+                  underline: Container(),
+                  value: selectedInstrument,
+                  hint: const Text('Seleziona instrument'),
+                  items: instrumentUser.value!.instruments
+                      .map((e) =>
+                          DropdownMenuItem(value: e, child: Text(e.name)))
+                      .toList(),
+                  onChanged: (instrument) {
+                    ref.read(selectedInstrumentProvider.notifier).state =
+                        instrument;
+                  },
+                ),
               ),
-              if (selectedInstrument.value != null &&
-                  selectedInstrument.value!.enabledAims.isNotEmpty) ...[
+              if (selectedInstrument != null &&
+                  selectedInstrument.enabledAims.isNotEmpty) ...[
+                const SizedBox(height: 16),
                 const Text('Aim abilitati'),
                 const SizedBox(height: 8),
-                Row(
-                  children: selectedInstrument.value!.enabledAims
-                      .map((e) => Chip(label: Text(e)))
+                Wrap(
+                  spacing: 4.0,
+                  children: selectedInstrument.enabledAims
+                      .map((e) =>
+                          Tooltip(message: e, child: Chip(label: Text(e))))
                       .toList(),
                 ),
               ]
@@ -305,6 +378,7 @@ class _WomIntegrationPanelState extends ConsumerState<WomIntegrationPanel> {
               MUButton(
                 text: 'Connetti piattaforma WOM',
                 onPressed: () async {
+                  loading.value = true;
                   final username = womEmailController.text.trim();
                   final password = womPasswordController.text;
 
@@ -314,6 +388,7 @@ class _WomIntegrationPanelState extends ConsumerState<WomIntegrationPanel> {
                   //     'alessandro.bogliolo@uniurb.it',
                   //     'D1GIT!',
                   //     'dev.wom.social');
+                  loading.value = false;
                   print(instrument);
                   setState(() {
                     instrumentUser.value = instrument;

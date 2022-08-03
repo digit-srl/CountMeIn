@@ -1,35 +1,47 @@
 import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
+import 'package:countmein/src/admin/application/providers_stream.dart';
+import 'package:countmein/src/admin/ui/screens/new_event.dart';
+import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
-import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../cloud.dart';
 import '../../../../ui/screens/event_details.dart';
-import '../../../common/mu_styles.dart';
 import '../../../../domain/entities/session.dart';
-import '../../../common/ui/widgets/my_button.dart';
+import '../../../../utils.dart';
 import '../widgets/info_text.dart';
 import 'managers.dart';
 
 class AdminProviderHandlerScreen extends ConsumerWidget {
   static const String routeName = '/adminProviderHandler';
 
-  final CMIProvider provider;
+  final String providerId;
+  final CMIProvider? extraProvider;
 
-  const AdminProviderHandlerScreen({Key? key, required this.provider})
-      : super(key: key);
+  const AdminProviderHandlerScreen({
+    Key? key,
+    this.extraProvider,
+    required this.providerId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    CMIProvider? provider;
+    if (extraProvider != null) {
+      provider = extraProvider!;
+    } else {
+      provider = ref.watch(singleCMIProviderProvider(providerId));
+    }
     final platformUserRole = ref.watch(authUserRoleProvider);
-    final eventsState = ref.watch(eventsStreamProvider(provider.id));
+
+    final eventsState = ref.watch(eventsStreamProvider(providerId));
     return Scaffold(
-      appBar: AppBar(
-        title: Text(provider.name),
+      appBar: AdminAppBar(
+        title: provider?.name ?? 'Caricamento...',
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -40,36 +52,36 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
               children: [
                 InfoText(
                   label: 'Nome Provider',
-                  value: provider.name,
+                  value: provider?.name,
                 ),
                 InfoText(
                   label: 'Amministratore',
-                  value: provider.adminFullName,
+                  value: provider?.adminFullName,
                 ),
                 InfoText(
                   label: 'Email Amministratore',
-                  value: provider.adminEmail,
+                  value: provider?.adminEmail,
                   copyable: true,
                 ),
                 InfoText(
                   label: 'Restrizione email',
-                  value: provider.domainRequirement,
+                  value: provider?.domainRequirement,
                 ),
                 InfoText(
                   label: 'WOM Api Key',
-                  value: provider.apiKey,
+                  value: provider?.apiKey,
                 ),
                 InfoText(
                   label: 'Aims',
-                  value: provider.aims?.join('-'),
+                  value: provider?.aims?.join('-'),
                 ),
                 InfoText2(
                     label: 'Managers',
                     labelWidget: IconButton(
-                      icon: Icon((provider.managers?.isEmpty ?? true)
+                      icon: Icon((provider?.managers?.isEmpty ?? true)
                           ? Icons.add
                           : Icons.edit),
-                      onPressed: provider.managers != null
+                      onPressed: provider?.managers != null
                           ? () {
                               context.push(ManagersHandlerScreen.routeName,
                                   extra: provider);
@@ -87,8 +99,8 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                     ),
                     value: Wrap(
                       children: [
-                        if (provider.managers != null)
-                          ...provider.managers!.values
+                        if (provider?.managers != null)
+                          ...provider!.managers!.values
                               .map(
                                 (e) => Padding(
                                   padding: const EdgeInsets.only(right: 8.0),
@@ -107,41 +119,73 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                               .toList(),
                       ],
                     )),
-                if (provider.status == CMIProviderStatus.pending &&
+                if (provider?.status == CMIProviderStatus.pending &&
                     platformUserRole == PlatformRole.cmi)
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await Cloud.providerRequests
+                          .doc()
+                          .update({'status': 'live'});
+                    },
                     child: Text('Accetta richiesta'),
                   ),
               ],
             ),
           ),
-          if (eventsState is AsyncData<List<Event>>)
-            GridView.builder(
-              shrinkWrap: true,
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              itemCount: eventsState.asData!.value.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                final p = eventsState.asData!.value[index];
-                return CMICard(
-                  onTap: () {
-                    context.push(
-                      EventDetailsScreen.routeName,
-                      extra: [p, provider.id],
+          if (provider?.status == CMIProviderStatus.live &&
+              eventsState is AsyncData<List<Event>>)
+            LayoutBuilder(builder: (context, constraints) {
+              print(constraints.maxWidth);
+              return GridView.builder(
+                shrinkWrap: true,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                itemCount: eventsState.asData!.value.length + 1,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: childAspectRatio(constraints.maxWidth),
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: 4 / 3,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  if (index == 0) {
+                    return CMICard(
+                      onTap: () {
+                        if (provider == null) return;
+                        context.push(
+                          '${NewEventFormScreen.routeName}/${provider.id}',
+                        );
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.add,
+                            size: 50,
+                          ),
+                          Text(
+                            'Crea nuovo evento',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                        ],
+                      ),
                     );
-                  },
-                  child: Text(
-                    p.name,
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                );
-              },
-            )
+                  }
+                  final p = eventsState.asData!.value[index - 1];
+                  return CMICard(
+                    onTap: () {
+                      context.pushNamed(
+                        EventDetailsScreen.routeName,
+                        params: {'eventId': p.id, 'providerId': providerId},
+                      );
+                    },
+                    child: Text(
+                      p.name,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                  );
+                },
+              );
+            })
         ],
       ),
     );

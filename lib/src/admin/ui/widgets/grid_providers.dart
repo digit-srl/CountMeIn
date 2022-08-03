@@ -1,3 +1,4 @@
+import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,33 +8,40 @@ import '../screens/admin_provider_handler.dart';
 import '../../../common/mu_styles.dart';
 
 class GridProvidersWidget extends StatelessWidget {
-
   final List<CMIProvider> providers;
 
-  const GridProvidersWidget({Key? key, required this.providers}) : super(key: key);
+  const GridProvidersWidget({Key? key, required this.providers})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: providers.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-      ),
-      itemBuilder: (BuildContext context, int index) {
-        final p = providers[index];
-        return CMICard(
-          onTap: () {
-            context.push(AdminProviderHandlerScreen.routeName, extra: p);
-          },
-          child: Text(
-            p.name,
-            // style: Theme.of(context).textTheme.subtitle1,
+    return LayoutBuilder(
+      builder: (context,constraints) {
+        return GridView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: providers.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: childAspectRatio(constraints.maxWidth),
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            childAspectRatio: 4/3,
           ),
+          itemBuilder: (BuildContext context, int index) {
+            final p = providers[index];
+            return CMICard(
+              onTap: () {
+                context.push('${AdminProviderHandlerScreen.routeName}/${p.id}',
+                    extra: p.status == CMIProviderStatus.pending ? p : null);
+                // params: {'providerId': p.id});
+              },
+              child: Text(
+                p.name,
+                // style: Theme.of(context).textTheme.subtitle1,
+              ),
+            );
+          },
         );
-      },
+      }
     );
   }
 }

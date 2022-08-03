@@ -1,3 +1,4 @@
+import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' show Timestamp;
 import 'date_time_converter.dart';
@@ -13,8 +14,9 @@ class CMIProviderRequest with _$CMIProviderRequest {
     required String adminName,
     required String adminSurname,
     required String adminEmail,
-    required String providerName,
+    required String name,
     required bool releaseWom,
+    @CMIProviderStatusConverter() required CMIProviderStatus status,
     String? womApiKey,
     List<String>? aims,
     String? domainRequirement,

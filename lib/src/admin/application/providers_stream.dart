@@ -3,7 +3,7 @@ import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:collection/collection.dart' show IterableExtension;
 import '../../../cloud.dart';
 import '../../../domain/entities/cmi_provider.dart';
 
@@ -13,6 +13,22 @@ final pendingProvidersStreamProvider =
       Cloud.providerRequests.where('status', isEqualTo: 'pending').snapshots();
 
   await for (final snap in stream) {
+    print('${snap.docs.length} providers trovati');
+    final list = <CMIProvider>[];
+    for (int i = 0; i < snap.docs.length; i++) {
+      final d = snap.docs[i].data();
+      try {
+        final s = CMIProvider.fromJson(d);
+        list.add(s);
+      } catch (ex, st) {
+        print(ex);
+        print(st);
+      }
+    }
+    yield list;
+  }
+
+  /*await for (final snap in stream) {
     try {
       final list = snap.docs.map((doc) {
         final s = CMIProvider.fromJson(doc.data());
@@ -24,7 +40,7 @@ final pendingProvidersStreamProvider =
       print(st);
       yield <CMIProvider>[];
     }
-  }
+  }*/
 });
 
 final activeProvidersStreamProvider =
@@ -59,4 +75,16 @@ final activeProvidersStreamProvider =
     print('user is not authenticated');
     yield <CMIProvider>[];
   }
+});
+
+final singleCMIProviderProvider =
+    Provider.family<CMIProvider?, String>((ref, providerId) {
+
+
+  final p = ref
+      .watch(activeProvidersStreamProvider)
+      .asData
+      ?.value
+      .firstWhereOrNull((element) => element.id == providerId);
+  return p;
 });

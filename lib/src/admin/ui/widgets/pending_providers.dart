@@ -20,7 +20,7 @@ class PendingProviders extends ConsumerWidget {
       }
           : null,
       iconBadge:
-      data != null && data.length > 0 ? Icons.account_balance_wallet : null,
+      data != null && data.isNotEmpty ? Icons.account_balance_wallet : null,
       child: data == null
           ? const CircularProgressIndicator()
           : Text(

@@ -1,4 +1,5 @@
 import 'package:countmein/domain/entities/cmi_provider_request.dart';
+import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -20,13 +21,13 @@ class AdminProvidersScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(activeProvidersStreamProvider);
     return Scaffold(
-      appBar: AppBar(title: Text('Providers'),),
+      appBar: const AdminAppBar(title: 'Providers',),
       body: state.when(
         data: (providers) => GridProvidersWidget(providers: providers),
         error: (err, st) => ErrorScreen(
           exception: err,
         ),
-        loading: () => LoadingWidget(),
+        loading: () => const LoadingWidget(),
       ),
     );
   }

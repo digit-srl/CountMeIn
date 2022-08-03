@@ -25,7 +25,7 @@ export function sendEmail(
   inline: any
 ) {
   const data = {
-    from: "CountMeIn <no-reply@digit.srl>",
+    from: "Count Me In <no-reply@digit.srl>",
     to: to,
     subject: subject,
     template: template,
@@ -188,14 +188,16 @@ export async function sendWomEmail(
 export async function sendNewActivityRequested(
   providerName: string,
   adminEmail: string,
-  adminFullname: string
+  adminFullName: string,
+  link: string
 ) {
   const emails = ["info@digit.srl", "difrancescogianmarco@gmail.com"];
 
   const json = JSON.stringify({
-    adminFullname: adminFullname,
+    adminFullName: adminFullName,
     provider: providerName,
     adminEmail: adminEmail,
+    link: encodeURI(link),
   });
 
   console.log(json);
@@ -203,6 +205,29 @@ export async function sendNewActivityRequested(
     emails,
     "Nuovo Provider in attesa di verifica",
     "new_provider_request",
+    json,
+    null,
+    null
+  );
+}
+export async function sendNewActivityRequestedToUser(
+  providerName: string,
+  adminEmail: string,
+  adminFullName: string
+) {
+  const emails = [adminEmail];
+
+  const json = JSON.stringify({
+    adminFullName: adminFullName,
+    provider: providerName,
+    adminEmail: adminEmail,
+  });
+
+  console.log(json);
+  return sendEmail(
+    emails,
+    "La tua richiesta è in attesa di verifica",
+    "new_provider_request_to_user",
     json,
     null,
     null

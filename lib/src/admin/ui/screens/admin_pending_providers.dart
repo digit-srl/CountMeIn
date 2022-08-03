@@ -1,3 +1,4 @@
+import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/ui/screens/error.dart';
 import 'package:countmein/ui/widgets/loading.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,9 @@ class AdminPendingProvidersScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(pendingProvidersStreamProvider);
     return Scaffold(
+      appBar: const AdminAppBar(
+        title: 'Pending providers',
+      ),
       body: state.when(
         data: (providers) => GridProvidersWidget(providers: providers),
         error: (err, st) => ErrorScreen(

@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 
-String enumToString(Object o) => o.toString().split('.').last;
+int childAspectRatio(double maxWidth) => maxWidth < 400
+    ? 1
+    : maxWidth < 500
+    ? 2
+    : maxWidth < 900
+    ? 3
+    : 4;
+
+
+String enumToString(Object? o) => o?.toString().split('.').last ?? '';
 
 T enumFromString<T extends Object>(String key, List<T> values) => values
     .firstWhere((v) => key.toLowerCase() == enumToString(v).toLowerCase());
