@@ -58,7 +58,9 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
           );
         }
       } else {
-        Hive.box('user').put('myUser', user.toJson());
+        final json = user.toJson();
+        json.remove('addedOn');
+        Hive.box('user').put('myUser',json );
       }
     } catch (ex, st) {
       print(ex);

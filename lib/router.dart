@@ -90,6 +90,8 @@ class RouterNotifier extends ChangeNotifier {
     final isGoingToHome = state.subloc == '/';
     final isGoingConfirmInvite =
         state.subloc == InviteFormConfirmScreen.routeName;
+    final isGoingToUserCardForm =
+        state.subloc.startsWith('/provider');
     final isGoingToResetPassword =
         state.subloc == ResetPasswordScreen.routeName;
     final isGoingToActivityRequest =
@@ -97,7 +99,7 @@ class RouterNotifier extends ChangeNotifier {
     if (isGoingToHome ||
         isGoingToActivityRequest ||
         isGoingConfirmInvite ||
-        isGoingToResetPassword) {
+        isGoingToResetPassword || isGoingToUserCardForm) {
       return null;
     }
     // From here we can use the state and implement our custom logic

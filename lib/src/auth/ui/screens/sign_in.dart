@@ -46,8 +46,8 @@ class SignInScreen extends HookConsumerWidget {
       final result = await ref
           .read(signInNotifierProvider.notifier)
           .signIn(email, password);
-      Hive.box('user').put('email',email);
-      Hive.box('user').put('password',password);
+      Hive.box('user').put('email', email);
+      Hive.box('user').put('password', password);
       // if(result){
       //   ref.read(goRouterProvider).pop();
       // }
@@ -58,8 +58,10 @@ class SignInScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final emailController = useTextEditingController(text: Hive.box('user').get('email'));
-    final passwordController = useTextEditingController(text: Hive.box('user').get('password'));
+    final emailController =
+        useTextEditingController(text: Hive.box('user').get('email'));
+    final passwordController =
+        useTextEditingController(text: Hive.box('user').get('password'));
     final isLoading = ref.watch(signInNotifierProvider);
     return Scaffold(
       appBar: AppBar(),
@@ -103,6 +105,7 @@ class SignInScreen extends HookConsumerWidget {
                       validator: emailValidator,
                     ),
                     MUTextField(
+                      maxLines: 1,
                       controller: passwordController,
                       labelText: 'Password',
                       validator: passwordValidator,
