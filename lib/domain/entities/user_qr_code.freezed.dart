@@ -221,7 +221,9 @@ class _$_UserQrCode implements _UserQrCode {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserQrCodeToJson(this);
+    return _$$_UserQrCodeToJson(
+      this,
+    );
   }
 }
 

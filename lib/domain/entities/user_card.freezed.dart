@@ -258,7 +258,9 @@ class _$_UserCard implements _UserCard {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserCardToJson(this);
+    return _$$_UserCardToJson(
+      this,
+    );
   }
 }
 

@@ -1,4 +1,3 @@
-
 import 'package:form_field_validator/form_field_validator.dart';
 
 class CFValidator extends TextFieldValidator {
@@ -24,5 +23,12 @@ class CFValidator extends TextFieldValidator {
 final nameSurnameValidator = MultiValidator([
   RequiredValidator(errorText: 'Questo campo è obbligatorio'),
   MinLengthValidator(3, errorText: 'Devi inserire almeno 3 caratteri'),
+  // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
+]);
+
+final numberValidator = MultiValidator([
+  RequiredValidator(errorText: 'Questo campo è obbligatorio'),
+  RangeValidator(
+      min: 1, max: 12, errorText: 'Devi inserire almeno 3 caratteri'),
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
 ]);

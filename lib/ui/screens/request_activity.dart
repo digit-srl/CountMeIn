@@ -1,6 +1,7 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:countmein/cloud.dart';
 import 'package:countmein/domain/entities/cmi_provider.dart';
+import 'package:countmein/ui/screens/user_register_form.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../src/common/mu_styles.dart';
 import 'package:dart_wom_connector/dart_wom_connector.dart';
@@ -112,7 +113,8 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
                         ),
                         MUTextField(
                           controller: restrictionDomainController,
-                          labelText: 'Registrazione dominio email utenti',
+                          labelText:
+                              'Restrizione dominio email utenti (facoltativo)',
                           // validator: textValidator,
                         ),
                         const SizedBox(height: 16),
@@ -178,12 +180,14 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
                           child: MUButton(
                             text: 'Richiedi attivazione',
                             onPressed: acceptPolicy
-                                ? () {
+                                ? () async {
                                     if (_formKey.currentState!.validate()) {
                                       final name = nameController.text.trim();
                                       final surname =
                                           surnameController.text.trim();
                                       final email = emailController.text.trim();
+                                      final cf = adminCfController.text.trim();
+                                      final pIva = cfController.text.trim();
                                       final activityName =
                                           providerNameController.text.trim();
                                       final restrictionDomain =
@@ -192,17 +196,50 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
 
                                       final selectedInstrument =
                                           ref.read(selectedInstrumentProvider);
-                                      _signUp(
+                                      final result = await _signUp(
                                         ref,
                                         context,
                                         name,
                                         surname,
                                         email,
+                                        cf,
                                         activityName,
                                         restrictionDomain,
                                         releaseWom,
+                                        pIva,
                                         selectedInstrument,
                                       );
+
+                                      if (result) {
+                                        nameController.clear();
+                                        surnameController.clear();
+                                        emailController.clear();
+                                        cfController.clear();
+                                        adminCfController.clear();
+                                        providerNameController.clear();
+                                        restrictionDomainController.clear();
+                                        ref
+                                            .read(
+                                                womIntegrationProvider.notifier)
+                                            .state = false;
+                                        ref
+                                            .read(selectedInstrumentProvider
+                                                .notifier)
+                                            .state = null;
+                                        ref
+                                            .read(womEmailControllerProvider)
+                                            .clear();
+                                        ref
+                                            .read(womPasswordControllerProvider)
+                                            .clear();
+
+                                        CoolAlert.show(
+                                            context: context,
+                                            width: 400,
+                                            type: CoolAlertType.success,
+                                            text:
+                                                'La richiesta è stata inviata con successo!');
+                                      }
                                     }
                                   }
                                 : null,
@@ -226,9 +263,11 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
     String name,
     String surname,
     String email,
+    String cf,
     String providerName,
     String restrictionDomain,
     bool releaseWom,
+    String pIva,
     Instrument? instrument,
   ) async {
     try {
@@ -252,10 +291,12 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
         adminEmail: email,
         adminName: name,
         adminSurname: surname,
+        adminCF: cf,
         requestedOn: DateTime.now(),
         domainRequirement: restrictionDomain,
         releaseWom: releaseWom,
         womApiKey: apiKey,
+        pIva: pIva,
         aims: instrument?.enabledAims.toList() ?? <String>[],
         status: CMIProviderStatus.pending,
       );
@@ -267,15 +308,17 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
       setState(() {
         isLoading = false;
       });
-      if (mounted) {
-        context.pop();
-        CoolAlert.show(
-            context: context,
-            type: CoolAlertType.success,
-            text: 'La richiesta è stata inviata con successo!');
-      }
+      return true;
+      // if (mounted) {
+      //   context.pop();
+      //   CoolAlert.show(
+      //       context: context,
+      //       type: CoolAlertType.success,
+      //       text: 'La richiesta è stata inviata con successo!');
+      // }
     } catch (ex) {
       print(ex);
+      return false;
     }
   }
 }

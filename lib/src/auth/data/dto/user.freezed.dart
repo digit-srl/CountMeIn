@@ -245,7 +245,9 @@ class _$_AuthUserDTO implements _AuthUserDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthUserDTOToJson(this);
+    return _$$_AuthUserDTOToJson(
+      this,
+    );
   }
 }
 

@@ -24,8 +24,10 @@ mixin _$CMIProviderRequest {
   String get adminName => throw _privateConstructorUsedError;
   String get adminSurname => throw _privateConstructorUsedError;
   String get adminEmail => throw _privateConstructorUsedError;
+  String get adminCF => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   bool get releaseWom => throw _privateConstructorUsedError;
+  String get pIva => throw _privateConstructorUsedError;
   @CMIProviderStatusConverter()
   CMIProviderStatus get status => throw _privateConstructorUsedError;
   String? get womApiKey => throw _privateConstructorUsedError;
@@ -50,8 +52,10 @@ abstract class $CMIProviderRequestCopyWith<$Res> {
       String adminName,
       String adminSurname,
       String adminEmail,
+      String adminCF,
       String name,
       bool releaseWom,
+      String pIva,
       @CMIProviderStatusConverter() CMIProviderStatus status,
       String? womApiKey,
       List<String>? aims,
@@ -74,8 +78,10 @@ class _$CMIProviderRequestCopyWithImpl<$Res>
     Object? adminName = freezed,
     Object? adminSurname = freezed,
     Object? adminEmail = freezed,
+    Object? adminCF = freezed,
     Object? name = freezed,
     Object? releaseWom = freezed,
+    Object? pIva = freezed,
     Object? status = freezed,
     Object? womApiKey = freezed,
     Object? aims = freezed,
@@ -99,6 +105,10 @@ class _$CMIProviderRequestCopyWithImpl<$Res>
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
+      adminCF: adminCF == freezed
+          ? _value.adminCF
+          : adminCF // ignore: cast_nullable_to_non_nullable
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -107,6 +117,10 @@ class _$CMIProviderRequestCopyWithImpl<$Res>
           ? _value.releaseWom
           : releaseWom // ignore: cast_nullable_to_non_nullable
               as bool,
+      pIva: pIva == freezed
+          ? _value.pIva
+          : pIva // ignore: cast_nullable_to_non_nullable
+              as String,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -143,8 +157,10 @@ abstract class _$$_CMIProviderRequestCopyWith<$Res>
       String adminName,
       String adminSurname,
       String adminEmail,
+      String adminCF,
       String name,
       bool releaseWom,
+      String pIva,
       @CMIProviderStatusConverter() CMIProviderStatus status,
       String? womApiKey,
       List<String>? aims,
@@ -169,8 +185,10 @@ class __$$_CMIProviderRequestCopyWithImpl<$Res>
     Object? adminName = freezed,
     Object? adminSurname = freezed,
     Object? adminEmail = freezed,
+    Object? adminCF = freezed,
     Object? name = freezed,
     Object? releaseWom = freezed,
+    Object? pIva = freezed,
     Object? status = freezed,
     Object? womApiKey = freezed,
     Object? aims = freezed,
@@ -194,6 +212,10 @@ class __$$_CMIProviderRequestCopyWithImpl<$Res>
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
+      adminCF: adminCF == freezed
+          ? _value.adminCF
+          : adminCF // ignore: cast_nullable_to_non_nullable
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -202,6 +224,10 @@ class __$$_CMIProviderRequestCopyWithImpl<$Res>
           ? _value.releaseWom
           : releaseWom // ignore: cast_nullable_to_non_nullable
               as bool,
+      pIva: pIva == freezed
+          ? _value.pIva
+          : pIva // ignore: cast_nullable_to_non_nullable
+              as String,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -234,8 +260,10 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
       required this.adminName,
       required this.adminSurname,
       required this.adminEmail,
+      required this.adminCF,
       required this.name,
       required this.releaseWom,
+      required this.pIva,
       @CMIProviderStatusConverter() required this.status,
       this.womApiKey,
       final List<String>? aims,
@@ -255,9 +283,13 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
   @override
   final String adminEmail;
   @override
+  final String adminCF;
+  @override
   final String name;
   @override
   final bool releaseWom;
+  @override
+  final String pIva;
   @override
   @CMIProviderStatusConverter()
   final CMIProviderStatus status;
@@ -280,7 +312,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
 
   @override
   String toString() {
-    return 'CMIProviderRequest(id: $id, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, name: $name, releaseWom: $releaseWom, status: $status, womApiKey: $womApiKey, aims: $aims, domainRequirement: $domainRequirement, requestedOn: $requestedOn)';
+    return 'CMIProviderRequest(id: $id, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, adminCF: $adminCF, name: $name, releaseWom: $releaseWom, pIva: $pIva, status: $status, womApiKey: $womApiKey, aims: $aims, domainRequirement: $domainRequirement, requestedOn: $requestedOn)';
   }
 
   @override
@@ -294,9 +326,11 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
                 .equals(other.adminSurname, adminSurname) &&
             const DeepCollectionEquality()
                 .equals(other.adminEmail, adminEmail) &&
+            const DeepCollectionEquality().equals(other.adminCF, adminCF) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.releaseWom, releaseWom) &&
+            const DeepCollectionEquality().equals(other.pIva, pIva) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.womApiKey, womApiKey) &&
             const DeepCollectionEquality().equals(other._aims, _aims) &&
@@ -314,8 +348,10 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
       const DeepCollectionEquality().hash(adminName),
       const DeepCollectionEquality().hash(adminSurname),
       const DeepCollectionEquality().hash(adminEmail),
+      const DeepCollectionEquality().hash(adminCF),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(releaseWom),
+      const DeepCollectionEquality().hash(pIva),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(womApiKey),
       const DeepCollectionEquality().hash(_aims),
@@ -330,7 +366,9 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CMIProviderRequestToJson(this);
+    return _$$_CMIProviderRequestToJson(
+      this,
+    );
   }
 }
 
@@ -340,8 +378,10 @@ abstract class _CMIProviderRequest implements CMIProviderRequest {
           required final String adminName,
           required final String adminSurname,
           required final String adminEmail,
+          required final String adminCF,
           required final String name,
           required final bool releaseWom,
+          required final String pIva,
           @CMIProviderStatusConverter() required final CMIProviderStatus status,
           final String? womApiKey,
           final List<String>? aims,
@@ -361,9 +401,13 @@ abstract class _CMIProviderRequest implements CMIProviderRequest {
   @override
   String get adminEmail;
   @override
+  String get adminCF;
+  @override
   String get name;
   @override
   bool get releaseWom;
+  @override
+  String get pIva;
   @override
   @CMIProviderStatusConverter()
   CMIProviderStatus get status;
