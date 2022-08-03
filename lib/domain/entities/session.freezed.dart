@@ -27,6 +27,8 @@ mixin _$Event {
   bool get isOpen => throw _privateConstructorUsedError;
   @EventStatusConverter()
   EventStatus? get status => throw _privateConstructorUsedError;
+  @EventTypeConverter()
+  CMIEventType? get type => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime get createdOn => throw _privateConstructorUsedError;
 
@@ -46,6 +48,7 @@ abstract class $EventCopyWith<$Res> {
       int? womCount,
       bool isOpen,
       @EventStatusConverter() EventStatus? status,
+      @EventTypeConverter() CMIEventType? type,
       @MyDateTimeConverter() DateTime createdOn});
 }
 
@@ -65,6 +68,7 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
     Object? womCount = freezed,
     Object? isOpen = freezed,
     Object? status = freezed,
+    Object? type = freezed,
     Object? createdOn = freezed,
   }) {
     return _then(_value.copyWith(
@@ -92,6 +96,10 @@ class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as EventStatus?,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as CMIEventType?,
       createdOn: createdOn == freezed
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -112,6 +120,7 @@ abstract class _$$_EventCopyWith<$Res> implements $EventCopyWith<$Res> {
       int? womCount,
       bool isOpen,
       @EventStatusConverter() EventStatus? status,
+      @EventTypeConverter() CMIEventType? type,
       @MyDateTimeConverter() DateTime createdOn});
 }
 
@@ -132,6 +141,7 @@ class __$$_EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
     Object? womCount = freezed,
     Object? isOpen = freezed,
     Object? status = freezed,
+    Object? type = freezed,
     Object? createdOn = freezed,
   }) {
     return _then(_$_Event(
@@ -159,6 +169,10 @@ class __$$_EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as EventStatus?,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as CMIEventType?,
       createdOn: createdOn == freezed
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -177,6 +191,7 @@ class _$_Event implements _Event {
       this.womCount,
       this.isOpen = true,
       @EventStatusConverter() this.status,
+      @EventTypeConverter() this.type,
       @MyDateTimeConverter() required this.createdOn});
 
   factory _$_Event.fromJson(Map<String, dynamic> json) =>
@@ -198,12 +213,15 @@ class _$_Event implements _Event {
   @EventStatusConverter()
   final EventStatus? status;
   @override
+  @EventTypeConverter()
+  final CMIEventType? type;
+  @override
   @MyDateTimeConverter()
   final DateTime createdOn;
 
   @override
   String toString() {
-    return 'Event(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, womCount: $womCount, isOpen: $isOpen, status: $status, createdOn: $createdOn)';
+    return 'Event(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, womCount: $womCount, isOpen: $isOpen, status: $status, type: $type, createdOn: $createdOn)';
   }
 
   @override
@@ -218,6 +236,7 @@ class _$_Event implements _Event {
             const DeepCollectionEquality().equals(other.womCount, womCount) &&
             const DeepCollectionEquality().equals(other.isOpen, isOpen) &&
             const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality().equals(other.type, type) &&
             const DeepCollectionEquality().equals(other.createdOn, createdOn));
   }
 
@@ -231,6 +250,7 @@ class _$_Event implements _Event {
       const DeepCollectionEquality().hash(womCount),
       const DeepCollectionEquality().hash(isOpen),
       const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(type),
       const DeepCollectionEquality().hash(createdOn));
 
   @JsonKey(ignore: true)
@@ -240,7 +260,9 @@ class _$_Event implements _Event {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EventToJson(this);
+    return _$$_EventToJson(
+      this,
+    );
   }
 }
 
@@ -252,6 +274,7 @@ abstract class _Event implements Event {
       final int? womCount,
       final bool isOpen,
       @EventStatusConverter() final EventStatus? status,
+      @EventTypeConverter() final CMIEventType? type,
       @MyDateTimeConverter() required final DateTime createdOn}) = _$_Event;
 
   factory _Event.fromJson(Map<String, dynamic> json) = _$_Event.fromJson;
@@ -269,6 +292,9 @@ abstract class _Event implements Event {
   @override
   @EventStatusConverter()
   EventStatus? get status;
+  @override
+  @EventTypeConverter()
+  CMIEventType? get type;
   @override
   @MyDateTimeConverter()
   DateTime get createdOn;

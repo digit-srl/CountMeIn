@@ -14,6 +14,8 @@ _$_Event _$$_EventFromJson(Map<String, dynamic> json) => _$_Event(
       isOpen: json['isOpen'] as bool? ?? true,
       status: _$JsonConverterFromJson<String, EventStatus>(
           json['status'], const EventStatusConverter().fromJson),
+      type: _$JsonConverterFromJson<String, CMIEventType>(
+          json['type'], const EventTypeConverter().fromJson),
       createdOn:
           const MyDateTimeConverter().fromJson(json['createdOn'] as Timestamp),
     );
@@ -26,6 +28,8 @@ Map<String, dynamic> _$$_EventToJson(_$_Event instance) => <String, dynamic>{
       'isOpen': instance.isOpen,
       'status': _$JsonConverterToJson<String, EventStatus>(
           instance.status, const EventStatusConverter().toJson),
+      'type': _$JsonConverterToJson<String, CMIEventType>(
+          instance.type, const EventTypeConverter().toJson),
       'createdOn': const MyDateTimeConverter().toJson(instance.createdOn),
     };
 

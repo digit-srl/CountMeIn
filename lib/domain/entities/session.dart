@@ -9,6 +9,7 @@ part 'session.freezed.dart';
 part 'session.g.dart';
 
 enum EventStatus { unknown, live, archived }
+enum CMIEventType { standard, mailingList, counter, recurring }
 
 @freezed
 class Event with _$Event {
@@ -19,6 +20,7 @@ class Event with _$Event {
     int? womCount,
     @Default(true) bool isOpen,
     @EventStatusConverter() EventStatus? status,
+    @EventTypeConverter() CMIEventType? type,
     @MyDateTimeConverter() required DateTime createdOn,
   }) = _Event;
 
@@ -26,7 +28,20 @@ class Event with _$Event {
       _$EventFromJson(json);
 }
 
+class EventTypeConverter implements JsonConverter<CMIEventType, String> {
+  const EventTypeConverter();
 
+  @override
+  CMIEventType fromJson(String? status) {
+    if(status == null){
+      return CMIEventType.standard;
+    }
+    return enumFromString(status, CMIEventType.values);
+  }
+
+  @override
+  String toJson(CMIEventType type) => enumToString(type);
+}
 
 class EventStatusConverter implements JsonConverter<EventStatus, String> {
   const EventStatusConverter();

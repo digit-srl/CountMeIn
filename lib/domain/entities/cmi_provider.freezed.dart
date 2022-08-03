@@ -375,7 +375,9 @@ class _$_CMIProvider implements _CMIProvider {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CMIProviderToJson(this);
+    return _$$_CMIProviderToJson(
+      this,
+    );
   }
 }
 
@@ -688,7 +690,9 @@ class _$_PendingProviderManager implements _PendingProviderManager {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PendingProviderManagerToJson(this);
+    return _$$_PendingProviderManagerToJson(
+      this,
+    );
   }
 }
 
@@ -909,7 +913,9 @@ class _$_ProviderManager implements _ProviderManager {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ProviderManagerToJson(this);
+    return _$$_ProviderManagerToJson(
+      this,
+    );
   }
 }
 
