@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+
+extension DateTimeX on DateTime{
+
+  DateTime get midnight => DateTime(this.year,this.month,this.day);
+  DateTime get midnightUTC => DateTime.utc(this.year,this.month,this.day);
+}
 int childAspectRatio(double maxWidth) => maxWidth < 400
     ? 1
     : maxWidth < 500
@@ -9,10 +15,10 @@ int childAspectRatio(double maxWidth) => maxWidth < 400
     : 4;
 
 
-String enumToString(Object? o) => o?.toString().split('.').last ?? '';
+String? enumToString(Object? o) => o?.toString().split('.').last;
 
 T enumFromString<T extends Object>(String key, List<T> values) => values
-    .firstWhere((v) => key.toLowerCase() == enumToString(v).toLowerCase());
+    .firstWhere((v) => key.toLowerCase() == enumToString(v)?.toLowerCase());
 
 ask(BuildContext context, String question) async {
   return await showDialog(

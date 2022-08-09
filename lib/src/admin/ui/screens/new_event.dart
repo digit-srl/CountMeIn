@@ -1,4 +1,6 @@
-import 'package:countmein/src/common/ui/cmi_dropdown.dart';
+import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
+import 'package:countmein/src/common/ui/cmi_date_picker.dart';
+import 'package:countmein/src/common/ui/widgets/cmi_dropdown.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/ui/widgets/my_text_field.dart';
 import 'package:countmein/utils.dart';
@@ -10,8 +12,8 @@ import 'package:countmein/cloud.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../domain/entities/session.dart';
 import '../../../../ui/validators.dart';
+import 'package:intl/intl.dart';
 
 final womValidator = MultiValidator([
   RequiredValidator(errorText: 'Questo campo è obbligatorio'),
@@ -26,8 +28,6 @@ final acceptPassepartoutProvider = StateProvider.autoDispose<bool>((ref) {
   return true;
 });
 
-enum WomReleaseType { predetermined, inOut }
-
 class NewEventFormScreen extends HookConsumerWidget {
   static const String routeName = "/newEventForm";
   final String providerId;
@@ -40,25 +40,25 @@ class NewEventFormScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final frequencyController = useTextEditingController();
-    final durationController = useTextEditingController();
+    // final durationController = useTextEditingController();
     final repsController = useTextEditingController();
     final nameController = useTextEditingController();
     final womController = useTextEditingController();
-    final releaseType = useState<WomReleaseType>(WomReleaseType.predetermined);
+    final accessType = useState<EventAccessType>(EventAccessType.single);
     final anonymous = useState<bool>(false);
     final recurring = useState<bool>(false);
     final releaseWom = useState<bool>(false);
     final emailEnabled = useState<bool>(false);
+    final startAt = useState<DateTime>(DateTime.now());
     final acceptPassepartout = ref.watch(acceptPassepartoutProvider);
-    final selectedType = useState<CMIEventType>(CMIEventType.standard);
-
+    final selectedFrequency = useState<FrequencyType>(FrequencyType.daily);
     final titleStyle = Theme.of(context).textTheme.headline6;
+
     return Scaffold(
       appBar: AppBar(),
       body: Center(
         child: Container(
-          constraints: BoxConstraints(maxWidth: 700),
+          constraints: const BoxConstraints(maxWidth: 700),
           padding: const EdgeInsets.all(16.0),
           child: CMICard(
             child: Form(
@@ -78,6 +78,52 @@ class NewEventFormScreen extends HookConsumerWidget {
                   const SizedBox(height: 16),
                   Row(
                     children: [
+                      // Flexible(
+                      //   child: MyTextField(
+                      //     keyboardType: TextInputType.number,
+                      //     controller: durationController,
+                      //     hintText: 'Durata in ore',
+                      //     validator: numberValidator,
+                      //   ),
+                      // ),
+                      // const SizedBox(width: 8),
+                      Flexible(
+                        child: CMIDatePicker(
+                          onChanged: (d) {
+                            startAt.value = d;
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        flex: 1,
+                        child: CMIDropdownButton<EventAccessType>(
+                          label: 'Tipo di accesso',
+                          value: accessType.value,
+                          onChanged: (t) {
+                            if (t == null) return;
+                            accessType.value = t;
+                          },
+                          items: EventAccessType.values
+                              .map(
+                                (e) => DropdownMenuItem<EventAccessType>(
+                                  value: e,
+                                  child: Text(enumToString(e) ?? '-'),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+
+                      // Flexible(
+                      //     child: CMITimePicker(
+                      //   onChanged: (DateTime value) {},
+                      // )),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
                       Text('Anonimo', style: titleStyle),
                       Switch(
                           value: anonymous.value,
@@ -88,11 +134,11 @@ class NewEventFormScreen extends HookConsumerWidget {
                   ),
                   if (!anonymous.value) ...[
                     const SizedBox(height: 8),
-                    OptionSelector(
+                    const OptionSelector(
                       text: 'Nome e Cognome',
                       value: true,
                     ),
-                    OptionSelector(
+                    const OptionSelector(
                       text: 'C.F.',
                       value: true,
                     ),
@@ -105,7 +151,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                       },
                     )
                   ],
-                  Divider(),
+                  const Divider(),
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -117,38 +163,37 @@ class NewEventFormScreen extends HookConsumerWidget {
                           }),
                     ],
                   ),
-                  const SizedBox(height: 8),
-                  MyTextField(
-                    keyboardType: TextInputType.number,
-                    controller: durationController,
-                    hintText: 'Durata in ore',
-                    validator: numberValidator,
-                  ),
                   if (recurring.value) ...[
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Flexible(
-                          child: MyTextField(
-                            keyboardType: TextInputType.number,
-                            controller: frequencyController,
-                            hintText: 'Frequenza',
-                            validator: numberValidator,
+                          child: CMIDropdownButton<FrequencyType>(
+                            value: selectedFrequency.value,
+                            onChanged: (f) {
+                              if (f == null) return;
+                              selectedFrequency.value = f;
+                            },
+                            items: FrequencyType.values
+                                .map((e) => DropdownMenuItem<FrequencyType>(
+                                    value: e,
+                                    child: Text(enumToString(e) ?? '-')))
+                                .toList(),
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        const SizedBox(width: 8),
                         Flexible(
                           child: MyTextField(
                             controller: repsController,
-                            hintText: 'Ripetizioni',
+                            hintText: 'Numero di ripetizioni',
                             validator: numberValidator,
                           ),
                         ),
                       ],
                     )
                   ],
-                  Divider(),
+                  const Divider(),
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -161,10 +206,11 @@ class NewEventFormScreen extends HookConsumerWidget {
                     ],
                   ),
                   if (releaseWom.value) ...[
+                    const SizedBox(height: 16),
                     Row(
                       children: [
-                        Flexible(
-                          flex: 2,
+                        /* Flexible(
+                          flex: 1,
                           child: CMIDropdownButton<WomReleaseType>(
                             value: releaseType.value,
                             onChanged: (t) {
@@ -180,43 +226,93 @@ class NewEventFormScreen extends HookConsumerWidget {
                                 )
                                 .toList(),
                           ),
-                        ),
-                        if (releaseType.value == WomReleaseType.predetermined) ...[
-                          const SizedBox(width: 8),
-                          Flexible(
-                            child: MyTextField(
-                              controller: womController,
-                              keyboardType: TextInputType.number,
-                              hintText: 'Quanti wom rilasciare?',
-                              validator: womValidator,
-                            ),
+                        ),*/
+                        // if (releaseType.value == WomReleaseType.fixed) ...[
+                        //   const SizedBox(width: 8),
+                        Flexible(
+                          child: MyTextField(
+                            controller: womController,
+                            keyboardType: TextInputType.number,
+                            hintText: 'Quanti wom rilasciare?',
+                            validator: womValidator,
                           ),
-                        ]
+                        ),
+                        // ]
                       ],
                     ),
                   ],
-                  Divider(),
-                  const SizedBox(height: 16),
+                  const Divider(),
                   const SizedBox(height: 16),
                   const SizedBox(height: 16),
                   Center(
                     child: ElevatedButton(
-                      onPressed: () {
-                        /*if (_formKey.currentState!.validate()) {
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
                           final eventId = const Uuid().v4();
-                          final s = Event(
+                          final currentSubEvent =
+                              DateFormat('y-MM-dd').format(startAt.value);
+
+                          final womCount =
+                              int.tryParse(womController.text.trim());
+
+                          final recurrence = recurring.value
+                              ? int.tryParse(repsController.text.trim()) ?? 1
+                              : 1;
+
+                          final start = startAt.value.midnightUTC;
+
+                          final days =
+                              recurrence * selectedFrequency.value.multiplier;
+                          final endAt = start.add(Duration(
+                              days: recurring.value
+                                  ? selectedFrequency.value.multiplier
+                                  : 1));
+
+                          print('days to end: $days');
+                          //TODO
+                          final subEventDeadline = endAt;
+
+                          final s = CMIEvent(
                             id: eventId,
-                            createdOn: DateTime.now(),
+                            currentSubEvent: currentSubEvent,
+                            recurrence: recurrence,
+                            subEventDeadline: subEventDeadline,
                             name: nameController.text.trim(),
-                            status: EventStatus.live,
-                            womCount: int.tryParse(womController.text.trim()),
                             acceptPassepartout: acceptPassepartout,
+                            anonymous: anonymous.value,
+                            recurring: recurring.value,
+                            // TODO isOpen is not necessary, use status
+                            isOpen: true,
+                            remaining: recurring.value ? recurrence - 1 : 0,
+                            frequency: recurring.value
+                                ? selectedFrequency.value
+                                : null,
+                            accessType: accessType.value,
+                            maxWomCount: womCount,
+                            status: EventStatus.live,
+                            createdOn: DateTime.now().toUtc(),
+                            startAt: start,
                           );
-                          Cloud.eventDoc(providerId, eventId).set(s.toJson());
-                          Navigator.of(context).pop();
-                        }*/
+
+                          final firstSubEvent = CMISubEvent(
+                            id: currentSubEvent,
+                            startAt: start,
+                            endAt: endAt,
+                          );
+
+                          final navigator = Navigator.of(context);
+
+                          //TODO use transaction
+                          await Cloud.eventDoc(providerId, eventId)
+                              .set(s.toJson());
+                          await Cloud.eventDoc(providerId, eventId)
+                              .collection('subEvents')
+                              .doc(firstSubEvent.id)
+                              .set(firstSubEvent.toJson());
+                          // navigator.pop();
+                        }
                       },
-                      child: Text('Crea evento'),
+                      child: const Text('Crea evento'),
                     ),
                   ),
                 ],

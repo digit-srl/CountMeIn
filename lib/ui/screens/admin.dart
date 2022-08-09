@@ -1,11 +1,12 @@
 
+import 'package:countmein/src/admin/application/events_stream.dart';
+import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:countmein/cloud.dart';
 
 import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/event_ids.dart';
-import '../../domain/entities/session.dart';
 import '../../domain/entities/user_card.dart';
 import '../../utils.dart';
 
@@ -14,8 +15,8 @@ final adminProvider =
   return AdminNotifier();
 });
 
-final eventsStreamProvider =
-    StreamProvider.family<List<Event>, String>((ref, activityId) async* {
+/*final eventsStreamProvider =
+    StreamProvider.family<List<CMIEvent>, String>((ref, activityId) async* {
   final stream = Cloud.eventsCollection(activityId)
       .where('status', isEqualTo: enumToString(CMIProviderStatus.live))
       // .orderBy('field')
@@ -23,15 +24,15 @@ final eventsStreamProvider =
 
   await for (final snap in stream) {
     final list = snap.docs.map((doc) {
-      final s = Event.fromJson(doc.data());
+      final s = CMIEvent.fromJson(doc.data());
       return s;
     }).toList();
     yield list;
   }
-});
+});*/
 
 final eventProvider =
-    Provider.family<AsyncValue<Event>, List<String>>((ref, ids) {
+    Provider.family<AsyncValue<CMIEvent>, List<String>>((ref, ids) {
   final activityId = ids[0];
   final eventId = ids[1];
   return ref

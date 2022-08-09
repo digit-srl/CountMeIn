@@ -29,6 +29,6 @@ final nameSurnameValidator = MultiValidator([
 final numberValidator = MultiValidator([
   RequiredValidator(errorText: 'Questo campo è obbligatorio'),
   RangeValidator(
-      min: 1, max: 12, errorText: 'Devi inserire almeno 3 caratteri'),
+      min: 1, max: 365, errorText: 'Il valore inserito non è valido'),
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
 ]);

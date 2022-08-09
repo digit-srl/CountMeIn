@@ -201,14 +201,15 @@ class RouterNotifier extends ChangeNotifier {
           },
         ),
         GoRoute(
-          path: '/provider/:activityId',
+          path: '/provider/:providerId',
           builder: (context, state) {
             return UserEventScreen(
-              activityId: state.params['activityId']!,
+              providerId: state.params['providerId']!,
             );
           },
         ),
         GoRoute(
+          name: EventDetailsScreen.routeName,
           path: '${EventDetailsScreen.routeName}/:providerId/:eventId',
           builder: (context, state) {
             final eventId = state.params['eventId'] as String;
@@ -220,6 +221,7 @@ class RouterNotifier extends ChangeNotifier {
           },
         ),
         GoRoute(
+          name: EventUsersScreen.routeName,
           path: '${EventUsersScreen.routeName}/:providerId/:eventId',
           builder: (context, state) {
             final eventId = state.params['eventId'] as String;

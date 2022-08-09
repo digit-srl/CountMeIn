@@ -21,6 +21,8 @@ class AuthGate extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
+    return HomeWebScreen();
+
     if(kIsWeb || Platform.isMacOS){
       return HomeWebScreen();
     }

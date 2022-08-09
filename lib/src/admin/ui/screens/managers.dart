@@ -144,7 +144,7 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                           .map((e) =>
                                               DropdownMenuItem<UserRole>(
                                                   value: e,
-                                                  child: Text(enumToString(e))))
+                                                  child: Text(enumToString(e) ?? '-')))
                                           .toList(),
                                       onChanged: (role) {
                                         if (role == null) return;
@@ -268,7 +268,7 @@ class MemberRow extends StatelessWidget {
         Expanded(
             flex: 1,
             child: Text(
-              enumToString(role),
+              enumToString(role) ?? '-',
               textAlign: TextAlign.start,
             )),
         Expanded(
@@ -291,7 +291,7 @@ class MemberRow extends StatelessWidget {
             padding: EdgeInsets.zero,
             backgroundColor: status.color,
             label: Text(
-              enumToString(status),
+              enumToString(status) ?? '-',
               style: Theme.of(context).textTheme.caption,
             ),
           ),

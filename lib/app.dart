@@ -145,8 +145,8 @@ class MyApp extends ConsumerWidget {
           // fontFamily: GoogleFonts.notoSans().fontFamily,
         ),
         darkTheme: FlexThemeData.dark(
-          colors: FlexColor.schemes[FlexScheme.deepBlue]!
-              .light.defaultError.toDark(10, true),
+          colors: FlexColor.schemes[FlexScheme.deepBlue]!.light.defaultError
+              .toDark(10, true),
           surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
           blendLevel: 15,
           appBarStyle: FlexAppBarStyle.background,
@@ -160,6 +160,10 @@ class MyApp extends ConsumerWidget {
           // To use the playground font, add GoogleFonts package and uncomment
           // fontFamily: GoogleFonts.notoSans().fontFamily,
         ),
+        builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context)
+                .copyWith(alwaysUse24HourFormat: true, textScaleFactor: 1),
+            child: child!),
         themeMode: ThemeMode.system,
         routeInformationProvider: router.routeInformationProvider,
         routeInformationParser: router.routeInformationParser,

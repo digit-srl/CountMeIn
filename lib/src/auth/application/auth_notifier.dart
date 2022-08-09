@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../cloud.dart';
+import '../../admin/application/providers_stream.dart';
 import '../data/dto/user.dart';
 import '../domain/entities/exceptions.dart';
 import '../domain/entities/user.dart';
@@ -18,7 +19,7 @@ final signUpErrorProvider = StateProvider.autoDispose<SignUpException?>((ref) {
 });
 
 final _userProvider =
-    StreamProvider.family<Map<String, dynamic>?, String>((ref, userId) async* {
+StreamProvider.family<Map<String, dynamic>?, String>((ref, userId) async* {
   final stream = Cloud.credentialsCollection.doc(userId).snapshots();
   await for (final doc in stream) {
     final data = doc.data();
@@ -78,28 +79,29 @@ final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
 
 final authStateProvider = Provider<AuthState>((ref) {
   return ref.watch(authStateStreamProvider).when(
-        data: (state) => state,
-        error: (err, stack) => AuthState.error(err, stack),
-        loading: () => const AuthState.loading(),
-      );
+    data: (state) => state,
+    error: (err, stack) => AuthState.error(err, stack),
+    loading: () => const AuthState.loading(),
+  );
 });
 
 final authUserRoleProvider = Provider<PlatformRole>((ref) {
   return ref.watch(authStateProvider).maybeWhen(
-        authenticated: (user) => user.role,
-        orElse: () => PlatformRole.unknown,
-      );
+    authenticated: (user) => user.role,
+    orElse: () => PlatformRole.unknown,
+  );
 });
 
 final userRoleProvider = Provider.family<UserRole, String>((ref, providerId) {
-  /*final state = ref.watch(authStateProvider);
+  final state = ref.watch(authStateProvider);
+  var role = UserRole.unknown;
   if (state is Authenticated) {
-    final role = state.user.providersRole[providerId];
-    if (role != null) {
-      return role;
-    }
-  }*/
-  return UserRole.unknown;
+    final provider = ref.watch(singleCMIProviderProvider(providerId));
+    final manager = provider?.managers?.values.firstWhere((element) =>
+    element.id == state.user.uid);
+    role = manager?.role ?? UserRole.unknown;
+  }
+  return role;
 });
 
 final _authStateChangesProvider = StreamProvider<User?>((ref) {
@@ -177,7 +179,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 }*/
 
 final signInNotifierProvider =
-    StateNotifierProvider.autoDispose<SignInNotifier, bool>((ref) {
+StateNotifierProvider.autoDispose<SignInNotifier, bool>((ref) {
   return SignInNotifier(ref.read);
 });
 
@@ -222,7 +224,7 @@ class SignInNotifier extends StateNotifier<bool> {
 }
 
 final signUpNotifierProvider =
-    StateNotifierProvider.autoDispose<SignUpNotifier, bool>((ref) {
+StateNotifierProvider.autoDispose<SignUpNotifier, bool>((ref) {
   return SignUpNotifier(ref.read);
 });
 
@@ -231,8 +233,8 @@ class SignUpNotifier extends StateNotifier<bool> {
 
   SignUpNotifier(this.read) : super(false);
 
-  Future<bool> signUp(
-      String name, String surname, String email, String password) async {
+  Future<bool> signUp(String name, String surname, String email,
+      String password) async {
     state = true;
     try {
       await read(authRepositoryProvider).signUp(name, surname, email, password);

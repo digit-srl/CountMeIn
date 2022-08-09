@@ -14,8 +14,9 @@ class AuthRepository extends IAuthRepository {
       print(userCredential.user);
     } on FirebaseAuthException catch (ex) {
       throw SignInException.fromFirebaseException(ex);
-    } catch (ex) {
+    } catch (ex,st) {
       print(ex);
+      print(st);
       throw UnknownException();
     }
   }

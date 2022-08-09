@@ -1,6 +1,7 @@
 import 'package:countmein/cloud.dart';
 import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/domain/entities/user_card.dart';
+import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/ui/screens/admin.dart';
@@ -50,6 +51,9 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
     final isOwner = role == UserRole.admin;
     final hasData = usersState is AsyncData;
     return Scaffold(
+      appBar: AdminAppBar(
+        title: 'Iscritti',
+      ),
       body: usersState.when(
         data: (list) {
           return list.isEmpty

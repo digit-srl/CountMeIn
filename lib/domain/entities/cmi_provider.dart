@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart' show Timestamp;
-import 'package:countmein/domain/entities/session.dart';
 import 'package:countmein/src/auth/data/dto/cmi_role_converter.dart';
 import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart' show Color, Colors;
@@ -92,7 +91,7 @@ class CMIProviderStatusConverter implements JsonConverter<CMIProviderStatus, Str
   }
 
   @override
-  String toJson(CMIProviderStatus status) => enumToString(status);
+  String toJson(CMIProviderStatus status) => enumToString(status) ?? 'unknown';
 }
 
 class ManagerStatusConverter implements JsonConverter<ProviderManagerStatus, String> {
@@ -107,7 +106,7 @@ class ManagerStatusConverter implements JsonConverter<ProviderManagerStatus, Str
   }
 
   @override
-  String toJson(ProviderManagerStatus status) => enumToString(status);
+  String toJson(ProviderManagerStatus status) => enumToString(status) ?? 'unknown';
 }
 
 extension CMIProviderX on CMIProvider{

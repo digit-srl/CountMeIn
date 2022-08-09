@@ -3,6 +3,7 @@ import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../utils.dart';
 import '../../../auth/application/auth_notifier.dart';
 import '../../../auth/domain/entities/user.dart';
 import '../../../auth/ui/screens/email_not_verified.dart';
@@ -32,18 +33,22 @@ class AdminDashboardScreen extends ConsumerWidget {
         children: [
           const AdminInfoWidget(),
           if (platformUserRole != UserRole.unknown)
-            GridView.count(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(16),
-              mainAxisSpacing: 16,
-              crossAxisSpacing: 16,
-              crossAxisCount: 4,
-              childAspectRatio: 4 / 3,
-              children: [
-                const ActiveProviders(),
-                if (platformUserRole == PlatformRole.cmi)
-                  const PendingProviders(),
-              ],
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return GridView.count(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(16),
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                  crossAxisCount: childAspectRatio(constraints.maxWidth),
+                  childAspectRatio: 4 / 3,
+                  children: [
+                    const ActiveProviders(),
+                    if (platformUserRole == PlatformRole.cmi)
+                      const PendingProviders(),
+                  ],
+                );
+              }
             ),
         ],
       ),

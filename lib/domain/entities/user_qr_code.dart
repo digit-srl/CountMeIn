@@ -1,4 +1,3 @@
-import 'package:countmein/domain/entities/session.dart';
 import 'package:countmein/domain/entities/user_card.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -46,7 +45,7 @@ class UserQrCode with _$UserQrCode {
       final uri = Uri.parse(code);
       final params = uri.queryParameters;
 
-      if (uri.host != authority) {
+      if (uri.host != 'cmi.digit.srl') {
         throw Exception();
       }
 

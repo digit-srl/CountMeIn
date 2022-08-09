@@ -309,13 +309,6 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
         isLoading = false;
       });
       return true;
-      // if (mounted) {
-      //   context.pop();
-      //   CoolAlert.show(
-      //       context: context,
-      //       type: CoolAlertType.success,
-      //       text: 'La richiesta è stata inviata con successo!');
-      // }
     } catch (ex) {
       print(ex);
       return false;

@@ -1,6 +1,7 @@
 import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
+import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/admin/ui/screens/new_event.dart';
 import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
@@ -11,7 +12,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../cloud.dart';
 import '../../../../ui/screens/event_details.dart';
-import '../../../../domain/entities/session.dart';
 import '../../../../utils.dart';
 import '../widgets/info_text.dart';
 import 'managers.dart';
@@ -37,6 +37,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
       provider = ref.watch(singleCMIProviderProvider(providerId));
     }
     final platformUserRole = ref.watch(authUserRoleProvider);
+    final userRole = ref.watch(userRoleProvider(providerId));
 
     final eventsState = ref.watch(eventsStreamProvider(providerId));
     return Scaffold(
@@ -133,7 +134,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
             ),
           ),
           if (provider?.status == CMIProviderStatus.live &&
-              eventsState is AsyncData<List<Event>>)
+              eventsState is AsyncData<List<CMIEvent>>)
             LayoutBuilder(builder: (context, constraints) {
               print(constraints.maxWidth);
               return GridView.builder(
@@ -149,12 +150,15 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
                     return CMICard(
-                      onTap: () {
-                        if (provider == null) return;
-                        context.push(
-                          '${NewEventFormScreen.routeName}/${provider.id}',
-                        );
-                      },
+                      onTap: platformUserRole == PlatformRole.cmi ||
+                              userRole == UserRole.admin
+                          ? () {
+                              if (provider == null) return;
+                              context.push(
+                                '${NewEventFormScreen.routeName}/${provider.id}',
+                              );
+                            }
+                          : null,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

@@ -18,7 +18,7 @@ class CMIRoleConverter implements JsonConverter<PlatformRole, String?> {
   }
 
   @override
-  String toJson(PlatformRole role) => enumToString(role);
+  String toJson(PlatformRole role) => enumToString(role) ?? 'unknown';
 }
 
 class UserRoleConverter implements JsonConverter<UserRole, String?> {
@@ -35,5 +35,5 @@ class UserRoleConverter implements JsonConverter<UserRole, String?> {
   }
 
   @override
-  String toJson(UserRole role) => enumToString(role);
+  String toJson(UserRole role) => enumToString(role) ?? 'unknown';
 }

@@ -80,7 +80,6 @@ final activeProvidersStreamProvider =
 final singleCMIProviderProvider =
     Provider.family<CMIProvider?, String>((ref, providerId) {
 
-
   final p = ref
       .watch(activeProvidersStreamProvider)
       .asData

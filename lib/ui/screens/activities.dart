@@ -1,3 +1,4 @@
+import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/ui/screens/new_event.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:flutter/material.dart';

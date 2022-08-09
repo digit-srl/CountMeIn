@@ -24,7 +24,10 @@ class MyTextField extends StatelessWidget {
       textCapitalization: textCapitalization ?? TextCapitalization.none,
       keyboardType: keyboardType,
       decoration: InputDecoration(
-          hintText: hintText, border: const OutlineInputBorder()),
+        hintText: hintText,
+        border: const OutlineInputBorder(),
+        labelText: hintText,
+      ),
     );
   }
 }

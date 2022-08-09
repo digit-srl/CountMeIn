@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,7 +14,6 @@ import 'package:countmein/ui/screens/admin.dart';
 import '../../cloud.dart';
 import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/event_ids.dart';
-import '../../domain/entities/session.dart';
 import '../../domain/entities/user_card.dart';
 import 'package:soundpool/soundpool.dart';
 
@@ -27,13 +27,13 @@ final usersCountProvider =
 });
 
 class ScanScreen extends ConsumerStatefulWidget {
-  final Event event;
-  final CMIProvider activity;
+  final CMIEvent event;
+  final CMIProvider provider;
 
   const ScanScreen({
     Key? key,
     required this.event,
-    required this.activity,
+    required this.provider,
   }) : super(key: key);
 
   @override
@@ -56,7 +56,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
   @override
   void initState() {
     super.initState();
-    ids = EventIds(activityId: widget.activity.id, eventId: eventId);
+    ids = EventIds(activityId: widget.provider.id, eventId: eventId);
     loadSound();
   }
 
@@ -103,7 +103,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                           try {
                             final userQrCode = UserQrCode.fromOldQrCode(data);
 
-                            if (userQrCode.activityId == widget.activity.id ||
+                            if (userQrCode.activityId == widget.provider.id ||
                                 (widget.event.acceptPassepartout &&
                                     userQrCode.activityId == 'countmein')) {
                               if (!list.contains(userQrCode.id)) {
@@ -132,8 +132,18 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                 });*/
 
                                 final user = userQrCode.toUserCard();
+
+                                Cloud.eventsCollection(widget.provider.id)
+                                    .doc(eventId)
+                                    .collection('subEvents')
+                                    .doc(widget.event.currentSubEvent)
+                                    .collection('users')
+                                    .doc(user.id)
+                                    .set(
+                                        user.toJson(), SetOptions(merge: true));
+
                                 Cloud.eventUsersCollection(
-                                        widget.activity.id, eventId)
+                                        widget.provider.id, eventId)
                                     .doc(user.id)
                                     .set(user.toJson(), SetOptions(merge: true))
                                     .then((value) {
