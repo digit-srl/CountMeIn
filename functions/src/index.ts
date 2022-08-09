@@ -11,6 +11,9 @@ const axios = require("axios").default;
 const cors = require("cors")({ origin: true });
 import { FirebaseError } from "@firebase/util";
 import { UserRecord } from "firebase-functions/v1/auth";
+import * as firestore from "@google-cloud/firestore";
+//import "@firebase/firestore";
+
 /*
 export const drawCard = functions.region('europe-west3').https.onRequest((request, response) => {
   const a = new AuthUser("", "", "", "", [], true);
@@ -936,4 +939,204 @@ export const onInviteToCollaborate = functions
 
     console.log(url);
     return Email.sendInvite(providerName, fullName, email, role, url);
+  });
+/*
+export const processEvents = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      const nowUTC = dateToUTC(new Date());
+      console.log(nowUTC);
+      //prendo tutti gli eventi attivi ricorrenti che sono da aggiornare (query su subEventDeadline)
+      const querySnapshot = await db
+        .collectionGroup("events")
+        .where("status", "==", "live")
+        //.where("recurring", "==", true)
+        .where("subEventDeadline", "<=", nowUTC)
+        .get();
+
+      querySnapshot.forEach(
+        async (doc: FirebaseFirestore.QueryDocumentSnapshot) => {
+          console.log(doc.id, " => ", doc.data());
+
+          const docRef = doc.ref;
+          const providerId = docRef.parent.parent?.id;
+
+          console.log("providerId:" + providerId);
+
+          const data = doc.data();
+          const recurrence = data.recurrence;
+          const remaining = data.remaining;
+
+          if (remaining > 0) {
+            var multiplier = 1;
+            if (recurrence === "daily") {
+              multiplier = 1;
+            } else if (recurrence === "monthly") {
+              multiplier = 31;
+            } else if (recurrence === "yearly") {
+              multiplier = 365;
+            }
+
+            const subEventDeadlineTimestamp: FirebaseFirestore.Timestamp =
+              data.subEventDeadline;
+            const subEventDeadlineDate = subEventDeadlineTimestamp.toDate();
+
+            let nextSubEventDeadlineDate: Date = addDays(
+              multiplier,
+              subEventDeadlineDate
+            );
+
+            console.log(subEventDeadlineDate);
+            console.log(nextSubEventDeadlineDate);
+
+            const nextSubEventId =
+              nextSubEventDeadlineDate.getFullYear() +
+              "-" +
+              ("0" + (nextSubEventDeadlineDate.getMonth() + 1)).slice(-2) +
+              "-" +
+              ("0" + (nextSubEventDeadlineDate.getDay() + 1)).slice(-2);
+
+            console.log("nextSubEventId " + nextSubEventId);
+
+            const nextReimaining = remaining - 1;
+
+            const nextSubEventDeadlineTimestamp: firestore.Timestamp =
+              firestore.Timestamp.fromDate(nextSubEventDeadlineDate);
+
+            const nextSubEvent = {
+              id: nextSubEventId,
+              startAt: subEventDeadlineTimestamp,
+              endAt: nextSubEventDeadlineTimestamp,
+            };
+
+            await docRef.update({
+              remaining: nextReimaining,
+              subEventDeadline: nextSubEventDeadlineTimestamp,
+            });
+
+            await docRef
+              .collection("subEvents")
+              .doc(nextSubEventId)
+              .set(nextSubEvent);
+          } else {
+            //chiudo l evento
+            await docRef.update({
+              subEventDeadline: null,
+              status: "closed",
+            });
+          }
+        }
+      );
+      response.status(200).send("There are " + querySnapshot.size + " events");
+    }
+  );
+
+*/
+
+function addDays(numOfDays: number, date = new Date()) {
+  const dateCopy = new Date(date.getTime());
+
+  dateCopy.setDate(dateCopy.getDate() + numOfDays);
+
+  return dateCopy;
+}
+
+function dateToUTC(date: Date) {
+  const utcDate = new Date(date.toUTCString().slice(0, -4));
+  return utcDate;
+}
+
+export const updateSubEventsCron = functions
+  .region("europe-west3")
+  //.pubsub.schedule("*/30 * * * *")
+  .pubsub.schedule("0 0 * * *")
+  .timeZone("Etc/UTC")
+  .onRun(async (_) => {
+    const now = new Date();
+    console.log("This will be run every day at 00:00 UTC " + now.toISOString());
+
+    const nowUTC = dateToUTC(new Date());
+    console.log(nowUTC);
+    //prendo tutti gli eventi attivi ricorrenti che sono da aggiornare (query su subEventDeadline)
+    const querySnapshot = await db
+      .collectionGroup("events")
+      .where("status", "==", "live")
+      //.where("recurring", "==", true)
+      .where("subEventDeadline", "<=", nowUTC)
+      .get();
+
+    querySnapshot.forEach(
+      async (doc: FirebaseFirestore.QueryDocumentSnapshot) => {
+        console.log(doc.id, " => ", doc.data());
+
+        const docRef = doc.ref;
+        const providerId = docRef.parent.parent?.id;
+
+        console.log("providerId:" + providerId);
+
+        const data = doc.data();
+        const recurrence = data.recurrence;
+        const remaining = data.remaining;
+
+        if (remaining > 0) {
+          var multiplier = 1;
+          if (recurrence === "daily") {
+            multiplier = 1;
+          } else if (recurrence === "monthly") {
+            multiplier = 31;
+          } else if (recurrence === "yearly") {
+            multiplier = 365;
+          }
+
+          const subEventDeadlineTimestamp: FirebaseFirestore.Timestamp =
+            data.subEventDeadline;
+          const subEventDeadlineDate = subEventDeadlineTimestamp.toDate();
+
+          let nextSubEventDeadlineDate: Date = addDays(
+            multiplier,
+            subEventDeadlineDate
+          );
+
+          console.log(subEventDeadlineDate);
+          console.log(nextSubEventDeadlineDate);
+
+          const nextSubEventId =
+            nextSubEventDeadlineDate.getFullYear() +
+            "-" +
+            ("0" + (nextSubEventDeadlineDate.getMonth() + 1)).slice(-2) +
+            "-" +
+            ("0" + (nextSubEventDeadlineDate.getDay() + 1)).slice(-2);
+
+          console.log("nextSubEventId " + nextSubEventId);
+
+          const nextReimaining = remaining - 1;
+
+          const nextSubEventDeadlineTimestamp: firestore.Timestamp =
+            firestore.Timestamp.fromDate(nextSubEventDeadlineDate);
+
+          const nextSubEvent = {
+            id: nextSubEventId,
+            startAt: subEventDeadlineTimestamp,
+            endAt: nextSubEventDeadlineTimestamp,
+          };
+
+          await docRef.update({
+            remaining: nextReimaining,
+            subEventDeadline: nextSubEventDeadlineTimestamp,
+          });
+
+          await docRef
+            .collection("subEvents")
+            .doc(nextSubEventId)
+            .set(nextSubEvent);
+        } else {
+          //chiudo l evento
+          await docRef.update({
+            subEventDeadline: null,
+            status: "closed",
+          });
+        }
+      }
+    );
   });
