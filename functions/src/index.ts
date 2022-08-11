@@ -191,45 +191,21 @@ export const onActivityCreated = functions
 
 export const onUserCheckIn = functions
   .region("europe-west3")
-  .firestore.document("providers/{providerId}/events/{eventId}/users/{userId}")
-  .onCreate(async (snap, context) => {
+  .firestore.document(
+    "providers/{providerId}/events/{eventId}/subEvents/{subEventId}/users/{userId}"
+  )
+  .onWrite(async (snap, context) => {
     try {
       const eventId = context.params.eventId;
       const providerId = context.params.providerId;
       const userId = context.params.userId;
 
-      const s = snap;
-      const user: FirebaseFirestore.DocumentData = s.data();
-      console.log("user check in name: " + user.name + " " + user.id);
-
-      if (user.id === undefined || user.id === null) {
-        console.log("user id undefined ");
-        return null;
-      }
-
-      const providerDoc: FirebaseFirestore.DocumentData = await db
-        .collection("providers")
-        .doc(providerId)
-        .get();
-
-      if (!providerDoc.data().releaseWom) {
-        console.log("this provider not release wom to user : " + userId);
+      //utente cancellato
+      if (!snap.after.exists) {
+        console.log("utente rimosso da " + "eventId: " + userId);
         return;
       }
-      const id = user.id;
-      const userDoc: FirebaseFirestore.DocumentData = await db
-        .collection("users")
-        .doc(id)
-        .get();
-      const userData = userDoc.data();
-      const email = userData.email;
-      //console.log(userData);
-      if (email === undefined || email === null) {
-        console.log("STOP user not exist email undefined ");
-        return null;
-      }
 
-      console.log("user exist email " + userData.email);
       const eventDoc: FirebaseFirestore.DocumentData = await db
         .collection("providers")
         .doc(providerId)
@@ -237,18 +213,94 @@ export const onUserCheckIn = functions
         .doc(eventId)
         .get();
 
-      const eventName = eventDoc.data().name;
+      const event = eventDoc.data();
+      const womCount = event.maxWomCount;
+      const eventName = event.name;
+      const eventAccessType = event.accessType;
       console.log(eventName);
-      const womCount = eventDoc.data().womCount;
-      if (womCount === undefined || womCount === null || womCount == 0) {
-        console.log("STOP wom count is " + womCount);
+
+      if (womCount === undefined || womCount === null || womCount === 0) {
+        console.log("this event not release wom to user : " + userId);
         return;
       }
+
+      const user: FirebaseFirestore.DocumentData | undefined =
+        snap.after.data();
+      console.log("user check in name: " + user?.name + " " + user?.id);
+
+      if (user === undefined || user === null) {
+        console.log("user id undefined ");
+        return null;
+      }
+
+      const checkOutAt = user.checkOutAt;
+      const checkInAt = user.checkInAt;
+
+      if (checkOutAt === undefined || checkOutAt === null) {
+        console.log("Missing checkOut");
+        return null;
+      }
+
+      /*const providerDoc: FirebaseFirestore.DocumentData = await db
+        .collection("providers")
+        .doc(providerId)
+        .get();
+
+      if (!providerDoc.data().releaseWom) {
+        console.log("this provider not release wom to user : " + userId);
+        return;
+      }*/
+
+      const userDoc: FirebaseFirestore.DocumentData = await db
+        .collection("users")
+        .doc(userId)
+        .get();
+
+      const userData = userDoc.data();
+      const email = userData.email;
+      //console.log(userData);
+
+      if (email === undefined || email === null) {
+        console.log("STOP user not exist email undefined ");
+        return null;
+      }
+
+      console.log("user exist email " + userData.email);
+
+      const providerDoc: FirebaseFirestore.DocumentData = await db
+        .collection("providers")
+        .doc(providerId)
+        .get();
+
+      let wom = womCount;
+
+      if (eventAccessType === "inOut") {
+        if (checkInAt === undefined || checkInAt === null) {
+          console.log("ChekInAt is undefined or null");
+          return null;
+        }
+
+        const checkOuDate = checkOutAt.toDate();
+        const checkInDate = checkInAt.toDate();
+
+        let diffMs = checkOuDate - checkInDate; // milliseconds
+        let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+        console.log(diffMins + "minutes");
+        const tmpWom = diffMins;
+        const minWom = Math.min(wom, tmpWom);
+        wom = minWom;
+      }
+
       const apiKey = providerDoc.data().apiKey;
       const aim = providerDoc.data().aim;
+
+      if (apiKey === undefined || apiKey === null) {
+        console.log("ApiKey is null or undefined, providerId: " + providerId);
+        return null;
+      }
       const data = {
         apiKey: apiKey,
-        womCount: womCount,
+        womCount: wom,
         lat: 0.0,
         long: 0.0,
         aim: aim,
@@ -273,7 +325,7 @@ export const onUserCheckIn = functions
       const providerName = providerDoc.data().name;
       return Email.sendWomEmail(
         link,
-        womCount,
+        wom,
         email,
         pin,
         user.name,
@@ -855,27 +907,25 @@ export const confirmPendingInvite = functions
   );
 
 /*
-export const moveUrbino = functions
+export const checkIn = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {
-      const id = "asdfghjk";
-
-      let map = new Map<string, string>();
-      map.set("providersRole." + id, "role");
-
-      let jsonObject = Object.fromEntries(map);
-
-      db.collection("credentials")
-        .doc("dMqwaz96B8N7qZD6C5SFQSlO9PhX")
-        .update(jsonObject);
+      db.collection("providers")
+        .doc("Yy31B32YBDJDUt7TbZEl")
+        .collection("events")
+        .doc("7aa0445a-517f-44c9-96bb-d982b2a9be28")
+        .collection("subEvents")
+        .doc("2022-08-09")
+        .collection("users")
+        .doc(request.body.id)
+        .update(request.body);
 
       //await db.collection("providers").doc("countmein").set(activity.data());
     }
   );
 
   */
-
 export const onInviteToCollaborate = functions
   .region("europe-west3")
   .firestore.document("providers/{providerId}/pendingInvite/{inviteId}")
@@ -945,6 +995,11 @@ export const processEvents = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {
+      const now = new Date();
+      console.log(
+        "This will be run every day at 00:00 UTC " + now.toISOString()
+      );
+
       const nowUTC = dateToUTC(new Date());
       console.log(nowUTC);
       //prendo tutti gli eventi attivi ricorrenti che sono da aggiornare (query su subEventDeadline)
@@ -995,7 +1050,7 @@ export const processEvents = functions
               "-" +
               ("0" + (nextSubEventDeadlineDate.getMonth() + 1)).slice(-2) +
               "-" +
-              ("0" + (nextSubEventDeadlineDate.getDay() + 1)).slice(-2);
+              ("0" + nextSubEventDeadlineDate.getDate()).slice(-2);
 
             console.log("nextSubEventId " + nextSubEventId);
 
@@ -1012,6 +1067,7 @@ export const processEvents = functions
 
             await docRef.update({
               remaining: nextReimaining,
+              currentSubEvent: nextSubEventId,
               subEventDeadline: nextSubEventDeadlineTimestamp,
             });
 
@@ -1031,8 +1087,7 @@ export const processEvents = functions
       response.status(200).send("There are " + querySnapshot.size + " events");
     }
   );
-
-*/
+  */
 
 function addDays(numOfDays: number, date = new Date()) {
   const dateCopy = new Date(date.getTime());
@@ -1106,7 +1161,7 @@ export const updateSubEventsCron = functions
             "-" +
             ("0" + (nextSubEventDeadlineDate.getMonth() + 1)).slice(-2) +
             "-" +
-            ("0" + (nextSubEventDeadlineDate.getDay() + 1)).slice(-2);
+            ("0" + nextSubEventDeadlineDate.getDate()).slice(-2);
 
           console.log("nextSubEventId " + nextSubEventId);
 
@@ -1123,6 +1178,7 @@ export const updateSubEventsCron = functions
 
           await docRef.update({
             remaining: nextReimaining,
+            currentSubEvent: nextSubEventId,
             subEventDeadline: nextSubEventDeadlineTimestamp,
           });
 
