@@ -76,3 +76,36 @@ extension UserCardX on UserCard {
     ];
   }
 }
+
+@freezed
+class EventUser with _$EventUser {
+  const factory EventUser({
+    required String id,
+    String? name,
+    String? surname,
+    String? cf,
+    String? email,
+    @MyDateTimeConverter() DateTime? checkInAt,
+    @MyDateTimeConverter() DateTime? checkOutAt,
+  }) = _EventUser;
+
+  factory EventUser.fromJson(Map<String, Object?> json) =>
+      _$EventUserFromJson(json);
+}
+
+extension EventUserX on EventUser{
+  String get fullName {
+    if(name == null) {
+      return id;
+    }
+    return '$name $surname';
+  }
+
+  List toCsvList() {
+    return [
+      name,
+      surname,
+      cf,
+    ];
+  }
+}

@@ -32,8 +32,8 @@ mixin _$CMIEvent {
   int? get remaining => throw _privateConstructorUsedError;
   String? get currentSubEvent => throw _privateConstructorUsedError;
   @EventAccessTypeConverter()
-  EventAccessType? get accessType => throw _privateConstructorUsedError;
-  int? get maxWomCount => throw _privateConstructorUsedError;
+  EventAccessType get accessType => throw _privateConstructorUsedError;
+  int get maxWomCount => throw _privateConstructorUsedError;
   @EventStatusConverter()
   EventStatus? get status => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
@@ -64,8 +64,8 @@ abstract class $CMIEventCopyWith<$Res> {
       int? recurrence,
       int? remaining,
       String? currentSubEvent,
-      @EventAccessTypeConverter() EventAccessType? accessType,
-      int? maxWomCount,
+      @EventAccessTypeConverter() EventAccessType accessType,
+      int maxWomCount,
       @EventStatusConverter() EventStatus? status,
       @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime? subEventDeadline,
@@ -143,11 +143,11 @@ class _$CMIEventCopyWithImpl<$Res> implements $CMIEventCopyWith<$Res> {
       accessType: accessType == freezed
           ? _value.accessType
           : accessType // ignore: cast_nullable_to_non_nullable
-              as EventAccessType?,
+              as EventAccessType,
       maxWomCount: maxWomCount == freezed
           ? _value.maxWomCount
           : maxWomCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -185,8 +185,8 @@ abstract class _$$_CMIEventCopyWith<$Res> implements $CMIEventCopyWith<$Res> {
       int? recurrence,
       int? remaining,
       String? currentSubEvent,
-      @EventAccessTypeConverter() EventAccessType? accessType,
-      int? maxWomCount,
+      @EventAccessTypeConverter() EventAccessType accessType,
+      int maxWomCount,
       @EventStatusConverter() EventStatus? status,
       @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime? subEventDeadline,
@@ -266,11 +266,11 @@ class __$$_CMIEventCopyWithImpl<$Res> extends _$CMIEventCopyWithImpl<$Res>
       accessType: accessType == freezed
           ? _value.accessType
           : accessType // ignore: cast_nullable_to_non_nullable
-              as EventAccessType?,
+              as EventAccessType,
       maxWomCount: maxWomCount == freezed
           ? _value.maxWomCount
           : maxWomCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -305,8 +305,8 @@ class _$_CMIEvent implements _CMIEvent {
       this.recurrence,
       this.remaining,
       this.currentSubEvent,
-      @EventAccessTypeConverter() this.accessType,
-      this.maxWomCount,
+      @EventAccessTypeConverter() required this.accessType,
+      required this.maxWomCount,
       @EventStatusConverter() this.status,
       @MyDateTimeConverter() required this.createdOn,
       @MyDateTimeConverter() this.subEventDeadline,
@@ -342,9 +342,9 @@ class _$_CMIEvent implements _CMIEvent {
   final String? currentSubEvent;
   @override
   @EventAccessTypeConverter()
-  final EventAccessType? accessType;
+  final EventAccessType accessType;
   @override
-  final int? maxWomCount;
+  final int maxWomCount;
   @override
   @EventStatusConverter()
   final EventStatus? status;
@@ -438,8 +438,8 @@ abstract class _CMIEvent implements CMIEvent {
       final int? recurrence,
       final int? remaining,
       final String? currentSubEvent,
-      @EventAccessTypeConverter() final EventAccessType? accessType,
-      final int? maxWomCount,
+      @EventAccessTypeConverter() required final EventAccessType accessType,
+      required final int maxWomCount,
       @EventStatusConverter() final EventStatus? status,
       @MyDateTimeConverter() required final DateTime createdOn,
       @MyDateTimeConverter() final DateTime? subEventDeadline,
@@ -470,9 +470,9 @@ abstract class _CMIEvent implements CMIEvent {
   String? get currentSubEvent;
   @override
   @EventAccessTypeConverter()
-  EventAccessType? get accessType;
+  EventAccessType get accessType;
   @override
-  int? get maxWomCount;
+  int get maxWomCount;
   @override
   @EventStatusConverter()
   EventStatus? get status;
@@ -673,5 +673,141 @@ abstract class _CMISubEvent implements CMISubEvent {
   @override
   @JsonKey(ignore: true)
   _$$_CMISubEventCopyWith<_$_CMISubEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$CMIQuerySubEvent {
+  String get providerId => throw _privateConstructorUsedError;
+  String get eventId => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CMIQuerySubEventCopyWith<CMIQuerySubEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CMIQuerySubEventCopyWith<$Res> {
+  factory $CMIQuerySubEventCopyWith(
+          CMIQuerySubEvent value, $Res Function(CMIQuerySubEvent) then) =
+      _$CMIQuerySubEventCopyWithImpl<$Res>;
+  $Res call({String providerId, String eventId});
+}
+
+/// @nodoc
+class _$CMIQuerySubEventCopyWithImpl<$Res>
+    implements $CMIQuerySubEventCopyWith<$Res> {
+  _$CMIQuerySubEventCopyWithImpl(this._value, this._then);
+
+  final CMIQuerySubEvent _value;
+  // ignore: unused_field
+  final $Res Function(CMIQuerySubEvent) _then;
+
+  @override
+  $Res call({
+    Object? providerId = freezed,
+    Object? eventId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      providerId: providerId == freezed
+          ? _value.providerId
+          : providerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      eventId: eventId == freezed
+          ? _value.eventId
+          : eventId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_CMIQuerySubEventCopyWith<$Res>
+    implements $CMIQuerySubEventCopyWith<$Res> {
+  factory _$$_CMIQuerySubEventCopyWith(
+          _$_CMIQuerySubEvent value, $Res Function(_$_CMIQuerySubEvent) then) =
+      __$$_CMIQuerySubEventCopyWithImpl<$Res>;
+  @override
+  $Res call({String providerId, String eventId});
+}
+
+/// @nodoc
+class __$$_CMIQuerySubEventCopyWithImpl<$Res>
+    extends _$CMIQuerySubEventCopyWithImpl<$Res>
+    implements _$$_CMIQuerySubEventCopyWith<$Res> {
+  __$$_CMIQuerySubEventCopyWithImpl(
+      _$_CMIQuerySubEvent _value, $Res Function(_$_CMIQuerySubEvent) _then)
+      : super(_value, (v) => _then(v as _$_CMIQuerySubEvent));
+
+  @override
+  _$_CMIQuerySubEvent get _value => super._value as _$_CMIQuerySubEvent;
+
+  @override
+  $Res call({
+    Object? providerId = freezed,
+    Object? eventId = freezed,
+  }) {
+    return _then(_$_CMIQuerySubEvent(
+      providerId: providerId == freezed
+          ? _value.providerId
+          : providerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      eventId: eventId == freezed
+          ? _value.eventId
+          : eventId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CMIQuerySubEvent implements _CMIQuerySubEvent {
+  const _$_CMIQuerySubEvent({required this.providerId, required this.eventId});
+
+  @override
+  final String providerId;
+  @override
+  final String eventId;
+
+  @override
+  String toString() {
+    return 'CMIQuerySubEvent(providerId: $providerId, eventId: $eventId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CMIQuerySubEvent &&
+            const DeepCollectionEquality()
+                .equals(other.providerId, providerId) &&
+            const DeepCollectionEquality().equals(other.eventId, eventId));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(providerId),
+      const DeepCollectionEquality().hash(eventId));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_CMIQuerySubEventCopyWith<_$_CMIQuerySubEvent> get copyWith =>
+      __$$_CMIQuerySubEventCopyWithImpl<_$_CMIQuerySubEvent>(this, _$identity);
+}
+
+abstract class _CMIQuerySubEvent implements CMIQuerySubEvent {
+  const factory _CMIQuerySubEvent(
+      {required final String providerId,
+      required final String eventId}) = _$_CMIQuerySubEvent;
+
+  @override
+  String get providerId;
+  @override
+  String get eventId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CMIQuerySubEventCopyWith<_$_CMIQuerySubEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }

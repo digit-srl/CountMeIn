@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:countmein/src/admin/application/users_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
+import 'package:countmein/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,17 +25,21 @@ import '../../domain/entities/user_qr_code.dart';
 
 final usersCountProvider =
     Provider.autoDispose.family<int, EventIds>((ref, ids) {
-  return ref.watch(usersStreamProvider(ids)).asData?.value.length ?? 0;
+  return ref.watch(eventUsersStreamProvider(ids)).asData?.value.length ?? 0;
 });
+
+enum ScanMode { checkIn, checkOut }
 
 class ScanScreen extends ConsumerStatefulWidget {
   final CMIEvent event;
   final CMIProvider provider;
+  final ScanMode scanMode;
 
   const ScanScreen({
     Key? key,
     required this.event,
     required this.provider,
+    required this.scanMode,
   }) : super(key: key);
 
   @override
@@ -42,21 +48,19 @@ class ScanScreen extends ConsumerStatefulWidget {
 
 class _ScanScreenState extends ConsumerState<ScanScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  Barcode? result;
 
   bool processing = false;
   final list = <String>[];
-
-  UserCard? lastUSer;
-
-  late EventIds ids;
-
   String get eventId => widget.event.id;
+
+  EventUser? lastUser;
+  late EventIds ids;
+  Barcode? result;
 
   @override
   void initState() {
     super.initState();
-    ids = EventIds(activityId: widget.provider.id, eventId: eventId);
+    ids = EventIds(providerId: widget.provider.id, eventId: eventId);
     loadSound();
   }
 
@@ -131,7 +135,27 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                       position: ToastPosition.bottom);
                                 });*/
 
-                                final user = userQrCode.toUserCard();
+                                // final user = userQrCode.toUserCard();
+                                var user = EventUser(
+                                  id: userQrCode.id,
+                                  name: userQrCode.name,
+                                  surname: userQrCode.surname,
+                                  email: userQrCode.email,
+                                  cf: userQrCode.cf,
+                                );
+
+                                if (widget.event.accessType ==
+                                        EventAccessType.single ||
+                                    widget.scanMode == ScanMode.checkOut) {
+                                  user = user.copyWith(checkOutAt: DateTime.now());
+                                } else {
+                                  user = user.copyWith(checkInAt: DateTime.now());
+                                }
+
+                                final json = user.toJson();
+                                final mergeFields = <String>[];
+                                final setOptions = SetOptions(
+                                    merge: true, mergeFields: mergeFields);
 
                                 Cloud.eventsCollection(widget.provider.id)
                                     .doc(eventId)
@@ -139,23 +163,23 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                     .doc(widget.event.currentSubEvent)
                                     .collection('users')
                                     .doc(user.id)
-                                    .set(
-                                        user.toJson(), SetOptions(merge: true));
+                                    .set(json, setOptions);
 
-                                Cloud.eventUsersCollection(
-                                        widget.provider.id, eventId)
+                                Cloud.eventUsersCollection(EventIds(
+                                        providerId: widget.provider.id,
+                                        eventId: eventId))
                                     .doc(user.id)
-                                    .set(user.toJson(), SetOptions(merge: true))
+                                    .set(json, setOptions)
                                     .then((value) {
                                   setState(() {
                                     result = barcode;
-                                    lastUSer = user;
+                                    lastUser = user;
                                   });
                                   Future.delayed(const Duration(seconds: 1),
                                       () {
                                     setState(() {
                                       result = null;
-                                      lastUSer = null;
+                                      lastUser = null;
                                     });
                                   });
                                   processing = false;
@@ -181,34 +205,42 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                       }),
                 ),
                 Expanded(
-                    flex: 1,
-                    child: Container(
-                      color: lastUSer != null ? Colors.green : Colors.white,
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (kDebugMode && result != null)
-                            Text(
-                                'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.rawValue}'),
-                          const SizedBox(height: 8),
+                  flex: 1,
+                  child: Container(
+                    color: lastUser != null ? Colors.green : Colors.white,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (kDebugMode && result != null)
                           Text(
-                            lastUSer != null
-                                ? '${lastUSer!.name} ${lastUSer!.surname} ${lastUSer!.cf}'
-                                : 'SCAN QR CODE',
-                            textAlign: lastUSer != null
-                                ? TextAlign.start
-                                : TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                              'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.rawValue}'),
+                        const SizedBox(height: 8),
+                        Text(
+                          lastUser != null
+                              ? '${lastUser!.name} ${lastUser!.surname} ${lastUser!.cf}'
+                              : 'SCAN QR CODE',
+                          textAlign: lastUser != null
+                              ? TextAlign.start
+                              : TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
-                    ))
+                        ),
+                      ],
+                    ),
+                  ),
+                )
               ],
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Chip(label: Text(enumToString(widget.scanMode)?.toUpperCase() ?? ''),)
+              ),
             ),
             Align(
               alignment: Alignment.topRight,

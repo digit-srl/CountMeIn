@@ -222,20 +222,22 @@ class RouterNotifier extends ChangeNotifier {
         ),
         GoRoute(
           name: EventUsersScreen.routeName,
-          path: '${EventUsersScreen.routeName}/:providerId/:eventId',
+          path: '${EventUsersScreen.routeName}/:providerId/:eventId/:subEventId',
           builder: (context, state) {
             final eventId = state.params['eventId'] as String;
             final providerId = state.params['providerId'] as String;
+            final subEventId = state.params['subEventId'] as String?;
             return EventUsersScreen(
               eventId: eventId,
               providerId: providerId,
+              subEventId: subEventId,
             );
           },
         ),
         GoRoute(
           path: UserDetailsScreen.routeName,
           builder: (context, state) {
-            return UserDetailsScreen(user: state.extra! as UserCard);
+            return UserDetailsScreen(user: state.extra! as EventUser);
           },
         ),
         GoRoute(

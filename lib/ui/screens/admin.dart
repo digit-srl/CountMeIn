@@ -31,15 +31,6 @@ final adminProvider =
   }
 });*/
 
-final eventProvider =
-    Provider.family<AsyncValue<CMIEvent>, List<String>>((ref, ids) {
-  final activityId = ids[0];
-  final eventId = ids[1];
-  return ref
-      .watch(eventsStreamProvider(activityId))
-      .whenData((list) => list.firstWhere((event) => event.id == eventId));
-});
-
 enum FilterOrder {
   byName,
   byDate,
@@ -47,19 +38,7 @@ enum FilterOrder {
 
 final orderFilterProvider = StateProvider<FilterOrder>((ref) => FilterOrder.byDate);
 
-final usersStreamProvider =
-    StreamProvider.family<List<UserCard>, EventIds>((ref, ids) async* {
-  final stream = Cloud.eventUsersCollection(ids.activityId, ids.eventId).snapshots();
 
-  await for (final snap in stream) {
-    print('event: ${ids.eventId} => ${snap.docs.length} users');
-    final list = snap.docs.map((doc) {
-      final s = UserCard.fromJson(doc.data());
-      return s;
-    }).toList();
-    yield list;
-  }
-});
 
 class AdminNotifier extends StateNotifier<AsyncValue<List<CMIProvider>>> {
   AdminNotifier() : super(const AsyncLoading());

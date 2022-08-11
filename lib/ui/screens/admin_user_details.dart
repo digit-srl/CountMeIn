@@ -5,7 +5,7 @@ import '../../domain/entities/user_card.dart';
 class UserDetailsScreen extends StatelessWidget {
   static const routeName = '/userDetails';
 
-  final UserCard user;
+  final EventUser user;
 
   const UserDetailsScreen({Key? key, required this.user}) : super(key: key);
 
@@ -38,7 +38,7 @@ class UserDetailsScreen extends StatelessWidget {
 
 class UserField extends StatelessWidget {
   final String field;
-  final String value;
+  final String? value;
 
   const UserField({Key? key, required this.field, required this.value})
       : super(key: key);
@@ -56,7 +56,7 @@ class UserField extends StatelessWidget {
             style: TextStyle(color: Colors.grey),
           ),
           Text(
-            value,
+            value ?? '-',
             style: TextStyle(fontSize: 18),
           ),
         ],

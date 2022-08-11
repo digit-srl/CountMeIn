@@ -18,9 +18,8 @@ _$_CMIEvent _$$_CMIEventFromJson(Map<String, dynamic> json) => _$_CMIEvent(
       recurrence: json['recurrence'] as int?,
       remaining: json['remaining'] as int?,
       currentSubEvent: json['currentSubEvent'] as String?,
-      accessType: _$JsonConverterFromJson<String, EventAccessType?>(
-          json['accessType'], const EventAccessTypeConverter().fromJson),
-      maxWomCount: json['maxWomCount'] as int?,
+      accessType: $enumDecode(_$EventAccessTypeEnumMap, json['accessType']),
+      maxWomCount: json['maxWomCount'] as int,
       status: _$JsonConverterFromJson<String, EventStatus>(
           json['status'], const EventStatusConverter().fromJson),
       createdOn:
@@ -43,8 +42,7 @@ Map<String, dynamic> _$$_CMIEventToJson(_$_CMIEvent instance) =>
       'recurrence': instance.recurrence,
       'remaining': instance.remaining,
       'currentSubEvent': instance.currentSubEvent,
-      'accessType':
-          const EventAccessTypeConverter().toJson(instance.accessType),
+      'accessType': _$EventAccessTypeEnumMap[instance.accessType]!,
       'maxWomCount': instance.maxWomCount,
       'status': _$JsonConverterToJson<String, EventStatus>(
           instance.status, const EventStatusConverter().toJson),
@@ -53,6 +51,11 @@ Map<String, dynamic> _$$_CMIEventToJson(_$_CMIEvent instance) =>
           instance.subEventDeadline, const MyDateTimeConverter().toJson),
       'startAt': const MyDateTimeConverter().toJson(instance.startAt),
     };
+
+const _$EventAccessTypeEnumMap = {
+  EventAccessType.single: 'single',
+  EventAccessType.inOut: 'inOut',
+};
 
 Value? _$JsonConverterFromJson<Json, Value>(
   Object? json,

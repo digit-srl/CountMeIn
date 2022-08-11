@@ -1,6 +1,8 @@
 import 'package:countmein/cloud.dart';
 import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/domain/entities/user_card.dart';
+import 'package:countmein/src/admin/application/events_stream.dart';
+import 'package:countmein/src/admin/application/users_stream.dart';
 import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
@@ -16,17 +18,19 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:universal_io/io.dart';
-
+import 'package:intl/intl.dart';
 class EventUsersScreen extends ConsumerStatefulWidget {
   static const String routeName = '/eventUsers';
 
   final String eventId;
   final String providerId;
+  final String? subEventId;
 
   const EventUsersScreen({
     Key? key,
     required this.eventId,
     required this.providerId,
+    this.subEventId,
   }) : super(key: key);
 
   @override
@@ -36,22 +40,28 @@ class EventUsersScreen extends ConsumerStatefulWidget {
 class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
   late EventIds ids;
 
+  late DateFormat dateFormat;
   @override
   void initState() {
     super.initState();
-    ids = EventIds(activityId: widget.providerId, eventId: widget.eventId);
+    dateFormat = DateFormat('HH:mm');
+    ids = EventIds(
+      providerId: widget.providerId,
+      eventId: widget.eventId,
+      subEventId: widget.subEventId,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final eventState =
-        ref.watch(eventProvider([widget.providerId, widget.eventId]));
-    final usersState = ref.watch(usersStreamProvider(ids));
+        ref.watch(eventProvider(ids));
+    final usersState = ref.watch(eventUsersStreamProvider(ids));
     final role = ref.watch(userRoleProvider(widget.providerId));
     final isOwner = role == UserRole.admin;
     final hasData = usersState is AsyncData;
     return Scaffold(
-      appBar: AdminAppBar(
+      appBar: const AdminAppBar(
         title: 'Iscritti',
       ),
       body: usersState.when(
@@ -73,25 +83,48 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                       },
                       title: Text(user.fullName),
                       subtitle: Text(
-                        user.cf,
+                        user.cf ?? '-',
                         style: Theme.of(context).textTheme.caption,
                       ),
                       leading: Text('${index + 1}'),
-                      trailing: isOwner
-                          ? IconButton(
-                              icon: const Icon(Icons.delete),
-                              color: Colors.red,
-                              onPressed: () {
-                                _deleteUser(user.id, user.fullName);
-                              })
-                          : null,
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (user.checkInAt != null)
+                            Tooltip(
+                              message: dateFormat.format(user.checkInAt!),
+                              child: const Icon(
+                                Icons.arrow_circle_down,
+
+                                color: Colors.green,
+                              ),
+                            ),
+                           const SizedBox(width: 16),
+                          if (user.checkOutAt != null)
+                            Tooltip(
+                              message: dateFormat.format(user.checkOutAt!),
+                              child: const Icon(
+                                Icons.arrow_circle_up,
+                                color: Colors.red,
+                              ),
+                            )
+                        ],
+                      ),
+                      // trailing: isOwner
+                      //     ? IconButton(
+                      //         icon: const Icon(Icons.delete),
+                      //         color: Colors.red,
+                      //         onPressed: () {
+                      //           _deleteUser(user.id, user.fullName);
+                      //         })
+                      //     : null,
                     );
                   });
         },
         error: (err, stack) {
           return Center(child: Text(err.toString()));
         },
-        loading: () => Center(child: LoadingWidget()),
+        loading: () => const Center(child: const LoadingWidget()),
       ),
       floatingActionButton: usersState.maybeWhen(
         data: (list) {
@@ -183,13 +216,14 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
           );
         });
     if (answer ?? false) {
-      Cloud.eventUsersCollection(widget.providerId, widget.eventId)
+      Cloud.eventUsersCollection(
+              EventIds(providerId: widget.providerId, eventId: widget.eventId))
           .doc(userId)
           .delete();
     }
   }
 
-  Future<File?> getCsv(List<UserCard> users, String eventName) async {
+  Future<File?> getCsv(List<EventUser> users, String eventName) async {
     try {
       final filename = eventName.replaceAll(' ', '_').toLowerCase();
       final statuses = await [

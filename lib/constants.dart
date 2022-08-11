@@ -13,3 +13,4 @@ const functionBaseUrl = kDebugMode
 const authority = kDebugMode ? 'localhost:5003' : 'cmi.digit.srl';
 const baseUrl = 'https://$authority';
 const passepartoutActivityId = 'wom-count-me-in';
+const womDomain = kDebugMode ? 'dev.wom.social': 'wom.social';

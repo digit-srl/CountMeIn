@@ -5,8 +5,9 @@ part 'event_ids.freezed.dart';
 @freezed
 class EventIds with _$EventIds {
   const factory EventIds({
-    required String activityId,
+    required String providerId,
     required String eventId,
+    String? subEventId,
   }) = _EventIds;
 }
 

@@ -16,8 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EventIds {
-  String get activityId => throw _privateConstructorUsedError;
+  String get providerId => throw _privateConstructorUsedError;
   String get eventId => throw _privateConstructorUsedError;
+  String? get subEventId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $EventIdsCopyWith<EventIds> get copyWith =>
@@ -28,7 +29,7 @@ mixin _$EventIds {
 abstract class $EventIdsCopyWith<$Res> {
   factory $EventIdsCopyWith(EventIds value, $Res Function(EventIds) then) =
       _$EventIdsCopyWithImpl<$Res>;
-  $Res call({String activityId, String eventId});
+  $Res call({String providerId, String eventId, String? subEventId});
 }
 
 /// @nodoc
@@ -41,18 +42,23 @@ class _$EventIdsCopyWithImpl<$Res> implements $EventIdsCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? activityId = freezed,
+    Object? providerId = freezed,
     Object? eventId = freezed,
+    Object? subEventId = freezed,
   }) {
     return _then(_value.copyWith(
-      activityId: activityId == freezed
-          ? _value.activityId
-          : activityId // ignore: cast_nullable_to_non_nullable
+      providerId: providerId == freezed
+          ? _value.providerId
+          : providerId // ignore: cast_nullable_to_non_nullable
               as String,
       eventId: eventId == freezed
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
               as String,
+      subEventId: subEventId == freezed
+          ? _value.subEventId
+          : subEventId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -63,7 +69,7 @@ abstract class _$$_EventIdsCopyWith<$Res> implements $EventIdsCopyWith<$Res> {
           _$_EventIds value, $Res Function(_$_EventIds) then) =
       __$$_EventIdsCopyWithImpl<$Res>;
   @override
-  $Res call({String activityId, String eventId});
+  $Res call({String providerId, String eventId, String? subEventId});
 }
 
 /// @nodoc
@@ -78,18 +84,23 @@ class __$$_EventIdsCopyWithImpl<$Res> extends _$EventIdsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? activityId = freezed,
+    Object? providerId = freezed,
     Object? eventId = freezed,
+    Object? subEventId = freezed,
   }) {
     return _then(_$_EventIds(
-      activityId: activityId == freezed
-          ? _value.activityId
-          : activityId // ignore: cast_nullable_to_non_nullable
+      providerId: providerId == freezed
+          ? _value.providerId
+          : providerId // ignore: cast_nullable_to_non_nullable
               as String,
       eventId: eventId == freezed
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
               as String,
+      subEventId: subEventId == freezed
+          ? _value.subEventId
+          : subEventId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -97,16 +108,19 @@ class __$$_EventIdsCopyWithImpl<$Res> extends _$EventIdsCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_EventIds implements _EventIds {
-  const _$_EventIds({required this.activityId, required this.eventId});
+  const _$_EventIds(
+      {required this.providerId, required this.eventId, this.subEventId});
 
   @override
-  final String activityId;
+  final String providerId;
   @override
   final String eventId;
+  @override
+  final String? subEventId;
 
   @override
   String toString() {
-    return 'EventIds(activityId: $activityId, eventId: $eventId)';
+    return 'EventIds(providerId: $providerId, eventId: $eventId, subEventId: $subEventId)';
   }
 
   @override
@@ -115,15 +129,18 @@ class _$_EventIds implements _EventIds {
         (other.runtimeType == runtimeType &&
             other is _$_EventIds &&
             const DeepCollectionEquality()
-                .equals(other.activityId, activityId) &&
-            const DeepCollectionEquality().equals(other.eventId, eventId));
+                .equals(other.providerId, providerId) &&
+            const DeepCollectionEquality().equals(other.eventId, eventId) &&
+            const DeepCollectionEquality()
+                .equals(other.subEventId, subEventId));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(activityId),
-      const DeepCollectionEquality().hash(eventId));
+      const DeepCollectionEquality().hash(providerId),
+      const DeepCollectionEquality().hash(eventId),
+      const DeepCollectionEquality().hash(subEventId));
 
   @JsonKey(ignore: true)
   @override
@@ -133,13 +150,16 @@ class _$_EventIds implements _EventIds {
 
 abstract class _EventIds implements EventIds {
   const factory _EventIds(
-      {required final String activityId,
-      required final String eventId}) = _$_EventIds;
+      {required final String providerId,
+      required final String eventId,
+      final String? subEventId}) = _$_EventIds;
 
   @override
-  String get activityId;
+  String get providerId;
   @override
   String get eventId;
+  @override
+  String? get subEventId;
   @override
   @JsonKey(ignore: true)
   _$$_EventIdsCopyWith<_$_EventIds> get copyWith =>

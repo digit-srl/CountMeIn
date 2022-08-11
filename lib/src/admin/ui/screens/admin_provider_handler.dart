@@ -128,7 +128,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                           .doc()
                           .update({'status': 'live'});
                     },
-                    child: Text('Accetta richiesta'),
+                    child: const Text('Accetta richiesta'),
                   ),
               ],
             ),
@@ -139,6 +139,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
               print(constraints.maxWidth);
               return GridView.builder(
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 itemCount: eventsState.asData!.value.length + 1,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -162,7 +163,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.add,
                             size: 50,
                           ),

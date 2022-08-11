@@ -137,6 +137,7 @@ class MyApp extends ConsumerWidget {
           subThemesData: const FlexSubThemesData(
             blendOnLevel: 20,
             blendOnColors: false,
+            dialogBackgroundSchemeColor: SchemeColor.inversePrimary,
           ),
           useMaterial3ErrorColors: true,
           visualDensity: FlexColorScheme.comfortablePlatformDensity,
@@ -153,6 +154,7 @@ class MyApp extends ConsumerWidget {
           appBarOpacity: 0.90,
           subThemesData: const FlexSubThemesData(
             blendOnLevel: 30,
+            dialogBackgroundSchemeColor: SchemeColor.inversePrimary,
           ),
           useMaterial3ErrorColors: true,
           visualDensity: FlexColorScheme.comfortablePlatformDensity,

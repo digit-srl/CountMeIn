@@ -14,6 +14,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:uuid/uuid.dart';
+import '../../constants.dart';
 import '../../domain/entities/cmi_provider_request.dart';
 import '../../src/auth/ui/screens/sign_in.dart';
 import '../../src/common/ui/widgets/cmi_container.dart';
@@ -279,7 +280,7 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
         apiKey = await InstrumentClient.createNewApiKey(
           u,
           p,
-          'dev.wom.social',
+          womDomain,
           'cmi-wom-integration',
           instrument.id,
         );
@@ -419,7 +420,7 @@ class _WomIntegrationPanelState extends ConsumerState<WomIntegrationPanel> {
                   final password = womPasswordController.text;
 
                   final instrument = await InstrumentClient.authenticate(
-                      username, password, 'dev.wom.social');
+                      username, password, womDomain);
                   // final instrument = await InstrumentClient.authenticate(
                   //     'alessandro.bogliolo@uniurb.it',
                   //     'D1GIT!',

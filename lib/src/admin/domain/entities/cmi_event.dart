@@ -41,8 +41,8 @@ class CMIEvent with _$CMIEvent {
     int? recurrence,
     int? remaining,
     String? currentSubEvent,
-    @EventAccessTypeConverter() EventAccessType? accessType,
-    int? maxWomCount,
+    @EventAccessTypeConverter() required EventAccessType accessType,
+    required int maxWomCount,
     @EventStatusConverter() EventStatus? status,
     @MyDateTimeConverter() required DateTime createdOn,
     @MyDateTimeConverter() DateTime? subEventDeadline,
@@ -63,6 +63,14 @@ class CMISubEvent with _$CMISubEvent {
 
   factory CMISubEvent.fromJson(Map<String, Object?> json) =>
       _$CMISubEventFromJson(json);
+}
+
+@freezed
+class CMIQuerySubEvent with _$CMIQuerySubEvent {
+  const factory CMIQuerySubEvent({
+    required String providerId,
+    required String eventId,
+  }) = _CMIQuerySubEvent;
 }
 
 class EventAccessTypeConverter
@@ -110,3 +118,4 @@ class EventStatusConverter implements JsonConverter<EventStatus, String> {
   @override
   String toJson(EventStatus status) => enumToString(status) ?? 'unknown';
 }
+

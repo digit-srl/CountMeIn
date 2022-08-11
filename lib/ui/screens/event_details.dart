@@ -1,4 +1,4 @@
-
+import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/admin/ui/screens/event_users.dart';
@@ -36,15 +36,47 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    ids = EventIds(activityId: widget.providerId, eventId: widget.eventId);
+    ids = EventIds(providerId: widget.providerId, eventId: widget.eventId);
   }
 
-  _goToScan(CMIProvider activity, CMIEvent event) {
+  _goToScan(CMIProvider activity, CMIEvent event) async {
+    final scanMode = await showDialog(
+        context: context,
+        builder: (c) {
+          return Dialog(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                   const SizedBox(height: 8),
+                  Text('Scegli il tipo di scansione',style:Theme.of(context).textTheme.headline6),
+                  CMICard(
+                    onTap: () {
+                      Navigator.of(c).pop(ScanMode.checkIn);
+                    },
+                    margin: const EdgeInsets.all(16),
+                    child: Text('CheckIn'),
+                  ),
+                  CMICard(
+                    onTap: () {
+                      Navigator.of(c).pop(ScanMode.checkOut);
+                    },
+                    margin: const EdgeInsets.all(16),
+                    child: Text('CheckOut'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+    if (scanMode == null) return;
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (c) => ScanScreen(
           event: event,
           provider: activity,
+          scanMode: scanMode,
         ),
       ),
     );
@@ -52,13 +84,14 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final eventState =
-        ref.watch(eventProvider([widget.providerId, widget.eventId]));
+    final eventState = ref.watch(eventProvider(ids));
     final eventData = eventState.asData?.value;
     final provider = ref.watch(singleCMIProviderProvider(widget.providerId));
     // final role = ref.watch(userRoleProvider(widget.providerId));
     // final isOwner = role == UserRole.admin;
 
+    final subEvents =
+        ref.watch(subEventsStreamProvider(ids)).asData?.value ?? [];
     return Scaffold(
       appBar: AppBar(
         title: Text(eventState.asData?.value.name ?? ''),
@@ -69,7 +102,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
             IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () {
-                  _goToScan(provider!, eventData);
+                  _goToScan(provider, eventData);
                 }),
           ]
         ],
@@ -91,11 +124,13 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                 ),
                 InfoText(
                   label: 'WOM',
-                  value: eventData?.maxWomCount?.toString(),
+                  value: eventData?.maxWomCount.toString(),
                 ),
                 InfoText(
                   label: 'Tipo',
-                  value: (eventData?.recurring ?? false) ? 'Ricorrente (${eventData!.recurrence})' : 'Singolo',
+                  value: (eventData?.recurring ?? false)
+                      ? 'Ricorrente (${eventData!.recurrence})'
+                      : 'Singolo',
                 ),
                 InfoText(
                   label: 'Stato',
@@ -108,34 +143,50 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
               ],
             ),
           ),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              return GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: childAspectRatio(constraints.maxWidth),
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                childAspectRatio: 2,
-                children: [
+          LayoutBuilder(builder: (context, constraints) {
+            return GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: childAspectRatio(constraints.maxWidth),
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              childAspectRatio: 2,
+              children: [
+                CMICard(
+                  onTap: () {
+                    context.pushNamed(
+                      EventUsersScreen.routeName,
+                      params: {
+                        'eventId': widget.eventId,
+                        'providerId': widget.providerId
+                      },
+                    );
+                  },
+                  child: Text(
+                    'Utenti unici',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ),
+                for (int i = 0; i < subEvents.length; i++)
                   CMICard(
                     onTap: () {
                       context.pushNamed(
                         EventUsersScreen.routeName,
                         params: {
                           'eventId': widget.eventId,
-                          'providerId': widget.providerId
+                          'providerId': widget.providerId,
+                          'subEventId': subEvents[i].id,
                         },
                       );
                     },
                     child: Text(
-                      'Utenti unici',
+                      subEvents[i].id,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
-                  )
-                ],
-              );
-            }
-          ),
+                  ),
+              ],
+            );
+          }),
         ],
       ),
     );

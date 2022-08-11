@@ -253,7 +253,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                               DateFormat('y-MM-dd').format(startAt.value);
 
                           final womCount =
-                              int.tryParse(womController.text.trim());
+                              int.tryParse(womController.text.trim()) ?? 0;
 
                           final recurrence = recurring.value
                               ? int.tryParse(repsController.text.trim()) ?? 1
@@ -288,7 +288,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                                 ? selectedFrequency.value
                                 : null,
                             accessType: accessType.value,
-                            maxWomCount: womCount,
+                            maxWomCount: releaseWom.value ? womCount : 0,
                             status: EventStatus.live,
                             createdOn: DateTime.now().toUtc(),
                             startAt: start,
