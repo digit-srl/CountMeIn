@@ -990,7 +990,7 @@ export const onInviteToCollaborate = functions
     console.log(url);
     return Email.sendInvite(providerName, fullName, email, role, url);
   });
-/*
+
 export const processEvents = functions
   .region("europe-west3")
   .https.onRequest(
@@ -1046,11 +1046,11 @@ export const processEvents = functions
             console.log(nextSubEventDeadlineDate);
 
             const nextSubEventId =
-              nextSubEventDeadlineDate.getFullYear() +
+              subEventDeadlineDate.getFullYear() +
               "-" +
-              ("0" + (nextSubEventDeadlineDate.getMonth() + 1)).slice(-2) +
+              ("0" + (subEventDeadlineDate.getMonth() + 1)).slice(-2) +
               "-" +
-              ("0" + nextSubEventDeadlineDate.getDate()).slice(-2);
+              ("0" + subEventDeadlineDate.getDate()).slice(-2);
 
             console.log("nextSubEventId " + nextSubEventId);
 
@@ -1087,7 +1087,6 @@ export const processEvents = functions
       response.status(200).send("There are " + querySnapshot.size + " events");
     }
   );
-  */
 
 function addDays(numOfDays: number, date = new Date()) {
   const dateCopy = new Date(date.getTime());
@@ -1104,12 +1103,14 @@ function dateToUTC(date: Date) {
 
 export const updateSubEventsCron = functions
   .region("europe-west3")
-  //.pubsub.schedule("*/30 * * * *")
-  .pubsub.schedule("0 0 * * *")
+  .pubsub.schedule("*/30 * * * *")
+  //.pubsub.schedule("0 0 * * *")
   .timeZone("Etc/UTC")
   .onRun(async (_) => {
     const now = new Date();
-    console.log("This will be run every day at 00:00 UTC " + now.toISOString());
+    console.log(
+      "This will be run every 30 minutes at 00:00 UTC " + now.toISOString()
+    );
 
     const nowUTC = dateToUTC(new Date());
     console.log(nowUTC);
@@ -1157,11 +1158,11 @@ export const updateSubEventsCron = functions
           console.log(nextSubEventDeadlineDate);
 
           const nextSubEventId =
-            nextSubEventDeadlineDate.getFullYear() +
+            subEventDeadlineDate.getFullYear() +
             "-" +
-            ("0" + (nextSubEventDeadlineDate.getMonth() + 1)).slice(-2) +
+            ("0" + (subEventDeadlineDate.getMonth() + 1)).slice(-2) +
             "-" +
-            ("0" + nextSubEventDeadlineDate.getDate()).slice(-2);
+            ("0" + subEventDeadlineDate.getDate()).slice(-2);
 
           console.log("nextSubEventId " + nextSubEventId);
 
