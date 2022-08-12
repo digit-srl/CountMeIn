@@ -88,18 +88,21 @@ class RouterNotifier extends ChangeNotifier {
 
     final authState = _ref.read(authStateProvider);
     final isGoingToHome = state.subloc == '/';
+    final isGoingToVerificationEmail =
+        state.subloc.startsWith(EmailVerificationScreen.routeName);
     final isGoingConfirmInvite =
         state.subloc == InviteFormConfirmScreen.routeName;
-    final isGoingToUserCardForm =
-        state.subloc.startsWith('/provider');
+    final isGoingToUserCardForm = state.subloc.startsWith('/provider');
     final isGoingToResetPassword =
         state.subloc == ResetPasswordScreen.routeName;
     final isGoingToActivityRequest =
         state.subloc == ActivityRequestScreen.routeName;
     if (isGoingToHome ||
+        isGoingToVerificationEmail ||
         isGoingToActivityRequest ||
         isGoingConfirmInvite ||
-        isGoingToResetPassword || isGoingToUserCardForm) {
+        isGoingToResetPassword ||
+        isGoingToUserCardForm) {
       return null;
     }
     // From here we can use the state and implement our custom logic
@@ -168,16 +171,14 @@ class RouterNotifier extends ChangeNotifier {
           builder: (context, state) => const AdminProvidersScreen(),
         ),
         GoRoute(
-          // name: AdminProviderHandlerScreen.routeName,
-          path: '${AdminProviderHandlerScreen.routeName}/:providerId',
-          builder: (context, state) {
-
-            return AdminProviderHandlerScreen(
-              providerId: state.params['providerId'] as String,
-              extraProvider: state.extra as CMIProvider?,
-            );
-          }
-        ),
+            // name: AdminProviderHandlerScreen.routeName,
+            path: '${AdminProviderHandlerScreen.routeName}/:providerId',
+            builder: (context, state) {
+              return AdminProviderHandlerScreen(
+                providerId: state.params['providerId'] as String,
+                extraProvider: state.extra as CMIProvider?,
+              );
+            }),
         GoRoute(
           path: '${NewEventFormScreen.routeName}/:providerId',
           builder: (context, state) => NewEventFormScreen(
@@ -222,11 +223,12 @@ class RouterNotifier extends ChangeNotifier {
         ),
         GoRoute(
           name: EventUsersScreen.routeName,
-          path: '${EventUsersScreen.routeName}/:providerId/:eventId/:subEventId',
+          path:
+              '${EventUsersScreen.routeName}/:providerId/:eventId',
           builder: (context, state) {
             final eventId = state.params['eventId'] as String;
             final providerId = state.params['providerId'] as String;
-            final subEventId = state.params['subEventId'] as String?;
+            final subEventId = state.queryParams['subEventId'] as String?;
             return EventUsersScreen(
               eventId: eventId,
               providerId: providerId,

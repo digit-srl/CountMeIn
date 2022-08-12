@@ -40,37 +40,46 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
   }
 
   _goToScan(CMIProvider activity, CMIEvent event) async {
-    final scanMode = await showDialog(
-        context: context,
-        builder: (c) {
-          return Dialog(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                   const SizedBox(height: 8),
-                  Text('Scegli il tipo di scansione',style:Theme.of(context).textTheme.headline6),
-                  CMICard(
-                    onTap: () {
-                      Navigator.of(c).pop(ScanMode.checkIn);
-                    },
-                    margin: const EdgeInsets.all(16),
-                    child: Text('CheckIn'),
-                  ),
-                  CMICard(
-                    onTap: () {
-                      Navigator.of(c).pop(ScanMode.checkOut);
-                    },
-                    margin: const EdgeInsets.all(16),
-                    child: Text('CheckOut'),
-                  ),
-                ],
+    // TODO se single non chiedere
+    var scanMode = ScanMode.checkOut;
+    if(event.accessType == EventAccessType.inOut) {
+      final sMode = await showDialog(
+          context: context,
+          builder: (c) {
+            return Dialog(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 8),
+                    Text('Scegli il tipo di scansione', style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline6),
+                    CMICard(
+                      onTap: () {
+                        Navigator.of(c).pop(ScanMode.checkIn);
+                      },
+                      margin: const EdgeInsets.all(16),
+                      child: Text('CheckIn'),
+                    ),
+                    CMICard(
+                      onTap: () {
+                        Navigator.of(c).pop(ScanMode.checkOut);
+                      },
+                      margin: const EdgeInsets.all(16),
+                      child: Text('CheckOut'),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        });
-    if (scanMode == null) return;
+            );
+          });
+      if (sMode == null) return;
+      scanMode = sMode;
+    }
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (c) => ScanScreen(
@@ -158,7 +167,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                       EventUsersScreen.routeName,
                       params: {
                         'eventId': widget.eventId,
-                        'providerId': widget.providerId
+                        'providerId': widget.providerId,
                       },
                     );
                   },
@@ -172,10 +181,12 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                     onTap: () {
                       context.pushNamed(
                         EventUsersScreen.routeName,
+                        queryParams: {
+                          'subEventId': subEvents[i].id,
+                        },
                         params: {
                           'eventId': widget.eventId,
                           'providerId': widget.providerId,
-                          'subEventId': subEvents[i].id,
                         },
                       );
                     },

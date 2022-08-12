@@ -51,6 +51,8 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
 
   bool processing = false;
   final list = <String>[];
+  final userWithoutCheckIn = <String>{};
+
   String get eventId => widget.event.id;
 
   EventUser? lastUser;
@@ -72,6 +74,26 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
 
   int? soundId;
   late Soundpool pool;
+
+  showUpdate(Barcode? barcode, EventUser user) {
+    if (soundId != null) {
+      pool.play(soundId!);
+    }
+    setState(() {
+      result = barcode;
+      lastUser = user;
+    });
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() {
+        result = null;
+        lastUser = null;
+      });
+    });
+
+    showToast('${user.name} ${user.surname} aggiunto al database',
+        duration: const Duration(milliseconds: 250),
+        position: ToastPosition.bottom);
+  }
 
   loadSound() async {
     pool = Soundpool.fromOptions(options: SoundpoolOptions.kDefault);
@@ -96,7 +118,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                       allowDuplicates: true,
                       controller: MobileScannerController(
                           facing: CameraFacing.back, torchEnabled: false),
-                      onDetect: (barcode, args) {
+                      onDetect: (barcode, args) async {
                         final data = barcode.rawValue;
 
                         if (processing) return;
@@ -110,30 +132,12 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                             if (userQrCode.activityId == widget.provider.id ||
                                 (widget.event.acceptPassepartout &&
                                     userQrCode.activityId == 'countmein')) {
+                              if (userWithoutCheckIn.contains(userQrCode.id)) {
+                                return;
+                              }
+
                               if (!list.contains(userQrCode.id)) {
                                 processing = true;
-                                if (soundId != null) {
-                                  pool.play(soundId!);
-                                }
-
-                                /*   Future.delayed(Duration(seconds: 3), () {
-                                  setState(() {
-                                    result = barcode;
-                                    lastUSer = user;
-                                  });
-                                  Future.delayed(Duration(seconds: 1), () {
-                                    setState(() {
-                                      result = null;
-                                      lastUSer = null;
-                                    });
-                                  });
-                                  processing = false;
-                                  list.add(userId);
-
-                                  showToast(
-                                      '${user.name} ${user.surname} aggiunto al database',
-                                      position: ToastPosition.bottom);
-                                });*/
 
                                 // final user = userQrCode.toUserCard();
                                 var user = EventUser(
@@ -144,56 +148,85 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                   cf: userQrCode.cf,
                                 );
 
-                                if (widget.event.accessType ==
-                                        EventAccessType.single ||
-                                    widget.scanMode == ScanMode.checkOut) {
-                                  user = user.copyWith(checkOutAt: DateTime.now());
+                                final isSingleAccessType =
+                                    widget.event.accessType ==
+                                        EventAccessType.single;
+                                // if (isSingleAccessType ||
+                                //     widget.scanMode == ScanMode.checkOut) {
+                                //   user =
+                                //       user.copyWith(checkOutAt: DateTime.now());
+                                // } else {
+                                //   user =
+                                //       user.copyWith(checkInAt: DateTime.now());
+                                // }
+
+                                final userSubEventDocRef =
+                                    Cloud.eventsCollection(widget.provider.id)
+                                        .doc(eventId)
+                                        .collection('subEvents')
+                                        .doc(widget.event.currentSubEvent)
+                                        .collection('users')
+                                        .doc(user.id);
+                                final userSubEventDoc =
+                                    await userSubEventDocRef.get();
+
+                                if (userSubEventDoc.exists) {
+                                  final userSubEventData =
+                                      userSubEventDoc.data() ?? {};
+                                  if (!isSingleAccessType &&
+                                      widget.scanMode == ScanMode.checkOut &&
+                                      (!userSubEventData
+                                              .containsKey('checkOutAt') ||
+                                          userSubEventData['checkOutAt'] ==
+                                              null)) {
+                                    userSubEventDocRef
+                                        .update({'checkOutAt': DateTime.now()});
+                                    showUpdate(barcode, user);
+                                  }
                                 } else {
-                                  user = user.copyWith(checkInAt: DateTime.now());
+                                  if (!isSingleAccessType &&
+                                      widget.scanMode == ScanMode.checkOut) {
+                                    userWithoutCheckIn.add(user.id);
+                                    processing = false;
+                                    showToast(
+                                        '${user.name} ${user.surname} non ha effettuato il check in!',
+                                        duration: const Duration(seconds: 1),
+                                        position: ToastPosition.bottom);
+                                    return;
+                                  }
+
+                                  if (isSingleAccessType &&
+                                      widget.scanMode == ScanMode.checkOut) {
+                                    user = user.copyWith(
+                                        checkOutAt: DateTime.now());
+                                  } else if (!isSingleAccessType &&
+                                      widget.scanMode == ScanMode.checkIn) {
+                                    user = user.copyWith(
+                                        checkInAt: DateTime.now());
+                                  }
+
+                                  userSubEventDocRef.set(user.toJson());
+                                  showUpdate(barcode, user);
                                 }
 
-                                final json = user.toJson();
-                                final mergeFields = <String>[];
-                                final setOptions = SetOptions(
-                                    merge: true, mergeFields: mergeFields);
-
-                                Cloud.eventsCollection(widget.provider.id)
-                                    .doc(eventId)
-                                    .collection('subEvents')
-                                    .doc(widget.event.currentSubEvent)
-                                    .collection('users')
-                                    .doc(user.id)
-                                    .set(json, setOptions);
-
-                                Cloud.eventUsersCollection(EventIds(
-                                        providerId: widget.provider.id,
-                                        eventId: eventId))
-                                    .doc(user.id)
-                                    .set(json, setOptions)
-                                    .then((value) {
-                                  setState(() {
-                                    result = barcode;
-                                    lastUser = user;
-                                  });
-                                  Future.delayed(const Duration(seconds: 1),
-                                      () {
-                                    setState(() {
-                                      result = null;
-                                      lastUser = null;
-                                    });
-                                  });
-                                  processing = false;
-                                  list.add(userQrCode.id);
-
-                                  showToast(
-                                      '${user.name} ${user.surname} aggiunto al database',
-                                      position: ToastPosition.bottom);
-                                });
+                                final userRef = Cloud.eventUsersCollection(
+                                        EventIds(
+                                            providerId: widget.provider.id,
+                                            eventId: eventId))
+                                    .doc(user.id);
+                                final globalUserDoc = await userRef.get();
+                                if (!globalUserDoc.exists) {
+                                  final u = user.toJson();
+                                  u.remove('checkOutAt');
+                                  u.remove('checkInAt');
+                                  userRef.set(u, SetOptions(merge: true));
+                                }
+                                processing = false;
+                                list.add(userQrCode.id);
                               } else {
-                                print('utente gia in lista');
-                                // showToast(
-                                //     'Utente già in lista',
-                                //     position: ToastPosition.bottom);
+                                showToast('Utente già scansionato',
+                                    duration: const Duration(milliseconds: 250),
+                                    position: ToastPosition.bottom);
                               }
                             }
                           } catch (ex) {
@@ -238,9 +271,11 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Chip(label: Text(enumToString(widget.scanMode)?.toUpperCase() ?? ''),)
-              ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Chip(
+                    label: Text(
+                        enumToString(widget.scanMode)?.toUpperCase() ?? ''),
+                  )),
             ),
             Align(
               alignment: Alignment.topRight,
