@@ -161,11 +161,11 @@ class RouterNotifier extends ChangeNotifier {
         ),
         GoRoute(
           path: AdminPendingProvidersScreen.routeName,
-          builder: (context, state) => AdminPendingProvidersScreen(),
+          builder: (context, state) => const AdminPendingProvidersScreen(),
         ),
         GoRoute(
           path: AdminProvidersScreen.routeName,
-          builder: (context, state) => AdminProvidersScreen(),
+          builder: (context, state) => const AdminProvidersScreen(),
         ),
         GoRoute(
           // name: AdminProviderHandlerScreen.routeName,
@@ -247,7 +247,7 @@ class RouterNotifier extends ChangeNotifier {
             final oobCode = state.queryParams['oobCode'];
             final name = state.queryParams['n'];
             if (oobCode == null) {
-              return ErrorScreen();
+              return const ErrorScreen();
             }
             return ResetPasswordScreen(
               oobCode: oobCode,
