@@ -76,6 +76,11 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                   label: 'Aims',
                   value: provider?.aims?.join('-'),
                 ),
+                InfoText(
+                  label: 'Tesserino',
+                  value: "https://cmi.digit.srl/provider/$providerId",
+                  copyable: true,
+                ),
                 InfoText2(
                     label: 'Managers',
                     labelWidget: IconButton(
@@ -125,7 +130,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                   ElevatedButton(
                     onPressed: () async {
                       await Cloud.providerRequests
-                          .doc()
+                          .doc(providerId)
                           .update({'status': 'live'});
                     },
                     child: const Text('Accetta richiesta'),

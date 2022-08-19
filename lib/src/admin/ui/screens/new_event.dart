@@ -309,7 +309,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                               .collection('subEvents')
                               .doc(firstSubEvent.id)
                               .set(firstSubEvent.toJson());
-                          // navigator.pop();
+                          navigator.pop();
                         }
                       },
                       child: const Text('Crea evento'),

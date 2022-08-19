@@ -19,7 +19,7 @@ class CMIProviderRequest with _$CMIProviderRequest {
     required bool releaseWom,
     required String pIva,
     @CMIProviderStatusConverter() required CMIProviderStatus status,
-    String? womApiKey,
+    String? apiKey,
     List<String>? aims,
     String? domainRequirement,
     @MyDateTimeConverter() required DateTime requestedOn,

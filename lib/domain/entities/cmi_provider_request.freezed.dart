@@ -30,7 +30,7 @@ mixin _$CMIProviderRequest {
   String get pIva => throw _privateConstructorUsedError;
   @CMIProviderStatusConverter()
   CMIProviderStatus get status => throw _privateConstructorUsedError;
-  String? get womApiKey => throw _privateConstructorUsedError;
+  String? get apiKey => throw _privateConstructorUsedError;
   List<String>? get aims => throw _privateConstructorUsedError;
   String? get domainRequirement => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
@@ -57,7 +57,7 @@ abstract class $CMIProviderRequestCopyWith<$Res> {
       bool releaseWom,
       String pIva,
       @CMIProviderStatusConverter() CMIProviderStatus status,
-      String? womApiKey,
+      String? apiKey,
       List<String>? aims,
       String? domainRequirement,
       @MyDateTimeConverter() DateTime requestedOn});
@@ -83,7 +83,7 @@ class _$CMIProviderRequestCopyWithImpl<$Res>
     Object? releaseWom = freezed,
     Object? pIva = freezed,
     Object? status = freezed,
-    Object? womApiKey = freezed,
+    Object? apiKey = freezed,
     Object? aims = freezed,
     Object? domainRequirement = freezed,
     Object? requestedOn = freezed,
@@ -125,9 +125,9 @@ class _$CMIProviderRequestCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as CMIProviderStatus,
-      womApiKey: womApiKey == freezed
-          ? _value.womApiKey
-          : womApiKey // ignore: cast_nullable_to_non_nullable
+      apiKey: apiKey == freezed
+          ? _value.apiKey
+          : apiKey // ignore: cast_nullable_to_non_nullable
               as String?,
       aims: aims == freezed
           ? _value.aims
@@ -162,7 +162,7 @@ abstract class _$$_CMIProviderRequestCopyWith<$Res>
       bool releaseWom,
       String pIva,
       @CMIProviderStatusConverter() CMIProviderStatus status,
-      String? womApiKey,
+      String? apiKey,
       List<String>? aims,
       String? domainRequirement,
       @MyDateTimeConverter() DateTime requestedOn});
@@ -190,7 +190,7 @@ class __$$_CMIProviderRequestCopyWithImpl<$Res>
     Object? releaseWom = freezed,
     Object? pIva = freezed,
     Object? status = freezed,
-    Object? womApiKey = freezed,
+    Object? apiKey = freezed,
     Object? aims = freezed,
     Object? domainRequirement = freezed,
     Object? requestedOn = freezed,
@@ -232,9 +232,9 @@ class __$$_CMIProviderRequestCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as CMIProviderStatus,
-      womApiKey: womApiKey == freezed
-          ? _value.womApiKey
-          : womApiKey // ignore: cast_nullable_to_non_nullable
+      apiKey: apiKey == freezed
+          ? _value.apiKey
+          : apiKey // ignore: cast_nullable_to_non_nullable
               as String?,
       aims: aims == freezed
           ? _value._aims
@@ -265,7 +265,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
       required this.releaseWom,
       required this.pIva,
       @CMIProviderStatusConverter() required this.status,
-      this.womApiKey,
+      this.apiKey,
       final List<String>? aims,
       this.domainRequirement,
       @MyDateTimeConverter() required this.requestedOn})
@@ -294,7 +294,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
   @CMIProviderStatusConverter()
   final CMIProviderStatus status;
   @override
-  final String? womApiKey;
+  final String? apiKey;
   final List<String>? _aims;
   @override
   List<String>? get aims {
@@ -312,7 +312,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
 
   @override
   String toString() {
-    return 'CMIProviderRequest(id: $id, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, adminCF: $adminCF, name: $name, releaseWom: $releaseWom, pIva: $pIva, status: $status, womApiKey: $womApiKey, aims: $aims, domainRequirement: $domainRequirement, requestedOn: $requestedOn)';
+    return 'CMIProviderRequest(id: $id, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, adminCF: $adminCF, name: $name, releaseWom: $releaseWom, pIva: $pIva, status: $status, apiKey: $apiKey, aims: $aims, domainRequirement: $domainRequirement, requestedOn: $requestedOn)';
   }
 
   @override
@@ -332,7 +332,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
                 .equals(other.releaseWom, releaseWom) &&
             const DeepCollectionEquality().equals(other.pIva, pIva) &&
             const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.womApiKey, womApiKey) &&
+            const DeepCollectionEquality().equals(other.apiKey, apiKey) &&
             const DeepCollectionEquality().equals(other._aims, _aims) &&
             const DeepCollectionEquality()
                 .equals(other.domainRequirement, domainRequirement) &&
@@ -353,7 +353,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
       const DeepCollectionEquality().hash(releaseWom),
       const DeepCollectionEquality().hash(pIva),
       const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(womApiKey),
+      const DeepCollectionEquality().hash(apiKey),
       const DeepCollectionEquality().hash(_aims),
       const DeepCollectionEquality().hash(domainRequirement),
       const DeepCollectionEquality().hash(requestedOn));
@@ -383,7 +383,7 @@ abstract class _CMIProviderRequest implements CMIProviderRequest {
           required final bool releaseWom,
           required final String pIva,
           @CMIProviderStatusConverter() required final CMIProviderStatus status,
-          final String? womApiKey,
+          final String? apiKey,
           final List<String>? aims,
           final String? domainRequirement,
           @MyDateTimeConverter() required final DateTime requestedOn}) =
@@ -412,7 +412,7 @@ abstract class _CMIProviderRequest implements CMIProviderRequest {
   @CMIProviderStatusConverter()
   CMIProviderStatus get status;
   @override
-  String? get womApiKey;
+  String? get apiKey;
   @override
   List<String>? get aims;
   @override

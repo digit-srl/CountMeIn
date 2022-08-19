@@ -296,7 +296,7 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
         requestedOn: DateTime.now(),
         domainRequirement: restrictionDomain,
         releaseWom: releaseWom,
-        womApiKey: apiKey,
+        apiKey: apiKey,
         pIva: pIva,
         aims: instrument?.enabledAims.toList() ?? <String>[],
         status: CMIProviderStatus.pending,

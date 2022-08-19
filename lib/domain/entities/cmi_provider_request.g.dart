@@ -19,7 +19,7 @@ _$_CMIProviderRequest _$$_CMIProviderRequestFromJson(
       pIva: json['pIva'] as String,
       status:
           const CMIProviderStatusConverter().fromJson(json['status'] as String),
-      womApiKey: json['womApiKey'] as String?,
+      apiKey: json['apiKey'] as String?,
       aims: (json['aims'] as List<dynamic>?)?.map((e) => e as String).toList(),
       domainRequirement: json['domainRequirement'] as String?,
       requestedOn: const MyDateTimeConverter()
@@ -38,7 +38,7 @@ Map<String, dynamic> _$$_CMIProviderRequestToJson(
       'releaseWom': instance.releaseWom,
       'pIva': instance.pIva,
       'status': const CMIProviderStatusConverter().toJson(instance.status),
-      'womApiKey': instance.womApiKey,
+      'apiKey': instance.apiKey,
       'aims': instance.aims,
       'domainRequirement': instance.domainRequirement,
       'requestedOn': const MyDateTimeConverter().toJson(instance.requestedOn),

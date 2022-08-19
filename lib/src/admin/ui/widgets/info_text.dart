@@ -33,9 +33,11 @@ class InfoText extends StatelessWidget {
           const SizedBox(height: 4),
           Row(
             children: [
-              Text(
-                value ?? '-',
-                style: Theme.of(context).textTheme.headline6,
+              Flexible(
+                child: Text(
+                  value ?? '-',
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
               ),
               if (iconButton != null) iconButton!,
               if (copyable && value != null) ...[
@@ -81,12 +83,14 @@ class InfoText2 extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(
-                label,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    ?.copyWith(color: Colors.grey),
+              Flexible(
+                child: Text(
+                  label,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      ?.copyWith(color: Colors.grey),
+                ),
               ),
               if (labelWidget != null) labelWidget!
             ],
