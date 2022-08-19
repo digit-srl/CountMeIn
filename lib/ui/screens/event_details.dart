@@ -142,6 +142,10 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                       : 'Singolo',
                 ),
                 InfoText(
+                  label: 'Accesso',
+                  value: enumToString(eventData?.accessType),
+                ),
+                InfoText(
                   label: 'Stato',
                   value: enumToString(eventData?.status),
                 ),

@@ -11,7 +11,7 @@ enum EventAccessType { single, inOut }
 
 enum FrequencyType { daily, monthly, yearly }
 
-enum EventStatus { unknown, live, archived }
+enum EventStatus { unknown, live, archived, closed}
 
 enum CMIEventType { standard, mailingList, counter, recurring }
 

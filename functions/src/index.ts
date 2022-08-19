@@ -259,7 +259,6 @@ export const onUserCheckIn = functions
       const userData = userDoc.data();
       const email = userData.email;
       //console.log(userData);
-
       if (email === undefined || email === null) {
         console.log("STOP user not exist email undefined ");
         return null;
@@ -627,6 +626,7 @@ async function createNewAdminForProvider(
   //  role: role,
   //});
   await db.doc("credentials" + "/" + user.uid).set({
+    createdOn: firestore.Timestamp.fromDate(new Date()),
     uid: user.uid,
     surname: surname,
     name: name,
@@ -843,7 +843,7 @@ export const confirmPendingInvite = functions
           }
           fullName = name + " " + surname;
 
-          userId = await createNewAdminForProvider(
+          const tmpUser = await createNewAdminForProvider(
             name,
             surname,
             email,
@@ -851,6 +851,7 @@ export const confirmPendingInvite = functions
             providerId,
             cf
           );
+          userId = tmpUser.uid;
         }
 
         //TODO  controlla che l utente esista veramente
@@ -907,21 +908,18 @@ export const confirmPendingInvite = functions
   );
 
 /*
-export const checkIn = functions
+export const createUser = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {
-      db.collection("providers")
-        .doc("Yy31B32YBDJDUt7TbZEl")
-        .collection("events")
-        .doc("7aa0445a-517f-44c9-96bb-d982b2a9be28")
-        .collection("subEvents")
-        .doc("2022-08-09")
-        .collection("users")
-        .doc(request.body.id)
-        .update(request.body);
-
-      //await db.collection("providers").doc("countmein").set(activity.data());
+      await createNewAdminForProvider(
+        "gm",
+        "surnamen",
+        "gianmarco21@hotmail.it",
+        "admin",
+        "countmein",
+        "DFRGMR89M02I348U"
+      );
     }
   );
 
