@@ -42,7 +42,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
   _goToScan(CMIProvider activity, CMIEvent event) async {
     // TODO se single non chiedere
     var scanMode = ScanMode.checkOut;
-    if(event.accessType == EventAccessType.inOut) {
+    if (event.accessType == EventAccessType.inOut) {
       final sMode = await showDialog(
           context: context,
           builder: (c) {
@@ -53,10 +53,8 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(height: 8),
-                    Text('Scegli il tipo di scansione', style: Theme
-                        .of(context)
-                        .textTheme
-                        .headline6),
+                    Text('Scegli il tipo di scansione',
+                        style: Theme.of(context).textTheme.headline6),
                     CMICard(
                       onTap: () {
                         Navigator.of(c).pop(ScanMode.checkIn);
@@ -80,15 +78,17 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
       scanMode = sMode;
     }
 
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (c) => ScanScreen(
-          event: event,
-          provider: activity,
-          scanMode: scanMode,
+    if (mounted) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (c) => ScanScreen(
+            event: event,
+            provider: activity,
+            scanMode: scanMode,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   @override
@@ -109,7 +109,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
               eventData.status == EventStatus.live &&
               provider != null) ...[
             IconButton(
-                icon: const Icon(Icons.add),
+                icon: const Icon(Icons.qr_code_scanner),
                 onPressed: () {
                   _goToScan(provider, eventData);
                 }),
@@ -135,6 +135,8 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                   label: 'WOM',
                   value: eventData?.maxWomCount.toString(),
                 ),
+                InfoText(
+                    label: 'Anonimo', value: eventData?.anonymous.toString()),
                 InfoText(
                   label: 'Tipo',
                   value: (eventData?.recurring ?? false)

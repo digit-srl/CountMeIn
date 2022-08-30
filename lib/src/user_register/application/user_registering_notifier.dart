@@ -16,7 +16,6 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
 
   Future<void> register(CMIProvider activity, UserCard user) async {
     try {
-
       //TODO if email is null
       if (activity.releaseWom) {
         state = const UserRegisteringLoading();
@@ -36,9 +35,11 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
             state = UserRegisteringUserCardSentByEmail(
                 email: userOnFirestore.email!);
           } else {
-            await sendVerificationEmail();
-            state = UserRegisteringVerificationEmailSent(newUser:false,
-                email: userOnFirestore.email!);
+            // await sendVerificationEmail();
+            state = UserRegisteringVerificationEmailSent(
+              newUser: false,
+              email: userOnFirestore.email!,
+            );
           }
           // final u = user.copyWith(
           //   id: userOnFirestore.id,
@@ -60,7 +61,7 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
       } else {
         final json = user.toJson();
         json.remove('addedOn');
-        Hive.box('user').put('myUser',json );
+        Hive.box('user').put('myUser', json);
       }
     } catch (ex, st) {
       print(ex);

@@ -26,6 +26,7 @@ mixin _$CMIEvent {
   bool get anonymous => throw _privateConstructorUsedError;
   bool get recurring => throw _privateConstructorUsedError;
   bool get isOpen => throw _privateConstructorUsedError;
+  bool get emailShowed => throw _privateConstructorUsedError;
   @FrequencyTypeConverter()
   FrequencyType? get frequency => throw _privateConstructorUsedError;
   int? get recurrence => throw _privateConstructorUsedError;
@@ -60,6 +61,7 @@ abstract class $CMIEventCopyWith<$Res> {
       bool anonymous,
       bool recurring,
       bool isOpen,
+      bool emailShowed,
       @FrequencyTypeConverter() FrequencyType? frequency,
       int? recurrence,
       int? remaining,
@@ -88,6 +90,7 @@ class _$CMIEventCopyWithImpl<$Res> implements $CMIEventCopyWith<$Res> {
     Object? anonymous = freezed,
     Object? recurring = freezed,
     Object? isOpen = freezed,
+    Object? emailShowed = freezed,
     Object? frequency = freezed,
     Object? recurrence = freezed,
     Object? remaining = freezed,
@@ -123,6 +126,10 @@ class _$CMIEventCopyWithImpl<$Res> implements $CMIEventCopyWith<$Res> {
       isOpen: isOpen == freezed
           ? _value.isOpen
           : isOpen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      emailShowed: emailShowed == freezed
+          ? _value.emailShowed
+          : emailShowed // ignore: cast_nullable_to_non_nullable
               as bool,
       frequency: frequency == freezed
           ? _value.frequency
@@ -181,6 +188,7 @@ abstract class _$$_CMIEventCopyWith<$Res> implements $CMIEventCopyWith<$Res> {
       bool anonymous,
       bool recurring,
       bool isOpen,
+      bool emailShowed,
       @FrequencyTypeConverter() FrequencyType? frequency,
       int? recurrence,
       int? remaining,
@@ -211,6 +219,7 @@ class __$$_CMIEventCopyWithImpl<$Res> extends _$CMIEventCopyWithImpl<$Res>
     Object? anonymous = freezed,
     Object? recurring = freezed,
     Object? isOpen = freezed,
+    Object? emailShowed = freezed,
     Object? frequency = freezed,
     Object? recurrence = freezed,
     Object? remaining = freezed,
@@ -246,6 +255,10 @@ class __$$_CMIEventCopyWithImpl<$Res> extends _$CMIEventCopyWithImpl<$Res>
       isOpen: isOpen == freezed
           ? _value.isOpen
           : isOpen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      emailShowed: emailShowed == freezed
+          ? _value.emailShowed
+          : emailShowed // ignore: cast_nullable_to_non_nullable
               as bool,
       frequency: frequency == freezed
           ? _value.frequency
@@ -301,6 +314,7 @@ class _$_CMIEvent implements _CMIEvent {
       this.anonymous = true,
       this.recurring = true,
       this.isOpen = true,
+      this.emailShowed = false,
       @FrequencyTypeConverter() this.frequency,
       this.recurrence,
       this.remaining,
@@ -332,6 +346,9 @@ class _$_CMIEvent implements _CMIEvent {
   @JsonKey()
   final bool isOpen;
   @override
+  @JsonKey()
+  final bool emailShowed;
+  @override
   @FrequencyTypeConverter()
   final FrequencyType? frequency;
   @override
@@ -360,7 +377,7 @@ class _$_CMIEvent implements _CMIEvent {
 
   @override
   String toString() {
-    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, isOpen: $isOpen, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, currentSubEvent: $currentSubEvent, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt)';
+    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, isOpen: $isOpen, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, currentSubEvent: $currentSubEvent, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt)';
   }
 
   @override
@@ -375,6 +392,8 @@ class _$_CMIEvent implements _CMIEvent {
             const DeepCollectionEquality().equals(other.anonymous, anonymous) &&
             const DeepCollectionEquality().equals(other.recurring, recurring) &&
             const DeepCollectionEquality().equals(other.isOpen, isOpen) &&
+            const DeepCollectionEquality()
+                .equals(other.emailShowed, emailShowed) &&
             const DeepCollectionEquality().equals(other.frequency, frequency) &&
             const DeepCollectionEquality()
                 .equals(other.recurrence, recurrence) &&
@@ -402,6 +421,7 @@ class _$_CMIEvent implements _CMIEvent {
       const DeepCollectionEquality().hash(anonymous),
       const DeepCollectionEquality().hash(recurring),
       const DeepCollectionEquality().hash(isOpen),
+      const DeepCollectionEquality().hash(emailShowed),
       const DeepCollectionEquality().hash(frequency),
       const DeepCollectionEquality().hash(recurrence),
       const DeepCollectionEquality().hash(remaining),
@@ -434,6 +454,7 @@ abstract class _CMIEvent implements CMIEvent {
       final bool anonymous,
       final bool recurring,
       final bool isOpen,
+      final bool emailShowed,
       @FrequencyTypeConverter() final FrequencyType? frequency,
       final int? recurrence,
       final int? remaining,
@@ -459,6 +480,8 @@ abstract class _CMIEvent implements CMIEvent {
   bool get recurring;
   @override
   bool get isOpen;
+  @override
+  bool get emailShowed;
   @override
   @FrequencyTypeConverter()
   FrequencyType? get frequency;
@@ -498,6 +521,7 @@ CMISubEvent _$CMISubEventFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CMISubEvent {
   String get id => throw _privateConstructorUsedError;
+  GenderCount? get genderCount => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime get startAt => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
@@ -516,8 +540,11 @@ abstract class $CMISubEventCopyWith<$Res> {
       _$CMISubEventCopyWithImpl<$Res>;
   $Res call(
       {String id,
+      GenderCount? genderCount,
       @MyDateTimeConverter() DateTime startAt,
       @MyDateTimeConverter() DateTime endAt});
+
+  $GenderCountCopyWith<$Res>? get genderCount;
 }
 
 /// @nodoc
@@ -531,6 +558,7 @@ class _$CMISubEventCopyWithImpl<$Res> implements $CMISubEventCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
+    Object? genderCount = freezed,
     Object? startAt = freezed,
     Object? endAt = freezed,
   }) {
@@ -539,6 +567,10 @@ class _$CMISubEventCopyWithImpl<$Res> implements $CMISubEventCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      genderCount: genderCount == freezed
+          ? _value.genderCount
+          : genderCount // ignore: cast_nullable_to_non_nullable
+              as GenderCount?,
       startAt: startAt == freezed
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
@@ -548,6 +580,17 @@ class _$CMISubEventCopyWithImpl<$Res> implements $CMISubEventCopyWith<$Res> {
           : endAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
+  }
+
+  @override
+  $GenderCountCopyWith<$Res>? get genderCount {
+    if (_value.genderCount == null) {
+      return null;
+    }
+
+    return $GenderCountCopyWith<$Res>(_value.genderCount!, (value) {
+      return _then(_value.copyWith(genderCount: value));
+    });
   }
 }
 
@@ -560,8 +603,12 @@ abstract class _$$_CMISubEventCopyWith<$Res>
   @override
   $Res call(
       {String id,
+      GenderCount? genderCount,
       @MyDateTimeConverter() DateTime startAt,
       @MyDateTimeConverter() DateTime endAt});
+
+  @override
+  $GenderCountCopyWith<$Res>? get genderCount;
 }
 
 /// @nodoc
@@ -577,6 +624,7 @@ class __$$_CMISubEventCopyWithImpl<$Res> extends _$CMISubEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? genderCount = freezed,
     Object? startAt = freezed,
     Object? endAt = freezed,
   }) {
@@ -585,6 +633,10 @@ class __$$_CMISubEventCopyWithImpl<$Res> extends _$CMISubEventCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      genderCount: genderCount == freezed
+          ? _value.genderCount
+          : genderCount // ignore: cast_nullable_to_non_nullable
+              as GenderCount?,
       startAt: startAt == freezed
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
@@ -602,6 +654,7 @@ class __$$_CMISubEventCopyWithImpl<$Res> extends _$CMISubEventCopyWithImpl<$Res>
 class _$_CMISubEvent implements _CMISubEvent {
   const _$_CMISubEvent(
       {required this.id,
+      this.genderCount,
       @MyDateTimeConverter() required this.startAt,
       @MyDateTimeConverter() required this.endAt});
 
@@ -611,6 +664,8 @@ class _$_CMISubEvent implements _CMISubEvent {
   @override
   final String id;
   @override
+  final GenderCount? genderCount;
+  @override
   @MyDateTimeConverter()
   final DateTime startAt;
   @override
@@ -619,7 +674,7 @@ class _$_CMISubEvent implements _CMISubEvent {
 
   @override
   String toString() {
-    return 'CMISubEvent(id: $id, startAt: $startAt, endAt: $endAt)';
+    return 'CMISubEvent(id: $id, genderCount: $genderCount, startAt: $startAt, endAt: $endAt)';
   }
 
   @override
@@ -628,6 +683,8 @@ class _$_CMISubEvent implements _CMISubEvent {
         (other.runtimeType == runtimeType &&
             other is _$_CMISubEvent &&
             const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality()
+                .equals(other.genderCount, genderCount) &&
             const DeepCollectionEquality().equals(other.startAt, startAt) &&
             const DeepCollectionEquality().equals(other.endAt, endAt));
   }
@@ -637,6 +694,7 @@ class _$_CMISubEvent implements _CMISubEvent {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(genderCount),
       const DeepCollectionEquality().hash(startAt),
       const DeepCollectionEquality().hash(endAt));
 
@@ -656,6 +714,7 @@ class _$_CMISubEvent implements _CMISubEvent {
 abstract class _CMISubEvent implements CMISubEvent {
   const factory _CMISubEvent(
       {required final String id,
+      final GenderCount? genderCount,
       @MyDateTimeConverter() required final DateTime startAt,
       @MyDateTimeConverter() required final DateTime endAt}) = _$_CMISubEvent;
 
@@ -665,6 +724,8 @@ abstract class _CMISubEvent implements CMISubEvent {
   @override
   String get id;
   @override
+  GenderCount? get genderCount;
+  @override
   @MyDateTimeConverter()
   DateTime get startAt;
   @override
@@ -673,6 +734,178 @@ abstract class _CMISubEvent implements CMISubEvent {
   @override
   @JsonKey(ignore: true)
   _$$_CMISubEventCopyWith<_$_CMISubEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+GenderCount _$GenderCountFromJson(Map<String, dynamic> json) {
+  return _GenderCount.fromJson(json);
+}
+
+/// @nodoc
+mixin _$GenderCount {
+  int get male => throw _privateConstructorUsedError;
+  int get female => throw _privateConstructorUsedError;
+  int get notDeclared => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GenderCountCopyWith<GenderCount> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GenderCountCopyWith<$Res> {
+  factory $GenderCountCopyWith(
+          GenderCount value, $Res Function(GenderCount) then) =
+      _$GenderCountCopyWithImpl<$Res>;
+  $Res call({int male, int female, int notDeclared});
+}
+
+/// @nodoc
+class _$GenderCountCopyWithImpl<$Res> implements $GenderCountCopyWith<$Res> {
+  _$GenderCountCopyWithImpl(this._value, this._then);
+
+  final GenderCount _value;
+  // ignore: unused_field
+  final $Res Function(GenderCount) _then;
+
+  @override
+  $Res call({
+    Object? male = freezed,
+    Object? female = freezed,
+    Object? notDeclared = freezed,
+  }) {
+    return _then(_value.copyWith(
+      male: male == freezed
+          ? _value.male
+          : male // ignore: cast_nullable_to_non_nullable
+              as int,
+      female: female == freezed
+          ? _value.female
+          : female // ignore: cast_nullable_to_non_nullable
+              as int,
+      notDeclared: notDeclared == freezed
+          ? _value.notDeclared
+          : notDeclared // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_GenderCountCopyWith<$Res>
+    implements $GenderCountCopyWith<$Res> {
+  factory _$$_GenderCountCopyWith(
+          _$_GenderCount value, $Res Function(_$_GenderCount) then) =
+      __$$_GenderCountCopyWithImpl<$Res>;
+  @override
+  $Res call({int male, int female, int notDeclared});
+}
+
+/// @nodoc
+class __$$_GenderCountCopyWithImpl<$Res> extends _$GenderCountCopyWithImpl<$Res>
+    implements _$$_GenderCountCopyWith<$Res> {
+  __$$_GenderCountCopyWithImpl(
+      _$_GenderCount _value, $Res Function(_$_GenderCount) _then)
+      : super(_value, (v) => _then(v as _$_GenderCount));
+
+  @override
+  _$_GenderCount get _value => super._value as _$_GenderCount;
+
+  @override
+  $Res call({
+    Object? male = freezed,
+    Object? female = freezed,
+    Object? notDeclared = freezed,
+  }) {
+    return _then(_$_GenderCount(
+      male: male == freezed
+          ? _value.male
+          : male // ignore: cast_nullable_to_non_nullable
+              as int,
+      female: female == freezed
+          ? _value.female
+          : female // ignore: cast_nullable_to_non_nullable
+              as int,
+      notDeclared: notDeclared == freezed
+          ? _value.notDeclared
+          : notDeclared // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_GenderCount implements _GenderCount {
+  const _$_GenderCount(
+      {required this.male, required this.female, required this.notDeclared});
+
+  factory _$_GenderCount.fromJson(Map<String, dynamic> json) =>
+      _$$_GenderCountFromJson(json);
+
+  @override
+  final int male;
+  @override
+  final int female;
+  @override
+  final int notDeclared;
+
+  @override
+  String toString() {
+    return 'GenderCount(male: $male, female: $female, notDeclared: $notDeclared)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_GenderCount &&
+            const DeepCollectionEquality().equals(other.male, male) &&
+            const DeepCollectionEquality().equals(other.female, female) &&
+            const DeepCollectionEquality()
+                .equals(other.notDeclared, notDeclared));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(male),
+      const DeepCollectionEquality().hash(female),
+      const DeepCollectionEquality().hash(notDeclared));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_GenderCountCopyWith<_$_GenderCount> get copyWith =>
+      __$$_GenderCountCopyWithImpl<_$_GenderCount>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_GenderCountToJson(
+      this,
+    );
+  }
+}
+
+abstract class _GenderCount implements GenderCount {
+  const factory _GenderCount(
+      {required final int male,
+      required final int female,
+      required final int notDeclared}) = _$_GenderCount;
+
+  factory _GenderCount.fromJson(Map<String, dynamic> json) =
+      _$_GenderCount.fromJson;
+
+  @override
+  int get male;
+  @override
+  int get female;
+  @override
+  int get notDeclared;
+  @override
+  @JsonKey(ignore: true)
+  _$$_GenderCountCopyWith<_$_GenderCount> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

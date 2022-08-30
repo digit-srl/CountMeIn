@@ -37,6 +37,7 @@ class CMIEvent with _$CMIEvent {
     @Default(true) bool anonymous,
     @Default(true) bool recurring,
     @Default(true) bool isOpen,
+    @Default(false) bool emailShowed,
     @FrequencyTypeConverter() FrequencyType? frequency,
     int? recurrence,
     int? remaining,
@@ -57,12 +58,25 @@ class CMIEvent with _$CMIEvent {
 class CMISubEvent with _$CMISubEvent {
   const factory CMISubEvent({
     required String id,
+    GenderCount? genderCount,
     @MyDateTimeConverter() required DateTime startAt,
     @MyDateTimeConverter() required DateTime endAt,
   }) = _CMISubEvent;
 
   factory CMISubEvent.fromJson(Map<String, Object?> json) =>
       _$CMISubEventFromJson(json);
+}
+
+@freezed
+class GenderCount with _$GenderCount {
+  const factory GenderCount({
+    required int male,
+    required int female,
+    required int notDeclared,
+  }) = _GenderCount;
+
+  factory GenderCount.fromJson(Map<String, Object?> json) =>
+      _$GenderCountFromJson(json);
 }
 
 @freezed

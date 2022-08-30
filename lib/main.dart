@@ -18,7 +18,7 @@ enum AppFlavor { master, collab }
 
 // fvm flutter build web --web-renderer canvaskit
 // firebase deploy --only hosting
-// firebase deploy --only functions
+// firebase deploy --only functions:onUserCheckIn
 // firebase hosting:channel:deploy preview_name
 // fvm flutter build apk --dart-define=DEFINE_APP_NAME=+CountMeInMaster --dart-define=DEFINE_APP_SUFFIX=.master --dart-define=DEFINE_FLAVOR=master
 // fvm flutter build apk --dart-define=DEFINE_APP_NAME=CountMeIn --dart-define=DEFINE_APP_SUFFIX=.collab --dart-define=DEFINE_FLAVOR=collab
@@ -33,9 +33,9 @@ void main() async {
   );
 
   if (kDebugMode) {
-    // final d = "localhost";
-    // await FirebaseAuth.instance.useAuthEmulator(d, 9099);
-    // FirebaseFirestore.instance.useFirestoreEmulator(d, 8082);
+    final d = "localhost";
+    await FirebaseAuth.instance.useAuthEmulator(d, 9099);
+    FirebaseFirestore.instance.useFirestoreEmulator(d, 8082);
   }
 
   if (kIsWeb) {

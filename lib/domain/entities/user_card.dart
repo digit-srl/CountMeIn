@@ -17,6 +17,7 @@ class UserCard with _$UserCard {
     required String cf,
     String? email,
     String? secret,
+    String? gender,
     @MyDateTimeConverter() DateTime? addedOn,
     @Default(false) bool emailVerified,
   }) = _UserCard;

@@ -12,7 +12,6 @@ const cors = require("cors")({ origin: true });
 import { FirebaseError } from "@firebase/util";
 import { UserRecord } from "firebase-functions/v1/auth";
 import * as firestore from "@google-cloud/firestore";
-//import "@firebase/firestore";
 
 /*
 export const drawCard = functions.region('europe-west3').https.onRequest((request, response) => {
@@ -236,34 +235,84 @@ export const onUserCheckIn = functions
       const checkOutAt = user.checkOutAt;
       const checkInAt = user.checkInAt;
 
+      let userData: any | undefined;
+
+      if (
+        (eventAccessType === "inOut" &&
+          !(checkInAt === undefined || checkInAt === null)) ||
+        (eventAccessType === "single" &&
+          !(checkOutAt === undefined || checkOutAt === null))
+      ) {
+        console.log("check gender info");
+        const userDoc = await db.collection("users").doc(userId).get();
+
+        userData = userDoc.data();
+
+        const gender = userData.gender;
+        if (gender != null) {
+          let increment = 1;
+          let m = 0;
+          let f = 0;
+          let na = 0;
+          if (snap.after.exists && !snap.before.exists) {
+            increment = 1;
+          } else if (!snap.after.exists && snap.before.exists) {
+            increment = -1;
+          }
+
+          if (gender == "m") {
+            m = increment;
+          } else if (gender == "f") {
+            f = increment;
+          } else if (gender == "na") {
+            na = increment;
+          }
+
+          if (m != 0 || f != 0 || na != 0) {
+            console.log("m: " + m + ",f: " + f + ",na: " + na);
+            const countRef = snap.after.ref.parent.parent;
+            console.log(countRef);
+            if (countRef != null) {
+              await db.runTransaction(
+                async (transaction: FirebaseFirestore.Transaction) => {
+                  await transaction.update(countRef, {
+                    "genderCount.male": firestore.FieldValue.increment(m),
+                    "genderCount.female": firestore.FieldValue.increment(f),
+                    "genderCount.notDeclared":
+                      firestore.FieldValue.increment(na),
+                  });
+                }
+              );
+              //await countRef.update((current) => {
+              //  return (current || 0) + increment;
+              //});
+              functions.logger.log("Gender counter updated.");
+            }
+          }
+        }
+      }
+
       if (checkOutAt === undefined || checkOutAt === null) {
-        console.log("Missing checkOut");
+        console.log(
+          "Missing checkOut: this trigger need of checkOut date to release wom"
+        );
         return null;
       }
 
-      /*const providerDoc: FirebaseFirestore.DocumentData = await db
-        .collection("providers")
-        .doc(providerId)
-        .get();
+      if (userData === undefined) {
+        const userDoc: FirebaseFirestore.DocumentData = await db
+          .collection("users")
+          .doc(userId)
+          .get();
 
-      if (!providerDoc.data().releaseWom) {
-        console.log("this provider not release wom to user : " + userId);
-        return;
-      }*/
+        userData = userDoc.data();
+      }
 
-      const userDoc: FirebaseFirestore.DocumentData = await db
-        .collection("users")
-        .doc(userId)
-        .get();
-
-      const userData = userDoc.data();
       const email = userData.email;
-      //console.log(userData);
       if (email === undefined || email === null) {
         console.log("STOP user not exist email undefined ");
         return null;
       }
-
       console.log("user exist email " + userData.email);
 
       const providerDoc: FirebaseFirestore.DocumentData = await db
@@ -275,7 +324,9 @@ export const onUserCheckIn = functions
 
       if (eventAccessType === "inOut") {
         if (checkInAt === undefined || checkInAt === null) {
-          console.log("ChekInAt is undefined or null");
+          console.log(
+            "Event with in/out access must to have checkInAt defined"
+          );
           return null;
         }
 

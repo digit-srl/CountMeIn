@@ -72,4 +72,10 @@ StreamProvider.family<List<CMISubEvent>, EventIds>((ref, ids) async* {
   }
 });
 
-
+final subEventProvider =
+Provider.family<AsyncValue<CMISubEvent>, EventIds>((ref, ids) {
+  final subEventId = ids.subEventId;
+  return ref
+      .watch(subEventsStreamProvider(ids))
+      .whenData((list) => list.firstWhere((event) => event.id == subEventId));
+});

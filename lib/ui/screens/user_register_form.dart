@@ -1,7 +1,10 @@
 import 'package:countmein/src/auth/ui/screens/sign_in.dart';
+import 'package:countmein/src/common/domain/entities/gender.dart';
+import 'package:countmein/src/common/ui/widgets/cmi_dropdown.dart';
 import 'package:countmein/src/user_register/application/user_registering_notifier.dart';
 import 'package:countmein/src/user_register/application/user_registering_state.dart';
 import 'package:countmein/ui/widgets/loading.dart';
+import 'package:countmein/utils.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -51,12 +54,16 @@ final emailControllerProvider =
   return c;
 });
 
+final selectedGenderProvider = StateProvider.autoDispose<Gender?>((ref) {
+  return null;
+});
+
 class UserFormScreen extends ConsumerWidget {
-  final CMIProvider activity;
+  final CMIProvider cmiProvider;
 
   UserFormScreen({
     Key? key,
-    required this.activity,
+    required this.cmiProvider,
   }) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
@@ -67,7 +74,7 @@ class UserFormScreen extends ConsumerWidget {
     final surnameController = ref.watch(surnameControllerProvider);
     final cfController = ref.watch(cfControllerProvider);
     final emailController = ref.watch(emailControllerProvider);
-
+    final selectedGender = ref.watch(selectedGenderProvider);
     ref.listen(userRegisteringProvider, (previous, next) {
       if (previous != null &&
           previous is UserRegisteringInitial &&
@@ -95,7 +102,7 @@ class UserFormScreen extends ConsumerWidget {
               padding: const EdgeInsets.all(16),
               children: [
                 Text(
-                  activity.name,
+                  cmiProvider.name,
                   style: const TextStyle(fontSize: 18),
                 ),
                 const SizedBox(height: 16),
@@ -111,7 +118,26 @@ class UserFormScreen extends ConsumerWidget {
                   validator: nameSurnameValidator,
                 ),
                 const SizedBox(height: 16),
-                if (activity.releaseWom)
+                CMIDropdownButton<Gender>(
+                  label: 'Seleziona',
+                  validator: (v) {
+                    if (v == null) {
+                      return 'Questo campo è obbligatorio';
+                    }
+                    return null;
+                  },
+                  value: selectedGender,
+                  onChanged: (v) {
+                    if (v == null) return;
+                    ref.read(selectedGenderProvider.notifier).state = v;
+                  },
+                  items: Gender.values
+                      .map((e) => DropdownMenuItem<Gender>(
+                          value: e, child: Text(e.text)))
+                      .toList(),
+                ),
+                const SizedBox(height: 16),
+                if (cmiProvider.releaseWom)
                   MyTextField(
                     controller: emailController,
                     hintText: 'Email',
@@ -132,6 +158,7 @@ class UserFormScreen extends ConsumerWidget {
                         final surname = surnameController.text.trim();
                         final email = emailController.text.trim();
                         final cf = cfController.text.trim().toUpperCase();
+                        final gender = enumToString(selectedGender);
 
                         var user = UserCard(
                           id: const Uuid().v4(),
@@ -139,13 +166,14 @@ class UserFormScreen extends ConsumerWidget {
                           surname: surname,
                           cf: cf,
                           email: email,
+                          gender: gender,
                           addedOn: DateTime.now(),
                           secret: const Uuid().v4().substring(0, 8),
                         );
 
                         ref
                             .read(userRegisteringProvider.notifier)
-                            .register(activity, user);
+                            .register(cmiProvider, user);
                       }
                     },
                     child: const Text('Iscriviti')),

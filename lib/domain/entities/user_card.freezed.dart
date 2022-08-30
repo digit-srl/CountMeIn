@@ -26,6 +26,7 @@ mixin _$UserCard {
   String get cf => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get secret => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get addedOn => throw _privateConstructorUsedError;
   bool get emailVerified => throw _privateConstructorUsedError;
@@ -47,6 +48,7 @@ abstract class $UserCardCopyWith<$Res> {
       String cf,
       String? email,
       String? secret,
+      String? gender,
       @MyDateTimeConverter() DateTime? addedOn,
       bool emailVerified});
 }
@@ -67,6 +69,7 @@ class _$UserCardCopyWithImpl<$Res> implements $UserCardCopyWith<$Res> {
     Object? cf = freezed,
     Object? email = freezed,
     Object? secret = freezed,
+    Object? gender = freezed,
     Object? addedOn = freezed,
     Object? emailVerified = freezed,
   }) {
@@ -95,6 +98,10 @@ class _$UserCardCopyWithImpl<$Res> implements $UserCardCopyWith<$Res> {
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
               as String?,
+      gender: gender == freezed
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
       addedOn: addedOn == freezed
           ? _value.addedOn
           : addedOn // ignore: cast_nullable_to_non_nullable
@@ -120,6 +127,7 @@ abstract class _$$_UserCardCopyWith<$Res> implements $UserCardCopyWith<$Res> {
       String cf,
       String? email,
       String? secret,
+      String? gender,
       @MyDateTimeConverter() DateTime? addedOn,
       bool emailVerified});
 }
@@ -142,6 +150,7 @@ class __$$_UserCardCopyWithImpl<$Res> extends _$UserCardCopyWithImpl<$Res>
     Object? cf = freezed,
     Object? email = freezed,
     Object? secret = freezed,
+    Object? gender = freezed,
     Object? addedOn = freezed,
     Object? emailVerified = freezed,
   }) {
@@ -170,6 +179,10 @@ class __$$_UserCardCopyWithImpl<$Res> extends _$UserCardCopyWithImpl<$Res>
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
               as String?,
+      gender: gender == freezed
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
       addedOn: addedOn == freezed
           ? _value.addedOn
           : addedOn // ignore: cast_nullable_to_non_nullable
@@ -192,6 +205,7 @@ class _$_UserCard implements _UserCard {
       required this.cf,
       this.email,
       this.secret,
+      this.gender,
       @MyDateTimeConverter() this.addedOn,
       this.emailVerified = false});
 
@@ -211,6 +225,8 @@ class _$_UserCard implements _UserCard {
   @override
   final String? secret;
   @override
+  final String? gender;
+  @override
   @MyDateTimeConverter()
   final DateTime? addedOn;
   @override
@@ -219,7 +235,7 @@ class _$_UserCard implements _UserCard {
 
   @override
   String toString() {
-    return 'UserCard(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, secret: $secret, addedOn: $addedOn, emailVerified: $emailVerified)';
+    return 'UserCard(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, secret: $secret, gender: $gender, addedOn: $addedOn, emailVerified: $emailVerified)';
   }
 
   @override
@@ -233,6 +249,7 @@ class _$_UserCard implements _UserCard {
             const DeepCollectionEquality().equals(other.cf, cf) &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.secret, secret) &&
+            const DeepCollectionEquality().equals(other.gender, gender) &&
             const DeepCollectionEquality().equals(other.addedOn, addedOn) &&
             const DeepCollectionEquality()
                 .equals(other.emailVerified, emailVerified));
@@ -248,6 +265,7 @@ class _$_UserCard implements _UserCard {
       const DeepCollectionEquality().hash(cf),
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(secret),
+      const DeepCollectionEquality().hash(gender),
       const DeepCollectionEquality().hash(addedOn),
       const DeepCollectionEquality().hash(emailVerified));
 
@@ -272,6 +290,7 @@ abstract class _UserCard implements UserCard {
       required final String cf,
       final String? email,
       final String? secret,
+      final String? gender,
       @MyDateTimeConverter() final DateTime? addedOn,
       final bool emailVerified}) = _$_UserCard;
 
@@ -289,6 +308,8 @@ abstract class _UserCard implements UserCard {
   String? get email;
   @override
   String? get secret;
+  @override
+  String? get gender;
   @override
   @MyDateTimeConverter()
   DateTime? get addedOn;

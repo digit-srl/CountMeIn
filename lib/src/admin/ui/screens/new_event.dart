@@ -233,7 +233,9 @@ class NewEventFormScreen extends HookConsumerWidget {
                           child: MyTextField(
                             controller: womController,
                             keyboardType: TextInputType.number,
-                            hintText: 'Quanti wom rilasciare?',
+                            hintText: accessType.value == EventAccessType.inOut
+                                ? 'Numero max di wom da rilasciare'
+                                : 'Quanti wom rilasciare?',
                             validator: womValidator,
                           ),
                         ),
@@ -280,6 +282,8 @@ class NewEventFormScreen extends HookConsumerWidget {
                             name: nameController.text.trim(),
                             acceptPassepartout: acceptPassepartout,
                             anonymous: anonymous.value,
+                            emailShowed:
+                                anonymous.value ? false : emailEnabled.value,
                             recurring: recurring.value,
                             // TODO isOpen is not necessary, use status
                             isOpen: true,

@@ -13,6 +13,7 @@ _$_CMIEvent _$$_CMIEventFromJson(Map<String, dynamic> json) => _$_CMIEvent(
       anonymous: json['anonymous'] as bool? ?? true,
       recurring: json['recurring'] as bool? ?? true,
       isOpen: json['isOpen'] as bool? ?? true,
+      emailShowed: json['emailShowed'] as bool? ?? false,
       frequency:
           const FrequencyTypeConverter().fromJson(json['frequency'] as String?),
       recurrence: json['recurrence'] as int?,
@@ -38,6 +39,7 @@ Map<String, dynamic> _$$_CMIEventToJson(_$_CMIEvent instance) =>
       'anonymous': instance.anonymous,
       'recurring': instance.recurring,
       'isOpen': instance.isOpen,
+      'emailShowed': instance.emailShowed,
       'frequency': const FrequencyTypeConverter().toJson(instance.frequency),
       'recurrence': instance.recurrence,
       'remaining': instance.remaining,
@@ -72,6 +74,9 @@ Json? _$JsonConverterToJson<Json, Value>(
 _$_CMISubEvent _$$_CMISubEventFromJson(Map<String, dynamic> json) =>
     _$_CMISubEvent(
       id: json['id'] as String,
+      genderCount: json['genderCount'] == null
+          ? null
+          : GenderCount.fromJson(json['genderCount'] as Map<String, dynamic>),
       startAt:
           const MyDateTimeConverter().fromJson(json['startAt'] as Timestamp),
       endAt: const MyDateTimeConverter().fromJson(json['endAt'] as Timestamp),
@@ -80,6 +85,21 @@ _$_CMISubEvent _$$_CMISubEventFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_CMISubEventToJson(_$_CMISubEvent instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'genderCount': instance.genderCount,
       'startAt': const MyDateTimeConverter().toJson(instance.startAt),
       'endAt': const MyDateTimeConverter().toJson(instance.endAt),
+    };
+
+_$_GenderCount _$$_GenderCountFromJson(Map<String, dynamic> json) =>
+    _$_GenderCount(
+      male: json['male'] as int,
+      female: json['female'] as int,
+      notDeclared: json['notDeclared'] as int,
+    );
+
+Map<String, dynamic> _$$_GenderCountToJson(_$_GenderCount instance) =>
+    <String, dynamic>{
+      'male': instance.male,
+      'female': instance.female,
+      'notDeclared': instance.notDeclared,
     };

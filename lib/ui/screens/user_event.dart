@@ -17,9 +17,13 @@ final singleEventProvider = StreamProvider.autoDispose
 
   await for (final s in stream) {
     if (s.exists) {
-      final data = s.data();
-      if (data != null) {
-        yield CMIProvider.fromJson(data);
+      try{
+        final data = s.data();
+        if (data != null) {
+          yield CMIProvider.fromJson(data);
+        }
+      }catch(ex,st){
+        print(st);
       }
     }
   }
@@ -44,7 +48,7 @@ class UserEventScreen extends ConsumerWidget {
 
     if (eventState.releaseWom) {
       return UserFormScreen(
-        activity: eventState,
+        cmiProvider: eventState,
       );
     }
     return ValueListenableBuilder<Box<dynamic>>(
@@ -59,7 +63,7 @@ class UserEventScreen extends ConsumerWidget {
             );
           }
           return UserFormScreen(
-            activity: eventState,
+            cmiProvider: eventState,
           );
         });
   }

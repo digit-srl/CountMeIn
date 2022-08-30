@@ -13,6 +13,7 @@ _$_UserCard _$$_UserCardFromJson(Map<String, dynamic> json) => _$_UserCard(
       cf: json['cf'] as String,
       email: json['email'] as String?,
       secret: json['secret'] as String?,
+      gender: json['gender'] as String?,
       addedOn: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['addedOn'], const MyDateTimeConverter().fromJson),
       emailVerified: json['emailVerified'] as bool? ?? false,
@@ -26,6 +27,7 @@ Map<String, dynamic> _$$_UserCardToJson(_$_UserCard instance) =>
       'cf': instance.cf,
       'email': instance.email,
       'secret': instance.secret,
+      'gender': instance.gender,
       'addedOn': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.addedOn, const MyDateTimeConverter().toJson),
       'emailVerified': instance.emailVerified,

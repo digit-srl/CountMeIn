@@ -268,15 +268,16 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                 )
               ],
             ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Chip(
-                    label: Text(
-                        enumToString(widget.scanMode)?.toUpperCase() ?? ''),
-                  )),
-            ),
+            if (widget.event.accessType != EventAccessType.single)
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Chip(
+                      label: Text(
+                          enumToString(widget.scanMode)?.toUpperCase() ?? ''),
+                    )),
+              ),
             Align(
               alignment: Alignment.topRight,
               child: Padding(
