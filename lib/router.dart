@@ -5,6 +5,7 @@ import 'package:countmein/src/admin/ui/screens/new_event.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/auth/ui/screens/invite_form_confirm.dart';
+import 'package:countmein/src/user/screens/user_profile.dart';
 import 'package:countmein/ui/screens/event_details.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

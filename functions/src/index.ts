@@ -56,6 +56,8 @@ export const onAuthCreate = functions
   });
 */
 
+exports.userProfile = require("./user_profile");
+
 export const onActivityRequested = functions
   .region("europe-west3")
   .firestore.document("providerRequests/{docId}")
@@ -260,18 +262,17 @@ export const onUserCheckIn = functions
             increment = -1;
           }
 
-          if (gender == "m") {
+          if (gender == "male") {
             m = increment;
-          } else if (gender == "f") {
+          } else if (gender == "female") {
             f = increment;
-          } else if (gender == "na") {
+          } else if (gender == "notDeclared") {
             na = increment;
           }
 
           if (m != 0 || f != 0 || na != 0) {
             console.log("m: " + m + ",f: " + f + ",na: " + na);
             const countRef = snap.after.ref.parent.parent;
-            console.log(countRef);
             if (countRef != null) {
               await db.runTransaction(
                 async (transaction: FirebaseFirestore.Transaction) => {

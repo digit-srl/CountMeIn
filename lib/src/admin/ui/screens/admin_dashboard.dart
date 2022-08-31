@@ -30,28 +30,27 @@ class AdminDashboardScreen extends ConsumerWidget {
       body: isEmailNotVerified
           ? const EmailNotVerifiedScreen()
           : ListView(
-        children: [
-          const AdminInfoWidget(),
-          if (platformUserRole != UserRole.unknown)
-            LayoutBuilder(
-              builder: (context, constraints) {
-                return GridView.count(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(16),
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  crossAxisCount: childAspectRatio(constraints.maxWidth),
-                  childAspectRatio: 4 / 3,
-                  children: [
-                    const ActiveProviders(),
-                    if (platformUserRole == PlatformRole.cmi)
-                      const PendingProviders(),
-                  ],
-                );
-              }
+              children: [
+                const AdminInfoWidget(),
+                if (platformUserRole != UserRole.unknown)
+                  LayoutBuilder(builder: (context, constraints) {
+                    return GridView.count(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(16),
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 16,
+                      crossAxisCount: childAspectRatio(constraints.maxWidth),
+                      childAspectRatio: 4 / 3,
+                      children: [
+                        const ActiveProviders(),
+                        if (platformUserRole == PlatformRole.cmi)
+                          const PendingProviders(),
+                      ],
+                    );
+                  }),
+              ],
             ),
-        ],
-      ),
     );
   }
 }

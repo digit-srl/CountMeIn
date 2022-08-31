@@ -74,8 +74,10 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
 
   Future sendUserCardByEmail(
       String userId, String providerId, String providerName) async {
-    await Cloud.usersCollection
-        .doc(userId)
-        .update({'providerName': providerName, "providerId": providerId});
+    //TODO creare function per invio tesserino email da app
+    await Cloud.usersCollection.doc(userId).update({
+      'providerName': providerName,
+      "providerId": providerId,
+    });
   }
 }

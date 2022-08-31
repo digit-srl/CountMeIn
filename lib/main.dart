@@ -20,8 +20,7 @@ enum AppFlavor { master, collab }
 // firebase deploy --only hosting
 // firebase deploy --only functions:onUserCheckIn
 // firebase hosting:channel:deploy preview_name
-// fvm flutter build apk --dart-define=DEFINE_APP_NAME=+CountMeInMaster --dart-define=DEFINE_APP_SUFFIX=.master --dart-define=DEFINE_FLAVOR=master
-// fvm flutter build apk --dart-define=DEFINE_APP_NAME=CountMeIn --dart-define=DEFINE_APP_SUFFIX=.collab --dart-define=DEFINE_FLAVOR=collab
+// fvm flutter build apk
 // firebase emulators:start --import=./emulator_backup --export-on-exit
 // lsof -i tcp:8082
 
