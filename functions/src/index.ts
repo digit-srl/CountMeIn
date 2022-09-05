@@ -12,6 +12,8 @@ const cors = require("cors")({ origin: true });
 import { FirebaseError } from "@firebase/util";
 import { UserRecord } from "firebase-functions/v1/auth";
 import * as firestore from "@google-cloud/firestore";
+const randomstring = require("randomstring");
+const CodiceFiscale = require("codice-fiscale-js");
 
 /*
 export const drawCard = functions.region('europe-west3').https.onRequest((request, response) => {
@@ -390,6 +392,7 @@ export const onUserCheckIn = functions
     }
   });
 
+/*
 export const onUserCreated = functions
   .region("europe-west3")
   .firestore.document("users/{docId}")
@@ -406,7 +409,208 @@ export const onUserCreated = functions
       user.secret
     );
   });
+*/
 
+/// OUTPUT STATUS
+/// user_already_exist:
+/// invalid_fiscal_code:
+exports.createUser = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      console.log(request.body);
+
+      if (request.method !== "POST") {
+        response.status(403).send("Forbidden!");
+        return;
+      }
+      //const now = new Date();
+      const data = request.body;
+      const email = data.email;
+
+      if (email === null) {
+        console.log("Email is missing");
+        throw new functions.https.HttpsError(
+          "invalid-argument",
+          "Email is missing"
+        );
+      }
+
+      console.log("user " + email + " request creation");
+      const d = await db
+        .collection("users")
+        .where("email", "==", email)
+        .limit(1)
+        .get();
+
+      if (d.docs.length > 0) {
+        console.log(d.docs[0].data());
+        const userData = d.docs[0].data();
+
+        if (userData.emailVerified) {
+          if (data.providerId !== null && data.providerName !== null) {
+            sendUserCard(userData, data.providerId, data.providerName);
+            /*.then(() => {
+            console.log("send user card complete");
+            db.collection("users").doc(user.id).update({
+              providerId: null,
+              providerName: null,
+            });
+            return null;
+          })
+          .catch((err: any) => {
+            console.log(err);
+            throw new functions.https.HttpsError("aborted", err);
+          });*/
+          }
+        }
+
+        response
+          .send({
+            status: "user_already_exist",
+            emailVerified: userData.emailVerified,
+            userId: userData.id,
+          })
+          .end();
+        return;
+      }
+
+      if (
+        data.cf === null ||
+        data.name === null ||
+        data.surname === null ||
+        data.providerId === null ||
+        data.providerName === null ||
+        data.gender === null
+      ) {
+        console.log("Some field is null");
+        throw new functions.https.HttpsError(
+          "invalid-argument",
+          "Missing some data"
+        );
+      }
+
+      if (!CodiceFiscale.check(data.cf)) {
+        response
+          .send({
+            status: "invalid_fiscal_code",
+          })
+          .end();
+        return;
+      }
+
+      const fiscalCode = new CodiceFiscale(data.cf);
+      const bornIn = fiscalCode.birthday;
+      try {
+        const timestampNow = firestore.Timestamp.fromDate(new Date());
+        const bornInTimestamp = firestore.Timestamp.fromDate(bornIn);
+        const batch = db.batch();
+        const userRef = db.collection("users").doc();
+        const secret = randomstring.generate(8);
+
+        batch.set(userRef, {
+          emailVerified: false,
+          name: data.name,
+          id: userRef.id,
+          cf: data.cf,
+          addedOn: timestampNow,
+          surname: data.surname,
+          email: data.email,
+          secret: secret,
+          providerId: data.providerId,
+          providerName: data.providerName,
+        });
+
+        const userPrivateRef = db.collection("usersPrivateData").doc();
+        batch.set(userPrivateRef, {
+          id: userPrivateRef.id,
+          bornIn: bornInTimestamp,
+          gender: data.gender,
+        });
+        await batch.commit();
+        console.log("new user crated " + data.email);
+
+        const fullName = data.name + " " + data.surname;
+        Email.sendVerificationEmail(fullName, data.email, userRef.id, secret);
+        response
+          .send({
+            status: "success",
+          })
+          .end();
+      } catch (err: any) {
+        console.log(err);
+        throw new functions.https.HttpsError("aborted", err);
+      }
+    }
+  );
+
+exports.verifyEmail = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      console.log(request.body);
+
+      if (request.method !== "POST") {
+        response.status(403).send("Forbidden!");
+        return;
+      }
+
+      const data = request.body;
+      const userId = data.userId;
+      const providerId = data.providerId;
+      const secret = data.secret;
+
+      if (providerId === null || secret === null || userId === null) {
+        const message =
+          "Missing data: providerId: " +
+          providerId +
+          ", secret: " +
+          secret +
+          ", userId: userId";
+        console.log(message);
+        throw new functions.https.HttpsError("invalid-argument", message);
+      }
+
+      const userDoc = await db.collection("users").doc(userId).get();
+
+      if (!userDoc.exists) {
+        console.log("User not found");
+        throw new functions.https.HttpsError("not-found", "User not found");
+      }
+      const userData = userDoc.data();
+
+      if (userData.secret !== null && userData.secret == secret) {
+        if (userData.emailVerified) {
+          response.send({
+            status: "user_already_verified",
+          });
+          return;
+        }
+
+        await db.collection("users").doc(userId).update({
+          secret: null,
+          emailVerified: true,
+        });
+
+        const providerDoc = await db
+          .collection("providers")
+          .doc(providerId)
+          .get();
+        const providerName = providerDoc.data().name;
+
+        await sendUserCard(userData, providerId, providerName);
+        response.sendStatus(200);
+      } else {
+        console.log("secret is not correct");
+        throw new functions.https.HttpsError(
+          "invalid-argument",
+          "secret is not correct"
+        );
+      }
+    }
+  );
+
+/*
 export const onUserVerificationDone = functions
   .region("europe-west3")
   .firestore.document("users/{userId}")
@@ -469,16 +673,21 @@ export const onUserVerificationDone = functions
     }
     return null;
   });
+*/
 
-async function sendUserCard(data: FirebaseFirestore.DocumentData) {
+async function sendUserCard(
+  data: FirebaseFirestore.DocumentData,
+  providerId: string,
+  providerName: string
+) {
   const userId = data.id;
   const name = data.name;
   const surname = data.surname;
   const fullName = name + " " + surname;
   const cf = data.cf;
   const email = data.email;
-  const activityName = data.providerName;
-  const activityId = data.providerId;
+  //const activityName = data.providerName;
+  //const providerId = data.providerId;
   const url =
     "https://cmi.digit.srl/profile/" +
     userId +
@@ -490,19 +699,19 @@ async function sendUserCard(data: FirebaseFirestore.DocumentData) {
     "&cf=" +
     cf +
     "&pId=" +
-    activityId;
+    providerId;
   //"&email=" +
   //email;
 
   const buffer = await draw.drawUserCard(
-    activityName,
+    providerName,
     name,
     surname,
     cf,
     email,
     url
   );
-  return Email.sendUserCardEmail(fullName, email, cf, buffer, activityName)
+  return Email.sendUserCardEmail(fullName, email, cf, buffer, providerName)
     .then(() => {
       return true;
     })
@@ -762,7 +971,7 @@ export const createNewProvider = functions
   );
 
 //Only for testing
-export const verifyEmail = functions
+/*export const verifyEmail = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {
@@ -792,7 +1001,7 @@ export const verifyEmail = functions
         response.status(500).send(error);
       }
     }
-  );
+  );*/
 
 // Saves a message to the Firebase Realtime Database but sanitizes the text by removing swearwords.
 export const confirmPendingInvite = functions

@@ -22,6 +22,7 @@ mixin _$UserRegisteringState {
     required TResult Function(bool newUser, String email) verificationEmailSent,
     required TResult Function(String email) userCardSentByEmail,
     required TResult Function() loading,
+    required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -31,6 +32,7 @@ mixin _$UserRegisteringState {
     TResult Function(bool newUser, String email)? verificationEmailSent,
     TResult Function(String email)? userCardSentByEmail,
     TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -40,6 +42,7 @@ mixin _$UserRegisteringState {
     TResult Function(bool newUser, String email)? verificationEmailSent,
     TResult Function(String email)? userCardSentByEmail,
     TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
     required TResult orElse(),
   }) =>
@@ -52,6 +55,8 @@ mixin _$UserRegisteringState {
     required TResult Function(UserRegisteringUserCardSentByEmail value)
         userCardSentByEmail,
     required TResult Function(UserRegisteringLoading value) loading,
+    required TResult Function(UserRegisteringInvalidFiscalCode value)
+        invalidFiscalCode,
     required TResult Function(UserRegisteringError value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -63,6 +68,7 @@ mixin _$UserRegisteringState {
     TResult Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
     TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -74,6 +80,7 @@ mixin _$UserRegisteringState {
     TResult Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
     TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
     required TResult orElse(),
   }) =>
@@ -143,6 +150,7 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
     required TResult Function(bool newUser, String email) verificationEmailSent,
     required TResult Function(String email) userCardSentByEmail,
     required TResult Function() loading,
+    required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
   }) {
     return initial();
@@ -155,6 +163,7 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
     TResult Function(bool newUser, String email)? verificationEmailSent,
     TResult Function(String email)? userCardSentByEmail,
     TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
   }) {
     return initial?.call();
@@ -167,6 +176,7 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
     TResult Function(bool newUser, String email)? verificationEmailSent,
     TResult Function(String email)? userCardSentByEmail,
     TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
     required TResult orElse(),
   }) {
@@ -185,6 +195,8 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
     required TResult Function(UserRegisteringUserCardSentByEmail value)
         userCardSentByEmail,
     required TResult Function(UserRegisteringLoading value) loading,
+    required TResult Function(UserRegisteringInvalidFiscalCode value)
+        invalidFiscalCode,
     required TResult Function(UserRegisteringError value) error,
   }) {
     return initial(this);
@@ -199,6 +211,7 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
     TResult Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
     TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
   }) {
     return initial?.call(this);
@@ -213,6 +226,7 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
     TResult Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
     TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
     required TResult orElse(),
   }) {
@@ -315,6 +329,7 @@ class _$UserRegisteringVerificationEmailSent
     required TResult Function(bool newUser, String email) verificationEmailSent,
     required TResult Function(String email) userCardSentByEmail,
     required TResult Function() loading,
+    required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
   }) {
     return verificationEmailSent(newUser, email);
@@ -327,6 +342,7 @@ class _$UserRegisteringVerificationEmailSent
     TResult Function(bool newUser, String email)? verificationEmailSent,
     TResult Function(String email)? userCardSentByEmail,
     TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
   }) {
     return verificationEmailSent?.call(newUser, email);
@@ -339,6 +355,7 @@ class _$UserRegisteringVerificationEmailSent
     TResult Function(bool newUser, String email)? verificationEmailSent,
     TResult Function(String email)? userCardSentByEmail,
     TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
     required TResult orElse(),
   }) {
@@ -357,6 +374,8 @@ class _$UserRegisteringVerificationEmailSent
     required TResult Function(UserRegisteringUserCardSentByEmail value)
         userCardSentByEmail,
     required TResult Function(UserRegisteringLoading value) loading,
+    required TResult Function(UserRegisteringInvalidFiscalCode value)
+        invalidFiscalCode,
     required TResult Function(UserRegisteringError value) error,
   }) {
     return verificationEmailSent(this);
@@ -371,6 +390,7 @@ class _$UserRegisteringVerificationEmailSent
     TResult Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
     TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
   }) {
     return verificationEmailSent?.call(this);
@@ -385,6 +405,7 @@ class _$UserRegisteringVerificationEmailSent
     TResult Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
     TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
     required TResult orElse(),
   }) {
@@ -484,6 +505,7 @@ class _$UserRegisteringUserCardSentByEmail
     required TResult Function(bool newUser, String email) verificationEmailSent,
     required TResult Function(String email) userCardSentByEmail,
     required TResult Function() loading,
+    required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
   }) {
     return userCardSentByEmail(email);
@@ -496,6 +518,7 @@ class _$UserRegisteringUserCardSentByEmail
     TResult Function(bool newUser, String email)? verificationEmailSent,
     TResult Function(String email)? userCardSentByEmail,
     TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
   }) {
     return userCardSentByEmail?.call(email);
@@ -508,6 +531,7 @@ class _$UserRegisteringUserCardSentByEmail
     TResult Function(bool newUser, String email)? verificationEmailSent,
     TResult Function(String email)? userCardSentByEmail,
     TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
     required TResult orElse(),
   }) {
@@ -526,6 +550,8 @@ class _$UserRegisteringUserCardSentByEmail
     required TResult Function(UserRegisteringUserCardSentByEmail value)
         userCardSentByEmail,
     required TResult Function(UserRegisteringLoading value) loading,
+    required TResult Function(UserRegisteringInvalidFiscalCode value)
+        invalidFiscalCode,
     required TResult Function(UserRegisteringError value) error,
   }) {
     return userCardSentByEmail(this);
@@ -540,6 +566,7 @@ class _$UserRegisteringUserCardSentByEmail
     TResult Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
     TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
   }) {
     return userCardSentByEmail?.call(this);
@@ -554,6 +581,7 @@ class _$UserRegisteringUserCardSentByEmail
     TResult Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
     TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
     required TResult orElse(),
   }) {
@@ -622,6 +650,7 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
     required TResult Function(bool newUser, String email) verificationEmailSent,
     required TResult Function(String email) userCardSentByEmail,
     required TResult Function() loading,
+    required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
   }) {
     return loading();
@@ -634,6 +663,7 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
     TResult Function(bool newUser, String email)? verificationEmailSent,
     TResult Function(String email)? userCardSentByEmail,
     TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
   }) {
     return loading?.call();
@@ -646,6 +676,7 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
     TResult Function(bool newUser, String email)? verificationEmailSent,
     TResult Function(String email)? userCardSentByEmail,
     TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
     required TResult orElse(),
   }) {
@@ -664,6 +695,8 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
     required TResult Function(UserRegisteringUserCardSentByEmail value)
         userCardSentByEmail,
     required TResult Function(UserRegisteringLoading value) loading,
+    required TResult Function(UserRegisteringInvalidFiscalCode value)
+        invalidFiscalCode,
     required TResult Function(UserRegisteringError value) error,
   }) {
     return loading(this);
@@ -678,6 +711,7 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
     TResult Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
     TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
   }) {
     return loading?.call(this);
@@ -692,6 +726,7 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
     TResult Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
     TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
     required TResult orElse(),
   }) {
@@ -704,6 +739,149 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
 
 abstract class UserRegisteringLoading implements UserRegisteringState {
   const factory UserRegisteringLoading() = _$UserRegisteringLoading;
+}
+
+/// @nodoc
+abstract class _$$UserRegisteringInvalidFiscalCodeCopyWith<$Res> {
+  factory _$$UserRegisteringInvalidFiscalCodeCopyWith(
+          _$UserRegisteringInvalidFiscalCode value,
+          $Res Function(_$UserRegisteringInvalidFiscalCode) then) =
+      __$$UserRegisteringInvalidFiscalCodeCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$UserRegisteringInvalidFiscalCodeCopyWithImpl<$Res>
+    extends _$UserRegisteringStateCopyWithImpl<$Res>
+    implements _$$UserRegisteringInvalidFiscalCodeCopyWith<$Res> {
+  __$$UserRegisteringInvalidFiscalCodeCopyWithImpl(
+      _$UserRegisteringInvalidFiscalCode _value,
+      $Res Function(_$UserRegisteringInvalidFiscalCode) _then)
+      : super(_value, (v) => _then(v as _$UserRegisteringInvalidFiscalCode));
+
+  @override
+  _$UserRegisteringInvalidFiscalCode get _value =>
+      super._value as _$UserRegisteringInvalidFiscalCode;
+}
+
+/// @nodoc
+
+class _$UserRegisteringInvalidFiscalCode
+    implements UserRegisteringInvalidFiscalCode {
+  const _$UserRegisteringInvalidFiscalCode();
+
+  @override
+  String toString() {
+    return 'UserRegisteringState.invalidFiscalCode()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserRegisteringInvalidFiscalCode);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(bool newUser, String email) verificationEmailSent,
+    required TResult Function(String email) userCardSentByEmail,
+    required TResult Function() loading,
+    required TResult Function() invalidFiscalCode,
+    required TResult Function(Object error, StackTrace st) error,
+  }) {
+    return invalidFiscalCode();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(bool newUser, String email)? verificationEmailSent,
+    TResult Function(String email)? userCardSentByEmail,
+    TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
+    TResult Function(Object error, StackTrace st)? error,
+  }) {
+    return invalidFiscalCode?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(bool newUser, String email)? verificationEmailSent,
+    TResult Function(String email)? userCardSentByEmail,
+    TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
+    TResult Function(Object error, StackTrace st)? error,
+    required TResult orElse(),
+  }) {
+    if (invalidFiscalCode != null) {
+      return invalidFiscalCode();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UserRegisteringInitial value) initial,
+    required TResult Function(UserRegisteringVerificationEmailSent value)
+        verificationEmailSent,
+    required TResult Function(UserRegisteringUserCardSentByEmail value)
+        userCardSentByEmail,
+    required TResult Function(UserRegisteringLoading value) loading,
+    required TResult Function(UserRegisteringInvalidFiscalCode value)
+        invalidFiscalCode,
+    required TResult Function(UserRegisteringError value) error,
+  }) {
+    return invalidFiscalCode(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(UserRegisteringInitial value)? initial,
+    TResult Function(UserRegisteringVerificationEmailSent value)?
+        verificationEmailSent,
+    TResult Function(UserRegisteringUserCardSentByEmail value)?
+        userCardSentByEmail,
+    TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
+    TResult Function(UserRegisteringError value)? error,
+  }) {
+    return invalidFiscalCode?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserRegisteringInitial value)? initial,
+    TResult Function(UserRegisteringVerificationEmailSent value)?
+        verificationEmailSent,
+    TResult Function(UserRegisteringUserCardSentByEmail value)?
+        userCardSentByEmail,
+    TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
+    TResult Function(UserRegisteringError value)? error,
+    required TResult orElse(),
+  }) {
+    if (invalidFiscalCode != null) {
+      return invalidFiscalCode(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UserRegisteringInvalidFiscalCode
+    implements UserRegisteringState {
+  const factory UserRegisteringInvalidFiscalCode() =
+      _$UserRegisteringInvalidFiscalCode;
 }
 
 /// @nodoc
@@ -786,6 +964,7 @@ class _$UserRegisteringError implements UserRegisteringError {
     required TResult Function(bool newUser, String email) verificationEmailSent,
     required TResult Function(String email) userCardSentByEmail,
     required TResult Function() loading,
+    required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
   }) {
     return error(this.error, st);
@@ -798,6 +977,7 @@ class _$UserRegisteringError implements UserRegisteringError {
     TResult Function(bool newUser, String email)? verificationEmailSent,
     TResult Function(String email)? userCardSentByEmail,
     TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
   }) {
     return error?.call(this.error, st);
@@ -810,6 +990,7 @@ class _$UserRegisteringError implements UserRegisteringError {
     TResult Function(bool newUser, String email)? verificationEmailSent,
     TResult Function(String email)? userCardSentByEmail,
     TResult Function()? loading,
+    TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
     required TResult orElse(),
   }) {
@@ -828,6 +1009,8 @@ class _$UserRegisteringError implements UserRegisteringError {
     required TResult Function(UserRegisteringUserCardSentByEmail value)
         userCardSentByEmail,
     required TResult Function(UserRegisteringLoading value) loading,
+    required TResult Function(UserRegisteringInvalidFiscalCode value)
+        invalidFiscalCode,
     required TResult Function(UserRegisteringError value) error,
   }) {
     return error(this);
@@ -842,6 +1025,7 @@ class _$UserRegisteringError implements UserRegisteringError {
     TResult Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
     TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
   }) {
     return error?.call(this);
@@ -856,6 +1040,7 @@ class _$UserRegisteringError implements UserRegisteringError {
     TResult Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
     TResult Function(UserRegisteringLoading value)? loading,
+    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
     required TResult orElse(),
   }) {

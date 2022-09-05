@@ -5,8 +5,17 @@ import 'package:intl/intl.dart';
 
 class CMIDatePicker extends HookWidget {
   final ValueChanged<DateTime> onChanged;
+  final DateTime? firstDate;
+  final String? hintText;
+  final String? labelText;
 
-  CMIDatePicker({Key? key, required this.onChanged}) : super(key: key);
+  CMIDatePicker({
+    Key? key,
+    required this.onChanged,
+    this.firstDate,
+    this.hintText,
+    this.labelText,
+  }) : super(key: key);
 
   _selectDate() {}
 
@@ -17,18 +26,19 @@ class CMIDatePicker extends HookWidget {
   Widget build(BuildContext context) {
     final dateTimeState = useState<DateTime>(DateTime.now());
     final dateTime = dateTimeState.value;
-    final controller = useTextEditingController(text: dateFormat.format(dateTime));
+    final controller =
+        useTextEditingController(text: dateFormat.format(dateTime));
     return TextFormField(
       controller: controller,
       maxLines: 1,
-      decoration: InputDecoration(labelText: 'Data'),
+      decoration: InputDecoration(labelText:labelText, hintText: hintText),
       onTap: () async {
         FocusScope.of(context).requestFocus(FocusNode());
 
         final newDateTime = await showDatePicker(
             context: context,
             initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
+            firstDate: firstDate ?? DateTime(1920),
             lastDate: DateTime.now().add(Duration(days: 365)));
         if (newDateTime == null) return;
         controller.text = dateFormat.format(newDateTime);
@@ -51,7 +61,8 @@ class CMITimePicker extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final timeState = useState<TimeOfDay>(TimeOfDay.fromDateTime(DateTime.now()));
+    final timeState =
+        useState<TimeOfDay>(TimeOfDay.fromDateTime(DateTime.now()));
     final time = timeState.value;
     final controller = useTextEditingController(text: time.format(context));
     return TextFormField(
@@ -62,7 +73,9 @@ class CMITimePicker extends HookWidget {
         FocusScope.of(context).requestFocus(FocusNode());
 
         final newTime = await showTimePicker(
-            context: context, initialTime: time,);
+          context: context,
+          initialTime: time,
+        );
         if (newTime == null) return;
         controller.text = newTime.format(context);
         timeState.value = newTime;

@@ -1,5 +1,18 @@
 import 'package:form_field_validator/form_field_validator.dart';
 
+import 'package:flutter_codice_fiscale/codice_fiscale.dart';
+
+class MyEmailValidator extends EmailValidator{
+  MyEmailValidator({required super.errorText});
+
+  @override
+  bool get ignoreEmptyValues => false;
+
+  @override
+  bool isValid(String? value) {
+   return value!= null && value.isNotEmpty && super.isValid(value);
+  }
+}
 class CFValidator extends TextFieldValidator {
   CFValidator(
       {String errorText = 'Il codice fiscale è composto da 16 caratteri'})
@@ -11,12 +24,17 @@ class CFValidator extends TextFieldValidator {
   @override
   bool isValid(String? value) {
     if (value == null) return false;
+    if(CodiceFiscale.check(value)){
+      return true;
+    }
+    return false;
+/*
     if (value.toUpperCase() == 'NA') {
       return true;
     } else if (value.length == 16) {
       return true;
     }
-    return false;
+    return false;*/
   }
 }
 

@@ -37,7 +37,7 @@ class CMICard extends StatelessWidget {
           margin: margin,
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Center(child: child),
+            child: child,
           ),
         ),
       ),

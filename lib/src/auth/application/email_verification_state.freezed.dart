@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$EmailVerificationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initial,
     required TResult Function() verified,
     required TResult Function() userNotExist,
     required TResult Function() invalidData,
@@ -27,6 +28,7 @@ mixin _$EmailVerificationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function()? verified,
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
@@ -36,6 +38,7 @@ mixin _$EmailVerificationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function()? verified,
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
@@ -46,6 +49,7 @@ mixin _$EmailVerificationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(EmailVerificationInitial value) initial,
     required TResult Function(EmailVerificationVerified value) verified,
     required TResult Function(EmailVerificationUserNotExist value) userNotExist,
     required TResult Function(EmailVerificationInvalidData value) invalidData,
@@ -55,6 +59,7 @@ mixin _$EmailVerificationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
     TResult Function(EmailVerificationVerified value)? verified,
     TResult Function(EmailVerificationUserNotExist value)? userNotExist,
     TResult Function(EmailVerificationInvalidData value)? invalidData,
@@ -64,6 +69,7 @@ mixin _$EmailVerificationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
     TResult Function(EmailVerificationVerified value)? verified,
     TResult Function(EmailVerificationUserNotExist value)? userNotExist,
     TResult Function(EmailVerificationInvalidData value)? invalidData,
@@ -89,6 +95,137 @@ class _$EmailVerificationStateCopyWithImpl<$Res>
   final EmailVerificationState _value;
   // ignore: unused_field
   final $Res Function(EmailVerificationState) _then;
+}
+
+/// @nodoc
+abstract class _$$EmailVerificationInitialCopyWith<$Res> {
+  factory _$$EmailVerificationInitialCopyWith(_$EmailVerificationInitial value,
+          $Res Function(_$EmailVerificationInitial) then) =
+      __$$EmailVerificationInitialCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$EmailVerificationInitialCopyWithImpl<$Res>
+    extends _$EmailVerificationStateCopyWithImpl<$Res>
+    implements _$$EmailVerificationInitialCopyWith<$Res> {
+  __$$EmailVerificationInitialCopyWithImpl(_$EmailVerificationInitial _value,
+      $Res Function(_$EmailVerificationInitial) _then)
+      : super(_value, (v) => _then(v as _$EmailVerificationInitial));
+
+  @override
+  _$EmailVerificationInitial get _value =>
+      super._value as _$EmailVerificationInitial;
+}
+
+/// @nodoc
+
+class _$EmailVerificationInitial implements EmailVerificationInitial {
+  const _$EmailVerificationInitial();
+
+  @override
+  String toString() {
+    return 'EmailVerificationState.initial()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EmailVerificationInitial);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() verified,
+    required TResult Function() userNotExist,
+    required TResult Function() invalidData,
+    required TResult Function() loading,
+    required TResult Function(Object error, StackTrace st) error,
+  }) {
+    return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? verified,
+    TResult Function()? userNotExist,
+    TResult Function()? invalidData,
+    TResult Function()? loading,
+    TResult Function(Object error, StackTrace st)? error,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? verified,
+    TResult Function()? userNotExist,
+    TResult Function()? invalidData,
+    TResult Function()? loading,
+    TResult Function(Object error, StackTrace st)? error,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EmailVerificationInitial value) initial,
+    required TResult Function(EmailVerificationVerified value) verified,
+    required TResult Function(EmailVerificationUserNotExist value) userNotExist,
+    required TResult Function(EmailVerificationInvalidData value) invalidData,
+    required TResult Function(EmailVerificationLoading value) loading,
+    required TResult Function(EmailVerificationError value) error,
+  }) {
+    return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
+    TResult Function(EmailVerificationVerified value)? verified,
+    TResult Function(EmailVerificationUserNotExist value)? userNotExist,
+    TResult Function(EmailVerificationInvalidData value)? invalidData,
+    TResult Function(EmailVerificationLoading value)? loading,
+    TResult Function(EmailVerificationError value)? error,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
+    TResult Function(EmailVerificationVerified value)? verified,
+    TResult Function(EmailVerificationUserNotExist value)? userNotExist,
+    TResult Function(EmailVerificationInvalidData value)? invalidData,
+    TResult Function(EmailVerificationLoading value)? loading,
+    TResult Function(EmailVerificationError value)? error,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EmailVerificationInitial implements EmailVerificationState {
+  const factory EmailVerificationInitial() = _$EmailVerificationInitial;
 }
 
 /// @nodoc
@@ -135,6 +272,7 @@ class _$EmailVerificationVerified implements EmailVerificationVerified {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initial,
     required TResult Function() verified,
     required TResult Function() userNotExist,
     required TResult Function() invalidData,
@@ -147,6 +285,7 @@ class _$EmailVerificationVerified implements EmailVerificationVerified {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function()? verified,
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
@@ -159,6 +298,7 @@ class _$EmailVerificationVerified implements EmailVerificationVerified {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function()? verified,
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
@@ -175,6 +315,7 @@ class _$EmailVerificationVerified implements EmailVerificationVerified {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(EmailVerificationInitial value) initial,
     required TResult Function(EmailVerificationVerified value) verified,
     required TResult Function(EmailVerificationUserNotExist value) userNotExist,
     required TResult Function(EmailVerificationInvalidData value) invalidData,
@@ -187,6 +328,7 @@ class _$EmailVerificationVerified implements EmailVerificationVerified {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
     TResult Function(EmailVerificationVerified value)? verified,
     TResult Function(EmailVerificationUserNotExist value)? userNotExist,
     TResult Function(EmailVerificationInvalidData value)? invalidData,
@@ -199,6 +341,7 @@ class _$EmailVerificationVerified implements EmailVerificationVerified {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
     TResult Function(EmailVerificationVerified value)? verified,
     TResult Function(EmailVerificationUserNotExist value)? userNotExist,
     TResult Function(EmailVerificationInvalidData value)? invalidData,
@@ -262,6 +405,7 @@ class _$EmailVerificationUserNotExist implements EmailVerificationUserNotExist {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initial,
     required TResult Function() verified,
     required TResult Function() userNotExist,
     required TResult Function() invalidData,
@@ -274,6 +418,7 @@ class _$EmailVerificationUserNotExist implements EmailVerificationUserNotExist {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function()? verified,
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
@@ -286,6 +431,7 @@ class _$EmailVerificationUserNotExist implements EmailVerificationUserNotExist {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function()? verified,
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
@@ -302,6 +448,7 @@ class _$EmailVerificationUserNotExist implements EmailVerificationUserNotExist {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(EmailVerificationInitial value) initial,
     required TResult Function(EmailVerificationVerified value) verified,
     required TResult Function(EmailVerificationUserNotExist value) userNotExist,
     required TResult Function(EmailVerificationInvalidData value) invalidData,
@@ -314,6 +461,7 @@ class _$EmailVerificationUserNotExist implements EmailVerificationUserNotExist {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
     TResult Function(EmailVerificationVerified value)? verified,
     TResult Function(EmailVerificationUserNotExist value)? userNotExist,
     TResult Function(EmailVerificationInvalidData value)? invalidData,
@@ -326,6 +474,7 @@ class _$EmailVerificationUserNotExist implements EmailVerificationUserNotExist {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
     TResult Function(EmailVerificationVerified value)? verified,
     TResult Function(EmailVerificationUserNotExist value)? userNotExist,
     TResult Function(EmailVerificationInvalidData value)? invalidData,
@@ -390,6 +539,7 @@ class _$EmailVerificationInvalidData implements EmailVerificationInvalidData {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initial,
     required TResult Function() verified,
     required TResult Function() userNotExist,
     required TResult Function() invalidData,
@@ -402,6 +552,7 @@ class _$EmailVerificationInvalidData implements EmailVerificationInvalidData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function()? verified,
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
@@ -414,6 +565,7 @@ class _$EmailVerificationInvalidData implements EmailVerificationInvalidData {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function()? verified,
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
@@ -430,6 +582,7 @@ class _$EmailVerificationInvalidData implements EmailVerificationInvalidData {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(EmailVerificationInitial value) initial,
     required TResult Function(EmailVerificationVerified value) verified,
     required TResult Function(EmailVerificationUserNotExist value) userNotExist,
     required TResult Function(EmailVerificationInvalidData value) invalidData,
@@ -442,6 +595,7 @@ class _$EmailVerificationInvalidData implements EmailVerificationInvalidData {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
     TResult Function(EmailVerificationVerified value)? verified,
     TResult Function(EmailVerificationUserNotExist value)? userNotExist,
     TResult Function(EmailVerificationInvalidData value)? invalidData,
@@ -454,6 +608,7 @@ class _$EmailVerificationInvalidData implements EmailVerificationInvalidData {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
     TResult Function(EmailVerificationVerified value)? verified,
     TResult Function(EmailVerificationUserNotExist value)? userNotExist,
     TResult Function(EmailVerificationInvalidData value)? invalidData,
@@ -515,6 +670,7 @@ class _$EmailVerificationLoading implements EmailVerificationLoading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initial,
     required TResult Function() verified,
     required TResult Function() userNotExist,
     required TResult Function() invalidData,
@@ -527,6 +683,7 @@ class _$EmailVerificationLoading implements EmailVerificationLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function()? verified,
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
@@ -539,6 +696,7 @@ class _$EmailVerificationLoading implements EmailVerificationLoading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function()? verified,
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
@@ -555,6 +713,7 @@ class _$EmailVerificationLoading implements EmailVerificationLoading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(EmailVerificationInitial value) initial,
     required TResult Function(EmailVerificationVerified value) verified,
     required TResult Function(EmailVerificationUserNotExist value) userNotExist,
     required TResult Function(EmailVerificationInvalidData value) invalidData,
@@ -567,6 +726,7 @@ class _$EmailVerificationLoading implements EmailVerificationLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
     TResult Function(EmailVerificationVerified value)? verified,
     TResult Function(EmailVerificationUserNotExist value)? userNotExist,
     TResult Function(EmailVerificationInvalidData value)? invalidData,
@@ -579,6 +739,7 @@ class _$EmailVerificationLoading implements EmailVerificationLoading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
     TResult Function(EmailVerificationVerified value)? verified,
     TResult Function(EmailVerificationUserNotExist value)? userNotExist,
     TResult Function(EmailVerificationInvalidData value)? invalidData,
@@ -674,6 +835,7 @@ class _$EmailVerificationError implements EmailVerificationError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initial,
     required TResult Function() verified,
     required TResult Function() userNotExist,
     required TResult Function() invalidData,
@@ -686,6 +848,7 @@ class _$EmailVerificationError implements EmailVerificationError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function()? verified,
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
@@ -698,6 +861,7 @@ class _$EmailVerificationError implements EmailVerificationError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function()? verified,
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
@@ -714,6 +878,7 @@ class _$EmailVerificationError implements EmailVerificationError {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(EmailVerificationInitial value) initial,
     required TResult Function(EmailVerificationVerified value) verified,
     required TResult Function(EmailVerificationUserNotExist value) userNotExist,
     required TResult Function(EmailVerificationInvalidData value) invalidData,
@@ -726,6 +891,7 @@ class _$EmailVerificationError implements EmailVerificationError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
     TResult Function(EmailVerificationVerified value)? verified,
     TResult Function(EmailVerificationUserNotExist value)? userNotExist,
     TResult Function(EmailVerificationInvalidData value)? invalidData,
@@ -738,6 +904,7 @@ class _$EmailVerificationError implements EmailVerificationError {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmailVerificationInitial value)? initial,
     TResult Function(EmailVerificationVerified value)? verified,
     TResult Function(EmailVerificationUserNotExist value)? userNotExist,
     TResult Function(EmailVerificationInvalidData value)? invalidData,
@@ -763,11 +930,18 @@ abstract class EmailVerificationError implements EmailVerificationState {
       throw _privateConstructorUsedError;
 }
 
+EmailVerificationData _$EmailVerificationDataFromJson(
+    Map<String, dynamic> json) {
+  return _EmailVerificationData.fromJson(json);
+}
+
 /// @nodoc
 mixin _$EmailVerificationData {
   String get secret => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
+  String get providerId => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $EmailVerificationDataCopyWith<EmailVerificationData> get copyWith =>
       throw _privateConstructorUsedError;
@@ -778,7 +952,7 @@ abstract class $EmailVerificationDataCopyWith<$Res> {
   factory $EmailVerificationDataCopyWith(EmailVerificationData value,
           $Res Function(EmailVerificationData) then) =
       _$EmailVerificationDataCopyWithImpl<$Res>;
-  $Res call({String secret, String userId});
+  $Res call({String secret, String userId, String providerId});
 }
 
 /// @nodoc
@@ -794,6 +968,7 @@ class _$EmailVerificationDataCopyWithImpl<$Res>
   $Res call({
     Object? secret = freezed,
     Object? userId = freezed,
+    Object? providerId = freezed,
   }) {
     return _then(_value.copyWith(
       secret: secret == freezed
@@ -803,6 +978,10 @@ class _$EmailVerificationDataCopyWithImpl<$Res>
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      providerId: providerId == freezed
+          ? _value.providerId
+          : providerId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -815,7 +994,7 @@ abstract class _$$_EmailVerificationDataCopyWith<$Res>
           $Res Function(_$_EmailVerificationData) then) =
       __$$_EmailVerificationDataCopyWithImpl<$Res>;
   @override
-  $Res call({String secret, String userId});
+  $Res call({String secret, String userId, String providerId});
 }
 
 /// @nodoc
@@ -834,6 +1013,7 @@ class __$$_EmailVerificationDataCopyWithImpl<$Res>
   $Res call({
     Object? secret = freezed,
     Object? userId = freezed,
+    Object? providerId = freezed,
   }) {
     return _then(_$_EmailVerificationData(
       secret: secret == freezed
@@ -844,23 +1024,33 @@ class __$$_EmailVerificationDataCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      providerId: providerId == freezed
+          ? _value.providerId
+          : providerId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_EmailVerificationData implements _EmailVerificationData {
-  const _$_EmailVerificationData({required this.secret, required this.userId});
+  const _$_EmailVerificationData(
+      {required this.secret, required this.userId, required this.providerId});
+
+  factory _$_EmailVerificationData.fromJson(Map<String, dynamic> json) =>
+      _$$_EmailVerificationDataFromJson(json);
 
   @override
   final String secret;
   @override
   final String userId;
+  @override
+  final String providerId;
 
   @override
   String toString() {
-    return 'EmailVerificationData(secret: $secret, userId: $userId)';
+    return 'EmailVerificationData(secret: $secret, userId: $userId, providerId: $providerId)';
   }
 
   @override
@@ -869,31 +1059,48 @@ class _$_EmailVerificationData implements _EmailVerificationData {
         (other.runtimeType == runtimeType &&
             other is _$_EmailVerificationData &&
             const DeepCollectionEquality().equals(other.secret, secret) &&
-            const DeepCollectionEquality().equals(other.userId, userId));
+            const DeepCollectionEquality().equals(other.userId, userId) &&
+            const DeepCollectionEquality()
+                .equals(other.providerId, providerId));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(secret),
-      const DeepCollectionEquality().hash(userId));
+      const DeepCollectionEquality().hash(userId),
+      const DeepCollectionEquality().hash(providerId));
 
   @JsonKey(ignore: true)
   @override
   _$$_EmailVerificationDataCopyWith<_$_EmailVerificationData> get copyWith =>
       __$$_EmailVerificationDataCopyWithImpl<_$_EmailVerificationData>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_EmailVerificationDataToJson(
+      this,
+    );
+  }
 }
 
 abstract class _EmailVerificationData implements EmailVerificationData {
   const factory _EmailVerificationData(
       {required final String secret,
-      required final String userId}) = _$_EmailVerificationData;
+      required final String userId,
+      required final String providerId}) = _$_EmailVerificationData;
+
+  factory _EmailVerificationData.fromJson(Map<String, dynamic> json) =
+      _$_EmailVerificationData.fromJson;
 
   @override
   String get secret;
   @override
   String get userId;
+  @override
+  String get providerId;
   @override
   @JsonKey(ignore: true)
   _$$_EmailVerificationDataCopyWith<_$_EmailVerificationData> get copyWith =>

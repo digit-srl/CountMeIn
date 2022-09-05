@@ -225,6 +225,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.6"
+  dropdown_search:
+    dependency: "direct main"
+    description:
+      name: dropdown_search
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.2"
   easy_rich_text:
     dependency: "direct main"
     description:
@@ -351,6 +358,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_codice_fiscale:
+    dependency: "direct main"
+    description:
+      name: flutter_codice_fiscale
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   flutter_file_manager_android:
     dependency: transitive
     description:
@@ -472,7 +486,7 @@ packages:
       name: go_router
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.4"
+    version: "4.3.0"
   graphs:
     dependency: transitive
     description:
@@ -654,7 +668,7 @@ packages:
       name: package_info_plus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.3"
+    version: "1.4.3+1"
   package_info_plus_linux:
     dependency: transitive
     description:
@@ -871,7 +885,7 @@ packages:
       name: share_plus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.10"
+    version: "4.0.10+1"
   share_plus_linux:
     dependency: transitive
     description:

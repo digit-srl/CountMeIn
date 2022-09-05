@@ -7,6 +7,7 @@ import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/auth/ui/screens/invite_form_confirm.dart';
 import 'package:countmein/src/user/screens/user_profile.dart';
 import 'package:countmein/ui/screens/event_details.dart';
+import 'package:countmein/ui/screens/user_register_form.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -78,8 +79,13 @@ class RouterNotifier extends ChangeNotifier {
   /// GoRouter is already aware of state changes through `refreshListenable`
   /// We don't want to trigger a rebuild of the surrounding provider.
   String? _redirectLogic(GoRouterState state) {
-    print(state.location);
-    print(state.subloc);
+    print('Name: ${state.name}');
+    print('Path: ${state.path}');
+    print('FullPath: ${state.fullpath}');
+    print('Location: ${state.location}');
+    print('Subloc: ${state.subloc}');
+    print('Params: ${state.params}');
+    print('Query: ${state.queryParams}');
     final isEventRoute = state.subloc.startsWith('/event/');
 
     if (isEventRoute) {
@@ -87,6 +93,7 @@ class RouterNotifier extends ChangeNotifier {
       return state.subloc.replaceFirst('/event', '/provider');
     }
 
+    //http://localhost:63068/verification/YgknyjEc5wFhqfw1rn3P/aS1TCMkg/Yy31B32YBDJDUt7TbZEl
     final authState = _ref.read(authStateProvider);
     final isGoingToHome = state.subloc == '/';
     final isGoingToVerificationEmail =
@@ -98,6 +105,7 @@ class RouterNotifier extends ChangeNotifier {
         state.subloc == ResetPasswordScreen.routeName;
     final isGoingToActivityRequest =
         state.subloc == ActivityRequestScreen.routeName;
+
     if (isGoingToHome ||
         isGoingToVerificationEmail ||
         isGoingToActivityRequest ||
@@ -224,8 +232,7 @@ class RouterNotifier extends ChangeNotifier {
         ),
         GoRoute(
           name: EventUsersScreen.routeName,
-          path:
-              '${EventUsersScreen.routeName}/:providerId/:eventId',
+          path: '${EventUsersScreen.routeName}/:providerId/:eventId',
           builder: (context, state) {
             final eventId = state.params['eventId'] as String;
             final providerId = state.params['providerId'] as String;
@@ -259,10 +266,13 @@ class RouterNotifier extends ChangeNotifier {
           },
         ),
         GoRoute(
-          path: '${EmailVerificationScreen.routeName}/:userId/:secret',
+          name: EmailVerificationScreen.routeName,
+          path:
+              '${EmailVerificationScreen.routeName}/:userId/:secret/:providerId',
           builder: (context, state) {
             return EmailVerificationScreen(
               userId: state.params['userId'] as String,
+              providerId: state.params['providerId'] as String,
               secret: state.params['secret'] as String,
             );
           },

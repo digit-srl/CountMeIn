@@ -18,12 +18,14 @@
     "axios": "^0.27.2",
     "body-parser": "^1.20.0",
     "canvas": "^2.9.3",
+    "codice-fiscale-js": "^2.3.20",
     "dotenv": "^16.0.1",
     "firebase-admin": "^10.0.2",
-    "firebase-functions": "^3.22.0",
+    "firebase-functions": "^3.23.0",
     "form-data": "^4.0.0",
     "mailgun.js": "^7.0.2",
-    "qrcode": "^1.5.0"
+    "qrcode": "^1.5.0",
+    "randomstring": "^1.2.2"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
