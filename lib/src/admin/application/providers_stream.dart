@@ -1,7 +1,6 @@
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import '../../../cloud.dart';

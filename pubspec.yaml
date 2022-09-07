@@ -72,6 +72,7 @@ dependencies:
   package_info_plus: ^1.4.3+1
   universal_io: ^2.0.4
   flutter_codice_fiscale: ^0.0.3
+  pin_code_fields: ^7.4.0
   dart_wom_connector:
     path: /Users/gianmarcodifrancesco/Work/Digit/Dart/dart_wom_connector
   file_saver:
@@ -133,3 +134,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+scripts:
+  generate_files: fvm flutter pub run build_runner watch --delete-conflicting-outputs
+  start_emulators: firebase emulators:start --import=./emulator_backup --export-on-exit

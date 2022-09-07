@@ -101,6 +101,8 @@ class RouterNotifier extends ChangeNotifier {
     final isGoingConfirmInvite =
         state.subloc == InviteFormConfirmScreen.routeName;
     final isGoingToUserCardForm = state.subloc.startsWith('/provider');
+    final isGoingToUserProfile =
+        state.subloc.startsWith(UserConsoleScreen.routeName);
     final isGoingToResetPassword =
         state.subloc == ResetPasswordScreen.routeName;
     final isGoingToActivityRequest =
@@ -111,6 +113,7 @@ class RouterNotifier extends ChangeNotifier {
         isGoingToActivityRequest ||
         isGoingConfirmInvite ||
         isGoingToResetPassword ||
+        isGoingToUserProfile ||
         isGoingToUserCardForm) {
       return null;
     }

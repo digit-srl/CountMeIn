@@ -287,3 +287,27 @@ export async function sendInvite(
     null
   );
 }
+
+export async function sentUserProfileOtpCode(
+  fullName: string,
+  otpCode: string,
+  email: string
+) {
+  const emails = [email];
+
+  const json = JSON.stringify({
+    fullName: fullName,
+    otpCode: otpCode,
+    email: email,
+  });
+
+  console.log(json);
+  return sendEmail(
+    emails,
+    "Otp code",
+    "user_profile_otp_code",
+    json,
+    null,
+    null
+  );
+}

@@ -39,4 +39,8 @@ class Cloud {
   static DocumentReference<Map<String, dynamic>> eventDoc(
           String providerId, String eventId) =>
       eventsCollection(providerId).doc(eventId);
+
+  static DocumentReference<Map<String, dynamic>> userProfileDoc(
+          String userId) =>
+      usersCollection.doc(userId);
 }

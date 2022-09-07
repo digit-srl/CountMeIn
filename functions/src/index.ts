@@ -418,129 +418,120 @@ exports.createUser = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {
-      console.log(request.body);
+      cors(request, response, async () => {
+        console.log(request.body);
 
-      if (request.method !== "POST") {
-        response.status(403).send("Forbidden!");
-        return;
-      }
-      //const now = new Date();
-      const data = request.body;
-      const email = data.email;
+        if (request.method !== "POST") {
+          response.status(403).send("Forbidden!");
+          return;
+        }
+        //const now = new Date();
+        const data = request.body;
+        const email = data.email;
 
-      if (email === null) {
-        console.log("Email is missing");
-        throw new functions.https.HttpsError(
-          "invalid-argument",
-          "Email is missing"
-        );
-      }
+        if (email === null) {
+          console.log("Email is missing");
+          throw new functions.https.HttpsError(
+            "invalid-argument",
+            "Email is missing"
+          );
+        }
 
-      console.log("user " + email + " request creation");
-      const d = await db
-        .collection("users")
-        .where("email", "==", email)
-        .limit(1)
-        .get();
+        console.log("user " + email + " request creation");
+        const d = await db
+          .collection("users")
+          .where("email", "==", email)
+          .limit(1)
+          .get();
 
-      if (d.docs.length > 0) {
-        console.log(d.docs[0].data());
-        const userData = d.docs[0].data();
+        if (d.docs.length > 0) {
+          console.log(d.docs[0].data());
+          const userData = d.docs[0].data();
 
+          /*
         if (userData.emailVerified) {
           if (data.providerId !== null && data.providerName !== null) {
             sendUserCard(userData, data.providerId, data.providerName);
-            /*.then(() => {
-            console.log("send user card complete");
-            db.collection("users").doc(user.id).update({
-              providerId: null,
-              providerName: null,
-            });
-            return null;
-          })
-          .catch((err: any) => {
-            console.log(err);
-            throw new functions.https.HttpsError("aborted", err);
-          });*/
-          }
+             }
+        }*/
+
+          response
+            .send({
+              status: "user_already_exist",
+              emailVerified: userData.emailVerified,
+              userId: userData.id,
+            })
+            .end();
+          return;
         }
 
-        response
-          .send({
-            status: "user_already_exist",
-            emailVerified: userData.emailVerified,
-            userId: userData.id,
-          })
-          .end();
-        return;
-      }
+        if (
+          data.cf === null ||
+          data.name === null ||
+          data.surname === null ||
+          data.providerId === null ||
+          data.providerName === null ||
+          data.gender === null
+        ) {
+          console.log("Some field is null");
+          throw new functions.https.HttpsError(
+            "invalid-argument",
+            "Missing some data"
+          );
+        }
 
-      if (
-        data.cf === null ||
-        data.name === null ||
-        data.surname === null ||
-        data.providerId === null ||
-        data.providerName === null ||
-        data.gender === null
-      ) {
-        console.log("Some field is null");
-        throw new functions.https.HttpsError(
-          "invalid-argument",
-          "Missing some data"
-        );
-      }
+        if (!CodiceFiscale.check(data.cf)) {
+          response
+            .send({
+              status: "invalid_fiscal_code",
+            })
+            .end();
+          return;
+        }
 
-      if (!CodiceFiscale.check(data.cf)) {
-        response
-          .send({
-            status: "invalid_fiscal_code",
-          })
-          .end();
-        return;
-      }
+        const fiscalCode = new CodiceFiscale(data.cf);
+        const bornIn = fiscalCode.birthday;
+        try {
+          const timestampNow = firestore.Timestamp.fromDate(new Date());
+          const bornInTimestamp = firestore.Timestamp.fromDate(bornIn);
+          const batch = db.batch();
+          const userRef = db.collection("users").doc();
+          const secret = randomstring.generate(8);
 
-      const fiscalCode = new CodiceFiscale(data.cf);
-      const bornIn = fiscalCode.birthday;
-      try {
-        const timestampNow = firestore.Timestamp.fromDate(new Date());
-        const bornInTimestamp = firestore.Timestamp.fromDate(bornIn);
-        const batch = db.batch();
-        const userRef = db.collection("users").doc();
-        const secret = randomstring.generate(8);
+          batch.set(userRef, {
+            emailVerified: false,
+            name: data.name,
+            id: userRef.id,
+            cf: data.cf,
+            addedOn: timestampNow,
+            surname: data.surname,
+            email: data.email,
+            secret: secret,
+            providerId: data.providerId,
+            providerName: data.providerName,
+          });
 
-        batch.set(userRef, {
-          emailVerified: false,
-          name: data.name,
-          id: userRef.id,
-          cf: data.cf,
-          addedOn: timestampNow,
-          surname: data.surname,
-          email: data.email,
-          secret: secret,
-          providerId: data.providerId,
-          providerName: data.providerName,
-        });
+          const userPrivateRef = db.collection("usersPrivateData").doc();
+          batch.set(userPrivateRef, {
+            id: userPrivateRef.id,
+            bornIn: bornInTimestamp,
+            gender: data.gender,
+          });
+          await batch.commit();
+          console.log("new user crated " + data.email);
 
-        const userPrivateRef = db.collection("usersPrivateData").doc();
-        batch.set(userPrivateRef, {
-          id: userPrivateRef.id,
-          bornIn: bornInTimestamp,
-          gender: data.gender,
-        });
-        await batch.commit();
-        console.log("new user crated " + data.email);
-
-        const fullName = data.name + " " + data.surname;
-        Email.sendVerificationEmail(fullName, data.email, userRef.id, secret);
-        response
-          .send({
-            status: "success",
-          })
-          .end();
-      } catch (err: any) {
-        console.log(err);
-        throw new functions.https.HttpsError("aborted", err);
-      }
+          const fullName = data.name + " " + data.surname;
+          Email.sendVerificationEmail(fullName, data.email, userRef.id, secret);
+          response
+            .send({
+              status: "success",
+            })
+            .end();
+        } catch (err: any) {
+          console.log(err);
+          throw new functions.https.HttpsError("aborted", err);
+        }
+      });
     }
   );
 
@@ -548,65 +539,67 @@ exports.verifyEmail = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {
-      console.log(request.body);
+      cors(request, response, async () => {
+        console.log(request.body);
 
-      if (request.method !== "POST") {
-        response.status(403).send("Forbidden!");
-        return;
-      }
-
-      const data = request.body;
-      const userId = data.userId;
-      const providerId = data.providerId;
-      const secret = data.secret;
-
-      if (providerId === null || secret === null || userId === null) {
-        const message =
-          "Missing data: providerId: " +
-          providerId +
-          ", secret: " +
-          secret +
-          ", userId: userId";
-        console.log(message);
-        throw new functions.https.HttpsError("invalid-argument", message);
-      }
-
-      const userDoc = await db.collection("users").doc(userId).get();
-
-      if (!userDoc.exists) {
-        console.log("User not found");
-        throw new functions.https.HttpsError("not-found", "User not found");
-      }
-      const userData = userDoc.data();
-
-      if (userData.secret !== null && userData.secret == secret) {
-        if (userData.emailVerified) {
-          response.send({
-            status: "user_already_verified",
-          });
+        if (request.method !== "POST") {
+          response.status(403).send("Forbidden!");
           return;
         }
 
-        await db.collection("users").doc(userId).update({
-          secret: null,
-          emailVerified: true,
-        });
+        const data = request.body;
+        const userId = data.userId;
+        const providerId = data.providerId;
+        const secret = data.secret;
 
-        const providerDoc = await db
-          .collection("providers")
-          .doc(providerId)
-          .get();
-        const providerName = providerDoc.data().name;
+        if (providerId === null || secret === null || userId === null) {
+          const message =
+            "Missing data: providerId: " +
+            providerId +
+            ", secret: " +
+            secret +
+            ", userId: userId";
+          console.log(message);
+          throw new functions.https.HttpsError("invalid-argument", message);
+        }
 
-        await sendUserCard(userData, providerId, providerName);
-        response.sendStatus(200);
-      } else {
-        console.log("secret is not correct");
-        throw new functions.https.HttpsError(
-          "invalid-argument",
-          "secret is not correct"
-        );
-      }
+        const userDoc = await db.collection("users").doc(userId).get();
+
+        if (!userDoc.exists) {
+          console.log("User not found");
+          throw new functions.https.HttpsError("not-found", "User not found");
+        }
+        const userData = userDoc.data();
+
+        if (userData.secret !== null && userData.secret == secret) {
+          if (userData.emailVerified) {
+            response.send({
+              status: "user_already_verified",
+            });
+            return;
+          }
+
+          await db.collection("users").doc(userId).update({
+            secret: null,
+            emailVerified: true,
+          });
+
+          const providerDoc = await db
+            .collection("providers")
+            .doc(providerId)
+            .get();
+          const providerName = providerDoc.data().name;
+
+          await sendUserCard(userData, providerId, providerName);
+          response.sendStatus(200);
+        } else {
+          console.log("secret is not correct");
+          throw new functions.https.HttpsError(
+            "invalid-argument",
+            "secret is not correct"
+          );
+        }
+      });
     }
   );
 
@@ -822,6 +815,7 @@ export const sendResetPasswordEmail = functions
   );
 
 // Only for testing
+/*
 export const crateNewUser = functions
   .region("europe-west3")
   .https.onRequest(
@@ -860,6 +854,7 @@ export const crateNewUser = functions
       }
     }
   );
+*/
 
 async function createNewAdminForProvider(
   name: string,
@@ -929,6 +924,7 @@ async function generateAndSendResetPasswordEmail(
 }
 
 //Only for testing
+/*
 export const createNewProvider = functions
   .region("europe-west3")
   .https.onRequest(
@@ -969,6 +965,7 @@ export const createNewProvider = functions
       }
     }
   );
+*/
 
 //Only for testing
 /*export const verifyEmail = functions
@@ -1250,100 +1247,105 @@ export const onInviteToCollaborate = functions
     return Email.sendInvite(providerName, fullName, email, role, url);
   });
 
+//Only for testing
 export const processEvents = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {
-      const now = new Date();
-      console.log(
-        "This will be run every day at 00:00 UTC " + now.toISOString()
-      );
+      cors(request, response, async () => {
+        const now = new Date();
+        console.log(
+          "This will be run every day at 00:00 UTC " + now.toISOString()
+        );
 
-      const nowUTC = dateToUTC(new Date());
-      console.log(nowUTC);
-      //prendo tutti gli eventi attivi ricorrenti che sono da aggiornare (query su subEventDeadline)
-      const querySnapshot = await db
-        .collectionGroup("events")
-        .where("status", "==", "live")
-        //.where("recurring", "==", true)
-        .where("subEventDeadline", "<=", nowUTC)
-        .get();
+        const nowUTC = dateToUTC(new Date());
+        console.log(nowUTC);
+        //prendo tutti gli eventi attivi ricorrenti che sono da aggiornare (query su subEventDeadline)
+        const querySnapshot = await db
+          .collectionGroup("events")
+          .where("status", "==", "live")
+          //.where("recurring", "==", true)
+          .where("subEventDeadline", "<=", nowUTC)
+          .get();
 
-      querySnapshot.forEach(
-        async (doc: FirebaseFirestore.QueryDocumentSnapshot) => {
-          console.log(doc.id, " => ", doc.data());
+        querySnapshot.forEach(
+          async (doc: FirebaseFirestore.QueryDocumentSnapshot) => {
+            console.log(doc.id, " => ", doc.data());
 
-          const docRef = doc.ref;
-          const providerId = docRef.parent.parent?.id;
+            const docRef = doc.ref;
+            const providerId = docRef.parent.parent?.id;
 
-          console.log("providerId:" + providerId);
+            console.log("providerId:" + providerId);
 
-          const data = doc.data();
-          const recurrence = data.recurrence;
-          const remaining = data.remaining;
+            const data = doc.data();
+            const recurrence = data.recurrence;
+            const remaining = data.remaining;
 
-          if (remaining > 0) {
-            var multiplier = 1;
-            if (recurrence === "daily") {
-              multiplier = 1;
-            } else if (recurrence === "monthly") {
-              multiplier = 31;
-            } else if (recurrence === "yearly") {
-              multiplier = 365;
+            if (remaining > 0) {
+              var multiplier = 1;
+              if (recurrence === "daily") {
+                multiplier = 1;
+              } else if (recurrence === "monthly") {
+                multiplier = 31;
+              } else if (recurrence === "yearly") {
+                multiplier = 365;
+              }
+
+              const subEventDeadlineTimestamp: FirebaseFirestore.Timestamp =
+                data.subEventDeadline;
+              const subEventDeadlineDate = subEventDeadlineTimestamp.toDate();
+
+              let nextSubEventDeadlineDate: Date = addDays(
+                multiplier,
+                subEventDeadlineDate
+              );
+
+              console.log(subEventDeadlineDate);
+              console.log(nextSubEventDeadlineDate);
+
+              const nextSubEventId =
+                subEventDeadlineDate.getFullYear() +
+                "-" +
+                ("0" + (subEventDeadlineDate.getMonth() + 1)).slice(-2) +
+                "-" +
+                ("0" + subEventDeadlineDate.getDate()).slice(-2);
+
+              console.log("nextSubEventId " + nextSubEventId);
+
+              const nextReimaining = remaining - 1;
+
+              const nextSubEventDeadlineTimestamp: firestore.Timestamp =
+                firestore.Timestamp.fromDate(nextSubEventDeadlineDate);
+
+              const nextSubEvent = {
+                id: nextSubEventId,
+                startAt: subEventDeadlineTimestamp,
+                endAt: nextSubEventDeadlineTimestamp,
+              };
+
+              await docRef.update({
+                remaining: nextReimaining,
+                currentSubEvent: nextSubEventId,
+                subEventDeadline: nextSubEventDeadlineTimestamp,
+              });
+
+              await docRef
+                .collection("subEvents")
+                .doc(nextSubEventId)
+                .set(nextSubEvent);
+            } else {
+              //chiudo l evento
+              await docRef.update({
+                subEventDeadline: null,
+                status: "closed",
+              });
             }
-
-            const subEventDeadlineTimestamp: FirebaseFirestore.Timestamp =
-              data.subEventDeadline;
-            const subEventDeadlineDate = subEventDeadlineTimestamp.toDate();
-
-            let nextSubEventDeadlineDate: Date = addDays(
-              multiplier,
-              subEventDeadlineDate
-            );
-
-            console.log(subEventDeadlineDate);
-            console.log(nextSubEventDeadlineDate);
-
-            const nextSubEventId =
-              subEventDeadlineDate.getFullYear() +
-              "-" +
-              ("0" + (subEventDeadlineDate.getMonth() + 1)).slice(-2) +
-              "-" +
-              ("0" + subEventDeadlineDate.getDate()).slice(-2);
-
-            console.log("nextSubEventId " + nextSubEventId);
-
-            const nextReimaining = remaining - 1;
-
-            const nextSubEventDeadlineTimestamp: firestore.Timestamp =
-              firestore.Timestamp.fromDate(nextSubEventDeadlineDate);
-
-            const nextSubEvent = {
-              id: nextSubEventId,
-              startAt: subEventDeadlineTimestamp,
-              endAt: nextSubEventDeadlineTimestamp,
-            };
-
-            await docRef.update({
-              remaining: nextReimaining,
-              currentSubEvent: nextSubEventId,
-              subEventDeadline: nextSubEventDeadlineTimestamp,
-            });
-
-            await docRef
-              .collection("subEvents")
-              .doc(nextSubEventId)
-              .set(nextSubEvent);
-          } else {
-            //chiudo l evento
-            await docRef.update({
-              subEventDeadline: null,
-              status: "closed",
-            });
           }
-        }
-      );
-      response.status(200).send("There are " + querySnapshot.size + " events");
+        );
+        response
+          .status(200)
+          .send("There are " + querySnapshot.size + " events");
+      });
     }
   );
 

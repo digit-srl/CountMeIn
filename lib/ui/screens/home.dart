@@ -1,5 +1,6 @@
 import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
 import 'package:countmein/src/common/ui/widgets/my_button.dart';
+import 'package:countmein/src/user/screens/user_profile.dart';
 import 'package:countmein/states.dart';
 import 'package:countmein/ui/screens/user_event.dart';
 import 'package:flutter/foundation.dart';
@@ -36,7 +37,7 @@ class HomeWebScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                context.go('${UserEventScreen.routeName}/Yy31B32YBDJDUt7TbZEl');
+                context.go('${UserConsoleScreen.routeName}/YgknyjEc5wFhqfw1rn3P');
               },
               child: Text('vai all evento'),
             ),
