@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
-class MyTextField extends StatelessWidget {
+class CMITextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
   final String? Function(String?)? validator;
   final TextCapitalization? textCapitalization;
   final TextInputType? keyboardType;
+  final TextStyle? textStyle;
 
-  const MyTextField({
+  const CMITextField({
     Key? key,
     this.controller,
     this.hintText,
+    this.textStyle,
     this.validator,
     this.keyboardType,
     this.textCapitalization,
@@ -19,6 +21,7 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: textStyle,
       controller: controller,
       validator: validator,
       textCapitalization: textCapitalization ?? TextCapitalization.none,

@@ -14,19 +14,22 @@ class PendingProviders extends ConsumerWidget {
     final state = ref.watch(pendingProvidersStreamProvider);
     final data = state.asData?.value;
     return CMICard(
-      onTap: data != null && data.isNotEmpty
-          ? () {
-        context.push(AdminPendingProvidersScreen.routeName, extra: data);
-      }
-          : null,
-      iconBadge:
-      data != null && data.isNotEmpty ? Icons.account_balance_wallet : null,
-      child: data == null
-          ? const CircularProgressIndicator()
-          : Text(
-        '${data.length} Provider da validare',
-        style: Theme.of(context).textTheme.subtitle1,
-      ),
-    );
+        onTap: data != null && data.isNotEmpty
+            ? () {
+                context.push(AdminPendingProvidersScreen.routeName,
+                    extra: data);
+              }
+            : null,
+        iconBadge: data != null && data.isNotEmpty
+            ? Icons.account_balance_wallet
+            : null,
+        child: Center(
+          child: data == null
+              ? const CircularProgressIndicator()
+              : Text(
+                  '${data.length} Provider da validare',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+        ));
   }
 }

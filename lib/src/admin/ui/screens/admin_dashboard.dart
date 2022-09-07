@@ -1,5 +1,7 @@
+import 'package:countmein/src/admin/ui/screens/qrcode_validation.dart';
 import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
+import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -46,11 +48,34 @@ class AdminDashboardScreen extends ConsumerWidget {
                         const ActiveProviders(),
                         if (platformUserRole == PlatformRole.cmi)
                           const PendingProviders(),
+                        QrCodeValidationWidget(),
                       ],
                     );
                   }),
               ],
             ),
+    );
+  }
+}
+
+
+class QrCodeValidationWidget extends ConsumerWidget {
+  const QrCodeValidationWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    return CMICard(
+      onTap: () {
+        context.push(QrCodeValidationString.routeName);
+      }
+          ,
+      child: Center(
+        child: Text(
+          'Valida QrCode',
+          style: Theme.of(context).textTheme.subtitle1,
+        ),
+      ),
     );
   }
 }

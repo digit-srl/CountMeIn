@@ -29,6 +29,7 @@ class GridProvidersWidget extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             final p = providers[index];
             return CMICard(
+              center: true,
               onTap: () {
                 context.push('${AdminProviderHandlerScreen.routeName}/${p.id}',
                     extra: p.status == CMIProviderStatus.pending ? p : null);

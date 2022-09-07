@@ -19,12 +19,14 @@ class ActiveProviders extends ConsumerWidget {
               context.push(AdminProvidersScreen.routeName, extra: data);
             }
           : null,
-      child: data == null
-          ? const CircularProgressIndicator()
-          : Text(
-              '${data.length} Providers',
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
+      child: Center(
+        child: data == null
+            ? const CircularProgressIndicator()
+            : Text(
+                '${data.length} Providers',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+      ),
     );
   }
 }

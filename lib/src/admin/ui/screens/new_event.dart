@@ -61,6 +61,7 @@ class NewEventFormScreen extends HookConsumerWidget {
           constraints: const BoxConstraints(maxWidth: 700),
           padding: const EdgeInsets.all(16.0),
           child: CMICard(
+
             child: Form(
               key: _formKey,
               child: ListView(
@@ -70,7 +71,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                     style: Theme.of(context).textTheme.headline4,
                   ),
                   const SizedBox(height: 48),
-                  MyTextField(
+                  CMITextField(
                     controller: nameController,
                     hintText: 'Nome evento',
                     validator: nameSurnameValidator,
@@ -184,7 +185,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                         ),
                         const SizedBox(width: 8),
                         Flexible(
-                          child: MyTextField(
+                          child: CMITextField(
                             controller: repsController,
                             hintText: 'Numero di ripetizioni',
                             validator: numberValidator,
@@ -230,7 +231,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                         // if (releaseType.value == WomReleaseType.fixed) ...[
                         //   const SizedBox(width: 8),
                         Flexible(
-                          child: MyTextField(
+                          child: CMITextField(
                             controller: womController,
                             keyboardType: TextInputType.number,
                             hintText: accessType.value == EventAccessType.inOut

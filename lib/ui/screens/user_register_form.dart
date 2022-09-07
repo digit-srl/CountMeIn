@@ -119,20 +119,20 @@ class UserFormScreen extends ConsumerWidget {
                   style: const TextStyle(fontSize: 18),
                 ),
                 const SizedBox(height: 16),
-                MyTextField(
+                CMITextField(
                   controller: nameController,
                   hintText: 'Nome',
                   validator: nameSurnameValidator,
                 ),
                 const SizedBox(height: 16),
-                MyTextField(
+                CMITextField(
                   controller: surnameController,
                   hintText: 'Cognome',
                   validator: nameSurnameValidator,
                 ),
                 const SizedBox(height: 16),
                 // if (cmiProvider.releaseWom)
-                MyTextField(
+                CMITextField(
                   controller: emailController,
                   hintText: 'Email',
                   validator: MyEmailValidator(errorText: 'Email non valida'),
@@ -161,7 +161,7 @@ class UserFormScreen extends ConsumerWidget {
                 Row(
                   children: [
                     Flexible(
-                      child: MyTextField(
+                      child: CMITextField(
                         controller: cfController,
                         hintText: 'Codice Fiscale',
                         textCapitalization: TextCapitalization.characters,
@@ -325,13 +325,13 @@ class FormCodiceFiscale extends HookConsumerWidget {
         children: [
           Text('Calcola il tuo codice fiscale'),
           const SizedBox(height: 32),
-          MyTextField(
+          CMITextField(
             controller: nameController,
             hintText: 'Nome',
             validator: nameSurnameValidator,
           ),
           const SizedBox(height: 16),
-          MyTextField(
+          CMITextField(
             controller: surnameController,
             hintText: 'Cognome',
             validator: nameSurnameValidator,

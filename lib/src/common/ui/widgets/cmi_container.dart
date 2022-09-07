@@ -7,15 +7,19 @@ class CMICard extends StatelessWidget {
   final Function()? onTap;
   final EdgeInsetsGeometry? margin;
   final bool inverseColor;
+  final BoxConstraints? constraints;
+  final bool center;
 
-  const CMICard(
-      {Key? key,
-      required this.child,
-      this.iconBadge,
-      this.onTap,
-      this.margin,
-      this.inverseColor = false})
-      : super(key: key);
+  const CMICard({
+    Key? key,
+    required this.child,
+    this.iconBadge,
+    this.onTap,
+    this.margin,
+    this.constraints,
+    this.inverseColor = false,
+    this.center = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +39,10 @@ class CMICard extends StatelessWidget {
               ? Theme.of(context).colorScheme.inversePrimary
               : null,
           margin: margin,
-          child: Padding(
+          child: Container(
+            constraints: constraints,
             padding: const EdgeInsets.all(16),
+            alignment: center? Alignment.center : null,
             child: child,
           ),
         ),

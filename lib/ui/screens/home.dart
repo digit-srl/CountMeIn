@@ -35,7 +35,7 @@ class HomeWebScreen extends StatelessWidget {
               'Count Me In',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
-            ElevatedButton(
+          /*  ElevatedButton(
               onPressed: () {
                 context.go('${UserConsoleScreen.routeName}/YgknyjEc5wFhqfw1rn3P');
               },
@@ -62,7 +62,7 @@ class HomeWebScreen extends StatelessWidget {
                 }
               },
               child: Text('esporta nazioni'),
-            ),
+            ),*/
             FutureBuilder(
               future: PackageInfo.fromPlatform(),
               builder: (c, AsyncSnapshot<PackageInfo> snap) {

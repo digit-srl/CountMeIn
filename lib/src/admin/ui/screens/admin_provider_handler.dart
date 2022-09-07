@@ -156,6 +156,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
                     return CMICard(
+                      center: true,
                       onTap: platformUserRole == PlatformRole.cmi ||
                               userRole == UserRole.admin
                           ? () {
@@ -182,6 +183,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                   }
                   final p = eventsState.asData!.value[index - 1];
                   return CMICard(
+                    center: true,
                     onTap: () {
                       context.pushNamed(
                         EventDetailsScreen.routeName,

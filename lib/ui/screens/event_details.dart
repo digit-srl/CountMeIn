@@ -168,6 +168,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
               childAspectRatio: 2,
               children: [
                 CMICard(
+                  center: true,
                   onTap: () {
                     context.pushNamed(
                       EventUsersScreen.routeName,
@@ -184,6 +185,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                 ),
                 for (int i = 0; i < subEvents.length; i++)
                   CMICard(
+                    center: true,
                     onTap: () {
                       context.pushNamed(
                         EventUsersScreen.routeName,

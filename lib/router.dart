@@ -2,6 +2,7 @@ import 'package:countmein/src/admin/application/confirm_invite_state.dart';
 import 'package:countmein/src/admin/ui/screens/event_users.dart';
 import 'package:countmein/src/admin/ui/screens/managers.dart';
 import 'package:countmein/src/admin/ui/screens/new_event.dart';
+import 'package:countmein/src/admin/ui/screens/qrcode_validation.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/auth/ui/screens/invite_form_confirm.dart';
@@ -196,6 +197,10 @@ class RouterNotifier extends ChangeNotifier {
           builder: (context, state) => NewEventFormScreen(
             providerId: state.params['providerId']!,
           ),
+        ),
+        GoRoute(
+          path: QrCodeValidationString.routeName,
+          builder: (context, state) => const QrCodeValidationString(),
         ),
         GoRoute(
           path: ActivityRequestScreen.routeName,
