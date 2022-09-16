@@ -19,9 +19,10 @@ mixin _$QrCodeData {
   String get providerId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get surname => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
   String get cf => throw _privateConstructorUsedError;
-  String? get extra => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get privateId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $QrCodeDataCopyWith<QrCodeData> get copyWith =>
@@ -37,9 +38,10 @@ abstract class $QrCodeDataCopyWith<$Res> {
       {String providerId,
       String name,
       String surname,
-      String email,
       String cf,
-      String? extra});
+      String id,
+      String? email,
+      String? privateId});
 }
 
 /// @nodoc
@@ -55,9 +57,10 @@ class _$QrCodeDataCopyWithImpl<$Res> implements $QrCodeDataCopyWith<$Res> {
     Object? providerId = freezed,
     Object? name = freezed,
     Object? surname = freezed,
-    Object? email = freezed,
     Object? cf = freezed,
-    Object? extra = freezed,
+    Object? id = freezed,
+    Object? email = freezed,
+    Object? privateId = freezed,
   }) {
     return _then(_value.copyWith(
       providerId: providerId == freezed
@@ -72,17 +75,21 @@ class _$QrCodeDataCopyWithImpl<$Res> implements $QrCodeDataCopyWith<$Res> {
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
       cf: cf == freezed
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String,
-      extra: extra == freezed
-          ? _value.extra
-          : extra // ignore: cast_nullable_to_non_nullable
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      privateId: privateId == freezed
+          ? _value.privateId
+          : privateId // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -99,9 +106,10 @@ abstract class _$$_QrCodeDataCopyWith<$Res>
       {String providerId,
       String name,
       String surname,
-      String email,
       String cf,
-      String? extra});
+      String id,
+      String? email,
+      String? privateId});
 }
 
 /// @nodoc
@@ -119,9 +127,10 @@ class __$$_QrCodeDataCopyWithImpl<$Res> extends _$QrCodeDataCopyWithImpl<$Res>
     Object? providerId = freezed,
     Object? name = freezed,
     Object? surname = freezed,
-    Object? email = freezed,
     Object? cf = freezed,
-    Object? extra = freezed,
+    Object? id = freezed,
+    Object? email = freezed,
+    Object? privateId = freezed,
   }) {
     return _then(_$_QrCodeData(
       providerId: providerId == freezed
@@ -136,17 +145,21 @@ class __$$_QrCodeDataCopyWithImpl<$Res> extends _$QrCodeDataCopyWithImpl<$Res>
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
       cf: cf == freezed
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String,
-      extra: extra == freezed
-          ? _value.extra
-          : extra // ignore: cast_nullable_to_non_nullable
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      privateId: privateId == freezed
+          ? _value.privateId
+          : privateId // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -159,9 +172,10 @@ class _$_QrCodeData implements _QrCodeData {
       {required this.providerId,
       required this.name,
       required this.surname,
-      required this.email,
       required this.cf,
-      this.extra});
+      required this.id,
+      this.email,
+      this.privateId});
 
   @override
   final String providerId;
@@ -170,15 +184,17 @@ class _$_QrCodeData implements _QrCodeData {
   @override
   final String surname;
   @override
-  final String email;
-  @override
   final String cf;
   @override
-  final String? extra;
+  final String id;
+  @override
+  final String? email;
+  @override
+  final String? privateId;
 
   @override
   String toString() {
-    return 'QrCodeData(providerId: $providerId, name: $name, surname: $surname, email: $email, cf: $cf, extra: $extra)';
+    return 'QrCodeData(providerId: $providerId, name: $name, surname: $surname, cf: $cf, id: $id, email: $email, privateId: $privateId)';
   }
 
   @override
@@ -190,9 +206,10 @@ class _$_QrCodeData implements _QrCodeData {
                 .equals(other.providerId, providerId) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.surname, surname) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.cf, cf) &&
-            const DeepCollectionEquality().equals(other.extra, extra));
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.email, email) &&
+            const DeepCollectionEquality().equals(other.privateId, privateId));
   }
 
   @override
@@ -201,9 +218,10 @@ class _$_QrCodeData implements _QrCodeData {
       const DeepCollectionEquality().hash(providerId),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(surname),
-      const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(cf),
-      const DeepCollectionEquality().hash(extra));
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(email),
+      const DeepCollectionEquality().hash(privateId));
 
   @JsonKey(ignore: true)
   @override
@@ -216,9 +234,10 @@ abstract class _QrCodeData implements QrCodeData {
       {required final String providerId,
       required final String name,
       required final String surname,
-      required final String email,
       required final String cf,
-      final String? extra}) = _$_QrCodeData;
+      required final String id,
+      final String? email,
+      final String? privateId}) = _$_QrCodeData;
 
   @override
   String get providerId;
@@ -227,11 +246,13 @@ abstract class _QrCodeData implements QrCodeData {
   @override
   String get surname;
   @override
-  String get email;
-  @override
   String get cf;
   @override
-  String? get extra;
+  String get id;
+  @override
+  String? get email;
+  @override
+  String? get privateId;
   @override
   @JsonKey(ignore: true)
   _$$_QrCodeDataCopyWith<_$_QrCodeData> get copyWith =>

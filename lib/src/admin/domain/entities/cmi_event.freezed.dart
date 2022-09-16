@@ -745,7 +745,8 @@ GenderCount _$GenderCountFromJson(Map<String, dynamic> json) {
 mixin _$GenderCount {
   int get male => throw _privateConstructorUsedError;
   int get female => throw _privateConstructorUsedError;
-  int get notDeclared => throw _privateConstructorUsedError;
+  int get notBinary => throw _privateConstructorUsedError;
+  int get notAvailable => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -758,7 +759,7 @@ abstract class $GenderCountCopyWith<$Res> {
   factory $GenderCountCopyWith(
           GenderCount value, $Res Function(GenderCount) then) =
       _$GenderCountCopyWithImpl<$Res>;
-  $Res call({int male, int female, int notDeclared});
+  $Res call({int male, int female, int notBinary, int notAvailable});
 }
 
 /// @nodoc
@@ -773,7 +774,8 @@ class _$GenderCountCopyWithImpl<$Res> implements $GenderCountCopyWith<$Res> {
   $Res call({
     Object? male = freezed,
     Object? female = freezed,
-    Object? notDeclared = freezed,
+    Object? notBinary = freezed,
+    Object? notAvailable = freezed,
   }) {
     return _then(_value.copyWith(
       male: male == freezed
@@ -784,9 +786,13 @@ class _$GenderCountCopyWithImpl<$Res> implements $GenderCountCopyWith<$Res> {
           ? _value.female
           : female // ignore: cast_nullable_to_non_nullable
               as int,
-      notDeclared: notDeclared == freezed
-          ? _value.notDeclared
-          : notDeclared // ignore: cast_nullable_to_non_nullable
+      notBinary: notBinary == freezed
+          ? _value.notBinary
+          : notBinary // ignore: cast_nullable_to_non_nullable
+              as int,
+      notAvailable: notAvailable == freezed
+          ? _value.notAvailable
+          : notAvailable // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -799,7 +805,7 @@ abstract class _$$_GenderCountCopyWith<$Res>
           _$_GenderCount value, $Res Function(_$_GenderCount) then) =
       __$$_GenderCountCopyWithImpl<$Res>;
   @override
-  $Res call({int male, int female, int notDeclared});
+  $Res call({int male, int female, int notBinary, int notAvailable});
 }
 
 /// @nodoc
@@ -816,7 +822,8 @@ class __$$_GenderCountCopyWithImpl<$Res> extends _$GenderCountCopyWithImpl<$Res>
   $Res call({
     Object? male = freezed,
     Object? female = freezed,
-    Object? notDeclared = freezed,
+    Object? notBinary = freezed,
+    Object? notAvailable = freezed,
   }) {
     return _then(_$_GenderCount(
       male: male == freezed
@@ -827,9 +834,13 @@ class __$$_GenderCountCopyWithImpl<$Res> extends _$GenderCountCopyWithImpl<$Res>
           ? _value.female
           : female // ignore: cast_nullable_to_non_nullable
               as int,
-      notDeclared: notDeclared == freezed
-          ? _value.notDeclared
-          : notDeclared // ignore: cast_nullable_to_non_nullable
+      notBinary: notBinary == freezed
+          ? _value.notBinary
+          : notBinary // ignore: cast_nullable_to_non_nullable
+              as int,
+      notAvailable: notAvailable == freezed
+          ? _value.notAvailable
+          : notAvailable // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -839,7 +850,10 @@ class __$$_GenderCountCopyWithImpl<$Res> extends _$GenderCountCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_GenderCount implements _GenderCount {
   const _$_GenderCount(
-      {required this.male, required this.female, required this.notDeclared});
+      {required this.male,
+      required this.female,
+      required this.notBinary,
+      this.notAvailable = 0});
 
   factory _$_GenderCount.fromJson(Map<String, dynamic> json) =>
       _$$_GenderCountFromJson(json);
@@ -849,11 +863,14 @@ class _$_GenderCount implements _GenderCount {
   @override
   final int female;
   @override
-  final int notDeclared;
+  final int notBinary;
+  @override
+  @JsonKey()
+  final int notAvailable;
 
   @override
   String toString() {
-    return 'GenderCount(male: $male, female: $female, notDeclared: $notDeclared)';
+    return 'GenderCount(male: $male, female: $female, notBinary: $notBinary, notAvailable: $notAvailable)';
   }
 
   @override
@@ -863,8 +880,9 @@ class _$_GenderCount implements _GenderCount {
             other is _$_GenderCount &&
             const DeepCollectionEquality().equals(other.male, male) &&
             const DeepCollectionEquality().equals(other.female, female) &&
+            const DeepCollectionEquality().equals(other.notBinary, notBinary) &&
             const DeepCollectionEquality()
-                .equals(other.notDeclared, notDeclared));
+                .equals(other.notAvailable, notAvailable));
   }
 
   @JsonKey(ignore: true)
@@ -873,7 +891,8 @@ class _$_GenderCount implements _GenderCount {
       runtimeType,
       const DeepCollectionEquality().hash(male),
       const DeepCollectionEquality().hash(female),
-      const DeepCollectionEquality().hash(notDeclared));
+      const DeepCollectionEquality().hash(notBinary),
+      const DeepCollectionEquality().hash(notAvailable));
 
   @JsonKey(ignore: true)
   @override
@@ -892,7 +911,8 @@ abstract class _GenderCount implements GenderCount {
   const factory _GenderCount(
       {required final int male,
       required final int female,
-      required final int notDeclared}) = _$_GenderCount;
+      required final int notBinary,
+      final int notAvailable}) = _$_GenderCount;
 
   factory _GenderCount.fromJson(Map<String, dynamic> json) =
       _$_GenderCount.fromJson;
@@ -902,7 +922,9 @@ abstract class _GenderCount implements GenderCount {
   @override
   int get female;
   @override
-  int get notDeclared;
+  int get notBinary;
+  @override
+  int get notAvailable;
   @override
   @JsonKey(ignore: true)
   _$$_GenderCountCopyWith<_$_GenderCount> get copyWith =>

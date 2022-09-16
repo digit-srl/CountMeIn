@@ -2,18 +2,15 @@ import * as functions from "firebase-functions";
 const admin = require("firebase-admin");
 admin.initializeApp();
 import Email = require("./email");
-const draw = require("./draw");
 //const bodyParser = require("body-parser");
 import * as dotenv from "dotenv";
 dotenv.config();
 const db = admin.firestore();
-const axios = require("axios").default;
 const cors = require("cors")({ origin: true });
 import { FirebaseError } from "@firebase/util";
 import { UserRecord } from "firebase-functions/v1/auth";
 import * as firestore from "@google-cloud/firestore";
-const randomstring = require("randomstring");
-const CodiceFiscale = require("codice-fiscale-js");
+import { providerDocRef } from "./firestore_references";
 
 /*
 export const drawCard = functions.region('europe-west3').https.onRequest((request, response) => {
@@ -59,6 +56,8 @@ export const onAuthCreate = functions
 */
 
 exports.userProfile = require("./user_profile");
+exports.event = require("./event");
+exports.userSignUp = require("./user_sign_up");
 
 export const onActivityRequested = functions
   .region("europe-west3")
@@ -152,8 +151,8 @@ export const onActivityRequestedUpdated = functions
       managers.set("managers." + user.uid, map);
       let jManagers = Object.fromEntries(managers);
 
-      await db.collection("providers").doc(requestId).set(provider);
-      await db.collection("providers").doc(requestId).update(jManagers);
+      await providerDocRef(requestId).set(provider);
+      await providerDocRef(requestId).update(jManagers);
       await Email.sendWelcomeNewProvider(
         provider.name,
         email,
@@ -192,206 +191,6 @@ export const onActivityCreated = functions
     await Email.sendWelcomeNewProvider(provider.name, email, fullName, "admin");
   });*/
 
-export const onUserCheckIn = functions
-  .region("europe-west3")
-  .firestore.document(
-    "providers/{providerId}/events/{eventId}/subEvents/{subEventId}/users/{userId}"
-  )
-  .onWrite(async (snap, context) => {
-    try {
-      const eventId = context.params.eventId;
-      const providerId = context.params.providerId;
-      const userId = context.params.userId;
-
-      //utente cancellato
-      if (!snap.after.exists) {
-        console.log("utente rimosso da " + "eventId: " + userId);
-        return;
-      }
-
-      const eventDoc: FirebaseFirestore.DocumentData = await db
-        .collection("providers")
-        .doc(providerId)
-        .collection("events")
-        .doc(eventId)
-        .get();
-
-      const event = eventDoc.data();
-      const womCount = event.maxWomCount;
-      const eventName = event.name;
-      const eventAccessType = event.accessType;
-      console.log(eventName);
-
-      if (womCount === undefined || womCount === null || womCount === 0) {
-        console.log("this event not release wom to user : " + userId);
-        return;
-      }
-
-      const user: FirebaseFirestore.DocumentData | undefined =
-        snap.after.data();
-      console.log("user check in name: " + user?.name + " " + user?.id);
-
-      if (user === undefined || user === null) {
-        console.log("user id undefined ");
-        return null;
-      }
-
-      const checkOutAt = user.checkOutAt;
-      const checkInAt = user.checkInAt;
-
-      let userData: any | undefined;
-
-      if (
-        (eventAccessType === "inOut" &&
-          !(checkInAt === undefined || checkInAt === null)) ||
-        (eventAccessType === "single" &&
-          !(checkOutAt === undefined || checkOutAt === null))
-      ) {
-        console.log("check gender info");
-        const userDoc = await db.collection("users").doc(userId).get();
-
-        userData = userDoc.data();
-
-        const gender = userData.gender;
-        if (gender != null) {
-          let increment = 1;
-          let m = 0;
-          let f = 0;
-          let na = 0;
-          if (snap.after.exists && !snap.before.exists) {
-            increment = 1;
-          } else if (!snap.after.exists && snap.before.exists) {
-            increment = -1;
-          }
-
-          if (gender == "male") {
-            m = increment;
-          } else if (gender == "female") {
-            f = increment;
-          } else if (gender == "notDeclared") {
-            na = increment;
-          }
-
-          if (m != 0 || f != 0 || na != 0) {
-            console.log("m: " + m + ",f: " + f + ",na: " + na);
-            const countRef = snap.after.ref.parent.parent;
-            if (countRef != null) {
-              await db.runTransaction(
-                async (transaction: FirebaseFirestore.Transaction) => {
-                  await transaction.update(countRef, {
-                    "genderCount.male": firestore.FieldValue.increment(m),
-                    "genderCount.female": firestore.FieldValue.increment(f),
-                    "genderCount.notDeclared":
-                      firestore.FieldValue.increment(na),
-                  });
-                }
-              );
-              //await countRef.update((current) => {
-              //  return (current || 0) + increment;
-              //});
-              functions.logger.log("Gender counter updated.");
-            }
-          }
-        }
-      }
-
-      if (checkOutAt === undefined || checkOutAt === null) {
-        console.log(
-          "Missing checkOut: this trigger need of checkOut date to release wom"
-        );
-        return null;
-      }
-
-      if (userData === undefined) {
-        const userDoc: FirebaseFirestore.DocumentData = await db
-          .collection("users")
-          .doc(userId)
-          .get();
-
-        userData = userDoc.data();
-      }
-
-      const email = userData.email;
-      if (email === undefined || email === null) {
-        console.log("STOP user not exist email undefined ");
-        return null;
-      }
-      console.log("user exist email " + userData.email);
-
-      const providerDoc: FirebaseFirestore.DocumentData = await db
-        .collection("providers")
-        .doc(providerId)
-        .get();
-
-      let wom = womCount;
-
-      if (eventAccessType === "inOut") {
-        if (checkInAt === undefined || checkInAt === null) {
-          console.log(
-            "Event with in/out access must to have checkInAt defined"
-          );
-          return null;
-        }
-
-        const checkOuDate = checkOutAt.toDate();
-        const checkInDate = checkInAt.toDate();
-
-        let diffMs = checkOuDate - checkInDate; // milliseconds
-        let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-        console.log(diffMins + "minutes");
-        const tmpWom = diffMins;
-        const minWom = Math.min(wom, tmpWom);
-        wom = minWom;
-      }
-
-      const apiKey = providerDoc.data().apiKey;
-      const aim = providerDoc.data().aim;
-
-      if (apiKey === undefined || apiKey === null) {
-        console.log("ApiKey is null or undefined, providerId: " + providerId);
-        return null;
-      }
-      const data = {
-        apiKey: apiKey,
-        womCount: wom,
-        lat: 0.0,
-        long: 0.0,
-        aim: aim,
-      };
-      console.log(data);
-
-      const headers = {
-        "X-SuperSecret-Key": process.env.SECRET_HEADER_KEY,
-      };
-
-      const response = await axios.post(
-        process.env.WOM_SERVICE_DOMAIN + "/vouchers",
-        data,
-        {
-          headers: headers,
-        }
-      );
-      console.log(response.status);
-      const link = response.data.womLink;
-      const pin = response.data.womPassword;
-
-      const providerName = providerDoc.data().name;
-      return Email.sendWomEmail(
-        link,
-        wom,
-        email,
-        pin,
-        user.name,
-        providerName,
-        eventName
-      );
-    } catch (ex) {
-      console.log("onUpdateCheckIn failed");
-      console.log(ex);
-      return null;
-    }
-  });
-
 /*
 export const onUserCreated = functions
   .region("europe-west3")
@@ -410,198 +209,6 @@ export const onUserCreated = functions
     );
   });
 */
-
-/// OUTPUT STATUS
-/// user_already_exist:
-/// invalid_fiscal_code:
-exports.createUser = functions
-  .region("europe-west3")
-  .https.onRequest(
-    async (request: functions.https.Request, response: functions.Response) => {
-      cors(request, response, async () => {
-        console.log(request.body);
-
-        if (request.method !== "POST") {
-          response.status(403).send("Forbidden!");
-          return;
-        }
-        //const now = new Date();
-        const data = request.body;
-        const email = data.email;
-
-        if (email === null) {
-          console.log("Email is missing");
-          throw new functions.https.HttpsError(
-            "invalid-argument",
-            "Email is missing"
-          );
-        }
-
-        console.log("user " + email + " request creation");
-        const d = await db
-          .collection("users")
-          .where("email", "==", email)
-          .limit(1)
-          .get();
-
-        if (d.docs.length > 0) {
-          console.log(d.docs[0].data());
-          const userData = d.docs[0].data();
-
-          /*
-        if (userData.emailVerified) {
-          if (data.providerId !== null && data.providerName !== null) {
-            sendUserCard(userData, data.providerId, data.providerName);
-             }
-        }*/
-
-          response
-            .send({
-              status: "user_already_exist",
-              emailVerified: userData.emailVerified,
-              userId: userData.id,
-            })
-            .end();
-          return;
-        }
-
-        if (
-          data.cf === null ||
-          data.name === null ||
-          data.surname === null ||
-          data.providerId === null ||
-          data.providerName === null ||
-          data.gender === null
-        ) {
-          console.log("Some field is null");
-          throw new functions.https.HttpsError(
-            "invalid-argument",
-            "Missing some data"
-          );
-        }
-
-        if (!CodiceFiscale.check(data.cf)) {
-          response
-            .send({
-              status: "invalid_fiscal_code",
-            })
-            .end();
-          return;
-        }
-
-        const fiscalCode = new CodiceFiscale(data.cf);
-        const bornIn = fiscalCode.birthday;
-        try {
-          const timestampNow = firestore.Timestamp.fromDate(new Date());
-          const bornInTimestamp = firestore.Timestamp.fromDate(bornIn);
-          const batch = db.batch();
-          const userRef = db.collection("users").doc();
-          const secret = randomstring.generate(8);
-
-          batch.set(userRef, {
-            emailVerified: false,
-            name: data.name,
-            id: userRef.id,
-            cf: data.cf,
-            addedOn: timestampNow,
-            surname: data.surname,
-            email: data.email,
-            secret: secret,
-            providerId: data.providerId,
-            providerName: data.providerName,
-          });
-
-          const userPrivateRef = db.collection("usersPrivateData").doc();
-          batch.set(userPrivateRef, {
-            id: userPrivateRef.id,
-            bornIn: bornInTimestamp,
-            gender: data.gender,
-          });
-          await batch.commit();
-          console.log("new user crated " + data.email);
-
-          const fullName = data.name + " " + data.surname;
-          Email.sendVerificationEmail(fullName, data.email, userRef.id, secret);
-          response
-            .send({
-              status: "success",
-            })
-            .end();
-        } catch (err: any) {
-          console.log(err);
-          throw new functions.https.HttpsError("aborted", err);
-        }
-      });
-    }
-  );
-
-exports.verifyEmail = functions
-  .region("europe-west3")
-  .https.onRequest(
-    async (request: functions.https.Request, response: functions.Response) => {
-      cors(request, response, async () => {
-        console.log(request.body);
-
-        if (request.method !== "POST") {
-          response.status(403).send("Forbidden!");
-          return;
-        }
-
-        const data = request.body;
-        const userId = data.userId;
-        const providerId = data.providerId;
-        const secret = data.secret;
-
-        if (providerId === null || secret === null || userId === null) {
-          const message =
-            "Missing data: providerId: " +
-            providerId +
-            ", secret: " +
-            secret +
-            ", userId: userId";
-          console.log(message);
-          throw new functions.https.HttpsError("invalid-argument", message);
-        }
-
-        const userDoc = await db.collection("users").doc(userId).get();
-
-        if (!userDoc.exists) {
-          console.log("User not found");
-          throw new functions.https.HttpsError("not-found", "User not found");
-        }
-        const userData = userDoc.data();
-
-        if (userData.secret !== null && userData.secret == secret) {
-          if (userData.emailVerified) {
-            response.send({
-              status: "user_already_verified",
-            });
-            return;
-          }
-
-          await db.collection("users").doc(userId).update({
-            secret: null,
-            emailVerified: true,
-          });
-
-          const providerDoc = await db
-            .collection("providers")
-            .doc(providerId)
-            .get();
-          const providerName = providerDoc.data().name;
-
-          await sendUserCard(userData, providerId, providerName);
-          response.sendStatus(200);
-        } else {
-          console.log("secret is not correct");
-          throw new functions.https.HttpsError(
-            "invalid-argument",
-            "secret is not correct"
-          );
-        }
-      });
-    }
-  );
 
 /*
 export const onUserVerificationDone = functions
@@ -668,52 +275,7 @@ export const onUserVerificationDone = functions
   });
 */
 
-async function sendUserCard(
-  data: FirebaseFirestore.DocumentData,
-  providerId: string,
-  providerName: string
-) {
-  const userId = data.id;
-  const name = data.name;
-  const surname = data.surname;
-  const fullName = name + " " + surname;
-  const cf = data.cf;
-  const email = data.email;
-  //const activityName = data.providerName;
-  //const providerId = data.providerId;
-  const url =
-    "https://cmi.digit.srl/profile/" +
-    userId +
-    "?" +
-    "name=" +
-    name +
-    "&surname=" +
-    surname +
-    "&cf=" +
-    cf +
-    "&pId=" +
-    providerId;
-  //"&email=" +
-  //email;
-
-  const buffer = await draw.drawUserCard(
-    providerName,
-    name,
-    surname,
-    cf,
-    email,
-    url
-  );
-  return Email.sendUserCardEmail(fullName, email, cf, buffer, providerName)
-    .then(() => {
-      return true;
-    })
-    .catch((err: any) => {
-      console.log(err);
-      throw new functions.https.HttpsError("aborted", err);
-    });
-}
-
+// only internals
 export const changeClaim = functions
   .region("europe-west3")
   .https.onRequest(
@@ -1128,10 +690,8 @@ export const confirmPendingInvite = functions
 
         console.log(jManagers);
 
-        await db.doc("providers" + "/" + providerId).update(jManagers);
-        await db
-          .collection("providers")
-          .doc(providerId)
+        await providerDocRef(providerId).update(jManagers);
+        await providerDocRef(providerId)
           .collection("pendingInvite")
           .doc(inviteId)
           .update({

@@ -14,7 +14,6 @@ _$_UserRequest _$$_UserRequestFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String,
       providerId: json['providerId'] as String,
       providerName: json['providerName'] as String,
-      gender: json['gender'] as String,
     );
 
 Map<String, dynamic> _$$_UserRequestToJson(_$_UserRequest instance) =>
@@ -25,5 +24,4 @@ Map<String, dynamic> _$$_UserRequestToJson(_$_UserRequest instance) =>
       'email': instance.email,
       'providerId': instance.providerId,
       'providerName': instance.providerName,
-      'gender': instance.gender,
     };

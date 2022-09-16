@@ -94,12 +94,14 @@ _$_GenderCount _$$_GenderCountFromJson(Map<String, dynamic> json) =>
     _$_GenderCount(
       male: json['male'] as int,
       female: json['female'] as int,
-      notDeclared: json['notDeclared'] as int,
+      notBinary: json['notBinary'] as int,
+      notAvailable: json['notAvailable'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$_GenderCountToJson(_$_GenderCount instance) =>
     <String, dynamic>{
       'male': instance.male,
       'female': instance.female,
-      'notDeclared': instance.notDeclared,
+      'notBinary': instance.notBinary,
+      'notAvailable': instance.notAvailable,
     };

@@ -55,11 +55,19 @@ export function sendVerificationEmail(
   fullName: string,
   email: string,
   userId: string,
-  secret: string
+  secret: string,
+  providerId: string
+  //privateId: string
 ) {
   const emails = [email];
 
-  const url = "https://cmi.digit.srl/verification/" + userId + "/" + secret;
+  const url =
+    "https://cmi.digit.srl/verification/" +
+    userId +
+    "/" +
+    secret +
+    "/" +
+    providerId;
 
   const json = JSON.stringify({
     fullName: fullName,

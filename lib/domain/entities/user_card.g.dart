@@ -51,6 +51,8 @@ _$_EventUser _$$_EventUserFromJson(Map<String, dynamic> json) => _$_EventUser(
       surname: json['surname'] as String?,
       cf: json['cf'] as String?,
       email: json['email'] as String?,
+      privateId: json['privateId'] as String?,
+      fromExternalOrganization: json['fromExternalOrganization'] as bool,
       checkInAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['checkInAt'], const MyDateTimeConverter().fromJson),
       checkOutAt: _$JsonConverterFromJson<Timestamp, DateTime>(
@@ -64,6 +66,8 @@ Map<String, dynamic> _$$_EventUserToJson(_$_EventUser instance) =>
       'surname': instance.surname,
       'cf': instance.cf,
       'email': instance.email,
+      'privateId': instance.privateId,
+      'fromExternalOrganization': instance.fromExternalOrganization,
       'checkInAt': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.checkInAt, const MyDateTimeConverter().toJson),
       'checkOutAt': _$JsonConverterToJson<Timestamp, DateTime>(

@@ -23,7 +23,7 @@ mixin _$EmailVerificationState {
     required TResult Function() userNotExist,
     required TResult Function() invalidData,
     required TResult Function() loading,
-    required TResult Function(Object error, StackTrace st) error,
+    required TResult Function(Object? error, StackTrace? st) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -33,7 +33,7 @@ mixin _$EmailVerificationState {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,7 +43,7 @@ mixin _$EmailVerificationState {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -145,7 +145,7 @@ class _$EmailVerificationInitial implements EmailVerificationInitial {
     required TResult Function() userNotExist,
     required TResult Function() invalidData,
     required TResult Function() loading,
-    required TResult Function(Object error, StackTrace st) error,
+    required TResult Function(Object? error, StackTrace? st) error,
   }) {
     return initial();
   }
@@ -158,7 +158,7 @@ class _$EmailVerificationInitial implements EmailVerificationInitial {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
   }) {
     return initial?.call();
   }
@@ -171,7 +171,7 @@ class _$EmailVerificationInitial implements EmailVerificationInitial {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -277,7 +277,7 @@ class _$EmailVerificationVerified implements EmailVerificationVerified {
     required TResult Function() userNotExist,
     required TResult Function() invalidData,
     required TResult Function() loading,
-    required TResult Function(Object error, StackTrace st) error,
+    required TResult Function(Object? error, StackTrace? st) error,
   }) {
     return verified();
   }
@@ -290,7 +290,7 @@ class _$EmailVerificationVerified implements EmailVerificationVerified {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
   }) {
     return verified?.call();
   }
@@ -303,7 +303,7 @@ class _$EmailVerificationVerified implements EmailVerificationVerified {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
     required TResult orElse(),
   }) {
     if (verified != null) {
@@ -410,7 +410,7 @@ class _$EmailVerificationUserNotExist implements EmailVerificationUserNotExist {
     required TResult Function() userNotExist,
     required TResult Function() invalidData,
     required TResult Function() loading,
-    required TResult Function(Object error, StackTrace st) error,
+    required TResult Function(Object? error, StackTrace? st) error,
   }) {
     return userNotExist();
   }
@@ -423,7 +423,7 @@ class _$EmailVerificationUserNotExist implements EmailVerificationUserNotExist {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
   }) {
     return userNotExist?.call();
   }
@@ -436,7 +436,7 @@ class _$EmailVerificationUserNotExist implements EmailVerificationUserNotExist {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
     required TResult orElse(),
   }) {
     if (userNotExist != null) {
@@ -544,7 +544,7 @@ class _$EmailVerificationInvalidData implements EmailVerificationInvalidData {
     required TResult Function() userNotExist,
     required TResult Function() invalidData,
     required TResult Function() loading,
-    required TResult Function(Object error, StackTrace st) error,
+    required TResult Function(Object? error, StackTrace? st) error,
   }) {
     return invalidData();
   }
@@ -557,7 +557,7 @@ class _$EmailVerificationInvalidData implements EmailVerificationInvalidData {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
   }) {
     return invalidData?.call();
   }
@@ -570,7 +570,7 @@ class _$EmailVerificationInvalidData implements EmailVerificationInvalidData {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
     required TResult orElse(),
   }) {
     if (invalidData != null) {
@@ -675,7 +675,7 @@ class _$EmailVerificationLoading implements EmailVerificationLoading {
     required TResult Function() userNotExist,
     required TResult Function() invalidData,
     required TResult Function() loading,
-    required TResult Function(Object error, StackTrace st) error,
+    required TResult Function(Object? error, StackTrace? st) error,
   }) {
     return loading();
   }
@@ -688,7 +688,7 @@ class _$EmailVerificationLoading implements EmailVerificationLoading {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
   }) {
     return loading?.call();
   }
@@ -701,7 +701,7 @@ class _$EmailVerificationLoading implements EmailVerificationLoading {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -763,7 +763,7 @@ abstract class _$$EmailVerificationErrorCopyWith<$Res> {
   factory _$$EmailVerificationErrorCopyWith(_$EmailVerificationError value,
           $Res Function(_$EmailVerificationError) then) =
       __$$EmailVerificationErrorCopyWithImpl<$Res>;
-  $Res call({Object error, StackTrace st});
+  $Res call({Object? error, StackTrace? st});
 }
 
 /// @nodoc
@@ -784,14 +784,11 @@ class __$$EmailVerificationErrorCopyWithImpl<$Res>
     Object? st = freezed,
   }) {
     return _then(_$EmailVerificationError(
-      error == freezed
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as Object,
-      st == freezed
+      error: error == freezed ? _value.error : error,
+      st: st == freezed
           ? _value.st
           : st // ignore: cast_nullable_to_non_nullable
-              as StackTrace,
+              as StackTrace?,
     ));
   }
 }
@@ -799,12 +796,12 @@ class __$$EmailVerificationErrorCopyWithImpl<$Res>
 /// @nodoc
 
 class _$EmailVerificationError implements EmailVerificationError {
-  const _$EmailVerificationError(this.error, this.st);
+  const _$EmailVerificationError({this.error, this.st});
 
   @override
-  final Object error;
+  final Object? error;
   @override
-  final StackTrace st;
+  final StackTrace? st;
 
   @override
   String toString() {
@@ -840,7 +837,7 @@ class _$EmailVerificationError implements EmailVerificationError {
     required TResult Function() userNotExist,
     required TResult Function() invalidData,
     required TResult Function() loading,
-    required TResult Function(Object error, StackTrace st) error,
+    required TResult Function(Object? error, StackTrace? st) error,
   }) {
     return error(this.error, st);
   }
@@ -853,7 +850,7 @@ class _$EmailVerificationError implements EmailVerificationError {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
   }) {
     return error?.call(this.error, st);
   }
@@ -866,7 +863,7 @@ class _$EmailVerificationError implements EmailVerificationError {
     TResult Function()? userNotExist,
     TResult Function()? invalidData,
     TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult Function(Object? error, StackTrace? st)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -921,10 +918,10 @@ class _$EmailVerificationError implements EmailVerificationError {
 
 abstract class EmailVerificationError implements EmailVerificationState {
   const factory EmailVerificationError(
-      final Object error, final StackTrace st) = _$EmailVerificationError;
+      {final Object? error, final StackTrace? st}) = _$EmailVerificationError;
 
-  Object get error;
-  StackTrace get st;
+  Object? get error;
+  StackTrace? get st;
   @JsonKey(ignore: true)
   _$$EmailVerificationErrorCopyWith<_$EmailVerificationError> get copyWith =>
       throw _privateConstructorUsedError;

@@ -10,7 +10,7 @@ class EmailVerificationState with _$EmailVerificationState {
   const factory EmailVerificationState.userNotExist() = EmailVerificationUserNotExist;
   const factory EmailVerificationState.invalidData() = EmailVerificationInvalidData;
   const factory EmailVerificationState.loading() = EmailVerificationLoading;
-  const factory EmailVerificationState.error(Object error, StackTrace st) = EmailVerificationError;
+  const factory EmailVerificationState.error({Object? error, StackTrace? st}) = EmailVerificationError;
 }
 
 @freezed
@@ -19,6 +19,7 @@ class EmailVerificationData with _$EmailVerificationData {
     required String secret,
     required String userId,
     required String providerId,
+    // required String privateId,
   }) = _EmailVerificationData;
 
   factory EmailVerificationData.fromJson(Map<String, dynamic> json) =>

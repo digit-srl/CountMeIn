@@ -1,4 +1,5 @@
 import 'package:countmein/cloud.dart';
+import 'package:countmein/domain/entities/user_ids.dart';
 import 'package:countmein/src/user/application/user_profile_state.dart';
 import 'package:countmein/src/user/data/dto/user_profile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,8 +8,9 @@ import '../../../constants.dart';
 import '../../admin/application/confirm_invite.dart';
 
 final userProfileStreamProvider = StreamProvider.autoDispose
-    .family<UserProfile, String>((ref, userId) async* {
-  final stream = Cloud.userProfileDoc(userId).snapshots();
+    .family<UserProfile, UserIds>((ref, userIds) async* {
+  final stream =
+      Cloud.userProfileDoc(userIds.providerId, userIds.userId).snapshots();
 
   await for (final snap in stream) {
     if (snap.exists) {
@@ -18,22 +20,22 @@ final userProfileStreamProvider = StreamProvider.autoDispose
 });
 
 final userProfileNotifierProvider = StateNotifierProvider.autoDispose
-    .family<UserProfileNotifier, UserProfileState, String>((ref, userId) {
-  return UserProfileNotifier(userId, ref.read);
+    .family<UserProfileNotifier, UserProfileState, UserIds>((ref, userIds) {
+  return UserProfileNotifier(userIds, ref.read);
 });
 
 class UserProfileNotifier extends StateNotifier<UserProfileState> {
-  final String userId;
+  final UserIds userIds;
   final Reader read;
 
-  UserProfileNotifier(this.userId, this.read)
+  UserProfileNotifier(this.userIds, this.read)
       : super(const UserProfileInitial());
 
   Future getOtpCode() async {
     state = const UserProfileLoading();
     final res = await read(dioProvider).post(
       requestOtpCodeUrl,
-      data: {'userId': userId},
+      data: {'userId': userIds.userId},
     );
     if (res.statusCode == 200) {
       // final map = Map<String, dynamic>.from(res.data);
@@ -48,11 +50,15 @@ class UserProfileNotifier extends StateNotifier<UserProfileState> {
     try {
       final res = await read(dioProvider).post(
         verifyOtpCodeUrl,
-        data: {'userId': userId, 'otpCode': otpCode},
+        data: {
+          'userId': userIds.userId,
+          'otpCode': otpCode,
+          'providerId': userIds.providerId
+        },
       );
       if (res.statusCode == 200) {
         // final map = Map<String, dynamic>.from(res.data);
-        state = UserProfileData(userId);
+        state = const UserProfileData();
       } else {
         state = const UserProfileError();
       }
@@ -64,6 +70,6 @@ class UserProfileNotifier extends StateNotifier<UserProfileState> {
   }
 
   void reset() {
-    state = UserProfileInitial();
+    state = const UserProfileInitial();
   }
 }

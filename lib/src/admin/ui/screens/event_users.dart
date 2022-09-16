@@ -61,8 +61,8 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
     final eventState = ref.watch(eventProvider(ids));
     final usersState = ref.watch(eventUsersStreamProvider(ids));
     final subEvent = ids.subEventId == null ? null : ref.watch(subEventProvider(ids)).value;
-    final role = ref.watch(userRoleProvider(widget.providerId));
-    final isOwner = role == UserRole.admin;
+    // final role = ref.watch(userRoleProvider(widget.providerId));
+    // final isOwner = role == UserRole.admin;
     final hasData = usersState is AsyncData;
     final anonymous = eventState.value?.anonymous ?? true;
     return Scaffold(
@@ -76,7 +76,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
             CMICard(
               child: Column(
                 children: [
-                  Text('Gender'),
+                  Text('Genere'),
                   SizedBox(
                     height: 250,
                     child: Row(
@@ -109,7 +109,8 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                               sections: showingSections(
                                 subEvent?.genderCount?.male ?? 0,
                                 subEvent?.genderCount?.female ?? 0,
-                                subEvent?.genderCount?.notDeclared ?? 0,
+                                subEvent?.genderCount?.notBinary ?? 0,
+                                subEvent?.genderCount?.notAvailable ?? 0,
                               ),
                             ),
                           ),
@@ -150,7 +151,18 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                                 // const Text('?'),
                                 Icon(Icons.not_interested, color: Colors.green),
                                 const SizedBox(width: 8),
-                                Text(subEvent?.genderCount?.notDeclared.toString() ??
+                                Text(subEvent?.genderCount?.notBinary.toString() ??
+                                    '-'),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                // const Text('?'),
+                                Icon(Icons.not_interested, color: Colors.grey),
+                                const SizedBox(width: 8),
+                                Text(subEvent?.genderCount?.notAvailable.toString() ??
                                     '-'),
                               ],
                             ),
@@ -365,12 +377,13 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
     }
   }
 
-  List<PieChartSectionData> showingSections(int m, int f, int na) {
+  List<PieChartSectionData> showingSections(int m, int f, int nB, int na) {
     final total = m + f + na;
     final mPercentage = m / total * 100;
     final fPercentage = f / total * 100;
+    final nbPercentage = nB / total * 100;
     final naPercentage = na / total * 100;
-    return List.generate(3, (i) {
+    return List.generate(4, (i) {
       // final isTouched = i == touchedIndex;
       final isTouched = false;
       final fontSize = isTouched ? 20.0 : 16.0;
@@ -409,8 +422,21 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
         case 2:
           return PieChartSectionData(
             color: Colors.green,
+            value: nbPercentage,
+            title: '${nbPercentage.toStringAsFixed(1)}%',
+            radius: radius,
+            titleStyle: TextStyle(
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xffffffff)),
+            badgeWidget: Icon(Icons.female),
+            badgePositionPercentageOffset: .98,
+          );
+        case 3:
+          return PieChartSectionData(
+            color: Colors.grey,
             value: naPercentage,
-            title: '${naPercentage}%',
+            title: '${naPercentage.toStringAsFixed(1)}%',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,

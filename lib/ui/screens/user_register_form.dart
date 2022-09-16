@@ -5,9 +5,13 @@ import 'package:countmein/src/common/domain/entities/gender.dart';
 import 'package:countmein/src/common/ui/cmi_date_picker.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_dropdown.dart';
+import 'package:countmein/src/user/application/user_card_recovering_notifier.dart';
 import 'package:countmein/src/user/data/dto/user_request.dart';
+import 'package:countmein/src/user/ui/widgets/user_profile.dart';
+import 'package:countmein/src/user/ui/widgets/waiting_otp_code.dart';
 import 'package:countmein/src/user_register/application/user_registering_notifier.dart';
 import 'package:countmein/src/user_register/application/user_registering_state.dart';
+import 'package:countmein/ui/screens/user_event.dart';
 import 'package:countmein/ui/widgets/loading.dart';
 import 'package:countmein/utils.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -25,6 +29,7 @@ import '../../src/common/mu_styles.dart';
 import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/user_card.dart';
 import '../validators.dart';
+import '../widgets/cmi_error_widget.dart';
 import '../widgets/my_text_field.dart';
 
 final nameControllerProvider =
@@ -66,21 +71,33 @@ final selectedGenderProvider = StateProvider.autoDispose<Gender?>((ref) {
   return null;
 });
 
-class UserFormScreen extends ConsumerWidget {
-  static const routeName = '/userForm';
-  final CMIProvider cmiProvider;
+class UserFormScreen extends ConsumerStatefulWidget {
+  static const routeName = 'register';
 
-  UserFormScreen({
+  // final CMIProvider cmiProvider;
+  final String providerId;
+
+  const UserFormScreen({
     Key? key,
-    required this.cmiProvider,
+    required this.providerId,
   }) : super(key: key);
 
+  @override
+  ConsumerState createState() => _State();
+}
+
+class _State extends ConsumerState<UserFormScreen> {
   final _formKey = GlobalKey<FormState>();
 
   DateTime? selectedBornDate;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    final cmiProvider = ref.watch(singleEventProvider(widget.providerId)).value;
+    if (cmiProvider == null) {
+      return const LoadingWidget();
+    }
+
     final nameController = ref.watch(nameControllerProvider);
     final surnameController = ref.watch(surnameControllerProvider);
     final cfController = ref.watch(cfControllerProvider);
@@ -106,139 +123,143 @@ class UserFormScreen extends ConsumerWidget {
     });
 
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
-        child: Form(
-          key: _formKey,
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 450),
-            child: ListView(
+        child: CMICard(
+          child: Form(
+            key: _formKey,
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 450),
               padding: const EdgeInsets.all(16),
-              children: [
-                Text(
-                  cmiProvider.name,
-                  style: const TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 16),
-                CMITextField(
-                  controller: nameController,
-                  hintText: 'Nome',
-                  validator: nameSurnameValidator,
-                ),
-                const SizedBox(height: 16),
-                CMITextField(
-                  controller: surnameController,
-                  hintText: 'Cognome',
-                  validator: nameSurnameValidator,
-                ),
-                const SizedBox(height: 16),
-                // if (cmiProvider.releaseWom)
-                CMITextField(
-                  controller: emailController,
-                  hintText: 'Email',
-                  validator: MyEmailValidator(errorText: 'Email non valida'),
-                ),
-                const SizedBox(height: 16),
-                CMIDropdownButton<Gender>(
-                  label: 'Sesso percepito',
-                  validator: (v) {
-                    if (v == null) {
-                      return 'Questo campo è obbligatorio';
-                    }
-                    return null;
-                  },
-                  value: selectedGender,
-                  onChanged: (v) {
-                    if (v == null) return;
-                    ref.read(selectedGenderProvider.notifier).state = v;
-                  },
-                  items: Gender.values
-                      .map((e) => DropdownMenuItem<Gender>(
-                          value: e, child: Text(e.text)))
-                      .toList(),
-                ),
-                const SizedBox(height: 16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    cmiProvider.name,
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                  const SizedBox(height: 16),
+                  CMITextField(
+                    controller: nameController,
+                    hintText: 'Nome',
+                    validator: nameSurnameValidator,
+                  ),
+                  const SizedBox(height: 16),
+                  CMITextField(
+                    controller: surnameController,
+                    hintText: 'Cognome',
+                    validator: nameSurnameValidator,
+                  ),
+                  const SizedBox(height: 16),
+                  // if (cmiProvider.releaseWom)
+                  CMITextField(
+                    controller: emailController,
+                    hintText: 'Email',
+                    validator: MyEmailValidator(errorText: 'Email non valida'),
+                  ),
+                  const SizedBox(height: 16),
+                  // CMIDropdownButton<Gender>(
+                  //   label: 'Sesso percepito',
+                  //   validator: (v) {
+                  //     if (v == null) {
+                  //       return 'Questo campo è obbligatorio';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   value: selectedGender,
+                  //   onChanged: (v) {
+                  //     if (v == null) return;
+                  //     ref.read(selectedGenderProvider.notifier).state = v;
+                  //   },
+                  //   items: Gender.values
+                  //       .map((e) => DropdownMenuItem<Gender>(
+                  //           value: e, child: Text(e.text)))
+                  //       .toList(),
+                  // ),
+                  // const SizedBox(height: 16),
 
-                Row(
-                  children: [
-                    Flexible(
-                      child: CMITextField(
-                        controller: cfController,
-                        hintText: 'Codice Fiscale',
-                        textCapitalization: TextCapitalization.characters,
-                        validator: CFValidator(),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: CMITextField(
+                          controller: cfController,
+                          hintText: 'Codice Fiscale',
+                          textCapitalization: TextCapitalization.characters,
+                          validator: CFValidator(),
+                        ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () async {
-                        final cf = await showDialog(
-                            context: context,
-                            builder: (c) => Dialog(
-                                  child: Container(
-                                      constraints:
-                                          const BoxConstraints(maxWidth: 500),
-                                      child: const FormCodiceFiscale()),
-                                ));
+                      TextButton(
+                        onPressed: () async {
+                          final cf = await showDialog(
+                              context: context,
+                              builder: (c) => Dialog(
+                                    child: Container(
+                                        constraints:
+                                            const BoxConstraints(maxWidth: 500),
+                                        child: const FormCodiceFiscale()),
+                                  ));
 
-                        if (cf != null && cf is String && cf.isNotEmpty) {
-                          cfController.text = cf;
+                          if (cf != null && cf is String && cf.isNotEmpty) {
+                            cfController.text = cf;
+                          }
+                        },
+                        child: const Text('Calcola'),
+                      ),
+                    ],
+                  ),
+
+                  // const FormCodiceFiscale(),
+                  const SizedBox(height: 32),
+                  ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          final name = nameController.text.trim();
+                          final surname = surnameController.text.trim();
+                          final email = emailController.text.trim();
+                          final cf = cfController.text.trim().toUpperCase();
+                          // final gender =
+                          //     enumToString(selectedGender) ?? 'notBinary';
+
+                          // if(cmiProvider.releaseWom){
+                          if (email.isNotEmpty) {
+                            ref.read(userRegisteringProvider.notifier).register(
+                                  UserRequest(
+                                    name: name,
+                                    surname: surname,
+                                    cf: cf,
+                                    email: email,
+                                    providerId: cmiProvider.id,
+                                    providerName: cmiProvider.name,
+                                    // gender: gender,
+                                  ),
+                                );
+                          }
+                          // } else {
+                          //   var user = UserCard(
+                          //     id: const Uuid().v4(),
+                          //     name: name,
+                          //     surname: surname,
+                          //     cf: cf,
+                          //     email: email,
+                          //     gender: gender,
+                          //     addedOn: DateTime.now(),
+                          //     secret: const Uuid().v4().substring(0, 8),
+                          //   );
+                          //
+                          //   ref
+                          //       .read(userRegisteringProvider.notifier)
+                          //       .registerLocalUser(user);
+                          // }
                         }
                       },
-                      child: const Text('Calcola'),
-                    ),
-                  ],
-                ),
-
-                // const FormCodiceFiscale(),
-                const SizedBox(height: 32),
-                ElevatedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        final name = nameController.text.trim();
-                        final surname = surnameController.text.trim();
-                        final email = emailController.text.trim();
-                        final cf = cfController.text.trim().toUpperCase();
-                        final gender =
-                            enumToString(selectedGender) ?? 'notDeclared';
-
-                        // if(cmiProvider.releaseWom){
-                        if (email.isNotEmpty) {
-                          ref.read(userRegisteringProvider.notifier).register(
-                                UserRequest(
-                                  name: name,
-                                  surname: surname,
-                                  cf: cf,
-                                  email: email,
-                                  providerId: cmiProvider.id,
-                                  providerName: cmiProvider.name,
-                                  gender: gender,
-                                ),
-                              );
-                        }
-                        // } else {
-                        //   var user = UserCard(
-                        //     id: const Uuid().v4(),
-                        //     name: name,
-                        //     surname: surname,
-                        //     cf: cf,
-                        //     email: email,
-                        //     gender: gender,
-                        //     addedOn: DateTime.now(),
-                        //     secret: const Uuid().v4().substring(0, 8),
-                        //   );
-                        //
-                        //   ref
-                        //       .read(userRegisteringProvider.notifier)
-                        //       .registerLocalUser(user);
-                        // }
-                      }
-                    },
-                    child: const Text('Iscriviti')),
-                const SizedBox(height: 16),
-                // TextButton(
-                //     onPressed: () {},
-                //     child: const Text('Recupera una precedente iscrizione')),
-                // const SizedBox(height: 16),
-              ],
+                      child: const Text('Iscriviti')),
+                  const SizedBox(height: 16),
+                  // TextButton(
+                  //     onPressed: () {},
+                  //     child: const Text('Recupera una precedente iscrizione')),
+                  // const SizedBox(height: 16),
+                ],
+              ),
             ),
           ),
         ),
@@ -297,7 +318,7 @@ class UserRegisteringDialog extends ConsumerWidget {
         invalidFiscalCode: () {
           return Column(
             children: [
-              Text('Attenzione: il codice fiscale inserito non è valido!')
+              const Text('Attenzione: il codice fiscale inserito non è valido!')
             ],
           );
         },
@@ -323,7 +344,7 @@ class FormCodiceFiscale extends HookConsumerWidget {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          Text('Calcola il tuo codice fiscale'),
+          const Text('Calcola il tuo codice fiscale'),
           const SizedBox(height: 32),
           CMITextField(
             controller: nameController,

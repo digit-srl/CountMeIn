@@ -9,6 +9,7 @@ class CMICard extends StatelessWidget {
   final bool inverseColor;
   final BoxConstraints? constraints;
   final bool center;
+  final bool animated;
 
   const CMICard({
     Key? key,
@@ -19,6 +20,7 @@ class CMICard extends StatelessWidget {
     this.constraints,
     this.inverseColor = false,
     this.center = false,
+    this.animated = false,
   }) : super(key: key);
 
   @override
@@ -39,7 +41,8 @@ class CMICard extends StatelessWidget {
               ? Theme.of(context).colorScheme.inversePrimary
               : null,
           margin: margin,
-          child: Container(
+          child: AnimatedContainer(
+            duration: animated ? const Duration(milliseconds: 500) : Duration.zero,
             constraints: constraints,
             padding: const EdgeInsets.all(16),
             alignment: center? Alignment.center : null,

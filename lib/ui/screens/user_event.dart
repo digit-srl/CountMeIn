@@ -2,9 +2,11 @@ import 'package:countmein/cloud.dart';
 import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
+import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/ui/screens/user_register_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:countmein/ui/screens/user_qr_code.dart';
 import 'package:countmein/ui/widgets/loading.dart';
@@ -17,38 +19,71 @@ final singleEventProvider = StreamProvider.autoDispose
 
   await for (final s in stream) {
     if (s.exists) {
-      try{
+      try {
         final data = s.data();
         if (data != null) {
           yield CMIProvider.fromJson(data);
         }
-      }catch(ex,st){
+      } catch (ex, st) {
         print(st);
       }
     }
   }
 });
 
-class UserEventScreen extends ConsumerWidget {
-  static const routeName = '/event';
+class UserProviderScreen extends ConsumerWidget {
+  static const routeName = '/provider';
 
   final String providerId;
 
-  const UserEventScreen({
+  const UserProviderScreen({
     Key? key,
     required this.providerId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final eventState = ref.watch(singleEventProvider(providerId)).asData?.value;
-    if (eventState == null) {
+    final cmiProvider =
+        ref.watch(singleEventProvider(providerId)).asData?.value;
+    if (cmiProvider == null) {
       return const LoadingWidget();
     }
 
-    if (eventState.releaseWom) {
+    return Scaffold(
+      body: Center(
+        child: CMICard(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  cmiProvider.name,
+                  style: const TextStyle(fontSize: 18),
+                ),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: () {
+                    context.go('/provider/$providerId/register');
+                  },
+                  child: const Text('Registrati'),
+                ),
+                const SizedBox(height: 24),
+                const Text('oppure'),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                    onPressed: () {
+                      context.go('/provider/$providerId/recover');
+                    }, child: const Text('Recupera il tuo tesserino')),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    if (cmiProvider.releaseWom) {
       return UserFormScreen(
-        cmiProvider: eventState,
+        providerId: providerId,
       );
     }
     return ValueListenableBuilder<Box<dynamic>>(
@@ -58,13 +93,14 @@ class UserEventScreen extends ConsumerWidget {
           if (userJson != null) {
             final userMap = Map<String, dynamic>.from(userJson);
             return UserQRCodeScreen(
-              session: eventState,
+              session: cmiProvider,
               user: UserCard.fromJson(userMap),
             );
           }
           return UserFormScreen(
-            cmiProvider: eventState,
+            providerId: providerId,
           );
         });
   }
 }
+

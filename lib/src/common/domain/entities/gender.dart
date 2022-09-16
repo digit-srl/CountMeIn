@@ -1,7 +1,7 @@
 enum Gender {
   male,
   female,
-  notDeclared,
+  notBinary,
 }
 
 extension GenderX on Gender{
@@ -9,11 +9,11 @@ extension GenderX on Gender{
   String get text {
     switch(this){
       case Gender.male:
-        return 'Uomo';
+        return 'Maschio';
       case Gender.female:
-        return 'Donna';
-      case Gender.notDeclared:
-        return 'Non dichiarato';
+        return 'Femmina';
+      case Gender.notBinary:
+        return 'Non binario';
     }
   }
 }

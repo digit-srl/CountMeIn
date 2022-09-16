@@ -15,7 +15,9 @@ const baseUrl = 'https://$authority';
 const passepartoutActivityId = 'wom-count-me-in';
 const womDomain = kDebugMode ? 'dev.wom.social': 'wom.social';
 
-const createUserUrl = '$functionBaseUrl/createUser';
+const createUserUrl = '$functionBaseUrl/userSignUp-createUser';
 const verifyOtpCodeUrl = '$functionBaseUrl/userProfile-verifyOtpCode';
+const recoverUserUrl = '$functionBaseUrl/userProfile-recoverUser';
+const recoverUserCardUrl = '$functionBaseUrl/userSignUp-recoverUserCard';
 const requestOtpCodeUrl = '$functionBaseUrl/userProfile-requestOtpCode';
-const verifyEmailUrl = '$functionBaseUrl/verifyEmail';
+const verifyEmailUrl = '$functionBaseUrl/userSignUp-verifyEmail';

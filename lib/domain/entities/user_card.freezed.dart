@@ -332,6 +332,8 @@ mixin _$EventUser {
   String? get surname => throw _privateConstructorUsedError;
   String? get cf => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  String? get privateId => throw _privateConstructorUsedError;
+  bool get fromExternalOrganization => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get checkInAt => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
@@ -353,6 +355,8 @@ abstract class $EventUserCopyWith<$Res> {
       String? surname,
       String? cf,
       String? email,
+      String? privateId,
+      bool fromExternalOrganization,
       @MyDateTimeConverter() DateTime? checkInAt,
       @MyDateTimeConverter() DateTime? checkOutAt});
 }
@@ -372,6 +376,8 @@ class _$EventUserCopyWithImpl<$Res> implements $EventUserCopyWith<$Res> {
     Object? surname = freezed,
     Object? cf = freezed,
     Object? email = freezed,
+    Object? privateId = freezed,
+    Object? fromExternalOrganization = freezed,
     Object? checkInAt = freezed,
     Object? checkOutAt = freezed,
   }) {
@@ -396,6 +402,14 @@ class _$EventUserCopyWithImpl<$Res> implements $EventUserCopyWith<$Res> {
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      privateId: privateId == freezed
+          ? _value.privateId
+          : privateId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fromExternalOrganization: fromExternalOrganization == freezed
+          ? _value.fromExternalOrganization
+          : fromExternalOrganization // ignore: cast_nullable_to_non_nullable
+              as bool,
       checkInAt: checkInAt == freezed
           ? _value.checkInAt
           : checkInAt // ignore: cast_nullable_to_non_nullable
@@ -420,6 +434,8 @@ abstract class _$$_EventUserCopyWith<$Res> implements $EventUserCopyWith<$Res> {
       String? surname,
       String? cf,
       String? email,
+      String? privateId,
+      bool fromExternalOrganization,
       @MyDateTimeConverter() DateTime? checkInAt,
       @MyDateTimeConverter() DateTime? checkOutAt});
 }
@@ -441,6 +457,8 @@ class __$$_EventUserCopyWithImpl<$Res> extends _$EventUserCopyWithImpl<$Res>
     Object? surname = freezed,
     Object? cf = freezed,
     Object? email = freezed,
+    Object? privateId = freezed,
+    Object? fromExternalOrganization = freezed,
     Object? checkInAt = freezed,
     Object? checkOutAt = freezed,
   }) {
@@ -465,6 +483,14 @@ class __$$_EventUserCopyWithImpl<$Res> extends _$EventUserCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      privateId: privateId == freezed
+          ? _value.privateId
+          : privateId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fromExternalOrganization: fromExternalOrganization == freezed
+          ? _value.fromExternalOrganization
+          : fromExternalOrganization // ignore: cast_nullable_to_non_nullable
+              as bool,
       checkInAt: checkInAt == freezed
           ? _value.checkInAt
           : checkInAt // ignore: cast_nullable_to_non_nullable
@@ -486,6 +512,8 @@ class _$_EventUser implements _EventUser {
       this.surname,
       this.cf,
       this.email,
+      this.privateId,
+      required this.fromExternalOrganization,
       @MyDateTimeConverter() this.checkInAt,
       @MyDateTimeConverter() this.checkOutAt});
 
@@ -503,6 +531,10 @@ class _$_EventUser implements _EventUser {
   @override
   final String? email;
   @override
+  final String? privateId;
+  @override
+  final bool fromExternalOrganization;
+  @override
   @MyDateTimeConverter()
   final DateTime? checkInAt;
   @override
@@ -511,7 +543,7 @@ class _$_EventUser implements _EventUser {
 
   @override
   String toString() {
-    return 'EventUser(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, checkInAt: $checkInAt, checkOutAt: $checkOutAt)';
+    return 'EventUser(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, checkInAt: $checkInAt, checkOutAt: $checkOutAt)';
   }
 
   @override
@@ -524,6 +556,9 @@ class _$_EventUser implements _EventUser {
             const DeepCollectionEquality().equals(other.surname, surname) &&
             const DeepCollectionEquality().equals(other.cf, cf) &&
             const DeepCollectionEquality().equals(other.email, email) &&
+            const DeepCollectionEquality().equals(other.privateId, privateId) &&
+            const DeepCollectionEquality().equals(
+                other.fromExternalOrganization, fromExternalOrganization) &&
             const DeepCollectionEquality().equals(other.checkInAt, checkInAt) &&
             const DeepCollectionEquality()
                 .equals(other.checkOutAt, checkOutAt));
@@ -538,6 +573,8 @@ class _$_EventUser implements _EventUser {
       const DeepCollectionEquality().hash(surname),
       const DeepCollectionEquality().hash(cf),
       const DeepCollectionEquality().hash(email),
+      const DeepCollectionEquality().hash(privateId),
+      const DeepCollectionEquality().hash(fromExternalOrganization),
       const DeepCollectionEquality().hash(checkInAt),
       const DeepCollectionEquality().hash(checkOutAt));
 
@@ -561,6 +598,8 @@ abstract class _EventUser implements EventUser {
       final String? surname,
       final String? cf,
       final String? email,
+      final String? privateId,
+      required final bool fromExternalOrganization,
       @MyDateTimeConverter() final DateTime? checkInAt,
       @MyDateTimeConverter() final DateTime? checkOutAt}) = _$_EventUser;
 
@@ -577,6 +616,10 @@ abstract class _EventUser implements EventUser {
   String? get cf;
   @override
   String? get email;
+  @override
+  String? get privateId;
+  @override
+  bool get fromExternalOrganization;
   @override
   @MyDateTimeConverter()
   DateTime? get checkInAt;

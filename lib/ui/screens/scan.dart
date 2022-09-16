@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:countmein/domain/entities/qcode_data.dart';
 import 'package:countmein/src/admin/application/users_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/utils.dart';
@@ -127,11 +128,11 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                           print('detected data');
 
                           try {
-                            final userQrCode = UserQrCode.fromOldQrCode(data);
+                            final userQrCode = QrCodeData.fromQrCode(data);
 
-                            if (userQrCode.activityId == widget.provider.id ||
+                            if (userQrCode.providerId == widget.provider.id ||
                                 (widget.event.acceptPassepartout &&
-                                    userQrCode.activityId == 'countmein')) {
+                                    userQrCode.providerId == 'countmein')) {
                               if (userWithoutCheckIn.contains(userQrCode.id)) {
                                 return;
                               }
@@ -139,26 +140,20 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                               if (!list.contains(userQrCode.id)) {
                                 processing = true;
 
-                                // final user = userQrCode.toUserCard();
-                                var user = EventUser(
+                                var eventUser = EventUser(
                                   id: userQrCode.id,
                                   name: userQrCode.name,
                                   surname: userQrCode.surname,
                                   email: userQrCode.email,
                                   cf: userQrCode.cf,
+                                  fromExternalOrganization:
+                                      userQrCode.isExternalOrganization,
+                                  privateId: userQrCode.privateId,
                                 );
 
                                 final isSingleAccessType =
                                     widget.event.accessType ==
                                         EventAccessType.single;
-                                // if (isSingleAccessType ||
-                                //     widget.scanMode == ScanMode.checkOut) {
-                                //   user =
-                                //       user.copyWith(checkOutAt: DateTime.now());
-                                // } else {
-                                //   user =
-                                //       user.copyWith(checkInAt: DateTime.now());
-                                // }
 
                                 final userSubEventDocRef =
                                     Cloud.eventsCollection(widget.provider.id)
@@ -166,7 +161,8 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                         .collection('subEvents')
                                         .doc(widget.event.currentSubEvent)
                                         .collection('users')
-                                        .doc(user.id);
+                                        .doc(eventUser.id);
+
                                 final userSubEventDoc =
                                     await userSubEventDocRef.get();
 
@@ -181,15 +177,15 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                               null)) {
                                     userSubEventDocRef
                                         .update({'checkOutAt': DateTime.now()});
-                                    showUpdate(barcode, user);
+                                    showUpdate(barcode, eventUser);
                                   }
                                 } else {
                                   if (!isSingleAccessType &&
                                       widget.scanMode == ScanMode.checkOut) {
-                                    userWithoutCheckIn.add(user.id);
+                                    userWithoutCheckIn.add(eventUser.id);
                                     processing = false;
                                     showToast(
-                                        '${user.name} ${user.surname} non ha effettuato il check in!',
+                                        '${eventUser.name} ${eventUser.surname} non ha effettuato il check in!',
                                         duration: const Duration(seconds: 1),
                                         position: ToastPosition.bottom);
                                     return;
@@ -197,26 +193,44 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
 
                                   if (isSingleAccessType &&
                                       widget.scanMode == ScanMode.checkOut) {
-                                    user = user.copyWith(
+                                    eventUser = eventUser.copyWith(
                                         checkOutAt: DateTime.now());
                                   } else if (!isSingleAccessType &&
                                       widget.scanMode == ScanMode.checkIn) {
-                                    user = user.copyWith(
+                                    eventUser = eventUser.copyWith(
                                         checkInAt: DateTime.now());
                                   }
 
-                                  userSubEventDocRef.set(user.toJson());
-                                  showUpdate(barcode, user);
+                                  final batch =
+                                      FirebaseFirestore.instance.batch();
+                                  batch.set(
+                                      userSubEventDocRef, eventUser.toJson());
+                                  if (eventUser.privateId != null) {
+                                    final privateUserSubEventDocRef =
+                                        Cloud.eventsCollection(
+                                                widget.provider.id)
+                                            .doc(eventId)
+                                            .collection('subEvents')
+                                            .doc(widget.event.currentSubEvent)
+                                            .collection('privateUsers')
+                                            .doc(eventUser.privateId);
+                                    batch.set(privateUserSubEventDocRef,
+                                        {'id': eventUser.privateId});
+                                  }
+                                  batch.commit();
+                                  //userSubEventDocRef.set(eventUser.toJson());
+                                  showUpdate(barcode, eventUser);
                                 }
 
                                 final userRef = Cloud.eventUsersCollection(
-                                        EventIds(
-                                            providerId: widget.provider.id,
-                                            eventId: eventId))
-                                    .doc(user.id);
+                                  EventIds(
+                                    providerId: widget.provider.id,
+                                    eventId: eventId,
+                                  ),
+                                ).doc(eventUser.id);
                                 final globalUserDoc = await userRef.get();
                                 if (!globalUserDoc.exists) {
-                                  final u = user.toJson();
+                                  final u = eventUser.toJson();
                                   u.remove('checkOutAt');
                                   u.remove('checkInAt');
                                   userRef.set(u, SetOptions(merge: true));

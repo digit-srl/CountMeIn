@@ -1,7 +1,6 @@
 import * as Canvas from "canvas";
 import * as QRCode from "qrcode";
-
-// import fs = require("fs");
+import JsBarcode = require("jsbarcode");
 import path = require("path");
 
 // add the code below
@@ -13,7 +12,9 @@ export async function drawUserCard(
   surname: string,
   cf: string,
   email: string,
-  url: string
+  url: string,
+  privateId: string,
+  providerId: string
 ): Promise<Buffer> {
   const height = 800;
   const width = height * 1.6;
@@ -42,12 +43,13 @@ export async function drawUserCard(
   ctx.fillText(surname, startText, qrCodeY + paddingY * 5);
   ctx.fillText(cf, startText, qrCodeY + paddingY * 8);
 
+  const emailY = qrCodeY + qrCodeSize + paddingY * 2;
   ctx.font = "20px Impact";
   ctx.fillStyle = "rgba(211,211,211,1.0)";
   ctx.fillText("Nome", startText, qrCodeY + paddingY);
   ctx.fillText("Cognome", startText, qrCodeY + paddingY * 4);
   ctx.fillText("C.F.", startText, qrCodeY + paddingY * 7);
-  ctx.fillText(email, qrCodeX, qrCodeY + qrCodeSize + paddingY * 2);
+  ctx.fillText(email, qrCodeX, emailY);
 
   // Draw wom logo
   const img = await Canvas.loadImage(
@@ -58,6 +60,19 @@ export async function drawUserCard(
   const imgWidth = imgHeight * ratio;
   const padding = 40;
   ctx.drawImage(img, width - imgWidth - padding, padding, imgWidth, imgHeight);
+
+  const barcodeWidth = 350;
+  const barcodeHeight = 120;
+  const barcodeCanvas = Canvas.createCanvas(barcodeWidth, barcodeHeight);
+  const content = privateId + ";" + providerId;
+  JsBarcode(barcodeCanvas, content);
+  ctx.drawImage(
+    barcodeCanvas,
+    width - barcodeWidth - padding,
+    emailY - barcodeHeight / 2,
+    barcodeWidth,
+    barcodeHeight
+  );
 
   /*
   canvas
@@ -77,5 +92,18 @@ export async function getQrCode(value: string) {
   ctx.fillStyle = "black";
   const qrCode = await QRCode.toCanvas(canvas, value || "", { margin: 1 });
   ctx.drawImage(qrCode, height, width);
+  return canvas.toBuffer("image/png");
+}
+
+export async function getBarcode(value: string) {
+  const height = 150;
+  const width = 450;
+  const canvas = Canvas.createCanvas(width, height);
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "black";
+  const barcode = JsBarcode(canvas, value);
+  ctx.drawImage(barcode, height, width);
   return canvas.toBuffer("image/png");
 }

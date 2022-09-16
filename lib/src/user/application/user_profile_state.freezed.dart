@@ -19,7 +19,7 @@ mixin _$UserProfileState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String userId) data,
+    required TResult Function() data,
     required TResult Function() wrongCode,
     required TResult Function() waitingOtpCode,
     required TResult Function() loading,
@@ -29,7 +29,7 @@ mixin _$UserProfileState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,
@@ -39,7 +39,7 @@ mixin _$UserProfileState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,
@@ -139,7 +139,7 @@ class _$UserProfileInitial implements UserProfileInitial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String userId) data,
+    required TResult Function() data,
     required TResult Function() wrongCode,
     required TResult Function() waitingOtpCode,
     required TResult Function() loading,
@@ -152,7 +152,7 @@ class _$UserProfileInitial implements UserProfileInitial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,
@@ -165,7 +165,7 @@ class _$UserProfileInitial implements UserProfileInitial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,
@@ -231,7 +231,6 @@ abstract class _$$UserProfileDataCopyWith<$Res> {
   factory _$$UserProfileDataCopyWith(
           _$UserProfileData value, $Res Function(_$UserProfileData) then) =
       __$$UserProfileDataCopyWithImpl<$Res>;
-  $Res call({String userId});
 }
 
 /// @nodoc
@@ -244,81 +243,58 @@ class __$$UserProfileDataCopyWithImpl<$Res>
 
   @override
   _$UserProfileData get _value => super._value as _$UserProfileData;
-
-  @override
-  $Res call({
-    Object? userId = freezed,
-  }) {
-    return _then(_$UserProfileData(
-      userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$UserProfileData implements UserProfileData {
-  const _$UserProfileData(this.userId);
-
-  @override
-  final String userId;
+  const _$UserProfileData();
 
   @override
   String toString() {
-    return 'UserProfileState.data(userId: $userId)';
+    return 'UserProfileState.data()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UserProfileData &&
-            const DeepCollectionEquality().equals(other.userId, userId));
+        (other.runtimeType == runtimeType && other is _$UserProfileData);
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(userId));
-
-  @JsonKey(ignore: true)
-  @override
-  _$$UserProfileDataCopyWith<_$UserProfileData> get copyWith =>
-      __$$UserProfileDataCopyWithImpl<_$UserProfileData>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String userId) data,
+    required TResult Function() data,
     required TResult Function() wrongCode,
     required TResult Function() waitingOtpCode,
     required TResult Function() loading,
     required TResult Function(Object? error, StackTrace? st) error,
   }) {
-    return data(userId);
+    return data();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,
     TResult Function(Object? error, StackTrace? st)? error,
   }) {
-    return data?.call(userId);
+    return data?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,
@@ -326,7 +302,7 @@ class _$UserProfileData implements UserProfileData {
     required TResult orElse(),
   }) {
     if (data != null) {
-      return data(userId);
+      return data();
     }
     return orElse();
   }
@@ -376,12 +352,7 @@ class _$UserProfileData implements UserProfileData {
 }
 
 abstract class UserProfileData implements UserProfileState {
-  const factory UserProfileData(final String userId) = _$UserProfileData;
-
-  String get userId;
-  @JsonKey(ignore: true)
-  _$$UserProfileDataCopyWith<_$UserProfileData> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory UserProfileData() = _$UserProfileData;
 }
 
 /// @nodoc
@@ -426,7 +397,7 @@ class _$UserProfileWrongCode implements UserProfileWrongCode {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String userId) data,
+    required TResult Function() data,
     required TResult Function() wrongCode,
     required TResult Function() waitingOtpCode,
     required TResult Function() loading,
@@ -439,7 +410,7 @@ class _$UserProfileWrongCode implements UserProfileWrongCode {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,
@@ -452,7 +423,7 @@ class _$UserProfileWrongCode implements UserProfileWrongCode {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,
@@ -558,7 +529,7 @@ class _$UserProfileWaitingOtpCode implements UserProfileWaitingOtpCode {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String userId) data,
+    required TResult Function() data,
     required TResult Function() wrongCode,
     required TResult Function() waitingOtpCode,
     required TResult Function() loading,
@@ -571,7 +542,7 @@ class _$UserProfileWaitingOtpCode implements UserProfileWaitingOtpCode {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,
@@ -584,7 +555,7 @@ class _$UserProfileWaitingOtpCode implements UserProfileWaitingOtpCode {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,
@@ -687,7 +658,7 @@ class _$UserProfileLoading implements UserProfileLoading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String userId) data,
+    required TResult Function() data,
     required TResult Function() wrongCode,
     required TResult Function() waitingOtpCode,
     required TResult Function() loading,
@@ -700,7 +671,7 @@ class _$UserProfileLoading implements UserProfileLoading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,
@@ -713,7 +684,7 @@ class _$UserProfileLoading implements UserProfileLoading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,
@@ -847,7 +818,7 @@ class _$UserProfileError implements UserProfileError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String userId) data,
+    required TResult Function() data,
     required TResult Function() wrongCode,
     required TResult Function() waitingOtpCode,
     required TResult Function() loading,
@@ -860,7 +831,7 @@ class _$UserProfileError implements UserProfileError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,
@@ -873,7 +844,7 @@ class _$UserProfileError implements UserProfileError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String userId)? data,
+    TResult Function()? data,
     TResult Function()? wrongCode,
     TResult Function()? waitingOtpCode,
     TResult Function()? loading,

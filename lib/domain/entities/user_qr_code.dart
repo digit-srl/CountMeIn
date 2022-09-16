@@ -77,6 +77,10 @@ class UserQrCode with _$UserQrCode {
 
 extension UserQrCodeX on UserQrCode {
   toUserCard() {
-    return UserCard(id: id, name: name, surname: surname, cf: cf,email: email);
+    return UserCard(id: id,
+        name: name,
+        surname: surname,
+        cf: cf,
+        email: email);
   }
 }

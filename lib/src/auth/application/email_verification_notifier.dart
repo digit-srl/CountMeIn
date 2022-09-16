@@ -22,10 +22,10 @@ class EmailVerificationNotifier extends StateNotifier<EmailVerificationState> {
     // _init();
   }
 
-  Future<void> _init() async {
+/*  Future<void> _init() async {
     try {
       print('init verification email');
-      final userRef = Cloud.usersCollection.doc(data.userId);
+      final userRef = Cloud.usersCollection(providerId).doc(data.userId);
       final snap = await userRef.get();
       if (!snap.exists) {
         state = const EmailVerificationUserNotExist();
@@ -48,7 +48,7 @@ class EmailVerificationNotifier extends StateNotifier<EmailVerificationState> {
       print(st);
       state = EmailVerificationError(ex, st);
     }
-  }
+  }*/
 
   void verify() async {
     try {
@@ -56,12 +56,14 @@ class EmailVerificationNotifier extends StateNotifier<EmailVerificationState> {
       final res =
           await read(dioProvider).post(verifyEmailUrl, data: data.toJson());
       // final map = Map<String, dynamic>.from(res.data);
-      if(res.statusCode == 200){
+      if (res.statusCode == 200) {
         state = const EmailVerificationVerified();
-      }else if (res.statusCode == 404){
+      } else if (res.statusCode == 404) {
         state = const EmailVerificationUserNotExist();
-      }else{
+      } else if (res.statusCode == 400) {
         state = const EmailVerificationInvalidData();
+      } else {
+        state = const EmailVerificationError();
       }
     } catch (ex, st) {
       print(ex);

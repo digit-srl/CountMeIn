@@ -1,3 +1,4 @@
+import 'package:countmein/domain/entities/user_ids.dart';
 import 'package:countmein/src/admin/application/confirm_invite_state.dart';
 import 'package:countmein/src/admin/ui/screens/event_users.dart';
 import 'package:countmein/src/admin/ui/screens/managers.dart';
@@ -6,7 +7,8 @@ import 'package:countmein/src/admin/ui/screens/qrcode_validation.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/auth/ui/screens/invite_form_confirm.dart';
-import 'package:countmein/src/user/screens/user_profile.dart';
+import 'package:countmein/src/user/ui/screens/recover_user_card.dart';
+import 'package:countmein/src/user/ui/screens/user_dashboard.dart';
 import 'package:countmein/ui/screens/event_details.dart';
 import 'package:countmein/ui/screens/user_register_form.dart';
 import 'package:flutter/foundation.dart';
@@ -94,7 +96,6 @@ class RouterNotifier extends ChangeNotifier {
       return state.subloc.replaceFirst('/event', '/provider');
     }
 
-    //http://localhost:63068/verification/YgknyjEc5wFhqfw1rn3P/aS1TCMkg/Yy31B32YBDJDUt7TbZEl
     final authState = _ref.read(authStateProvider);
     final isGoingToHome = state.subloc == '/';
     final isGoingToVerificationEmail =
@@ -108,6 +109,7 @@ class RouterNotifier extends ChangeNotifier {
         state.subloc == ResetPasswordScreen.routeName;
     final isGoingToActivityRequest =
         state.subloc == ActivityRequestScreen.routeName;
+    // final isGoingToRecoverUserCard = state.subloc
 
     if (isGoingToHome ||
         isGoingToVerificationEmail ||
@@ -207,24 +209,39 @@ class RouterNotifier extends ChangeNotifier {
           builder: (context, state) => const ActivityRequestScreen(),
         ),
         GoRoute(
-          path: '${UserConsoleScreen.routeName}/:userId',
+          path: '${UserConsoleScreen.routeName}/:providerId/:userId',
           builder: (context, state) => UserConsoleScreen(
-            userId: state.params['userId']!,
+            userIds: UserIds(
+              userId: state.params['userId']!,
+              providerId: state.params['providerId']!,
+            ),
           ),
         ),
         GoRoute(
-          path: '${UserEventScreen.routeName}/:eventId',
+          path: '${UserProviderScreen.routeName}/:providerId',
           builder: (context, state) {
-            return Container();
-          },
-        ),
-        GoRoute(
-          path: '/provider/:providerId',
-          builder: (context, state) {
-            return UserEventScreen(
+            return UserProviderScreen(
               providerId: state.params['providerId']!,
             );
           },
+          routes: [
+            GoRoute(
+              path: UserFormScreen.routeName,
+              builder: (context, state) {
+                return UserFormScreen(
+                  providerId: state.params['providerId']!,
+                );
+              },
+            ),
+            GoRoute(
+              path: RecoverUserCard.routeName,
+              builder: (context, state) {
+                return RecoverUserCard(
+                  providerId: state.params['providerId']!,
+                );
+              },
+            ),
+          ],
         ),
         GoRoute(
           name: EventDetailsScreen.routeName,
@@ -280,8 +297,9 @@ class RouterNotifier extends ChangeNotifier {
           builder: (context, state) {
             return EmailVerificationScreen(
               userId: state.params['userId'] as String,
-              providerId: state.params['providerId'] as String,
               secret: state.params['secret'] as String,
+              providerId: state.params['providerId'] as String,
+              // privateId: state.params['privateId'] as String,
             );
           },
         ),

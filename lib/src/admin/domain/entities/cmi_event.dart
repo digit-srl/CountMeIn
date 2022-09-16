@@ -72,7 +72,8 @@ class GenderCount with _$GenderCount {
   const factory GenderCount({
     required int male,
     required int female,
-    required int notDeclared,
+    required int notBinary,
+    @Default(0) int notAvailable,
   }) = _GenderCount;
 
   factory GenderCount.fromJson(Map<String, Object?> json) =>

@@ -13,7 +13,7 @@ class UserRequest with _$UserRequest {
     required String email,
     required String providerId,
     required String providerName,
-    required String gender,
+    // required String gender,
   }) = _UserRequest;
 
   factory UserRequest.fromJson(Map<String, Object?> json) =>

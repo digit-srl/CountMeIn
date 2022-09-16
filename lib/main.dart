@@ -13,7 +13,6 @@ import 'firebase_options.dart';
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-
 enum AppFlavor { master, collab }
 
 // fvm flutter build web --web-renderer canvaskit

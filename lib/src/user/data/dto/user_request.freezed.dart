@@ -26,7 +26,6 @@ mixin _$UserRequest {
   String get email => throw _privateConstructorUsedError;
   String get providerId => throw _privateConstructorUsedError;
   String get providerName => throw _privateConstructorUsedError;
-  String get gender => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,8 +44,7 @@ abstract class $UserRequestCopyWith<$Res> {
       String cf,
       String email,
       String providerId,
-      String providerName,
-      String gender});
+      String providerName});
 }
 
 /// @nodoc
@@ -65,7 +63,6 @@ class _$UserRequestCopyWithImpl<$Res> implements $UserRequestCopyWith<$Res> {
     Object? email = freezed,
     Object? providerId = freezed,
     Object? providerName = freezed,
-    Object? gender = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -92,10 +89,6 @@ class _$UserRequestCopyWithImpl<$Res> implements $UserRequestCopyWith<$Res> {
           ? _value.providerName
           : providerName // ignore: cast_nullable_to_non_nullable
               as String,
-      gender: gender == freezed
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -113,8 +106,7 @@ abstract class _$$_UserRequestCopyWith<$Res>
       String cf,
       String email,
       String providerId,
-      String providerName,
-      String gender});
+      String providerName});
 }
 
 /// @nodoc
@@ -135,7 +127,6 @@ class __$$_UserRequestCopyWithImpl<$Res> extends _$UserRequestCopyWithImpl<$Res>
     Object? email = freezed,
     Object? providerId = freezed,
     Object? providerName = freezed,
-    Object? gender = freezed,
   }) {
     return _then(_$_UserRequest(
       name: name == freezed
@@ -162,10 +153,6 @@ class __$$_UserRequestCopyWithImpl<$Res> extends _$UserRequestCopyWithImpl<$Res>
           ? _value.providerName
           : providerName // ignore: cast_nullable_to_non_nullable
               as String,
-      gender: gender == freezed
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -179,8 +166,7 @@ class _$_UserRequest implements _UserRequest {
       required this.cf,
       required this.email,
       required this.providerId,
-      required this.providerName,
-      required this.gender});
+      required this.providerName});
 
   factory _$_UserRequest.fromJson(Map<String, dynamic> json) =>
       _$$_UserRequestFromJson(json);
@@ -197,12 +183,10 @@ class _$_UserRequest implements _UserRequest {
   final String providerId;
   @override
   final String providerName;
-  @override
-  final String gender;
 
   @override
   String toString() {
-    return 'UserRequest(name: $name, surname: $surname, cf: $cf, email: $email, providerId: $providerId, providerName: $providerName, gender: $gender)';
+    return 'UserRequest(name: $name, surname: $surname, cf: $cf, email: $email, providerId: $providerId, providerName: $providerName)';
   }
 
   @override
@@ -217,8 +201,7 @@ class _$_UserRequest implements _UserRequest {
             const DeepCollectionEquality()
                 .equals(other.providerId, providerId) &&
             const DeepCollectionEquality()
-                .equals(other.providerName, providerName) &&
-            const DeepCollectionEquality().equals(other.gender, gender));
+                .equals(other.providerName, providerName));
   }
 
   @JsonKey(ignore: true)
@@ -230,8 +213,7 @@ class _$_UserRequest implements _UserRequest {
       const DeepCollectionEquality().hash(cf),
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(providerId),
-      const DeepCollectionEquality().hash(providerName),
-      const DeepCollectionEquality().hash(gender));
+      const DeepCollectionEquality().hash(providerName));
 
   @JsonKey(ignore: true)
   @override
@@ -253,8 +235,7 @@ abstract class _UserRequest implements UserRequest {
       required final String cf,
       required final String email,
       required final String providerId,
-      required final String providerName,
-      required final String gender}) = _$_UserRequest;
+      required final String providerName}) = _$_UserRequest;
 
   factory _UserRequest.fromJson(Map<String, dynamic> json) =
       _$_UserRequest.fromJson;
@@ -271,8 +252,6 @@ abstract class _UserRequest implements UserRequest {
   String get providerId;
   @override
   String get providerName;
-  @override
-  String get gender;
   @override
   @JsonKey(ignore: true)
   _$$_UserRequestCopyWith<_$_UserRequest> get copyWith =>

@@ -86,6 +86,8 @@ class EventUser with _$EventUser {
     String? surname,
     String? cf,
     String? email,
+    String? privateId,
+    required bool fromExternalOrganization,
     @MyDateTimeConverter() DateTime? checkInAt,
     @MyDateTimeConverter() DateTime? checkOutAt,
   }) = _EventUser;
