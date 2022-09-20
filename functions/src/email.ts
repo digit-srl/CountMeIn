@@ -319,3 +319,46 @@ export async function sentUserProfileOtpCode(
     null
   );
 }
+
+// "fullName"
+// "qrCodeUrl"
+// "cf"
+export function sendGroupCardEmail(
+  fullName: string,
+  email: string,
+  cf: string,
+  buffer: Buffer,
+  providerName: string,
+  groupName: string
+) {
+  const emails = [email];
+
+  const json = JSON.stringify({
+    fullName: fullName,
+    cf: cf,
+    provider: providerName,
+    groupName: groupName,
+  });
+
+  const filename = "tesserino.png";
+  const attachment = {
+    data: buffer,
+    filename: filename,
+  };
+
+  return sendEmail(
+    emails,
+    "Il tuo tesserino di gruppo",
+    "group_card_template",
+    json,
+    attachment,
+    null
+  )
+    .then(() => {
+      return true;
+    }) // logs response data
+    .catch((err: any) => {
+      console.log(err);
+      throw new functions.https.HttpsError("aborted", err);
+    });
+}

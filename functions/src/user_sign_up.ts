@@ -265,6 +265,75 @@ async function sendUserCard(
     });
 }
 
+async function sendGroupCard(
+  data: FirebaseFirestore.DocumentData,
+  providerId: string,
+  providerName: string,
+  groupName: string,
+  groupCount: number,
+  averageAge: number,
+  womanPercentage: number,
+  manPercentage: number
+) {
+  const userId = data.id;
+  const name = data.name;
+  const surname = data.surname;
+  const fullName = name + " " + surname;
+  const cf = data.cf;
+  const email = data.email;
+  const url =
+    "https://cmi.digit.srl/profile/" +
+    userId +
+    "?" +
+    "name=" +
+    name +
+    "&surname=" +
+    surname +
+    "&cf=" +
+    cf +
+    "&pId=" +
+    providerId +
+    "&gN =" +
+    groupName +
+    "&gC =" +
+    groupCount +
+    "&aA =" +
+    averageAge +
+    "&wP =" +
+    womanPercentage +
+    "&mP =" +
+    manPercentage;
+
+  const buffer = await draw.drawGroupCard(
+    providerName,
+    name,
+    surname,
+    cf,
+    email,
+    url,
+    groupName,
+    groupCount.toString(),
+    averageAge.toString(),
+    float2int(manPercentage * 100).toString(),
+    float2int(womanPercentage * 100).toString()
+  );
+  return Email.sendGroupCardEmail(
+    fullName,
+    email,
+    cf,
+    buffer,
+    providerName,
+    groupName
+  )
+    .then(() => {
+      return true;
+    })
+    .catch((err: any) => {
+      console.error(err);
+      throw err;
+    });
+}
+
 exports.recoverUserCard = functions
   .region("europe-west3")
   .https.onRequest(
@@ -359,3 +428,92 @@ exports.recoverUserCard = functions
       });
     }
   );
+
+exports.requestGroupCard = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      cors(request, response, async () => {
+        console.log(request.body);
+
+        if (request.method !== "POST") {
+          response.status(403).send("Forbidden!");
+          return;
+        }
+
+        const data = request.body;
+        const providerId = data.providerId;
+        const userId = data.userId;
+        const groupCount = data.groupCount;
+        const averageAge = data.averageAge;
+        const womanPercentage = data.womanPercentage;
+        const manPercentage = data.manPercentage;
+        const groupName = data.groupName;
+
+        if (
+          providerId == null ||
+          userId == null ||
+          groupCount == null ||
+          averageAge == null ||
+          womanPercentage == null ||
+          manPercentage == null ||
+          groupName == null
+        ) {
+          const message = "Some fields are null";
+          console.error(message);
+
+          response.status(400).send("invalid-argument");
+          return;
+        }
+
+        try {
+          const userData = await getUserData(providerId, userId);
+          const providerData = await getProviderData(providerId);
+          await sendGroupCard(
+            userData,
+            providerId,
+            providerData.name,
+            groupName,
+            groupCount,
+            averageAge,
+            manPercentage,
+            womanPercentage
+          );
+
+          response.sendStatus(200);
+        } catch (ex) {
+          console.log(ex);
+          response.status(404).send("user-not-found");
+        }
+      });
+    }
+  );
+
+async function getUserData(
+  providerId: string,
+  userId: string
+): Promise<firestore.DocumentData> {
+  const userDoc = await usersCollectionRef(providerId).doc(userId).get();
+  const userData = userDoc.data();
+  if (!userDoc.exists || userData == null) {
+    console.log("User not found");
+    throw Error();
+  }
+  return userData;
+}
+
+async function getProviderData(
+  providerId: string
+): Promise<firestore.DocumentData> {
+  const providerDoc = await providerDocRef(providerId).get();
+  const providerData = providerDoc.data();
+  if (!providerDoc.exists || providerData == null) {
+    console.log("User not found");
+    throw Error();
+  }
+  return providerData;
+}
+
+function float2int(value: number) {
+  return Math.round(value);
+}

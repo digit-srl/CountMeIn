@@ -5,6 +5,7 @@ import 'package:countmein/src/common/domain/entities/gender.dart';
 import 'package:countmein/src/common/ui/cmi_date_picker.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_dropdown.dart';
+import 'package:countmein/src/common/upper_case_formatter.dart';
 import 'package:countmein/src/user/application/user_card_recovering_notifier.dart';
 import 'package:countmein/src/user/data/dto/user_request.dart';
 import 'package:countmein/src/user/ui/widgets/user_profile.dart';
@@ -184,6 +185,9 @@ class _State extends ConsumerState<UserFormScreen> {
                         child: CMITextField(
                           controller: cfController,
                           hintText: 'Codice Fiscale',
+                          inputFormatters: [
+                            UpperCaseTextFormatter()
+                          ],
                           textCapitalization: TextCapitalization.characters,
                           validator: CFValidator(),
                         ),
