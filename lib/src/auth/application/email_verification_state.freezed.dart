@@ -28,12 +28,12 @@ mixin _$EmailVerificationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? verified,
-    TResult Function()? userNotExist,
-    TResult Function()? invalidData,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? verified,
+    TResult? Function()? userNotExist,
+    TResult? Function()? invalidData,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,12 +59,12 @@ mixin _$EmailVerificationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(EmailVerificationInitial value)? initial,
-    TResult Function(EmailVerificationVerified value)? verified,
-    TResult Function(EmailVerificationUserNotExist value)? userNotExist,
-    TResult Function(EmailVerificationInvalidData value)? invalidData,
-    TResult Function(EmailVerificationLoading value)? loading,
-    TResult Function(EmailVerificationError value)? error,
+    TResult? Function(EmailVerificationInitial value)? initial,
+    TResult? Function(EmailVerificationVerified value)? verified,
+    TResult? Function(EmailVerificationUserNotExist value)? userNotExist,
+    TResult? Function(EmailVerificationInvalidData value)? invalidData,
+    TResult? Function(EmailVerificationLoading value)? loading,
+    TResult? Function(EmailVerificationError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -84,17 +84,19 @@ mixin _$EmailVerificationState {
 abstract class $EmailVerificationStateCopyWith<$Res> {
   factory $EmailVerificationStateCopyWith(EmailVerificationState value,
           $Res Function(EmailVerificationState) then) =
-      _$EmailVerificationStateCopyWithImpl<$Res>;
+      _$EmailVerificationStateCopyWithImpl<$Res, EmailVerificationState>;
 }
 
 /// @nodoc
-class _$EmailVerificationStateCopyWithImpl<$Res>
+class _$EmailVerificationStateCopyWithImpl<$Res,
+        $Val extends EmailVerificationState>
     implements $EmailVerificationStateCopyWith<$Res> {
   _$EmailVerificationStateCopyWithImpl(this._value, this._then);
 
-  final EmailVerificationState _value;
   // ignore: unused_field
-  final $Res Function(EmailVerificationState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -106,15 +108,12 @@ abstract class _$$EmailVerificationInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$EmailVerificationInitialCopyWithImpl<$Res>
-    extends _$EmailVerificationStateCopyWithImpl<$Res>
+    extends _$EmailVerificationStateCopyWithImpl<$Res,
+        _$EmailVerificationInitial>
     implements _$$EmailVerificationInitialCopyWith<$Res> {
   __$$EmailVerificationInitialCopyWithImpl(_$EmailVerificationInitial _value,
       $Res Function(_$EmailVerificationInitial) _then)
-      : super(_value, (v) => _then(v as _$EmailVerificationInitial));
-
-  @override
-  _$EmailVerificationInitial get _value =>
-      super._value as _$EmailVerificationInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -153,12 +152,12 @@ class _$EmailVerificationInitial implements EmailVerificationInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? verified,
-    TResult Function()? userNotExist,
-    TResult Function()? invalidData,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? verified,
+    TResult? Function()? userNotExist,
+    TResult? Function()? invalidData,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return initial?.call();
   }
@@ -196,12 +195,12 @@ class _$EmailVerificationInitial implements EmailVerificationInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(EmailVerificationInitial value)? initial,
-    TResult Function(EmailVerificationVerified value)? verified,
-    TResult Function(EmailVerificationUserNotExist value)? userNotExist,
-    TResult Function(EmailVerificationInvalidData value)? invalidData,
-    TResult Function(EmailVerificationLoading value)? loading,
-    TResult Function(EmailVerificationError value)? error,
+    TResult? Function(EmailVerificationInitial value)? initial,
+    TResult? Function(EmailVerificationVerified value)? verified,
+    TResult? Function(EmailVerificationUserNotExist value)? userNotExist,
+    TResult? Function(EmailVerificationInvalidData value)? invalidData,
+    TResult? Function(EmailVerificationLoading value)? loading,
+    TResult? Function(EmailVerificationError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -238,15 +237,12 @@ abstract class _$$EmailVerificationVerifiedCopyWith<$Res> {
 
 /// @nodoc
 class __$$EmailVerificationVerifiedCopyWithImpl<$Res>
-    extends _$EmailVerificationStateCopyWithImpl<$Res>
+    extends _$EmailVerificationStateCopyWithImpl<$Res,
+        _$EmailVerificationVerified>
     implements _$$EmailVerificationVerifiedCopyWith<$Res> {
   __$$EmailVerificationVerifiedCopyWithImpl(_$EmailVerificationVerified _value,
       $Res Function(_$EmailVerificationVerified) _then)
-      : super(_value, (v) => _then(v as _$EmailVerificationVerified));
-
-  @override
-  _$EmailVerificationVerified get _value =>
-      super._value as _$EmailVerificationVerified;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -285,12 +281,12 @@ class _$EmailVerificationVerified implements EmailVerificationVerified {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? verified,
-    TResult Function()? userNotExist,
-    TResult Function()? invalidData,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? verified,
+    TResult? Function()? userNotExist,
+    TResult? Function()? invalidData,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return verified?.call();
   }
@@ -328,12 +324,12 @@ class _$EmailVerificationVerified implements EmailVerificationVerified {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(EmailVerificationInitial value)? initial,
-    TResult Function(EmailVerificationVerified value)? verified,
-    TResult Function(EmailVerificationUserNotExist value)? userNotExist,
-    TResult Function(EmailVerificationInvalidData value)? invalidData,
-    TResult Function(EmailVerificationLoading value)? loading,
-    TResult Function(EmailVerificationError value)? error,
+    TResult? Function(EmailVerificationInitial value)? initial,
+    TResult? Function(EmailVerificationVerified value)? verified,
+    TResult? Function(EmailVerificationUserNotExist value)? userNotExist,
+    TResult? Function(EmailVerificationInvalidData value)? invalidData,
+    TResult? Function(EmailVerificationLoading value)? loading,
+    TResult? Function(EmailVerificationError value)? error,
   }) {
     return verified?.call(this);
   }
@@ -370,16 +366,13 @@ abstract class _$$EmailVerificationUserNotExistCopyWith<$Res> {
 
 /// @nodoc
 class __$$EmailVerificationUserNotExistCopyWithImpl<$Res>
-    extends _$EmailVerificationStateCopyWithImpl<$Res>
+    extends _$EmailVerificationStateCopyWithImpl<$Res,
+        _$EmailVerificationUserNotExist>
     implements _$$EmailVerificationUserNotExistCopyWith<$Res> {
   __$$EmailVerificationUserNotExistCopyWithImpl(
       _$EmailVerificationUserNotExist _value,
       $Res Function(_$EmailVerificationUserNotExist) _then)
-      : super(_value, (v) => _then(v as _$EmailVerificationUserNotExist));
-
-  @override
-  _$EmailVerificationUserNotExist get _value =>
-      super._value as _$EmailVerificationUserNotExist;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -418,12 +411,12 @@ class _$EmailVerificationUserNotExist implements EmailVerificationUserNotExist {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? verified,
-    TResult Function()? userNotExist,
-    TResult Function()? invalidData,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? verified,
+    TResult? Function()? userNotExist,
+    TResult? Function()? invalidData,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return userNotExist?.call();
   }
@@ -461,12 +454,12 @@ class _$EmailVerificationUserNotExist implements EmailVerificationUserNotExist {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(EmailVerificationInitial value)? initial,
-    TResult Function(EmailVerificationVerified value)? verified,
-    TResult Function(EmailVerificationUserNotExist value)? userNotExist,
-    TResult Function(EmailVerificationInvalidData value)? invalidData,
-    TResult Function(EmailVerificationLoading value)? loading,
-    TResult Function(EmailVerificationError value)? error,
+    TResult? Function(EmailVerificationInitial value)? initial,
+    TResult? Function(EmailVerificationVerified value)? verified,
+    TResult? Function(EmailVerificationUserNotExist value)? userNotExist,
+    TResult? Function(EmailVerificationInvalidData value)? invalidData,
+    TResult? Function(EmailVerificationLoading value)? loading,
+    TResult? Function(EmailVerificationError value)? error,
   }) {
     return userNotExist?.call(this);
   }
@@ -504,16 +497,13 @@ abstract class _$$EmailVerificationInvalidDataCopyWith<$Res> {
 
 /// @nodoc
 class __$$EmailVerificationInvalidDataCopyWithImpl<$Res>
-    extends _$EmailVerificationStateCopyWithImpl<$Res>
+    extends _$EmailVerificationStateCopyWithImpl<$Res,
+        _$EmailVerificationInvalidData>
     implements _$$EmailVerificationInvalidDataCopyWith<$Res> {
   __$$EmailVerificationInvalidDataCopyWithImpl(
       _$EmailVerificationInvalidData _value,
       $Res Function(_$EmailVerificationInvalidData) _then)
-      : super(_value, (v) => _then(v as _$EmailVerificationInvalidData));
-
-  @override
-  _$EmailVerificationInvalidData get _value =>
-      super._value as _$EmailVerificationInvalidData;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -552,12 +542,12 @@ class _$EmailVerificationInvalidData implements EmailVerificationInvalidData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? verified,
-    TResult Function()? userNotExist,
-    TResult Function()? invalidData,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? verified,
+    TResult? Function()? userNotExist,
+    TResult? Function()? invalidData,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return invalidData?.call();
   }
@@ -595,12 +585,12 @@ class _$EmailVerificationInvalidData implements EmailVerificationInvalidData {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(EmailVerificationInitial value)? initial,
-    TResult Function(EmailVerificationVerified value)? verified,
-    TResult Function(EmailVerificationUserNotExist value)? userNotExist,
-    TResult Function(EmailVerificationInvalidData value)? invalidData,
-    TResult Function(EmailVerificationLoading value)? loading,
-    TResult Function(EmailVerificationError value)? error,
+    TResult? Function(EmailVerificationInitial value)? initial,
+    TResult? Function(EmailVerificationVerified value)? verified,
+    TResult? Function(EmailVerificationUserNotExist value)? userNotExist,
+    TResult? Function(EmailVerificationInvalidData value)? invalidData,
+    TResult? Function(EmailVerificationLoading value)? loading,
+    TResult? Function(EmailVerificationError value)? error,
   }) {
     return invalidData?.call(this);
   }
@@ -636,15 +626,12 @@ abstract class _$$EmailVerificationLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$EmailVerificationLoadingCopyWithImpl<$Res>
-    extends _$EmailVerificationStateCopyWithImpl<$Res>
+    extends _$EmailVerificationStateCopyWithImpl<$Res,
+        _$EmailVerificationLoading>
     implements _$$EmailVerificationLoadingCopyWith<$Res> {
   __$$EmailVerificationLoadingCopyWithImpl(_$EmailVerificationLoading _value,
       $Res Function(_$EmailVerificationLoading) _then)
-      : super(_value, (v) => _then(v as _$EmailVerificationLoading));
-
-  @override
-  _$EmailVerificationLoading get _value =>
-      super._value as _$EmailVerificationLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -683,12 +670,12 @@ class _$EmailVerificationLoading implements EmailVerificationLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? verified,
-    TResult Function()? userNotExist,
-    TResult Function()? invalidData,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? verified,
+    TResult? Function()? userNotExist,
+    TResult? Function()? invalidData,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return loading?.call();
   }
@@ -726,12 +713,12 @@ class _$EmailVerificationLoading implements EmailVerificationLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(EmailVerificationInitial value)? initial,
-    TResult Function(EmailVerificationVerified value)? verified,
-    TResult Function(EmailVerificationUserNotExist value)? userNotExist,
-    TResult Function(EmailVerificationInvalidData value)? invalidData,
-    TResult Function(EmailVerificationLoading value)? loading,
-    TResult Function(EmailVerificationError value)? error,
+    TResult? Function(EmailVerificationInitial value)? initial,
+    TResult? Function(EmailVerificationVerified value)? verified,
+    TResult? Function(EmailVerificationUserNotExist value)? userNotExist,
+    TResult? Function(EmailVerificationInvalidData value)? invalidData,
+    TResult? Function(EmailVerificationLoading value)? loading,
+    TResult? Function(EmailVerificationError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -763,29 +750,27 @@ abstract class _$$EmailVerificationErrorCopyWith<$Res> {
   factory _$$EmailVerificationErrorCopyWith(_$EmailVerificationError value,
           $Res Function(_$EmailVerificationError) then) =
       __$$EmailVerificationErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({Object? error, StackTrace? st});
 }
 
 /// @nodoc
 class __$$EmailVerificationErrorCopyWithImpl<$Res>
-    extends _$EmailVerificationStateCopyWithImpl<$Res>
+    extends _$EmailVerificationStateCopyWithImpl<$Res, _$EmailVerificationError>
     implements _$$EmailVerificationErrorCopyWith<$Res> {
   __$$EmailVerificationErrorCopyWithImpl(_$EmailVerificationError _value,
       $Res Function(_$EmailVerificationError) _then)
-      : super(_value, (v) => _then(v as _$EmailVerificationError));
+      : super(_value, _then);
 
-  @override
-  _$EmailVerificationError get _value =>
-      super._value as _$EmailVerificationError;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? error = freezed,
     Object? st = freezed,
   }) {
     return _then(_$EmailVerificationError(
-      error: error == freezed ? _value.error : error,
-      st: st == freezed
+      error: freezed == error ? _value.error : error,
+      st: freezed == st
           ? _value.st
           : st // ignore: cast_nullable_to_non_nullable
               as StackTrace?,
@@ -814,17 +799,16 @@ class _$EmailVerificationError implements EmailVerificationError {
         (other.runtimeType == runtimeType &&
             other is _$EmailVerificationError &&
             const DeepCollectionEquality().equals(other.error, error) &&
-            const DeepCollectionEquality().equals(other.st, st));
+            (identical(other.st, st) || other.st == st));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(error),
-      const DeepCollectionEquality().hash(st));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error), st);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$EmailVerificationErrorCopyWith<_$EmailVerificationError> get copyWith =>
       __$$EmailVerificationErrorCopyWithImpl<_$EmailVerificationError>(
           this, _$identity);
@@ -845,12 +829,12 @@ class _$EmailVerificationError implements EmailVerificationError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? verified,
-    TResult Function()? userNotExist,
-    TResult Function()? invalidData,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? verified,
+    TResult? Function()? userNotExist,
+    TResult? Function()? invalidData,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return error?.call(this.error, st);
   }
@@ -888,12 +872,12 @@ class _$EmailVerificationError implements EmailVerificationError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(EmailVerificationInitial value)? initial,
-    TResult Function(EmailVerificationVerified value)? verified,
-    TResult Function(EmailVerificationUserNotExist value)? userNotExist,
-    TResult Function(EmailVerificationInvalidData value)? invalidData,
-    TResult Function(EmailVerificationLoading value)? loading,
-    TResult Function(EmailVerificationError value)? error,
+    TResult? Function(EmailVerificationInitial value)? initial,
+    TResult? Function(EmailVerificationVerified value)? verified,
+    TResult? Function(EmailVerificationUserNotExist value)? userNotExist,
+    TResult? Function(EmailVerificationInvalidData value)? invalidData,
+    TResult? Function(EmailVerificationLoading value)? loading,
+    TResult? Function(EmailVerificationError value)? error,
   }) {
     return error?.call(this);
   }
@@ -948,39 +932,43 @@ mixin _$EmailVerificationData {
 abstract class $EmailVerificationDataCopyWith<$Res> {
   factory $EmailVerificationDataCopyWith(EmailVerificationData value,
           $Res Function(EmailVerificationData) then) =
-      _$EmailVerificationDataCopyWithImpl<$Res>;
+      _$EmailVerificationDataCopyWithImpl<$Res, EmailVerificationData>;
+  @useResult
   $Res call({String secret, String userId, String providerId});
 }
 
 /// @nodoc
-class _$EmailVerificationDataCopyWithImpl<$Res>
+class _$EmailVerificationDataCopyWithImpl<$Res,
+        $Val extends EmailVerificationData>
     implements $EmailVerificationDataCopyWith<$Res> {
   _$EmailVerificationDataCopyWithImpl(this._value, this._then);
 
-  final EmailVerificationData _value;
   // ignore: unused_field
-  final $Res Function(EmailVerificationData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? secret = freezed,
-    Object? userId = freezed,
-    Object? providerId = freezed,
+    Object? secret = null,
+    Object? userId = null,
+    Object? providerId = null,
   }) {
     return _then(_value.copyWith(
-      secret: secret == freezed
+      secret: null == secret
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: userId == freezed
+      userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      providerId: providerId == freezed
+      providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -991,37 +979,35 @@ abstract class _$$_EmailVerificationDataCopyWith<$Res>
           $Res Function(_$_EmailVerificationData) then) =
       __$$_EmailVerificationDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String secret, String userId, String providerId});
 }
 
 /// @nodoc
 class __$$_EmailVerificationDataCopyWithImpl<$Res>
-    extends _$EmailVerificationDataCopyWithImpl<$Res>
+    extends _$EmailVerificationDataCopyWithImpl<$Res, _$_EmailVerificationData>
     implements _$$_EmailVerificationDataCopyWith<$Res> {
   __$$_EmailVerificationDataCopyWithImpl(_$_EmailVerificationData _value,
       $Res Function(_$_EmailVerificationData) _then)
-      : super(_value, (v) => _then(v as _$_EmailVerificationData));
+      : super(_value, _then);
 
-  @override
-  _$_EmailVerificationData get _value =>
-      super._value as _$_EmailVerificationData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? secret = freezed,
-    Object? userId = freezed,
-    Object? providerId = freezed,
+    Object? secret = null,
+    Object? userId = null,
+    Object? providerId = null,
   }) {
     return _then(_$_EmailVerificationData(
-      secret: secret == freezed
+      secret: null == secret
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: userId == freezed
+      userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      providerId: providerId == freezed
+      providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
@@ -1055,22 +1041,19 @@ class _$_EmailVerificationData implements _EmailVerificationData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EmailVerificationData &&
-            const DeepCollectionEquality().equals(other.secret, secret) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality()
-                .equals(other.providerId, providerId));
+            (identical(other.secret, secret) || other.secret == secret) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.providerId, providerId) ||
+                other.providerId == providerId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(secret),
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(providerId));
+  int get hashCode => Object.hash(runtimeType, secret, userId, providerId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_EmailVerificationDataCopyWith<_$_EmailVerificationData> get copyWith =>
       __$$_EmailVerificationDataCopyWithImpl<_$_EmailVerificationData>(
           this, _$identity);

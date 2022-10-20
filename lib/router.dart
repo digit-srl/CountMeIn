@@ -81,7 +81,7 @@ class RouterNotifier extends ChangeNotifier {
   /// IMPORTANT: conceptually, we want to use `ref.read` to read providers, here.
   /// GoRouter is already aware of state changes through `refreshListenable`
   /// We don't want to trigger a rebuild of the surrounding provider.
-  String? _redirectLogic(GoRouterState state) {
+  String? _redirectLogic(BuildContext context, GoRouterState state) {
     print('Name: ${state.name}');
     print('Path: ${state.path}');
     print('FullPath: ${state.fullpath}');

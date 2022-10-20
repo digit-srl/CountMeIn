@@ -181,18 +181,18 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 
 final signInNotifierProvider =
 StateNotifierProvider.autoDispose<SignInNotifier, bool>((ref) {
-  return SignInNotifier(ref.read);
+  return SignInNotifier(ref);
 });
 
 class SignInNotifier extends StateNotifier<bool> {
-  final Reader read;
+  final Ref ref;
 
-  SignInNotifier(this.read) : super(false);
+  SignInNotifier(this.ref) : super(false);
 
   Future<bool> signIn(String email, String password) async {
     state = true;
     try {
-      await read(authRepositoryProvider).signIn(email, password);
+      await ref.read(authRepositoryProvider).signIn(email, password);
       // authChangeNotifier.isLogged = true;
       state = false;
       return true;
@@ -212,7 +212,7 @@ class SignInNotifier extends StateNotifier<bool> {
 
   signOut() async {
     try {
-      await read(authRepositoryProvider).signOut();
+      await ref.read(authRepositoryProvider).signOut();
       // authChangeNotifier.isLogged = true;
       state = false;
       return true;
@@ -226,23 +226,23 @@ class SignInNotifier extends StateNotifier<bool> {
 
 final signUpNotifierProvider =
 StateNotifierProvider.autoDispose<SignUpNotifier, bool>((ref) {
-  return SignUpNotifier(ref.read);
+  return SignUpNotifier(ref);
 });
 
 class SignUpNotifier extends StateNotifier<bool> {
-  final Reader read;
+  final Ref ref;
 
-  SignUpNotifier(this.read) : super(false);
+  SignUpNotifier(this.ref) : super(false);
 
   Future<bool> signUp(String name, String surname, String email,
       String password) async {
     state = true;
     try {
-      await read(authRepositoryProvider).signUp(name, surname, email, password);
+      await ref.read(authRepositoryProvider).signUp(name, surname, email, password);
       return true;
     } on SignUpException catch (ex) {
       print(ex);
-      read(signUpErrorProvider.notifier).state = ex;
+      ref.read(signUpErrorProvider.notifier).state = ex;
       state = false;
       return false;
     }

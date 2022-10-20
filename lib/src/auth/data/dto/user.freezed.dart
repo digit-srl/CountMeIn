@@ -41,7 +41,8 @@ mixin _$AuthUserDTO {
 abstract class $AuthUserDTOCopyWith<$Res> {
   factory $AuthUserDTOCopyWith(
           AuthUserDTO value, $Res Function(AuthUserDTO) then) =
-      _$AuthUserDTOCopyWithImpl<$Res>;
+      _$AuthUserDTOCopyWithImpl<$Res, AuthUserDTO>;
+  @useResult
   $Res call(
       {String uid,
       String name,
@@ -53,53 +54,56 @@ abstract class $AuthUserDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AuthUserDTOCopyWithImpl<$Res> implements $AuthUserDTOCopyWith<$Res> {
+class _$AuthUserDTOCopyWithImpl<$Res, $Val extends AuthUserDTO>
+    implements $AuthUserDTOCopyWith<$Res> {
   _$AuthUserDTOCopyWithImpl(this._value, this._then);
 
-  final AuthUserDTO _value;
   // ignore: unused_field
-  final $Res Function(AuthUserDTO) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
-    Object? name = freezed,
-    Object? surname = freezed,
-    Object? email = freezed,
-    Object? emailVerified = freezed,
-    Object? role = freezed,
-    Object? createdOn = freezed,
+    Object? uid = null,
+    Object? name = null,
+    Object? surname = null,
+    Object? email = null,
+    Object? emailVerified = null,
+    Object? role = null,
+    Object? createdOn = null,
   }) {
     return _then(_value.copyWith(
-      uid: uid == freezed
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      surname: surname == freezed
+      surname: null == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      emailVerified: emailVerified == freezed
+      emailVerified: null == emailVerified
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool,
-      role: role == freezed
+      role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as PlatformRole,
-      createdOn: createdOn == freezed
+      createdOn: null == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
-    ));
+    ) as $Val);
   }
 }
 
@@ -110,6 +114,7 @@ abstract class _$$_AuthUserDTOCopyWith<$Res>
           _$_AuthUserDTO value, $Res Function(_$_AuthUserDTO) then) =
       __$$_AuthUserDTOCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String uid,
       String name,
@@ -121,51 +126,50 @@ abstract class _$$_AuthUserDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AuthUserDTOCopyWithImpl<$Res> extends _$AuthUserDTOCopyWithImpl<$Res>
+class __$$_AuthUserDTOCopyWithImpl<$Res>
+    extends _$AuthUserDTOCopyWithImpl<$Res, _$_AuthUserDTO>
     implements _$$_AuthUserDTOCopyWith<$Res> {
   __$$_AuthUserDTOCopyWithImpl(
       _$_AuthUserDTO _value, $Res Function(_$_AuthUserDTO) _then)
-      : super(_value, (v) => _then(v as _$_AuthUserDTO));
+      : super(_value, _then);
 
-  @override
-  _$_AuthUserDTO get _value => super._value as _$_AuthUserDTO;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
-    Object? name = freezed,
-    Object? surname = freezed,
-    Object? email = freezed,
-    Object? emailVerified = freezed,
-    Object? role = freezed,
-    Object? createdOn = freezed,
+    Object? uid = null,
+    Object? name = null,
+    Object? surname = null,
+    Object? email = null,
+    Object? emailVerified = null,
+    Object? role = null,
+    Object? createdOn = null,
   }) {
     return _then(_$_AuthUserDTO(
-      uid: uid == freezed
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      surname: surname == freezed
+      surname: null == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      emailVerified: emailVerified == freezed
+      emailVerified: null == emailVerified
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool,
-      role: role == freezed
+      role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as PlatformRole,
-      createdOn: createdOn == freezed
+      createdOn: null == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -216,30 +220,25 @@ class _$_AuthUserDTO implements _AuthUserDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AuthUserDTO &&
-            const DeepCollectionEquality().equals(other.uid, uid) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.surname, surname) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality()
-                .equals(other.emailVerified, emailVerified) &&
-            const DeepCollectionEquality().equals(other.role, role) &&
-            const DeepCollectionEquality().equals(other.createdOn, createdOn));
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.surname, surname) || other.surname == surname) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.emailVerified, emailVerified) ||
+                other.emailVerified == emailVerified) &&
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.createdOn, createdOn) ||
+                other.createdOn == createdOn));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(uid),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(surname),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(emailVerified),
-      const DeepCollectionEquality().hash(role),
-      const DeepCollectionEquality().hash(createdOn));
+      runtimeType, uid, name, surname, email, emailVerified, role, createdOn);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AuthUserDTOCopyWith<_$_AuthUserDTO> get copyWith =>
       __$$_AuthUserDTOCopyWithImpl<_$_AuthUserDTO>(this, _$identity);
 

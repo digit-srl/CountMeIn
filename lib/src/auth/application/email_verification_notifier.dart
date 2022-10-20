@@ -10,14 +10,14 @@ final emailVerificationProvider = StateNotifierProvider.autoDispose.family<
     EmailVerificationNotifier,
     EmailVerificationState,
     EmailVerificationData>((ref, data) {
-  return EmailVerificationNotifier(ref.read, data);
+  return EmailVerificationNotifier(ref, data);
 });
 
 class EmailVerificationNotifier extends StateNotifier<EmailVerificationState> {
   final EmailVerificationData data;
-  final Reader read;
+  final Ref ref;
 
-  EmailVerificationNotifier(this.read, this.data)
+  EmailVerificationNotifier(this.ref, this.data)
       : super(const EmailVerificationInitial()) {
     // _init();
   }
@@ -54,7 +54,7 @@ class EmailVerificationNotifier extends StateNotifier<EmailVerificationState> {
     try {
       state = const EmailVerificationLoading();
       final res =
-          await read(dioProvider).post(verifyEmailUrl, data: data.toJson());
+          await ref.read(dioProvider).post(verifyEmailUrl, data: data.toJson());
       // final map = Map<String, dynamic>.from(res.data);
       if (res.statusCode == 200) {
         state = const EmailVerificationVerified();

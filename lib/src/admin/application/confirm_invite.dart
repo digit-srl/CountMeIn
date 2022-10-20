@@ -25,14 +25,14 @@ final dioProvider = Provider<Dio>((ref) {
 final confirmInviteProvider = StateNotifierProvider.autoDispose
     .family<ConfirmInviteNotifier, ConfirmInviteState, InviteRequest>(
         (ref, request) {
-      return ConfirmInviteNotifier(request, ref.read);
+      return ConfirmInviteNotifier(request, ref);
     });
 
 class ConfirmInviteNotifier extends StateNotifier<ConfirmInviteState> {
   final InviteRequest request;
-  final Reader read;
+  final Ref ref;
 
-  ConfirmInviteNotifier(this.request, this.read)
+  ConfirmInviteNotifier(this.request, this.ref)
       : super(const ConfirmInviteLoading()) {
     init();
   }
@@ -73,7 +73,7 @@ class ConfirmInviteNotifier extends StateNotifier<ConfirmInviteState> {
     try {
       final url =
           '$functionBaseUrl/confirmPendingInvite';
-      final res = await read(dioProvider).post(url,
+      final res = await ref.read(dioProvider).post(url,
           data: data);
       final map = Map.from(res.data);
       final status =

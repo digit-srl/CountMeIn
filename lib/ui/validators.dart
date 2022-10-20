@@ -52,7 +52,7 @@ final numberValidator = MultiValidator([
 ]);
 
 final averageAgeValidator = MultiValidator([
-  RequiredValidator(errorText: 'Questo campo è obbligatorio'),
+  // RequiredValidator(errorText: 'Questo campo è obbligatorio'),
   RangeValidator(
       min: 3, max: 99, errorText: 'Il valore deve essere compreso tra 3 e 99'),
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')

@@ -9,6 +9,7 @@ class CMITextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextStyle? textStyle;
   final List<TextInputFormatter>? inputFormatters;
+  final ValueChanged<String>? onChanged;
 
   const CMITextField({
     Key? key,
@@ -19,6 +20,7 @@ class CMITextField extends StatelessWidget {
     this.keyboardType,
     this.textCapitalization,
     this.inputFormatters,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -30,8 +32,8 @@ class CMITextField extends StatelessWidget {
       validator: validator,
       textCapitalization: textCapitalization ?? TextCapitalization.none,
       keyboardType: keyboardType,
+      onChanged: onChanged,
       decoration: InputDecoration(
-
         hintText: hintText,
         border: const OutlineInputBorder(),
         labelText: hintText,

@@ -28,38 +28,42 @@ mixin _$EventIds {
 /// @nodoc
 abstract class $EventIdsCopyWith<$Res> {
   factory $EventIdsCopyWith(EventIds value, $Res Function(EventIds) then) =
-      _$EventIdsCopyWithImpl<$Res>;
+      _$EventIdsCopyWithImpl<$Res, EventIds>;
+  @useResult
   $Res call({String providerId, String eventId, String? subEventId});
 }
 
 /// @nodoc
-class _$EventIdsCopyWithImpl<$Res> implements $EventIdsCopyWith<$Res> {
+class _$EventIdsCopyWithImpl<$Res, $Val extends EventIds>
+    implements $EventIdsCopyWith<$Res> {
   _$EventIdsCopyWithImpl(this._value, this._then);
 
-  final EventIds _value;
   // ignore: unused_field
-  final $Res Function(EventIds) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? providerId = freezed,
-    Object? eventId = freezed,
+    Object? providerId = null,
+    Object? eventId = null,
     Object? subEventId = freezed,
   }) {
     return _then(_value.copyWith(
-      providerId: providerId == freezed
+      providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      eventId: eventId == freezed
+      eventId: null == eventId
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
               as String,
-      subEventId: subEventId == freezed
+      subEventId: freezed == subEventId
           ? _value.subEventId
           : subEventId // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -69,35 +73,35 @@ abstract class _$$_EventIdsCopyWith<$Res> implements $EventIdsCopyWith<$Res> {
           _$_EventIds value, $Res Function(_$_EventIds) then) =
       __$$_EventIdsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String providerId, String eventId, String? subEventId});
 }
 
 /// @nodoc
-class __$$_EventIdsCopyWithImpl<$Res> extends _$EventIdsCopyWithImpl<$Res>
+class __$$_EventIdsCopyWithImpl<$Res>
+    extends _$EventIdsCopyWithImpl<$Res, _$_EventIds>
     implements _$$_EventIdsCopyWith<$Res> {
   __$$_EventIdsCopyWithImpl(
       _$_EventIds _value, $Res Function(_$_EventIds) _then)
-      : super(_value, (v) => _then(v as _$_EventIds));
+      : super(_value, _then);
 
-  @override
-  _$_EventIds get _value => super._value as _$_EventIds;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? providerId = freezed,
-    Object? eventId = freezed,
+    Object? providerId = null,
+    Object? eventId = null,
     Object? subEventId = freezed,
   }) {
     return _then(_$_EventIds(
-      providerId: providerId == freezed
+      providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      eventId: eventId == freezed
+      eventId: null == eventId
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
               as String,
-      subEventId: subEventId == freezed
+      subEventId: freezed == subEventId
           ? _value.subEventId
           : subEventId // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -128,22 +132,19 @@ class _$_EventIds implements _EventIds {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EventIds &&
-            const DeepCollectionEquality()
-                .equals(other.providerId, providerId) &&
-            const DeepCollectionEquality().equals(other.eventId, eventId) &&
-            const DeepCollectionEquality()
-                .equals(other.subEventId, subEventId));
+            (identical(other.providerId, providerId) ||
+                other.providerId == providerId) &&
+            (identical(other.eventId, eventId) || other.eventId == eventId) &&
+            (identical(other.subEventId, subEventId) ||
+                other.subEventId == subEventId));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(providerId),
-      const DeepCollectionEquality().hash(eventId),
-      const DeepCollectionEquality().hash(subEventId));
+  int get hashCode => Object.hash(runtimeType, providerId, eventId, subEventId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_EventIdsCopyWith<_$_EventIds> get copyWith =>
       __$$_EventIdsCopyWithImpl<_$_EventIds>(this, _$identity);
 }

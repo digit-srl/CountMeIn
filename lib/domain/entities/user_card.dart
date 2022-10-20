@@ -88,17 +88,23 @@ class EventUser with _$EventUser {
     String? email,
     String? privateId,
     required bool fromExternalOrganization,
+    required bool isGroup,
     @MyDateTimeConverter() DateTime? checkInAt,
     @MyDateTimeConverter() DateTime? checkOutAt,
+    String? groupName,
+    int? averageAge,
+    int? groupCount,
+    double? womanPercentage,
+    double? manPercentage,
   }) = _EventUser;
 
   factory EventUser.fromJson(Map<String, Object?> json) =>
       _$EventUserFromJson(json);
 }
 
-extension EventUserX on EventUser{
+extension EventUserX on EventUser {
   String get fullName {
-    if(name == null) {
+    if (name == null) {
       return id;
     }
     return '$name $surname';
@@ -112,3 +118,24 @@ extension EventUserX on EventUser{
     ];
   }
 }
+/*
+@freezed
+class GroupUser with _$GroupUser {
+  const factory GroupUser({
+    required String id,
+    required String providerId,
+    required String userName,
+    required String userSurname,
+    required String cf,
+    required String userId,
+    required String groupName,
+    int? averageAge,
+    double? womanPercentage,
+    double? manPercentage,
+  }) = _GroupUser;
+
+  factory GroupUser.fromJson(Map<String, Object?> json) =>
+      _$GroupUserFromJson(json);
+}
+
+extension GroupUserX on GroupUser {}*/

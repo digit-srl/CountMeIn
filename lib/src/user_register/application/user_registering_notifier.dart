@@ -12,13 +12,13 @@ import '../../../cloud.dart';
 
 final userRegisteringProvider = StateNotifierProvider.autoDispose<
     UserRegisteringNotifier, UserRegisteringState>((ref) {
-  return UserRegisteringNotifier(ref.read);
+  return UserRegisteringNotifier(ref);
 });
 
 class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
-  final Reader read;
+  final Ref ref;
 
-  UserRegisteringNotifier(this.read) : super(const UserRegisteringInitial());
+  UserRegisteringNotifier(this.ref) : super(const UserRegisteringInitial());
 
   Future<void> register(UserRequest request) async {
     try {
@@ -63,7 +63,7 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
   Future<UserCreationResponse> _createUser(UserRequest request) async {
     try {
       final res =
-          await read(dioProvider).post(createUserUrl, data: request.toJson());
+          await ref.read(dioProvider).post(createUserUrl, data: request.toJson());
       final map = Map<String, dynamic>.from(res.data);
       return UserCreationResponse.fromJson(map);
     } catch (ex, st) {

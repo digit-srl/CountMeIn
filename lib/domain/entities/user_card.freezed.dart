@@ -40,7 +40,8 @@ mixin _$UserCard {
 /// @nodoc
 abstract class $UserCardCopyWith<$Res> {
   factory $UserCardCopyWith(UserCard value, $Res Function(UserCard) then) =
-      _$UserCardCopyWithImpl<$Res>;
+      _$UserCardCopyWithImpl<$Res, UserCard>;
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -54,63 +55,66 @@ abstract class $UserCardCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserCardCopyWithImpl<$Res> implements $UserCardCopyWith<$Res> {
+class _$UserCardCopyWithImpl<$Res, $Val extends UserCard>
+    implements $UserCardCopyWith<$Res> {
   _$UserCardCopyWithImpl(this._value, this._then);
 
-  final UserCard _value;
   // ignore: unused_field
-  final $Res Function(UserCard) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? surname = freezed,
-    Object? cf = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? surname = null,
+    Object? cf = null,
     Object? email = freezed,
     Object? secret = freezed,
     Object? gender = freezed,
     Object? addedOn = freezed,
-    Object? emailVerified = freezed,
+    Object? emailVerified = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      surname: surname == freezed
+      surname: null == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String,
-      cf: cf == freezed
+      cf: null == cf
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      secret: secret == freezed
+      secret: freezed == secret
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
               as String?,
-      gender: gender == freezed
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      addedOn: addedOn == freezed
+      addedOn: freezed == addedOn
           ? _value.addedOn
           : addedOn // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      emailVerified: emailVerified == freezed
+      emailVerified: null == emailVerified
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -120,6 +124,7 @@ abstract class _$$_UserCardCopyWith<$Res> implements $UserCardCopyWith<$Res> {
           _$_UserCard value, $Res Function(_$_UserCard) then) =
       __$$_UserCardCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -133,61 +138,60 @@ abstract class _$$_UserCardCopyWith<$Res> implements $UserCardCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_UserCardCopyWithImpl<$Res> extends _$UserCardCopyWithImpl<$Res>
+class __$$_UserCardCopyWithImpl<$Res>
+    extends _$UserCardCopyWithImpl<$Res, _$_UserCard>
     implements _$$_UserCardCopyWith<$Res> {
   __$$_UserCardCopyWithImpl(
       _$_UserCard _value, $Res Function(_$_UserCard) _then)
-      : super(_value, (v) => _then(v as _$_UserCard));
+      : super(_value, _then);
 
-  @override
-  _$_UserCard get _value => super._value as _$_UserCard;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? surname = freezed,
-    Object? cf = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? surname = null,
+    Object? cf = null,
     Object? email = freezed,
     Object? secret = freezed,
     Object? gender = freezed,
     Object? addedOn = freezed,
-    Object? emailVerified = freezed,
+    Object? emailVerified = null,
   }) {
     return _then(_$_UserCard(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      surname: surname == freezed
+      surname: null == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String,
-      cf: cf == freezed
+      cf: null == cf
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      secret: secret == freezed
+      secret: freezed == secret
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
               as String?,
-      gender: gender == freezed
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      addedOn: addedOn == freezed
+      addedOn: freezed == addedOn
           ? _value.addedOn
           : addedOn // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      emailVerified: emailVerified == freezed
+      emailVerified: null == emailVerified
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -243,34 +247,26 @@ class _$_UserCard implements _UserCard {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserCard &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.surname, surname) &&
-            const DeepCollectionEquality().equals(other.cf, cf) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.secret, secret) &&
-            const DeepCollectionEquality().equals(other.gender, gender) &&
-            const DeepCollectionEquality().equals(other.addedOn, addedOn) &&
-            const DeepCollectionEquality()
-                .equals(other.emailVerified, emailVerified));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.surname, surname) || other.surname == surname) &&
+            (identical(other.cf, cf) || other.cf == cf) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.secret, secret) || other.secret == secret) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.addedOn, addedOn) || other.addedOn == addedOn) &&
+            (identical(other.emailVerified, emailVerified) ||
+                other.emailVerified == emailVerified));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(surname),
-      const DeepCollectionEquality().hash(cf),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(secret),
-      const DeepCollectionEquality().hash(gender),
-      const DeepCollectionEquality().hash(addedOn),
-      const DeepCollectionEquality().hash(emailVerified));
+  int get hashCode => Object.hash(runtimeType, id, name, surname, cf, email,
+      secret, gender, addedOn, emailVerified);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UserCardCopyWith<_$_UserCard> get copyWith =>
       __$$_UserCardCopyWithImpl<_$_UserCard>(this, _$identity);
 
@@ -334,10 +330,16 @@ mixin _$EventUser {
   String? get email => throw _privateConstructorUsedError;
   String? get privateId => throw _privateConstructorUsedError;
   bool get fromExternalOrganization => throw _privateConstructorUsedError;
+  bool get isGroup => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get checkInAt => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get checkOutAt => throw _privateConstructorUsedError;
+  String? get groupName => throw _privateConstructorUsedError;
+  int? get averageAge => throw _privateConstructorUsedError;
+  int? get groupCount => throw _privateConstructorUsedError;
+  double? get womanPercentage => throw _privateConstructorUsedError;
+  double? get manPercentage => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -348,7 +350,8 @@ mixin _$EventUser {
 /// @nodoc
 abstract class $EventUserCopyWith<$Res> {
   factory $EventUserCopyWith(EventUser value, $Res Function(EventUser) then) =
-      _$EventUserCopyWithImpl<$Res>;
+      _$EventUserCopyWithImpl<$Res, EventUser>;
+  @useResult
   $Res call(
       {String id,
       String? name,
@@ -357,68 +360,107 @@ abstract class $EventUserCopyWith<$Res> {
       String? email,
       String? privateId,
       bool fromExternalOrganization,
+      bool isGroup,
       @MyDateTimeConverter() DateTime? checkInAt,
-      @MyDateTimeConverter() DateTime? checkOutAt});
+      @MyDateTimeConverter() DateTime? checkOutAt,
+      String? groupName,
+      int? averageAge,
+      int? groupCount,
+      double? womanPercentage,
+      double? manPercentage});
 }
 
 /// @nodoc
-class _$EventUserCopyWithImpl<$Res> implements $EventUserCopyWith<$Res> {
+class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
+    implements $EventUserCopyWith<$Res> {
   _$EventUserCopyWithImpl(this._value, this._then);
 
-  final EventUser _value;
   // ignore: unused_field
-  final $Res Function(EventUser) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? name = freezed,
     Object? surname = freezed,
     Object? cf = freezed,
     Object? email = freezed,
     Object? privateId = freezed,
-    Object? fromExternalOrganization = freezed,
+    Object? fromExternalOrganization = null,
+    Object? isGroup = null,
     Object? checkInAt = freezed,
     Object? checkOutAt = freezed,
+    Object? groupName = freezed,
+    Object? averageAge = freezed,
+    Object? groupCount = freezed,
+    Object? womanPercentage = freezed,
+    Object? manPercentage = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      surname: surname == freezed
+      surname: freezed == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String?,
-      cf: cf == freezed
+      cf: freezed == cf
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String?,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      privateId: privateId == freezed
+      privateId: freezed == privateId
           ? _value.privateId
           : privateId // ignore: cast_nullable_to_non_nullable
               as String?,
-      fromExternalOrganization: fromExternalOrganization == freezed
+      fromExternalOrganization: null == fromExternalOrganization
           ? _value.fromExternalOrganization
           : fromExternalOrganization // ignore: cast_nullable_to_non_nullable
               as bool,
-      checkInAt: checkInAt == freezed
+      isGroup: null == isGroup
+          ? _value.isGroup
+          : isGroup // ignore: cast_nullable_to_non_nullable
+              as bool,
+      checkInAt: freezed == checkInAt
           ? _value.checkInAt
           : checkInAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      checkOutAt: checkOutAt == freezed
+      checkOutAt: freezed == checkOutAt
           ? _value.checkOutAt
           : checkOutAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-    ));
+      groupName: freezed == groupName
+          ? _value.groupName
+          : groupName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      averageAge: freezed == averageAge
+          ? _value.averageAge
+          : averageAge // ignore: cast_nullable_to_non_nullable
+              as int?,
+      groupCount: freezed == groupCount
+          ? _value.groupCount
+          : groupCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      womanPercentage: freezed == womanPercentage
+          ? _value.womanPercentage
+          : womanPercentage // ignore: cast_nullable_to_non_nullable
+              as double?,
+      manPercentage: freezed == manPercentage
+          ? _value.manPercentage
+          : manPercentage // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ) as $Val);
   }
 }
 
@@ -428,6 +470,7 @@ abstract class _$$_EventUserCopyWith<$Res> implements $EventUserCopyWith<$Res> {
           _$_EventUser value, $Res Function(_$_EventUser) then) =
       __$$_EventUserCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String? name,
@@ -436,69 +479,104 @@ abstract class _$$_EventUserCopyWith<$Res> implements $EventUserCopyWith<$Res> {
       String? email,
       String? privateId,
       bool fromExternalOrganization,
+      bool isGroup,
       @MyDateTimeConverter() DateTime? checkInAt,
-      @MyDateTimeConverter() DateTime? checkOutAt});
+      @MyDateTimeConverter() DateTime? checkOutAt,
+      String? groupName,
+      int? averageAge,
+      int? groupCount,
+      double? womanPercentage,
+      double? manPercentage});
 }
 
 /// @nodoc
-class __$$_EventUserCopyWithImpl<$Res> extends _$EventUserCopyWithImpl<$Res>
+class __$$_EventUserCopyWithImpl<$Res>
+    extends _$EventUserCopyWithImpl<$Res, _$_EventUser>
     implements _$$_EventUserCopyWith<$Res> {
   __$$_EventUserCopyWithImpl(
       _$_EventUser _value, $Res Function(_$_EventUser) _then)
-      : super(_value, (v) => _then(v as _$_EventUser));
+      : super(_value, _then);
 
-  @override
-  _$_EventUser get _value => super._value as _$_EventUser;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? name = freezed,
     Object? surname = freezed,
     Object? cf = freezed,
     Object? email = freezed,
     Object? privateId = freezed,
-    Object? fromExternalOrganization = freezed,
+    Object? fromExternalOrganization = null,
+    Object? isGroup = null,
     Object? checkInAt = freezed,
     Object? checkOutAt = freezed,
+    Object? groupName = freezed,
+    Object? averageAge = freezed,
+    Object? groupCount = freezed,
+    Object? womanPercentage = freezed,
+    Object? manPercentage = freezed,
   }) {
     return _then(_$_EventUser(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      surname: surname == freezed
+      surname: freezed == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String?,
-      cf: cf == freezed
+      cf: freezed == cf
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String?,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      privateId: privateId == freezed
+      privateId: freezed == privateId
           ? _value.privateId
           : privateId // ignore: cast_nullable_to_non_nullable
               as String?,
-      fromExternalOrganization: fromExternalOrganization == freezed
+      fromExternalOrganization: null == fromExternalOrganization
           ? _value.fromExternalOrganization
           : fromExternalOrganization // ignore: cast_nullable_to_non_nullable
               as bool,
-      checkInAt: checkInAt == freezed
+      isGroup: null == isGroup
+          ? _value.isGroup
+          : isGroup // ignore: cast_nullable_to_non_nullable
+              as bool,
+      checkInAt: freezed == checkInAt
           ? _value.checkInAt
           : checkInAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      checkOutAt: checkOutAt == freezed
+      checkOutAt: freezed == checkOutAt
           ? _value.checkOutAt
           : checkOutAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      groupName: freezed == groupName
+          ? _value.groupName
+          : groupName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      averageAge: freezed == averageAge
+          ? _value.averageAge
+          : averageAge // ignore: cast_nullable_to_non_nullable
+              as int?,
+      groupCount: freezed == groupCount
+          ? _value.groupCount
+          : groupCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      womanPercentage: freezed == womanPercentage
+          ? _value.womanPercentage
+          : womanPercentage // ignore: cast_nullable_to_non_nullable
+              as double?,
+      manPercentage: freezed == manPercentage
+          ? _value.manPercentage
+          : manPercentage // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -514,8 +592,14 @@ class _$_EventUser implements _EventUser {
       this.email,
       this.privateId,
       required this.fromExternalOrganization,
+      required this.isGroup,
       @MyDateTimeConverter() this.checkInAt,
-      @MyDateTimeConverter() this.checkOutAt});
+      @MyDateTimeConverter() this.checkOutAt,
+      this.groupName,
+      this.averageAge,
+      this.groupCount,
+      this.womanPercentage,
+      this.manPercentage});
 
   factory _$_EventUser.fromJson(Map<String, dynamic> json) =>
       _$$_EventUserFromJson(json);
@@ -535,15 +619,27 @@ class _$_EventUser implements _EventUser {
   @override
   final bool fromExternalOrganization;
   @override
+  final bool isGroup;
+  @override
   @MyDateTimeConverter()
   final DateTime? checkInAt;
   @override
   @MyDateTimeConverter()
   final DateTime? checkOutAt;
+  @override
+  final String? groupName;
+  @override
+  final int? averageAge;
+  @override
+  final int? groupCount;
+  @override
+  final double? womanPercentage;
+  @override
+  final double? manPercentage;
 
   @override
   String toString() {
-    return 'EventUser(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, checkInAt: $checkInAt, checkOutAt: $checkOutAt)';
+    return 'EventUser(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, isGroup: $isGroup, checkInAt: $checkInAt, checkOutAt: $checkOutAt, groupName: $groupName, averageAge: $averageAge, groupCount: $groupCount, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
   }
 
   @override
@@ -551,35 +647,56 @@ class _$_EventUser implements _EventUser {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EventUser &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.surname, surname) &&
-            const DeepCollectionEquality().equals(other.cf, cf) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.privateId, privateId) &&
-            const DeepCollectionEquality().equals(
-                other.fromExternalOrganization, fromExternalOrganization) &&
-            const DeepCollectionEquality().equals(other.checkInAt, checkInAt) &&
-            const DeepCollectionEquality()
-                .equals(other.checkOutAt, checkOutAt));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.surname, surname) || other.surname == surname) &&
+            (identical(other.cf, cf) || other.cf == cf) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.privateId, privateId) ||
+                other.privateId == privateId) &&
+            (identical(
+                    other.fromExternalOrganization, fromExternalOrganization) ||
+                other.fromExternalOrganization == fromExternalOrganization) &&
+            (identical(other.isGroup, isGroup) || other.isGroup == isGroup) &&
+            (identical(other.checkInAt, checkInAt) ||
+                other.checkInAt == checkInAt) &&
+            (identical(other.checkOutAt, checkOutAt) ||
+                other.checkOutAt == checkOutAt) &&
+            (identical(other.groupName, groupName) ||
+                other.groupName == groupName) &&
+            (identical(other.averageAge, averageAge) ||
+                other.averageAge == averageAge) &&
+            (identical(other.groupCount, groupCount) ||
+                other.groupCount == groupCount) &&
+            (identical(other.womanPercentage, womanPercentage) ||
+                other.womanPercentage == womanPercentage) &&
+            (identical(other.manPercentage, manPercentage) ||
+                other.manPercentage == manPercentage));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(surname),
-      const DeepCollectionEquality().hash(cf),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(privateId),
-      const DeepCollectionEquality().hash(fromExternalOrganization),
-      const DeepCollectionEquality().hash(checkInAt),
-      const DeepCollectionEquality().hash(checkOutAt));
+      id,
+      name,
+      surname,
+      cf,
+      email,
+      privateId,
+      fromExternalOrganization,
+      isGroup,
+      checkInAt,
+      checkOutAt,
+      groupName,
+      averageAge,
+      groupCount,
+      womanPercentage,
+      manPercentage);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_EventUserCopyWith<_$_EventUser> get copyWith =>
       __$$_EventUserCopyWithImpl<_$_EventUser>(this, _$identity);
 
@@ -600,8 +717,14 @@ abstract class _EventUser implements EventUser {
       final String? email,
       final String? privateId,
       required final bool fromExternalOrganization,
+      required final bool isGroup,
       @MyDateTimeConverter() final DateTime? checkInAt,
-      @MyDateTimeConverter() final DateTime? checkOutAt}) = _$_EventUser;
+      @MyDateTimeConverter() final DateTime? checkOutAt,
+      final String? groupName,
+      final int? averageAge,
+      final int? groupCount,
+      final double? womanPercentage,
+      final double? manPercentage}) = _$_EventUser;
 
   factory _EventUser.fromJson(Map<String, dynamic> json) =
       _$_EventUser.fromJson;
@@ -621,11 +744,23 @@ abstract class _EventUser implements EventUser {
   @override
   bool get fromExternalOrganization;
   @override
+  bool get isGroup;
+  @override
   @MyDateTimeConverter()
   DateTime? get checkInAt;
   @override
   @MyDateTimeConverter()
   DateTime? get checkOutAt;
+  @override
+  String? get groupName;
+  @override
+  int? get averageAge;
+  @override
+  int? get groupCount;
+  @override
+  double? get womanPercentage;
+  @override
+  double? get manPercentage;
   @override
   @JsonKey(ignore: true)
   _$$_EventUserCopyWith<_$_EventUser> get copyWith =>

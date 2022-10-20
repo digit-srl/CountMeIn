@@ -28,12 +28,12 @@ mixin _$ConfirmInviteState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? inviteExpired,
-    TResult Function()? userAlreadyRegistered,
-    TResult Function()? newUser,
-    TResult Function(ConfirmInviteResponseStatus status)? response,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? loading,
+    TResult? Function()? inviteExpired,
+    TResult? Function()? userAlreadyRegistered,
+    TResult? Function()? newUser,
+    TResult? Function(ConfirmInviteResponseStatus status)? response,
+    TResult? Function(Object error, StackTrace st)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,12 +60,12 @@ mixin _$ConfirmInviteState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ConfirmInviteLoading value)? loading,
-    TResult Function(InviteExpired value)? inviteExpired,
-    TResult Function(UserAlreadyRegistered value)? userAlreadyRegistered,
-    TResult Function(NewUser value)? newUser,
-    TResult Function(ConfirmResponse value)? response,
-    TResult Function(ConfirmInviteError value)? error,
+    TResult? Function(ConfirmInviteLoading value)? loading,
+    TResult? Function(InviteExpired value)? inviteExpired,
+    TResult? Function(UserAlreadyRegistered value)? userAlreadyRegistered,
+    TResult? Function(NewUser value)? newUser,
+    TResult? Function(ConfirmResponse value)? response,
+    TResult? Function(ConfirmInviteError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -85,17 +85,18 @@ mixin _$ConfirmInviteState {
 abstract class $ConfirmInviteStateCopyWith<$Res> {
   factory $ConfirmInviteStateCopyWith(
           ConfirmInviteState value, $Res Function(ConfirmInviteState) then) =
-      _$ConfirmInviteStateCopyWithImpl<$Res>;
+      _$ConfirmInviteStateCopyWithImpl<$Res, ConfirmInviteState>;
 }
 
 /// @nodoc
-class _$ConfirmInviteStateCopyWithImpl<$Res>
+class _$ConfirmInviteStateCopyWithImpl<$Res, $Val extends ConfirmInviteState>
     implements $ConfirmInviteStateCopyWith<$Res> {
   _$ConfirmInviteStateCopyWithImpl(this._value, this._then);
 
-  final ConfirmInviteState _value;
   // ignore: unused_field
-  final $Res Function(ConfirmInviteState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -107,14 +108,11 @@ abstract class _$$ConfirmInviteLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$ConfirmInviteLoadingCopyWithImpl<$Res>
-    extends _$ConfirmInviteStateCopyWithImpl<$Res>
+    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$ConfirmInviteLoading>
     implements _$$ConfirmInviteLoadingCopyWith<$Res> {
   __$$ConfirmInviteLoadingCopyWithImpl(_$ConfirmInviteLoading _value,
       $Res Function(_$ConfirmInviteLoading) _then)
-      : super(_value, (v) => _then(v as _$ConfirmInviteLoading));
-
-  @override
-  _$ConfirmInviteLoading get _value => super._value as _$ConfirmInviteLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -152,12 +150,12 @@ class _$ConfirmInviteLoading implements ConfirmInviteLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? inviteExpired,
-    TResult Function()? userAlreadyRegistered,
-    TResult Function()? newUser,
-    TResult Function(ConfirmInviteResponseStatus status)? response,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? loading,
+    TResult? Function()? inviteExpired,
+    TResult? Function()? userAlreadyRegistered,
+    TResult? Function()? newUser,
+    TResult? Function(ConfirmInviteResponseStatus status)? response,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return loading?.call();
   }
@@ -196,12 +194,12 @@ class _$ConfirmInviteLoading implements ConfirmInviteLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ConfirmInviteLoading value)? loading,
-    TResult Function(InviteExpired value)? inviteExpired,
-    TResult Function(UserAlreadyRegistered value)? userAlreadyRegistered,
-    TResult Function(NewUser value)? newUser,
-    TResult Function(ConfirmResponse value)? response,
-    TResult Function(ConfirmInviteError value)? error,
+    TResult? Function(ConfirmInviteLoading value)? loading,
+    TResult? Function(InviteExpired value)? inviteExpired,
+    TResult? Function(UserAlreadyRegistered value)? userAlreadyRegistered,
+    TResult? Function(NewUser value)? newUser,
+    TResult? Function(ConfirmResponse value)? response,
+    TResult? Function(ConfirmInviteError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -237,14 +235,11 @@ abstract class _$$InviteExpiredCopyWith<$Res> {
 
 /// @nodoc
 class __$$InviteExpiredCopyWithImpl<$Res>
-    extends _$ConfirmInviteStateCopyWithImpl<$Res>
+    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$InviteExpired>
     implements _$$InviteExpiredCopyWith<$Res> {
   __$$InviteExpiredCopyWithImpl(
       _$InviteExpired _value, $Res Function(_$InviteExpired) _then)
-      : super(_value, (v) => _then(v as _$InviteExpired));
-
-  @override
-  _$InviteExpired get _value => super._value as _$InviteExpired;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -282,12 +277,12 @@ class _$InviteExpired implements InviteExpired {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? inviteExpired,
-    TResult Function()? userAlreadyRegistered,
-    TResult Function()? newUser,
-    TResult Function(ConfirmInviteResponseStatus status)? response,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? loading,
+    TResult? Function()? inviteExpired,
+    TResult? Function()? userAlreadyRegistered,
+    TResult? Function()? newUser,
+    TResult? Function(ConfirmInviteResponseStatus status)? response,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return inviteExpired?.call();
   }
@@ -326,12 +321,12 @@ class _$InviteExpired implements InviteExpired {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ConfirmInviteLoading value)? loading,
-    TResult Function(InviteExpired value)? inviteExpired,
-    TResult Function(UserAlreadyRegistered value)? userAlreadyRegistered,
-    TResult Function(NewUser value)? newUser,
-    TResult Function(ConfirmResponse value)? response,
-    TResult Function(ConfirmInviteError value)? error,
+    TResult? Function(ConfirmInviteLoading value)? loading,
+    TResult? Function(InviteExpired value)? inviteExpired,
+    TResult? Function(UserAlreadyRegistered value)? userAlreadyRegistered,
+    TResult? Function(NewUser value)? newUser,
+    TResult? Function(ConfirmResponse value)? response,
+    TResult? Function(ConfirmInviteError value)? error,
   }) {
     return inviteExpired?.call(this);
   }
@@ -367,14 +362,11 @@ abstract class _$$UserAlreadyRegisteredCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserAlreadyRegisteredCopyWithImpl<$Res>
-    extends _$ConfirmInviteStateCopyWithImpl<$Res>
+    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$UserAlreadyRegistered>
     implements _$$UserAlreadyRegisteredCopyWith<$Res> {
   __$$UserAlreadyRegisteredCopyWithImpl(_$UserAlreadyRegistered _value,
       $Res Function(_$UserAlreadyRegistered) _then)
-      : super(_value, (v) => _then(v as _$UserAlreadyRegistered));
-
-  @override
-  _$UserAlreadyRegistered get _value => super._value as _$UserAlreadyRegistered;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -412,12 +404,12 @@ class _$UserAlreadyRegistered implements UserAlreadyRegistered {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? inviteExpired,
-    TResult Function()? userAlreadyRegistered,
-    TResult Function()? newUser,
-    TResult Function(ConfirmInviteResponseStatus status)? response,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? loading,
+    TResult? Function()? inviteExpired,
+    TResult? Function()? userAlreadyRegistered,
+    TResult? Function()? newUser,
+    TResult? Function(ConfirmInviteResponseStatus status)? response,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return userAlreadyRegistered?.call();
   }
@@ -456,12 +448,12 @@ class _$UserAlreadyRegistered implements UserAlreadyRegistered {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ConfirmInviteLoading value)? loading,
-    TResult Function(InviteExpired value)? inviteExpired,
-    TResult Function(UserAlreadyRegistered value)? userAlreadyRegistered,
-    TResult Function(NewUser value)? newUser,
-    TResult Function(ConfirmResponse value)? response,
-    TResult Function(ConfirmInviteError value)? error,
+    TResult? Function(ConfirmInviteLoading value)? loading,
+    TResult? Function(InviteExpired value)? inviteExpired,
+    TResult? Function(UserAlreadyRegistered value)? userAlreadyRegistered,
+    TResult? Function(NewUser value)? newUser,
+    TResult? Function(ConfirmResponse value)? response,
+    TResult? Function(ConfirmInviteError value)? error,
   }) {
     return userAlreadyRegistered?.call(this);
   }
@@ -496,13 +488,10 @@ abstract class _$$NewUserCopyWith<$Res> {
 
 /// @nodoc
 class __$$NewUserCopyWithImpl<$Res>
-    extends _$ConfirmInviteStateCopyWithImpl<$Res>
+    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$NewUser>
     implements _$$NewUserCopyWith<$Res> {
   __$$NewUserCopyWithImpl(_$NewUser _value, $Res Function(_$NewUser) _then)
-      : super(_value, (v) => _then(v as _$NewUser));
-
-  @override
-  _$NewUser get _value => super._value as _$NewUser;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -540,12 +529,12 @@ class _$NewUser implements NewUser {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? inviteExpired,
-    TResult Function()? userAlreadyRegistered,
-    TResult Function()? newUser,
-    TResult Function(ConfirmInviteResponseStatus status)? response,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? loading,
+    TResult? Function()? inviteExpired,
+    TResult? Function()? userAlreadyRegistered,
+    TResult? Function()? newUser,
+    TResult? Function(ConfirmInviteResponseStatus status)? response,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return newUser?.call();
   }
@@ -584,12 +573,12 @@ class _$NewUser implements NewUser {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ConfirmInviteLoading value)? loading,
-    TResult Function(InviteExpired value)? inviteExpired,
-    TResult Function(UserAlreadyRegistered value)? userAlreadyRegistered,
-    TResult Function(NewUser value)? newUser,
-    TResult Function(ConfirmResponse value)? response,
-    TResult Function(ConfirmInviteError value)? error,
+    TResult? Function(ConfirmInviteLoading value)? loading,
+    TResult? Function(InviteExpired value)? inviteExpired,
+    TResult? Function(UserAlreadyRegistered value)? userAlreadyRegistered,
+    TResult? Function(NewUser value)? newUser,
+    TResult? Function(ConfirmResponse value)? response,
+    TResult? Function(ConfirmInviteError value)? error,
   }) {
     return newUser?.call(this);
   }
@@ -621,26 +610,25 @@ abstract class _$$ConfirmResponseCopyWith<$Res> {
   factory _$$ConfirmResponseCopyWith(
           _$ConfirmResponse value, $Res Function(_$ConfirmResponse) then) =
       __$$ConfirmResponseCopyWithImpl<$Res>;
+  @useResult
   $Res call({ConfirmInviteResponseStatus status});
 }
 
 /// @nodoc
 class __$$ConfirmResponseCopyWithImpl<$Res>
-    extends _$ConfirmInviteStateCopyWithImpl<$Res>
+    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$ConfirmResponse>
     implements _$$ConfirmResponseCopyWith<$Res> {
   __$$ConfirmResponseCopyWithImpl(
       _$ConfirmResponse _value, $Res Function(_$ConfirmResponse) _then)
-      : super(_value, (v) => _then(v as _$ConfirmResponse));
+      : super(_value, _then);
 
-  @override
-  _$ConfirmResponse get _value => super._value as _$ConfirmResponse;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
+    Object? status = null,
   }) {
     return _then(_$ConfirmResponse(
-      status == freezed
+      null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as ConfirmInviteResponseStatus,
@@ -666,15 +654,15 @@ class _$ConfirmResponse implements ConfirmResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ConfirmResponse &&
-            const DeepCollectionEquality().equals(other.status, status));
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(status));
+  int get hashCode => Object.hash(runtimeType, status);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$ConfirmResponseCopyWith<_$ConfirmResponse> get copyWith =>
       __$$ConfirmResponseCopyWithImpl<_$ConfirmResponse>(this, _$identity);
 
@@ -694,12 +682,12 @@ class _$ConfirmResponse implements ConfirmResponse {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? inviteExpired,
-    TResult Function()? userAlreadyRegistered,
-    TResult Function()? newUser,
-    TResult Function(ConfirmInviteResponseStatus status)? response,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? loading,
+    TResult? Function()? inviteExpired,
+    TResult? Function()? userAlreadyRegistered,
+    TResult? Function()? newUser,
+    TResult? Function(ConfirmInviteResponseStatus status)? response,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return response?.call(status);
   }
@@ -738,12 +726,12 @@ class _$ConfirmResponse implements ConfirmResponse {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ConfirmInviteLoading value)? loading,
-    TResult Function(InviteExpired value)? inviteExpired,
-    TResult Function(UserAlreadyRegistered value)? userAlreadyRegistered,
-    TResult Function(NewUser value)? newUser,
-    TResult Function(ConfirmResponse value)? response,
-    TResult Function(ConfirmInviteError value)? error,
+    TResult? Function(ConfirmInviteLoading value)? loading,
+    TResult? Function(InviteExpired value)? inviteExpired,
+    TResult? Function(UserAlreadyRegistered value)? userAlreadyRegistered,
+    TResult? Function(NewUser value)? newUser,
+    TResult? Function(ConfirmResponse value)? response,
+    TResult? Function(ConfirmInviteError value)? error,
   }) {
     return response?.call(this);
   }
@@ -781,31 +769,27 @@ abstract class _$$ConfirmInviteErrorCopyWith<$Res> {
   factory _$$ConfirmInviteErrorCopyWith(_$ConfirmInviteError value,
           $Res Function(_$ConfirmInviteError) then) =
       __$$ConfirmInviteErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({Object error, StackTrace st});
 }
 
 /// @nodoc
 class __$$ConfirmInviteErrorCopyWithImpl<$Res>
-    extends _$ConfirmInviteStateCopyWithImpl<$Res>
+    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$ConfirmInviteError>
     implements _$$ConfirmInviteErrorCopyWith<$Res> {
   __$$ConfirmInviteErrorCopyWithImpl(
       _$ConfirmInviteError _value, $Res Function(_$ConfirmInviteError) _then)
-      : super(_value, (v) => _then(v as _$ConfirmInviteError));
+      : super(_value, _then);
 
-  @override
-  _$ConfirmInviteError get _value => super._value as _$ConfirmInviteError;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = freezed,
-    Object? st = freezed,
+    Object? error = null,
+    Object? st = null,
   }) {
     return _then(_$ConfirmInviteError(
-      error == freezed
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as Object,
-      st == freezed
+      null == error ? _value.error : error,
+      null == st
           ? _value.st
           : st // ignore: cast_nullable_to_non_nullable
               as StackTrace,
@@ -834,17 +818,16 @@ class _$ConfirmInviteError implements ConfirmInviteError {
         (other.runtimeType == runtimeType &&
             other is _$ConfirmInviteError &&
             const DeepCollectionEquality().equals(other.error, error) &&
-            const DeepCollectionEquality().equals(other.st, st));
+            (identical(other.st, st) || other.st == st));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(error),
-      const DeepCollectionEquality().hash(st));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error), st);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$ConfirmInviteErrorCopyWith<_$ConfirmInviteError> get copyWith =>
       __$$ConfirmInviteErrorCopyWithImpl<_$ConfirmInviteError>(
           this, _$identity);
@@ -865,12 +848,12 @@ class _$ConfirmInviteError implements ConfirmInviteError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? inviteExpired,
-    TResult Function()? userAlreadyRegistered,
-    TResult Function()? newUser,
-    TResult Function(ConfirmInviteResponseStatus status)? response,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? loading,
+    TResult? Function()? inviteExpired,
+    TResult? Function()? userAlreadyRegistered,
+    TResult? Function()? newUser,
+    TResult? Function(ConfirmInviteResponseStatus status)? response,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return error?.call(this.error, st);
   }
@@ -909,12 +892,12 @@ class _$ConfirmInviteError implements ConfirmInviteError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ConfirmInviteLoading value)? loading,
-    TResult Function(InviteExpired value)? inviteExpired,
-    TResult Function(UserAlreadyRegistered value)? userAlreadyRegistered,
-    TResult Function(NewUser value)? newUser,
-    TResult Function(ConfirmResponse value)? response,
-    TResult Function(ConfirmInviteError value)? error,
+    TResult? Function(ConfirmInviteLoading value)? loading,
+    TResult? Function(InviteExpired value)? inviteExpired,
+    TResult? Function(UserAlreadyRegistered value)? userAlreadyRegistered,
+    TResult? Function(NewUser value)? newUser,
+    TResult? Function(ConfirmResponse value)? response,
+    TResult? Function(ConfirmInviteError value)? error,
   }) {
     return error?.call(this);
   }
@@ -965,7 +948,8 @@ mixin _$InviteRequest {
 abstract class $InviteRequestCopyWith<$Res> {
   factory $InviteRequestCopyWith(
           InviteRequest value, $Res Function(InviteRequest) then) =
-      _$InviteRequestCopyWithImpl<$Res>;
+      _$InviteRequestCopyWithImpl<$Res, InviteRequest>;
+  @useResult
   $Res call(
       {String providerId,
       String? userId,
@@ -975,44 +959,46 @@ abstract class $InviteRequestCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$InviteRequestCopyWithImpl<$Res>
+class _$InviteRequestCopyWithImpl<$Res, $Val extends InviteRequest>
     implements $InviteRequestCopyWith<$Res> {
   _$InviteRequestCopyWithImpl(this._value, this._then);
 
-  final InviteRequest _value;
   // ignore: unused_field
-  final $Res Function(InviteRequest) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? providerId = freezed,
+    Object? providerId = null,
     Object? userId = freezed,
-    Object? inviteId = freezed,
-    Object? providerName = freezed,
-    Object? secret = freezed,
+    Object? inviteId = null,
+    Object? providerName = null,
+    Object? secret = null,
   }) {
     return _then(_value.copyWith(
-      providerId: providerId == freezed
+      providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      inviteId: inviteId == freezed
+      inviteId: null == inviteId
           ? _value.inviteId
           : inviteId // ignore: cast_nullable_to_non_nullable
               as String,
-      providerName: providerName == freezed
+      providerName: null == providerName
           ? _value.providerName
           : providerName // ignore: cast_nullable_to_non_nullable
               as String,
-      secret: secret == freezed
+      secret: null == secret
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1023,6 +1009,7 @@ abstract class _$$_InviteRequestCopyWith<$Res>
           _$_InviteRequest value, $Res Function(_$_InviteRequest) then) =
       __$$_InviteRequestCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String providerId,
       String? userId,
@@ -1033,41 +1020,39 @@ abstract class _$$_InviteRequestCopyWith<$Res>
 
 /// @nodoc
 class __$$_InviteRequestCopyWithImpl<$Res>
-    extends _$InviteRequestCopyWithImpl<$Res>
+    extends _$InviteRequestCopyWithImpl<$Res, _$_InviteRequest>
     implements _$$_InviteRequestCopyWith<$Res> {
   __$$_InviteRequestCopyWithImpl(
       _$_InviteRequest _value, $Res Function(_$_InviteRequest) _then)
-      : super(_value, (v) => _then(v as _$_InviteRequest));
+      : super(_value, _then);
 
-  @override
-  _$_InviteRequest get _value => super._value as _$_InviteRequest;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? providerId = freezed,
+    Object? providerId = null,
     Object? userId = freezed,
-    Object? inviteId = freezed,
-    Object? providerName = freezed,
-    Object? secret = freezed,
+    Object? inviteId = null,
+    Object? providerName = null,
+    Object? secret = null,
   }) {
     return _then(_$_InviteRequest(
-      providerId: providerId == freezed
+      providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      inviteId: inviteId == freezed
+      inviteId: null == inviteId
           ? _value.inviteId
           : inviteId // ignore: cast_nullable_to_non_nullable
               as String,
-      providerName: providerName == freezed
+      providerName: null == providerName
           ? _value.providerName
           : providerName // ignore: cast_nullable_to_non_nullable
               as String,
-      secret: secret == freezed
+      secret: null == secret
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
               as String,
@@ -1106,26 +1091,23 @@ class _$_InviteRequest implements _InviteRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_InviteRequest &&
-            const DeepCollectionEquality()
-                .equals(other.providerId, providerId) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.inviteId, inviteId) &&
-            const DeepCollectionEquality()
-                .equals(other.providerName, providerName) &&
-            const DeepCollectionEquality().equals(other.secret, secret));
+            (identical(other.providerId, providerId) ||
+                other.providerId == providerId) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.inviteId, inviteId) ||
+                other.inviteId == inviteId) &&
+            (identical(other.providerName, providerName) ||
+                other.providerName == providerName) &&
+            (identical(other.secret, secret) || other.secret == secret));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(providerId),
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(inviteId),
-      const DeepCollectionEquality().hash(providerName),
-      const DeepCollectionEquality().hash(secret));
+      runtimeType, providerId, userId, inviteId, providerName, secret);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InviteRequestCopyWith<_$_InviteRequest> get copyWith =>
       __$$_InviteRequestCopyWithImpl<_$_InviteRequest>(this, _$identity);
 }

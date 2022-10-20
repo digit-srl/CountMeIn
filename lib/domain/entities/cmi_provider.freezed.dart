@@ -48,7 +48,8 @@ mixin _$CMIProvider {
 abstract class $CMIProviderCopyWith<$Res> {
   factory $CMIProviderCopyWith(
           CMIProvider value, $Res Function(CMIProvider) then) =
-      _$CMIProviderCopyWithImpl<$Res>;
+      _$CMIProviderCopyWithImpl<$Res, CMIProvider>;
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -66,83 +67,86 @@ abstract class $CMIProviderCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CMIProviderCopyWithImpl<$Res> implements $CMIProviderCopyWith<$Res> {
+class _$CMIProviderCopyWithImpl<$Res, $Val extends CMIProvider>
+    implements $CMIProviderCopyWith<$Res> {
   _$CMIProviderCopyWithImpl(this._value, this._then);
 
-  final CMIProvider _value;
   // ignore: unused_field
-  final $Res Function(CMIProvider) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? adminName = freezed,
-    Object? adminSurname = freezed,
-    Object? adminEmail = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? adminName = null,
+    Object? adminSurname = null,
+    Object? adminEmail = null,
     Object? managers = freezed,
     Object? apiKey = freezed,
     Object? aims = freezed,
     Object? domainRequirement = freezed,
-    Object? releaseWom = freezed,
+    Object? releaseWom = null,
     Object? status = freezed,
     Object? createdOn = freezed,
-    Object? requestedOn = freezed,
+    Object? requestedOn = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      adminName: adminName == freezed
+      adminName: null == adminName
           ? _value.adminName
           : adminName // ignore: cast_nullable_to_non_nullable
               as String,
-      adminSurname: adminSurname == freezed
+      adminSurname: null == adminSurname
           ? _value.adminSurname
           : adminSurname // ignore: cast_nullable_to_non_nullable
               as String,
-      adminEmail: adminEmail == freezed
+      adminEmail: null == adminEmail
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
-      managers: managers == freezed
+      managers: freezed == managers
           ? _value.managers
           : managers // ignore: cast_nullable_to_non_nullable
               as Map<String, ProviderManager>?,
-      apiKey: apiKey == freezed
+      apiKey: freezed == apiKey
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
               as String?,
-      aims: aims == freezed
+      aims: freezed == aims
           ? _value.aims
           : aims // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      domainRequirement: domainRequirement == freezed
+      domainRequirement: freezed == domainRequirement
           ? _value.domainRequirement
           : domainRequirement // ignore: cast_nullable_to_non_nullable
               as String?,
-      releaseWom: releaseWom == freezed
+      releaseWom: null == releaseWom
           ? _value.releaseWom
           : releaseWom // ignore: cast_nullable_to_non_nullable
               as bool,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as CMIProviderStatus?,
-      createdOn: createdOn == freezed
+      createdOn: freezed == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      requestedOn: requestedOn == freezed
+      requestedOn: null == requestedOn
           ? _value.requestedOn
           : requestedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
-    ));
+    ) as $Val);
   }
 }
 
@@ -153,6 +157,7 @@ abstract class _$$_CMIProviderCopyWith<$Res>
           _$_CMIProvider value, $Res Function(_$_CMIProvider) then) =
       __$$_CMIProviderCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -170,81 +175,80 @@ abstract class _$$_CMIProviderCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CMIProviderCopyWithImpl<$Res> extends _$CMIProviderCopyWithImpl<$Res>
+class __$$_CMIProviderCopyWithImpl<$Res>
+    extends _$CMIProviderCopyWithImpl<$Res, _$_CMIProvider>
     implements _$$_CMIProviderCopyWith<$Res> {
   __$$_CMIProviderCopyWithImpl(
       _$_CMIProvider _value, $Res Function(_$_CMIProvider) _then)
-      : super(_value, (v) => _then(v as _$_CMIProvider));
+      : super(_value, _then);
 
-  @override
-  _$_CMIProvider get _value => super._value as _$_CMIProvider;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? adminName = freezed,
-    Object? adminSurname = freezed,
-    Object? adminEmail = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? adminName = null,
+    Object? adminSurname = null,
+    Object? adminEmail = null,
     Object? managers = freezed,
     Object? apiKey = freezed,
     Object? aims = freezed,
     Object? domainRequirement = freezed,
-    Object? releaseWom = freezed,
+    Object? releaseWom = null,
     Object? status = freezed,
     Object? createdOn = freezed,
-    Object? requestedOn = freezed,
+    Object? requestedOn = null,
   }) {
     return _then(_$_CMIProvider(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      adminName: adminName == freezed
+      adminName: null == adminName
           ? _value.adminName
           : adminName // ignore: cast_nullable_to_non_nullable
               as String,
-      adminSurname: adminSurname == freezed
+      adminSurname: null == adminSurname
           ? _value.adminSurname
           : adminSurname // ignore: cast_nullable_to_non_nullable
               as String,
-      adminEmail: adminEmail == freezed
+      adminEmail: null == adminEmail
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
-      managers: managers == freezed
+      managers: freezed == managers
           ? _value._managers
           : managers // ignore: cast_nullable_to_non_nullable
               as Map<String, ProviderManager>?,
-      apiKey: apiKey == freezed
+      apiKey: freezed == apiKey
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
               as String?,
-      aims: aims == freezed
+      aims: freezed == aims
           ? _value._aims
           : aims // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      domainRequirement: domainRequirement == freezed
+      domainRequirement: freezed == domainRequirement
           ? _value.domainRequirement
           : domainRequirement // ignore: cast_nullable_to_non_nullable
               as String?,
-      releaseWom: releaseWom == freezed
+      releaseWom: null == releaseWom
           ? _value.releaseWom
           : releaseWom // ignore: cast_nullable_to_non_nullable
               as bool,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as CMIProviderStatus?,
-      createdOn: createdOn == freezed
+      createdOn: freezed == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      requestedOn: requestedOn == freezed
+      requestedOn: null == requestedOn
           ? _value.requestedOn
           : requestedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -330,46 +334,49 @@ class _$_CMIProvider implements _CMIProvider {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CMIProvider &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.adminName, adminName) &&
-            const DeepCollectionEquality()
-                .equals(other.adminSurname, adminSurname) &&
-            const DeepCollectionEquality()
-                .equals(other.adminEmail, adminEmail) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.adminName, adminName) ||
+                other.adminName == adminName) &&
+            (identical(other.adminSurname, adminSurname) ||
+                other.adminSurname == adminSurname) &&
+            (identical(other.adminEmail, adminEmail) ||
+                other.adminEmail == adminEmail) &&
             const DeepCollectionEquality().equals(other._managers, _managers) &&
-            const DeepCollectionEquality().equals(other.apiKey, apiKey) &&
+            (identical(other.apiKey, apiKey) || other.apiKey == apiKey) &&
             const DeepCollectionEquality().equals(other._aims, _aims) &&
-            const DeepCollectionEquality()
-                .equals(other.domainRequirement, domainRequirement) &&
-            const DeepCollectionEquality()
-                .equals(other.releaseWom, releaseWom) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.createdOn, createdOn) &&
-            const DeepCollectionEquality()
-                .equals(other.requestedOn, requestedOn));
+            (identical(other.domainRequirement, domainRequirement) ||
+                other.domainRequirement == domainRequirement) &&
+            (identical(other.releaseWom, releaseWom) ||
+                other.releaseWom == releaseWom) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.createdOn, createdOn) ||
+                other.createdOn == createdOn) &&
+            (identical(other.requestedOn, requestedOn) ||
+                other.requestedOn == requestedOn));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(adminName),
-      const DeepCollectionEquality().hash(adminSurname),
-      const DeepCollectionEquality().hash(adminEmail),
+      id,
+      name,
+      adminName,
+      adminSurname,
+      adminEmail,
       const DeepCollectionEquality().hash(_managers),
-      const DeepCollectionEquality().hash(apiKey),
+      apiKey,
       const DeepCollectionEquality().hash(_aims),
-      const DeepCollectionEquality().hash(domainRequirement),
-      const DeepCollectionEquality().hash(releaseWom),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(createdOn),
-      const DeepCollectionEquality().hash(requestedOn));
+      domainRequirement,
+      releaseWom,
+      status,
+      createdOn,
+      requestedOn);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CMIProviderCopyWith<_$_CMIProvider> get copyWith =>
       __$$_CMIProviderCopyWithImpl<_$_CMIProvider>(this, _$identity);
 
@@ -465,7 +472,8 @@ mixin _$PendingProviderManager {
 abstract class $PendingProviderManagerCopyWith<$Res> {
   factory $PendingProviderManagerCopyWith(PendingProviderManager value,
           $Res Function(PendingProviderManager) then) =
-      _$PendingProviderManagerCopyWithImpl<$Res>;
+      _$PendingProviderManagerCopyWithImpl<$Res, PendingProviderManager>;
+  @useResult
   $Res call(
       {String id,
       @UserRoleConverter() UserRole role,
@@ -478,59 +486,62 @@ abstract class $PendingProviderManagerCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PendingProviderManagerCopyWithImpl<$Res>
+class _$PendingProviderManagerCopyWithImpl<$Res,
+        $Val extends PendingProviderManager>
     implements $PendingProviderManagerCopyWith<$Res> {
   _$PendingProviderManagerCopyWithImpl(this._value, this._then);
 
-  final PendingProviderManager _value;
   // ignore: unused_field
-  final $Res Function(PendingProviderManager) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? role = freezed,
-    Object? name = freezed,
-    Object? secret = freezed,
-    Object? providerName = freezed,
-    Object? email = freezed,
-    Object? invitedOn = freezed,
-    Object? status = freezed,
+    Object? id = null,
+    Object? role = null,
+    Object? name = null,
+    Object? secret = null,
+    Object? providerName = null,
+    Object? email = null,
+    Object? invitedOn = null,
+    Object? status = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      role: role == freezed
+      role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      secret: secret == freezed
+      secret: null == secret
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
               as String,
-      providerName: providerName == freezed
+      providerName: null == providerName
           ? _value.providerName
           : providerName // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      invitedOn: invitedOn == freezed
+      invitedOn: null == invitedOn
           ? _value.invitedOn
           : invitedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as ProviderManagerStatus,
-    ));
+    ) as $Val);
   }
 }
 
@@ -541,6 +552,7 @@ abstract class _$$_PendingProviderManagerCopyWith<$Res>
           $Res Function(_$_PendingProviderManager) then) =
       __$$_PendingProviderManagerCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       @UserRoleConverter() UserRole role,
@@ -554,57 +566,55 @@ abstract class _$$_PendingProviderManagerCopyWith<$Res>
 
 /// @nodoc
 class __$$_PendingProviderManagerCopyWithImpl<$Res>
-    extends _$PendingProviderManagerCopyWithImpl<$Res>
+    extends _$PendingProviderManagerCopyWithImpl<$Res,
+        _$_PendingProviderManager>
     implements _$$_PendingProviderManagerCopyWith<$Res> {
   __$$_PendingProviderManagerCopyWithImpl(_$_PendingProviderManager _value,
       $Res Function(_$_PendingProviderManager) _then)
-      : super(_value, (v) => _then(v as _$_PendingProviderManager));
+      : super(_value, _then);
 
-  @override
-  _$_PendingProviderManager get _value =>
-      super._value as _$_PendingProviderManager;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? role = freezed,
-    Object? name = freezed,
-    Object? secret = freezed,
-    Object? providerName = freezed,
-    Object? email = freezed,
-    Object? invitedOn = freezed,
-    Object? status = freezed,
+    Object? id = null,
+    Object? role = null,
+    Object? name = null,
+    Object? secret = null,
+    Object? providerName = null,
+    Object? email = null,
+    Object? invitedOn = null,
+    Object? status = null,
   }) {
     return _then(_$_PendingProviderManager(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      role: role == freezed
+      role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      secret: secret == freezed
+      secret: null == secret
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
               as String,
-      providerName: providerName == freezed
+      providerName: null == providerName
           ? _value.providerName
           : providerName // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      invitedOn: invitedOn == freezed
+      invitedOn: null == invitedOn
           ? _value.invitedOn
           : invitedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as ProviderManagerStatus,
@@ -658,32 +668,26 @@ class _$_PendingProviderManager implements _PendingProviderManager {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PendingProviderManager &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.role, role) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.secret, secret) &&
-            const DeepCollectionEquality()
-                .equals(other.providerName, providerName) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.invitedOn, invitedOn) &&
-            const DeepCollectionEquality().equals(other.status, status));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.secret, secret) || other.secret == secret) &&
+            (identical(other.providerName, providerName) ||
+                other.providerName == providerName) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.invitedOn, invitedOn) ||
+                other.invitedOn == invitedOn) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(role),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(secret),
-      const DeepCollectionEquality().hash(providerName),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(invitedOn),
-      const DeepCollectionEquality().hash(status));
+  int get hashCode => Object.hash(runtimeType, id, role, name, secret,
+      providerName, email, invitedOn, status);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PendingProviderManagerCopyWith<_$_PendingProviderManager> get copyWith =>
       __$$_PendingProviderManagerCopyWithImpl<_$_PendingProviderManager>(
           this, _$identity);
@@ -761,7 +765,8 @@ mixin _$ProviderManager {
 abstract class $ProviderManagerCopyWith<$Res> {
   factory $ProviderManagerCopyWith(
           ProviderManager value, $Res Function(ProviderManager) then) =
-      _$ProviderManagerCopyWithImpl<$Res>;
+      _$ProviderManagerCopyWithImpl<$Res, ProviderManager>;
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -770,39 +775,41 @@ abstract class $ProviderManagerCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ProviderManagerCopyWithImpl<$Res>
+class _$ProviderManagerCopyWithImpl<$Res, $Val extends ProviderManager>
     implements $ProviderManagerCopyWith<$Res> {
   _$ProviderManagerCopyWithImpl(this._value, this._then);
 
-  final ProviderManager _value;
   // ignore: unused_field
-  final $Res Function(ProviderManager) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? email = freezed,
-    Object? role = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? email = null,
+    Object? role = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      role: role == freezed
+      role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
-    ));
+    ) as $Val);
   }
 }
 
@@ -813,6 +820,7 @@ abstract class _$$_ProviderManagerCopyWith<$Res>
           _$_ProviderManager value, $Res Function(_$_ProviderManager) then) =
       __$$_ProviderManagerCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -822,36 +830,34 @@ abstract class _$$_ProviderManagerCopyWith<$Res>
 
 /// @nodoc
 class __$$_ProviderManagerCopyWithImpl<$Res>
-    extends _$ProviderManagerCopyWithImpl<$Res>
+    extends _$ProviderManagerCopyWithImpl<$Res, _$_ProviderManager>
     implements _$$_ProviderManagerCopyWith<$Res> {
   __$$_ProviderManagerCopyWithImpl(
       _$_ProviderManager _value, $Res Function(_$_ProviderManager) _then)
-      : super(_value, (v) => _then(v as _$_ProviderManager));
+      : super(_value, _then);
 
-  @override
-  _$_ProviderManager get _value => super._value as _$_ProviderManager;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? email = freezed,
-    Object? role = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? email = null,
+    Object? role = null,
   }) {
     return _then(_$_ProviderManager(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      role: role == freezed
+      role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
@@ -891,23 +897,19 @@ class _$_ProviderManager implements _ProviderManager {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ProviderManager &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.role, role));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.role, role) || other.role == role));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(role));
+  int get hashCode => Object.hash(runtimeType, id, name, email, role);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ProviderManagerCopyWith<_$_ProviderManager> get copyWith =>
       __$$_ProviderManagerCopyWithImpl<_$_ProviderManager>(this, _$identity);
 

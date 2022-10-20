@@ -28,12 +28,12 @@ mixin _$UserRegisteringState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
-    TResult Function()? loading,
-    TResult Function()? invalidFiscalCode,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? initial,
+    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function()? loading,
+    TResult? Function()? invalidFiscalCode,
+    TResult? Function(Object error, StackTrace st)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,14 +62,15 @@ mixin _$UserRegisteringState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserRegisteringInitial value)? initial,
-    TResult Function(UserRegisteringVerificationEmailSent value)?
+    TResult? Function(UserRegisteringInitial value)? initial,
+    TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
+    TResult? Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
-    TResult Function(UserRegisteringLoading value)? loading,
-    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
-    TResult Function(UserRegisteringError value)? error,
+    TResult? Function(UserRegisteringLoading value)? loading,
+    TResult? Function(UserRegisteringInvalidFiscalCode value)?
+        invalidFiscalCode,
+    TResult? Function(UserRegisteringError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -91,17 +92,19 @@ mixin _$UserRegisteringState {
 abstract class $UserRegisteringStateCopyWith<$Res> {
   factory $UserRegisteringStateCopyWith(UserRegisteringState value,
           $Res Function(UserRegisteringState) then) =
-      _$UserRegisteringStateCopyWithImpl<$Res>;
+      _$UserRegisteringStateCopyWithImpl<$Res, UserRegisteringState>;
 }
 
 /// @nodoc
-class _$UserRegisteringStateCopyWithImpl<$Res>
+class _$UserRegisteringStateCopyWithImpl<$Res,
+        $Val extends UserRegisteringState>
     implements $UserRegisteringStateCopyWith<$Res> {
   _$UserRegisteringStateCopyWithImpl(this._value, this._then);
 
-  final UserRegisteringState _value;
   // ignore: unused_field
-  final $Res Function(UserRegisteringState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -113,15 +116,11 @@ abstract class _$$UserRegisteringInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserRegisteringInitialCopyWithImpl<$Res>
-    extends _$UserRegisteringStateCopyWithImpl<$Res>
+    extends _$UserRegisteringStateCopyWithImpl<$Res, _$UserRegisteringInitial>
     implements _$$UserRegisteringInitialCopyWith<$Res> {
   __$$UserRegisteringInitialCopyWithImpl(_$UserRegisteringInitial _value,
       $Res Function(_$UserRegisteringInitial) _then)
-      : super(_value, (v) => _then(v as _$UserRegisteringInitial));
-
-  @override
-  _$UserRegisteringInitial get _value =>
-      super._value as _$UserRegisteringInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -159,12 +158,12 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
-    TResult Function()? loading,
-    TResult Function()? invalidFiscalCode,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? initial,
+    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function()? loading,
+    TResult? Function()? invalidFiscalCode,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return initial?.call();
   }
@@ -205,14 +204,15 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserRegisteringInitial value)? initial,
-    TResult Function(UserRegisteringVerificationEmailSent value)?
+    TResult? Function(UserRegisteringInitial value)? initial,
+    TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
+    TResult? Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
-    TResult Function(UserRegisteringLoading value)? loading,
-    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
-    TResult Function(UserRegisteringError value)? error,
+    TResult? Function(UserRegisteringLoading value)? loading,
+    TResult? Function(UserRegisteringInvalidFiscalCode value)?
+        invalidFiscalCode,
+    TResult? Function(UserRegisteringError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -247,34 +247,32 @@ abstract class _$$UserRegisteringVerificationEmailSentCopyWith<$Res> {
           _$UserRegisteringVerificationEmailSent value,
           $Res Function(_$UserRegisteringVerificationEmailSent) then) =
       __$$UserRegisteringVerificationEmailSentCopyWithImpl<$Res>;
+  @useResult
   $Res call({bool newUser, String email});
 }
 
 /// @nodoc
 class __$$UserRegisteringVerificationEmailSentCopyWithImpl<$Res>
-    extends _$UserRegisteringStateCopyWithImpl<$Res>
+    extends _$UserRegisteringStateCopyWithImpl<$Res,
+        _$UserRegisteringVerificationEmailSent>
     implements _$$UserRegisteringVerificationEmailSentCopyWith<$Res> {
   __$$UserRegisteringVerificationEmailSentCopyWithImpl(
       _$UserRegisteringVerificationEmailSent _value,
       $Res Function(_$UserRegisteringVerificationEmailSent) _then)
-      : super(
-            _value, (v) => _then(v as _$UserRegisteringVerificationEmailSent));
+      : super(_value, _then);
 
-  @override
-  _$UserRegisteringVerificationEmailSent get _value =>
-      super._value as _$UserRegisteringVerificationEmailSent;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? newUser = freezed,
-    Object? email = freezed,
+    Object? newUser = null,
+    Object? email = null,
   }) {
     return _then(_$UserRegisteringVerificationEmailSent(
-      newUser: newUser == freezed
+      newUser: null == newUser
           ? _value.newUser
           : newUser // ignore: cast_nullable_to_non_nullable
               as bool,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
@@ -305,18 +303,16 @@ class _$UserRegisteringVerificationEmailSent
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserRegisteringVerificationEmailSent &&
-            const DeepCollectionEquality().equals(other.newUser, newUser) &&
-            const DeepCollectionEquality().equals(other.email, email));
+            (identical(other.newUser, newUser) || other.newUser == newUser) &&
+            (identical(other.email, email) || other.email == email));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(newUser),
-      const DeepCollectionEquality().hash(email));
+  int get hashCode => Object.hash(runtimeType, newUser, email);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UserRegisteringVerificationEmailSentCopyWith<
           _$UserRegisteringVerificationEmailSent>
       get copyWith => __$$UserRegisteringVerificationEmailSentCopyWithImpl<
@@ -338,12 +334,12 @@ class _$UserRegisteringVerificationEmailSent
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
-    TResult Function()? loading,
-    TResult Function()? invalidFiscalCode,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? initial,
+    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function()? loading,
+    TResult? Function()? invalidFiscalCode,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return verificationEmailSent?.call(newUser, email);
   }
@@ -384,14 +380,15 @@ class _$UserRegisteringVerificationEmailSent
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserRegisteringInitial value)? initial,
-    TResult Function(UserRegisteringVerificationEmailSent value)?
+    TResult? Function(UserRegisteringInitial value)? initial,
+    TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
+    TResult? Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
-    TResult Function(UserRegisteringLoading value)? loading,
-    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
-    TResult Function(UserRegisteringError value)? error,
+    TResult? Function(UserRegisteringLoading value)? loading,
+    TResult? Function(UserRegisteringInvalidFiscalCode value)?
+        invalidFiscalCode,
+    TResult? Function(UserRegisteringError value)? error,
   }) {
     return verificationEmailSent?.call(this);
   }
@@ -436,28 +433,27 @@ abstract class _$$UserRegisteringUserCardSentByEmailCopyWith<$Res> {
           _$UserRegisteringUserCardSentByEmail value,
           $Res Function(_$UserRegisteringUserCardSentByEmail) then) =
       __$$UserRegisteringUserCardSentByEmailCopyWithImpl<$Res>;
+  @useResult
   $Res call({String email});
 }
 
 /// @nodoc
 class __$$UserRegisteringUserCardSentByEmailCopyWithImpl<$Res>
-    extends _$UserRegisteringStateCopyWithImpl<$Res>
+    extends _$UserRegisteringStateCopyWithImpl<$Res,
+        _$UserRegisteringUserCardSentByEmail>
     implements _$$UserRegisteringUserCardSentByEmailCopyWith<$Res> {
   __$$UserRegisteringUserCardSentByEmailCopyWithImpl(
       _$UserRegisteringUserCardSentByEmail _value,
       $Res Function(_$UserRegisteringUserCardSentByEmail) _then)
-      : super(_value, (v) => _then(v as _$UserRegisteringUserCardSentByEmail));
+      : super(_value, _then);
 
-  @override
-  _$UserRegisteringUserCardSentByEmail get _value =>
-      super._value as _$UserRegisteringUserCardSentByEmail;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = freezed,
+    Object? email = null,
   }) {
     return _then(_$UserRegisteringUserCardSentByEmail(
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
@@ -484,15 +480,15 @@ class _$UserRegisteringUserCardSentByEmail
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserRegisteringUserCardSentByEmail &&
-            const DeepCollectionEquality().equals(other.email, email));
+            (identical(other.email, email) || other.email == email));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(email));
+  int get hashCode => Object.hash(runtimeType, email);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UserRegisteringUserCardSentByEmailCopyWith<
           _$UserRegisteringUserCardSentByEmail>
       get copyWith => __$$UserRegisteringUserCardSentByEmailCopyWithImpl<
@@ -514,12 +510,12 @@ class _$UserRegisteringUserCardSentByEmail
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
-    TResult Function()? loading,
-    TResult Function()? invalidFiscalCode,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? initial,
+    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function()? loading,
+    TResult? Function()? invalidFiscalCode,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return userCardSentByEmail?.call(email);
   }
@@ -560,14 +556,15 @@ class _$UserRegisteringUserCardSentByEmail
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserRegisteringInitial value)? initial,
-    TResult Function(UserRegisteringVerificationEmailSent value)?
+    TResult? Function(UserRegisteringInitial value)? initial,
+    TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
+    TResult? Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
-    TResult Function(UserRegisteringLoading value)? loading,
-    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
-    TResult Function(UserRegisteringError value)? error,
+    TResult? Function(UserRegisteringLoading value)? loading,
+    TResult? Function(UserRegisteringInvalidFiscalCode value)?
+        invalidFiscalCode,
+    TResult? Function(UserRegisteringError value)? error,
   }) {
     return userCardSentByEmail?.call(this);
   }
@@ -613,15 +610,11 @@ abstract class _$$UserRegisteringLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserRegisteringLoadingCopyWithImpl<$Res>
-    extends _$UserRegisteringStateCopyWithImpl<$Res>
+    extends _$UserRegisteringStateCopyWithImpl<$Res, _$UserRegisteringLoading>
     implements _$$UserRegisteringLoadingCopyWith<$Res> {
   __$$UserRegisteringLoadingCopyWithImpl(_$UserRegisteringLoading _value,
       $Res Function(_$UserRegisteringLoading) _then)
-      : super(_value, (v) => _then(v as _$UserRegisteringLoading));
-
-  @override
-  _$UserRegisteringLoading get _value =>
-      super._value as _$UserRegisteringLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -659,12 +652,12 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
-    TResult Function()? loading,
-    TResult Function()? invalidFiscalCode,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? initial,
+    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function()? loading,
+    TResult? Function()? invalidFiscalCode,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return loading?.call();
   }
@@ -705,14 +698,15 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserRegisteringInitial value)? initial,
-    TResult Function(UserRegisteringVerificationEmailSent value)?
+    TResult? Function(UserRegisteringInitial value)? initial,
+    TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
+    TResult? Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
-    TResult Function(UserRegisteringLoading value)? loading,
-    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
-    TResult Function(UserRegisteringError value)? error,
+    TResult? Function(UserRegisteringLoading value)? loading,
+    TResult? Function(UserRegisteringInvalidFiscalCode value)?
+        invalidFiscalCode,
+    TResult? Function(UserRegisteringError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -751,16 +745,13 @@ abstract class _$$UserRegisteringInvalidFiscalCodeCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserRegisteringInvalidFiscalCodeCopyWithImpl<$Res>
-    extends _$UserRegisteringStateCopyWithImpl<$Res>
+    extends _$UserRegisteringStateCopyWithImpl<$Res,
+        _$UserRegisteringInvalidFiscalCode>
     implements _$$UserRegisteringInvalidFiscalCodeCopyWith<$Res> {
   __$$UserRegisteringInvalidFiscalCodeCopyWithImpl(
       _$UserRegisteringInvalidFiscalCode _value,
       $Res Function(_$UserRegisteringInvalidFiscalCode) _then)
-      : super(_value, (v) => _then(v as _$UserRegisteringInvalidFiscalCode));
-
-  @override
-  _$UserRegisteringInvalidFiscalCode get _value =>
-      super._value as _$UserRegisteringInvalidFiscalCode;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -800,12 +791,12 @@ class _$UserRegisteringInvalidFiscalCode
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
-    TResult Function()? loading,
-    TResult Function()? invalidFiscalCode,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? initial,
+    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function()? loading,
+    TResult? Function()? invalidFiscalCode,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return invalidFiscalCode?.call();
   }
@@ -846,14 +837,15 @@ class _$UserRegisteringInvalidFiscalCode
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserRegisteringInitial value)? initial,
-    TResult Function(UserRegisteringVerificationEmailSent value)?
+    TResult? Function(UserRegisteringInitial value)? initial,
+    TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
+    TResult? Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
-    TResult Function(UserRegisteringLoading value)? loading,
-    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
-    TResult Function(UserRegisteringError value)? error,
+    TResult? Function(UserRegisteringLoading value)? loading,
+    TResult? Function(UserRegisteringInvalidFiscalCode value)?
+        invalidFiscalCode,
+    TResult? Function(UserRegisteringError value)? error,
   }) {
     return invalidFiscalCode?.call(this);
   }
@@ -889,31 +881,27 @@ abstract class _$$UserRegisteringErrorCopyWith<$Res> {
   factory _$$UserRegisteringErrorCopyWith(_$UserRegisteringError value,
           $Res Function(_$UserRegisteringError) then) =
       __$$UserRegisteringErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({Object error, StackTrace st});
 }
 
 /// @nodoc
 class __$$UserRegisteringErrorCopyWithImpl<$Res>
-    extends _$UserRegisteringStateCopyWithImpl<$Res>
+    extends _$UserRegisteringStateCopyWithImpl<$Res, _$UserRegisteringError>
     implements _$$UserRegisteringErrorCopyWith<$Res> {
   __$$UserRegisteringErrorCopyWithImpl(_$UserRegisteringError _value,
       $Res Function(_$UserRegisteringError) _then)
-      : super(_value, (v) => _then(v as _$UserRegisteringError));
+      : super(_value, _then);
 
-  @override
-  _$UserRegisteringError get _value => super._value as _$UserRegisteringError;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = freezed,
-    Object? st = freezed,
+    Object? error = null,
+    Object? st = null,
   }) {
     return _then(_$UserRegisteringError(
-      error == freezed
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as Object,
-      st == freezed
+      null == error ? _value.error : error,
+      null == st
           ? _value.st
           : st // ignore: cast_nullable_to_non_nullable
               as StackTrace,
@@ -942,17 +930,16 @@ class _$UserRegisteringError implements UserRegisteringError {
         (other.runtimeType == runtimeType &&
             other is _$UserRegisteringError &&
             const DeepCollectionEquality().equals(other.error, error) &&
-            const DeepCollectionEquality().equals(other.st, st));
+            (identical(other.st, st) || other.st == st));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(error),
-      const DeepCollectionEquality().hash(st));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error), st);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UserRegisteringErrorCopyWith<_$UserRegisteringError> get copyWith =>
       __$$UserRegisteringErrorCopyWithImpl<_$UserRegisteringError>(
           this, _$identity);
@@ -973,12 +960,12 @@ class _$UserRegisteringError implements UserRegisteringError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
-    TResult Function()? loading,
-    TResult Function()? invalidFiscalCode,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? initial,
+    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function()? loading,
+    TResult? Function()? invalidFiscalCode,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return error?.call(this.error, st);
   }
@@ -1019,14 +1006,15 @@ class _$UserRegisteringError implements UserRegisteringError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserRegisteringInitial value)? initial,
-    TResult Function(UserRegisteringVerificationEmailSent value)?
+    TResult? Function(UserRegisteringInitial value)? initial,
+    TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
+    TResult? Function(UserRegisteringUserCardSentByEmail value)?
         userCardSentByEmail,
-    TResult Function(UserRegisteringLoading value)? loading,
-    TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
-    TResult Function(UserRegisteringError value)? error,
+    TResult? Function(UserRegisteringLoading value)? loading,
+    TResult? Function(UserRegisteringInvalidFiscalCode value)?
+        invalidFiscalCode,
+    TResult? Function(UserRegisteringError value)? error,
   }) {
     return error?.call(this);
   }

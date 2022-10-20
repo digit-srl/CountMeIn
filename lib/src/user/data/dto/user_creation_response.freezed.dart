@@ -34,39 +34,43 @@ mixin _$UserCreationResponse {
 abstract class $UserCreationResponseCopyWith<$Res> {
   factory $UserCreationResponseCopyWith(UserCreationResponse value,
           $Res Function(UserCreationResponse) then) =
-      _$UserCreationResponseCopyWithImpl<$Res>;
+      _$UserCreationResponseCopyWithImpl<$Res, UserCreationResponse>;
+  @useResult
   $Res call({String status, String? userId, bool? emailVerified});
 }
 
 /// @nodoc
-class _$UserCreationResponseCopyWithImpl<$Res>
+class _$UserCreationResponseCopyWithImpl<$Res,
+        $Val extends UserCreationResponse>
     implements $UserCreationResponseCopyWith<$Res> {
   _$UserCreationResponseCopyWithImpl(this._value, this._then);
 
-  final UserCreationResponse _value;
   // ignore: unused_field
-  final $Res Function(UserCreationResponse) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
+    Object? status = null,
     Object? userId = freezed,
     Object? emailVerified = freezed,
   }) {
     return _then(_value.copyWith(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      emailVerified: emailVerified == freezed
+      emailVerified: freezed == emailVerified
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -77,36 +81,35 @@ abstract class _$$_UserCreationResponseCopyWith<$Res>
           $Res Function(_$_UserCreationResponse) then) =
       __$$_UserCreationResponseCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String status, String? userId, bool? emailVerified});
 }
 
 /// @nodoc
 class __$$_UserCreationResponseCopyWithImpl<$Res>
-    extends _$UserCreationResponseCopyWithImpl<$Res>
+    extends _$UserCreationResponseCopyWithImpl<$Res, _$_UserCreationResponse>
     implements _$$_UserCreationResponseCopyWith<$Res> {
   __$$_UserCreationResponseCopyWithImpl(_$_UserCreationResponse _value,
       $Res Function(_$_UserCreationResponse) _then)
-      : super(_value, (v) => _then(v as _$_UserCreationResponse));
+      : super(_value, _then);
 
-  @override
-  _$_UserCreationResponse get _value => super._value as _$_UserCreationResponse;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
+    Object? status = null,
     Object? userId = freezed,
     Object? emailVerified = freezed,
   }) {
     return _then(_$_UserCreationResponse(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      emailVerified: emailVerified == freezed
+      emailVerified: freezed == emailVerified
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -140,22 +143,19 @@ class _$_UserCreationResponse implements _UserCreationResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserCreationResponse &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality()
-                .equals(other.emailVerified, emailVerified));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.emailVerified, emailVerified) ||
+                other.emailVerified == emailVerified));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(emailVerified));
+  int get hashCode => Object.hash(runtimeType, status, userId, emailVerified);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UserCreationResponseCopyWith<_$_UserCreationResponse> get copyWith =>
       __$$_UserCreationResponseCopyWithImpl<_$_UserCreationResponse>(
           this, _$identity);

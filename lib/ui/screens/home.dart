@@ -34,12 +34,13 @@ class HomeWebScreen extends StatelessWidget {
               'Count Me In',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
-          ElevatedButton(
+         /* ElevatedButton(
               onPressed: () {
-                context.go('${UserProviderScreen.routeName}/Yy31B32YBDJDUt7TbZEl');
+                // context.go('${UserProviderScreen.routeName}/Yy31B32YBDJDUt7TbZEl');
+                context.go('${UserProviderScreen.routeName}/countmein');
               },
               child: Text('vai all evento'),
-            ),
+            ),*/
             /*
             ElevatedButton(
               onPressed: () {

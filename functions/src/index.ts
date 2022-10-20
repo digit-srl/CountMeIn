@@ -10,7 +10,14 @@ const cors = require("cors")({ origin: true });
 import { FirebaseError } from "@firebase/util";
 import { UserRecord } from "firebase-functions/v1/auth";
 import * as firestore from "@google-cloud/firestore";
-import { providerDocRef } from "./firestore_references";
+import {
+  credentialsCollectionRef,
+  eventCollectionRef,
+  providerDocRef,
+  providersCollectionRef,
+  usersCollectionRef,
+  privateUsersCollectionRef,
+} from "./firestore_references";
 
 /*
 export const drawCard = functions.region('europe-west3').https.onRequest((request, response) => {
@@ -1018,3 +1025,30 @@ export const updateSubEventsCron = functions
       }
     );
   });
+
+//Only for testing
+export const exportDbToJson = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      cors(request, response, async () => {
+        const credentials = await credentialsCollectionRef().limit(1).get();
+        const providers = await providersCollectionRef().limit(1).get();
+        const providerId = providers.docs[0].data().id;
+        const event = await eventCollectionRef(providerId).limit(1).get();
+        const user = await usersCollectionRef(providerId).limit(1).get();
+        const userPrivate = await privateUsersCollectionRef(providerId)
+          .limit(1)
+          .get();
+
+        const data = {
+          credentials: credentials.docs[0].data(),
+          providers: providers.docs[0].data(),
+          event: event.docs[0].data(),
+          user: user.docs[0].data(),
+          userPrivate: userPrivate.docs[0].data(),
+        };
+        response.status(200).send(data);
+      });
+    }
+  );

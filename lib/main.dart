@@ -10,8 +10,7 @@ import 'app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-import 'package:flutter/foundation.dart'
-    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 enum AppFlavor { master, collab }
 
@@ -31,9 +30,9 @@ void main() async {
   );
 
   if (kDebugMode) {
-    final d = "localhost";
-    await FirebaseAuth.instance.useAuthEmulator(d, 9099);
-    FirebaseFirestore.instance.useFirestoreEmulator(d, 8082);
+    // final d = "localhost";
+    // await FirebaseAuth.instance.useAuthEmulator(d, 9099);
+    // FirebaseFirestore.instance.useFirestoreEmulator(d, 8082);
   }
 
   if (kIsWeb) {
@@ -48,4 +47,3 @@ void main() async {
   setPathUrlStrategy();
   runApp(ProviderScope(child: MyApp()));
 }
-

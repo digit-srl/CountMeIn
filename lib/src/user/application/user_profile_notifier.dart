@@ -21,19 +21,19 @@ final userProfileStreamProvider = StreamProvider.autoDispose
 
 final userProfileNotifierProvider = StateNotifierProvider.autoDispose
     .family<UserProfileNotifier, UserProfileState, UserIds>((ref, userIds) {
-  return UserProfileNotifier(userIds, ref.read);
+  return UserProfileNotifier(userIds, ref);
 });
 
 class UserProfileNotifier extends StateNotifier<UserProfileState> {
   final UserIds userIds;
-  final Reader read;
+  final Ref ref;
 
-  UserProfileNotifier(this.userIds, this.read)
+  UserProfileNotifier(this.userIds, this.ref)
       : super(const UserProfileInitial());
 
   Future getOtpCode() async {
     state = const UserProfileLoading();
-    final res = await read(dioProvider).post(
+    final res = await ref.read(dioProvider).post(
       requestOtpCodeUrl,
       data: {'userId': userIds.userId},
     );
@@ -48,7 +48,7 @@ class UserProfileNotifier extends StateNotifier<UserProfileState> {
   Future verifyOtpCode(String otpCode) async {
     state = const UserProfileLoading();
     try {
-      final res = await read(dioProvider).post(
+      final res = await ref.read(dioProvider).post(
         verifyOtpCodeUrl,
         data: {
           'userId': userIds.userId,

@@ -38,7 +38,8 @@ mixin _$UserProfile {
 abstract class $UserProfileCopyWith<$Res> {
   factory $UserProfileCopyWith(
           UserProfile value, $Res Function(UserProfile) then) =
-      _$UserProfileCopyWithImpl<$Res>;
+      _$UserProfileCopyWithImpl<$Res, UserProfile>;
+  @useResult
   $Res call(
       {String name,
       String surname,
@@ -49,48 +50,51 @@ abstract class $UserProfileCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserProfileCopyWithImpl<$Res> implements $UserProfileCopyWith<$Res> {
+class _$UserProfileCopyWithImpl<$Res, $Val extends UserProfile>
+    implements $UserProfileCopyWith<$Res> {
   _$UserProfileCopyWithImpl(this._value, this._then);
 
-  final UserProfile _value;
   // ignore: unused_field
-  final $Res Function(UserProfile) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? surname = freezed,
-    Object? cf = freezed,
-    Object? email = freezed,
-    Object? addedOn = freezed,
-    Object? emailVerified = freezed,
+    Object? name = null,
+    Object? surname = null,
+    Object? cf = null,
+    Object? email = null,
+    Object? addedOn = null,
+    Object? emailVerified = null,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      surname: surname == freezed
+      surname: null == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String,
-      cf: cf == freezed
+      cf: null == cf
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      addedOn: addedOn == freezed
+      addedOn: null == addedOn
           ? _value.addedOn
           : addedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      emailVerified: emailVerified == freezed
+      emailVerified: null == emailVerified
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -101,6 +105,7 @@ abstract class _$$_UserProfileCopyWith<$Res>
           _$_UserProfile value, $Res Function(_$_UserProfile) then) =
       __$$_UserProfileCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String name,
       String surname,
@@ -111,46 +116,45 @@ abstract class _$$_UserProfileCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_UserProfileCopyWithImpl<$Res> extends _$UserProfileCopyWithImpl<$Res>
+class __$$_UserProfileCopyWithImpl<$Res>
+    extends _$UserProfileCopyWithImpl<$Res, _$_UserProfile>
     implements _$$_UserProfileCopyWith<$Res> {
   __$$_UserProfileCopyWithImpl(
       _$_UserProfile _value, $Res Function(_$_UserProfile) _then)
-      : super(_value, (v) => _then(v as _$_UserProfile));
+      : super(_value, _then);
 
-  @override
-  _$_UserProfile get _value => super._value as _$_UserProfile;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? surname = freezed,
-    Object? cf = freezed,
-    Object? email = freezed,
-    Object? addedOn = freezed,
-    Object? emailVerified = freezed,
+    Object? name = null,
+    Object? surname = null,
+    Object? cf = null,
+    Object? email = null,
+    Object? addedOn = null,
+    Object? emailVerified = null,
   }) {
     return _then(_$_UserProfile(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      surname: surname == freezed
+      surname: null == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String,
-      cf: cf == freezed
+      cf: null == cf
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      addedOn: addedOn == freezed
+      addedOn: null == addedOn
           ? _value.addedOn
           : addedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      emailVerified: emailVerified == freezed
+      emailVerified: null == emailVerified
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -196,28 +200,23 @@ class _$_UserProfile implements _UserProfile {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserProfile &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.surname, surname) &&
-            const DeepCollectionEquality().equals(other.cf, cf) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.addedOn, addedOn) &&
-            const DeepCollectionEquality()
-                .equals(other.emailVerified, emailVerified));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.surname, surname) || other.surname == surname) &&
+            (identical(other.cf, cf) || other.cf == cf) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.addedOn, addedOn) || other.addedOn == addedOn) &&
+            (identical(other.emailVerified, emailVerified) ||
+                other.emailVerified == emailVerified));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(surname),
-      const DeepCollectionEquality().hash(cf),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(addedOn),
-      const DeepCollectionEquality().hash(emailVerified));
+      runtimeType, name, surname, cf, email, addedOn, emailVerified);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UserProfileCopyWith<_$_UserProfile> get copyWith =>
       __$$_UserProfileCopyWithImpl<_$_UserProfile>(this, _$identity);
 

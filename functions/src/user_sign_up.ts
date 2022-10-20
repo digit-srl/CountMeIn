@@ -10,6 +10,7 @@ import {
   providerDocRef,
   userDocRef,
   usersCollectionRef,
+  userGroupCollectionRef,
 } from "./firestore_references";
 const randomstring = require("randomstring");
 const CodiceFiscale = require("codice-fiscale-js");
@@ -267,13 +268,14 @@ async function sendUserCard(
 
 async function sendGroupCard(
   data: FirebaseFirestore.DocumentData,
+  groupId: string,
   providerId: string,
   providerName: string,
   groupName: string,
   groupCount: number,
-  averageAge: number,
-  womanPercentage: number,
-  manPercentage: number
+  averageAge: number | undefined,
+  manPercentage: number | undefined,
+  womanPercentage: number | undefined
 ) {
   const userId = data.id;
   const name = data.name;
@@ -281,7 +283,7 @@ async function sendGroupCard(
   const fullName = name + " " + surname;
   const cf = data.cf;
   const email = data.email;
-  const url =
+  var url =
     "https://cmi.digit.srl/profile/" +
     userId +
     "?" +
@@ -293,16 +295,24 @@ async function sendGroupCard(
     cf +
     "&pId=" +
     providerId +
-    "&gN =" +
+    "&gId=" +
+    groupId +
+    "&gN=" +
     groupName +
-    "&gC =" +
-    groupCount +
-    "&aA =" +
-    averageAge +
-    "&wP =" +
-    womanPercentage +
-    "&mP =" +
-    manPercentage;
+    "&gC=" +
+    groupCount;
+
+  if (manPercentage != null) {
+    url = url + "&mP =" + manPercentage;
+  }
+
+  if (womanPercentage != null) {
+    url = url + "&wP =" + womanPercentage;
+  }
+
+  if (averageAge != null) {
+    url = url + "&aA =" + averageAge;
+  }
 
   const buffer = await draw.drawGroupCard(
     providerName,
@@ -313,9 +323,9 @@ async function sendGroupCard(
     url,
     groupName,
     groupCount.toString(),
-    averageAge.toString(),
-    float2int(manPercentage * 100).toString(),
-    float2int(womanPercentage * 100).toString()
+    averageAge?.toString(),
+    manPercentage,
+    womanPercentage
   );
   return Email.sendGroupCardEmail(
     fullName,
@@ -454,9 +464,6 @@ exports.requestGroupCard = functions
           providerId == null ||
           userId == null ||
           groupCount == null ||
-          averageAge == null ||
-          womanPercentage == null ||
-          manPercentage == null ||
           groupName == null
         ) {
           const message = "Some fields are null";
@@ -469,8 +476,19 @@ exports.requestGroupCard = functions
         try {
           const userData = await getUserData(providerId, userId);
           const providerData = await getProviderData(providerId);
+          const groupDocRef = userGroupCollectionRef(providerId, userId).doc();
+          const groupId = groupDocRef.id;
+          await groupDocRef.set({
+            id: groupId,
+            groupName: groupName,
+            groupCount: groupCount,
+            averageAge: averageAge,
+            manPercentage: manPercentage,
+            womanPercentage: womanPercentage,
+          });
           await sendGroupCard(
             userData,
+            groupId,
             providerId,
             providerData.name,
             groupName,
@@ -483,7 +501,7 @@ exports.requestGroupCard = functions
           response.sendStatus(200);
         } catch (ex) {
           console.log(ex);
-          response.status(404).send("user-not-found");
+          response.status(404).send("error");
         }
       });
     }
@@ -512,8 +530,4 @@ async function getProviderData(
     throw Error();
   }
   return providerData;
-}
-
-function float2int(value: number) {
-  return Math.round(value);
 }

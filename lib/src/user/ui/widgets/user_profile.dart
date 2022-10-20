@@ -8,7 +8,6 @@ import 'package:countmein/src/admin/ui/widgets/info_text.dart';
 import 'package:countmein/src/common/domain/entities/gender.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_dropdown.dart';
-import 'package:countmein/src/user/application/user_card_recovering_notifier.dart';
 import 'package:countmein/src/user/application/user_profile_notifier.dart';
 import 'package:countmein/ui/validators.dart';
 import 'package:countmein/ui/widgets/loading.dart';
@@ -209,9 +208,9 @@ class GroupCardForm extends StatefulHookConsumerWidget {
   final Function(
     String groupName,
     int groupCount,
-    int averageAge,
-    double manPercentage,
-    double womanPercentage,
+    int? averageAge,
+    double? manPercentage,
+    double? womanPercentage,
   )? onSubmit;
 
   const GroupCardForm({
@@ -233,6 +232,8 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
     final averageAgeController = useTextEditingController();
     final groupCountController = useTextEditingController();
     final manPercentage = useState<double>(0.5);
+    final sliderDivisions = useState<int?>(null);
+    final sliderEnabled = useState<bool>(false);
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
@@ -265,20 +266,35 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
               hintText: 'Numero di partecipanti',
               validator: maxGroupCountValidator,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              onChanged: (v) {
+                sliderDivisions.value = int.tryParse(v);
+              },
             ),
             const SizedBox(height: 24),
-            Text(
+            const Text(
               'Percentuale maschi/femmine',
               textAlign: TextAlign.start,
             ),
             const SizedBox(height: 8),
+            Row(
+              children: [
+                Checkbox(
+                    value: sliderEnabled.value,
+                    onChanged: (v) {
+                      if (v == null) return;
+                      sliderEnabled.value = v;
+                    }),
+                const SizedBox(width: 16),
+                Text('Aggiungi info sul genere dei partecipanti'),
+              ],
+            ),
             SliderTheme(
               data: SliderTheme.of(context).copyWith(
                 trackHeight: 10.0,
-                trackShape: RoundedRectSliderTrackShape(),
+                trackShape: const RoundedRectSliderTrackShape(),
                 // activeTrackColor: Colors.purple.shade800,
                 // inactiveTrackColor: Colors.p,
-                thumbShape: RoundSliderThumbShape(
+                thumbShape: const RoundSliderThumbShape(
                   enabledThumbRadius: 14.0,
                   pressedElevation: 8.0,
                 ),
@@ -290,10 +306,10 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
                 inactiveTickMarkColor: Colors.transparent,
                 activeTickMarkColor: Colors.lightBlue,
                 inactiveTrackColor: Colors.pink,
-                valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
                 valueIndicatorColor: Colors.grey,
                 activeTrackColor: Colors.lightBlue,
-                valueIndicatorTextStyle: TextStyle(
+                valueIndicatorTextStyle: const TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
                 ),
@@ -301,28 +317,33 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
               child: Slider(
                 min: 0,
                 max: 1,
-                divisions: 20,
+                divisions: sliderDivisions.value ?? 1,
                 // activeColor: Colors.lightBlue,
                 // inactiveColor: Colors.pink,
                 label: '${(manPercentage.value * 100).toStringAsFixed(0)} %',
                 value: manPercentage.value,
-                onChanged: (double value) {
-                  manPercentage.value = value;
-                },
+                onChanged: sliderDivisions.value == null || !sliderEnabled.value
+                    ? null
+                    : (double value) {
+                        manPercentage.value = value;
+                      },
               ),
             ),
             Row(
               children: [
                 Expanded(
                     child: Text(
-                  'Maschi: ${(manPercentage.value * 100).toStringAsFixed(0)} %',
+                  'Maschi: ${((sliderDivisions.value ?? 1) * manPercentage.value).toStringAsFixed(0)}',
+                  // 'Maschi: ${(manPercentage.value * 100).toStringAsFixed(0)} %',
                   textAlign: TextAlign.center,
                 )),
                 Expanded(
-                    child: Text(
-                  'Femmine: ${(100 - manPercentage.value * 100).toStringAsFixed(0)} %',
-                  textAlign: TextAlign.center,
-                )),
+                  child: Text(
+                    'Femmine: ${((1 - manPercentage.value) * (sliderDivisions.value ?? 1)).toStringAsFixed(0)}',
+                    // 'Femmine: ${(100 - manPercentage.value * 100).toStringAsFixed(0)} %',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 32),
@@ -335,23 +356,24 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
                           final count =
                               int.parse(groupCountController.text.trim());
                           final averageAge =
-                              int.parse(averageAgeController.text.trim());
+                              int.tryParse(averageAgeController.text.trim());
 
-                          final manP = roundDouble(manPercentage.value,2);
-                          final womanP = roundDouble(1 - manPercentage.value,2);
+                          final manP = roundDouble(manPercentage.value, 2);
+                          final womanP =
+                              roundDouble(1 - manPercentage.value, 2);
                           print(manP);
                           print(womanP);
                           widget.onSubmit?.call(
                             name,
                             count,
                             averageAge,
-                            manP,
-                            womanP,
+                            sliderEnabled.value ? manP : null,
+                            sliderEnabled.value ? womanP : null,
                           );
                         }
                       }
                     : null,
-                child: Text('Richiedi'),
+                child: const Text('Richiedi'),
               ),
             ),
           ],
@@ -360,7 +382,7 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
     );
   }
 
-  double roundDouble(double value, int places){
+  double roundDouble(double value, int places) {
     num mod = pow(10.0, places);
     return ((value * mod).round().toDouble() / mod);
   }

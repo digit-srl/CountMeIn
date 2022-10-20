@@ -28,12 +28,12 @@ mixin _$UserProfileState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? data,
-    TResult Function()? wrongCode,
-    TResult Function()? waitingOtpCode,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? data,
+    TResult? Function()? wrongCode,
+    TResult? Function()? waitingOtpCode,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,12 +59,12 @@ mixin _$UserProfileState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserProfileInitial value)? initial,
-    TResult Function(UserProfileData value)? data,
-    TResult Function(UserProfileWrongCode value)? wrongCode,
-    TResult Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
-    TResult Function(UserProfileLoading value)? loading,
-    TResult Function(UserProfileError value)? error,
+    TResult? Function(UserProfileInitial value)? initial,
+    TResult? Function(UserProfileData value)? data,
+    TResult? Function(UserProfileWrongCode value)? wrongCode,
+    TResult? Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserProfileLoading value)? loading,
+    TResult? Function(UserProfileError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -84,17 +84,18 @@ mixin _$UserProfileState {
 abstract class $UserProfileStateCopyWith<$Res> {
   factory $UserProfileStateCopyWith(
           UserProfileState value, $Res Function(UserProfileState) then) =
-      _$UserProfileStateCopyWithImpl<$Res>;
+      _$UserProfileStateCopyWithImpl<$Res, UserProfileState>;
 }
 
 /// @nodoc
-class _$UserProfileStateCopyWithImpl<$Res>
+class _$UserProfileStateCopyWithImpl<$Res, $Val extends UserProfileState>
     implements $UserProfileStateCopyWith<$Res> {
   _$UserProfileStateCopyWithImpl(this._value, this._then);
 
-  final UserProfileState _value;
   // ignore: unused_field
-  final $Res Function(UserProfileState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -106,14 +107,11 @@ abstract class _$$UserProfileInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserProfileInitialCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res>
+    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileInitial>
     implements _$$UserProfileInitialCopyWith<$Res> {
   __$$UserProfileInitialCopyWithImpl(
       _$UserProfileInitial _value, $Res Function(_$UserProfileInitial) _then)
-      : super(_value, (v) => _then(v as _$UserProfileInitial));
-
-  @override
-  _$UserProfileInitial get _value => super._value as _$UserProfileInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -151,12 +149,12 @@ class _$UserProfileInitial implements UserProfileInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? data,
-    TResult Function()? wrongCode,
-    TResult Function()? waitingOtpCode,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? data,
+    TResult? Function()? wrongCode,
+    TResult? Function()? waitingOtpCode,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return initial?.call();
   }
@@ -194,12 +192,12 @@ class _$UserProfileInitial implements UserProfileInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserProfileInitial value)? initial,
-    TResult Function(UserProfileData value)? data,
-    TResult Function(UserProfileWrongCode value)? wrongCode,
-    TResult Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
-    TResult Function(UserProfileLoading value)? loading,
-    TResult Function(UserProfileError value)? error,
+    TResult? Function(UserProfileInitial value)? initial,
+    TResult? Function(UserProfileData value)? data,
+    TResult? Function(UserProfileWrongCode value)? wrongCode,
+    TResult? Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserProfileLoading value)? loading,
+    TResult? Function(UserProfileError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -235,14 +233,11 @@ abstract class _$$UserProfileDataCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserProfileDataCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res>
+    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileData>
     implements _$$UserProfileDataCopyWith<$Res> {
   __$$UserProfileDataCopyWithImpl(
       _$UserProfileData _value, $Res Function(_$UserProfileData) _then)
-      : super(_value, (v) => _then(v as _$UserProfileData));
-
-  @override
-  _$UserProfileData get _value => super._value as _$UserProfileData;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -280,12 +275,12 @@ class _$UserProfileData implements UserProfileData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? data,
-    TResult Function()? wrongCode,
-    TResult Function()? waitingOtpCode,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? data,
+    TResult? Function()? wrongCode,
+    TResult? Function()? waitingOtpCode,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return data?.call();
   }
@@ -323,12 +318,12 @@ class _$UserProfileData implements UserProfileData {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserProfileInitial value)? initial,
-    TResult Function(UserProfileData value)? data,
-    TResult Function(UserProfileWrongCode value)? wrongCode,
-    TResult Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
-    TResult Function(UserProfileLoading value)? loading,
-    TResult Function(UserProfileError value)? error,
+    TResult? Function(UserProfileInitial value)? initial,
+    TResult? Function(UserProfileData value)? data,
+    TResult? Function(UserProfileWrongCode value)? wrongCode,
+    TResult? Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserProfileLoading value)? loading,
+    TResult? Function(UserProfileError value)? error,
   }) {
     return data?.call(this);
   }
@@ -364,14 +359,11 @@ abstract class _$$UserProfileWrongCodeCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserProfileWrongCodeCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res>
+    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileWrongCode>
     implements _$$UserProfileWrongCodeCopyWith<$Res> {
   __$$UserProfileWrongCodeCopyWithImpl(_$UserProfileWrongCode _value,
       $Res Function(_$UserProfileWrongCode) _then)
-      : super(_value, (v) => _then(v as _$UserProfileWrongCode));
-
-  @override
-  _$UserProfileWrongCode get _value => super._value as _$UserProfileWrongCode;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -409,12 +401,12 @@ class _$UserProfileWrongCode implements UserProfileWrongCode {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? data,
-    TResult Function()? wrongCode,
-    TResult Function()? waitingOtpCode,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? data,
+    TResult? Function()? wrongCode,
+    TResult? Function()? waitingOtpCode,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return wrongCode?.call();
   }
@@ -452,12 +444,12 @@ class _$UserProfileWrongCode implements UserProfileWrongCode {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserProfileInitial value)? initial,
-    TResult Function(UserProfileData value)? data,
-    TResult Function(UserProfileWrongCode value)? wrongCode,
-    TResult Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
-    TResult Function(UserProfileLoading value)? loading,
-    TResult Function(UserProfileError value)? error,
+    TResult? Function(UserProfileInitial value)? initial,
+    TResult? Function(UserProfileData value)? data,
+    TResult? Function(UserProfileWrongCode value)? wrongCode,
+    TResult? Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserProfileLoading value)? loading,
+    TResult? Function(UserProfileError value)? error,
   }) {
     return wrongCode?.call(this);
   }
@@ -494,15 +486,11 @@ abstract class _$$UserProfileWaitingOtpCodeCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserProfileWaitingOtpCodeCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res>
+    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileWaitingOtpCode>
     implements _$$UserProfileWaitingOtpCodeCopyWith<$Res> {
   __$$UserProfileWaitingOtpCodeCopyWithImpl(_$UserProfileWaitingOtpCode _value,
       $Res Function(_$UserProfileWaitingOtpCode) _then)
-      : super(_value, (v) => _then(v as _$UserProfileWaitingOtpCode));
-
-  @override
-  _$UserProfileWaitingOtpCode get _value =>
-      super._value as _$UserProfileWaitingOtpCode;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -541,12 +529,12 @@ class _$UserProfileWaitingOtpCode implements UserProfileWaitingOtpCode {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? data,
-    TResult Function()? wrongCode,
-    TResult Function()? waitingOtpCode,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? data,
+    TResult? Function()? wrongCode,
+    TResult? Function()? waitingOtpCode,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return waitingOtpCode?.call();
   }
@@ -584,12 +572,12 @@ class _$UserProfileWaitingOtpCode implements UserProfileWaitingOtpCode {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserProfileInitial value)? initial,
-    TResult Function(UserProfileData value)? data,
-    TResult Function(UserProfileWrongCode value)? wrongCode,
-    TResult Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
-    TResult Function(UserProfileLoading value)? loading,
-    TResult Function(UserProfileError value)? error,
+    TResult? Function(UserProfileInitial value)? initial,
+    TResult? Function(UserProfileData value)? data,
+    TResult? Function(UserProfileWrongCode value)? wrongCode,
+    TResult? Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserProfileLoading value)? loading,
+    TResult? Function(UserProfileError value)? error,
   }) {
     return waitingOtpCode?.call(this);
   }
@@ -625,14 +613,11 @@ abstract class _$$UserProfileLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserProfileLoadingCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res>
+    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileLoading>
     implements _$$UserProfileLoadingCopyWith<$Res> {
   __$$UserProfileLoadingCopyWithImpl(
       _$UserProfileLoading _value, $Res Function(_$UserProfileLoading) _then)
-      : super(_value, (v) => _then(v as _$UserProfileLoading));
-
-  @override
-  _$UserProfileLoading get _value => super._value as _$UserProfileLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -670,12 +655,12 @@ class _$UserProfileLoading implements UserProfileLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? data,
-    TResult Function()? wrongCode,
-    TResult Function()? waitingOtpCode,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? data,
+    TResult? Function()? wrongCode,
+    TResult? Function()? waitingOtpCode,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return loading?.call();
   }
@@ -713,12 +698,12 @@ class _$UserProfileLoading implements UserProfileLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserProfileInitial value)? initial,
-    TResult Function(UserProfileData value)? data,
-    TResult Function(UserProfileWrongCode value)? wrongCode,
-    TResult Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
-    TResult Function(UserProfileLoading value)? loading,
-    TResult Function(UserProfileError value)? error,
+    TResult? Function(UserProfileInitial value)? initial,
+    TResult? Function(UserProfileData value)? data,
+    TResult? Function(UserProfileWrongCode value)? wrongCode,
+    TResult? Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserProfileLoading value)? loading,
+    TResult? Function(UserProfileError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -750,28 +735,27 @@ abstract class _$$UserProfileErrorCopyWith<$Res> {
   factory _$$UserProfileErrorCopyWith(
           _$UserProfileError value, $Res Function(_$UserProfileError) then) =
       __$$UserProfileErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({Object? error, StackTrace? st});
 }
 
 /// @nodoc
 class __$$UserProfileErrorCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res>
+    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileError>
     implements _$$UserProfileErrorCopyWith<$Res> {
   __$$UserProfileErrorCopyWithImpl(
       _$UserProfileError _value, $Res Function(_$UserProfileError) _then)
-      : super(_value, (v) => _then(v as _$UserProfileError));
+      : super(_value, _then);
 
-  @override
-  _$UserProfileError get _value => super._value as _$UserProfileError;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? error = freezed,
     Object? st = freezed,
   }) {
     return _then(_$UserProfileError(
-      error: error == freezed ? _value.error : error,
-      st: st == freezed
+      error: freezed == error ? _value.error : error,
+      st: freezed == st
           ? _value.st
           : st // ignore: cast_nullable_to_non_nullable
               as StackTrace?,
@@ -800,17 +784,16 @@ class _$UserProfileError implements UserProfileError {
         (other.runtimeType == runtimeType &&
             other is _$UserProfileError &&
             const DeepCollectionEquality().equals(other.error, error) &&
-            const DeepCollectionEquality().equals(other.st, st));
+            (identical(other.st, st) || other.st == st));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(error),
-      const DeepCollectionEquality().hash(st));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error), st);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UserProfileErrorCopyWith<_$UserProfileError> get copyWith =>
       __$$UserProfileErrorCopyWithImpl<_$UserProfileError>(this, _$identity);
 
@@ -830,12 +813,12 @@ class _$UserProfileError implements UserProfileError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? data,
-    TResult Function()? wrongCode,
-    TResult Function()? waitingOtpCode,
-    TResult Function()? loading,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? data,
+    TResult? Function()? wrongCode,
+    TResult? Function()? waitingOtpCode,
+    TResult? Function()? loading,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return error?.call(this.error, st);
   }
@@ -873,12 +856,12 @@ class _$UserProfileError implements UserProfileError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserProfileInitial value)? initial,
-    TResult Function(UserProfileData value)? data,
-    TResult Function(UserProfileWrongCode value)? wrongCode,
-    TResult Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
-    TResult Function(UserProfileLoading value)? loading,
-    TResult Function(UserProfileError value)? error,
+    TResult? Function(UserProfileInitial value)? initial,
+    TResult? Function(UserProfileData value)? data,
+    TResult? Function(UserProfileWrongCode value)? wrongCode,
+    TResult? Function(UserProfileWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserProfileLoading value)? loading,
+    TResult? Function(UserProfileError value)? error,
   }) {
     return error?.call(this);
   }

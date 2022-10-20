@@ -12,15 +12,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:countmein/ui/screens/admin.dart';
+import 'package:soundpool/soundpool.dart';
 
 import '../../cloud.dart';
 import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/event_ids.dart';
 import '../../domain/entities/user_card.dart';
-import 'package:soundpool/soundpool.dart';
-
-import '../../domain/entities/user_qr_code.dart';
 
 // uof%gian marco%di francesco%DFRGMR89M02I348U%uof
 
@@ -52,6 +49,10 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
 
   bool processing = false;
   final list = <String>[];
+
+  // Lista di appoggio per evitare che lo scanner continuo faccia chiamate al
+  // db per utenti che non hanno effettuato il check in ma stanno
+  // facendo il checkout
   final userWithoutCheckIn = <String>{};
 
   String get eventId => widget.event.id;
@@ -129,7 +130,9 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
 
                           try {
                             final userQrCode = QrCodeData.fromQrCode(data);
+                            final isGroupCard = userQrCode.isGroupCard;
 
+                            // if(isGroupCard) return;
                             if (userQrCode.providerId == widget.provider.id ||
                                 (widget.event.acceptPassepartout &&
                                     userQrCode.providerId == 'countmein')) {
@@ -140,8 +143,25 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                               if (!list.contains(userQrCode.id)) {
                                 processing = true;
 
+                                // var groupUser = GroupUser(
+                                //   userId: userQrCode.id,
+                                //   userName: userQrCode.name,
+                                //   userSurname: userQrCode.surname,
+                                //   cf: userQrCode.cf,
+                                //   providerId: userQrCode.providerId,
+                                //   manPercentage: userQrCode.manPercentage ?? 0,
+                                //   womanPercentage:
+                                //       userQrCode.womanPercentage ?? 0,
+                                //   averageAge: userQrCode.averageAge ?? 0,
+                                //   groupName: userQrCode.groupName ?? '',
+                                //   id: '',
+                                // );
+
                                 var eventUser = EventUser(
-                                  id: userQrCode.id,
+                                  isGroup: isGroupCard,
+                                  id: isGroupCard
+                                      ? userQrCode.groupId!
+                                      : userQrCode.id,
                                   name: userQrCode.name,
                                   surname: userQrCode.surname,
                                   email: userQrCode.email,
@@ -149,6 +169,11 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                   fromExternalOrganization:
                                       userQrCode.isExternalOrganization,
                                   privateId: userQrCode.privateId,
+                                  groupName: userQrCode.groupName,
+                                  groupCount: userQrCode.groupCount,
+                                  averageAge: userQrCode.averageAge,
+                                  manPercentage: userQrCode.manPercentage,
+                                  womanPercentage: userQrCode.womanPercentage,
                                 );
 
                                 final isSingleAccessType =
@@ -184,8 +209,10 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                       widget.scanMode == ScanMode.checkOut) {
                                     userWithoutCheckIn.add(eventUser.id);
                                     processing = false;
-                                    showToast(
-                                        '${eventUser.name} ${eventUser.surname} non ha effettuato il check in!',
+                                    final message = eventUser.isGroup
+                                        ? '${eventUser.groupName ?? 'Il gruppo'} non ha effettuato il check in!'
+                                        : '${eventUser.name} ${eventUser.surname} non ha effettuato il check in!';
+                                    showToast(message,
                                         duration: const Duration(seconds: 1),
                                         position: ToastPosition.bottom);
                                     return;
@@ -205,7 +232,23 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                       FirebaseFirestore.instance.batch();
                                   batch.set(
                                       userSubEventDocRef, eventUser.toJson());
-                                  if (eventUser.privateId != null) {
+                                  // use this or increment on client the users with groupcount
+                                  if (isGroupCard &&
+                                      isSingleAccessType &&
+                                      widget.scanMode == ScanMode.checkOut) {
+                                    final subEventDocRef =
+                                        Cloud.eventsCollection(
+                                                widget.provider.id)
+                                            .doc(eventId)
+                                            .collection('subEvents')
+                                            .doc(widget.event.currentSubEvent);
+                                    batch.update(subEventDocRef, {
+                                      'totalUsers': FieldValue.increment(
+                                          eventUser.groupCount ?? 0)
+                                    });
+                                  }
+                                  if (!eventUser.isGroup &&
+                                      eventUser.privateId != null) {
                                     final privateUserSubEventDocRef =
                                         Cloud.eventsCollection(
                                                 widget.provider.id)
@@ -233,6 +276,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                   final u = eventUser.toJson();
                                   u.remove('checkOutAt');
                                   u.remove('checkInAt');
+                                  u.remove('privateId');
                                   userRef.set(u, SetOptions(merge: true));
                                 }
                                 processing = false;

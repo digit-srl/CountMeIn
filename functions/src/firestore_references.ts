@@ -23,6 +23,16 @@ export function usersCollectionRef(
   return providerDocRef(providerId).collection("users");
 }
 
+export function userGroupCollectionRef(
+  providerId: string,
+  userId: string
+): FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData> {
+  return providerDocRef(providerId)
+    .collection("users")
+    .doc(userId)
+    .collection("groups");
+}
+
 export function userDocRef(
   providerId: string,
   userId: string
@@ -41,6 +51,10 @@ export function eventCollectionRef(
   providerId: string
 ): FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData> {
   return db.collection("providers").doc(providerId).collection("events");
+}
+
+export function credentialsCollectionRef(): FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData> {
+  return db.collection("credentials");
 }
 
 export function eventDocRef(

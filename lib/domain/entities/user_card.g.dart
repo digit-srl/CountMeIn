@@ -53,10 +53,16 @@ _$_EventUser _$$_EventUserFromJson(Map<String, dynamic> json) => _$_EventUser(
       email: json['email'] as String?,
       privateId: json['privateId'] as String?,
       fromExternalOrganization: json['fromExternalOrganization'] as bool,
+      isGroup: json['isGroup'] as bool,
       checkInAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['checkInAt'], const MyDateTimeConverter().fromJson),
       checkOutAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['checkOutAt'], const MyDateTimeConverter().fromJson),
+      groupName: json['groupName'] as String?,
+      averageAge: json['averageAge'] as int?,
+      groupCount: json['groupCount'] as int?,
+      womanPercentage: (json['womanPercentage'] as num?)?.toDouble(),
+      manPercentage: (json['manPercentage'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$_EventUserToJson(_$_EventUser instance) =>
@@ -68,8 +74,14 @@ Map<String, dynamic> _$$_EventUserToJson(_$_EventUser instance) =>
       'email': instance.email,
       'privateId': instance.privateId,
       'fromExternalOrganization': instance.fromExternalOrganization,
+      'isGroup': instance.isGroup,
       'checkInAt': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.checkInAt, const MyDateTimeConverter().toJson),
       'checkOutAt': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.checkOutAt, const MyDateTimeConverter().toJson),
+      'groupName': instance.groupName,
+      'averageAge': instance.averageAge,
+      'groupCount': instance.groupCount,
+      'womanPercentage': instance.womanPercentage,
+      'manPercentage': instance.manPercentage,
     };

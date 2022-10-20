@@ -1,0 +1,141 @@
+{
+    "credentials": [
+        {
+            "uid": "XPxs8hhz7CwdXA3qrJ2P3XvC7bOF",
+            "emailVerified": true,
+            "role": "owner",
+            "surname": "Klopfenstein",
+            "name": "Lorenz",
+            "email": "juanito.21.gm@gmail.com"
+        }
+    ],
+    "providers": [
+        {
+            "events": [
+                {
+                    "subevents": [
+                        {
+                            "users": [
+                                {
+                                    "id": "xxxx",
+                                    "cf": "XXXXXXXXXXX",
+                                    "checkInAt": {
+                                        "_seconds": 1657104332,
+                                        "_nanoseconds": 386000000
+                                    },
+                                    "checkOutAt": {
+                                        "_seconds": 1657104332,
+                                        "_nanoseconds": 386000000
+                                    },
+                                    "fromExternalOrganization": true,
+                                    "name": "nome",
+                                    "surname": "cognome",
+                                    "privateId": "yyyyyyyyyyyyy"
+                                }
+                            ],
+                            "privateUsers": [
+                                {
+                                    "privateId": "yyyyyyyyyyyyy"
+                                }
+                            ],
+                            "id": "2022-09-09",
+                            "endAt": {
+                                "_seconds": 1657104332,
+                                "_nanoseconds": 386000000
+                            },
+                            "genderCount": {
+                                "male": 12,
+                                "female": 1,
+                                "notBinary": 1,
+                                "notAvailable": 1
+                            }
+                        }
+                    ],
+                    "subEventDeadline": {
+                        "_seconds": 1662768000,
+                        "_nanoseconds": 0
+                    },
+                    "emailShowed": false,
+                    "currentSubEvent": "2022-09-09",
+                    "recurring": false,
+                    "createdOn": {
+                        "_seconds": 1662711225,
+                        "_nanoseconds": 387794000
+                    },
+                    "remaining": 0,
+                    "frequency": null,
+                    "accessType": "single",
+                    "recurrence": 1,
+                    "isOpen": true,
+                    "maxWomCount": 0,
+                    "name": "Prov",
+                    "anonymous": false,
+                    "id": "6181b557-22f0-4152-9875-af6591dfe899",
+                    "acceptPassepartout": true,
+                    "startAt": {
+                        "_seconds": 1662681600,
+                        "_nanoseconds": 0
+                    },
+                    "status": "live"
+                }
+            ],
+            "users": [
+                {
+                    "emailVerified": true,
+                    "cf": "DFRGMR89M02I348U",
+                    "surname": "dfghjki",
+                    "name": "dfghj",
+                    "id": "6ii20pzyvwhvnzw7dIaM",
+                    "secret": null,
+                    "addedOn": {
+                        "_seconds": 1663231935,
+                        "_nanoseconds": 486000000
+                    },
+                    "email": "difrancescogianmarco@gmail.com"
+                }
+            ],
+            "usersPrivateData": [
+                {
+                    "bornIn": {
+                        "_seconds": 618019200,
+                        "_nanoseconds": 0
+                    },
+                    "gender": "male",
+                    "id": "IjmIif1fWM4oQgP7xEo5"
+                }
+            ],
+            "adminName": "Gian Marco",
+            "aim": "H",
+            "apiKey": "ef12cfe8-20cf-49a6-a556-1f495cd4666f",
+            "name": "WOM Count Me In",
+            "requestedOn": {
+                "_seconds": 1657104332,
+                "_nanoseconds": 386000000
+            },
+            "id": "Yy31B32YBDJDUt7TbZEl",
+            "releaseWom": true,
+            "createdOn": {
+                "_seconds": 1657104315,
+                "_nanoseconds": 581000000
+            },
+            "managers": {
+                "dMqwaz96B8N7qZD6C5SFQSlO9PhX": {
+                    "role": "admin",
+                    "name": "GM Di Fra",
+                    "id": "dMqwaz96B8N7qZD6C5SFQSlO9PhX",
+                    "email": "difrancescogianmarco@gmail.com",
+                    "status": "active"
+                },
+                "Zh9bMp6F4dhslSsZh85KZDhqXoTA": {
+                    "role": "collaborator",
+                    "name": "Janmarc Di Frans",
+                    "id": "Zh9bMp6F4dhslSsZh85KZDhqXoTA",
+                    "email": "juanito.21.gm@gmail.com"
+                }
+            },
+            "status": "live",
+            "adminSurname": "Di Francesco",
+            "adminEmail": "difrancescogianmarco@gmail.com"
+        }
+    ]
+}

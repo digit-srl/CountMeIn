@@ -53,7 +53,8 @@ mixin _$CMIEvent {
 /// @nodoc
 abstract class $CMIEventCopyWith<$Res> {
   factory $CMIEventCopyWith(CMIEvent value, $Res Function(CMIEvent) then) =
-      _$CMIEventCopyWithImpl<$Res>;
+      _$CMIEventCopyWithImpl<$Res, CMIEvent>;
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -75,103 +76,106 @@ abstract class $CMIEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CMIEventCopyWithImpl<$Res> implements $CMIEventCopyWith<$Res> {
+class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
+    implements $CMIEventCopyWith<$Res> {
   _$CMIEventCopyWithImpl(this._value, this._then);
 
-  final CMIEvent _value;
   // ignore: unused_field
-  final $Res Function(CMIEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? acceptPassepartout = freezed,
-    Object? anonymous = freezed,
-    Object? recurring = freezed,
-    Object? isOpen = freezed,
-    Object? emailShowed = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? acceptPassepartout = null,
+    Object? anonymous = null,
+    Object? recurring = null,
+    Object? isOpen = null,
+    Object? emailShowed = null,
     Object? frequency = freezed,
     Object? recurrence = freezed,
     Object? remaining = freezed,
     Object? currentSubEvent = freezed,
-    Object? accessType = freezed,
-    Object? maxWomCount = freezed,
+    Object? accessType = null,
+    Object? maxWomCount = null,
     Object? status = freezed,
-    Object? createdOn = freezed,
+    Object? createdOn = null,
     Object? subEventDeadline = freezed,
-    Object? startAt = freezed,
+    Object? startAt = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      acceptPassepartout: acceptPassepartout == freezed
+      acceptPassepartout: null == acceptPassepartout
           ? _value.acceptPassepartout
           : acceptPassepartout // ignore: cast_nullable_to_non_nullable
               as bool,
-      anonymous: anonymous == freezed
+      anonymous: null == anonymous
           ? _value.anonymous
           : anonymous // ignore: cast_nullable_to_non_nullable
               as bool,
-      recurring: recurring == freezed
+      recurring: null == recurring
           ? _value.recurring
           : recurring // ignore: cast_nullable_to_non_nullable
               as bool,
-      isOpen: isOpen == freezed
+      isOpen: null == isOpen
           ? _value.isOpen
           : isOpen // ignore: cast_nullable_to_non_nullable
               as bool,
-      emailShowed: emailShowed == freezed
+      emailShowed: null == emailShowed
           ? _value.emailShowed
           : emailShowed // ignore: cast_nullable_to_non_nullable
               as bool,
-      frequency: frequency == freezed
+      frequency: freezed == frequency
           ? _value.frequency
           : frequency // ignore: cast_nullable_to_non_nullable
               as FrequencyType?,
-      recurrence: recurrence == freezed
+      recurrence: freezed == recurrence
           ? _value.recurrence
           : recurrence // ignore: cast_nullable_to_non_nullable
               as int?,
-      remaining: remaining == freezed
+      remaining: freezed == remaining
           ? _value.remaining
           : remaining // ignore: cast_nullable_to_non_nullable
               as int?,
-      currentSubEvent: currentSubEvent == freezed
+      currentSubEvent: freezed == currentSubEvent
           ? _value.currentSubEvent
           : currentSubEvent // ignore: cast_nullable_to_non_nullable
               as String?,
-      accessType: accessType == freezed
+      accessType: null == accessType
           ? _value.accessType
           : accessType // ignore: cast_nullable_to_non_nullable
               as EventAccessType,
-      maxWomCount: maxWomCount == freezed
+      maxWomCount: null == maxWomCount
           ? _value.maxWomCount
           : maxWomCount // ignore: cast_nullable_to_non_nullable
               as int,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as EventStatus?,
-      createdOn: createdOn == freezed
+      createdOn: null == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      subEventDeadline: subEventDeadline == freezed
+      subEventDeadline: freezed == subEventDeadline
           ? _value.subEventDeadline
           : subEventDeadline // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      startAt: startAt == freezed
+      startAt: null == startAt
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-    ));
+    ) as $Val);
   }
 }
 
@@ -181,6 +185,7 @@ abstract class _$$_CMIEventCopyWith<$Res> implements $CMIEventCopyWith<$Res> {
           _$_CMIEvent value, $Res Function(_$_CMIEvent) then) =
       __$$_CMIEventCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -202,101 +207,100 @@ abstract class _$$_CMIEventCopyWith<$Res> implements $CMIEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_CMIEventCopyWithImpl<$Res> extends _$CMIEventCopyWithImpl<$Res>
+class __$$_CMIEventCopyWithImpl<$Res>
+    extends _$CMIEventCopyWithImpl<$Res, _$_CMIEvent>
     implements _$$_CMIEventCopyWith<$Res> {
   __$$_CMIEventCopyWithImpl(
       _$_CMIEvent _value, $Res Function(_$_CMIEvent) _then)
-      : super(_value, (v) => _then(v as _$_CMIEvent));
+      : super(_value, _then);
 
-  @override
-  _$_CMIEvent get _value => super._value as _$_CMIEvent;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? acceptPassepartout = freezed,
-    Object? anonymous = freezed,
-    Object? recurring = freezed,
-    Object? isOpen = freezed,
-    Object? emailShowed = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? acceptPassepartout = null,
+    Object? anonymous = null,
+    Object? recurring = null,
+    Object? isOpen = null,
+    Object? emailShowed = null,
     Object? frequency = freezed,
     Object? recurrence = freezed,
     Object? remaining = freezed,
     Object? currentSubEvent = freezed,
-    Object? accessType = freezed,
-    Object? maxWomCount = freezed,
+    Object? accessType = null,
+    Object? maxWomCount = null,
     Object? status = freezed,
-    Object? createdOn = freezed,
+    Object? createdOn = null,
     Object? subEventDeadline = freezed,
-    Object? startAt = freezed,
+    Object? startAt = null,
   }) {
     return _then(_$_CMIEvent(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      acceptPassepartout: acceptPassepartout == freezed
+      acceptPassepartout: null == acceptPassepartout
           ? _value.acceptPassepartout
           : acceptPassepartout // ignore: cast_nullable_to_non_nullable
               as bool,
-      anonymous: anonymous == freezed
+      anonymous: null == anonymous
           ? _value.anonymous
           : anonymous // ignore: cast_nullable_to_non_nullable
               as bool,
-      recurring: recurring == freezed
+      recurring: null == recurring
           ? _value.recurring
           : recurring // ignore: cast_nullable_to_non_nullable
               as bool,
-      isOpen: isOpen == freezed
+      isOpen: null == isOpen
           ? _value.isOpen
           : isOpen // ignore: cast_nullable_to_non_nullable
               as bool,
-      emailShowed: emailShowed == freezed
+      emailShowed: null == emailShowed
           ? _value.emailShowed
           : emailShowed // ignore: cast_nullable_to_non_nullable
               as bool,
-      frequency: frequency == freezed
+      frequency: freezed == frequency
           ? _value.frequency
           : frequency // ignore: cast_nullable_to_non_nullable
               as FrequencyType?,
-      recurrence: recurrence == freezed
+      recurrence: freezed == recurrence
           ? _value.recurrence
           : recurrence // ignore: cast_nullable_to_non_nullable
               as int?,
-      remaining: remaining == freezed
+      remaining: freezed == remaining
           ? _value.remaining
           : remaining // ignore: cast_nullable_to_non_nullable
               as int?,
-      currentSubEvent: currentSubEvent == freezed
+      currentSubEvent: freezed == currentSubEvent
           ? _value.currentSubEvent
           : currentSubEvent // ignore: cast_nullable_to_non_nullable
               as String?,
-      accessType: accessType == freezed
+      accessType: null == accessType
           ? _value.accessType
           : accessType // ignore: cast_nullable_to_non_nullable
               as EventAccessType,
-      maxWomCount: maxWomCount == freezed
+      maxWomCount: null == maxWomCount
           ? _value.maxWomCount
           : maxWomCount // ignore: cast_nullable_to_non_nullable
               as int,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as EventStatus?,
-      createdOn: createdOn == freezed
+      createdOn: null == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      subEventDeadline: subEventDeadline == freezed
+      subEventDeadline: freezed == subEventDeadline
           ? _value.subEventDeadline
           : subEventDeadline // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      startAt: startAt == freezed
+      startAt: null == startAt
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -385,56 +389,62 @@ class _$_CMIEvent implements _CMIEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CMIEvent &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.acceptPassepartout, acceptPassepartout) &&
-            const DeepCollectionEquality().equals(other.anonymous, anonymous) &&
-            const DeepCollectionEquality().equals(other.recurring, recurring) &&
-            const DeepCollectionEquality().equals(other.isOpen, isOpen) &&
-            const DeepCollectionEquality()
-                .equals(other.emailShowed, emailShowed) &&
-            const DeepCollectionEquality().equals(other.frequency, frequency) &&
-            const DeepCollectionEquality()
-                .equals(other.recurrence, recurrence) &&
-            const DeepCollectionEquality().equals(other.remaining, remaining) &&
-            const DeepCollectionEquality()
-                .equals(other.currentSubEvent, currentSubEvent) &&
-            const DeepCollectionEquality()
-                .equals(other.accessType, accessType) &&
-            const DeepCollectionEquality()
-                .equals(other.maxWomCount, maxWomCount) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.createdOn, createdOn) &&
-            const DeepCollectionEquality()
-                .equals(other.subEventDeadline, subEventDeadline) &&
-            const DeepCollectionEquality().equals(other.startAt, startAt));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.acceptPassepartout, acceptPassepartout) ||
+                other.acceptPassepartout == acceptPassepartout) &&
+            (identical(other.anonymous, anonymous) ||
+                other.anonymous == anonymous) &&
+            (identical(other.recurring, recurring) ||
+                other.recurring == recurring) &&
+            (identical(other.isOpen, isOpen) || other.isOpen == isOpen) &&
+            (identical(other.emailShowed, emailShowed) ||
+                other.emailShowed == emailShowed) &&
+            (identical(other.frequency, frequency) ||
+                other.frequency == frequency) &&
+            (identical(other.recurrence, recurrence) ||
+                other.recurrence == recurrence) &&
+            (identical(other.remaining, remaining) ||
+                other.remaining == remaining) &&
+            (identical(other.currentSubEvent, currentSubEvent) ||
+                other.currentSubEvent == currentSubEvent) &&
+            (identical(other.accessType, accessType) ||
+                other.accessType == accessType) &&
+            (identical(other.maxWomCount, maxWomCount) ||
+                other.maxWomCount == maxWomCount) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.createdOn, createdOn) ||
+                other.createdOn == createdOn) &&
+            (identical(other.subEventDeadline, subEventDeadline) ||
+                other.subEventDeadline == subEventDeadline) &&
+            (identical(other.startAt, startAt) || other.startAt == startAt));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(acceptPassepartout),
-      const DeepCollectionEquality().hash(anonymous),
-      const DeepCollectionEquality().hash(recurring),
-      const DeepCollectionEquality().hash(isOpen),
-      const DeepCollectionEquality().hash(emailShowed),
-      const DeepCollectionEquality().hash(frequency),
-      const DeepCollectionEquality().hash(recurrence),
-      const DeepCollectionEquality().hash(remaining),
-      const DeepCollectionEquality().hash(currentSubEvent),
-      const DeepCollectionEquality().hash(accessType),
-      const DeepCollectionEquality().hash(maxWomCount),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(createdOn),
-      const DeepCollectionEquality().hash(subEventDeadline),
-      const DeepCollectionEquality().hash(startAt));
+      id,
+      name,
+      acceptPassepartout,
+      anonymous,
+      recurring,
+      isOpen,
+      emailShowed,
+      frequency,
+      recurrence,
+      remaining,
+      currentSubEvent,
+      accessType,
+      maxWomCount,
+      status,
+      createdOn,
+      subEventDeadline,
+      startAt);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CMIEventCopyWith<_$_CMIEvent> get copyWith =>
       __$$_CMIEventCopyWithImpl<_$_CMIEvent>(this, _$identity);
 
@@ -537,7 +547,8 @@ mixin _$CMISubEvent {
 abstract class $CMISubEventCopyWith<$Res> {
   factory $CMISubEventCopyWith(
           CMISubEvent value, $Res Function(CMISubEvent) then) =
-      _$CMISubEventCopyWithImpl<$Res>;
+      _$CMISubEventCopyWithImpl<$Res, CMISubEvent>;
+  @useResult
   $Res call(
       {String id,
       GenderCount? genderCount,
@@ -548,48 +559,52 @@ abstract class $CMISubEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CMISubEventCopyWithImpl<$Res> implements $CMISubEventCopyWith<$Res> {
+class _$CMISubEventCopyWithImpl<$Res, $Val extends CMISubEvent>
+    implements $CMISubEventCopyWith<$Res> {
   _$CMISubEventCopyWithImpl(this._value, this._then);
 
-  final CMISubEvent _value;
   // ignore: unused_field
-  final $Res Function(CMISubEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? genderCount = freezed,
-    Object? startAt = freezed,
-    Object? endAt = freezed,
+    Object? startAt = null,
+    Object? endAt = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      genderCount: genderCount == freezed
+      genderCount: freezed == genderCount
           ? _value.genderCount
           : genderCount // ignore: cast_nullable_to_non_nullable
               as GenderCount?,
-      startAt: startAt == freezed
+      startAt: null == startAt
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      endAt: endAt == freezed
+      endAt: null == endAt
           ? _value.endAt
           : endAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $GenderCountCopyWith<$Res>? get genderCount {
     if (_value.genderCount == null) {
       return null;
     }
 
     return $GenderCountCopyWith<$Res>(_value.genderCount!, (value) {
-      return _then(_value.copyWith(genderCount: value));
+      return _then(_value.copyWith(genderCount: value) as $Val);
     });
   }
 }
@@ -601,6 +616,7 @@ abstract class _$$_CMISubEventCopyWith<$Res>
           _$_CMISubEvent value, $Res Function(_$_CMISubEvent) then) =
       __$$_CMISubEventCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       GenderCount? genderCount,
@@ -612,36 +628,35 @@ abstract class _$$_CMISubEventCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CMISubEventCopyWithImpl<$Res> extends _$CMISubEventCopyWithImpl<$Res>
+class __$$_CMISubEventCopyWithImpl<$Res>
+    extends _$CMISubEventCopyWithImpl<$Res, _$_CMISubEvent>
     implements _$$_CMISubEventCopyWith<$Res> {
   __$$_CMISubEventCopyWithImpl(
       _$_CMISubEvent _value, $Res Function(_$_CMISubEvent) _then)
-      : super(_value, (v) => _then(v as _$_CMISubEvent));
+      : super(_value, _then);
 
-  @override
-  _$_CMISubEvent get _value => super._value as _$_CMISubEvent;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? genderCount = freezed,
-    Object? startAt = freezed,
-    Object? endAt = freezed,
+    Object? startAt = null,
+    Object? endAt = null,
   }) {
     return _then(_$_CMISubEvent(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      genderCount: genderCount == freezed
+      genderCount: freezed == genderCount
           ? _value.genderCount
           : genderCount // ignore: cast_nullable_to_non_nullable
               as GenderCount?,
-      startAt: startAt == freezed
+      startAt: null == startAt
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      endAt: endAt == freezed
+      endAt: null == endAt
           ? _value.endAt
           : endAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -682,24 +697,20 @@ class _$_CMISubEvent implements _CMISubEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CMISubEvent &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.genderCount, genderCount) &&
-            const DeepCollectionEquality().equals(other.startAt, startAt) &&
-            const DeepCollectionEquality().equals(other.endAt, endAt));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.genderCount, genderCount) ||
+                other.genderCount == genderCount) &&
+            (identical(other.startAt, startAt) || other.startAt == startAt) &&
+            (identical(other.endAt, endAt) || other.endAt == endAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(genderCount),
-      const DeepCollectionEquality().hash(startAt),
-      const DeepCollectionEquality().hash(endAt));
+  int get hashCode => Object.hash(runtimeType, id, genderCount, startAt, endAt);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CMISubEventCopyWith<_$_CMISubEvent> get copyWith =>
       __$$_CMISubEventCopyWithImpl<_$_CMISubEvent>(this, _$identity);
 
@@ -758,43 +769,47 @@ mixin _$GenderCount {
 abstract class $GenderCountCopyWith<$Res> {
   factory $GenderCountCopyWith(
           GenderCount value, $Res Function(GenderCount) then) =
-      _$GenderCountCopyWithImpl<$Res>;
+      _$GenderCountCopyWithImpl<$Res, GenderCount>;
+  @useResult
   $Res call({int male, int female, int notBinary, int notAvailable});
 }
 
 /// @nodoc
-class _$GenderCountCopyWithImpl<$Res> implements $GenderCountCopyWith<$Res> {
+class _$GenderCountCopyWithImpl<$Res, $Val extends GenderCount>
+    implements $GenderCountCopyWith<$Res> {
   _$GenderCountCopyWithImpl(this._value, this._then);
 
-  final GenderCount _value;
   // ignore: unused_field
-  final $Res Function(GenderCount) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? male = freezed,
-    Object? female = freezed,
-    Object? notBinary = freezed,
-    Object? notAvailable = freezed,
+    Object? male = null,
+    Object? female = null,
+    Object? notBinary = null,
+    Object? notAvailable = null,
   }) {
     return _then(_value.copyWith(
-      male: male == freezed
+      male: null == male
           ? _value.male
           : male // ignore: cast_nullable_to_non_nullable
               as int,
-      female: female == freezed
+      female: null == female
           ? _value.female
           : female // ignore: cast_nullable_to_non_nullable
               as int,
-      notBinary: notBinary == freezed
+      notBinary: null == notBinary
           ? _value.notBinary
           : notBinary // ignore: cast_nullable_to_non_nullable
               as int,
-      notAvailable: notAvailable == freezed
+      notAvailable: null == notAvailable
           ? _value.notAvailable
           : notAvailable // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -805,40 +820,40 @@ abstract class _$$_GenderCountCopyWith<$Res>
           _$_GenderCount value, $Res Function(_$_GenderCount) then) =
       __$$_GenderCountCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int male, int female, int notBinary, int notAvailable});
 }
 
 /// @nodoc
-class __$$_GenderCountCopyWithImpl<$Res> extends _$GenderCountCopyWithImpl<$Res>
+class __$$_GenderCountCopyWithImpl<$Res>
+    extends _$GenderCountCopyWithImpl<$Res, _$_GenderCount>
     implements _$$_GenderCountCopyWith<$Res> {
   __$$_GenderCountCopyWithImpl(
       _$_GenderCount _value, $Res Function(_$_GenderCount) _then)
-      : super(_value, (v) => _then(v as _$_GenderCount));
+      : super(_value, _then);
 
-  @override
-  _$_GenderCount get _value => super._value as _$_GenderCount;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? male = freezed,
-    Object? female = freezed,
-    Object? notBinary = freezed,
-    Object? notAvailable = freezed,
+    Object? male = null,
+    Object? female = null,
+    Object? notBinary = null,
+    Object? notAvailable = null,
   }) {
     return _then(_$_GenderCount(
-      male: male == freezed
+      male: null == male
           ? _value.male
           : male // ignore: cast_nullable_to_non_nullable
               as int,
-      female: female == freezed
+      female: null == female
           ? _value.female
           : female // ignore: cast_nullable_to_non_nullable
               as int,
-      notBinary: notBinary == freezed
+      notBinary: null == notBinary
           ? _value.notBinary
           : notBinary // ignore: cast_nullable_to_non_nullable
               as int,
-      notAvailable: notAvailable == freezed
+      notAvailable: null == notAvailable
           ? _value.notAvailable
           : notAvailable // ignore: cast_nullable_to_non_nullable
               as int,
@@ -878,24 +893,22 @@ class _$_GenderCount implements _GenderCount {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GenderCount &&
-            const DeepCollectionEquality().equals(other.male, male) &&
-            const DeepCollectionEquality().equals(other.female, female) &&
-            const DeepCollectionEquality().equals(other.notBinary, notBinary) &&
-            const DeepCollectionEquality()
-                .equals(other.notAvailable, notAvailable));
+            (identical(other.male, male) || other.male == male) &&
+            (identical(other.female, female) || other.female == female) &&
+            (identical(other.notBinary, notBinary) ||
+                other.notBinary == notBinary) &&
+            (identical(other.notAvailable, notAvailable) ||
+                other.notAvailable == notAvailable));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(male),
-      const DeepCollectionEquality().hash(female),
-      const DeepCollectionEquality().hash(notBinary),
-      const DeepCollectionEquality().hash(notAvailable));
+  int get hashCode =>
+      Object.hash(runtimeType, male, female, notBinary, notAvailable);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GenderCountCopyWith<_$_GenderCount> get copyWith =>
       __$$_GenderCountCopyWithImpl<_$_GenderCount>(this, _$identity);
 
@@ -945,34 +958,37 @@ mixin _$CMIQuerySubEvent {
 abstract class $CMIQuerySubEventCopyWith<$Res> {
   factory $CMIQuerySubEventCopyWith(
           CMIQuerySubEvent value, $Res Function(CMIQuerySubEvent) then) =
-      _$CMIQuerySubEventCopyWithImpl<$Res>;
+      _$CMIQuerySubEventCopyWithImpl<$Res, CMIQuerySubEvent>;
+  @useResult
   $Res call({String providerId, String eventId});
 }
 
 /// @nodoc
-class _$CMIQuerySubEventCopyWithImpl<$Res>
+class _$CMIQuerySubEventCopyWithImpl<$Res, $Val extends CMIQuerySubEvent>
     implements $CMIQuerySubEventCopyWith<$Res> {
   _$CMIQuerySubEventCopyWithImpl(this._value, this._then);
 
-  final CMIQuerySubEvent _value;
   // ignore: unused_field
-  final $Res Function(CMIQuerySubEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? providerId = freezed,
-    Object? eventId = freezed,
+    Object? providerId = null,
+    Object? eventId = null,
   }) {
     return _then(_value.copyWith(
-      providerId: providerId == freezed
+      providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      eventId: eventId == freezed
+      eventId: null == eventId
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -983,31 +999,30 @@ abstract class _$$_CMIQuerySubEventCopyWith<$Res>
           _$_CMIQuerySubEvent value, $Res Function(_$_CMIQuerySubEvent) then) =
       __$$_CMIQuerySubEventCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String providerId, String eventId});
 }
 
 /// @nodoc
 class __$$_CMIQuerySubEventCopyWithImpl<$Res>
-    extends _$CMIQuerySubEventCopyWithImpl<$Res>
+    extends _$CMIQuerySubEventCopyWithImpl<$Res, _$_CMIQuerySubEvent>
     implements _$$_CMIQuerySubEventCopyWith<$Res> {
   __$$_CMIQuerySubEventCopyWithImpl(
       _$_CMIQuerySubEvent _value, $Res Function(_$_CMIQuerySubEvent) _then)
-      : super(_value, (v) => _then(v as _$_CMIQuerySubEvent));
+      : super(_value, _then);
 
-  @override
-  _$_CMIQuerySubEvent get _value => super._value as _$_CMIQuerySubEvent;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? providerId = freezed,
-    Object? eventId = freezed,
+    Object? providerId = null,
+    Object? eventId = null,
   }) {
     return _then(_$_CMIQuerySubEvent(
-      providerId: providerId == freezed
+      providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      eventId: eventId == freezed
+      eventId: null == eventId
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
               as String,
@@ -1035,19 +1050,17 @@ class _$_CMIQuerySubEvent implements _CMIQuerySubEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CMIQuerySubEvent &&
-            const DeepCollectionEquality()
-                .equals(other.providerId, providerId) &&
-            const DeepCollectionEquality().equals(other.eventId, eventId));
+            (identical(other.providerId, providerId) ||
+                other.providerId == providerId) &&
+            (identical(other.eventId, eventId) || other.eventId == eventId));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(providerId),
-      const DeepCollectionEquality().hash(eventId));
+  int get hashCode => Object.hash(runtimeType, providerId, eventId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CMIQuerySubEventCopyWith<_$_CMIQuerySubEvent> get copyWith =>
       __$$_CMIQuerySubEventCopyWithImpl<_$_CMIQuerySubEvent>(this, _$identity);
 }

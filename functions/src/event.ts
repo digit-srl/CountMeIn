@@ -140,7 +140,24 @@ export const onUserCheckIn = functions
         console.log(
           "Missing checkOut: this trigger need of checkOut date to release wom"
         );
-        return null;
+        return;
+      }
+
+      const isGroup = user.isGroup;
+      if (isGroup) {
+        console.log("The user is a group, a group will not receive woms");
+        const groupCount = user.groupCount ?? 0;
+        const eventRef = snap.after.ref.parent.parent;
+        if (eventRef != null) {
+          await db.runTransaction(
+            async (transaction: FirebaseFirestore.Transaction) => {
+              await transaction.update(eventRef, {
+                totalUsers: firestore.FieldValue.increment(groupCount),
+              });
+            }
+          );
+        }
+        return;
       }
 
       const eventDoc: FirebaseFirestore.DocumentData = await eventDocRef(

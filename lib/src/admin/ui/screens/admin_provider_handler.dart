@@ -38,6 +38,8 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
     }
     final platformUserRole = ref.watch(authUserRoleProvider);
     final userRole = ref.watch(userRoleProvider(providerId));
+    print('platformUserRole: $platformUserRole');
+    print('userRole: $userRole');
 
     final eventsState = ref.watch(eventsStreamProvider(providerId));
     return Scaffold(

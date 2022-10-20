@@ -24,7 +24,7 @@ mixin _$AuthFailure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String description)? unknown,
+    TResult? Function(String description)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -40,7 +40,7 @@ mixin _$AuthFailure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(AuthUnknownFailure value)? unknown,
+    TResult? Function(AuthUnknownFailure value)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,28 +59,32 @@ mixin _$AuthFailure {
 abstract class $AuthFailureCopyWith<$Res> {
   factory $AuthFailureCopyWith(
           AuthFailure value, $Res Function(AuthFailure) then) =
-      _$AuthFailureCopyWithImpl<$Res>;
+      _$AuthFailureCopyWithImpl<$Res, AuthFailure>;
+  @useResult
   $Res call({String description});
 }
 
 /// @nodoc
-class _$AuthFailureCopyWithImpl<$Res> implements $AuthFailureCopyWith<$Res> {
+class _$AuthFailureCopyWithImpl<$Res, $Val extends AuthFailure>
+    implements $AuthFailureCopyWith<$Res> {
   _$AuthFailureCopyWithImpl(this._value, this._then);
 
-  final AuthFailure _value;
   // ignore: unused_field
-  final $Res Function(AuthFailure) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? description = freezed,
+    Object? description = null,
   }) {
     return _then(_value.copyWith(
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -91,26 +95,25 @@ abstract class _$$AuthUnknownFailureCopyWith<$Res>
           $Res Function(_$AuthUnknownFailure) then) =
       __$$AuthUnknownFailureCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String description});
 }
 
 /// @nodoc
 class __$$AuthUnknownFailureCopyWithImpl<$Res>
-    extends _$AuthFailureCopyWithImpl<$Res>
+    extends _$AuthFailureCopyWithImpl<$Res, _$AuthUnknownFailure>
     implements _$$AuthUnknownFailureCopyWith<$Res> {
   __$$AuthUnknownFailureCopyWithImpl(
       _$AuthUnknownFailure _value, $Res Function(_$AuthUnknownFailure) _then)
-      : super(_value, (v) => _then(v as _$AuthUnknownFailure));
+      : super(_value, _then);
 
-  @override
-  _$AuthUnknownFailure get _value => super._value as _$AuthUnknownFailure;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? description = freezed,
+    Object? description = null,
   }) {
     return _then(_$AuthUnknownFailure(
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
@@ -137,16 +140,16 @@ class _$AuthUnknownFailure implements AuthUnknownFailure {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthUnknownFailure &&
-            const DeepCollectionEquality()
-                .equals(other.description, description));
+            (identical(other.description, description) ||
+                other.description == description));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(description));
+  int get hashCode => Object.hash(runtimeType, description);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$AuthUnknownFailureCopyWith<_$AuthUnknownFailure> get copyWith =>
       __$$AuthUnknownFailureCopyWithImpl<_$AuthUnknownFailure>(
           this, _$identity);
@@ -162,7 +165,7 @@ class _$AuthUnknownFailure implements AuthUnknownFailure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String description)? unknown,
+    TResult? Function(String description)? unknown,
   }) {
     return unknown?.call(description);
   }
@@ -190,7 +193,7 @@ class _$AuthUnknownFailure implements AuthUnknownFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(AuthUnknownFailure value)? unknown,
+    TResult? Function(AuthUnknownFailure value)? unknown,
   }) {
     return unknown?.call(this);
   }

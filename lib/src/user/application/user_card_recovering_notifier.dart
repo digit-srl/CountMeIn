@@ -7,14 +7,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final userCardRecoveringProvider = StateNotifierProvider.autoDispose<
     UserCardRecoveringNotifier, UserCardRecoveringState>((ref) {
-  return UserCardRecoveringNotifier(ref.read);
+  return UserCardRecoveringNotifier(ref);
 });
 
 class UserCardRecoveringNotifier
     extends StateNotifier<UserCardRecoveringState> {
-  final Reader read;
+  final Ref ref;
 
-  UserCardRecoveringNotifier(this.read)
+  UserCardRecoveringNotifier(this.ref)
       : super(const UserCardRecoveringInitial());
 
   late UserCardRecoveringState _cache;
@@ -22,7 +22,7 @@ class UserCardRecoveringNotifier
     _cache = state;
     state = const UserCardRecoveringLoading();
     try{
-      final res = await read(dioProvider).post(
+      final res = await ref.read(dioProvider).post(
         recoverUserUrl,
         data: {'cf': cf.toUpperCase(), 'providerId': providerId},
       );
@@ -40,6 +40,7 @@ class UserCardRecoveringNotifier
       }
     }catch(ex,st){
       state = UserCardRecoveringError(st: st);
+      print(st);
     }
   }
 
@@ -50,7 +51,7 @@ class UserCardRecoveringNotifier
     _cache = state;
     state = const UserCardRecoveringLoading();
     try {
-      final res = await read(dioProvider).post(
+      final res = await ref.read(dioProvider).post(
         verifyOtpCodeUrl,
         data: {
           'userId': ids.userId,

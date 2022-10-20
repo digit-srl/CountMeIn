@@ -37,7 +37,8 @@ mixin _$UserRequest {
 abstract class $UserRequestCopyWith<$Res> {
   factory $UserRequestCopyWith(
           UserRequest value, $Res Function(UserRequest) then) =
-      _$UserRequestCopyWithImpl<$Res>;
+      _$UserRequestCopyWithImpl<$Res, UserRequest>;
+  @useResult
   $Res call(
       {String name,
       String surname,
@@ -48,48 +49,51 @@ abstract class $UserRequestCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserRequestCopyWithImpl<$Res> implements $UserRequestCopyWith<$Res> {
+class _$UserRequestCopyWithImpl<$Res, $Val extends UserRequest>
+    implements $UserRequestCopyWith<$Res> {
   _$UserRequestCopyWithImpl(this._value, this._then);
 
-  final UserRequest _value;
   // ignore: unused_field
-  final $Res Function(UserRequest) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? surname = freezed,
-    Object? cf = freezed,
-    Object? email = freezed,
-    Object? providerId = freezed,
-    Object? providerName = freezed,
+    Object? name = null,
+    Object? surname = null,
+    Object? cf = null,
+    Object? email = null,
+    Object? providerId = null,
+    Object? providerName = null,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      surname: surname == freezed
+      surname: null == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String,
-      cf: cf == freezed
+      cf: null == cf
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      providerId: providerId == freezed
+      providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      providerName: providerName == freezed
+      providerName: null == providerName
           ? _value.providerName
           : providerName // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -100,6 +104,7 @@ abstract class _$$_UserRequestCopyWith<$Res>
           _$_UserRequest value, $Res Function(_$_UserRequest) then) =
       __$$_UserRequestCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String name,
       String surname,
@@ -110,46 +115,45 @@ abstract class _$$_UserRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_UserRequestCopyWithImpl<$Res> extends _$UserRequestCopyWithImpl<$Res>
+class __$$_UserRequestCopyWithImpl<$Res>
+    extends _$UserRequestCopyWithImpl<$Res, _$_UserRequest>
     implements _$$_UserRequestCopyWith<$Res> {
   __$$_UserRequestCopyWithImpl(
       _$_UserRequest _value, $Res Function(_$_UserRequest) _then)
-      : super(_value, (v) => _then(v as _$_UserRequest));
+      : super(_value, _then);
 
-  @override
-  _$_UserRequest get _value => super._value as _$_UserRequest;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? surname = freezed,
-    Object? cf = freezed,
-    Object? email = freezed,
-    Object? providerId = freezed,
-    Object? providerName = freezed,
+    Object? name = null,
+    Object? surname = null,
+    Object? cf = null,
+    Object? email = null,
+    Object? providerId = null,
+    Object? providerName = null,
   }) {
     return _then(_$_UserRequest(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      surname: surname == freezed
+      surname: null == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String,
-      cf: cf == freezed
+      cf: null == cf
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      providerId: providerId == freezed
+      providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      providerName: providerName == freezed
+      providerName: null == providerName
           ? _value.providerName
           : providerName // ignore: cast_nullable_to_non_nullable
               as String,
@@ -194,29 +198,24 @@ class _$_UserRequest implements _UserRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserRequest &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.surname, surname) &&
-            const DeepCollectionEquality().equals(other.cf, cf) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality()
-                .equals(other.providerId, providerId) &&
-            const DeepCollectionEquality()
-                .equals(other.providerName, providerName));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.surname, surname) || other.surname == surname) &&
+            (identical(other.cf, cf) || other.cf == cf) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.providerId, providerId) ||
+                other.providerId == providerId) &&
+            (identical(other.providerName, providerName) ||
+                other.providerName == providerName));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(surname),
-      const DeepCollectionEquality().hash(cf),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(providerId),
-      const DeepCollectionEquality().hash(providerName));
+      runtimeType, name, surname, cf, email, providerId, providerName);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UserRequestCopyWith<_$_UserRequest> get copyWith =>
       __$$_UserRequestCopyWithImpl<_$_UserRequest>(this, _$identity);
 

@@ -27,11 +27,11 @@ mixin _$UserCardRecoveringState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(UserIds ids)? waitingOtpCode,
-    TResult Function(UserIds ids)? profile,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(UserIds ids)? waitingOtpCode,
+    TResult? Function(UserIds ids)? profile,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -56,11 +56,11 @@ mixin _$UserCardRecoveringState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserCardRecoveringInitial value)? initial,
-    TResult Function(UserCardRecoveringLoading value)? loading,
-    TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
-    TResult Function(UserCardRecoveringProfile value)? profile,
-    TResult Function(UserCardRecoveringError value)? error,
+    TResult? Function(UserCardRecoveringInitial value)? initial,
+    TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserCardRecoveringProfile value)? profile,
+    TResult? Function(UserCardRecoveringError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -79,17 +79,19 @@ mixin _$UserCardRecoveringState {
 abstract class $UserCardRecoveringStateCopyWith<$Res> {
   factory $UserCardRecoveringStateCopyWith(UserCardRecoveringState value,
           $Res Function(UserCardRecoveringState) then) =
-      _$UserCardRecoveringStateCopyWithImpl<$Res>;
+      _$UserCardRecoveringStateCopyWithImpl<$Res, UserCardRecoveringState>;
 }
 
 /// @nodoc
-class _$UserCardRecoveringStateCopyWithImpl<$Res>
+class _$UserCardRecoveringStateCopyWithImpl<$Res,
+        $Val extends UserCardRecoveringState>
     implements $UserCardRecoveringStateCopyWith<$Res> {
   _$UserCardRecoveringStateCopyWithImpl(this._value, this._then);
 
-  final UserCardRecoveringState _value;
   // ignore: unused_field
-  final $Res Function(UserCardRecoveringState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -102,15 +104,12 @@ abstract class _$$UserCardRecoveringInitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserCardRecoveringInitialCopyWithImpl<$Res>
-    extends _$UserCardRecoveringStateCopyWithImpl<$Res>
+    extends _$UserCardRecoveringStateCopyWithImpl<$Res,
+        _$UserCardRecoveringInitial>
     implements _$$UserCardRecoveringInitialCopyWith<$Res> {
   __$$UserCardRecoveringInitialCopyWithImpl(_$UserCardRecoveringInitial _value,
       $Res Function(_$UserCardRecoveringInitial) _then)
-      : super(_value, (v) => _then(v as _$UserCardRecoveringInitial));
-
-  @override
-  _$UserCardRecoveringInitial get _value =>
-      super._value as _$UserCardRecoveringInitial;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -148,11 +147,11 @@ class _$UserCardRecoveringInitial implements UserCardRecoveringInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(UserIds ids)? waitingOtpCode,
-    TResult Function(UserIds ids)? profile,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(UserIds ids)? waitingOtpCode,
+    TResult? Function(UserIds ids)? profile,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return initial?.call();
   }
@@ -189,11 +188,11 @@ class _$UserCardRecoveringInitial implements UserCardRecoveringInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserCardRecoveringInitial value)? initial,
-    TResult Function(UserCardRecoveringLoading value)? loading,
-    TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
-    TResult Function(UserCardRecoveringProfile value)? profile,
-    TResult Function(UserCardRecoveringError value)? error,
+    TResult? Function(UserCardRecoveringInitial value)? initial,
+    TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserCardRecoveringProfile value)? profile,
+    TResult? Function(UserCardRecoveringError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -229,15 +228,12 @@ abstract class _$$UserCardRecoveringLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserCardRecoveringLoadingCopyWithImpl<$Res>
-    extends _$UserCardRecoveringStateCopyWithImpl<$Res>
+    extends _$UserCardRecoveringStateCopyWithImpl<$Res,
+        _$UserCardRecoveringLoading>
     implements _$$UserCardRecoveringLoadingCopyWith<$Res> {
   __$$UserCardRecoveringLoadingCopyWithImpl(_$UserCardRecoveringLoading _value,
       $Res Function(_$UserCardRecoveringLoading) _then)
-      : super(_value, (v) => _then(v as _$UserCardRecoveringLoading));
-
-  @override
-  _$UserCardRecoveringLoading get _value =>
-      super._value as _$UserCardRecoveringLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -275,11 +271,11 @@ class _$UserCardRecoveringLoading implements UserCardRecoveringLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(UserIds ids)? waitingOtpCode,
-    TResult Function(UserIds ids)? profile,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(UserIds ids)? waitingOtpCode,
+    TResult? Function(UserIds ids)? profile,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return loading?.call();
   }
@@ -316,11 +312,11 @@ class _$UserCardRecoveringLoading implements UserCardRecoveringLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserCardRecoveringInitial value)? initial,
-    TResult Function(UserCardRecoveringLoading value)? loading,
-    TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
-    TResult Function(UserCardRecoveringProfile value)? profile,
-    TResult Function(UserCardRecoveringError value)? error,
+    TResult? Function(UserCardRecoveringInitial value)? initial,
+    TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserCardRecoveringProfile value)? profile,
+    TResult? Function(UserCardRecoveringError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -352,6 +348,7 @@ abstract class _$$UserCardRecoveringWaitingOtpCodeCopyWith<$Res> {
           _$UserCardRecoveringWaitingOtpCode value,
           $Res Function(_$UserCardRecoveringWaitingOtpCode) then) =
       __$$UserCardRecoveringWaitingOtpCodeCopyWithImpl<$Res>;
+  @useResult
   $Res call({UserIds ids});
 
   $UserIdsCopyWith<$Res> get ids;
@@ -359,23 +356,21 @@ abstract class _$$UserCardRecoveringWaitingOtpCodeCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserCardRecoveringWaitingOtpCodeCopyWithImpl<$Res>
-    extends _$UserCardRecoveringStateCopyWithImpl<$Res>
+    extends _$UserCardRecoveringStateCopyWithImpl<$Res,
+        _$UserCardRecoveringWaitingOtpCode>
     implements _$$UserCardRecoveringWaitingOtpCodeCopyWith<$Res> {
   __$$UserCardRecoveringWaitingOtpCodeCopyWithImpl(
       _$UserCardRecoveringWaitingOtpCode _value,
       $Res Function(_$UserCardRecoveringWaitingOtpCode) _then)
-      : super(_value, (v) => _then(v as _$UserCardRecoveringWaitingOtpCode));
+      : super(_value, _then);
 
-  @override
-  _$UserCardRecoveringWaitingOtpCode get _value =>
-      super._value as _$UserCardRecoveringWaitingOtpCode;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ids = freezed,
+    Object? ids = null,
   }) {
     return _then(_$UserCardRecoveringWaitingOtpCode(
-      ids: ids == freezed
+      ids: null == ids
           ? _value.ids
           : ids // ignore: cast_nullable_to_non_nullable
               as UserIds,
@@ -383,6 +378,7 @@ class __$$UserCardRecoveringWaitingOtpCodeCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UserIdsCopyWith<$Res> get ids {
     return $UserIdsCopyWith<$Res>(_value.ids, (value) {
       return _then(_value.copyWith(ids: value));
@@ -409,15 +405,15 @@ class _$UserCardRecoveringWaitingOtpCode
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserCardRecoveringWaitingOtpCode &&
-            const DeepCollectionEquality().equals(other.ids, ids));
+            (identical(other.ids, ids) || other.ids == ids));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(ids));
+  int get hashCode => Object.hash(runtimeType, ids);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UserCardRecoveringWaitingOtpCodeCopyWith<
           _$UserCardRecoveringWaitingOtpCode>
       get copyWith => __$$UserCardRecoveringWaitingOtpCodeCopyWithImpl<
@@ -438,11 +434,11 @@ class _$UserCardRecoveringWaitingOtpCode
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(UserIds ids)? waitingOtpCode,
-    TResult Function(UserIds ids)? profile,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(UserIds ids)? waitingOtpCode,
+    TResult? Function(UserIds ids)? profile,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return waitingOtpCode?.call(ids);
   }
@@ -479,11 +475,11 @@ class _$UserCardRecoveringWaitingOtpCode
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserCardRecoveringInitial value)? initial,
-    TResult Function(UserCardRecoveringLoading value)? loading,
-    TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
-    TResult Function(UserCardRecoveringProfile value)? profile,
-    TResult Function(UserCardRecoveringError value)? error,
+    TResult? Function(UserCardRecoveringInitial value)? initial,
+    TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserCardRecoveringProfile value)? profile,
+    TResult? Function(UserCardRecoveringError value)? error,
   }) {
     return waitingOtpCode?.call(this);
   }
@@ -523,6 +519,7 @@ abstract class _$$UserCardRecoveringProfileCopyWith<$Res> {
           _$UserCardRecoveringProfile value,
           $Res Function(_$UserCardRecoveringProfile) then) =
       __$$UserCardRecoveringProfileCopyWithImpl<$Res>;
+  @useResult
   $Res call({UserIds ids});
 
   $UserIdsCopyWith<$Res> get ids;
@@ -530,22 +527,20 @@ abstract class _$$UserCardRecoveringProfileCopyWith<$Res> {
 
 /// @nodoc
 class __$$UserCardRecoveringProfileCopyWithImpl<$Res>
-    extends _$UserCardRecoveringStateCopyWithImpl<$Res>
+    extends _$UserCardRecoveringStateCopyWithImpl<$Res,
+        _$UserCardRecoveringProfile>
     implements _$$UserCardRecoveringProfileCopyWith<$Res> {
   __$$UserCardRecoveringProfileCopyWithImpl(_$UserCardRecoveringProfile _value,
       $Res Function(_$UserCardRecoveringProfile) _then)
-      : super(_value, (v) => _then(v as _$UserCardRecoveringProfile));
+      : super(_value, _then);
 
-  @override
-  _$UserCardRecoveringProfile get _value =>
-      super._value as _$UserCardRecoveringProfile;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ids = freezed,
+    Object? ids = null,
   }) {
     return _then(_$UserCardRecoveringProfile(
-      ids: ids == freezed
+      ids: null == ids
           ? _value.ids
           : ids // ignore: cast_nullable_to_non_nullable
               as UserIds,
@@ -553,6 +548,7 @@ class __$$UserCardRecoveringProfileCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UserIdsCopyWith<$Res> get ids {
     return $UserIdsCopyWith<$Res>(_value.ids, (value) {
       return _then(_value.copyWith(ids: value));
@@ -578,15 +574,15 @@ class _$UserCardRecoveringProfile implements UserCardRecoveringProfile {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserCardRecoveringProfile &&
-            const DeepCollectionEquality().equals(other.ids, ids));
+            (identical(other.ids, ids) || other.ids == ids));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(ids));
+  int get hashCode => Object.hash(runtimeType, ids);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UserCardRecoveringProfileCopyWith<_$UserCardRecoveringProfile>
       get copyWith => __$$UserCardRecoveringProfileCopyWithImpl<
           _$UserCardRecoveringProfile>(this, _$identity);
@@ -606,11 +602,11 @@ class _$UserCardRecoveringProfile implements UserCardRecoveringProfile {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(UserIds ids)? waitingOtpCode,
-    TResult Function(UserIds ids)? profile,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(UserIds ids)? waitingOtpCode,
+    TResult? Function(UserIds ids)? profile,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return profile?.call(ids);
   }
@@ -647,11 +643,11 @@ class _$UserCardRecoveringProfile implements UserCardRecoveringProfile {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserCardRecoveringInitial value)? initial,
-    TResult Function(UserCardRecoveringLoading value)? loading,
-    TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
-    TResult Function(UserCardRecoveringProfile value)? profile,
-    TResult Function(UserCardRecoveringError value)? error,
+    TResult? Function(UserCardRecoveringInitial value)? initial,
+    TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserCardRecoveringProfile value)? profile,
+    TResult? Function(UserCardRecoveringError value)? error,
   }) {
     return profile?.call(this);
   }
@@ -688,29 +684,28 @@ abstract class _$$UserCardRecoveringErrorCopyWith<$Res> {
   factory _$$UserCardRecoveringErrorCopyWith(_$UserCardRecoveringError value,
           $Res Function(_$UserCardRecoveringError) then) =
       __$$UserCardRecoveringErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({Object? error, StackTrace? st});
 }
 
 /// @nodoc
 class __$$UserCardRecoveringErrorCopyWithImpl<$Res>
-    extends _$UserCardRecoveringStateCopyWithImpl<$Res>
+    extends _$UserCardRecoveringStateCopyWithImpl<$Res,
+        _$UserCardRecoveringError>
     implements _$$UserCardRecoveringErrorCopyWith<$Res> {
   __$$UserCardRecoveringErrorCopyWithImpl(_$UserCardRecoveringError _value,
       $Res Function(_$UserCardRecoveringError) _then)
-      : super(_value, (v) => _then(v as _$UserCardRecoveringError));
+      : super(_value, _then);
 
-  @override
-  _$UserCardRecoveringError get _value =>
-      super._value as _$UserCardRecoveringError;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? error = freezed,
     Object? st = freezed,
   }) {
     return _then(_$UserCardRecoveringError(
-      error: error == freezed ? _value.error : error,
-      st: st == freezed
+      error: freezed == error ? _value.error : error,
+      st: freezed == st
           ? _value.st
           : st // ignore: cast_nullable_to_non_nullable
               as StackTrace?,
@@ -739,17 +734,16 @@ class _$UserCardRecoveringError implements UserCardRecoveringError {
         (other.runtimeType == runtimeType &&
             other is _$UserCardRecoveringError &&
             const DeepCollectionEquality().equals(other.error, error) &&
-            const DeepCollectionEquality().equals(other.st, st));
+            (identical(other.st, st) || other.st == st));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(error),
-      const DeepCollectionEquality().hash(st));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error), st);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UserCardRecoveringErrorCopyWith<_$UserCardRecoveringError> get copyWith =>
       __$$UserCardRecoveringErrorCopyWithImpl<_$UserCardRecoveringError>(
           this, _$identity);
@@ -769,11 +763,11 @@ class _$UserCardRecoveringError implements UserCardRecoveringError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(UserIds ids)? waitingOtpCode,
-    TResult Function(UserIds ids)? profile,
-    TResult Function(Object? error, StackTrace? st)? error,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(UserIds ids)? waitingOtpCode,
+    TResult? Function(UserIds ids)? profile,
+    TResult? Function(Object? error, StackTrace? st)? error,
   }) {
     return error?.call(this.error, st);
   }
@@ -810,11 +804,11 @@ class _$UserCardRecoveringError implements UserCardRecoveringError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UserCardRecoveringInitial value)? initial,
-    TResult Function(UserCardRecoveringLoading value)? loading,
-    TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
-    TResult Function(UserCardRecoveringProfile value)? profile,
-    TResult Function(UserCardRecoveringError value)? error,
+    TResult? Function(UserCardRecoveringInitial value)? initial,
+    TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserCardRecoveringProfile value)? profile,
+    TResult? Function(UserCardRecoveringError value)? error,
   }) {
     return error?.call(this);
   }

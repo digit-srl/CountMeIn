@@ -27,11 +27,11 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(AuthUser user)? authenticated,
-    TResult Function()? loading,
-    TResult Function()? unauthenticated,
-    TResult Function(User user)? emailNotVerified,
-    TResult Function(Object err, StackTrace? stack)? error,
+    TResult? Function(AuthUser user)? authenticated,
+    TResult? Function()? loading,
+    TResult? Function()? unauthenticated,
+    TResult? Function(User user)? emailNotVerified,
+    TResult? Function(Object err, StackTrace? stack)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,11 +55,11 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Authenticated value)? authenticated,
-    TResult Function(AuthLoading value)? loading,
-    TResult Function(Unautenticated value)? unauthenticated,
-    TResult Function(EmailNotVerified value)? emailNotVerified,
-    TResult Function(AuthError value)? error,
+    TResult? Function(Authenticated value)? authenticated,
+    TResult? Function(AuthLoading value)? loading,
+    TResult? Function(Unautenticated value)? unauthenticated,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
+    TResult? Function(AuthError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -77,16 +77,18 @@ mixin _$AuthState {
 /// @nodoc
 abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
-      _$AuthStateCopyWithImpl<$Res>;
+      _$AuthStateCopyWithImpl<$Res, AuthState>;
 }
 
 /// @nodoc
-class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
+class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
+    implements $AuthStateCopyWith<$Res> {
   _$AuthStateCopyWithImpl(this._value, this._then);
 
-  final AuthState _value;
   // ignore: unused_field
-  final $Res Function(AuthState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -94,27 +96,27 @@ abstract class _$$AuthenticatedCopyWith<$Res> {
   factory _$$AuthenticatedCopyWith(
           _$Authenticated value, $Res Function(_$Authenticated) then) =
       __$$AuthenticatedCopyWithImpl<$Res>;
+  @useResult
   $Res call({AuthUser user});
 
   $AuthUserCopyWith<$Res> get user;
 }
 
 /// @nodoc
-class __$$AuthenticatedCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+class __$$AuthenticatedCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$Authenticated>
     implements _$$AuthenticatedCopyWith<$Res> {
   __$$AuthenticatedCopyWithImpl(
       _$Authenticated _value, $Res Function(_$Authenticated) _then)
-      : super(_value, (v) => _then(v as _$Authenticated));
+      : super(_value, _then);
 
-  @override
-  _$Authenticated get _value => super._value as _$Authenticated;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = freezed,
+    Object? user = null,
   }) {
     return _then(_$Authenticated(
-      user == freezed
+      null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as AuthUser,
@@ -122,6 +124,7 @@ class __$$AuthenticatedCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AuthUserCopyWith<$Res> get user {
     return $AuthUserCopyWith<$Res>(_value.user, (value) {
       return _then(_value.copyWith(user: value));
@@ -147,15 +150,15 @@ class _$Authenticated implements Authenticated {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Authenticated &&
-            const DeepCollectionEquality().equals(other.user, user));
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$AuthenticatedCopyWith<_$Authenticated> get copyWith =>
       __$$AuthenticatedCopyWithImpl<_$Authenticated>(this, _$identity);
 
@@ -174,11 +177,11 @@ class _$Authenticated implements Authenticated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(AuthUser user)? authenticated,
-    TResult Function()? loading,
-    TResult Function()? unauthenticated,
-    TResult Function(User user)? emailNotVerified,
-    TResult Function(Object err, StackTrace? stack)? error,
+    TResult? Function(AuthUser user)? authenticated,
+    TResult? Function()? loading,
+    TResult? Function()? unauthenticated,
+    TResult? Function(User user)? emailNotVerified,
+    TResult? Function(Object err, StackTrace? stack)? error,
   }) {
     return authenticated?.call(user);
   }
@@ -214,11 +217,11 @@ class _$Authenticated implements Authenticated {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Authenticated value)? authenticated,
-    TResult Function(AuthLoading value)? loading,
-    TResult Function(Unautenticated value)? unauthenticated,
-    TResult Function(EmailNotVerified value)? emailNotVerified,
-    TResult Function(AuthError value)? error,
+    TResult? Function(Authenticated value)? authenticated,
+    TResult? Function(AuthLoading value)? loading,
+    TResult? Function(Unautenticated value)? unauthenticated,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
+    TResult? Function(AuthError value)? error,
   }) {
     return authenticated?.call(this);
   }
@@ -257,14 +260,12 @@ abstract class _$$AuthLoadingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$AuthLoadingCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+class __$$AuthLoadingCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthLoading>
     implements _$$AuthLoadingCopyWith<$Res> {
   __$$AuthLoadingCopyWithImpl(
       _$AuthLoading _value, $Res Function(_$AuthLoading) _then)
-      : super(_value, (v) => _then(v as _$AuthLoading));
-
-  @override
-  _$AuthLoading get _value => super._value as _$AuthLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -301,11 +302,11 @@ class _$AuthLoading implements AuthLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(AuthUser user)? authenticated,
-    TResult Function()? loading,
-    TResult Function()? unauthenticated,
-    TResult Function(User user)? emailNotVerified,
-    TResult Function(Object err, StackTrace? stack)? error,
+    TResult? Function(AuthUser user)? authenticated,
+    TResult? Function()? loading,
+    TResult? Function()? unauthenticated,
+    TResult? Function(User user)? emailNotVerified,
+    TResult? Function(Object err, StackTrace? stack)? error,
   }) {
     return loading?.call();
   }
@@ -341,11 +342,11 @@ class _$AuthLoading implements AuthLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Authenticated value)? authenticated,
-    TResult Function(AuthLoading value)? loading,
-    TResult Function(Unautenticated value)? unauthenticated,
-    TResult Function(EmailNotVerified value)? emailNotVerified,
-    TResult Function(AuthError value)? error,
+    TResult? Function(Authenticated value)? authenticated,
+    TResult? Function(AuthLoading value)? loading,
+    TResult? Function(Unautenticated value)? unauthenticated,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
+    TResult? Function(AuthError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -379,14 +380,12 @@ abstract class _$$UnautenticatedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$UnautenticatedCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+class __$$UnautenticatedCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$Unautenticated>
     implements _$$UnautenticatedCopyWith<$Res> {
   __$$UnautenticatedCopyWithImpl(
       _$Unautenticated _value, $Res Function(_$Unautenticated) _then)
-      : super(_value, (v) => _then(v as _$Unautenticated));
-
-  @override
-  _$Unautenticated get _value => super._value as _$Unautenticated;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -423,11 +422,11 @@ class _$Unautenticated implements Unautenticated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(AuthUser user)? authenticated,
-    TResult Function()? loading,
-    TResult Function()? unauthenticated,
-    TResult Function(User user)? emailNotVerified,
-    TResult Function(Object err, StackTrace? stack)? error,
+    TResult? Function(AuthUser user)? authenticated,
+    TResult? Function()? loading,
+    TResult? Function()? unauthenticated,
+    TResult? Function(User user)? emailNotVerified,
+    TResult? Function(Object err, StackTrace? stack)? error,
   }) {
     return unauthenticated?.call();
   }
@@ -463,11 +462,11 @@ class _$Unautenticated implements Unautenticated {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Authenticated value)? authenticated,
-    TResult Function(AuthLoading value)? loading,
-    TResult Function(Unautenticated value)? unauthenticated,
-    TResult Function(EmailNotVerified value)? emailNotVerified,
-    TResult Function(AuthError value)? error,
+    TResult? Function(Authenticated value)? authenticated,
+    TResult? Function(AuthLoading value)? loading,
+    TResult? Function(Unautenticated value)? unauthenticated,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
+    TResult? Function(AuthError value)? error,
   }) {
     return unauthenticated?.call(this);
   }
@@ -498,26 +497,25 @@ abstract class _$$EmailNotVerifiedCopyWith<$Res> {
   factory _$$EmailNotVerifiedCopyWith(
           _$EmailNotVerified value, $Res Function(_$EmailNotVerified) then) =
       __$$EmailNotVerifiedCopyWithImpl<$Res>;
+  @useResult
   $Res call({User user});
 }
 
 /// @nodoc
 class __$$EmailNotVerifiedCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$EmailNotVerified>
     implements _$$EmailNotVerifiedCopyWith<$Res> {
   __$$EmailNotVerifiedCopyWithImpl(
       _$EmailNotVerified _value, $Res Function(_$EmailNotVerified) _then)
-      : super(_value, (v) => _then(v as _$EmailNotVerified));
+      : super(_value, _then);
 
-  @override
-  _$EmailNotVerified get _value => super._value as _$EmailNotVerified;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = freezed,
+    Object? user = null,
   }) {
     return _then(_$EmailNotVerified(
-      user == freezed
+      null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
@@ -543,15 +541,15 @@ class _$EmailNotVerified implements EmailNotVerified {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EmailNotVerified &&
-            const DeepCollectionEquality().equals(other.user, user));
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$EmailNotVerifiedCopyWith<_$EmailNotVerified> get copyWith =>
       __$$EmailNotVerifiedCopyWithImpl<_$EmailNotVerified>(this, _$identity);
 
@@ -570,11 +568,11 @@ class _$EmailNotVerified implements EmailNotVerified {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(AuthUser user)? authenticated,
-    TResult Function()? loading,
-    TResult Function()? unauthenticated,
-    TResult Function(User user)? emailNotVerified,
-    TResult Function(Object err, StackTrace? stack)? error,
+    TResult? Function(AuthUser user)? authenticated,
+    TResult? Function()? loading,
+    TResult? Function()? unauthenticated,
+    TResult? Function(User user)? emailNotVerified,
+    TResult? Function(Object err, StackTrace? stack)? error,
   }) {
     return emailNotVerified?.call(user);
   }
@@ -610,11 +608,11 @@ class _$EmailNotVerified implements EmailNotVerified {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Authenticated value)? authenticated,
-    TResult Function(AuthLoading value)? loading,
-    TResult Function(Unautenticated value)? unauthenticated,
-    TResult Function(EmailNotVerified value)? emailNotVerified,
-    TResult Function(AuthError value)? error,
+    TResult? Function(Authenticated value)? authenticated,
+    TResult? Function(AuthLoading value)? loading,
+    TResult? Function(Unautenticated value)? unauthenticated,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
+    TResult? Function(AuthError value)? error,
   }) {
     return emailNotVerified?.call(this);
   }
@@ -650,30 +648,27 @@ abstract class _$$AuthErrorCopyWith<$Res> {
   factory _$$AuthErrorCopyWith(
           _$AuthError value, $Res Function(_$AuthError) then) =
       __$$AuthErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({Object err, StackTrace? stack});
 }
 
 /// @nodoc
-class __$$AuthErrorCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+class __$$AuthErrorCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthError>
     implements _$$AuthErrorCopyWith<$Res> {
   __$$AuthErrorCopyWithImpl(
       _$AuthError _value, $Res Function(_$AuthError) _then)
-      : super(_value, (v) => _then(v as _$AuthError));
+      : super(_value, _then);
 
-  @override
-  _$AuthError get _value => super._value as _$AuthError;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? err = freezed,
+    Object? err = null,
     Object? stack = freezed,
   }) {
     return _then(_$AuthError(
-      err == freezed
-          ? _value.err
-          : err // ignore: cast_nullable_to_non_nullable
-              as Object,
-      stack == freezed
+      null == err ? _value.err : err,
+      freezed == stack
           ? _value.stack
           : stack // ignore: cast_nullable_to_non_nullable
               as StackTrace?,
@@ -702,17 +697,16 @@ class _$AuthError implements AuthError {
         (other.runtimeType == runtimeType &&
             other is _$AuthError &&
             const DeepCollectionEquality().equals(other.err, err) &&
-            const DeepCollectionEquality().equals(other.stack, stack));
+            (identical(other.stack, stack) || other.stack == stack));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(err),
-      const DeepCollectionEquality().hash(stack));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(err), stack);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$AuthErrorCopyWith<_$AuthError> get copyWith =>
       __$$AuthErrorCopyWithImpl<_$AuthError>(this, _$identity);
 
@@ -731,11 +725,11 @@ class _$AuthError implements AuthError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(AuthUser user)? authenticated,
-    TResult Function()? loading,
-    TResult Function()? unauthenticated,
-    TResult Function(User user)? emailNotVerified,
-    TResult Function(Object err, StackTrace? stack)? error,
+    TResult? Function(AuthUser user)? authenticated,
+    TResult? Function()? loading,
+    TResult? Function()? unauthenticated,
+    TResult? Function(User user)? emailNotVerified,
+    TResult? Function(Object err, StackTrace? stack)? error,
   }) {
     return error?.call(err, stack);
   }
@@ -771,11 +765,11 @@ class _$AuthError implements AuthError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Authenticated value)? authenticated,
-    TResult Function(AuthLoading value)? loading,
-    TResult Function(Unautenticated value)? unauthenticated,
-    TResult Function(EmailNotVerified value)? emailNotVerified,
-    TResult Function(AuthError value)? error,
+    TResult? Function(Authenticated value)? authenticated,
+    TResult? Function(AuthLoading value)? loading,
+    TResult? Function(Unautenticated value)? unauthenticated,
+    TResult? Function(EmailNotVerified value)? emailNotVerified,
+    TResult? Function(AuthError value)? error,
   }) {
     return error?.call(this);
   }

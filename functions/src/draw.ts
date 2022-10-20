@@ -82,6 +82,10 @@ export async function drawUserCard(
   return canvas.toBuffer("image/png");
 }
 
+function float2int(value: number) {
+  return Math.round(value);
+}
+
 export async function drawGroupCard(
   eventTitle: string,
   name: string,
@@ -91,9 +95,9 @@ export async function drawGroupCard(
   url: string,
   groupName: string,
   groupCount: string,
-  averageAge: string,
-  manCount: string,
-  womanCount: string
+  averageAge: string | undefined,
+  manPercentage: number | undefined,
+  womanPercentage: number | undefined
 ): Promise<Buffer> {
   const height = 800;
   const width = height * 1.6;
@@ -122,17 +126,26 @@ export async function drawGroupCard(
   ctx.fillText(groupName, startText, qrCodeY + paddingY * 5);
   ctx.fillText(cf, startText, qrCodeY + paddingY * 8);
   ctx.fillText("N: " + groupCount, startText, qrCodeY + paddingY * 11);
-  ctx.fillText("A: " + averageAge, startText + 120, qrCodeY + paddingY * 11);
-  ctx.fillText(
-    "M: " + manCount + "%",
-    startText + 240,
-    qrCodeY + paddingY * 11
-  );
-  ctx.fillText(
-    "F: " + womanCount + "%",
-    startText + 420,
-    qrCodeY + paddingY * 11
-  );
+
+  if (averageAge != null) {
+    ctx.fillText("A: " + averageAge, startText + 120, qrCodeY + paddingY * 11);
+  }
+
+  if (manPercentage != null) {
+    ctx.fillText(
+      "M: " + float2int(manPercentage * 100).toString() + "%",
+      startText + 240,
+      qrCodeY + paddingY * 11
+    );
+  }
+
+  if (womanPercentage != null) {
+    ctx.fillText(
+      "F: " + float2int(womanPercentage * 100).toString() + "%",
+      startText + 420,
+      qrCodeY + paddingY * 11
+    );
+  }
 
   const emailY = qrCodeY + qrCodeSize + paddingY * 2;
   ctx.font = "20px Impact";

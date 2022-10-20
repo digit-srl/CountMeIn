@@ -29,12 +29,12 @@ mixin _$ResetPasswordState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? data,
-    TResult Function()? complete,
-    TResult Function(ResetPasswordException exception)? firebaseException,
-    TResult Function()? weakPassword,
-    TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? data,
+    TResult? Function()? complete,
+    TResult? Function(ResetPasswordException exception)? firebaseException,
+    TResult? Function()? weakPassword,
+    TResult? Function()? loading,
+    TResult? Function(Object error, StackTrace st)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,12 +61,12 @@ mixin _$ResetPasswordState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ResetPasswordData value)? data,
-    TResult Function(ResetPasswordComplete value)? complete,
-    TResult Function(ResetPasswordFirebaseException value)? firebaseException,
-    TResult Function(ResetPasswordWeakPassword value)? weakPassword,
-    TResult Function(ResetPasswordLoading value)? loading,
-    TResult Function(ResetPasswordError value)? error,
+    TResult? Function(ResetPasswordData value)? data,
+    TResult? Function(ResetPasswordComplete value)? complete,
+    TResult? Function(ResetPasswordFirebaseException value)? firebaseException,
+    TResult? Function(ResetPasswordWeakPassword value)? weakPassword,
+    TResult? Function(ResetPasswordLoading value)? loading,
+    TResult? Function(ResetPasswordError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -86,17 +86,18 @@ mixin _$ResetPasswordState {
 abstract class $ResetPasswordStateCopyWith<$Res> {
   factory $ResetPasswordStateCopyWith(
           ResetPasswordState value, $Res Function(ResetPasswordState) then) =
-      _$ResetPasswordStateCopyWithImpl<$Res>;
+      _$ResetPasswordStateCopyWithImpl<$Res, ResetPasswordState>;
 }
 
 /// @nodoc
-class _$ResetPasswordStateCopyWithImpl<$Res>
+class _$ResetPasswordStateCopyWithImpl<$Res, $Val extends ResetPasswordState>
     implements $ResetPasswordStateCopyWith<$Res> {
   _$ResetPasswordStateCopyWithImpl(this._value, this._then);
 
-  final ResetPasswordState _value;
   // ignore: unused_field
-  final $Res Function(ResetPasswordState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -108,14 +109,11 @@ abstract class _$$ResetPasswordDataCopyWith<$Res> {
 
 /// @nodoc
 class __$$ResetPasswordDataCopyWithImpl<$Res>
-    extends _$ResetPasswordStateCopyWithImpl<$Res>
+    extends _$ResetPasswordStateCopyWithImpl<$Res, _$ResetPasswordData>
     implements _$$ResetPasswordDataCopyWith<$Res> {
   __$$ResetPasswordDataCopyWithImpl(
       _$ResetPasswordData _value, $Res Function(_$ResetPasswordData) _then)
-      : super(_value, (v) => _then(v as _$ResetPasswordData));
-
-  @override
-  _$ResetPasswordData get _value => super._value as _$ResetPasswordData;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -154,12 +152,12 @@ class _$ResetPasswordData implements ResetPasswordData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? data,
-    TResult Function()? complete,
-    TResult Function(ResetPasswordException exception)? firebaseException,
-    TResult Function()? weakPassword,
-    TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? data,
+    TResult? Function()? complete,
+    TResult? Function(ResetPasswordException exception)? firebaseException,
+    TResult? Function()? weakPassword,
+    TResult? Function()? loading,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return data?.call();
   }
@@ -198,12 +196,12 @@ class _$ResetPasswordData implements ResetPasswordData {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ResetPasswordData value)? data,
-    TResult Function(ResetPasswordComplete value)? complete,
-    TResult Function(ResetPasswordFirebaseException value)? firebaseException,
-    TResult Function(ResetPasswordWeakPassword value)? weakPassword,
-    TResult Function(ResetPasswordLoading value)? loading,
-    TResult Function(ResetPasswordError value)? error,
+    TResult? Function(ResetPasswordData value)? data,
+    TResult? Function(ResetPasswordComplete value)? complete,
+    TResult? Function(ResetPasswordFirebaseException value)? firebaseException,
+    TResult? Function(ResetPasswordWeakPassword value)? weakPassword,
+    TResult? Function(ResetPasswordLoading value)? loading,
+    TResult? Function(ResetPasswordError value)? error,
   }) {
     return data?.call(this);
   }
@@ -239,14 +237,11 @@ abstract class _$$ResetPasswordCompleteCopyWith<$Res> {
 
 /// @nodoc
 class __$$ResetPasswordCompleteCopyWithImpl<$Res>
-    extends _$ResetPasswordStateCopyWithImpl<$Res>
+    extends _$ResetPasswordStateCopyWithImpl<$Res, _$ResetPasswordComplete>
     implements _$$ResetPasswordCompleteCopyWith<$Res> {
   __$$ResetPasswordCompleteCopyWithImpl(_$ResetPasswordComplete _value,
       $Res Function(_$ResetPasswordComplete) _then)
-      : super(_value, (v) => _then(v as _$ResetPasswordComplete));
-
-  @override
-  _$ResetPasswordComplete get _value => super._value as _$ResetPasswordComplete;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -285,12 +280,12 @@ class _$ResetPasswordComplete implements ResetPasswordComplete {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? data,
-    TResult Function()? complete,
-    TResult Function(ResetPasswordException exception)? firebaseException,
-    TResult Function()? weakPassword,
-    TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? data,
+    TResult? Function()? complete,
+    TResult? Function(ResetPasswordException exception)? firebaseException,
+    TResult? Function()? weakPassword,
+    TResult? Function()? loading,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return complete?.call();
   }
@@ -329,12 +324,12 @@ class _$ResetPasswordComplete implements ResetPasswordComplete {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ResetPasswordData value)? data,
-    TResult Function(ResetPasswordComplete value)? complete,
-    TResult Function(ResetPasswordFirebaseException value)? firebaseException,
-    TResult Function(ResetPasswordWeakPassword value)? weakPassword,
-    TResult Function(ResetPasswordLoading value)? loading,
-    TResult Function(ResetPasswordError value)? error,
+    TResult? Function(ResetPasswordData value)? data,
+    TResult? Function(ResetPasswordComplete value)? complete,
+    TResult? Function(ResetPasswordFirebaseException value)? firebaseException,
+    TResult? Function(ResetPasswordWeakPassword value)? weakPassword,
+    TResult? Function(ResetPasswordLoading value)? loading,
+    TResult? Function(ResetPasswordError value)? error,
   }) {
     return complete?.call(this);
   }
@@ -367,6 +362,7 @@ abstract class _$$ResetPasswordFirebaseExceptionCopyWith<$Res> {
           _$ResetPasswordFirebaseException value,
           $Res Function(_$ResetPasswordFirebaseException) then) =
       __$$ResetPasswordFirebaseExceptionCopyWithImpl<$Res>;
+  @useResult
   $Res call({ResetPasswordException exception});
 
   $ResetPasswordExceptionCopyWith<$Res> get exception;
@@ -374,23 +370,21 @@ abstract class _$$ResetPasswordFirebaseExceptionCopyWith<$Res> {
 
 /// @nodoc
 class __$$ResetPasswordFirebaseExceptionCopyWithImpl<$Res>
-    extends _$ResetPasswordStateCopyWithImpl<$Res>
+    extends _$ResetPasswordStateCopyWithImpl<$Res,
+        _$ResetPasswordFirebaseException>
     implements _$$ResetPasswordFirebaseExceptionCopyWith<$Res> {
   __$$ResetPasswordFirebaseExceptionCopyWithImpl(
       _$ResetPasswordFirebaseException _value,
       $Res Function(_$ResetPasswordFirebaseException) _then)
-      : super(_value, (v) => _then(v as _$ResetPasswordFirebaseException));
+      : super(_value, _then);
 
-  @override
-  _$ResetPasswordFirebaseException get _value =>
-      super._value as _$ResetPasswordFirebaseException;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? exception = freezed,
+    Object? exception = null,
   }) {
     return _then(_$ResetPasswordFirebaseException(
-      exception == freezed
+      null == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
               as ResetPasswordException,
@@ -398,6 +392,7 @@ class __$$ResetPasswordFirebaseExceptionCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ResetPasswordExceptionCopyWith<$Res> get exception {
     return $ResetPasswordExceptionCopyWith<$Res>(_value.exception, (value) {
       return _then(_value.copyWith(exception: value));
@@ -424,15 +419,16 @@ class _$ResetPasswordFirebaseException
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ResetPasswordFirebaseException &&
-            const DeepCollectionEquality().equals(other.exception, exception));
+            (identical(other.exception, exception) ||
+                other.exception == exception));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(exception));
+  int get hashCode => Object.hash(runtimeType, exception);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$ResetPasswordFirebaseExceptionCopyWith<_$ResetPasswordFirebaseException>
       get copyWith => __$$ResetPasswordFirebaseExceptionCopyWithImpl<
           _$ResetPasswordFirebaseException>(this, _$identity);
@@ -454,12 +450,12 @@ class _$ResetPasswordFirebaseException
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? data,
-    TResult Function()? complete,
-    TResult Function(ResetPasswordException exception)? firebaseException,
-    TResult Function()? weakPassword,
-    TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? data,
+    TResult? Function()? complete,
+    TResult? Function(ResetPasswordException exception)? firebaseException,
+    TResult? Function()? weakPassword,
+    TResult? Function()? loading,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return firebaseException?.call(exception);
   }
@@ -498,12 +494,12 @@ class _$ResetPasswordFirebaseException
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ResetPasswordData value)? data,
-    TResult Function(ResetPasswordComplete value)? complete,
-    TResult Function(ResetPasswordFirebaseException value)? firebaseException,
-    TResult Function(ResetPasswordWeakPassword value)? weakPassword,
-    TResult Function(ResetPasswordLoading value)? loading,
-    TResult Function(ResetPasswordError value)? error,
+    TResult? Function(ResetPasswordData value)? data,
+    TResult? Function(ResetPasswordComplete value)? complete,
+    TResult? Function(ResetPasswordFirebaseException value)? firebaseException,
+    TResult? Function(ResetPasswordWeakPassword value)? weakPassword,
+    TResult? Function(ResetPasswordLoading value)? loading,
+    TResult? Function(ResetPasswordError value)? error,
   }) {
     return firebaseException?.call(this);
   }
@@ -547,15 +543,11 @@ abstract class _$$ResetPasswordWeakPasswordCopyWith<$Res> {
 
 /// @nodoc
 class __$$ResetPasswordWeakPasswordCopyWithImpl<$Res>
-    extends _$ResetPasswordStateCopyWithImpl<$Res>
+    extends _$ResetPasswordStateCopyWithImpl<$Res, _$ResetPasswordWeakPassword>
     implements _$$ResetPasswordWeakPasswordCopyWith<$Res> {
   __$$ResetPasswordWeakPasswordCopyWithImpl(_$ResetPasswordWeakPassword _value,
       $Res Function(_$ResetPasswordWeakPassword) _then)
-      : super(_value, (v) => _then(v as _$ResetPasswordWeakPassword));
-
-  @override
-  _$ResetPasswordWeakPassword get _value =>
-      super._value as _$ResetPasswordWeakPassword;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -595,12 +587,12 @@ class _$ResetPasswordWeakPassword implements ResetPasswordWeakPassword {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? data,
-    TResult Function()? complete,
-    TResult Function(ResetPasswordException exception)? firebaseException,
-    TResult Function()? weakPassword,
-    TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? data,
+    TResult? Function()? complete,
+    TResult? Function(ResetPasswordException exception)? firebaseException,
+    TResult? Function()? weakPassword,
+    TResult? Function()? loading,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return weakPassword?.call();
   }
@@ -639,12 +631,12 @@ class _$ResetPasswordWeakPassword implements ResetPasswordWeakPassword {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ResetPasswordData value)? data,
-    TResult Function(ResetPasswordComplete value)? complete,
-    TResult Function(ResetPasswordFirebaseException value)? firebaseException,
-    TResult Function(ResetPasswordWeakPassword value)? weakPassword,
-    TResult Function(ResetPasswordLoading value)? loading,
-    TResult Function(ResetPasswordError value)? error,
+    TResult? Function(ResetPasswordData value)? data,
+    TResult? Function(ResetPasswordComplete value)? complete,
+    TResult? Function(ResetPasswordFirebaseException value)? firebaseException,
+    TResult? Function(ResetPasswordWeakPassword value)? weakPassword,
+    TResult? Function(ResetPasswordLoading value)? loading,
+    TResult? Function(ResetPasswordError value)? error,
   }) {
     return weakPassword?.call(this);
   }
@@ -680,14 +672,11 @@ abstract class _$$ResetPasswordLoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$ResetPasswordLoadingCopyWithImpl<$Res>
-    extends _$ResetPasswordStateCopyWithImpl<$Res>
+    extends _$ResetPasswordStateCopyWithImpl<$Res, _$ResetPasswordLoading>
     implements _$$ResetPasswordLoadingCopyWith<$Res> {
   __$$ResetPasswordLoadingCopyWithImpl(_$ResetPasswordLoading _value,
       $Res Function(_$ResetPasswordLoading) _then)
-      : super(_value, (v) => _then(v as _$ResetPasswordLoading));
-
-  @override
-  _$ResetPasswordLoading get _value => super._value as _$ResetPasswordLoading;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -726,12 +715,12 @@ class _$ResetPasswordLoading implements ResetPasswordLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? data,
-    TResult Function()? complete,
-    TResult Function(ResetPasswordException exception)? firebaseException,
-    TResult Function()? weakPassword,
-    TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? data,
+    TResult? Function()? complete,
+    TResult? Function(ResetPasswordException exception)? firebaseException,
+    TResult? Function()? weakPassword,
+    TResult? Function()? loading,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return loading?.call();
   }
@@ -770,12 +759,12 @@ class _$ResetPasswordLoading implements ResetPasswordLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ResetPasswordData value)? data,
-    TResult Function(ResetPasswordComplete value)? complete,
-    TResult Function(ResetPasswordFirebaseException value)? firebaseException,
-    TResult Function(ResetPasswordWeakPassword value)? weakPassword,
-    TResult Function(ResetPasswordLoading value)? loading,
-    TResult Function(ResetPasswordError value)? error,
+    TResult? Function(ResetPasswordData value)? data,
+    TResult? Function(ResetPasswordComplete value)? complete,
+    TResult? Function(ResetPasswordFirebaseException value)? firebaseException,
+    TResult? Function(ResetPasswordWeakPassword value)? weakPassword,
+    TResult? Function(ResetPasswordLoading value)? loading,
+    TResult? Function(ResetPasswordError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -807,31 +796,27 @@ abstract class _$$ResetPasswordErrorCopyWith<$Res> {
   factory _$$ResetPasswordErrorCopyWith(_$ResetPasswordError value,
           $Res Function(_$ResetPasswordError) then) =
       __$$ResetPasswordErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({Object error, StackTrace st});
 }
 
 /// @nodoc
 class __$$ResetPasswordErrorCopyWithImpl<$Res>
-    extends _$ResetPasswordStateCopyWithImpl<$Res>
+    extends _$ResetPasswordStateCopyWithImpl<$Res, _$ResetPasswordError>
     implements _$$ResetPasswordErrorCopyWith<$Res> {
   __$$ResetPasswordErrorCopyWithImpl(
       _$ResetPasswordError _value, $Res Function(_$ResetPasswordError) _then)
-      : super(_value, (v) => _then(v as _$ResetPasswordError));
+      : super(_value, _then);
 
-  @override
-  _$ResetPasswordError get _value => super._value as _$ResetPasswordError;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = freezed,
-    Object? st = freezed,
+    Object? error = null,
+    Object? st = null,
   }) {
     return _then(_$ResetPasswordError(
-      error == freezed
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as Object,
-      st == freezed
+      null == error ? _value.error : error,
+      null == st
           ? _value.st
           : st // ignore: cast_nullable_to_non_nullable
               as StackTrace,
@@ -860,17 +845,16 @@ class _$ResetPasswordError implements ResetPasswordError {
         (other.runtimeType == runtimeType &&
             other is _$ResetPasswordError &&
             const DeepCollectionEquality().equals(other.error, error) &&
-            const DeepCollectionEquality().equals(other.st, st));
+            (identical(other.st, st) || other.st == st));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(error),
-      const DeepCollectionEquality().hash(st));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error), st);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$ResetPasswordErrorCopyWith<_$ResetPasswordError> get copyWith =>
       __$$ResetPasswordErrorCopyWithImpl<_$ResetPasswordError>(
           this, _$identity);
@@ -892,12 +876,12 @@ class _$ResetPasswordError implements ResetPasswordError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? data,
-    TResult Function()? complete,
-    TResult Function(ResetPasswordException exception)? firebaseException,
-    TResult Function()? weakPassword,
-    TResult Function()? loading,
-    TResult Function(Object error, StackTrace st)? error,
+    TResult? Function()? data,
+    TResult? Function()? complete,
+    TResult? Function(ResetPasswordException exception)? firebaseException,
+    TResult? Function()? weakPassword,
+    TResult? Function()? loading,
+    TResult? Function(Object error, StackTrace st)? error,
   }) {
     return error?.call(this.error, st);
   }
@@ -936,12 +920,12 @@ class _$ResetPasswordError implements ResetPasswordError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ResetPasswordData value)? data,
-    TResult Function(ResetPasswordComplete value)? complete,
-    TResult Function(ResetPasswordFirebaseException value)? firebaseException,
-    TResult Function(ResetPasswordWeakPassword value)? weakPassword,
-    TResult Function(ResetPasswordLoading value)? loading,
-    TResult Function(ResetPasswordError value)? error,
+    TResult? Function(ResetPasswordData value)? data,
+    TResult? Function(ResetPasswordComplete value)? complete,
+    TResult? Function(ResetPasswordFirebaseException value)? firebaseException,
+    TResult? Function(ResetPasswordWeakPassword value)? weakPassword,
+    TResult? Function(ResetPasswordLoading value)? loading,
+    TResult? Function(ResetPasswordError value)? error,
   }) {
     return error?.call(this);
   }
@@ -988,11 +972,11 @@ mixin _$ResetPasswordException {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? unknown,
-    TResult Function()? expired,
-    TResult Function()? userDisabled,
-    TResult Function()? userNotFound,
-    TResult Function()? invalidCode,
+    TResult? Function()? unknown,
+    TResult? Function()? expired,
+    TResult? Function()? userDisabled,
+    TResult? Function()? userNotFound,
+    TResult? Function()? invalidCode,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1016,11 +1000,11 @@ mixin _$ResetPasswordException {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ResetPasswordExUnknown value)? unknown,
-    TResult Function(ResetPasswordExExpired value)? expired,
-    TResult Function(ResetPasswordExDisabled value)? userDisabled,
-    TResult Function(ResetPasswordExUserNotFound value)? userNotFound,
-    TResult Function(ResetPasswordExInvalidCode value)? invalidCode,
+    TResult? Function(ResetPasswordExUnknown value)? unknown,
+    TResult? Function(ResetPasswordExExpired value)? expired,
+    TResult? Function(ResetPasswordExDisabled value)? userDisabled,
+    TResult? Function(ResetPasswordExUserNotFound value)? userNotFound,
+    TResult? Function(ResetPasswordExInvalidCode value)? invalidCode,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1039,17 +1023,19 @@ mixin _$ResetPasswordException {
 abstract class $ResetPasswordExceptionCopyWith<$Res> {
   factory $ResetPasswordExceptionCopyWith(ResetPasswordException value,
           $Res Function(ResetPasswordException) then) =
-      _$ResetPasswordExceptionCopyWithImpl<$Res>;
+      _$ResetPasswordExceptionCopyWithImpl<$Res, ResetPasswordException>;
 }
 
 /// @nodoc
-class _$ResetPasswordExceptionCopyWithImpl<$Res>
+class _$ResetPasswordExceptionCopyWithImpl<$Res,
+        $Val extends ResetPasswordException>
     implements $ResetPasswordExceptionCopyWith<$Res> {
   _$ResetPasswordExceptionCopyWithImpl(this._value, this._then);
 
-  final ResetPasswordException _value;
   // ignore: unused_field
-  final $Res Function(ResetPasswordException) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -1061,15 +1047,11 @@ abstract class _$$ResetPasswordExUnknownCopyWith<$Res> {
 
 /// @nodoc
 class __$$ResetPasswordExUnknownCopyWithImpl<$Res>
-    extends _$ResetPasswordExceptionCopyWithImpl<$Res>
+    extends _$ResetPasswordExceptionCopyWithImpl<$Res, _$ResetPasswordExUnknown>
     implements _$$ResetPasswordExUnknownCopyWith<$Res> {
   __$$ResetPasswordExUnknownCopyWithImpl(_$ResetPasswordExUnknown _value,
       $Res Function(_$ResetPasswordExUnknown) _then)
-      : super(_value, (v) => _then(v as _$ResetPasswordExUnknown));
-
-  @override
-  _$ResetPasswordExUnknown get _value =>
-      super._value as _$ResetPasswordExUnknown;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -1106,11 +1088,11 @@ class _$ResetPasswordExUnknown implements ResetPasswordExUnknown {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? unknown,
-    TResult Function()? expired,
-    TResult Function()? userDisabled,
-    TResult Function()? userNotFound,
-    TResult Function()? invalidCode,
+    TResult? Function()? unknown,
+    TResult? Function()? expired,
+    TResult? Function()? userDisabled,
+    TResult? Function()? userNotFound,
+    TResult? Function()? invalidCode,
   }) {
     return unknown?.call();
   }
@@ -1146,11 +1128,11 @@ class _$ResetPasswordExUnknown implements ResetPasswordExUnknown {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ResetPasswordExUnknown value)? unknown,
-    TResult Function(ResetPasswordExExpired value)? expired,
-    TResult Function(ResetPasswordExDisabled value)? userDisabled,
-    TResult Function(ResetPasswordExUserNotFound value)? userNotFound,
-    TResult Function(ResetPasswordExInvalidCode value)? invalidCode,
+    TResult? Function(ResetPasswordExUnknown value)? unknown,
+    TResult? Function(ResetPasswordExExpired value)? expired,
+    TResult? Function(ResetPasswordExDisabled value)? userDisabled,
+    TResult? Function(ResetPasswordExUserNotFound value)? userNotFound,
+    TResult? Function(ResetPasswordExInvalidCode value)? invalidCode,
   }) {
     return unknown?.call(this);
   }
@@ -1185,15 +1167,11 @@ abstract class _$$ResetPasswordExExpiredCopyWith<$Res> {
 
 /// @nodoc
 class __$$ResetPasswordExExpiredCopyWithImpl<$Res>
-    extends _$ResetPasswordExceptionCopyWithImpl<$Res>
+    extends _$ResetPasswordExceptionCopyWithImpl<$Res, _$ResetPasswordExExpired>
     implements _$$ResetPasswordExExpiredCopyWith<$Res> {
   __$$ResetPasswordExExpiredCopyWithImpl(_$ResetPasswordExExpired _value,
       $Res Function(_$ResetPasswordExExpired) _then)
-      : super(_value, (v) => _then(v as _$ResetPasswordExExpired));
-
-  @override
-  _$ResetPasswordExExpired get _value =>
-      super._value as _$ResetPasswordExExpired;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -1230,11 +1208,11 @@ class _$ResetPasswordExExpired implements ResetPasswordExExpired {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? unknown,
-    TResult Function()? expired,
-    TResult Function()? userDisabled,
-    TResult Function()? userNotFound,
-    TResult Function()? invalidCode,
+    TResult? Function()? unknown,
+    TResult? Function()? expired,
+    TResult? Function()? userDisabled,
+    TResult? Function()? userNotFound,
+    TResult? Function()? invalidCode,
   }) {
     return expired?.call();
   }
@@ -1270,11 +1248,11 @@ class _$ResetPasswordExExpired implements ResetPasswordExExpired {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ResetPasswordExUnknown value)? unknown,
-    TResult Function(ResetPasswordExExpired value)? expired,
-    TResult Function(ResetPasswordExDisabled value)? userDisabled,
-    TResult Function(ResetPasswordExUserNotFound value)? userNotFound,
-    TResult Function(ResetPasswordExInvalidCode value)? invalidCode,
+    TResult? Function(ResetPasswordExUnknown value)? unknown,
+    TResult? Function(ResetPasswordExExpired value)? expired,
+    TResult? Function(ResetPasswordExDisabled value)? userDisabled,
+    TResult? Function(ResetPasswordExUserNotFound value)? userNotFound,
+    TResult? Function(ResetPasswordExInvalidCode value)? invalidCode,
   }) {
     return expired?.call(this);
   }
@@ -1309,15 +1287,12 @@ abstract class _$$ResetPasswordExDisabledCopyWith<$Res> {
 
 /// @nodoc
 class __$$ResetPasswordExDisabledCopyWithImpl<$Res>
-    extends _$ResetPasswordExceptionCopyWithImpl<$Res>
+    extends _$ResetPasswordExceptionCopyWithImpl<$Res,
+        _$ResetPasswordExDisabled>
     implements _$$ResetPasswordExDisabledCopyWith<$Res> {
   __$$ResetPasswordExDisabledCopyWithImpl(_$ResetPasswordExDisabled _value,
       $Res Function(_$ResetPasswordExDisabled) _then)
-      : super(_value, (v) => _then(v as _$ResetPasswordExDisabled));
-
-  @override
-  _$ResetPasswordExDisabled get _value =>
-      super._value as _$ResetPasswordExDisabled;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -1355,11 +1330,11 @@ class _$ResetPasswordExDisabled implements ResetPasswordExDisabled {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? unknown,
-    TResult Function()? expired,
-    TResult Function()? userDisabled,
-    TResult Function()? userNotFound,
-    TResult Function()? invalidCode,
+    TResult? Function()? unknown,
+    TResult? Function()? expired,
+    TResult? Function()? userDisabled,
+    TResult? Function()? userNotFound,
+    TResult? Function()? invalidCode,
   }) {
     return userDisabled?.call();
   }
@@ -1395,11 +1370,11 @@ class _$ResetPasswordExDisabled implements ResetPasswordExDisabled {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ResetPasswordExUnknown value)? unknown,
-    TResult Function(ResetPasswordExExpired value)? expired,
-    TResult Function(ResetPasswordExDisabled value)? userDisabled,
-    TResult Function(ResetPasswordExUserNotFound value)? userNotFound,
-    TResult Function(ResetPasswordExInvalidCode value)? invalidCode,
+    TResult? Function(ResetPasswordExUnknown value)? unknown,
+    TResult? Function(ResetPasswordExExpired value)? expired,
+    TResult? Function(ResetPasswordExDisabled value)? userDisabled,
+    TResult? Function(ResetPasswordExUserNotFound value)? userNotFound,
+    TResult? Function(ResetPasswordExInvalidCode value)? invalidCode,
   }) {
     return userDisabled?.call(this);
   }
@@ -1435,16 +1410,13 @@ abstract class _$$ResetPasswordExUserNotFoundCopyWith<$Res> {
 
 /// @nodoc
 class __$$ResetPasswordExUserNotFoundCopyWithImpl<$Res>
-    extends _$ResetPasswordExceptionCopyWithImpl<$Res>
+    extends _$ResetPasswordExceptionCopyWithImpl<$Res,
+        _$ResetPasswordExUserNotFound>
     implements _$$ResetPasswordExUserNotFoundCopyWith<$Res> {
   __$$ResetPasswordExUserNotFoundCopyWithImpl(
       _$ResetPasswordExUserNotFound _value,
       $Res Function(_$ResetPasswordExUserNotFound) _then)
-      : super(_value, (v) => _then(v as _$ResetPasswordExUserNotFound));
-
-  @override
-  _$ResetPasswordExUserNotFound get _value =>
-      super._value as _$ResetPasswordExUserNotFound;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -1482,11 +1454,11 @@ class _$ResetPasswordExUserNotFound implements ResetPasswordExUserNotFound {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? unknown,
-    TResult Function()? expired,
-    TResult Function()? userDisabled,
-    TResult Function()? userNotFound,
-    TResult Function()? invalidCode,
+    TResult? Function()? unknown,
+    TResult? Function()? expired,
+    TResult? Function()? userDisabled,
+    TResult? Function()? userNotFound,
+    TResult? Function()? invalidCode,
   }) {
     return userNotFound?.call();
   }
@@ -1522,11 +1494,11 @@ class _$ResetPasswordExUserNotFound implements ResetPasswordExUserNotFound {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ResetPasswordExUnknown value)? unknown,
-    TResult Function(ResetPasswordExExpired value)? expired,
-    TResult Function(ResetPasswordExDisabled value)? userDisabled,
-    TResult Function(ResetPasswordExUserNotFound value)? userNotFound,
-    TResult Function(ResetPasswordExInvalidCode value)? invalidCode,
+    TResult? Function(ResetPasswordExUnknown value)? unknown,
+    TResult? Function(ResetPasswordExExpired value)? expired,
+    TResult? Function(ResetPasswordExDisabled value)? userDisabled,
+    TResult? Function(ResetPasswordExUserNotFound value)? userNotFound,
+    TResult? Function(ResetPasswordExInvalidCode value)? invalidCode,
   }) {
     return userNotFound?.call(this);
   }
@@ -1562,16 +1534,13 @@ abstract class _$$ResetPasswordExInvalidCodeCopyWith<$Res> {
 
 /// @nodoc
 class __$$ResetPasswordExInvalidCodeCopyWithImpl<$Res>
-    extends _$ResetPasswordExceptionCopyWithImpl<$Res>
+    extends _$ResetPasswordExceptionCopyWithImpl<$Res,
+        _$ResetPasswordExInvalidCode>
     implements _$$ResetPasswordExInvalidCodeCopyWith<$Res> {
   __$$ResetPasswordExInvalidCodeCopyWithImpl(
       _$ResetPasswordExInvalidCode _value,
       $Res Function(_$ResetPasswordExInvalidCode) _then)
-      : super(_value, (v) => _then(v as _$ResetPasswordExInvalidCode));
-
-  @override
-  _$ResetPasswordExInvalidCode get _value =>
-      super._value as _$ResetPasswordExInvalidCode;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -1609,11 +1578,11 @@ class _$ResetPasswordExInvalidCode implements ResetPasswordExInvalidCode {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? unknown,
-    TResult Function()? expired,
-    TResult Function()? userDisabled,
-    TResult Function()? userNotFound,
-    TResult Function()? invalidCode,
+    TResult? Function()? unknown,
+    TResult? Function()? expired,
+    TResult? Function()? userDisabled,
+    TResult? Function()? userNotFound,
+    TResult? Function()? invalidCode,
   }) {
     return invalidCode?.call();
   }
@@ -1649,11 +1618,11 @@ class _$ResetPasswordExInvalidCode implements ResetPasswordExInvalidCode {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ResetPasswordExUnknown value)? unknown,
-    TResult Function(ResetPasswordExExpired value)? expired,
-    TResult Function(ResetPasswordExDisabled value)? userDisabled,
-    TResult Function(ResetPasswordExUserNotFound value)? userNotFound,
-    TResult Function(ResetPasswordExInvalidCode value)? invalidCode,
+    TResult? Function(ResetPasswordExUnknown value)? unknown,
+    TResult? Function(ResetPasswordExExpired value)? expired,
+    TResult? Function(ResetPasswordExDisabled value)? userDisabled,
+    TResult? Function(ResetPasswordExUserNotFound value)? userNotFound,
+    TResult? Function(ResetPasswordExInvalidCode value)? invalidCode,
   }) {
     return invalidCode?.call(this);
   }

@@ -60,7 +60,8 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
   Widget build(BuildContext context) {
     final eventState = ref.watch(eventProvider(ids));
     final usersState = ref.watch(eventUsersStreamProvider(ids));
-    final subEvent = ids.subEventId == null ? null : ref.watch(subEventProvider(ids)).value;
+    final subEvent =
+        ids.subEventId == null ? null : ref.watch(subEventProvider(ids)).value;
     // final role = ref.watch(userRoleProvider(widget.providerId));
     // final isOwner = role == UserRole.admin;
     final hasData = usersState is AsyncData;
@@ -76,7 +77,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
             CMICard(
               child: Column(
                 children: [
-                  Text('Genere'),
+                  const Text('Genere'),
                   SizedBox(
                     height: 250,
                     child: Row(
@@ -122,12 +123,13 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 // const Text('M'),
-                                Icon(
+                                const Icon(
                                   Icons.male,
                                   color: Colors.blue,
                                 ),
                                 const SizedBox(width: 8),
-                                Text(subEvent?.genderCount?.male.toString() ?? '-')
+                                Text(subEvent?.genderCount?.male.toString() ??
+                                    '-')
                               ],
                             ),
                             const SizedBox(height: 8),
@@ -135,23 +137,12 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 // const Text('F'),
-                                Icon(
+                                const Icon(
                                   Icons.female,
                                   color: Colors.pink,
                                 ),
                                 const SizedBox(width: 8),
-                                Text(
-                                    subEvent?.genderCount?.female.toString() ?? '-'),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                // const Text('?'),
-                                Icon(Icons.not_interested, color: Colors.green),
-                                const SizedBox(width: 8),
-                                Text(subEvent?.genderCount?.notBinary.toString() ??
+                                Text(subEvent?.genderCount?.female.toString() ??
                                     '-'),
                               ],
                             ),
@@ -160,9 +151,24 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 // const Text('?'),
-                                Icon(Icons.not_interested, color: Colors.grey),
+                                const Icon(Icons.not_interested,
+                                    color: Colors.green),
                                 const SizedBox(width: 8),
-                                Text(subEvent?.genderCount?.notAvailable.toString() ??
+                                Text(subEvent?.genderCount?.notBinary
+                                        .toString() ??
+                                    '-'),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                // const Text('?'),
+                                const Icon(Icons.not_interested,
+                                    color: Colors.grey),
+                                const SizedBox(width: 8),
+                                Text(subEvent?.genderCount?.notAvailable
+                                        .toString() ??
                                     '-'),
                               ],
                             ),
@@ -203,14 +209,27 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                                 context.push(UserDetailsScreen.routeName,
                                     extra: user);
                               },
-                              title: Text(anonymous ? user.id : user.fullName),
-                              subtitle: anonymous
-                                  ? null
-                                  : Text(
-                                      user.cf ?? '-',
+                              title: Text(
+                                user.isGroup
+                                    ? user.groupName ?? 'Gruppo'
+                                    : anonymous
+                                        ? user.id
+                                        : user.fullName,
+                              ),
+                              subtitle: user.isGroup
+                                  ? Text(
+                                      '${user.groupCount} persone' ?? '-',
                                       style:
                                           Theme.of(context).textTheme.caption,
-                                    ),
+                                    )
+                                  : anonymous
+                                      ? null
+                                      : Text(
+                                          user.cf ?? '-',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption,
+                                        ),
                               leading: Text('${index + 1}'),
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -245,7 +264,8 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                               //         })
                               //     : null,
                             );
-                          });
+                          },
+                        );
             },
             error: (err, stack) {
               return Center(child: Text(err.toString()));
@@ -402,7 +422,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                 fontWeight: FontWeight.bold,
                 color: const Color(0xffffffff)),
             badgeWidget:
-                CircleAvatar(radius: 20, child: const Icon(Icons.male)),
+                const CircleAvatar(radius: 20, child: Icon(Icons.male)),
             badgePositionPercentageOffset: .98,
           );
         case 1:
@@ -416,7 +436,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                 fontWeight: FontWeight.bold,
                 color: const Color(0xffffffff)),
             badgeWidget:
-                CircleAvatar(radius: 20, child: const Icon(Icons.female)),
+                const CircleAvatar(radius: 20, child: Icon(Icons.female)),
             badgePositionPercentageOffset: .98,
           );
         case 2:
@@ -429,7 +449,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                 fontSize: fontSize,
                 fontWeight: FontWeight.bold,
                 color: const Color(0xffffffff)),
-            badgeWidget: Icon(Icons.female),
+            badgeWidget: const Icon(Icons.female),
             badgePositionPercentageOffset: .98,
           );
         case 3:
@@ -442,7 +462,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                 fontSize: fontSize,
                 fontWeight: FontWeight.bold,
                 color: const Color(0xffffffff)),
-            badgeWidget: Icon(Icons.female),
+            badgeWidget: const Icon(Icons.female),
             badgePositionPercentageOffset: .98,
           );
         default:

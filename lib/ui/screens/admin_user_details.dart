@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../domain/entities/user_card.dart';
 
@@ -17,18 +18,42 @@ class UserDetailsScreen extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
+            if (user.isGroup)
+              UserField(
+                field: 'Nome Gruppo',
+                value: user.groupName,
+              ),
             UserField(
-              field: 'Nome',
-              value: user.name,
+              field: user.isGroup ? 'Nome accompagnatore' : 'Nome',
+              value: user.isGroup ? user.fullName : user.name,
             ),
-            UserField(
-              field: 'Cognome',
-              value: user.surname,
-            ),
+            if (!user.isGroup)
+              UserField(
+                field: 'Cognome',
+                value: user.surname,
+              ),
             UserField(
               field: 'C.F.',
               value: user.cf,
             ),
+            if (user.isGroup) ...[
+              UserField(
+                field: 'N. Componenti',
+                value: user.groupCount?.toString(),
+              ),
+              UserField(
+                field: 'Maschi',
+                value: user.manPercentage != null
+                    ? (user.manPercentage! * 100).toStringAsFixed(0)
+                    : null,
+              ),
+              UserField(
+                field: 'Femmine',
+                value: user.womanPercentage != null
+                    ? (user.womanPercentage! * 100).toStringAsFixed(0)
+                    : null,
+              ),
+            ],
           ],
         ),
       ),

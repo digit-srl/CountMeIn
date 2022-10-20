@@ -46,7 +46,8 @@ mixin _$CMIProviderRequest {
 abstract class $CMIProviderRequestCopyWith<$Res> {
   factory $CMIProviderRequestCopyWith(
           CMIProviderRequest value, $Res Function(CMIProviderRequest) then) =
-      _$CMIProviderRequestCopyWithImpl<$Res>;
+      _$CMIProviderRequestCopyWithImpl<$Res, CMIProviderRequest>;
+  @useResult
   $Res call(
       {String id,
       String adminName,
@@ -64,84 +65,86 @@ abstract class $CMIProviderRequestCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CMIProviderRequestCopyWithImpl<$Res>
+class _$CMIProviderRequestCopyWithImpl<$Res, $Val extends CMIProviderRequest>
     implements $CMIProviderRequestCopyWith<$Res> {
   _$CMIProviderRequestCopyWithImpl(this._value, this._then);
 
-  final CMIProviderRequest _value;
   // ignore: unused_field
-  final $Res Function(CMIProviderRequest) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? adminName = freezed,
-    Object? adminSurname = freezed,
-    Object? adminEmail = freezed,
-    Object? adminCF = freezed,
-    Object? name = freezed,
-    Object? releaseWom = freezed,
-    Object? pIva = freezed,
-    Object? status = freezed,
+    Object? id = null,
+    Object? adminName = null,
+    Object? adminSurname = null,
+    Object? adminEmail = null,
+    Object? adminCF = null,
+    Object? name = null,
+    Object? releaseWom = null,
+    Object? pIva = null,
+    Object? status = null,
     Object? apiKey = freezed,
     Object? aims = freezed,
     Object? domainRequirement = freezed,
-    Object? requestedOn = freezed,
+    Object? requestedOn = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      adminName: adminName == freezed
+      adminName: null == adminName
           ? _value.adminName
           : adminName // ignore: cast_nullable_to_non_nullable
               as String,
-      adminSurname: adminSurname == freezed
+      adminSurname: null == adminSurname
           ? _value.adminSurname
           : adminSurname // ignore: cast_nullable_to_non_nullable
               as String,
-      adminEmail: adminEmail == freezed
+      adminEmail: null == adminEmail
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
-      adminCF: adminCF == freezed
+      adminCF: null == adminCF
           ? _value.adminCF
           : adminCF // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      releaseWom: releaseWom == freezed
+      releaseWom: null == releaseWom
           ? _value.releaseWom
           : releaseWom // ignore: cast_nullable_to_non_nullable
               as bool,
-      pIva: pIva == freezed
+      pIva: null == pIva
           ? _value.pIva
           : pIva // ignore: cast_nullable_to_non_nullable
               as String,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as CMIProviderStatus,
-      apiKey: apiKey == freezed
+      apiKey: freezed == apiKey
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
               as String?,
-      aims: aims == freezed
+      aims: freezed == aims
           ? _value.aims
           : aims // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      domainRequirement: domainRequirement == freezed
+      domainRequirement: freezed == domainRequirement
           ? _value.domainRequirement
           : domainRequirement // ignore: cast_nullable_to_non_nullable
               as String?,
-      requestedOn: requestedOn == freezed
+      requestedOn: null == requestedOn
           ? _value.requestedOn
           : requestedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
-    ));
+    ) as $Val);
   }
 }
 
@@ -152,6 +155,7 @@ abstract class _$$_CMIProviderRequestCopyWith<$Res>
           $Res Function(_$_CMIProviderRequest) then) =
       __$$_CMIProviderRequestCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String adminName,
@@ -170,81 +174,79 @@ abstract class _$$_CMIProviderRequestCopyWith<$Res>
 
 /// @nodoc
 class __$$_CMIProviderRequestCopyWithImpl<$Res>
-    extends _$CMIProviderRequestCopyWithImpl<$Res>
+    extends _$CMIProviderRequestCopyWithImpl<$Res, _$_CMIProviderRequest>
     implements _$$_CMIProviderRequestCopyWith<$Res> {
   __$$_CMIProviderRequestCopyWithImpl(
       _$_CMIProviderRequest _value, $Res Function(_$_CMIProviderRequest) _then)
-      : super(_value, (v) => _then(v as _$_CMIProviderRequest));
+      : super(_value, _then);
 
-  @override
-  _$_CMIProviderRequest get _value => super._value as _$_CMIProviderRequest;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? adminName = freezed,
-    Object? adminSurname = freezed,
-    Object? adminEmail = freezed,
-    Object? adminCF = freezed,
-    Object? name = freezed,
-    Object? releaseWom = freezed,
-    Object? pIva = freezed,
-    Object? status = freezed,
+    Object? id = null,
+    Object? adminName = null,
+    Object? adminSurname = null,
+    Object? adminEmail = null,
+    Object? adminCF = null,
+    Object? name = null,
+    Object? releaseWom = null,
+    Object? pIva = null,
+    Object? status = null,
     Object? apiKey = freezed,
     Object? aims = freezed,
     Object? domainRequirement = freezed,
-    Object? requestedOn = freezed,
+    Object? requestedOn = null,
   }) {
     return _then(_$_CMIProviderRequest(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      adminName: adminName == freezed
+      adminName: null == adminName
           ? _value.adminName
           : adminName // ignore: cast_nullable_to_non_nullable
               as String,
-      adminSurname: adminSurname == freezed
+      adminSurname: null == adminSurname
           ? _value.adminSurname
           : adminSurname // ignore: cast_nullable_to_non_nullable
               as String,
-      adminEmail: adminEmail == freezed
+      adminEmail: null == adminEmail
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
-      adminCF: adminCF == freezed
+      adminCF: null == adminCF
           ? _value.adminCF
           : adminCF // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      releaseWom: releaseWom == freezed
+      releaseWom: null == releaseWom
           ? _value.releaseWom
           : releaseWom // ignore: cast_nullable_to_non_nullable
               as bool,
-      pIva: pIva == freezed
+      pIva: null == pIva
           ? _value.pIva
           : pIva // ignore: cast_nullable_to_non_nullable
               as String,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as CMIProviderStatus,
-      apiKey: apiKey == freezed
+      apiKey: freezed == apiKey
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
               as String?,
-      aims: aims == freezed
+      aims: freezed == aims
           ? _value._aims
           : aims // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      domainRequirement: domainRequirement == freezed
+      domainRequirement: freezed == domainRequirement
           ? _value.domainRequirement
           : domainRequirement // ignore: cast_nullable_to_non_nullable
               as String?,
-      requestedOn: requestedOn == freezed
+      requestedOn: null == requestedOn
           ? _value.requestedOn
           : requestedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -320,46 +322,48 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CMIProviderRequest &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.adminName, adminName) &&
-            const DeepCollectionEquality()
-                .equals(other.adminSurname, adminSurname) &&
-            const DeepCollectionEquality()
-                .equals(other.adminEmail, adminEmail) &&
-            const DeepCollectionEquality().equals(other.adminCF, adminCF) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.releaseWom, releaseWom) &&
-            const DeepCollectionEquality().equals(other.pIva, pIva) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.apiKey, apiKey) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.adminName, adminName) ||
+                other.adminName == adminName) &&
+            (identical(other.adminSurname, adminSurname) ||
+                other.adminSurname == adminSurname) &&
+            (identical(other.adminEmail, adminEmail) ||
+                other.adminEmail == adminEmail) &&
+            (identical(other.adminCF, adminCF) || other.adminCF == adminCF) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.releaseWom, releaseWom) ||
+                other.releaseWom == releaseWom) &&
+            (identical(other.pIva, pIva) || other.pIva == pIva) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.apiKey, apiKey) || other.apiKey == apiKey) &&
             const DeepCollectionEquality().equals(other._aims, _aims) &&
-            const DeepCollectionEquality()
-                .equals(other.domainRequirement, domainRequirement) &&
-            const DeepCollectionEquality()
-                .equals(other.requestedOn, requestedOn));
+            (identical(other.domainRequirement, domainRequirement) ||
+                other.domainRequirement == domainRequirement) &&
+            (identical(other.requestedOn, requestedOn) ||
+                other.requestedOn == requestedOn));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(adminName),
-      const DeepCollectionEquality().hash(adminSurname),
-      const DeepCollectionEquality().hash(adminEmail),
-      const DeepCollectionEquality().hash(adminCF),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(releaseWom),
-      const DeepCollectionEquality().hash(pIva),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(apiKey),
+      id,
+      adminName,
+      adminSurname,
+      adminEmail,
+      adminCF,
+      name,
+      releaseWom,
+      pIva,
+      status,
+      apiKey,
       const DeepCollectionEquality().hash(_aims),
-      const DeepCollectionEquality().hash(domainRequirement),
-      const DeepCollectionEquality().hash(requestedOn));
+      domainRequirement,
+      requestedOn);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CMIProviderRequestCopyWith<_$_CMIProviderRequest> get copyWith =>
       __$$_CMIProviderRequestCopyWithImpl<_$_CMIProviderRequest>(
           this, _$identity);

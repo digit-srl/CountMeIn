@@ -37,7 +37,8 @@ mixin _$UserQrCode {
 abstract class $UserQrCodeCopyWith<$Res> {
   factory $UserQrCodeCopyWith(
           UserQrCode value, $Res Function(UserQrCode) then) =
-      _$UserQrCodeCopyWithImpl<$Res>;
+      _$UserQrCodeCopyWithImpl<$Res, UserQrCode>;
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -48,48 +49,51 @@ abstract class $UserQrCodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserQrCodeCopyWithImpl<$Res> implements $UserQrCodeCopyWith<$Res> {
+class _$UserQrCodeCopyWithImpl<$Res, $Val extends UserQrCode>
+    implements $UserQrCodeCopyWith<$Res> {
   _$UserQrCodeCopyWithImpl(this._value, this._then);
 
-  final UserQrCode _value;
   // ignore: unused_field
-  final $Res Function(UserQrCode) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? surname = freezed,
-    Object? cf = freezed,
-    Object? activityId = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? surname = null,
+    Object? cf = null,
+    Object? activityId = null,
     Object? email = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      surname: surname == freezed
+      surname: null == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String,
-      cf: cf == freezed
+      cf: null == cf
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String,
-      activityId: activityId == freezed
+      activityId: null == activityId
           ? _value.activityId
           : activityId // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -100,6 +104,7 @@ abstract class _$$_UserQrCodeCopyWith<$Res>
           _$_UserQrCode value, $Res Function(_$_UserQrCode) then) =
       __$$_UserQrCodeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -110,46 +115,45 @@ abstract class _$$_UserQrCodeCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_UserQrCodeCopyWithImpl<$Res> extends _$UserQrCodeCopyWithImpl<$Res>
+class __$$_UserQrCodeCopyWithImpl<$Res>
+    extends _$UserQrCodeCopyWithImpl<$Res, _$_UserQrCode>
     implements _$$_UserQrCodeCopyWith<$Res> {
   __$$_UserQrCodeCopyWithImpl(
       _$_UserQrCode _value, $Res Function(_$_UserQrCode) _then)
-      : super(_value, (v) => _then(v as _$_UserQrCode));
+      : super(_value, _then);
 
-  @override
-  _$_UserQrCode get _value => super._value as _$_UserQrCode;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? surname = freezed,
-    Object? cf = freezed,
-    Object? activityId = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? surname = null,
+    Object? cf = null,
+    Object? activityId = null,
     Object? email = freezed,
   }) {
     return _then(_$_UserQrCode(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      surname: surname == freezed
+      surname: null == surname
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String,
-      cf: cf == freezed
+      cf: null == cf
           ? _value.cf
           : cf // ignore: cast_nullable_to_non_nullable
               as String,
-      activityId: activityId == freezed
+      activityId: null == activityId
           ? _value.activityId
           : activityId // ignore: cast_nullable_to_non_nullable
               as String,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -194,28 +198,23 @@ class _$_UserQrCode implements _UserQrCode {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserQrCode &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.surname, surname) &&
-            const DeepCollectionEquality().equals(other.cf, cf) &&
-            const DeepCollectionEquality()
-                .equals(other.activityId, activityId) &&
-            const DeepCollectionEquality().equals(other.email, email));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.surname, surname) || other.surname == surname) &&
+            (identical(other.cf, cf) || other.cf == cf) &&
+            (identical(other.activityId, activityId) ||
+                other.activityId == activityId) &&
+            (identical(other.email, email) || other.email == email));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(surname),
-      const DeepCollectionEquality().hash(cf),
-      const DeepCollectionEquality().hash(activityId),
-      const DeepCollectionEquality().hash(email));
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, surname, cf, activityId, email);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UserQrCodeCopyWith<_$_UserQrCode> get copyWith =>
       __$$_UserQrCodeCopyWithImpl<_$_UserQrCode>(this, _$identity);
 

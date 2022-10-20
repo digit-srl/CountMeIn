@@ -27,6 +27,9 @@ final singleEventProvider = StreamProvider.autoDispose
       } catch (ex, st) {
         print(st);
       }
+    }else{
+      print('Doc not exists');
+      throw Exception('Doc not exists');
     }
   }
 });
@@ -44,7 +47,7 @@ class UserProviderScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cmiProvider =
-        ref.watch(singleEventProvider(providerId)).asData?.value;
+        ref.watch(singleEventProvider(providerId)).value;
     if (cmiProvider == null) {
       return const LoadingWidget();
     }
