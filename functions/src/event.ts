@@ -144,19 +144,23 @@ export const onUserCheckIn = functions
       }
 
       const isGroup = user.isGroup;
+
+      //Incrementiamo il numero degli utenti totali
+      const groupCount = isGroup ? user.groupCount ?? 0 : 1;
+      const eventRef = snap.after.ref.parent.parent;
+      if (eventRef != null) {
+        await db.runTransaction(
+          async (transaction: FirebaseFirestore.Transaction) => {
+            await transaction.update(eventRef, {
+              totalUsers: firestore.FieldValue.increment(groupCount),
+            });
+          }
+        );
+      }
+
+      //Se è un gruppo terminiamo la funzione in quanto i passaggi successivi sono relativi al rilascio dei wom
       if (isGroup) {
         console.log("The user is a group, a group will not receive woms");
-        const groupCount = user.groupCount ?? 0;
-        const eventRef = snap.after.ref.parent.parent;
-        if (eventRef != null) {
-          await db.runTransaction(
-            async (transaction: FirebaseFirestore.Transaction) => {
-              await transaction.update(eventRef, {
-                totalUsers: firestore.FieldValue.increment(groupCount),
-              });
-            }
-          );
-        }
         return;
       }
 
