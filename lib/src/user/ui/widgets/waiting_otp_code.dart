@@ -1,4 +1,5 @@
 import 'package:countmein/domain/entities/user_ids.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/user/application/user_profile_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -87,16 +88,16 @@ class _WaitingOtpCodeState extends ConsumerState<WaitingOtpCode> {
                 )
               ],*/
               onCompleted: (v) {
-                print("Completed");
+                logger.i("Completed");
               },
               // onTap: () {
-              //   print("Pressed");
+              //   logger.i("Pressed");
               // },
               onChanged: (value) {
-                print(value);
+                logger.i(value);
               },
               beforeTextPaste: (text) {
-                print("Allowing to paste $text");
+                logger.i("Allowing to paste $text");
                 //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
                 //but you can show anything you want here, like your pop up saying wrong paste format or etc
                 return true;

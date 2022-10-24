@@ -1,3 +1,4 @@
+import 'package:countmein/my_logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../../cloud.dart';
@@ -11,12 +12,12 @@ class AuthRepository extends IAuthRepository {
     try {
       final userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      print(userCredential.user);
+      logger.i(userCredential.user);
     } on FirebaseAuthException catch (ex) {
       throw SignInException.fromFirebaseException(ex);
     } catch (ex,st) {
-      print(ex);
-      print(st);
+      logger.i(ex);
+      logger.i(st);
       throw UnknownException();
     }
   }
@@ -28,7 +29,7 @@ class AuthRepository extends IAuthRepository {
       /*final authUser = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       if (authUser.user != null && !authUser.user!.emailVerified) {
-        print('user not verififed send email');
+        logger.i('user not verififed send email');
         authUser.user!.sendEmailVerification();
       }
 
@@ -46,7 +47,7 @@ class AuthRepository extends IAuthRepository {
             .doc(authUser.user!.uid)
             .set(authUser.toJson());
       } else {
-        print('user is null from AuthUser');
+        logger.i('user is null from AuthUser');
       }*/
     } on FirebaseAuthException catch (ex) {
       throw SignUpException.fromFirebaseException(ex);
@@ -62,7 +63,7 @@ class AuthRepository extends IAuthRepository {
     } on FirebaseAuthException catch (ex) {
       throw SignInException.fromFirebaseException(ex);
     } catch (ex) {
-      print(ex);
+      logger.i(ex);
       throw UnknownException();
     }
   }

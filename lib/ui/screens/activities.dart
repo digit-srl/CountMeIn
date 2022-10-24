@@ -1,3 +1,4 @@
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/ui/screens/new_event.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
@@ -18,7 +19,7 @@ import 'event_details.dart';
 
 final activitiesStreamProvider =
     StreamProvider.family<List<CMIProvider>, String>((ref, userId) async* {
-  print('get acttivities for userId: $userId');
+  logger.i('get acttivities for userId: $userId');
   final stream = Cloud.providerCollection
       .where('status', isEqualTo: enumToString(CMIProviderStatus.live))
       .where('managers', arrayContains: userId)
@@ -269,7 +270,7 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
       try {
         await Cloud.eventDoc(providerId, eventId).delete();
       } catch (ex) {
-        print(ex);
+        logger.i(ex);
       }
     }
   }

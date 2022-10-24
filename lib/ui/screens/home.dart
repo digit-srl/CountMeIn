@@ -59,7 +59,7 @@ class HomeWebScreen extends StatelessWidget {
                   buffer.writeln('];');
                   file.writeAsString(buffer.toString());
                 } catch (ex) {
-                  print(ex);
+                  logger.i(ex);
                 }
               },
               child: Text('esporta nazioni'),

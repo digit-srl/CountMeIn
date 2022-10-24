@@ -1,5 +1,6 @@
 import 'package:countmein/cloud.dart';
 import 'package:countmein/domain/entities/user_card.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../constants.dart';
@@ -24,7 +25,7 @@ class EmailVerificationNotifier extends StateNotifier<EmailVerificationState> {
 
 /*  Future<void> _init() async {
     try {
-      print('init verification email');
+      logger.i('init verification email');
       final userRef = Cloud.usersCollection(providerId).doc(data.userId);
       final snap = await userRef.get();
       if (!snap.exists) {
@@ -44,8 +45,8 @@ class EmailVerificationNotifier extends StateNotifier<EmailVerificationState> {
         }
       }
     } catch (ex, st) {
-      print(ex);
-      print(st);
+      logger.i(ex);
+      logger.i(st);
       state = EmailVerificationError(ex, st);
     }
   }*/
@@ -66,8 +67,8 @@ class EmailVerificationNotifier extends StateNotifier<EmailVerificationState> {
         state = const EmailVerificationError();
       }
     } catch (ex, st) {
-      print(ex);
-      print(st);
+      logger.i(ex);
+      logger.i(st);
       rethrow;
     }
   }

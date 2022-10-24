@@ -1,13 +1,11 @@
 import 'package:countmein/cloud.dart';
 import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/domain/entities/user_card.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/users_stream.dart';
 import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
-import 'package:countmein/src/auth/application/auth_notifier.dart';
-import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
-import 'package:countmein/ui/screens/admin.dart';
 import 'package:countmein/ui/screens/admin_user_details.dart';
 import 'package:countmein/ui/widgets/loading.dart';
 import 'package:csv/csv.dart';
@@ -218,7 +216,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                               ),
                               subtitle: user.isGroup
                                   ? Text(
-                                      '${user.groupCount} persone' ?? '-',
+                                      '${user.groupCount} persone',
                                       style:
                                           Theme.of(context).textTheme.caption,
                                     )
@@ -392,7 +390,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
       }
       return null;
     } catch (ex) {
-      print(ex);
+      logger.i(ex);
       return null;
     }
   }

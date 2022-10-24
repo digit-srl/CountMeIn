@@ -32,44 +32,46 @@ class AdminDashboardScreen extends ConsumerWidget {
       body: isEmailNotVerified
           ? const EmailNotVerifiedScreen()
           : ListView(
+              padding: const EdgeInsets.all(16),
               children: [
                 const AdminInfoWidget(),
-                if (platformUserRole != UserRole.unknown)
+                if (platformUserRole != UserRole.unknown) ...[
+                  const SizedBox(height: 16),
                   LayoutBuilder(builder: (context, constraints) {
+                    final cr = calculateCrossAxisCount(constraints.maxWidth);
+                    print('${constraints.maxWidth} con ${cr}');
                     return GridView.count(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      padding: const EdgeInsets.all(16),
+                      // padding: const EdgeInsets.all(16),
                       mainAxisSpacing: 16,
                       crossAxisSpacing: 16,
-                      crossAxisCount: childAspectRatio(constraints.maxWidth),
-                      childAspectRatio: 4 / 3,
+                      crossAxisCount: cr,
+                      childAspectRatio: cr == 1 ? 3 : 4 / 3,
                       children: [
                         const ActiveProviders(),
                         if (platformUserRole == PlatformRole.cmi)
                           const PendingProviders(),
-                        QrCodeValidationWidget(),
+                        const QrCodeValidationWidget(),
                       ],
                     );
                   }),
+                ]
               ],
             ),
     );
   }
 }
 
-
 class QrCodeValidationWidget extends ConsumerWidget {
   const QrCodeValidationWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return CMICard(
       onTap: () {
         context.push(QrCodeValidationString.routeName);
-      }
-          ,
+      },
       child: Center(
         child: Text(
           'Valida QrCode',

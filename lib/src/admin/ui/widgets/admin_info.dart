@@ -1,3 +1,4 @@
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
@@ -14,9 +15,9 @@ class AdminInfoWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authUserState = ref.watch(authStateProvider);
     final user = authUserState is Authenticated ? authUserState.user : null;
-    print(user);
+    logger.i(user);
     return CMICard(
-      margin: const EdgeInsets.all(16),
+      // margin: const EdgeInsets.all(16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

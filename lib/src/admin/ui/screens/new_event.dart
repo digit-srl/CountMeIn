@@ -1,3 +1,4 @@
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/common/ui/cmi_date_picker.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_dropdown.dart';
@@ -271,7 +272,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                                   ? selectedFrequency.value.multiplier
                                   : 1));
 
-                          print('days to end: $days');
+                          logger.i('days to end: $days');
                           //TODO
                           final subEventDeadline = endAt;
 

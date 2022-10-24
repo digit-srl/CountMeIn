@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:countmein/constants.dart';
 import 'package:countmein/domain/entities/user_ids.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/confirm_invite.dart';
 import 'package:countmein/src/admin/ui/widgets/info_text.dart';
 import 'package:countmein/src/common/domain/entities/gender.dart';
@@ -133,8 +134,8 @@ class UserProfileDataWidget extends HookConsumerWidget {
                                         width: 300);
                                   }
                                 } catch (ex, st) {
-                                  print(ex);
-                                  print(st);
+                                  logger.i(ex);
+                                  logger.i(st);
                                   rethrow;
                                 }
                               }
@@ -361,8 +362,8 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
                           final manP = roundDouble(manPercentage.value, 2);
                           final womanP =
                               roundDouble(1 - manPercentage.value, 2);
-                          print(manP);
-                          print(womanP);
+                          logger.i(manP);
+                          logger.i(womanP);
                           widget.onSubmit?.call(
                             name,
                             count,

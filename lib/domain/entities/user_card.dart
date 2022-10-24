@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../constants.dart';
@@ -28,8 +29,8 @@ class UserCard with _$UserCard {
   factory UserCard.fromOldQrCode(String code) {
     final split = code.split('%');
 
-    print(split);
-    print(split.length);
+    logger.i(split);
+    logger.i(split.length);
     if (split.length != 7) {
       throw Exception();
     }

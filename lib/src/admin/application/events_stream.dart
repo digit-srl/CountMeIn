@@ -1,4 +1,5 @@
 import 'package:countmein/domain/entities/event_ids.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,14 +17,14 @@ final eventsStreamProvider =
       }).toList();
       yield list;
     } catch (ex, st) {
-      print(ex);
-      print(st);
+      logger.i(ex);
+      logger.i(st);
       yield <CMIEvent>[];
     }
   }*/
 
   await for (final snap in stream) {
-    print('${snap.docs.length} eventi trovati');
+    logger.i('${snap.docs.length} eventi trovati');
     final list = <CMIEvent>[];
     for (int i = 0; i < snap.docs.length; i++) {
       final d = snap.docs[i].data();
@@ -31,8 +32,8 @@ final eventsStreamProvider =
         final s = CMIEvent.fromJson(d);
         list.add(s);
       } catch (ex, st) {
-        print(ex);
-        print(st);
+        logger.i(ex);
+        logger.i(st);
       }
     }
     yield list;
@@ -56,7 +57,7 @@ StreamProvider.family<List<CMISubEvent>, EventIds>((ref, ids) async* {
   final stream = Cloud.eventsCollection(providerId).doc(eventId).collection('subEvents').snapshots();
 
   await for (final snap in stream) {
-    print('${snap.docs.length} eventi trovati');
+    logger.i('${snap.docs.length} eventi trovati');
     final list = <CMISubEvent>[];
     for (int i = 0; i < snap.docs.length; i++) {
       final d = snap.docs[i].data();
@@ -64,8 +65,8 @@ StreamProvider.family<List<CMISubEvent>, EventIds>((ref, ids) async* {
         final s = CMISubEvent.fromJson(d);
         list.add(s);
       } catch (ex, st) {
-        print(ex);
-        print(st);
+        logger.i(ex);
+        logger.i(st);
       }
     }
     yield list;

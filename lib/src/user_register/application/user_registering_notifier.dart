@@ -1,6 +1,7 @@
 import 'package:countmein/constants.dart';
 import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:countmein/domain/entities/user_card.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/confirm_invite.dart';
 import 'package:countmein/src/user/data/dto/user_creation_response.dart';
 import 'package:countmein/src/user/data/dto/user_request.dart';
@@ -49,8 +50,8 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
           );
         }
     } catch (ex, st) {
-      print(ex);
-      print(st);
+      logger.i(ex);
+      logger.i(st);
       state = UserRegisteringError(ex, st);
     }
   }
@@ -67,8 +68,8 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
       final map = Map<String, dynamic>.from(res.data);
       return UserCreationResponse.fromJson(map);
     } catch (ex, st) {
-      print(ex);
-      print(st);
+      logger.i(ex);
+      logger.i(st);
       rethrow;
     }
   }

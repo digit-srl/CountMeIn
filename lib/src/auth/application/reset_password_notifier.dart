@@ -2,6 +2,8 @@ import 'package:countmein/src/auth/application/reset_password_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../my_logger.dart';
+
 final resetPasswordProvider = StateNotifierProvider.family<
     ResetPasswordNotifier, ResetPasswordState, String>((ref, oobCode) {
   return ResetPasswordNotifier(oobCode);
@@ -29,7 +31,7 @@ class ResetPasswordNotifier extends StateNotifier<ResetPasswordState> {
     try {
       final email =
           await FirebaseAuth.instance.verifyPasswordResetCode(oobCode);
-      print('email per il reset: $email');
+      logger.i('email per il reset: $email');
       state = const ResetPasswordData();
     } on FirebaseAuthException catch (ex) {
       handleFirebaseEx(ex);
@@ -54,7 +56,7 @@ class ResetPasswordNotifier extends StateNotifier<ResetPasswordState> {
   ///  - Thrown if the new password is not strong enough.
   confirmNewPassword(String newPassword) async {
     try {
-      print(oobCode);
+      logger.i(oobCode);
       await FirebaseAuth.instance
           .confirmPasswordReset(code: oobCode, newPassword: newPassword);
       state = const ResetPasswordComplete();

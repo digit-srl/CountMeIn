@@ -155,7 +155,7 @@ class AdminNotifier extends StateNotifier<AsyncValue<List<CMIProvider>>> {
           );
         });
     if (answer ?? false) {
-      print('yesss');
+      logger.i('yesss');
       Cloud.eventDoc(activityId, eventId)
           .update({'status': enumToString(SessionsStatus.archived)});
     }

@@ -1,4 +1,5 @@
 import 'package:countmein/domain/entities/cmi_provider.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
@@ -13,6 +14,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../cloud.dart';
 import '../../../../ui/screens/event_details.dart';
 import '../../../../utils.dart';
+import '../widgets/generic_grid_view.dart';
 import '../widgets/info_text.dart';
 import 'managers.dart';
 
@@ -38,8 +40,8 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
     }
     final platformUserRole = ref.watch(authUserRoleProvider);
     final userRole = ref.watch(userRoleProvider(providerId));
-    print('platformUserRole: $platformUserRole');
-    print('userRole: $userRole');
+    logger.i('platformUserRole: $platformUserRole');
+    logger.i('userRole: $userRole');
 
     final eventsState = ref.watch(eventsStreamProvider(providerId));
     return Scaffold(
@@ -140,66 +142,55 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
               ],
             ),
           ),
+           const SizedBox(height: 16),
           if (provider?.status == CMIProviderStatus.live &&
               eventsState is AsyncData<List<CMIEvent>>)
-            LayoutBuilder(builder: (context, constraints) {
-              print(constraints.maxWidth);
-              return GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                itemCount: eventsState.asData!.value.length + 1,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: childAspectRatio(constraints.maxWidth),
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                  childAspectRatio: 4 / 3,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == 0) {
-                    return CMICard(
-                      center: true,
-                      onTap: platformUserRole == PlatformRole.cmi ||
-                              userRole == UserRole.admin
-                          ? () {
-                              if (provider == null) return;
-                              context.push(
-                                '${NewEventFormScreen.routeName}/${provider.id}',
-                              );
-                            }
-                          : null,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.add,
-                            size: 50,
-                          ),
-                          Text(
-                            'Crea nuovo evento',
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                  final p = eventsState.asData!.value[index - 1];
+            GenericGridView(
+              itemCount: eventsState.asData!.value.length + 1,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == 0) {
                   return CMICard(
                     center: true,
-                    onTap: () {
-                      context.pushNamed(
-                        EventDetailsScreen.routeName,
-                        params: {'eventId': p.id, 'providerId': providerId},
-                      );
-                    },
-                    child: Text(
-                      p.name,
-                      style: Theme.of(context).textTheme.subtitle1,
+                    onTap: platformUserRole == PlatformRole.cmi ||
+                            userRole == UserRole.admin
+                        ? () {
+                            if (provider == null) return;
+                            context.push(
+                              '${NewEventFormScreen.routeName}/${provider.id}',
+                            );
+                          }
+                        : null,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.add,
+                          size: 50,
+                        ),
+                        Text(
+                          'Crea nuovo evento',
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                      ],
                     ),
                   );
-                },
-              );
-            })
+                }
+                final p = eventsState.asData!.value[index - 1];
+                return CMICard(
+                  center: true,
+                  onTap: () {
+                    context.pushNamed(
+                      EventDetailsScreen.routeName,
+                      params: {'eventId': p.id, 'providerId': providerId},
+                    );
+                  },
+                  child: Text(
+                    p.name,
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                );
+              },
+            ),
         ],
       ),
     );

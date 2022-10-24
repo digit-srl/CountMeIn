@@ -1,3 +1,4 @@
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/ui/screens/request_activity.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
@@ -41,7 +42,7 @@ class SignInScreen extends HookConsumerWidget {
   final _formKey = GlobalKey<FormState>();
 
   _signIn(String email, String password, WidgetRef ref) async {
-    print('$email, $password');
+    logger.i('$email, $password');
     try {
       final result = await ref
           .read(signInNotifierProvider.notifier)
@@ -52,7 +53,7 @@ class SignInScreen extends HookConsumerWidget {
       //   ref.read(goRouterProvider).pop();
       // }
     } on SignInException catch (ex) {
-      print(ex);
+      logger.i(ex);
     }
   }
 
@@ -157,7 +158,7 @@ class SignInScreen extends HookConsumerWidget {
                     //         targetString: 'qui',
                     //         recognizer: TapGestureRecognizer()
                     //           ..onTap = () {
-                    //             print('password dimenticata');
+                    //             logger.i('password dimenticata');
                     //           },
                     //         style: Theme.of(context)
                     //             .textTheme

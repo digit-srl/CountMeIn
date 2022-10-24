@@ -1,15 +1,13 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:countmein/cloud.dart';
 import 'package:countmein/domain/entities/cmi_provider.dart';
-import 'package:countmein/ui/screens/user_register_form.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:countmein/my_logger.dart';
 import '../../../src/common/mu_styles.dart';
 import 'package:dart_wom_connector/dart_wom_connector.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -311,7 +309,7 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
       });
       return true;
     } catch (ex) {
-      print(ex);
+      logger.i(ex);
       return false;
     }
   }
@@ -426,7 +424,7 @@ class _WomIntegrationPanelState extends ConsumerState<WomIntegrationPanel> {
                   //     'D1GIT!',
                   //     'dev.wom.social');
                   loading.value = false;
-                  print(instrument);
+                  logger.i(instrument);
                   setState(() {
                     instrumentUser.value = instrument;
                   });

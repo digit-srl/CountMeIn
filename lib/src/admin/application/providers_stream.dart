@@ -1,3 +1,4 @@
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
@@ -12,7 +13,7 @@ final pendingProvidersStreamProvider =
       Cloud.providerRequests.where('status', isEqualTo: 'pending').snapshots();
 
   await for (final snap in stream) {
-    print('${snap.docs.length} providers trovati');
+    logger.i('${snap.docs.length} providers trovati');
     final list = <CMIProvider>[];
     for (int i = 0; i < snap.docs.length; i++) {
       final d = snap.docs[i].data();
@@ -20,26 +21,13 @@ final pendingProvidersStreamProvider =
         final s = CMIProvider.fromJson(d);
         list.add(s);
       } catch (ex, st) {
-        print(ex);
-        print(st);
+        logger.w(d);
+        logger.e(ex);
+        logger.e(st);
       }
     }
     yield list;
   }
-
-  /*await for (final snap in stream) {
-    try {
-      final list = snap.docs.map((doc) {
-        final s = CMIProvider.fromJson(doc.data());
-        return s;
-      }).toList();
-      yield list;
-    } catch (ex, st) {
-      print(ex);
-      print(st);
-      yield <CMIProvider>[];
-    }
-  }*/
 });
 
 final activeProvidersStreamProvider =
@@ -56,7 +44,7 @@ final activeProvidersStreamProvider =
     final stream = query.snapshots();
 
     await for (final snap in stream) {
-      print('${snap.docs.length} providers trovati');
+      logger.i('${snap.docs.length} providers trovati');
       final list = <CMIProvider>[];
       for (int i = 0; i < snap.docs.length; i++) {
         final d = snap.docs[i].data();
@@ -64,14 +52,15 @@ final activeProvidersStreamProvider =
           final s = CMIProvider.fromJson(d);
           list.add(s);
         } catch (ex, st) {
-          print(ex);
-          print(st);
+          logger.w(d);
+          logger.e(ex);
+          logger.e(st);
         }
       }
       yield list;
     }
   } else {
-    print('user is not authenticated');
+    logger.i('user is not authenticated');
     yield <CMIProvider>[];
   }
 });

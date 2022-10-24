@@ -1,5 +1,6 @@
 import 'package:countmein/constants.dart';
 import 'package:countmein/domain/entities/user_ids.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/confirm_invite.dart';
 import 'package:countmein/src/user/application/user_card_recovering_state.dart';
 import 'package:dio/dio.dart';
@@ -40,7 +41,7 @@ class UserCardRecoveringNotifier
       }
     }catch(ex,st){
       state = UserCardRecoveringError(st: st);
-      print(st);
+      logger.i(st);
     }
   }
 
@@ -67,12 +68,12 @@ class UserCardRecoveringNotifier
         state = const UserCardRecoveringError();
       }
     } on DioError catch (ex, st) {
-      print(ex);
-      print(st);
+      logger.i(ex);
+      logger.i(st);
       state = UserCardRecoveringError(error: ex, st: st);
     } catch (ex, st) {
-      print(ex);
-      print(st);
+      logger.i(ex);
+      logger.i(st);
       state = UserCardRecoveringError(error: ex, st: st);
     }
   }

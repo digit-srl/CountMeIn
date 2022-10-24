@@ -1,5 +1,6 @@
 import 'package:countmein/cloud.dart';
 import 'package:countmein/domain/entities/user_ids.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/user/application/user_profile_state.dart';
 import 'package:countmein/src/user/data/dto/user_profile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -63,8 +64,8 @@ class UserProfileNotifier extends StateNotifier<UserProfileState> {
         state = const UserProfileError();
       }
     } catch (ex, st) {
-      print(ex);
-      print(st);
+      logger.i(ex);
+      logger.i(st);
       rethrow;
     }
   }

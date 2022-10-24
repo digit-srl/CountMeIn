@@ -1,4 +1,5 @@
 import 'package:countmein/domain/entities/user_ids.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/confirm_invite_state.dart';
 import 'package:countmein/src/admin/ui/screens/event_users.dart';
 import 'package:countmein/src/admin/ui/screens/managers.dart';
@@ -69,8 +70,8 @@ class RouterNotifier extends ChangeNotifier {
     _ref.listen<AuthState?>(
       authStateProvider,
       (_, currentState) {
-        print('router listing auth state');
-        print(currentState);
+        logger.i('router listing auth state');
+        logger.i(currentState);
         // if (currentState is Authenticated) {
         notifyListeners();
         // }
@@ -82,17 +83,17 @@ class RouterNotifier extends ChangeNotifier {
   /// GoRouter is already aware of state changes through `refreshListenable`
   /// We don't want to trigger a rebuild of the surrounding provider.
   String? _redirectLogic(BuildContext context, GoRouterState state) {
-    print('Name: ${state.name}');
-    print('Path: ${state.path}');
-    print('FullPath: ${state.fullpath}');
-    print('Location: ${state.location}');
-    print('Subloc: ${state.subloc}');
-    print('Params: ${state.params}');
-    print('Query: ${state.queryParams}');
+    logger.i('Name: ${state.name}');
+    logger.i('Path: ${state.path}');
+    logger.i('FullPath: ${state.fullpath}');
+    logger.i('Location: ${state.location}');
+    logger.i('Subloc: ${state.subloc}');
+    logger.i('Params: ${state.params}');
+    logger.i('Query: ${state.queryParams}');
     final isEventRoute = state.subloc.startsWith('/event/');
 
     if (isEventRoute) {
-      print('is event route');
+      logger.i('is event route');
       return state.subloc.replaceFirst('/event', '/provider');
     }
 

@@ -1,5 +1,6 @@
 import 'package:countmein/cloud.dart';
 import 'package:countmein/domain/entities/cmi_provider.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
@@ -25,10 +26,10 @@ final singleEventProvider = StreamProvider.autoDispose
           yield CMIProvider.fromJson(data);
         }
       } catch (ex, st) {
-        print(st);
+        logger.i(st);
       }
     }else{
-      print('Doc not exists');
+      logger.i('Doc not exists');
       throw Exception('Doc not exists');
     }
   }

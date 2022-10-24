@@ -23,7 +23,10 @@ class AdminProvidersScreen extends ConsumerWidget {
     return Scaffold(
       appBar: const AdminAppBar(title: 'Providers',),
       body: state.when(
-        data: (providers) => GridProvidersWidget(providers: providers),
+        data: (providers) => Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: GridProvidersWidget(providers: providers),
+        ),
         error: (err, st) => ErrorScreen(
           exception: err,
         ),

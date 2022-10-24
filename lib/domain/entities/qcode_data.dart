@@ -1,3 +1,4 @@
+import 'package:countmein/my_logger.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../utils.dart';
@@ -35,7 +36,7 @@ class QrCodeData with _$QrCodeData {
           throw Exception();
         }
 
-        print(uri.pathSegments);
+        logger.i(uri.pathSegments);
         if (uri.pathSegments.length != 2 || uri.pathSegments[0] != 'profile') {
           throw Exception();
         }

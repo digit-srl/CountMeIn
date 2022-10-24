@@ -11,6 +11,7 @@ import 'package:countmein/ui/screens/scan.dart';
 
 import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/event_ids.dart';
+import '../../src/admin/ui/widgets/generic_grid_view.dart';
 import '../../utils.dart';
 import 'admin.dart';
 
@@ -158,16 +159,12 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
               ],
             ),
           ),
-          LayoutBuilder(builder: (context, constraints) {
-            return GridView.count(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: childAspectRatio(constraints.maxWidth),
-              mainAxisSpacing: 8,
-              crossAxisSpacing: 8,
-              childAspectRatio: 2,
-              children: [
-                CMICard(
+          const SizedBox(height: 16),
+          GenericGridView(
+            itemCount: subEvents.length + 1,
+            itemBuilder: (c, index) {
+              if (index == 0) {
+                return CMICard(
                   center: true,
                   onTap: () {
                     context.pushNamed(
@@ -182,30 +179,45 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                     'Utenti unici',
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
-                ),
-                for (int i = 0; i < subEvents.length; i++)
-                  CMICard(
-                    center: true,
-                    onTap: () {
-                      context.pushNamed(
-                        EventUsersScreen.routeName,
-                        queryParams: {
-                          'subEventId': subEvents[i].id,
-                        },
-                        params: {
-                          'eventId': widget.eventId,
-                          'providerId': widget.providerId,
-                        },
-                      );
+                );
+              }
+              final subEvent = subEvents[index - 1];
+              return CMICard(
+                center: true,
+                onTap: () {
+                  context.pushNamed(
+                    EventUsersScreen.routeName,
+                    queryParams: {
+                      'subEventId': subEvent.id,
                     },
-                    child: Text(
-                      subEvents[i].id,
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                  ),
+                    params: {
+                      'eventId': widget.eventId,
+                      'providerId': widget.providerId,
+                    },
+                  );
+                },
+                child: Text(
+                  subEvent.id,
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+              );
+            },
+          ),
+          /*LayoutBuilder(builder: (context, constraints) {
+            return GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: calculateCrossAxisCount(constraints.maxWidth),
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              childAspectRatio: 2,
+              children: [
+
+                for (int i = 0; i < subEvents.length; i++)
+
               ],
             );
-          }),
+          }),*/
         ],
       ),
     );

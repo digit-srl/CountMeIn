@@ -1,4 +1,5 @@
 import 'package:countmein/domain/entities/cmi_provider.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
@@ -32,8 +33,8 @@ final pendingInviteStreamProvider =
       }).toList();
       yield list;
     } catch (ex, st) {
-      print(ex);
-      print(st);
+      logger.i(ex);
+      logger.i(st);
       yield <PendingProviderManager>[];
     }
   }
@@ -183,7 +184,7 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                       nameController.clear();
                                       emailController.clear();
                                     } catch (ex) {
-                                      print(ex);
+                                      logger.i(ex);
                                     }
                                   }
                                 },

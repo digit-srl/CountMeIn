@@ -1,3 +1,4 @@
+import 'package:countmein/my_logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -57,7 +58,7 @@ final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
               }
             },
             error: (err, stack) async* {
-              print(stack);
+              logger.i(stack);
               yield AuthError(err, stack);
             },
             loading: () async* {
@@ -197,7 +198,7 @@ class SignInNotifier extends StateNotifier<bool> {
       state = false;
       return true;
     } on SignInException catch (ex) {
-      print(ex);
+      logger.i(ex);
       state = false;
       return false;
     }
@@ -217,7 +218,7 @@ class SignInNotifier extends StateNotifier<bool> {
       state = false;
       return true;
     } on SignInException catch (ex) {
-      print(ex);
+      logger.i(ex);
       state = false;
       return false;
     }
@@ -241,7 +242,7 @@ class SignUpNotifier extends StateNotifier<bool> {
       await ref.read(authRepositoryProvider).signUp(name, surname, email, password);
       return true;
     } on SignUpException catch (ex) {
-      print(ex);
+      logger.i(ex);
       ref.read(signUpErrorProvider.notifier).state = ex;
       state = false;
       return false;

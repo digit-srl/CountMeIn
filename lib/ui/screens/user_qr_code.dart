@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:countmein/my_logger.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -163,7 +164,7 @@ class _UserCardDialogState extends State<UserCardDialog> {
                     fileName: 'my_card_2.png',
                     bytes: bytes,
                   );
-                 print(path);
+                 logger.i(path);
 
                 js.context.callMethod("webSaveAs", [
                   html.Blob([bytes]),
@@ -189,7 +190,7 @@ class _UserCardDialogState extends State<UserCardDialog> {
       Uint8List? pngBytes = byteData?.buffer.asUint8List();
       return pngBytes;
     } catch (e) {
-      debugPrint("$e");
+      logger.e("$e");
       return null;
     }
   }

@@ -1,3 +1,4 @@
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -78,11 +79,11 @@ class ConfirmInviteNotifier extends StateNotifier<ConfirmInviteState> {
       final map = Map.from(res.data);
       final status =
       enumFromString(map['status'], ConfirmInviteResponseStatus.values);
-      print(status);
+      logger.i(status);
       state = ConfirmResponse(status);
     } catch (ex, st) {
-      print(ex);
-      print(st);
+      logger.i(ex);
+      logger.i(st);
       state = ConfirmInviteError(ex, st);
     }
   }

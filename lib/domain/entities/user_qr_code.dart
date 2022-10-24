@@ -1,4 +1,5 @@
 import 'package:countmein/domain/entities/user_card.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../constants.dart';
@@ -26,8 +27,8 @@ class UserQrCode with _$UserQrCode {
     if (code.startsWith(qrCodePrefix) && code.endsWith(qrCodePrefix)) {
       final split = code.split('%');
 
-      print(split);
-      print(split.length);
+      logger.i(split);
+      logger.i(split.length);
       final userId = split[1];
       final name = split[2];
       final surname = split[3];
@@ -49,7 +50,7 @@ class UserQrCode with _$UserQrCode {
         throw Exception();
       }
 
-      print(uri.pathSegments);
+      logger.i(uri.pathSegments);
       if (uri.pathSegments.length != 2 || uri.pathSegments[0] != 'profile') {
         throw Exception();
       }
