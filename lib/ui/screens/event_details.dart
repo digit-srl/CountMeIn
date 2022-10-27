@@ -1,19 +1,33 @@
+import 'package:countmein/cloud.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
+import 'package:countmein/src/admin/application/scan_notifier.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/admin/ui/screens/event_users.dart';
 import 'package:countmein/src/admin/ui/widgets/info_text.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
+import 'package:countmein/ui/widgets/my_text_field.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:countmein/ui/screens/scan.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/event_ids.dart';
 import '../../src/admin/ui/widgets/generic_grid_view.dart';
 import '../../utils.dart';
 import 'admin.dart';
+import 'package:intl/intl.dart';
+
+extension DateTimeX on DateTime {
+  bool get isToday {
+    final now = DateTime.now();
+    return now.year == year && now.month == month && now.day == day;
+  }
+}
 
 class EventDetailsScreen extends ConsumerStatefulWidget {
   static const String routeName = '/eventDetails';
@@ -34,6 +48,8 @@ class EventDetailsScreen extends ConsumerStatefulWidget {
 class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
   late EventIds ids;
 
+  static final formatter = DateFormat('EEEE,d MMMM, yyyy', 'it_IT');
+
   @override
   void initState() {
     super.initState();
@@ -45,36 +61,37 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
     var scanMode = ScanMode.checkOut;
     if (event.accessType == EventAccessType.inOut) {
       final sMode = await showDialog(
-          context: context,
-          builder: (c) {
-            return Dialog(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(height: 8),
-                    Text('Scegli il tipo di scansione',
-                        style: Theme.of(context).textTheme.headline6),
-                    CMICard(
-                      onTap: () {
-                        Navigator.of(c).pop(ScanMode.checkIn);
-                      },
-                      margin: const EdgeInsets.all(16),
-                      child: Text('CheckIn'),
-                    ),
-                    CMICard(
-                      onTap: () {
-                        Navigator.of(c).pop(ScanMode.checkOut);
-                      },
-                      margin: const EdgeInsets.all(16),
-                      child: Text('CheckOut'),
-                    ),
-                  ],
-                ),
+        context: context,
+        builder: (c) {
+          return Dialog(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 8),
+                  Text('Scegli il tipo di scansione',
+                      style: Theme.of(context).textTheme.headline6),
+                  CMICard(
+                    onTap: () {
+                      Navigator.of(c).pop(ScanMode.checkIn);
+                    },
+                    margin: const EdgeInsets.all(16),
+                    child: Text('CheckIn'),
+                  ),
+                  CMICard(
+                    onTap: () {
+                      Navigator.of(c).pop(ScanMode.checkOut);
+                    },
+                    margin: const EdgeInsets.all(16),
+                    child: Text('CheckOut'),
+                  ),
+                ],
               ),
-            );
-          });
+            ),
+          );
+        },
+      );
       if (sMode == null) return;
       scanMode = sMode;
     }
@@ -106,6 +123,23 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
       appBar: AppBar(
         title: Text(eventState.asData?.value.name ?? ''),
         actions: [
+          if (kDebugMode && provider != null && eventData != null)
+            IconButton(
+              icon: const Icon(Icons.qr_code_scanner),
+              onPressed: () async {
+                await showDialog(
+                  context: context,
+                  builder: (c) {
+                    return Dialog(
+                      child: ScanSimulationWidget(
+                        event: eventData,
+                        provider: provider,
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           if (eventData != null &&
               eventData.status == EventStatus.live &&
               provider != null) ...[
@@ -121,7 +155,12 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
         padding: const EdgeInsets.all(16),
         children: [
           CMICard(
+            collapsedWidget: InfoText(
+              label: 'Nome Evento',
+              value: eventData?.name,
+            ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 InfoText(
                   label: 'Nome Evento',
@@ -136,25 +175,56 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                   label: 'WOM',
                   value: eventData?.maxWomCount.toString(),
                 ),
-                InfoText(
-                    label: 'Anonimo', value: eventData?.anonymous.toString()),
-                InfoText(
-                  label: 'Tipo',
-                  value: (eventData?.recurring ?? false)
-                      ? 'Ricorrente (${eventData!.recurrence})'
-                      : 'Singolo',
+                Row(
+                  children: [
+                    Flexible(
+                      child: InfoText(
+                          label: 'Anonimo',
+                          value: eventData?.anonymous.toString()),
+                    ),
+                    Flexible(
+                      child: InfoText(
+                        label: 'Accetta passpartout',
+                        value: eventData?.acceptPassepartout.toString(),
+                      ),
+                    ),
+                  ],
                 ),
-                InfoText(
-                  label: 'Accesso',
-                  value: enumToString(eventData?.accessType),
+                Row(
+                  children: [
+                    Flexible(
+                      child: InfoText(
+                        label: 'Ricorrenza',
+                        value: (eventData?.recurring ?? false)
+                            ? 'Giornaliera x${eventData!.recurrence})'
+                            : 'Singola',
+                      ),
+                    ),
+                    Flexible(
+                      child: InfoText(
+                        label: 'Accesso',
+                        value: eventData?.accessType.text,
+                      ),
+                    ),
+                  ],
                 ),
                 InfoText(
                   label: 'Stato',
-                  value: enumToString(eventData?.status),
+                  value: eventData?.status?.text,
                 ),
-                InfoText(
-                  label: 'Accetta passpartout',
-                  value: eventData?.acceptPassepartout.toString(),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: ElevatedButton(
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    onPressed: () async {
+                      final n = Navigator.of(context);
+                      await Cloud.eventDoc(widget.providerId, widget.eventId)
+                          .delete();
+                      n.pop();
+                    },
+                    child: Text('Elimina'),
+                  ),
                 ),
               ],
             ),
@@ -184,6 +254,12 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
               final subEvent = subEvents[index - 1];
               return CMICard(
                 center: true,
+                flag: subEvent.startAt.isToday
+                    ? Chip(
+                        backgroundColor: Colors.green,
+                        label: Text('ATTIVO'),
+                      )
+                    : null,
                 onTap: () {
                   context.pushNamed(
                     EventUsersScreen.routeName,
@@ -196,9 +272,20 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                     },
                   );
                 },
-                child: Text(
-                  subEvent.id,
-                  style: Theme.of(context).textTheme.subtitle1,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      // subEvent.id,
+                      formatter.format(subEvent.startAt),
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    Text(
+                      // subEvent.id,
+                      '${subEvent.totalUsers} utenti',
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                  ],
                 ),
               );
             },
@@ -218,6 +305,73 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
               ],
             );
           }),*/
+        ],
+      ),
+    );
+  }
+}
+
+class ScanSimulationWidget extends HookConsumerWidget {
+  final CMIEvent event;
+  final CMIProvider provider;
+
+  const ScanSimulationWidget({
+    Key? key,
+    required this.event,
+    required this.provider,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final dataController = useTextEditingController();
+    final scanMode = useState(ScanMode.checkOut);
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('Prova la scansione',
+              style: Theme.of(context).textTheme.headline6),
+          CMITextField(
+            controller: dataController,
+            hintText: 'Qr Code data',
+          ),
+          const SizedBox(height: 8),
+          Text('Scegli il tipo di scansione',
+              style: Theme.of(context).textTheme.headline6),
+           const SizedBox(height: 16),
+          ToggleButtons(
+            children: [
+              Icon(
+                Icons.arrow_downward,
+                color: Colors.green,
+              ),
+              Icon(
+                Icons.arrow_upward,
+                color: Colors.red,
+              )
+            ],
+            isSelected:
+                ScanMode.values.map((e) => e == scanMode.value).toList(),
+            onPressed: event.accessType == EventAccessType.inOut
+                ? (index) {
+                    scanMode.value = ScanMode.values[index];
+                  }
+                : null,
+          ),
+           const SizedBox(height: 16),
+          ElevatedButton(
+              onPressed: () {
+// https://cmi.digit.srl/profile/27KEQsVlgbHsNONPSP5V?name=Gian Marco&surname=Di Francesco&cf=DFRGMR89M02I348U&pId=countmein&gId=g2f90soy5Xf1tvX3xrsW&gN=GRUPPO JANMARC&gC=6&aA=12
+                ref.read(scanControllerProvider(event.id)).processScan(
+                      dataController.text.trim(),
+                      provider,
+                      event,
+                      scanMode.value,
+                      null,
+                    );
+              },
+              child: Text('Try'))
         ],
       ),
     );

@@ -29,6 +29,7 @@ mixin _$CMIProvider {
       throw _privateConstructorUsedError;
   String? get apiKey => throw _privateConstructorUsedError;
   List<String>? get aims => throw _privateConstructorUsedError;
+  String? get aim => throw _privateConstructorUsedError;
   String? get domainRequirement => throw _privateConstructorUsedError;
   bool get releaseWom => throw _privateConstructorUsedError;
   @CMIProviderStatusConverter()
@@ -59,6 +60,7 @@ abstract class $CMIProviderCopyWith<$Res> {
       Map<String, ProviderManager>? managers,
       String? apiKey,
       List<String>? aims,
+      String? aim,
       String? domainRequirement,
       bool releaseWom,
       @CMIProviderStatusConverter() CMIProviderStatus? status,
@@ -87,6 +89,7 @@ class _$CMIProviderCopyWithImpl<$Res, $Val extends CMIProvider>
     Object? managers = freezed,
     Object? apiKey = freezed,
     Object? aims = freezed,
+    Object? aim = freezed,
     Object? domainRequirement = freezed,
     Object? releaseWom = null,
     Object? status = freezed,
@@ -126,6 +129,10 @@ class _$CMIProviderCopyWithImpl<$Res, $Val extends CMIProvider>
           ? _value.aims
           : aims // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      aim: freezed == aim
+          ? _value.aim
+          : aim // ignore: cast_nullable_to_non_nullable
+              as String?,
       domainRequirement: freezed == domainRequirement
           ? _value.domainRequirement
           : domainRequirement // ignore: cast_nullable_to_non_nullable
@@ -167,6 +174,7 @@ abstract class _$$_CMIProviderCopyWith<$Res>
       Map<String, ProviderManager>? managers,
       String? apiKey,
       List<String>? aims,
+      String? aim,
       String? domainRequirement,
       bool releaseWom,
       @CMIProviderStatusConverter() CMIProviderStatus? status,
@@ -193,6 +201,7 @@ class __$$_CMIProviderCopyWithImpl<$Res>
     Object? managers = freezed,
     Object? apiKey = freezed,
     Object? aims = freezed,
+    Object? aim = freezed,
     Object? domainRequirement = freezed,
     Object? releaseWom = null,
     Object? status = freezed,
@@ -232,6 +241,10 @@ class __$$_CMIProviderCopyWithImpl<$Res>
           ? _value._aims
           : aims // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      aim: freezed == aim
+          ? _value.aim
+          : aim // ignore: cast_nullable_to_non_nullable
+              as String?,
       domainRequirement: freezed == domainRequirement
           ? _value.domainRequirement
           : domainRequirement // ignore: cast_nullable_to_non_nullable
@@ -268,6 +281,7 @@ class _$_CMIProvider implements _CMIProvider {
       final Map<String, ProviderManager>? managers,
       this.apiKey,
       final List<String>? aims,
+      this.aim,
       this.domainRequirement,
       this.releaseWom = false,
       @CMIProviderStatusConverter() this.status,
@@ -310,6 +324,8 @@ class _$_CMIProvider implements _CMIProvider {
   }
 
   @override
+  final String? aim;
+  @override
   final String? domainRequirement;
   @override
   @JsonKey()
@@ -326,7 +342,7 @@ class _$_CMIProvider implements _CMIProvider {
 
   @override
   String toString() {
-    return 'CMIProvider(id: $id, name: $name, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, managers: $managers, apiKey: $apiKey, aims: $aims, domainRequirement: $domainRequirement, releaseWom: $releaseWom, status: $status, createdOn: $createdOn, requestedOn: $requestedOn)';
+    return 'CMIProvider(id: $id, name: $name, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, managers: $managers, apiKey: $apiKey, aims: $aims, aim: $aim, domainRequirement: $domainRequirement, releaseWom: $releaseWom, status: $status, createdOn: $createdOn, requestedOn: $requestedOn)';
   }
 
   @override
@@ -345,6 +361,7 @@ class _$_CMIProvider implements _CMIProvider {
             const DeepCollectionEquality().equals(other._managers, _managers) &&
             (identical(other.apiKey, apiKey) || other.apiKey == apiKey) &&
             const DeepCollectionEquality().equals(other._aims, _aims) &&
+            (identical(other.aim, aim) || other.aim == aim) &&
             (identical(other.domainRequirement, domainRequirement) ||
                 other.domainRequirement == domainRequirement) &&
             (identical(other.releaseWom, releaseWom) ||
@@ -368,6 +385,7 @@ class _$_CMIProvider implements _CMIProvider {
       const DeepCollectionEquality().hash(_managers),
       apiKey,
       const DeepCollectionEquality().hash(_aims),
+      aim,
       domainRequirement,
       releaseWom,
       status,
@@ -398,6 +416,7 @@ abstract class _CMIProvider implements CMIProvider {
           final Map<String, ProviderManager>? managers,
           final String? apiKey,
           final List<String>? aims,
+          final String? aim,
           final String? domainRequirement,
           final bool releaseWom,
           @CMIProviderStatusConverter() final CMIProviderStatus? status,
@@ -424,6 +443,8 @@ abstract class _CMIProvider implements CMIProvider {
   String? get apiKey;
   @override
   List<String>? get aims;
+  @override
+  String? get aim;
   @override
   String? get domainRequirement;
   @override

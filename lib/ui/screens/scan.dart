@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:countmein/domain/entities/qcode_data.dart';
-import 'package:countmein/my_logger.dart';
+import 'package:countmein/src/admin/application/scan_notifier.dart';
 import 'package:countmein/src/admin/application/users_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/utils.dart';
@@ -15,7 +13,6 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:soundpool/soundpool.dart';
 
-import '../../cloud.dart';
 import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/event_ids.dart';
 import '../../domain/entities/user_card.dart';
@@ -45,14 +42,6 @@ class ScanScreen extends ConsumerStatefulWidget {
 
 class _ScanScreenState extends ConsumerState<ScanScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-
-  bool processing = false;
-  final list = <String>[];
-
-  // Lista di appoggio per evitare che lo scanner continuo faccia chiamate al
-  // db per utenti che non hanno effettuato il check in ma stanno
-  // facendo il checkout
-  final userWithoutCheckIn = <String>{};
 
   String get eventId => widget.event.id;
 
@@ -119,169 +108,16 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                     allowDuplicates: true,
                     controller: MobileScannerController(
                         facing: CameraFacing.back, torchEnabled: false),
-                    onDetect: (barcode, args) async {
+                    onDetect: (barcode, args) {
                       final data = barcode.rawValue;
-
-                      if (processing) return;
-
-                      if (data != null) {
-                        logger.i('detected data');
-
-                        try {
-                          final userQrCode = QrCodeData.fromQrCode(data);
-                          final isGroupCard = userQrCode.isGroupCard;
-
-                          // if(isGroupCard) return;
-                          if (userQrCode.providerId == widget.provider.id ||
-                              (widget.event.acceptPassepartout &&
-                                  userQrCode.providerId == 'countmein')) {
-                            if (userWithoutCheckIn.contains(userQrCode.id)) {
-                              return;
-                            }
-
-                            if (!list.contains(userQrCode.id)) {
-                              processing = true;
-
-                              var eventUser = EventUser(
-                                isGroup: isGroupCard,
-                                id: isGroupCard
-                                    ? userQrCode.groupId!
-                                    : userQrCode.id,
-                                name: userQrCode.name,
-                                surname: userQrCode.surname,
-                                email: userQrCode.isExternalOrganization
-                                    ? '${userQrCode.email}${widget.provider.domainRequirement}'
-                                    : userQrCode.email,
-                                cf: userQrCode.cf,
-                                fromExternalOrganization:
-                                    userQrCode.isExternalOrganization,
-                                privateId: userQrCode.privateId,
-                                groupName: userQrCode.groupName,
-                                groupCount: userQrCode.groupCount,
-                                averageAge: userQrCode.averageAge,
-                                manPercentage: userQrCode.manPercentage,
-                                womanPercentage: userQrCode.womanPercentage,
-                              );
-
-                              final isSingleAccessType =
-                                  widget.event.accessType ==
-                                      EventAccessType.single;
-
-                              final userSubEventDocRef =
-                                  Cloud.eventsCollection(widget.provider.id)
-                                      .doc(eventId)
-                                      .collection('subEvents')
-                                      .doc(widget.event.currentSubEvent)
-                                      .collection('users')
-                                      .doc(eventUser.id);
-
-                              final userSubEventDoc =
-                                  await userSubEventDocRef.get();
-
-                              if (userSubEventDoc.exists) {
-                                final userSubEventData =
-                                    userSubEventDoc.data() ?? {};
-                                if (!isSingleAccessType &&
-                                    widget.scanMode == ScanMode.checkOut &&
-                                    (!userSubEventData
-                                            .containsKey('checkOutAt') ||
-                                        userSubEventData['checkOutAt'] ==
-                                            null)) {
-                                  userSubEventDocRef
-                                      .update({'checkOutAt': DateTime.now()});
-                                  showUpdate(barcode, eventUser);
-                                }
-                              } else {
-                                if (!isSingleAccessType &&
-                                    widget.scanMode == ScanMode.checkOut) {
-                                  userWithoutCheckIn.add(eventUser.id);
-                                  processing = false;
-                                  final message = eventUser.isGroup
-                                      ? '${eventUser.groupName ?? 'Il gruppo'} non ha effettuato il check in!'
-                                      : '${eventUser.name} ${eventUser.surname} non ha effettuato il check in!';
-                                  showToast(message,
-                                      duration: const Duration(seconds: 1),
-                                      position: ToastPosition.bottom);
-                                  return;
-                                }
-
-                                if (isSingleAccessType &&
-                                    widget.scanMode == ScanMode.checkOut) {
-                                  eventUser = eventUser.copyWith(
-                                      checkOutAt: DateTime.now());
-                                } else if (!isSingleAccessType &&
-                                    widget.scanMode == ScanMode.checkIn) {
-                                  eventUser = eventUser.copyWith(
-                                      checkInAt: DateTime.now());
-                                }
-
-                                final batch =
-                                    FirebaseFirestore.instance.batch();
-                                batch.set(
-                                    userSubEventDocRef, eventUser.toJson());
-                                // use this or increment on client the users with groupcount
-                                // if (isGroupCard &&
-                                //     isSingleAccessType &&
-                                //     widget.scanMode == ScanMode.checkOut) {
-                                //   final subEventDocRef =
-                                //       Cloud.eventsCollection(widget.provider.id)
-                                //           .doc(eventId)
-                                //           .collection('subEvents')
-                                //           .doc(widget.event.currentSubEvent);
-                                //   batch.update(subEventDocRef, {
-                                //     'totalUsers': FieldValue.increment(
-                                //         eventUser.groupCount ?? 0)
-                                //   });
-                                // }
-                                if (!eventUser.isGroup &&
-                                    eventUser.privateId != null) {
-                                  final privateUserSubEventDocRef =
-                                      Cloud.eventsCollection(widget.provider.id)
-                                          .doc(eventId)
-                                          .collection('subEvents')
-                                          .doc(widget.event.currentSubEvent)
-                                          .collection('privateUsers')
-                                          .doc(eventUser.privateId);
-                                  batch.set(privateUserSubEventDocRef,
-                                      {'id': eventUser.privateId});
-                                }
-                                batch.commit();
-                                //userSubEventDocRef.set(eventUser.toJson());
-                                showUpdate(barcode, eventUser);
-                              }
-
-                              final userRef = Cloud.eventUsersCollection(
-                                EventIds(
-                                  providerId: widget.provider.id,
-                                  eventId: eventId,
-                                ),
-                              ).doc(eventUser.id);
-                              final globalUserDoc = await userRef.get();
-                              if (!globalUserDoc.exists) {
-                                final u = eventUser.toJson();
-                                u.remove('checkOutAt');
-                                u.remove('checkInAt');
-                                u.remove('privateId');
-                                userRef.set(u, SetOptions(merge: true));
-                              }
-                              processing = false;
-                              list.add(userQrCode.id);
-                            } else {
-                              showToast('Utente già scansionato',
-                                  duration: const Duration(milliseconds: 250),
-                                  position: ToastPosition.bottom);
-                            }
-                          } else {
-                            showToast(
-                                'Il provider del tesserino non è valido per questo evento.',
-                                position: ToastPosition.bottom);
-                          }
-                        } catch (ex) {
-                          processing = false;
-                          showToast('QR-Code non valido',
-                              position: ToastPosition.bottom);
-                        }
-                      }
+                      if (data == null) return;
+                      ref.read(scanControllerProvider(widget.event.id)).processScan(
+                            data,
+                            widget.provider,
+                            widget.event,
+                            widget.scanMode,
+                            (user) => showUpdate(barcode, user),
+                          );
                     },
                   ),
                 ),

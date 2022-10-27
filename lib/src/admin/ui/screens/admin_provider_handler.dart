@@ -52,6 +52,10 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(16),
         children: [
           CMICard(
+            collapsedWidget:  InfoText(
+              label: 'Nome Provider',
+              value: provider?.name,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -76,9 +80,21 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                   label: 'WOM Api Key',
                   value: provider?.apiKey,
                 ),
-                InfoText(
-                  label: 'Aims',
-                  value: provider?.aims?.join('-'),
+                Row(
+                  children: [
+                    Flexible(
+                      child: InfoText(
+                        label: 'Aims',
+                        value: provider?.aims?.join('-'),
+                      ),
+                    ),
+                    Flexible(
+                      child: InfoText(
+                        label: 'AIM',
+                        value: provider?.aim,
+                      ),
+                    ),
+                  ],
                 ),
                 InfoText(
                   label: 'Tesserino',

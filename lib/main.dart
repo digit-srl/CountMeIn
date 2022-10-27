@@ -5,18 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_strategy/url_strategy.dart';
-
 import 'app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+import 'package:intl/date_symbol_data_local.dart';
 enum AppFlavor { master, collab }
 
 // fvm flutter build web --web-renderer canvaskit
 // firebase deploy --only hosting
-// firebase deploy --only functions:onUserCheckIn
+// firebase deploy --only functions:userSignUp-requestGroupCard
 // firebase hosting:channel:deploy preview_name
 // fvm flutter build apk
 // firebase emulators:start --import=./emulator_backup --export-on-exit
@@ -29,6 +29,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  initializeDateFormatting('it_IT');
   if (kDebugMode) {
     // final d = "localhost";
     // await FirebaseAuth.instance.useAuthEmulator(d, 9099);

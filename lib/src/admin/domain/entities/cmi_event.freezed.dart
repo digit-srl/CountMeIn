@@ -532,6 +532,7 @@ CMISubEvent _$CMISubEventFromJson(Map<String, dynamic> json) {
 mixin _$CMISubEvent {
   String get id => throw _privateConstructorUsedError;
   GenderCount? get genderCount => throw _privateConstructorUsedError;
+  int get totalUsers => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime get startAt => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
@@ -552,6 +553,7 @@ abstract class $CMISubEventCopyWith<$Res> {
   $Res call(
       {String id,
       GenderCount? genderCount,
+      int totalUsers,
       @MyDateTimeConverter() DateTime startAt,
       @MyDateTimeConverter() DateTime endAt});
 
@@ -573,6 +575,7 @@ class _$CMISubEventCopyWithImpl<$Res, $Val extends CMISubEvent>
   $Res call({
     Object? id = null,
     Object? genderCount = freezed,
+    Object? totalUsers = null,
     Object? startAt = null,
     Object? endAt = null,
   }) {
@@ -585,6 +588,10 @@ class _$CMISubEventCopyWithImpl<$Res, $Val extends CMISubEvent>
           ? _value.genderCount
           : genderCount // ignore: cast_nullable_to_non_nullable
               as GenderCount?,
+      totalUsers: null == totalUsers
+          ? _value.totalUsers
+          : totalUsers // ignore: cast_nullable_to_non_nullable
+              as int,
       startAt: null == startAt
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
@@ -620,6 +627,7 @@ abstract class _$$_CMISubEventCopyWith<$Res>
   $Res call(
       {String id,
       GenderCount? genderCount,
+      int totalUsers,
       @MyDateTimeConverter() DateTime startAt,
       @MyDateTimeConverter() DateTime endAt});
 
@@ -640,6 +648,7 @@ class __$$_CMISubEventCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? genderCount = freezed,
+    Object? totalUsers = null,
     Object? startAt = null,
     Object? endAt = null,
   }) {
@@ -652,6 +661,10 @@ class __$$_CMISubEventCopyWithImpl<$Res>
           ? _value.genderCount
           : genderCount // ignore: cast_nullable_to_non_nullable
               as GenderCount?,
+      totalUsers: null == totalUsers
+          ? _value.totalUsers
+          : totalUsers // ignore: cast_nullable_to_non_nullable
+              as int,
       startAt: null == startAt
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
@@ -670,6 +683,7 @@ class _$_CMISubEvent implements _CMISubEvent {
   const _$_CMISubEvent(
       {required this.id,
       this.genderCount,
+      this.totalUsers = 0,
       @MyDateTimeConverter() required this.startAt,
       @MyDateTimeConverter() required this.endAt});
 
@@ -681,6 +695,9 @@ class _$_CMISubEvent implements _CMISubEvent {
   @override
   final GenderCount? genderCount;
   @override
+  @JsonKey()
+  final int totalUsers;
+  @override
   @MyDateTimeConverter()
   final DateTime startAt;
   @override
@@ -689,7 +706,7 @@ class _$_CMISubEvent implements _CMISubEvent {
 
   @override
   String toString() {
-    return 'CMISubEvent(id: $id, genderCount: $genderCount, startAt: $startAt, endAt: $endAt)';
+    return 'CMISubEvent(id: $id, genderCount: $genderCount, totalUsers: $totalUsers, startAt: $startAt, endAt: $endAt)';
   }
 
   @override
@@ -700,13 +717,16 @@ class _$_CMISubEvent implements _CMISubEvent {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.genderCount, genderCount) ||
                 other.genderCount == genderCount) &&
+            (identical(other.totalUsers, totalUsers) ||
+                other.totalUsers == totalUsers) &&
             (identical(other.startAt, startAt) || other.startAt == startAt) &&
             (identical(other.endAt, endAt) || other.endAt == endAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, genderCount, startAt, endAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, genderCount, totalUsers, startAt, endAt);
 
   @JsonKey(ignore: true)
   @override
@@ -726,6 +746,7 @@ abstract class _CMISubEvent implements CMISubEvent {
   const factory _CMISubEvent(
       {required final String id,
       final GenderCount? genderCount,
+      final int totalUsers,
       @MyDateTimeConverter() required final DateTime startAt,
       @MyDateTimeConverter() required final DateTime endAt}) = _$_CMISubEvent;
 
@@ -736,6 +757,8 @@ abstract class _CMISubEvent implements CMISubEvent {
   String get id;
   @override
   GenderCount? get genderCount;
+  @override
+  int get totalUsers;
   @override
   @MyDateTimeConverter()
   DateTime get startAt;

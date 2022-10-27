@@ -1,3 +1,4 @@
+import 'package:countmein/cloud.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -6,9 +7,14 @@ import '../../domain/entities/user_card.dart';
 class UserDetailsScreen extends StatelessWidget {
   static const routeName = '/userDetails';
 
+  final Function()? onDelete;
   final EventUser user;
 
-  const UserDetailsScreen({Key? key, required this.user}) : super(key: key);
+  const UserDetailsScreen({
+    Key? key,
+    required this.user,
+    this.onDelete,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +60,11 @@ class UserDetailsScreen extends StatelessWidget {
                     : null,
               ),
             ],
+            // if (onDelete != null)
+            //   ElevatedButton(
+            //     onPressed: onDelete,
+            //     child: Text('Elimina'),
+            //   ),
           ],
         ),
       ),

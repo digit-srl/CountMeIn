@@ -77,6 +77,7 @@ _$_CMISubEvent _$$_CMISubEventFromJson(Map<String, dynamic> json) =>
       genderCount: json['genderCount'] == null
           ? null
           : GenderCount.fromJson(json['genderCount'] as Map<String, dynamic>),
+      totalUsers: json['totalUsers'] as int? ?? 0,
       startAt:
           const MyDateTimeConverter().fromJson(json['startAt'] as Timestamp),
       endAt: const MyDateTimeConverter().fromJson(json['endAt'] as Timestamp),
@@ -86,6 +87,7 @@ Map<String, dynamic> _$$_CMISubEventToJson(_$_CMISubEvent instance) =>
     <String, dynamic>{
       'id': instance.id,
       'genderCount': instance.genderCount,
+      'totalUsers': instance.totalUsers,
       'startAt': const MyDateTimeConverter().toJson(instance.startAt),
       'endAt': const MyDateTimeConverter().toJson(instance.endAt),
     };

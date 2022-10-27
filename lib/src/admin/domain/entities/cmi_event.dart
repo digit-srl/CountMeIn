@@ -7,15 +7,41 @@ part 'cmi_event.freezed.dart';
 
 part 'cmi_event.g.dart';
 
-enum EventAccessType { single, inOut }
+// enum EventAccessType { single, inOut }
 
-enum FrequencyType { daily, monthly, yearly }
+// enhanced enum is more like a constant class
+enum EventAccessType {
+  single,
+  inOut;
 
-enum EventStatus { unknown, live, archived, closed}
+  String get text {
+    switch (this) {
+      case EventAccessType.single:
+        return 'Check In';
+      case EventAccessType.inOut:
+        return 'Check In/Out';
+    }
+  }
+}
 
-enum CMIEventType { standard, mailingList, counter, recurring }
+// enum FrequencyType { daily, monthly, yearly }
 
-extension FrequencyTypeX on FrequencyType {
+enum FrequencyType {
+  daily,
+  monthly,
+  yearly;
+
+  String get text {
+    switch (this) {
+      case FrequencyType.daily:
+        return 'Giornaliero';
+      case FrequencyType.monthly:
+        return 'Settimanale';
+      case FrequencyType.yearly:
+        return 'Annuale';
+    }
+  }
+
   int get multiplier {
     switch (this) {
       case FrequencyType.daily:
@@ -24,6 +50,28 @@ extension FrequencyTypeX on FrequencyType {
         return 31;
       case FrequencyType.yearly:
         return 365;
+    }
+  }
+}
+
+// enum EventStatus { unknown, live, archived, closed }
+
+enum EventStatus {
+  unknown,
+  live,
+  archived,
+  closed;
+
+  String get text {
+    switch (this) {
+      case EventStatus.unknown:
+        return 'Sconosciuto';
+      case EventStatus.live:
+        return 'Attivo';
+      case EventStatus.archived:
+        return 'Archiviato';
+      case EventStatus.closed:
+        return 'Chiuso';
     }
   }
 }
@@ -59,6 +107,7 @@ class CMISubEvent with _$CMISubEvent {
   const factory CMISubEvent({
     required String id,
     GenderCount? genderCount,
+    @Default(0) int totalUsers,
     @MyDateTimeConverter() required DateTime startAt,
     @MyDateTimeConverter() required DateTime endAt,
   }) = _CMISubEvent;
@@ -133,4 +182,3 @@ class EventStatusConverter implements JsonConverter<EventStatus, String> {
   @override
   String toJson(EventStatus status) => enumToString(status) ?? 'unknown';
 }
-

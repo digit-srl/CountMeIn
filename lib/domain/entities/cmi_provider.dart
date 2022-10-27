@@ -25,6 +25,7 @@ class CMIProvider with _$CMIProvider {
     Map<String,ProviderManager>? managers,
     String? apiKey,
     List<String>? aims,
+    String? aim,
     String? domainRequirement,
     @Default(false) bool releaseWom,
     @CMIProviderStatusConverter() CMIProviderStatus? status,

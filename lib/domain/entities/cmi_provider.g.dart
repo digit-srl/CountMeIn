@@ -19,6 +19,7 @@ _$_CMIProvider _$$_CMIProviderFromJson(Map<String, dynamic> json) =>
       ),
       apiKey: json['apiKey'] as String?,
       aims: (json['aims'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      aim: json['aim'] as String?,
       domainRequirement: json['domainRequirement'] as String?,
       releaseWom: json['releaseWom'] as bool? ?? false,
       status: _$JsonConverterFromJson<String, CMIProviderStatus>(
@@ -39,6 +40,7 @@ Map<String, dynamic> _$$_CMIProviderToJson(_$_CMIProvider instance) =>
       'managers': instance.managers,
       'apiKey': instance.apiKey,
       'aims': instance.aims,
+      'aim': instance.aim,
       'domainRequirement': instance.domainRequirement,
       'releaseWom': instance.releaseWom,
       'status': _$JsonConverterToJson<String, CMIProviderStatus>(

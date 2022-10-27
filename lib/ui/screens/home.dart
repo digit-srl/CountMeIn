@@ -1,12 +1,10 @@
 import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
 import 'package:countmein/src/common/ui/widgets/my_button.dart';
-import 'package:countmein/states.dart';
 import 'package:countmein/ui/screens/user_event.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:universal_io/io.dart';
 
 class HomeWebScreen extends StatelessWidget {
   const HomeWebScreen({Key? key}) : super(key: key);
@@ -34,13 +32,13 @@ class HomeWebScreen extends StatelessWidget {
               'Count Me In',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
-         /* ElevatedButton(
+            ElevatedButton(
               onPressed: () {
                 // context.go('${UserProviderScreen.routeName}/Yy31B32YBDJDUt7TbZEl');
                 context.go('${UserProviderScreen.routeName}/countmein');
               },
               child: Text('vai all evento'),
-            ),*/
+            ),
             /*
             ElevatedButton(
               onPressed: () {

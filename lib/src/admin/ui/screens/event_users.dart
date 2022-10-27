@@ -178,7 +178,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                 ],
               ),
             ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Text(
             'Utenti',
             style: Theme.of(context).textTheme.headline4,
@@ -200,6 +200,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: list.length,
                           shrinkWrap: true,
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 48),
                           itemBuilder: (c, index) {
                             final user = list[index];
                             return ListTile(
@@ -207,12 +208,39 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                                 context.push(UserDetailsScreen.routeName,
                                     extra: user);
                               },
-                              title: Text(
-                                user.isGroup
-                                    ? user.groupName ?? 'Gruppo'
-                                    : anonymous
-                                        ? user.id
-                                        : user.fullName,
+                              title: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    user.isGroup
+                                        ? user.groupName ?? 'Gruppo'
+                                        : anonymous
+                                            ? user.id
+                                            : user.fullName,
+                                  ),
+                                  if (user.isGroup)
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 16.0),
+                                      child: Chip(
+                                        label: Text(
+                                          'GROUP',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption,
+                                        ),
+                                        backgroundColor: Colors.green,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 0,
+                                          vertical: 0,
+                                        ),
+                                        labelPadding: const EdgeInsets.symmetric(
+                                          horizontal: 4,
+                                          vertical: 0,
+                                        ),
+                                      ),
+                                    )
+                                ],
                               ),
                               subtitle: user.isGroup
                                   ? Text(
