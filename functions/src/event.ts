@@ -107,6 +107,7 @@ export const onUserCheckIn = functions
       const eventId = context.params.eventId;
       const providerId = context.params.providerId;
       const userId = context.params.userId;
+      const eventRef = snap.after.ref.parent.parent;
 
       console.log(
         "providerId" +
@@ -120,6 +121,26 @@ export const onUserCheckIn = functions
       //utente cancellato
       if (!snap.after.exists) {
         console.log("utente rimosso da " + "eventId: " + userId);
+
+        const previousUser: FirebaseFirestore.DocumentData | undefined =
+          snap.before.data();
+
+        if (previousUser != null) {
+          const isGroup = previousUser.isGroup;
+
+          //Decrementiamo il numero degli utenti totali
+          const groupCount = isGroup ? previousUser.groupCount ?? 0 : 1;
+
+          if (eventRef != null) {
+            await db.runTransaction(
+              async (transaction: FirebaseFirestore.Transaction) => {
+                await transaction.update(eventRef, {
+                  totalUsers: firestore.FieldValue.increment(-groupCount),
+                });
+              }
+            );
+          }
+        }
         return;
       }
 
@@ -147,7 +168,6 @@ export const onUserCheckIn = functions
 
       //Incrementiamo il numero degli utenti totali
       const groupCount = isGroup ? user.groupCount ?? 0 : 1;
-      const eventRef = snap.after.ref.parent.parent;
       if (eventRef != null) {
         await db.runTransaction(
           async (transaction: FirebaseFirestore.Transaction) => {

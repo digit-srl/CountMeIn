@@ -303,15 +303,15 @@ async function sendGroupCard(
     groupCount;
 
   if (manPercentage != null) {
-    url = url + "&mP =" + manPercentage;
+    url = url + "&mP=" + manPercentage;
   }
 
   if (womanPercentage != null) {
-    url = url + "&wP =" + womanPercentage;
+    url = url + "&wP=" + womanPercentage;
   }
 
   if (averageAge != null) {
-    url = url + "&aA =" + averageAge;
+    url = url + "&aA=" + averageAge;
   }
 
   const buffer = await draw.drawGroupCard(
