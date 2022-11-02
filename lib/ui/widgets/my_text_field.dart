@@ -10,6 +10,7 @@ class CMITextField extends StatelessWidget {
   final TextStyle? textStyle;
   final List<TextInputFormatter>? inputFormatters;
   final ValueChanged<String>? onChanged;
+  final bool enabled;
 
   const CMITextField({
     Key? key,
@@ -21,11 +22,13 @@ class CMITextField extends StatelessWidget {
     this.textCapitalization,
     this.inputFormatters,
     this.onChanged,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: enabled,
       style: textStyle,
       inputFormatters: inputFormatters,
       controller: controller,

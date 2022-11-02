@@ -4,6 +4,7 @@ import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/application/scan_notifier.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/admin/ui/screens/event_users.dart';
+import 'package:countmein/src/admin/ui/widgets/add_scanner.dart';
 import 'package:countmein/src/admin/ui/widgets/info_text.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/ui/widgets/my_text_field.dart';
@@ -113,7 +114,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
   Widget build(BuildContext context) {
     final eventState = ref.watch(eventProvider(ids));
     final eventData = eventState.asData?.value;
-    final provider = ref.watch(singleCMIProviderProvider(widget.providerId));
+    final provider = ref.watch(singleCMIProviderProvider(widget.providerId)).valueOrNull;
     // final role = ref.watch(userRoleProvider(widget.providerId));
     // final isOwner = role == UserRole.admin;
 
@@ -214,16 +215,40 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                 ),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                    onPressed: () async {
-                      final n = Navigator.of(context);
-                      await Cloud.eventDoc(widget.providerId, widget.eventId)
-                          .delete();
-                      n.pop();
-                    },
-                    child: Text('Elimina'),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ElevatedButton(
+                        // style:
+                        // ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                        onPressed: () async {
+                          if (provider == null || eventData == null) return;
+                          showDialog(
+                            context: context,
+                            builder: (c) => Dialog(
+                              child: AddScannerWidget(
+                                provider: provider,
+                                event: eventData,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Text('Aggiungi scanner'),
+                      ),
+                      const SizedBox(width: 16),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red),
+                        onPressed: () async {
+                          final n = Navigator.of(context);
+                          await Cloud.eventDoc(
+                                  widget.providerId, widget.eventId)
+                              .delete();
+                          n.pop();
+                        },
+                        child: Text('Elimina'),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -339,7 +364,7 @@ class ScanSimulationWidget extends HookConsumerWidget {
           const SizedBox(height: 8),
           Text('Scegli il tipo di scansione',
               style: Theme.of(context).textTheme.headline6),
-           const SizedBox(height: 16),
+          const SizedBox(height: 16),
           ToggleButtons(
             children: [
               Icon(
@@ -359,7 +384,7 @@ class ScanSimulationWidget extends HookConsumerWidget {
                   }
                 : null,
           ),
-           const SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
               onPressed: () {
 // https://cmi.digit.srl/profile/27KEQsVlgbHsNONPSP5V?name=Gian Marco&surname=Di Francesco&cf=DFRGMR89M02I348U&pId=countmein&gId=g2f90soy5Xf1tvX3xrsW&gN=GRUPPO JANMARC&gC=6&aA=12

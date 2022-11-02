@@ -68,12 +68,12 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
     final state = ref.watch(pendingInviteStreamProvider(widget.provider.id));
 
     return Scaffold(
-      appBar: AdminAppBar(
+      appBar: const AdminAppBar(
         title: 'Managers',
       ),
       body: Center(
         child: Container(
-          constraints: BoxConstraints(maxWidth: 1000),
+          constraints: const BoxConstraints(maxWidth: 1000),
           padding: const EdgeInsets.all(16.0),
           // alignment:Alignment.center,
           child: CMICard(
@@ -85,19 +85,141 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Spacer(),
-                          MUButton(
-                            text: 'Aggiungi membro',
-                            onPressed: () {
-                              setState(() {
-                                addingMode = true;
-                              });
-                            },
+                      if (!addingMode)
+                        Row(
+                          children: [
+                            const Spacer(),
+                            MUButton(
+                              text: 'Nuovo membro',
+                              onPressed: () {
+                                setState(() {
+                                  addingMode = !addingMode;
+                                });
+                              },
+                            ),
+                          ],
+                        )
+                      else
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 32.0),
+                          child: CMICard(
+                            inverseColor: true,
+                            // height: 55,
+                            margin: const EdgeInsets.symmetric(vertical: 16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Text('Nuovo manager'),
+                                const SizedBox(height: 32),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Flexible(
+                                      flex: 2,
+                                      child: MUTextField(
+                                        paddingTop: 0,
+                                        hintText: 'Nome',
+                                        maxLines: 1,
+                                        controller: nameController,
+                                        validator: textValidator,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Flexible(
+                                      flex: 2,
+                                      child: MUTextField(
+                                        paddingTop: 0,
+                                        hintText: 'Email',
+                                        maxLines: 1,
+                                        controller: emailController,
+                                        validator: emailValidator,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: SizedBox(
+                                    width: 300,
+                                    child: InputDecorator(
+                                      decoration: const InputDecoration(isDense: true,),
+                                      child: DropdownButton<UserRole>(
+                                        value: selectedRole,
+                                        items: UserRole.values.sublist(0,2)
+                                            .map((e) => DropdownMenuItem<
+                                            UserRole>(
+                                            value: e,
+                                            child: Text(
+                                                enumToString(e) ?? '-')))
+                                            .toList(),
+                                        onChanged: (role) {
+                                          if (role == null) return;
+                                          ref
+                                              .read(selectedRoleProvider
+                                              .notifier)
+                                              .state = role;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 32),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            addingMode = !addingMode;
+                                          });
+                                        },
+                                        child: Text('Annulla')),
+                                    MUButton(
+                                      text: 'Invita',
+                                      onPressed: () async {
+                                        if (_formKey.currentState!.validate()) {
+                                          final email =
+                                              emailController.text.trim();
+                                          final name =
+                                              nameController.text.trim();
+                                          final newManager =
+                                              PendingProviderManager(
+                                            id: const Uuid().v4(),
+                                            role: selectedRole,
+                                            name: name,
+                                            status:
+                                                ProviderManagerStatus.pending,
+                                            invitedOn: DateTime.now(),
+                                            email: email,
+                                            secret: '',
+                                            providerName: widget.provider.name,
+                                            eventsRestriction: [],
+                                          );
+
+                                          try {
+                                            await Cloud.pendingInviteCollection(
+                                                    widget.provider.id)
+                                                .doc(newManager.id)
+                                                .set(newManager.toJson());
+                                            setState(() {
+                                              addingMode = false;
+                                            });
+                                            nameController.clear();
+                                            emailController.clear();
+                                          } catch (ex) {
+                                            logger.i(ex);
+                                          }
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
                       Row(
                         children: const [
                           Expanded(flex: 2, child: Text('Membro')),
@@ -108,90 +230,6 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                       ),
                       const SizedBox(height: 8),
                       const Divider(),
-                      if (addingMode)
-                        Container(
-                          height: 55,
-                          margin: const EdgeInsets.symmetric(vertical: 16.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Flexible(
-                                flex: 2,
-                                child: MUTextField(
-                                  paddingTop: 0,
-                                  hintText: 'Nome',
-                                  controller: nameController,
-                                  validator: textValidator,
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              Flexible(
-                                flex: 2,
-                                child: MUTextField(
-                                  paddingTop: 0,
-                                  hintText: 'Email',
-                                  controller: emailController,
-                                  validator: emailValidator,
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              Flexible(
-                                  flex: 1,
-                                  child: InputDecorator(
-                                    decoration: InputDecoration(),
-                                    child: DropdownButton<UserRole>(
-                                      value: selectedRole,
-                                      items: UserRole.values
-                                          .map((e) =>
-                                              DropdownMenuItem<UserRole>(
-                                                  value: e,
-                                                  child: Text(enumToString(e) ?? '-')))
-                                          .toList(),
-                                      onChanged: (role) {
-                                        if (role == null) return;
-                                        ref
-                                            .read(selectedRoleProvider.notifier)
-                                            .state = role;
-                                      },
-                                    ),
-                                  )),
-                              const SizedBox(width: 16),
-                              MUButton(
-                                text: 'Invita',
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    final email = emailController.text.trim();
-                                    final name = nameController.text.trim();
-                                    final newManager = PendingProviderManager(
-                                      id: const Uuid().v4(),
-                                      role: selectedRole,
-                                      name: name,
-                                      status: ProviderManagerStatus.pending,
-                                      invitedOn: DateTime.now(),
-                                      email: email,
-                                      secret: '',
-                                      providerName: widget.provider.name,
-                                    );
-
-                                    try {
-                                      await Cloud.pendingInviteCollection(
-                                              widget.provider.id)
-                                          .doc(newManager.id)
-                                          .set(newManager.toJson());
-                                      setState(() {
-                                        addingMode = false;
-                                      });
-                                      nameController.clear();
-                                      emailController.clear();
-                                    } catch (ex) {
-                                      logger.i(ex);
-                                    }
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
                       for (final m in widget.provider.managers!.values)
                         MemberRow(
                           name: m.name,
@@ -305,3 +343,5 @@ class MemberRow extends StatelessWidget {
     );
   }
 }
+
+

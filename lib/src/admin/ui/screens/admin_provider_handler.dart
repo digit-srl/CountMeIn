@@ -36,7 +36,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
     if (extraProvider != null) {
       provider = extraProvider!;
     } else {
-      provider = ref.watch(singleCMIProviderProvider(providerId));
+      provider = ref.watch(singleCMIProviderProvider(providerId)).valueOrNull;
     }
     final platformUserRole = ref.watch(authUserRoleProvider);
     final userRole = ref.watch(userRoleProvider(providerId));

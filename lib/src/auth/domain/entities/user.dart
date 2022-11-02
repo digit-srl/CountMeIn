@@ -10,6 +10,7 @@ enum PlatformRole {
 enum UserRole {
   admin,
   collaborator,
+  scanner,
   unknown,
 }
 

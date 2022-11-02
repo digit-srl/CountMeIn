@@ -61,6 +61,7 @@ class PendingProviderManager with _$PendingProviderManager {
     required String email,
     @MyDateTimeConverter() required DateTime invitedOn,
     @ManagerStatusConverter() required ProviderManagerStatus status,
+    @Default(<String>[]) List<String> eventsRestriction,
   }) = _PendingProviderManager;
 
   factory PendingProviderManager.fromJson(Map<String, Object?> json) =>
@@ -74,6 +75,7 @@ class ProviderManager with _$ProviderManager {
     required String name,
     required String email,
     @UserRoleConverter() required UserRole role,
+    @Default(<String>[]) List<String> eventsRestriction,
   }) = _ProviderManager;
 
   factory ProviderManager.fromJson(Map<String, Object?> json) =>

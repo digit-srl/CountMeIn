@@ -74,6 +74,10 @@ _$_PendingProviderManager _$$_PendingProviderManagerFromJson(
       invitedOn:
           const MyDateTimeConverter().fromJson(json['invitedOn'] as Timestamp),
       status: const ManagerStatusConverter().fromJson(json['status'] as String),
+      eventsRestriction: (json['eventsRestriction'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
     );
 
 Map<String, dynamic> _$$_PendingProviderManagerToJson(
@@ -87,6 +91,7 @@ Map<String, dynamic> _$$_PendingProviderManagerToJson(
       'email': instance.email,
       'invitedOn': const MyDateTimeConverter().toJson(instance.invitedOn),
       'status': const ManagerStatusConverter().toJson(instance.status),
+      'eventsRestriction': instance.eventsRestriction,
     };
 
 _$_ProviderManager _$$_ProviderManagerFromJson(Map<String, dynamic> json) =>
@@ -95,6 +100,10 @@ _$_ProviderManager _$$_ProviderManagerFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       email: json['email'] as String,
       role: const UserRoleConverter().fromJson(json['role'] as String?),
+      eventsRestriction: (json['eventsRestriction'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
     );
 
 Map<String, dynamic> _$$_ProviderManagerToJson(_$_ProviderManager instance) =>
@@ -103,4 +112,5 @@ Map<String, dynamic> _$$_ProviderManagerToJson(_$_ProviderManager instance) =>
       'name': instance.name,
       'email': instance.email,
       'role': const UserRoleConverter().toJson(instance.role),
+      'eventsRestriction': instance.eventsRestriction,
     };

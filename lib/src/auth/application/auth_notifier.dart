@@ -99,7 +99,7 @@ final userRoleProvider = Provider.family<UserRole, String>((ref, providerId) {
   var role = UserRole.unknown;
   if (state is Authenticated) {
     final provider = ref.watch(singleCMIProviderProvider(providerId));
-    final manager = provider?.managers?.values.firstWhereOrNull((element) =>
+    final manager = provider.valueOrNull?.managers?.values.firstWhereOrNull((element) =>
     element.id == state.user.uid);
     role = manager?.role ?? UserRole.unknown;
   }
