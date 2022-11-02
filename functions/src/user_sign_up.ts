@@ -5,6 +5,7 @@ const draw = require("./draw");
 const db = admin.firestore();
 const cors = require("cors")({ origin: true });
 import * as firestore from "@google-cloud/firestore";
+import * as utils from "./firestore_utils";
 import {
   privateUsersCollectionRef,
   providerDocRef,
@@ -474,7 +475,7 @@ exports.requestGroupCard = functions
         }
 
         try {
-          const userData = await getUserData(providerId, userId);
+          const userData = await utils.getUserData(providerId, userId);
           const providerData = await getProviderData(providerId);
           const groupDocRef = userGroupCollectionRef(providerId, userId).doc();
           const groupId = groupDocRef.id;
@@ -506,19 +507,6 @@ exports.requestGroupCard = functions
       });
     }
   );
-
-async function getUserData(
-  providerId: string,
-  userId: string
-): Promise<firestore.DocumentData> {
-  const userDoc = await usersCollectionRef(providerId).doc(userId).get();
-  const userData = userDoc.data();
-  if (!userDoc.exists || userData == null) {
-    console.log("User not found");
-    throw Error();
-  }
-  return userData;
-}
 
 async function getProviderData(
   providerId: string

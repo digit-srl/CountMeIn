@@ -10,6 +10,7 @@ const cors = require("cors")({ origin: true });
 import { FirebaseError } from "@firebase/util";
 import { UserRecord } from "firebase-functions/v1/auth";
 import * as firestore from "@google-cloud/firestore";
+import * as utils from "./firestore_utils";
 import {
   credentialsCollectionRef,
   eventCollectionRef,
@@ -17,6 +18,7 @@ import {
   providersCollectionRef,
   usersCollectionRef,
   privateUsersCollectionRef,
+  providerPendingInviteDocRef,
 } from "./firestore_references";
 
 /*
@@ -580,8 +582,8 @@ export const confirmPendingInvite = functions
           return;
         }
 
-        const data = request.body;
         console.log("confirmPendingInvite");
+        const data = request.body;
         const inviteId: string = data.inviteId;
         const secret = data.secret;
         const providerId: string = data.providerId;
@@ -606,14 +608,19 @@ export const confirmPendingInvite = functions
         }
 
         console.log("confirmPendingInvite: arguments ok");
-        const invite = await db
-          .collection("providers")
-          .doc(providerId)
-          .collection("pendingInvite")
-          .doc(inviteId)
-          .get();
+        const invite = await providerPendingInviteDocRef(
+          providerId,
+          inviteId
+        ).get();
 
         const inviteData = invite.data();
+        if (!invite.exists || inviteData == null) {
+          throw new functions.https.HttpsError(
+            "invalid-argument",
+            "pending invite data doesn't exists"
+          );
+        }
+
         const status = inviteData.status;
         if (status === "completed") {
           response
@@ -633,7 +640,7 @@ export const confirmPendingInvite = functions
 
         const secretOnDb = inviteData.secret;
         const email = inviteData.email;
-        var fullName = inviteData.fullName;
+        var fullName = inviteData.name;
         console.log(inviteData);
 
         const role: string = inviteData.role;
@@ -650,9 +657,9 @@ export const confirmPendingInvite = functions
         var userId = inviteData.userId;
         const name = data.name;
         const surname = data.surname;
-        const cf = data.cf;
+        var cf = data.cf;
 
-        // New user
+        // Create New user
         if (userId === undefined || userId === null) {
           console.log("confirmPendingInvite: new user");
           if (
@@ -679,15 +686,24 @@ export const confirmPendingInvite = functions
             cf
           );
           userId = tmpUser.uid;
+        } else {
+          console.log(
+            "get existing user " + userId + " of provider " + providerId
+          );
+          const userData = await utils.getManagerUserData(userId);
+          fullName = userData.name + " " + userData.surname;
+          cf = userData.cf;
         }
 
         //TODO  controlla che l utente esista veramente
 
+        const eventsRestriction = inviteData.eventsRestriction;
         let map = {
           id: userId,
           role: role,
           email: email,
           name: fullName,
+          eventsRestriction: eventsRestriction,
         };
         let managers = new Map<string, Object>();
         managers.set("managers." + userId, map);
@@ -774,11 +790,7 @@ export const onInviteToCollaborate = functions
 
     // TODO check that all field is valid
 
-    const requestRef = db
-      .collection("providers")
-      .doc(providerId)
-      .collection("pendingInvite")
-      .doc(inviteId);
+    const requestRef = providerPendingInviteDocRef(providerId, inviteId);
     var secret = Math.random().toString(36).slice(-8);
 
     await requestRef.update({
@@ -799,7 +811,6 @@ export const onInviteToCollaborate = functions
       const user = await admin.auth().getUserByEmail(email);
       await requestRef.update({
         userId: user.uid,
-        fullName: user.displayName,
       });
       url = url + "&u=" + user.uid;
       console.log("user exist");
