@@ -14,10 +14,11 @@ class AuthRepository extends IAuthRepository {
           .signInWithEmailAndPassword(email: email, password: password);
       logger.i(userCredential.user);
     } on FirebaseAuthException catch (ex) {
+      logger.e(ex);
       throw SignInException.fromFirebaseException(ex);
-    } catch (ex,st) {
-      logger.i(ex);
-      logger.i(st);
+    } catch (ex, st) {
+      logger.e(ex);
+      logger.e(st);
       throw UnknownException();
     }
   }
@@ -50,20 +51,23 @@ class AuthRepository extends IAuthRepository {
         logger.i('user is null from AuthUser');
       }*/
     } on FirebaseAuthException catch (ex) {
+      logger.e(ex);
       throw SignUpException.fromFirebaseException(ex);
     } catch (ex) {
+      logger.e(ex);
       throw UnknownException();
     }
   }
 
   @override
-  Future<void> signOut()async {
+  Future<void> signOut() async {
     try {
-       await FirebaseAuth.instance.signOut();
+      await FirebaseAuth.instance.signOut();
     } on FirebaseAuthException catch (ex) {
+      logger.e(ex);
       throw SignInException.fromFirebaseException(ex);
     } catch (ex) {
-      logger.i(ex);
+      logger.e(ex);
       throw UnknownException();
     }
   }

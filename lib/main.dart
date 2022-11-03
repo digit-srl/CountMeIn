@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:countmein/env.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ void main() async {
   );
 
   initializeDateFormatting('it_IT');
-  if (kDebugMode) {
+  if (Environment.launchMode == 'emulator') {
     final d = "localhost";
     await FirebaseAuth.instance.useAuthEmulator(d, 9099);
     FirebaseFirestore.instance.useFirestoreEmulator(d, 8082);
