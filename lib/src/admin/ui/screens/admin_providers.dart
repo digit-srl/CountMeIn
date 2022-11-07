@@ -12,7 +12,7 @@ import '../widgets/grid_providers.dart';
 import 'admin_dashboard.dart';
 
 class AdminProvidersScreen extends ConsumerWidget {
-  static const String routeName = '/adminProviders';
+  static const String routeName = 'providers';
 
   const AdminProvidersScreen({Key? key})
       : super(key: key);

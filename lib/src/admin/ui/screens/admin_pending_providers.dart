@@ -8,7 +8,7 @@ import '../../application/providers_stream.dart';
 import '../widgets/grid_providers.dart';
 
 class AdminPendingProvidersScreen extends ConsumerWidget {
-  static const String routeName = '/adminPendingProviders';
+  static const String routeName = 'adminPendingProviders';
 
   const AdminPendingProvidersScreen({Key? key})
       : super(key: key);

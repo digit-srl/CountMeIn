@@ -1,3 +1,5 @@
+import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
+import 'package:countmein/src/admin/ui/screens/admin_providers.dart';
 import 'package:countmein/src/admin/ui/widgets/generic_grid_view.dart';
 import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +26,7 @@ class GridProvidersWidget extends StatelessWidget {
         return CMICard(
           center: true,
           onTap: () {
-            context.push('${AdminProviderHandlerScreen.routeName}/${p.id}',
+            context.go('${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${p.id}',
                 extra: p.status == CMIProviderStatus.pending ? p : null);
             // params: {'providerId': p.id});
           },

@@ -1,3 +1,4 @@
+import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +17,7 @@ class ActiveProviders extends ConsumerWidget {
     return CMICard(
       onTap: data != null && data.isNotEmpty
           ? () {
-              context.push(AdminProvidersScreen.routeName, extra: data);
+              context.go("${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}", extra: data);
             }
           : null,
       child: Center(

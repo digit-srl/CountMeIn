@@ -3,6 +3,9 @@ import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/application/scan_notifier.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
+import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
+import 'package:countmein/src/admin/ui/screens/admin_provider_handler.dart';
+import 'package:countmein/src/admin/ui/screens/admin_providers.dart';
 import 'package:countmein/src/admin/ui/screens/event_users.dart';
 import 'package:countmein/src/admin/ui/widgets/add_scanner.dart';
 import 'package:countmein/src/admin/ui/widgets/info_text.dart';
@@ -31,7 +34,7 @@ extension DateTimeX on DateTime {
 }
 
 class EventDetailsScreen extends ConsumerStatefulWidget {
-  static const String routeName = '/eventDetails';
+  static const String routeName = 'event';
 
   final String eventId;
   final String providerId;
@@ -114,7 +117,8 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
   Widget build(BuildContext context) {
     final eventState = ref.watch(eventProvider(ids));
     final eventData = eventState.asData?.value;
-    final provider = ref.watch(singleCMIProviderProvider(widget.providerId)).valueOrNull;
+    final provider =
+        ref.watch(singleCMIProviderProvider(widget.providerId)).valueOrNull;
     // final role = ref.watch(userRoleProvider(widget.providerId));
     // final isOwner = role == UserRole.admin;
 
@@ -126,7 +130,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
         actions: [
           if (kDebugMode && provider != null && eventData != null)
             IconButton(
-              icon: const Icon(Icons.qr_code_scanner),
+              icon: const Icon(Icons.qr_code),
               onPressed: () async {
                 await showDialog(
                   context: context,
@@ -262,13 +266,9 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                 return CMICard(
                   center: true,
                   onTap: () {
-                    context.pushNamed(
-                      EventUsersScreen.routeName,
-                      params: {
-                        'eventId': widget.eventId,
-                        'providerId': widget.providerId,
-                      },
-                    );
+                    final path =
+                        '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${widget.providerId}/${EventDetailsScreen.routeName}/${widget.eventId}/${EventUsersScreen.routeName}';
+                    context.go(path);
                   },
                   child: Text(
                     'Utenti unici',
@@ -286,16 +286,19 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                       )
                     : null,
                 onTap: () {
-                  context.pushNamed(
-                    EventUsersScreen.routeName,
-                    queryParams: {
-                      'subEventId': subEvent.id,
-                    },
-                    params: {
-                      'eventId': widget.eventId,
-                      'providerId': widget.providerId,
-                    },
-                  );
+                  final path =
+                      '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${widget.providerId}/${EventDetailsScreen.routeName}/${widget.eventId}/${EventUsersScreen.routeName}?s=${subEvent.id}';
+                  context.go(path);
+                  // context.pushNamed(
+                  //   EventUsersScreen.routeName,
+                  //   queryParams: {
+                  //     'subEventId': subEvent.id,
+                  //   },
+                  //   params: {
+                  //     'eventId': widget.eventId,
+                  //     'providerId': widget.providerId,
+                  //   },
+                  // );
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

@@ -14,7 +14,8 @@ import '../widgets/admin_info.dart';
 import '../widgets/pending_providers.dart';
 
 class AdminDashboardScreen extends ConsumerWidget {
-  static const String routeName = '/adminDashboard';
+  static const String routeName = 'admin';
+  static const String path = '/admin';
 
   const AdminDashboardScreen({Key? key}) : super(key: key);
 
@@ -70,7 +71,8 @@ class QrCodeValidationWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return CMICard(
       onTap: () {
-        context.push(QrCodeValidationString.routeName);
+        context.go(
+            '${AdminDashboardScreen.path}/${QrCodeValidationScreen.routeName}');
       },
       child: Center(
         child: Text(

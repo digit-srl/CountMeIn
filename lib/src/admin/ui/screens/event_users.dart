@@ -21,7 +21,7 @@ import 'package:universal_io/io.dart';
 import 'package:intl/intl.dart';
 
 class EventUsersScreen extends ConsumerStatefulWidget {
-  static const String routeName = '/eventUsers';
+  static const String routeName = 'eventUsers';
 
   final String eventId;
   final String providerId;

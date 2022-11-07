@@ -99,6 +99,7 @@ class RouterNotifier extends ChangeNotifier {
 
     final authState = _ref.read(authStateProvider);
     final isGoingToHome = state.subloc == '/';
+    final isGoingToAdmin = state.subloc == '/admin';
     final isGoingToVerificationEmail =
         state.subloc.startsWith(EmailVerificationScreen.routeName);
     final isGoingConfirmInvite =
@@ -112,17 +113,22 @@ class RouterNotifier extends ChangeNotifier {
         state.subloc == ActivityRequestScreen.routeName;
     // final isGoingToRecoverUserCard = state.subloc
 
-    if (isGoingToHome ||
-        isGoingToVerificationEmail ||
-        isGoingToActivityRequest ||
-        isGoingConfirmInvite ||
-        isGoingToResetPassword ||
-        isGoingToUserProfile ||
-        isGoingToUserCardForm) {
+    if(!isGoingToAdmin){
       return null;
     }
+
+    // if (isGoingToHome ||
+    //     isGoingToVerificationEmail ||
+    //     isGoingToActivityRequest ||
+    //     isGoingConfirmInvite ||
+    //     isGoingToResetPassword ||
+    //     isGoingToUserProfile ||
+    //     isGoingToUserCardForm) {
+    //   return null;
+    // }
+
     // From here we can use the state and implement our custom logic
-    final isGoingToDashboard = state.subloc == AdminDashboardScreen.routeName;
+    // final isGoingToDashboard = state.subloc == AdminDashboardScreen.routeName;
     final isGoingToSignIn = state.subloc == SignInScreen.routeName;
 
     final fromp = state.subloc == '/' ? '' : '?from=${state.location}';
@@ -146,6 +152,81 @@ class RouterNotifier extends ChangeNotifier {
           builder: (context, state) => const AuthGate(),
         ),
         GoRoute(
+            name: AdminDashboardScreen.routeName,
+            path: AdminDashboardScreen.path,
+            builder: (context, state) => const AdminDashboardScreen(),
+            routes: [
+              GoRoute(
+                path: AdminProvidersScreen.routeName,
+                builder: (context, state) => const AdminProvidersScreen(),
+                routes: [
+                  GoRoute(
+                    // name: AdminProviderHandlerScreen.routeName,
+                    path: '${AdminProviderHandlerScreen.routeName}/:providerId',
+                    builder: (context, state) {
+                      return AdminProviderHandlerScreen(
+                        providerId: state.params['providerId'] as String,
+                        extraProvider: state.extra as CMIProvider?,
+                      );
+                    },
+                    routes: [
+                      GoRoute(
+                        path: NewEventFormScreen.routeName,
+                        builder: (context, state) {
+                          return NewEventFormScreen(
+                            providerId: state.params['providerId']!,
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        path: ManagersHandlerScreen.routeName,
+                        builder: (context, state) => ManagersHandlerScreen(
+                          provider: state.extra as CMIProvider,
+                        ),
+                      ),
+                      GoRoute(
+                        name: EventDetailsScreen.routeName,
+                        path: '${EventDetailsScreen.routeName}/:eventId',
+                        builder: (context, state) {
+                          final eventId = state.params['eventId'] as String;
+                          final providerId = state.params['providerId'] as String;
+                          return EventDetailsScreen(
+                            eventId: eventId,
+                            providerId: providerId,
+                          );
+                        },
+                        routes: [
+                          GoRoute(
+                            name: EventUsersScreen.routeName,
+                            path: EventUsersScreen.routeName,
+                            builder: (context, state) {
+                              final eventId = state.params['eventId'] as String;
+                              final providerId = state.params['providerId'] as String;
+                              final subEventId = state.queryParams['s'] as String?;
+                              return EventUsersScreen(
+                                eventId: eventId,
+                                providerId: providerId,
+                                subEventId: subEventId,
+                              );
+                            },
+                          ),
+                        ]
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: AdminPendingProvidersScreen.routeName,
+                builder: (context, state) =>
+                    const AdminPendingProvidersScreen(),
+              ),
+              GoRoute(
+                path: QrCodeValidationScreen.routeName,
+                builder: (context, state) => const QrCodeValidationScreen(),
+              ),
+            ]),
+        GoRoute(
           path: SignInScreen.routeName,
           builder: (context, state) => SignInScreen(),
         ),
@@ -167,43 +248,6 @@ class RouterNotifier extends ChangeNotifier {
               ),
             );
           },
-        ),
-        GoRoute(
-          path: AdminDashboardScreen.routeName,
-          builder: (context, state) => const AdminDashboardScreen(),
-        ),
-        GoRoute(
-          path: ManagersHandlerScreen.routeName,
-          builder: (context, state) => ManagersHandlerScreen(
-            provider: state.extra as CMIProvider,
-          ),
-        ),
-        GoRoute(
-          path: AdminPendingProvidersScreen.routeName,
-          builder: (context, state) => const AdminPendingProvidersScreen(),
-        ),
-        GoRoute(
-          path: AdminProvidersScreen.routeName,
-          builder: (context, state) => const AdminProvidersScreen(),
-        ),
-        GoRoute(
-            // name: AdminProviderHandlerScreen.routeName,
-            path: '${AdminProviderHandlerScreen.routeName}/:providerId',
-            builder: (context, state) {
-              return AdminProviderHandlerScreen(
-                providerId: state.params['providerId'] as String,
-                extraProvider: state.extra as CMIProvider?,
-              );
-            }),
-        GoRoute(
-          path: '${NewEventFormScreen.routeName}/:providerId',
-          builder: (context, state) => NewEventFormScreen(
-            providerId: state.params['providerId']!,
-          ),
-        ),
-        GoRoute(
-          path: QrCodeValidationString.routeName,
-          builder: (context, state) => const QrCodeValidationString(),
         ),
         GoRoute(
           path: ActivityRequestScreen.routeName,
@@ -243,32 +287,6 @@ class RouterNotifier extends ChangeNotifier {
               },
             ),
           ],
-        ),
-        GoRoute(
-          name: EventDetailsScreen.routeName,
-          path: '${EventDetailsScreen.routeName}/:providerId/:eventId',
-          builder: (context, state) {
-            final eventId = state.params['eventId'] as String;
-            final providerId = state.params['providerId'] as String;
-            return EventDetailsScreen(
-              eventId: eventId,
-              providerId: providerId,
-            );
-          },
-        ),
-        GoRoute(
-          name: EventUsersScreen.routeName,
-          path: '${EventUsersScreen.routeName}/:providerId/:eventId',
-          builder: (context, state) {
-            final eventId = state.params['eventId'] as String;
-            final providerId = state.params['providerId'] as String;
-            final subEventId = state.queryParams['subEventId'] as String?;
-            return EventUsersScreen(
-              eventId: eventId,
-              providerId: providerId,
-              subEventId: subEventId,
-            );
-          },
         ),
         GoRoute(
           path: UserDetailsScreen.routeName,

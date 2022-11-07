@@ -3,6 +3,8 @@ import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
+import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
+import 'package:countmein/src/admin/ui/screens/admin_providers.dart';
 import 'package:countmein/src/admin/ui/screens/new_event.dart';
 import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
@@ -19,7 +21,7 @@ import '../widgets/info_text.dart';
 import 'managers.dart';
 
 class AdminProviderHandlerScreen extends ConsumerWidget {
-  static const String routeName = '/adminProviderHandler';
+  static const String routeName = 'dashboard';
 
   final String providerId;
   final CMIProvider? extraProvider;
@@ -52,7 +54,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(16),
         children: [
           CMICard(
-            collapsedWidget:  InfoText(
+            collapsedWidget: InfoText(
               label: 'Nome Provider',
               value: provider?.name,
             ),
@@ -109,8 +111,9 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                           : Icons.edit),
                       onPressed: provider?.managers != null
                           ? () {
-                              context.push(ManagersHandlerScreen.routeName,
-                                  extra: provider);
+                              final path =
+                                  '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${provider!.id}/${ManagersHandlerScreen.routeName}';
+                              context.go(path, extra: provider);
                               /* showDialog(
                                     context: context,
                                     builder: (c) {
@@ -158,7 +161,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
               ],
             ),
           ),
-           const SizedBox(height: 16),
+          const SizedBox(height: 16),
           if (provider?.status == CMIProviderStatus.live &&
               eventsState is AsyncData<List<CMIEvent>>)
             GenericGridView(
@@ -171,9 +174,12 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                             userRole == UserRole.admin
                         ? () {
                             if (provider == null) return;
-                            context.push(
-                              '${NewEventFormScreen.routeName}/${provider.id}',
-                            );
+                            final path =
+                                '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/$providerId/${NewEventFormScreen.routeName}';
+                            context.go(path, extra: provider);
+                            // context.push(
+                            //   '${NewEventFormScreen.routeName}/${provider.id}',
+                            // );
                           }
                         : null,
                     child: Column(
@@ -191,17 +197,17 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                     ),
                   );
                 }
-                final p = eventsState.asData!.value[index - 1];
+                final event = eventsState.asData!.value[index - 1];
                 return CMICard(
                   center: true,
                   onTap: () {
-                    context.pushNamed(
-                      EventDetailsScreen.routeName,
-                      params: {'eventId': p.id, 'providerId': providerId},
-                    );
+                    final path =
+                        '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/$providerId/${EventDetailsScreen.routeName}/${event.id}';
+
+                    context.go(path);
                   },
                   child: Text(
-                    p.name,
+                    event.name,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 );

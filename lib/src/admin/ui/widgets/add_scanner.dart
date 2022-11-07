@@ -37,7 +37,8 @@ class AddScannerWidget extends HookConsumerWidget {
     final scanners = ref.watch(scannersProvider(provider.id));
     final selectedScanner = useState<ProviderManager?>(null);
 
-    return Padding(
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 800),
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

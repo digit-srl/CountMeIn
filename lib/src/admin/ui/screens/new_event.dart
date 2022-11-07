@@ -30,7 +30,7 @@ final acceptPassepartoutProvider = StateProvider.autoDispose<bool>((ref) {
 });
 
 class NewEventFormScreen extends HookConsumerWidget {
-  static const String routeName = "/newEventForm";
+  static const String routeName = "create-event";
   final String providerId;
 
   NewEventFormScreen({

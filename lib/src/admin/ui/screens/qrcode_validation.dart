@@ -7,15 +7,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 
-class QrCodeValidationString extends StatefulHookConsumerWidget {
-  static const String routeName = '/qrCodeValidation';
-  const QrCodeValidationString({Key? key}) : super(key: key);
+class QrCodeValidationScreen extends StatefulHookConsumerWidget {
+  static const String routeName = 'qr-code-validation';
+  const QrCodeValidationScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<QrCodeValidationString> createState() => _State();
+  ConsumerState<QrCodeValidationScreen> createState() => _State();
 }
 
-class _State extends ConsumerState<QrCodeValidationString> {
+class _State extends ConsumerState<QrCodeValidationScreen> {
 
   final formKey = GlobalKey<FormState>();
 

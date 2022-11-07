@@ -45,7 +45,7 @@ final selectedRoleProvider = StateProvider.autoDispose<UserRole>((ref) {
 });
 
 class ManagersHandlerScreen extends StatefulHookConsumerWidget {
-  static const String routeName = '/managers';
+  static const String routeName = 'managers';
   final CMIProvider provider;
 
   const ManagersHandlerScreen({Key? key, required this.provider})
