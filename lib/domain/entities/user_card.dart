@@ -95,6 +95,7 @@ class EventUser with _$EventUser {
     String? groupName,
     int? averageAge,
     int? groupCount,
+    int? participationCount,
     double? womanPercentage,
     double? manPercentage,
   }) = _EventUser;

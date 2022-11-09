@@ -31,6 +31,8 @@ mixin _$CMIEvent {
   FrequencyType? get frequency => throw _privateConstructorUsedError;
   int? get recurrence => throw _privateConstructorUsedError;
   int? get remaining => throw _privateConstructorUsedError;
+  int? get totalUsers => throw _privateConstructorUsedError;
+  GenderCount? get genderCount => throw _privateConstructorUsedError;
   String? get currentSubEvent => throw _privateConstructorUsedError;
   @EventAccessTypeConverter()
   EventAccessType get accessType => throw _privateConstructorUsedError;
@@ -66,6 +68,8 @@ abstract class $CMIEventCopyWith<$Res> {
       @FrequencyTypeConverter() FrequencyType? frequency,
       int? recurrence,
       int? remaining,
+      int? totalUsers,
+      GenderCount? genderCount,
       String? currentSubEvent,
       @EventAccessTypeConverter() EventAccessType accessType,
       int maxWomCount,
@@ -73,6 +77,8 @@ abstract class $CMIEventCopyWith<$Res> {
       @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime? subEventDeadline,
       @MyDateTimeConverter() DateTime startAt});
+
+  $GenderCountCopyWith<$Res>? get genderCount;
 }
 
 /// @nodoc
@@ -98,6 +104,8 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
     Object? frequency = freezed,
     Object? recurrence = freezed,
     Object? remaining = freezed,
+    Object? totalUsers = freezed,
+    Object? genderCount = freezed,
     Object? currentSubEvent = freezed,
     Object? accessType = null,
     Object? maxWomCount = null,
@@ -147,6 +155,14 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
           ? _value.remaining
           : remaining // ignore: cast_nullable_to_non_nullable
               as int?,
+      totalUsers: freezed == totalUsers
+          ? _value.totalUsers
+          : totalUsers // ignore: cast_nullable_to_non_nullable
+              as int?,
+      genderCount: freezed == genderCount
+          ? _value.genderCount
+          : genderCount // ignore: cast_nullable_to_non_nullable
+              as GenderCount?,
       currentSubEvent: freezed == currentSubEvent
           ? _value.currentSubEvent
           : currentSubEvent // ignore: cast_nullable_to_non_nullable
@@ -177,6 +193,18 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
               as DateTime,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GenderCountCopyWith<$Res>? get genderCount {
+    if (_value.genderCount == null) {
+      return null;
+    }
+
+    return $GenderCountCopyWith<$Res>(_value.genderCount!, (value) {
+      return _then(_value.copyWith(genderCount: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -197,6 +225,8 @@ abstract class _$$_CMIEventCopyWith<$Res> implements $CMIEventCopyWith<$Res> {
       @FrequencyTypeConverter() FrequencyType? frequency,
       int? recurrence,
       int? remaining,
+      int? totalUsers,
+      GenderCount? genderCount,
       String? currentSubEvent,
       @EventAccessTypeConverter() EventAccessType accessType,
       int maxWomCount,
@@ -204,6 +234,9 @@ abstract class _$$_CMIEventCopyWith<$Res> implements $CMIEventCopyWith<$Res> {
       @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime? subEventDeadline,
       @MyDateTimeConverter() DateTime startAt});
+
+  @override
+  $GenderCountCopyWith<$Res>? get genderCount;
 }
 
 /// @nodoc
@@ -227,6 +260,8 @@ class __$$_CMIEventCopyWithImpl<$Res>
     Object? frequency = freezed,
     Object? recurrence = freezed,
     Object? remaining = freezed,
+    Object? totalUsers = freezed,
+    Object? genderCount = freezed,
     Object? currentSubEvent = freezed,
     Object? accessType = null,
     Object? maxWomCount = null,
@@ -276,6 +311,14 @@ class __$$_CMIEventCopyWithImpl<$Res>
           ? _value.remaining
           : remaining // ignore: cast_nullable_to_non_nullable
               as int?,
+      totalUsers: freezed == totalUsers
+          ? _value.totalUsers
+          : totalUsers // ignore: cast_nullable_to_non_nullable
+              as int?,
+      genderCount: freezed == genderCount
+          ? _value.genderCount
+          : genderCount // ignore: cast_nullable_to_non_nullable
+              as GenderCount?,
       currentSubEvent: freezed == currentSubEvent
           ? _value.currentSubEvent
           : currentSubEvent // ignore: cast_nullable_to_non_nullable
@@ -322,6 +365,8 @@ class _$_CMIEvent implements _CMIEvent {
       @FrequencyTypeConverter() this.frequency,
       this.recurrence,
       this.remaining,
+      this.totalUsers = 0,
+      this.genderCount,
       this.currentSubEvent,
       @EventAccessTypeConverter() required this.accessType,
       required this.maxWomCount,
@@ -360,6 +405,11 @@ class _$_CMIEvent implements _CMIEvent {
   @override
   final int? remaining;
   @override
+  @JsonKey()
+  final int? totalUsers;
+  @override
+  final GenderCount? genderCount;
+  @override
   final String? currentSubEvent;
   @override
   @EventAccessTypeConverter()
@@ -381,7 +431,7 @@ class _$_CMIEvent implements _CMIEvent {
 
   @override
   String toString() {
-    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, isOpen: $isOpen, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, currentSubEvent: $currentSubEvent, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt)';
+    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, isOpen: $isOpen, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, currentSubEvent: $currentSubEvent, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt)';
   }
 
   @override
@@ -406,6 +456,10 @@ class _$_CMIEvent implements _CMIEvent {
                 other.recurrence == recurrence) &&
             (identical(other.remaining, remaining) ||
                 other.remaining == remaining) &&
+            (identical(other.totalUsers, totalUsers) ||
+                other.totalUsers == totalUsers) &&
+            (identical(other.genderCount, genderCount) ||
+                other.genderCount == genderCount) &&
             (identical(other.currentSubEvent, currentSubEvent) ||
                 other.currentSubEvent == currentSubEvent) &&
             (identical(other.accessType, accessType) ||
@@ -422,25 +476,28 @@ class _$_CMIEvent implements _CMIEvent {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      name,
-      acceptPassepartout,
-      anonymous,
-      recurring,
-      isOpen,
-      emailShowed,
-      frequency,
-      recurrence,
-      remaining,
-      currentSubEvent,
-      accessType,
-      maxWomCount,
-      status,
-      createdOn,
-      subEventDeadline,
-      startAt);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        name,
+        acceptPassepartout,
+        anonymous,
+        recurring,
+        isOpen,
+        emailShowed,
+        frequency,
+        recurrence,
+        remaining,
+        totalUsers,
+        genderCount,
+        currentSubEvent,
+        accessType,
+        maxWomCount,
+        status,
+        createdOn,
+        subEventDeadline,
+        startAt
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -468,6 +525,8 @@ abstract class _CMIEvent implements CMIEvent {
       @FrequencyTypeConverter() final FrequencyType? frequency,
       final int? recurrence,
       final int? remaining,
+      final int? totalUsers,
+      final GenderCount? genderCount,
       final String? currentSubEvent,
       @EventAccessTypeConverter() required final EventAccessType accessType,
       required final int maxWomCount,
@@ -499,6 +558,10 @@ abstract class _CMIEvent implements CMIEvent {
   int? get recurrence;
   @override
   int? get remaining;
+  @override
+  int? get totalUsers;
+  @override
+  GenderCount? get genderCount;
   @override
   String? get currentSubEvent;
   @override

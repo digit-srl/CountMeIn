@@ -338,6 +338,7 @@ mixin _$EventUser {
   String? get groupName => throw _privateConstructorUsedError;
   int? get averageAge => throw _privateConstructorUsedError;
   int? get groupCount => throw _privateConstructorUsedError;
+  int? get participationCount => throw _privateConstructorUsedError;
   double? get womanPercentage => throw _privateConstructorUsedError;
   double? get manPercentage => throw _privateConstructorUsedError;
 
@@ -366,6 +367,7 @@ abstract class $EventUserCopyWith<$Res> {
       String? groupName,
       int? averageAge,
       int? groupCount,
+      int? participationCount,
       double? womanPercentage,
       double? manPercentage});
 }
@@ -396,6 +398,7 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
     Object? groupName = freezed,
     Object? averageAge = freezed,
     Object? groupCount = freezed,
+    Object? participationCount = freezed,
     Object? womanPercentage = freezed,
     Object? manPercentage = freezed,
   }) {
@@ -452,6 +455,10 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
           ? _value.groupCount
           : groupCount // ignore: cast_nullable_to_non_nullable
               as int?,
+      participationCount: freezed == participationCount
+          ? _value.participationCount
+          : participationCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       womanPercentage: freezed == womanPercentage
           ? _value.womanPercentage
           : womanPercentage // ignore: cast_nullable_to_non_nullable
@@ -485,6 +492,7 @@ abstract class _$$_EventUserCopyWith<$Res> implements $EventUserCopyWith<$Res> {
       String? groupName,
       int? averageAge,
       int? groupCount,
+      int? participationCount,
       double? womanPercentage,
       double? manPercentage});
 }
@@ -513,6 +521,7 @@ class __$$_EventUserCopyWithImpl<$Res>
     Object? groupName = freezed,
     Object? averageAge = freezed,
     Object? groupCount = freezed,
+    Object? participationCount = freezed,
     Object? womanPercentage = freezed,
     Object? manPercentage = freezed,
   }) {
@@ -569,6 +578,10 @@ class __$$_EventUserCopyWithImpl<$Res>
           ? _value.groupCount
           : groupCount // ignore: cast_nullable_to_non_nullable
               as int?,
+      participationCount: freezed == participationCount
+          ? _value.participationCount
+          : participationCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       womanPercentage: freezed == womanPercentage
           ? _value.womanPercentage
           : womanPercentage // ignore: cast_nullable_to_non_nullable
@@ -598,6 +611,7 @@ class _$_EventUser implements _EventUser {
       this.groupName,
       this.averageAge,
       this.groupCount,
+      this.participationCount,
       this.womanPercentage,
       this.manPercentage});
 
@@ -633,13 +647,15 @@ class _$_EventUser implements _EventUser {
   @override
   final int? groupCount;
   @override
+  final int? participationCount;
+  @override
   final double? womanPercentage;
   @override
   final double? manPercentage;
 
   @override
   String toString() {
-    return 'EventUser(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, isGroup: $isGroup, checkInAt: $checkInAt, checkOutAt: $checkOutAt, groupName: $groupName, averageAge: $averageAge, groupCount: $groupCount, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
+    return 'EventUser(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, isGroup: $isGroup, checkInAt: $checkInAt, checkOutAt: $checkOutAt, groupName: $groupName, averageAge: $averageAge, groupCount: $groupCount, participationCount: $participationCount, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
   }
 
   @override
@@ -668,6 +684,8 @@ class _$_EventUser implements _EventUser {
                 other.averageAge == averageAge) &&
             (identical(other.groupCount, groupCount) ||
                 other.groupCount == groupCount) &&
+            (identical(other.participationCount, participationCount) ||
+                other.participationCount == participationCount) &&
             (identical(other.womanPercentage, womanPercentage) ||
                 other.womanPercentage == womanPercentage) &&
             (identical(other.manPercentage, manPercentage) ||
@@ -691,6 +709,7 @@ class _$_EventUser implements _EventUser {
       groupName,
       averageAge,
       groupCount,
+      participationCount,
       womanPercentage,
       manPercentage);
 
@@ -723,6 +742,7 @@ abstract class _EventUser implements EventUser {
       final String? groupName,
       final int? averageAge,
       final int? groupCount,
+      final int? participationCount,
       final double? womanPercentage,
       final double? manPercentage}) = _$_EventUser;
 
@@ -757,6 +777,8 @@ abstract class _EventUser implements EventUser {
   int? get averageAge;
   @override
   int? get groupCount;
+  @override
+  int? get participationCount;
   @override
   double? get womanPercentage;
   @override

@@ -61,6 +61,7 @@ _$_EventUser _$$_EventUserFromJson(Map<String, dynamic> json) => _$_EventUser(
       groupName: json['groupName'] as String?,
       averageAge: json['averageAge'] as int?,
       groupCount: json['groupCount'] as int?,
+      participationCount: json['participationCount'] as int?,
       womanPercentage: (json['womanPercentage'] as num?)?.toDouble(),
       manPercentage: (json['manPercentage'] as num?)?.toDouble(),
     );
@@ -82,6 +83,7 @@ Map<String, dynamic> _$$_EventUserToJson(_$_EventUser instance) =>
       'groupName': instance.groupName,
       'averageAge': instance.averageAge,
       'groupCount': instance.groupCount,
+      'participationCount': instance.participationCount,
       'womanPercentage': instance.womanPercentage,
       'manPercentage': instance.manPercentage,
     };

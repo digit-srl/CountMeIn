@@ -5,6 +5,7 @@ import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/users_stream.dart';
 import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
+import 'package:countmein/src/admin/ui/widgets/gender_card.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/ui/screens/admin_user_details.dart';
 import 'package:countmein/ui/widgets/loading.dart';
@@ -64,6 +65,9 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
     // final isOwner = role == UserRole.admin;
     final hasData = usersState is AsyncData;
     final anonymous = eventState.value?.anonymous ?? true;
+    final genderCount = ids.subEventId == null
+        ? eventState.valueOrNull?.genderCount
+        : subEvent?.genderCount;
     return Scaffold(
       appBar: const AdminAppBar(
         title: 'Iscritti',
@@ -71,113 +75,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          if (subEvent?.genderCount != null)
-            CMICard(
-              child: Column(
-                children: [
-                  const Text('Genere'),
-                  SizedBox(
-                    height: 250,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AspectRatio(
-                          aspectRatio: 1,
-                          child: PieChart(
-                            PieChartData(
-                              pieTouchData: PieTouchData(
-                                touchCallback:
-                                    (FlTouchEvent event, pieTouchResponse) {
-                                  // setState(() {
-                                  //   if (!event.isInterestedForInteractions ||
-                                  //       pieTouchResponse == null ||
-                                  //       pieTouchResponse.touchedSection == null) {
-                                  //     touchedIndex = -1;
-                                  //     return;
-                                  //   }
-                                  //   touchedIndex = pieTouchResponse
-                                  //       .touchedSection!.touchedSectionIndex;
-                                  // });
-                                },
-                              ),
-                              borderData: FlBorderData(
-                                show: false,
-                              ),
-                              sectionsSpace: 0,
-                              centerSpaceRadius: 0,
-                              sections: showingSections(
-                                subEvent?.genderCount?.male ?? 0,
-                                subEvent?.genderCount?.female ?? 0,
-                                subEvent?.genderCount?.notBinary ?? 0,
-                                subEvent?.genderCount?.notAvailable ?? 0,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 24),
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                // const Text('M'),
-                                const Icon(
-                                  Icons.male,
-                                  color: Colors.blue,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(subEvent?.genderCount?.male.toString() ??
-                                    '-')
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                // const Text('F'),
-                                const Icon(
-                                  Icons.female,
-                                  color: Colors.pink,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(subEvent?.genderCount?.female.toString() ??
-                                    '-'),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                // const Text('?'),
-                                const Icon(Icons.not_interested,
-                                    color: Colors.green),
-                                const SizedBox(width: 8),
-                                Text(subEvent?.genderCount?.notBinary
-                                        .toString() ??
-                                    '-'),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                // const Text('?'),
-                                const Icon(Icons.not_interested,
-                                    color: Colors.grey),
-                                const SizedBox(width: 8),
-                                Text(subEvent?.genderCount?.notAvailable
-                                        .toString() ??
-                                    '-'),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          if (genderCount != null) GenderCard(genderCount: genderCount),
           const SizedBox(height: 8),
           Text(
             'Utenti',
@@ -218,6 +116,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                                             ? user.id
                                             : user.fullName,
                                   ),
+
                                   if (user.isGroup)
                                     Padding(
                                       padding:
@@ -234,12 +133,14 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                                           horizontal: 0,
                                           vertical: 0,
                                         ),
-                                        labelPadding: const EdgeInsets.symmetric(
+                                        labelPadding:
+                                            const EdgeInsets.symmetric(
                                           horizontal: 4,
                                           vertical: 0,
                                         ),
                                       ),
-                                    )
+                                    ),
+
                                 ],
                               ),
                               subtitle: user.isGroup
@@ -278,7 +179,9 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                                         Icons.arrow_circle_up,
                                         color: Colors.red,
                                       ),
-                                    )
+                                    ),
+                                  if(user.participationCount != null)
+                                    Text('Ricorrenze ${user.participationCount}'),
                                 ],
                               ),
                               // trailing: isOwner
@@ -421,80 +324,6 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
       logger.i(ex);
       return null;
     }
-  }
-
-  List<PieChartSectionData> showingSections(int m, int f, int nB, int na) {
-    final total = m + f + na;
-    final mPercentage = m / total * 100;
-    final fPercentage = f / total * 100;
-    final nbPercentage = nB / total * 100;
-    final naPercentage = na / total * 100;
-    return List.generate(4, (i) {
-      // final isTouched = i == touchedIndex;
-      final isTouched = false;
-      final fontSize = isTouched ? 20.0 : 16.0;
-      final radius = isTouched ? 110.0 : 100.0;
-      final widgetSize = isTouched ? 55.0 : 40.0;
-
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: Colors.blue,
-            value: mPercentage,
-            title: '${mPercentage.toStringAsFixed(1)}%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-            badgeWidget:
-                const CircleAvatar(radius: 20, child: Icon(Icons.male)),
-            badgePositionPercentageOffset: .98,
-          );
-        case 1:
-          return PieChartSectionData(
-            color: Colors.pink,
-            value: fPercentage,
-            title: '${fPercentage.toStringAsFixed(1)}%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-            badgeWidget:
-                const CircleAvatar(radius: 20, child: Icon(Icons.female)),
-            badgePositionPercentageOffset: .98,
-          );
-        case 2:
-          return PieChartSectionData(
-            color: Colors.green,
-            value: nbPercentage,
-            title: '${nbPercentage.toStringAsFixed(1)}%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-            badgeWidget: const Icon(Icons.female),
-            badgePositionPercentageOffset: .98,
-          );
-        case 3:
-          return PieChartSectionData(
-            color: Colors.grey,
-            value: naPercentage,
-            title: '${naPercentage.toStringAsFixed(1)}%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-            badgeWidget: const Icon(Icons.female),
-            badgePositionPercentageOffset: .98,
-          );
-        default:
-          throw 'Oh no';
-      }
-    });
   }
 }
 

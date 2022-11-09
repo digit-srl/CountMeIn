@@ -21,10 +21,8 @@ export function providerPendingInviteDocRef(
     .doc(inviteId);
 }
 
-export function privateUsersCollectionRef(
-  providerId: string
-): FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData> {
-  return providerDocRef(providerId).collection("usersPrivateData");
+export function privateUsersCollectionRef(): FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData> {
+  return db.collection("usersPrivateData");
 }
 
 export function usersCollectionRef(
@@ -51,10 +49,9 @@ export function userDocRef(
 }
 
 export function privateUserDocRef(
-  providerId: string,
   userId: string
 ): FirebaseFirestore.DocumentReference {
-  return privateUsersCollectionRef(providerId).doc(userId);
+  return privateUsersCollectionRef().doc(userId);
 }
 
 export function eventCollectionRef(

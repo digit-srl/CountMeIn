@@ -116,7 +116,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final eventState = ref.watch(eventProvider(ids));
-    final eventData = eventState.asData?.value;
+    final eventData = eventState.asData?.valueOrNull;
     final provider =
         ref.watch(singleCMIProviderProvider(widget.providerId)).valueOrNull;
     // final role = ref.watch(userRoleProvider(widget.providerId));
@@ -259,65 +259,80 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          GenericGridView(
-            itemCount: subEvents.length + 1,
-            itemBuilder: (c, index) {
-              if (index == 0) {
+          if (eventData != null)
+            GenericGridView(
+              itemCount: eventData.recurring ? subEvents.length + 1 : 1,
+              itemBuilder: (c, index) {
+
+                if (eventData.recurring && index == 0) {
+                  return CMICard(
+                    center: true,
+                    onTap: () {
+                      final path =
+                          '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${widget.providerId}/${EventDetailsScreen.routeName}/${widget.eventId}/${EventUsersScreen.routeName}';
+                      context.go(path);
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Utenti unici',
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                        if (eventData?.totalUsers != null &&
+                            eventData!.totalUsers! > 0)
+                          Text(
+                            // subEvent.id,
+                            '${eventData.totalUsers} utenti',
+                            style: Theme.of(context).textTheme.caption,
+                          ),
+                      ],
+                    ),
+                  );
+                }
+                final realIndex = index - ( eventData.recurring ? 1 : 0);
+                final subEvent = subEvents[realIndex];
                 return CMICard(
                   center: true,
+                  flag: subEvent.startAt.isToday
+                      ? Chip(
+                          backgroundColor: Colors.green,
+                          label: Text('ATTIVO'),
+                        )
+                      : null,
                   onTap: () {
                     final path =
-                        '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${widget.providerId}/${EventDetailsScreen.routeName}/${widget.eventId}/${EventUsersScreen.routeName}';
+                        '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${widget.providerId}/${EventDetailsScreen.routeName}/${widget.eventId}/${EventUsersScreen.routeName}?s=${subEvent.id}';
                     context.go(path);
+                    // context.pushNamed(
+                    //   EventUsersScreen.routeName,
+                    //   queryParams: {
+                    //     'subEventId': subEvent.id,
+                    //   },
+                    //   params: {
+                    //     'eventId': widget.eventId,
+                    //     'providerId': widget.providerId,
+                    //   },
+                    // );
                   },
-                  child: Text(
-                    'Utenti unici',
-                    style: Theme.of(context).textTheme.subtitle1,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        // subEvent.id,
+                        formatter.format(subEvent.startAt),
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                      Text(
+                        // subEvent.id,
+                        '${subEvent.totalUsers} utenti',
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                    ],
                   ),
                 );
-              }
-              final subEvent = subEvents[index - 1];
-              return CMICard(
-                center: true,
-                flag: subEvent.startAt.isToday
-                    ? Chip(
-                        backgroundColor: Colors.green,
-                        label: Text('ATTIVO'),
-                      )
-                    : null,
-                onTap: () {
-                  final path =
-                      '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${widget.providerId}/${EventDetailsScreen.routeName}/${widget.eventId}/${EventUsersScreen.routeName}?s=${subEvent.id}';
-                  context.go(path);
-                  // context.pushNamed(
-                  //   EventUsersScreen.routeName,
-                  //   queryParams: {
-                  //     'subEventId': subEvent.id,
-                  //   },
-                  //   params: {
-                  //     'eventId': widget.eventId,
-                  //     'providerId': widget.providerId,
-                  //   },
-                  // );
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      // subEvent.id,
-                      formatter.format(subEvent.startAt),
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                    Text(
-                      // subEvent.id,
-                      '${subEvent.totalUsers} utenti',
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+              },
+            ),
           /*LayoutBuilder(builder: (context, constraints) {
             return GridView.count(
               shrinkWrap: true,
@@ -353,6 +368,7 @@ class ScanSimulationWidget extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final dataController = useTextEditingController();
     final scanMode = useState(ScanMode.checkOut);
+    ref.listen(scanControllerProvider(event.id), (_, __) {});
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -391,7 +407,7 @@ class ScanSimulationWidget extends HookConsumerWidget {
           ElevatedButton(
               onPressed: () {
 // https://cmi.digit.srl/profile/27KEQsVlgbHsNONPSP5V?name=Gian Marco&surname=Di Francesco&cf=DFRGMR89M02I348U&pId=countmein&gId=g2f90soy5Xf1tvX3xrsW&gN=GRUPPO JANMARC&gC=6&aA=12
-                ref.read(scanControllerProvider(event.id)).processScan(
+                ref.read(scanControllerProvider(event.id)).processScan2(
                       dataController.text.trim(),
                       provider,
                       event,

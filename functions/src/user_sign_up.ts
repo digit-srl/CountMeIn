@@ -421,7 +421,7 @@ exports.recoverUserCard = functions
         try {
           const bornInTimestamp = firestore.Timestamp.fromDate(bornIn);
           const batch = db.batch();
-          const userPrivateRef = privateUsersCollectionRef(providerId).doc();
+          const userPrivateRef = privateUsersCollectionRef().doc();
           const privateId = userPrivateRef.id;
           batch.set(userPrivateRef, {
             id: privateId,
@@ -429,7 +429,7 @@ exports.recoverUserCard = functions
             gender: gender,
           });
           await batch.commit();
-          console.log("new user crated " + data.email);
+          console.log("private date set on" + userPrivateRef.path);
           await sendUserCard(userData, providerId, providerName, privateId);
           response.sendStatus(200);
         } catch (err: any) {

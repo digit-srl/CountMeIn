@@ -34,8 +34,8 @@ class HomeWebScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                // context.go('${UserProviderScreen.routeName}/Yy31B32YBDJDUt7TbZEl');
-                context.go('${UserProviderScreen.routeName}/countmein');
+                context.go('${UserProviderScreen.routeName}/Yy31B32YBDJDUt7TbZEl');
+                // context.go('${UserProviderScreen.routeName}/countmein');
               },
               child: Text('vai all evento'),
             ),

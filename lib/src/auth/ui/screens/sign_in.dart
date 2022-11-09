@@ -1,4 +1,5 @@
 import 'package:countmein/my_logger.dart';
+import 'package:countmein/src/auth/ui/screens/auht_gate.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/ui/screens/request_activity.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
@@ -65,7 +66,17 @@ class SignInScreen extends HookConsumerWidget {
         useTextEditingController(text: Hive.box('user').get('password'));
     final isLoading = ref.watch(signInNotifierProvider);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.home),
+            color: Colors.white,
+            onPressed: () {
+              context.go(AuthGate.routeName);
+            },
+          ),
+        ],
+      ),
       body: LoadingOverlay(
         isLoading: isLoading,
         child: Center(

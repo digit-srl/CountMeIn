@@ -89,6 +89,8 @@ class CMIEvent with _$CMIEvent {
     @FrequencyTypeConverter() FrequencyType? frequency,
     int? recurrence,
     int? remaining,
+    @Default(0) int? totalUsers,
+    GenderCount? genderCount,
     String? currentSubEvent,
     @EventAccessTypeConverter() required EventAccessType accessType,
     required int maxWomCount,

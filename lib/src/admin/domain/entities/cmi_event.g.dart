@@ -18,6 +18,10 @@ _$_CMIEvent _$$_CMIEventFromJson(Map<String, dynamic> json) => _$_CMIEvent(
           const FrequencyTypeConverter().fromJson(json['frequency'] as String?),
       recurrence: json['recurrence'] as int?,
       remaining: json['remaining'] as int?,
+      totalUsers: json['totalUsers'] as int? ?? 0,
+      genderCount: json['genderCount'] == null
+          ? null
+          : GenderCount.fromJson(json['genderCount'] as Map<String, dynamic>),
       currentSubEvent: json['currentSubEvent'] as String?,
       accessType: $enumDecode(_$EventAccessTypeEnumMap, json['accessType']),
       maxWomCount: json['maxWomCount'] as int,
@@ -43,6 +47,8 @@ Map<String, dynamic> _$$_CMIEventToJson(_$_CMIEvent instance) =>
       'frequency': const FrequencyTypeConverter().toJson(instance.frequency),
       'recurrence': instance.recurrence,
       'remaining': instance.remaining,
+      'totalUsers': instance.totalUsers,
+      'genderCount': instance.genderCount,
       'currentSubEvent': instance.currentSubEvent,
       'accessType': _$EventAccessTypeEnumMap[instance.accessType]!,
       'maxWomCount': instance.maxWomCount,

@@ -111,7 +111,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                     onDetect: (barcode, args) {
                       final data = barcode.rawValue;
                       if (data == null) return;
-                      ref.read(scanControllerProvider(widget.event.id)).processScan(
+                      ref.read(scanControllerProvider(widget.event.id)).processScan2(
                             data,
                             widget.provider,
                             widget.event,

@@ -36,10 +36,11 @@ class QrCodeData with _$QrCodeData {
           throw Exception();
         }
 
-        logger.i(uri.pathSegments);
         if (uri.pathSegments.length != 2 || uri.pathSegments[0] != 'profile') {
           throw Exception();
         }
+        logger.i(uri.pathSegments[0]);
+        logger.i(uri.pathSegments[1]);
 
         final userId = uri.pathSegments[1];
 
@@ -73,6 +74,8 @@ class QrCodeData with _$QrCodeData {
             params.containsKey('gId') &&
             params.containsKey('gC') &&
             params.containsKey('gN')) {
+
+          logger.i("this qrcode is a group card");
           return QrCodeData(
             id: userId,
             name: params['name'] as String,
@@ -91,6 +94,9 @@ class QrCodeData with _$QrCodeData {
             params.containsKey('surname') &&
             params.containsKey('cf') &&
             params.containsKey('pId')) {
+
+
+          logger.i("this qrcode is a simple card");
           return QrCodeData(
             id: userId,
             name: params['name'] as String,

@@ -12,12 +12,7 @@ import { UserRecord } from "firebase-functions/v1/auth";
 import * as firestore from "@google-cloud/firestore";
 import * as utils from "./firestore_utils";
 import {
-  credentialsCollectionRef,
-  eventCollectionRef,
   providerDocRef,
-  providersCollectionRef,
-  usersCollectionRef,
-  privateUsersCollectionRef,
   providerPendingInviteDocRef,
 } from "./firestore_references";
 
@@ -494,83 +489,6 @@ async function generateAndSendResetPasswordEmail(
   }
 }
 
-//Only for testing
-/*
-export const createNewProvider = functions
-  .region("europe-west3")
-  .https.onRequest(
-    async (request: functions.https.Request, response: functions.Response) => {
-      console.log(request.body);
-
-      if (request.method !== "POST") {
-        response.status(403).send("Forbidden!");
-        return;
-      }
-
-      const data = request.body;
-      //const acceptPassepartout = data.acceptPassepartout;
-      const name = data.name;
-      const surname = data.surname;
-      const email = data.email;
-      //const releaseWom = data.releaseWom;
-      //const status = data.status;
-
-      if (name === undefined || name === null || name === "") {
-        response.status(400).send("invalid name");
-        return;
-      }
-
-      try {
-        await createNewAdminForProvider(
-          name,
-          surname,
-          email,
-          "admin",
-          "",
-          "DFRGMR89M02I348U"
-        );
-        response.status(200).end();
-      } catch (error) {
-        console.log(error);
-        response.status(500).send(error);
-      }
-    }
-  );
-*/
-
-//Only for testing
-/*export const verifyEmail = functions
-  .region("europe-west3")
-  .https.onRequest(
-    async (request: functions.https.Request, response: functions.Response) => {
-      console.log(request.body);
-
-      if (request.method !== "POST") {
-        response.status(403).send("Forbidden!");
-        return;
-      }
-
-      const data = request.body;
-      const email = data.email;
-      const uid = data.uid;
-
-      if (email === undefined || email === null || email === "") {
-        response.status(400).send("invalid email");
-        return;
-      }
-
-      try {
-        await admin.auth().updateUser(uid, {
-          emailVerified: true,
-        });
-        response.status(200).end();
-      } catch (error) {
-        console.log(error);
-        response.status(500).send(error);
-      }
-    }
-  );*/
-
 // Saves a message to the Firebase Realtime Database but sanitizes the text by removing swearwords.
 export const confirmPendingInvite = functions
   .region("europe-west3")
@@ -825,108 +743,6 @@ export const onInviteToCollaborate = functions
     return Email.sendInvite(providerName, fullName, email, role, url);
   });
 
-//Only for testing
-export const processEvents = functions
-  .region("europe-west3")
-  .https.onRequest(
-    async (request: functions.https.Request, response: functions.Response) => {
-      cors(request, response, async () => {
-        const now = new Date();
-        console.log(
-          "This will be run every day at 00:00 UTC " + now.toISOString()
-        );
-
-        const nowUTC = dateToUTC(new Date());
-        console.log(nowUTC);
-        //prendo tutti gli eventi attivi ricorrenti che sono da aggiornare (query su subEventDeadline)
-        const querySnapshot = await db
-          .collectionGroup("events")
-          .where("status", "==", "live")
-          //.where("recurring", "==", true)
-          .where("subEventDeadline", "<=", nowUTC)
-          .get();
-
-        querySnapshot.forEach(
-          async (doc: FirebaseFirestore.QueryDocumentSnapshot) => {
-            console.log(doc.id, " => ", doc.data());
-
-            const docRef = doc.ref;
-            const providerId = docRef.parent.parent?.id;
-
-            console.log("providerId:" + providerId);
-
-            const data = doc.data();
-            const recurrence = data.recurrence;
-            const remaining = data.remaining;
-
-            if (remaining > 0) {
-              var multiplier = 1;
-              if (recurrence === "daily") {
-                multiplier = 1;
-              } else if (recurrence === "monthly") {
-                multiplier = 31;
-              } else if (recurrence === "yearly") {
-                multiplier = 365;
-              }
-
-              const subEventDeadlineTimestamp: FirebaseFirestore.Timestamp =
-                data.subEventDeadline;
-              const subEventDeadlineDate = subEventDeadlineTimestamp.toDate();
-
-              let nextSubEventDeadlineDate: Date = addDays(
-                multiplier,
-                subEventDeadlineDate
-              );
-
-              console.log(subEventDeadlineDate);
-              console.log(nextSubEventDeadlineDate);
-
-              const nextSubEventId =
-                subEventDeadlineDate.getFullYear() +
-                "-" +
-                ("0" + (subEventDeadlineDate.getMonth() + 1)).slice(-2) +
-                "-" +
-                ("0" + subEventDeadlineDate.getDate()).slice(-2);
-
-              console.log("nextSubEventId " + nextSubEventId);
-
-              const nextReimaining = remaining - 1;
-
-              const nextSubEventDeadlineTimestamp: firestore.Timestamp =
-                firestore.Timestamp.fromDate(nextSubEventDeadlineDate);
-
-              const nextSubEvent = {
-                id: nextSubEventId,
-                startAt: subEventDeadlineTimestamp,
-                endAt: nextSubEventDeadlineTimestamp,
-              };
-
-              await docRef.update({
-                remaining: nextReimaining,
-                currentSubEvent: nextSubEventId,
-                subEventDeadline: nextSubEventDeadlineTimestamp,
-              });
-
-              await docRef
-                .collection("subEvents")
-                .doc(nextSubEventId)
-                .set(nextSubEvent);
-            } else {
-              //chiudo l evento
-              await docRef.update({
-                subEventDeadline: null,
-                status: "closed",
-              });
-            }
-          }
-        );
-        response
-          .status(200)
-          .send("There are " + querySnapshot.size + " events");
-      });
-    }
-  );
-
 function addDays(numOfDays: number, date = new Date()) {
   const dateCopy = new Date(date.getTime());
 
@@ -1038,6 +854,110 @@ export const updateSubEventsCron = functions
   });
 
 //Only for testing
+/*
+
+//Only for testing
+export const processEvents = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      cors(request, response, async () => {
+        const now = new Date();
+        console.log(
+          "This will be run every day at 00:00 UTC " + now.toISOString()
+        );
+
+        const nowUTC = dateToUTC(new Date());
+        console.log(nowUTC);
+        //prendo tutti gli eventi attivi ricorrenti che sono da aggiornare (query su subEventDeadline)
+        const querySnapshot = await db
+          .collectionGroup("events")
+          .where("status", "==", "live")
+          //.where("recurring", "==", true)
+          .where("subEventDeadline", "<=", nowUTC)
+          .get();
+
+        querySnapshot.forEach(
+          async (doc: FirebaseFirestore.QueryDocumentSnapshot) => {
+            console.log(doc.id, " => ", doc.data());
+
+            const docRef = doc.ref;
+            const providerId = docRef.parent.parent?.id;
+
+            console.log("providerId:" + providerId);
+
+            const data = doc.data();
+            const recurrence = data.recurrence;
+            const remaining = data.remaining;
+
+            if (remaining > 0) {
+              var multiplier = 1;
+              if (recurrence === "daily") {
+                multiplier = 1;
+              } else if (recurrence === "monthly") {
+                multiplier = 31;
+              } else if (recurrence === "yearly") {
+                multiplier = 365;
+              }
+
+              const subEventDeadlineTimestamp: FirebaseFirestore.Timestamp =
+                data.subEventDeadline;
+              const subEventDeadlineDate = subEventDeadlineTimestamp.toDate();
+
+              let nextSubEventDeadlineDate: Date = addDays(
+                multiplier,
+                subEventDeadlineDate
+              );
+
+              console.log(subEventDeadlineDate);
+              console.log(nextSubEventDeadlineDate);
+
+              const nextSubEventId =
+                subEventDeadlineDate.getFullYear() +
+                "-" +
+                ("0" + (subEventDeadlineDate.getMonth() + 1)).slice(-2) +
+                "-" +
+                ("0" + subEventDeadlineDate.getDate()).slice(-2);
+
+              console.log("nextSubEventId " + nextSubEventId);
+
+              const nextReimaining = remaining - 1;
+
+              const nextSubEventDeadlineTimestamp: firestore.Timestamp =
+                firestore.Timestamp.fromDate(nextSubEventDeadlineDate);
+
+              const nextSubEvent = {
+                id: nextSubEventId,
+                startAt: subEventDeadlineTimestamp,
+                endAt: nextSubEventDeadlineTimestamp,
+              };
+
+              await docRef.update({
+                remaining: nextReimaining,
+                currentSubEvent: nextSubEventId,
+                subEventDeadline: nextSubEventDeadlineTimestamp,
+              });
+
+              await docRef
+                .collection("subEvents")
+                .doc(nextSubEventId)
+                .set(nextSubEvent);
+            } else {
+              //chiudo l evento
+              await docRef.update({
+                subEventDeadline: null,
+                status: "closed",
+              });
+            }
+          }
+        );
+        response
+          .status(200)
+          .send("There are " + querySnapshot.size + " events");
+      });
+    }
+  );
+  
 export const exportDbToJson = functions
   .region("europe-west3")
   .https.onRequest(
@@ -1048,9 +968,7 @@ export const exportDbToJson = functions
         const providerId = providers.docs[0].data().id;
         const event = await eventCollectionRef(providerId).limit(1).get();
         const user = await usersCollectionRef(providerId).limit(1).get();
-        const userPrivate = await privateUsersCollectionRef(providerId)
-          .limit(1)
-          .get();
+        const userPrivate = await privateUsersCollectionRef().limit(1).get();
 
         const data = {
           credentials: credentials.docs[0].data(),
@@ -1063,3 +981,101 @@ export const exportDbToJson = functions
       });
     }
   );
+*/
+
+//Only for testing
+/*
+export const copyFirebaseDoc = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      cors(request, response, async () => {
+        const data = request.body;
+        const fromRef = data.fromRef;
+        const toRef = data.toRef;
+
+        const dbFromRef = db.doc(fromRef);
+        const fromDoc = await dbFromRef.get();
+        await db.doc(toRef).set(fromDoc.data());
+        response.send("Ok");
+      });
+    }
+  );
+  */
+
+//Only for testing
+/*
+export const createNewProvider = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      console.log(request.body);
+
+      if (request.method !== "POST") {
+        response.status(403).send("Forbidden!");
+        return;
+      }
+
+      const data = request.body;
+      //const acceptPassepartout = data.acceptPassepartout;
+      const name = data.name;
+      const surname = data.surname;
+      const email = data.email;
+      //const releaseWom = data.releaseWom;
+      //const status = data.status;
+
+      if (name === undefined || name === null || name === "") {
+        response.status(400).send("invalid name");
+        return;
+      }
+
+      try {
+        await createNewAdminForProvider(
+          name,
+          surname,
+          email,
+          "admin",
+          "",
+          "DFRGMR89M02I348U"
+        );
+        response.status(200).end();
+      } catch (error) {
+        console.log(error);
+        response.status(500).send(error);
+      }
+    }
+  );
+*/
+
+//Only for testing
+/*export const verifyEmail = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      console.log(request.body);
+
+      if (request.method !== "POST") {
+        response.status(403).send("Forbidden!");
+        return;
+      }
+
+      const data = request.body;
+      const email = data.email;
+      const uid = data.uid;
+
+      if (email === undefined || email === null || email === "") {
+        response.status(400).send("invalid email");
+        return;
+      }
+
+      try {
+        await admin.auth().updateUser(uid, {
+          emailVerified: true,
+        });
+        response.status(200).end();
+      } catch (error) {
+        console.log(error);
+        response.status(500).send(error);
+      }
+    }
+  );*/
