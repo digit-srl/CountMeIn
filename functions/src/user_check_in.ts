@@ -11,10 +11,10 @@ import {
   privateUserDocRef,
 } from "./firestore_references";
 
-exports.onPrivateUserCheckIn = functions
+exports.onPrivateSessionUserCheckIn = functions
   .region("europe-west3")
   .firestore.document(
-    "providers/{providerId}/events/{eventId}/subEvents/{subEventId}/privateUsers/{userId}"
+    "providers/{providerId}/events/{eventId}/sessions/{sessionId}/privateUsers/{userId}"
   )
   .onWrite(async (snap, context) => {
     try {
@@ -23,16 +23,21 @@ exports.onPrivateUserCheckIn = functions
 
       //utente cancellato
       if (!snap.after.exists) {
-        console.log("utente rimosso da " + "eventId: " + userId);
+        console.log(
+          "onPrivateUserCheckIn: utente rimosso da " + "eventId: " + userId
+        );
         return;
       }
 
       const privateEventUserData: FirebaseFirestore.DocumentData | undefined =
         snap.after.data();
-      console.log("user check in private id: " + privateEventUserData?.id);
+      console.log(
+        "onPrivateUserCheckIn: user check in private id: " +
+          privateEventUserData?.id
+      );
 
       if (privateEventUserData === undefined || privateEventUserData === null) {
-        console.log("privateEventUserDoc undefined ");
+        console.log("onPrivateUserCheckIn: privateEventUserDoc undefined ");
         return null;
       }
 
@@ -65,7 +70,9 @@ exports.onPrivateUserCheckIn = functions
           }
 
           if (m != 0 || f != 0 || na != 0) {
-            console.log("m: " + m + ",f: " + f + ",na: " + na);
+            console.log(
+              "onPrivateUserCheckIn: m: " + m + ",f: " + f + ",na: " + na
+            );
             const countRef = snap.after.ref.parent.parent;
             if (countRef != null) {
               await db.runTransaction(
@@ -84,34 +91,34 @@ exports.onPrivateUserCheckIn = functions
             }
           }
         } else {
-          console.log("gender infot doesnt exists");
+          console.log("onPrivateUserCheckIn: gender infot doesnt exists");
         }
       } else {
-        console.log("private user doc doesnt exists");
+        console.log("onPrivateUserCheckIn: private user doc doesnt exists");
       }
       return null;
     } catch (ex) {
-      console.log("onUpdateCheckIn failed");
+      console.log("onPrivateUserCheckIn failed");
       console.log(ex);
       return null;
     }
   });
 
-export const onUserCheckIn = functions
+export const onSessionUserCheckIn = functions
   .region("europe-west3")
   .firestore.document(
-    "providers/{providerId}/events/{eventId}/subEvents/{subEventId}/users/{userId}"
+    "providers/{providerId}/events/{eventId}/sessions/{sessionId}/users/{userId}"
   )
   .onWrite(async (snap, context) => {
     try {
       const eventId = context.params.eventId;
-      const subEventId = context.params.subEventId;
+      const sessionId = context.params.sessionId;
       const providerId = context.params.providerId;
       const userId = context.params.userId;
       const eventRef = snap.after.ref.parent.parent;
 
       console.log(
-        "providerId" +
+        "onUserCheckIn: providerId" +
           providerId +
           " eventId: " +
           eventId +
@@ -121,7 +128,7 @@ export const onUserCheckIn = functions
 
       //utente cancellato
       if (!snap.after.exists) {
-        console.log("utente rimosso da " + "eventId: " + userId);
+        console.log("onUserCheckIn: utente rimosso da " + "eventId: " + userId);
 
         const previousUser: FirebaseFirestore.DocumentData | undefined =
           snap.before.data();
@@ -133,7 +140,9 @@ export const onUserCheckIn = functions
           const groupCount = isGroup ? previousUser.groupCount ?? 0 : 1;
 
           if (eventRef != null) {
-            console.log("decrement total user with " + groupCount);
+            console.log(
+              "onUserCheckIn: decrement total user with " + groupCount
+            );
             await db.runTransaction(
               async (transaction: FirebaseFirestore.Transaction) => {
                 await transaction.update(eventRef, {
@@ -148,10 +157,12 @@ export const onUserCheckIn = functions
 
       const user: FirebaseFirestore.DocumentData | undefined =
         snap.after.data();
-      console.log("user check in name: " + user?.name + " " + user?.id);
+      console.log(
+        "onUserCheckIn: user check in name: " + user?.name + " " + user?.id
+      );
 
       if (user === undefined || user === null) {
-        console.log("user id undefined ");
+        console.log("onUserCheckIn: user id undefined ");
         return null;
       }
 
@@ -162,15 +173,17 @@ export const onUserCheckIn = functions
 
       // Nuovo utente (può avere checkInAt != null oppure checkOutAt != null mai entrambi != null)
       if (!snap.before.exists && snap.after.exists) {
-        console.log("new user in subevent " + subEventId);
+        console.log("onUserCheckIn: new user in subevent " + sessionId);
         // Utente ha fatto check in
         if (checkInAt != null || checkOutAt != null) {
-          console.log("checkInAt or  checkOutAt != null");
+          console.log("onUserCheckIn: checkInAt or  checkOutAt != null");
           //Incrementiamo il numero degli utenti totali
           const groupCount = isGroup ? user.groupCount ?? 0 : 1;
           if (eventRef != null) {
-            console.log("eventRef : " + eventRef.path);
-            console.log("increment total user with " + groupCount);
+            console.log("onUserCheckIn: eventRef : " + eventRef.path);
+            console.log(
+              "onUserCheckIn: increment total user with " + groupCount
+            );
             await db.runTransaction(
               async (transaction: FirebaseFirestore.Transaction) => {
                 await transaction.update(eventRef, {
@@ -184,13 +197,15 @@ export const onUserCheckIn = functions
 
       //Se è un gruppo terminiamo la funzione in quanto i passaggi successivi sono relativi al rilascio dei wom
       if (isGroup) {
-        console.log("The user is a group, a group will not receive woms");
+        console.log(
+          "onUserCheckIn: The user is a group, a group will not receive woms"
+        );
         return;
       }
 
       if (checkOutAt === undefined || checkOutAt === null) {
         console.log(
-          "Missing checkOut: this trigger need of checkOut date to release wom"
+          "onUserCheckIn: Missing checkOut: this trigger need of checkOut date to release wom"
         );
         return;
       }
@@ -207,7 +222,9 @@ export const onUserCheckIn = functions
       console.log(eventName);
 
       if (womCount === undefined || womCount === null || womCount === 0) {
-        console.log("this event not release wom to user : " + userId);
+        console.log(
+          "onUserCheckIn: this event not release wom to user : " + userId
+        );
         return;
       }
 
@@ -215,7 +232,9 @@ export const onUserCheckIn = functions
         eventAccessType === "inOut" &&
         (checkInAt === undefined || checkInAt === null)
       ) {
-        console.log("Event with in/out access must to have checkInAt defined");
+        console.log(
+          "onUserCheckIn: Event with in/out access must to have checkInAt defined"
+        );
         return null;
       }
 
@@ -254,10 +273,10 @@ export const onUserCheckIn = functions
 
       const email = userData.email;
       if (email === undefined || email === null) {
-        console.log("STOP user not exist email undefined ");
+        console.log("onUserCheckIn: STOP user not exist email undefined ");
         return null;
       }
-      console.log("user exist email " + userData.email);
+      console.log("onUserCheckIn: user exist email " + userData.email);
 
       const providerDoc: FirebaseFirestore.DocumentData = await providerDocRef(
         providerId
@@ -281,7 +300,10 @@ export const onUserCheckIn = functions
       const aim = providerDoc.data().aim;
 
       if (apiKey === undefined || apiKey === null) {
-        console.log("ApiKey is null or undefined, providerId: " + providerId);
+        console.log(
+          "onUserCheckIn: ApiKey is null or undefined, providerId: " +
+            providerId
+        );
         return null;
       }
       const data = {
@@ -337,16 +359,25 @@ exports.onGlobalPrivateUserCheckIn = functions
 
       //utente cancellato
       if (!snap.after.exists) {
-        console.log("utente rimosso da " + "eventId: " + userId);
+        console.log(
+          "onGlobalPrivateUserCheckIn: utente rimosso da " +
+            "eventId: " +
+            userId
+        );
         return new Promise((resolve, reject) => {});
       }
 
       const privateEventUserData: FirebaseFirestore.DocumentData | undefined =
         snap.after.data();
-      console.log("user check in private id: " + privateEventUserData?.id);
+      console.log(
+        "onGlobalPrivateUserCheckIn: user check in private id: " +
+          privateEventUserData?.id
+      );
 
       if (privateEventUserData === undefined || privateEventUserData === null) {
-        console.log("privateEventUserDoc undefined ");
+        console.log(
+          "onGlobalPrivateUserCheckIn: privateEventUserDoc undefined "
+        );
         return new Promise((resolve, reject) => {});
       }
 
@@ -394,18 +425,22 @@ exports.onGlobalPrivateUserCheckIn = functions
               //await countRef.update((current) => {
               //  return (current || 0) + increment;
               //});
-              functions.logger.log("Gender counter updated.");
+              console.log(
+                "onGlobalPrivateUserCheckIn: Gender counter updated."
+              );
             }
           }
         } else {
-          console.log("gender infot doesnt exists");
+          console.log("onGlobalPrivateUserCheckIn: gender infot doesnt exists");
         }
       } else {
-        console.log("private user doc doesnt exists");
+        console.log(
+          "onGlobalPrivateUserCheckIn: private user doc doesnt exists"
+        );
       }
       return new Promise((resolve, reject) => {});
     } catch (ex) {
-      console.log("onUpdateCheckIn failed");
+      console.log("onGlobalPrivateUserCheckIn failed");
       console.log(ex);
       return new Promise((resolve, reject) => {});
     }
@@ -422,7 +457,7 @@ export const onGlobalUserCheckIn = functions
       const eventRef = snap.after.ref.parent.parent;
 
       console.log(
-        "providerId" +
+        "onGlobalUserCheckIn: providerId" +
           providerId +
           " eventId: " +
           eventId +
@@ -433,7 +468,7 @@ export const onGlobalUserCheckIn = functions
       //utente cancellato
       if (!snap.after.exists) {
         console.log(
-          "utente rimosso da " + "eventId: " + eventId,
+          "onGlobalUserCheckIn: utente rimosso da " + "eventId: " + eventId,
           "userId: " + userId
         );
 
@@ -446,7 +481,9 @@ export const onGlobalUserCheckIn = functions
           //Decrementiamo il numero degli utenti totali
           const groupCount = isGroup ? previousUser.groupCount ?? 0 : 1;
           if (eventRef != null) {
-            console.log("decrement total user with " + groupCount);
+            console.log(
+              "onGlobalUserCheckIn: decrement total user with " + groupCount
+            );
             await db.runTransaction(
               async (transaction: FirebaseFirestore.Transaction) => {
                 await transaction.update(eventRef, {
@@ -461,10 +498,15 @@ export const onGlobalUserCheckIn = functions
 
       const user: FirebaseFirestore.DocumentData | undefined =
         snap.after.data();
-      console.log("user check in name: " + user?.name + " userId: " + user?.id);
+      console.log(
+        "onGlobalUserCheckIn: user check in name: " +
+          user?.name +
+          " userId: " +
+          user?.id
+      );
 
       if (user === undefined || user === null) {
-        console.log("user is undefined ");
+        console.log("onGlobalUserCheckIn: user is undefined ");
         return null;
       }
 
@@ -475,12 +517,14 @@ export const onGlobalUserCheckIn = functions
       // Nuovo utente (può avere checkInAt != null oppure checkOutAt != null mai entrambi != null)
       if (!snap.before.exists && snap.after.exists) {
         // Utente ha fatto check in
-        console.log("check in global user " + user.id);
+        console.log("onGlobalUserCheckIn: check in global user " + user.id);
         //Incrementiamo il numero degli utenti totali
         const groupCount = isGroup ? user.groupCount ?? 0 : 1;
         if (eventRef != null) {
-          console.log("eventRef " + eventRef.path);
-          console.log("increment total user with " + groupCount);
+          console.log("onGlobalUserCheckIn: eventRef " + eventRef.path);
+          console.log(
+            "onGlobalUserCheckIn: increment total user with " + groupCount
+          );
           await db.runTransaction(
             async (transaction: FirebaseFirestore.Transaction) => {
               await transaction.update(eventRef, {
@@ -492,7 +536,7 @@ export const onGlobalUserCheckIn = functions
       }
       return new Promise((resolve, reject) => {});
     } catch (ex) {
-      console.log("onUpdateCheckIn failed");
+      console.log("onGlobalUserCheckIn failed");
       console.log(ex);
       return null;
     }

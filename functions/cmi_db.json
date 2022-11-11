@@ -13,7 +13,7 @@
         {
             "events": [
                 {
-                    "subevents": [
+                    "sessions": [
                         {
                             "users": [
                                 {
@@ -56,7 +56,7 @@
                         "_nanoseconds": 0
                     },
                     "emailShowed": false,
-                    "currentSubEvent": "2022-09-09",
+                    "activeSessionId": "2022-09-09",
                     "recurring": false,
                     "createdOn": {
                         "_seconds": 1662711225,

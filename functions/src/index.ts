@@ -60,7 +60,7 @@ export const onAuthCreate = functions
 */
 
 exports.userProfile = require("./user_profile");
-exports.event = require("./event");
+exports.userCheckIn = require("./user_check_in");
 exports.userSignUp = require("./user_sign_up");
 
 export const onActivityRequested = functions
@@ -774,6 +774,7 @@ export const updateSubEventsCron = functions
       .collectionGroup("events")
       .where("status", "==", "live")
       //.where("recurring", "==", true)
+      .where("type", "==", "periodic")
       .where("subEventDeadline", "<=", nowUTC)
       .get();
 
@@ -821,7 +822,7 @@ export const updateSubEventsCron = functions
 
           console.log("nextSubEventId " + nextSubEventId);
 
-          const nextReimaining = remaining - 1;
+          const nextRemaining = remaining - 1;
 
           const nextSubEventDeadlineTimestamp: firestore.Timestamp =
             firestore.Timestamp.fromDate(nextSubEventDeadlineDate);
@@ -833,13 +834,13 @@ export const updateSubEventsCron = functions
           };
 
           await docRef.update({
-            remaining: nextReimaining,
-            currentSubEvent: nextSubEventId,
+            remaining: nextRemaining,
+            activeSessionId: nextSubEventId,
             subEventDeadline: nextSubEventDeadlineTimestamp,
           });
 
           await docRef
-            .collection("subEvents")
+            .collection("sessions")
             .doc(nextSubEventId)
             .set(nextSubEvent);
         } else {
@@ -934,7 +935,7 @@ export const processEvents = functions
 
               await docRef.update({
                 remaining: nextReimaining,
-                currentSubEvent: nextSubEventId,
+                activeSessionId: nextSubEventId,
                 subEventDeadline: nextSubEventDeadlineTimestamp,
               });
 
