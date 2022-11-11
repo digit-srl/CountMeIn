@@ -51,7 +51,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
     ids = EventIds(
       providerId: widget.providerId,
       eventId: widget.eventId,
-      subEventId: widget.subEventId,
+      sessionId: widget.subEventId,
     );
   }
 
@@ -60,12 +60,12 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
     final eventState = ref.watch(eventProvider(ids));
     final usersState = ref.watch(eventUsersStreamProvider(ids));
     final subEvent =
-        ids.subEventId == null ? null : ref.watch(subEventProvider(ids)).value;
+        ids.sessionId == null ? null : ref.watch(subEventProvider(ids)).value;
     // final role = ref.watch(userRoleProvider(widget.providerId));
     // final isOwner = role == UserRole.admin;
     final hasData = usersState is AsyncData;
     final anonymous = eventState.value?.anonymous ?? true;
-    final genderCount = ids.subEventId == null
+    final genderCount = ids.sessionId == null
         ? eventState.valueOrNull?.genderCount
         : subEvent?.genderCount;
     return Scaffold(
@@ -181,7 +181,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                                       ),
                                     ),
                                   if(user.participationCount != null)
-                                    Text('Ricorrenze ${user.participationCount}'),
+                                    Text('Presenze ${user.participationCount}'),
                                 ],
                               ),
                               // trailing: isOwner

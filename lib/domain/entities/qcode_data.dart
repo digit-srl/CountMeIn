@@ -39,8 +39,7 @@ class QrCodeData with _$QrCodeData {
         if (uri.pathSegments.length != 2 || uri.pathSegments[0] != 'profile') {
           throw Exception();
         }
-        logger.i(uri.pathSegments[0]);
-        logger.i(uri.pathSegments[1]);
+        logger.i('pathSegments: ${uri.pathSegments[0]} ${uri.pathSegments[1]}');
 
         final userId = uri.pathSegments[1];
 

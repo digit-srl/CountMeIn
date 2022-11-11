@@ -7,7 +7,7 @@ class EventIds with _$EventIds {
   const factory EventIds({
     required String providerId,
     required String eventId,
-    String? subEventId,
+    String? sessionId,
   }) = _EventIds;
 }
 

@@ -11,7 +11,8 @@ class CMICard extends StatefulWidget {
   final BoxConstraints? constraints;
   final bool center;
   final bool animated;
-  final Widget? flag;
+  final Widget? trailing;
+  final Widget? leading;
 
   const CMICard({
     Key? key,
@@ -24,7 +25,8 @@ class CMICard extends StatefulWidget {
     this.center = false,
     this.animated = false,
     this.collapsedWidget,
-    this.flag,
+    this.trailing,
+    this.leading,
   }) : super(key: key);
 
   @override
@@ -86,13 +88,21 @@ class _CMICardState extends State<CMICard> {
                       widget.collapsedWidget!,
                     ],
                   ),
-                if (widget.collapsedWidget != null || widget.flag != null)
+                if (widget.collapsedWidget != null ||
+                    widget.trailing != null ||
+                    widget.leading != null)
                   Positioned(
                     right: 4,
+                    left: 4,
                     top: 4,
-                    child: widget.flag != null
-                        ? widget.flag!
-                        : IconButton(
+                    child: Row(
+                      children: [
+                        if (widget.leading != null) widget.leading!,
+                        const Spacer(),
+                        if (widget.trailing != null)
+                          widget.trailing!
+                        else if (widget.collapsedWidget != null)
+                          IconButton(
                             onPressed: () {
                               setState(() {
                                 opened = !opened;
@@ -102,6 +112,8 @@ class _CMICardState extends State<CMICard> {
                                 ? Icons.keyboard_arrow_up
                                 : Icons.keyboard_arrow_down),
                           ),
+                      ],
+                    ),
                   ),
               ],
             ),

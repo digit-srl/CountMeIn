@@ -15,8 +15,11 @@ final eventsStreamProvider =
   final authUserState = ref.watch(authStateProvider);
   if (authUserState is Authenticated) {
     final user = authUserState.user;
-    final pManagers =
-        ref.watch(singleCMIProviderProvider(providerId)).valueOrNull?.managers ?? {};
+    final pManagers = ref
+            .watch(singleCMIProviderProvider(providerId))
+            .valueOrNull
+            ?.managers ??
+        {};
     if (pManagers.containsKey(user.uid)) {
       final stream = Cloud.eventsCollection(providerId).snapshots();
 
@@ -78,17 +81,14 @@ final eventProvider =
   }
 });
 
-final subEventsStreamProvider =
+final sessionsStreamProvider =
     StreamProvider.family<List<CMISubEvent>, EventIds>((ref, ids) async* {
-  final providerId = ids.providerId;
-  final eventId = ids.eventId;
-  final stream = Cloud.eventsCollection(providerId)
-      .doc(eventId)
-      .collection('subEvents')
-      .snapshots();
+  // final providerId = ids.providerId;
+  // final eventId = ids.eventId;
+  final stream = Cloud.sessionCollection(ids).snapshots();
 
   await for (final snap in stream) {
-    logger.i('${snap.docs.length} eventi trovati');
+    logger.i('sessionsStreamProvider: ${snap.docs.length} sessioni trovate');
     final list = <CMISubEvent>[];
     for (int i = 0; i < snap.docs.length; i++) {
       final d = snap.docs[i].data();
@@ -100,17 +100,18 @@ final subEventsStreamProvider =
         logger.i(st);
       }
     }
+    logger.i('sessionsStreamProvider: mostrate ${list.length}/${snap.docs.length}');
     yield list;
   }
 });
 
 final subEventProvider =
     StreamProvider.family<CMISubEvent, EventIds>((ref, ids) async* {
-  final subEventId = ids.subEventId;
+  final subEventId = ids.sessionId;
 
-  if (ref.exists(subEventsStreamProvider(ids))) {
+  if (ref.exists(sessionsStreamProvider(ids))) {
     logger.i("subEventProvider: subEventsStreamProvider exists");
-    final itemFromItemList = await ref.watch(subEventsStreamProvider(ids)
+    final itemFromItemList = await ref.watch(sessionsStreamProvider(ids)
         .selectAsync((list) =>
             list.firstWhereOrNull((event) => event.id == subEventId)));
     if (itemFromItemList != null) {
@@ -119,11 +120,7 @@ final subEventProvider =
       return;
     }
   }
-  final stream = Cloud.eventsCollection(ids.providerId)
-      .doc(ids.eventId)
-      .collection('subEvents')
-      .doc(ids.subEventId)
-      .snapshots();
+  final stream = Cloud.sessionDoc(ids).snapshots();
   await for (final snap in stream) {
     final data = snap.data();
     if (snap.exists && data != null) {

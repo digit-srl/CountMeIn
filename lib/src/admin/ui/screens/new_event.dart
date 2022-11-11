@@ -1,3 +1,4 @@
+import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/common/ui/cmi_date_picker.dart';
@@ -37,6 +38,7 @@ class NewEventFormScreen extends HookConsumerWidget {
     Key? key,
     required this.providerId,
   }) : super(key: key);
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -46,8 +48,9 @@ class NewEventFormScreen extends HookConsumerWidget {
     final nameController = useTextEditingController();
     final womController = useTextEditingController();
     final accessType = useState<EventAccessType>(EventAccessType.single);
+    final eventType = useState<EventType>(EventType.manual);
     final anonymous = useState<bool>(false);
-    final recurring = useState<bool>(false);
+    // final recurring = useState<bool>(false);
     final releaseWom = useState<bool>(false);
     final emailEnabled = useState<bool>(false);
     final startAt = useState<DateTime>(DateTime.now());
@@ -62,7 +65,6 @@ class NewEventFormScreen extends HookConsumerWidget {
           constraints: const BoxConstraints(maxWidth: 700),
           padding: const EdgeInsets.all(16.0),
           child: CMICard(
-
             child: Form(
               key: _formKey,
               child: ListView(
@@ -155,17 +157,33 @@ class NewEventFormScreen extends HookConsumerWidget {
                   ],
                   const Divider(),
                   const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Text('Ricorrente', style: titleStyle),
-                      Switch(
-                          value: recurring.value,
-                          onChanged: (v) {
-                            recurring.value = v;
-                          }),
-                    ],
+                  // Row(
+                  //   children: [
+                  //     Text('Ricorrente', style: titleStyle),
+                  //     Switch(
+                  //         value: recurring.value,
+                  //         onChanged: (v) {
+                  //           recurring.value = v;
+                  //         }),
+                  //   ],
+                  // ),
+                  CMIDropdownButton<EventType>(
+                    label: 'Tipo di evento',
+                    value: eventType.value,
+                    onChanged: (t) {
+                      if (t == null) return;
+                      eventType.value = t;
+                    },
+                    items: EventType.values
+                        .map(
+                          (e) => DropdownMenuItem<EventType>(
+                            value: e,
+                            child: Text(e.text),
+                          ),
+                        )
+                        .toList(),
                   ),
-                  if (recurring.value) ...[
+                  if (eventType.value == EventType.periodic) ...[
                     const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -179,8 +197,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                             },
                             items: FrequencyType.values
                                 .map((e) => DropdownMenuItem<FrequencyType>(
-                                    value: e,
-                                    child: Text(enumToString(e) ?? '-')))
+                                    value: e, child: Text(e.text)))
                                 .toList(),
                           ),
                         ),
@@ -251,15 +268,17 @@ class NewEventFormScreen extends HookConsumerWidget {
                   Center(
                     child: ElevatedButton(
                       onPressed: () async {
+                        final isRecurring =
+                            eventType.value == EventType.periodic;
                         if (_formKey.currentState!.validate()) {
                           final eventId = const Uuid().v4();
-                          final currentSubEvent =
+                          final currentSubEventId =
                               DateFormat('y-MM-dd').format(startAt.value);
 
                           final womCount =
                               int.tryParse(womController.text.trim()) ?? 0;
 
-                          final recurrence = recurring.value
+                          final recurrence = isRecurring
                               ? int.tryParse(repsController.text.trim()) ?? 1
                               : 1;
 
@@ -267,18 +286,23 @@ class NewEventFormScreen extends HookConsumerWidget {
 
                           final days =
                               recurrence * selectedFrequency.value.multiplier;
-                          final endAt = start.add(Duration(
-                              days: recurring.value
-                                  ? selectedFrequency.value.multiplier
-                                  : 1));
+
+                          // Data di fine prima sessione
+                          final subEventEndAt = start.add(
+                            Duration(
+                                days: isRecurring
+                                    ? selectedFrequency.value.multiplier
+                                    : 1),
+                          );
 
                           logger.i('days to end: $days');
                           //TODO
-                          final subEventDeadline = endAt;
+                          final subEventDeadline = subEventEndAt;
 
                           final s = CMIEvent(
                             id: eventId,
-                            currentSubEvent: currentSubEvent,
+                            type: eventType.value,
+                            activeSessionId: currentSubEventId,
                             recurrence: recurrence,
                             subEventDeadline: subEventDeadline,
                             name: nameController.text.trim(),
@@ -286,13 +310,10 @@ class NewEventFormScreen extends HookConsumerWidget {
                             anonymous: anonymous.value,
                             emailShowed:
                                 anonymous.value ? false : emailEnabled.value,
-                            recurring: recurring.value,
-                            // TODO isOpen is not necessary, use status
-                            isOpen: true,
-                            remaining: recurring.value ? recurrence - 1 : 0,
-                            frequency: recurring.value
-                                ? selectedFrequency.value
-                                : null,
+                            recurring: isRecurring,
+                            remaining: isRecurring ? recurrence - 1 : 0,
+                            frequency:
+                                isRecurring ? selectedFrequency.value : null,
                             accessType: accessType.value,
                             maxWomCount: releaseWom.value ? womCount : 0,
                             status: EventStatus.live,
@@ -301,9 +322,9 @@ class NewEventFormScreen extends HookConsumerWidget {
                           );
 
                           final firstSubEvent = CMISubEvent(
-                            id: currentSubEvent,
+                            id: currentSubEventId,
                             startAt: start,
-                            endAt: endAt,
+                            endAt: subEventEndAt,
                           );
 
                           final navigator = Navigator.of(context);
@@ -311,9 +332,10 @@ class NewEventFormScreen extends HookConsumerWidget {
                           //TODO use transaction
                           await Cloud.eventDoc(providerId, eventId)
                               .set(s.toJson());
-                          await Cloud.eventDoc(providerId, eventId)
-                              .collection('subEvents')
-                              .doc(firstSubEvent.id)
+                          await Cloud.sessionDoc(EventIds(
+                                  providerId: providerId,
+                                  eventId: eventId,
+                                  sessionId: firstSubEvent.id))
                               .set(firstSubEvent.toJson());
                           navigator.pop();
                         }

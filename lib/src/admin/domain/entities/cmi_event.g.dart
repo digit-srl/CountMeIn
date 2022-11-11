@@ -12,7 +12,6 @@ _$_CMIEvent _$$_CMIEventFromJson(Map<String, dynamic> json) => _$_CMIEvent(
       acceptPassepartout: json['acceptPassepartout'] as bool? ?? true,
       anonymous: json['anonymous'] as bool? ?? true,
       recurring: json['recurring'] as bool? ?? true,
-      isOpen: json['isOpen'] as bool? ?? true,
       emailShowed: json['emailShowed'] as bool? ?? false,
       frequency:
           const FrequencyTypeConverter().fromJson(json['frequency'] as String?),
@@ -22,11 +21,12 @@ _$_CMIEvent _$$_CMIEventFromJson(Map<String, dynamic> json) => _$_CMIEvent(
       genderCount: json['genderCount'] == null
           ? null
           : GenderCount.fromJson(json['genderCount'] as Map<String, dynamic>),
-      currentSubEvent: json['currentSubEvent'] as String?,
+      activeSessionId: json['activeSessionId'] as String?,
       accessType: $enumDecode(_$EventAccessTypeEnumMap, json['accessType']),
       maxWomCount: json['maxWomCount'] as int,
       status: _$JsonConverterFromJson<String, EventStatus>(
           json['status'], const EventStatusConverter().fromJson),
+      type: $enumDecode(_$EventTypeEnumMap, json['type']),
       createdOn:
           const MyDateTimeConverter().fromJson(json['createdOn'] as Timestamp),
       subEventDeadline: _$JsonConverterFromJson<Timestamp, DateTime>(
@@ -42,18 +42,18 @@ Map<String, dynamic> _$$_CMIEventToJson(_$_CMIEvent instance) =>
       'acceptPassepartout': instance.acceptPassepartout,
       'anonymous': instance.anonymous,
       'recurring': instance.recurring,
-      'isOpen': instance.isOpen,
       'emailShowed': instance.emailShowed,
       'frequency': const FrequencyTypeConverter().toJson(instance.frequency),
       'recurrence': instance.recurrence,
       'remaining': instance.remaining,
       'totalUsers': instance.totalUsers,
       'genderCount': instance.genderCount,
-      'currentSubEvent': instance.currentSubEvent,
+      'activeSessionId': instance.activeSessionId,
       'accessType': _$EventAccessTypeEnumMap[instance.accessType]!,
       'maxWomCount': instance.maxWomCount,
       'status': _$JsonConverterToJson<String, EventStatus>(
           instance.status, const EventStatusConverter().toJson),
+      'type': _$EventTypeEnumMap[instance.type]!,
       'createdOn': const MyDateTimeConverter().toJson(instance.createdOn),
       'subEventDeadline': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.subEventDeadline, const MyDateTimeConverter().toJson),
@@ -71,6 +71,11 @@ Value? _$JsonConverterFromJson<Json, Value>(
 ) =>
     json == null ? null : fromJson(json as Json);
 
+const _$EventTypeEnumMap = {
+  EventType.manual: 'manual',
+  EventType.periodic: 'periodic',
+};
+
 Json? _$JsonConverterToJson<Json, Value>(
   Value? value,
   Json? Function(Value value) toJson,
@@ -80,22 +85,26 @@ Json? _$JsonConverterToJson<Json, Value>(
 _$_CMISubEvent _$$_CMISubEventFromJson(Map<String, dynamic> json) =>
     _$_CMISubEvent(
       id: json['id'] as String,
+      name: json['name'] as String?,
       genderCount: json['genderCount'] == null
           ? null
           : GenderCount.fromJson(json['genderCount'] as Map<String, dynamic>),
       totalUsers: json['totalUsers'] as int? ?? 0,
       startAt:
           const MyDateTimeConverter().fromJson(json['startAt'] as Timestamp),
-      endAt: const MyDateTimeConverter().fromJson(json['endAt'] as Timestamp),
+      endAt: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['endAt'], const MyDateTimeConverter().fromJson),
     );
 
 Map<String, dynamic> _$$_CMISubEventToJson(_$_CMISubEvent instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'name': instance.name,
       'genderCount': instance.genderCount,
       'totalUsers': instance.totalUsers,
       'startAt': const MyDateTimeConverter().toJson(instance.startAt),
-      'endAt': const MyDateTimeConverter().toJson(instance.endAt),
+      'endAt': _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.endAt, const MyDateTimeConverter().toJson),
     };
 
 _$_GenderCount _$$_GenderCountFromJson(Map<String, dynamic> json) =>

@@ -13,10 +13,11 @@ class Cloud {
       providerDoc(providerId).collection('events');
 
   static DocumentReference<Map<String, dynamic>> providerDoc(
-      String providerId) =>
-     providerCollection.doc(providerId);
+          String providerId) =>
+      providerCollection.doc(providerId);
 
-  static CollectionReference<Map<String, dynamic>> usersCollection(String providerId) =>
+  static CollectionReference<Map<String, dynamic>> usersCollection(
+          String providerId) =>
       providerDoc(providerId).collection('users');
 
   static final CollectionReference<Map<String, dynamic>> providerCollection =
@@ -28,15 +29,19 @@ class Cloud {
 
   static CollectionReference<Map<String, dynamic>> eventUsersCollection(
       EventIds ids) {
-    if (ids.subEventId != null) {
-      return eventDoc(ids.providerId, ids.eventId)
-          .collection('subEvents')
-          .doc(ids.subEventId)
-          .collection('users');
+    if (ids.sessionId != null) {
+      return sessionDoc(ids).collection('users');
     }
-    return eventDoc(ids.providerId, ids.eventId)
-        .collection('users');
+    return eventDoc(ids.providerId, ids.eventId).collection('users');
   }
+
+  static CollectionReference<Map<String, dynamic>> sessionCollection(
+      EventIds ids) {
+    return eventDoc(ids.providerId, ids.eventId).collection('sessions');
+  }
+
+  static DocumentReference<Map<String, dynamic>> sessionDoc(EventIds ids) =>
+      sessionCollection(ids).doc(ids.sessionId);
 
   static DocumentReference<Map<String, dynamic>> eventDoc(
           String providerId, String eventId) =>

@@ -25,6 +25,7 @@ class ScanController {
 
   bool processing = false;
 
+  // old process
   processScan(
     String data,
     CMIProvider provider,
@@ -70,12 +71,12 @@ class ScanController {
 
           final isSingleAccessType = event.accessType == EventAccessType.single;
 
-          final userSubEventDocRef = Cloud.eventsCollection(provider.id)
-              .doc(event.id)
-              .collection('subEvents')
-              .doc(event.currentSubEvent)
-              .collection('users')
-              .doc(eventUser.id);
+          final userSubEventDocRef = Cloud.sessionDoc(
+            EventIds(
+                providerId: provider.id,
+                eventId: event.id,
+                sessionId: event.activeSessionId),
+          ).collection('users').doc(eventUser.id);
 
           final userSubEventDoc = await userSubEventDocRef.get();
 
@@ -124,13 +125,12 @@ class ScanController {
             //   });
             // }
             if (!eventUser.isGroup && eventUser.privateId != null) {
-              final privateUserSubEventDocRef =
-                  Cloud.eventsCollection(provider.id)
-                      .doc(event.id)
-                      .collection('subEvents')
-                      .doc(event.currentSubEvent)
-                      .collection('privateUsers')
-                      .doc(eventUser.privateId);
+              final privateUserSubEventDocRef = Cloud.sessionDoc(
+                EventIds(
+                    providerId: provider.id,
+                    eventId: event.id,
+                    sessionId: event.activeSessionId),
+              ).collection('privateUsers').doc(eventUser.privateId);
               batch.set(privateUserSubEventDocRef, {'id': eventUser.privateId});
             }
             batch.commit();
@@ -196,6 +196,10 @@ class ScanController {
         if (userWithoutCheckIn.contains(userQrCode.id)) {
           return;
         }
+        final ids = EventIds(
+            providerId: provider.id,
+            eventId: event.id,
+            sessionId: event.activeSessionId);
 
         if (!list.contains(userQrCode.id)) {
           processing = true;
@@ -220,14 +224,12 @@ class ScanController {
 
           final isSingleAccessType = event.accessType == EventAccessType.single;
 
-          final userSubEventDocRef = Cloud.eventsCollection(provider.id)
-              .doc(event.id)
-              .collection('subEvents')
-              .doc(event.currentSubEvent)
-              .collection('users')
-              .doc(eventUser.id);
+          final userSubEventDocRef =
+              Cloud.sessionDoc(ids).collection('users').doc(eventUser.id);
 
+          logger.i('get user ${eventUser.id} from ${event.activeSessionId}');
           final userSubEventDoc = await userSubEventDocRef.get();
+          logger.i('get user ${eventUser.id} complete');
           final userSubEventData = userSubEventDoc.data() ?? {};
 
           //Check out
@@ -268,13 +270,9 @@ class ScanController {
             batch.set(userSubEventDocRef, eventUser.toJson());
             if (!eventUser.isGroup && eventUser.privateId != null) {
               logger.i('processScan2: checkin user has private id');
-              final privateUserSubEventDocRef =
-                  Cloud.eventsCollection(provider.id)
-                      .doc(event.id)
-                      .collection('subEvents')
-                      .doc(event.currentSubEvent)
-                      .collection('privateUsers')
-                      .doc(eventUser.privateId);
+              final privateUserSubEventDocRef = Cloud.sessionDoc(ids)
+                  .collection('privateUsers')
+                  .doc(eventUser.privateId);
               batch.set(privateUserSubEventDocRef, {'id': eventUser.privateId});
             }
             batch.commit();
@@ -305,6 +303,7 @@ class ScanController {
               }
             }
           } else {
+            logger.i('User exists, increment participation count');
             await Cloud.eventUsersCollection(
               EventIds(
                 providerId: provider.id,

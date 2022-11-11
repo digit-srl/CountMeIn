@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 class CMITextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
+  final String? labelText;
   final String? Function(String?)? validator;
   final TextCapitalization? textCapitalization;
   final TextInputType? keyboardType;
@@ -16,6 +17,7 @@ class CMITextField extends StatelessWidget {
     Key? key,
     this.controller,
     this.hintText,
+    this.labelText,
     this.textStyle,
     this.validator,
     this.keyboardType,
@@ -39,7 +41,7 @@ class CMITextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         border: const OutlineInputBorder(),
-        labelText: hintText,
+        labelText: labelText,
       ),
     );
   }

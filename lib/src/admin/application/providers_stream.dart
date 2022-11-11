@@ -79,12 +79,12 @@ final singleCMIProviderProvider =
 
 
   if (ref.exists(activeProvidersStreamProvider)) {
-    logger.i("eventProvider: eventsStreamProvider exists ");
+    logger.i("singleCMIProviderProvider: eventsStreamProvider exists ");
     final itemFromItemList = await ref.watch(activeProvidersStreamProvider
         .selectAsync(
             (list) => list.firstWhereOrNull((element) => element.id == providerId)));
     if (itemFromItemList != null) {
-      logger.i("eventProvider: emit from existing provider");
+      logger.i("singleCMIProviderProvider: emit from existing provider");
       yield itemFromItemList;
       return;
     }

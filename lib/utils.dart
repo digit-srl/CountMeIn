@@ -27,7 +27,7 @@ T enumFromString<T extends Object>(String key, List<T> values) =>
     values
         .firstWhere((v) => key.toLowerCase() == enumToString(v)?.toLowerCase());
 
-ask(BuildContext context, String question) async {
+Future<bool?> ask(BuildContext context, String question) async {
   return await showDialog(
     context: context,
     builder: (c) {
@@ -48,7 +48,7 @@ ask(BuildContext context, String question) async {
                 children: [
                   TextButton(
                       onPressed: () {
-                        Navigator.of(c).pop();
+                        Navigator.of(c).pop(false);
                       },
                       child: const Text('Annulla')),
                   ElevatedButton(

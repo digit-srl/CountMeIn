@@ -83,13 +83,13 @@ class RouterNotifier extends ChangeNotifier {
   /// GoRouter is already aware of state changes through `refreshListenable`
   /// We don't want to trigger a rebuild of the surrounding provider.
   String? _redirectLogic(BuildContext context, GoRouterState state) {
-    logger.i('Name: ${state.name}');
-    logger.i('Path: ${state.path}');
-    logger.i('FullPath: ${state.fullpath}');
-    logger.i('Location: ${state.location}');
-    logger.i('Subloc: ${state.subloc}');
-    logger.i('Params: ${state.params}');
-    logger.i('Query: ${state.queryParams}');
+    // logger.i('Name: ${state.name}');
+    // logger.i('Path: ${state.path}');
+    // logger.i('FullPath: ${state.fullpath}');
+    // logger.i('Location: ${state.location}');
+    // logger.i('Subloc: ${state.subloc}');
+    // logger.i('Params: ${state.params}');
+    // logger.i('Query: ${state.queryParams}');
     final isEventRoute = state.subloc.startsWith('/event/');
 
     if (isEventRoute) {
@@ -98,19 +98,19 @@ class RouterNotifier extends ChangeNotifier {
     }
 
     final authState = _ref.read(authStateProvider);
-    final isGoingToHome = state.subloc == '/';
     final isGoingToAdmin = state.subloc == '/admin';
-    final isGoingToVerificationEmail =
-        state.subloc.startsWith(EmailVerificationScreen.routeName);
-    final isGoingConfirmInvite =
-        state.subloc == InviteFormConfirmScreen.routeName;
-    final isGoingToUserCardForm = state.subloc.startsWith('/provider');
-    final isGoingToUserProfile =
-        state.subloc.startsWith(UserConsoleScreen.routeName);
-    final isGoingToResetPassword =
-        state.subloc == ResetPasswordScreen.routeName;
-    final isGoingToActivityRequest =
-        state.subloc == ActivityRequestScreen.routeName;
+    // final isGoingToHome = state.subloc == '/';
+    // final isGoingToVerificationEmail =
+    //     state.subloc.startsWith(EmailVerificationScreen.routeName);
+    // final isGoingConfirmInvite =
+    //     state.subloc == InviteFormConfirmScreen.routeName;
+    // final isGoingToUserCardForm = state.subloc.startsWith('/provider');
+    // final isGoingToUserProfile =
+    //     state.subloc.startsWith(UserConsoleScreen.routeName);
+    // final isGoingToResetPassword =
+    //     state.subloc == ResetPasswordScreen.routeName;
+    // final isGoingToActivityRequest =
+    //     state.subloc == ActivityRequestScreen.routeName;
     // final isGoingToRecoverUserCard = state.subloc
 
     if(!isGoingToAdmin){

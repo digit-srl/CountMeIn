@@ -14,6 +14,13 @@ class GenderCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (genderCount.male +
+            genderCount.female +
+            genderCount.notBinary +
+            genderCount.notAvailable ==
+        0) {
+      return const SizedBox.shrink();
+    }
     return CMICard(
       child: Column(
         children: [
@@ -46,12 +53,18 @@ class GenderCard extends ConsumerWidget {
                       ),
                       sectionsSpace: 0,
                       centerSpaceRadius: 0,
-                      sections: showingSections(
-                        genderCount.male,
-                        genderCount.female,
-                        genderCount.notBinary,
-                        genderCount.notAvailable,
-                      ),
+                      sections: genderCount.male +
+                                  genderCount.female +
+                                  genderCount.notBinary +
+                                  genderCount.notAvailable ==
+                              0
+                          ? []
+                          : showingSections(
+                              genderCount.male,
+                              genderCount.female,
+                              genderCount.notBinary,
+                              genderCount.notAvailable,
+                            ),
                     ),
                   ),
                 ),

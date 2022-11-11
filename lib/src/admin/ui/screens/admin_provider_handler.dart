@@ -10,6 +10,7 @@ import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -200,15 +201,33 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                 final event = eventsState.asData!.value[index - 1];
                 return CMICard(
                   center: true,
+                  leading: event.isActive
+                      ? Chip(
+                          backgroundColor: Colors.green,
+                          label: Text('ATTIVO'),
+                        )
+                      : null,
                   onTap: () {
                     final path =
                         '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/$providerId/${EventDetailsScreen.routeName}/${event.id}';
 
                     context.go(path);
                   },
-                  child: Text(
-                    event.name,
-                    style: Theme.of(context).textTheme.subtitle1,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        event.name,
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                      if (kDebugMode)
+                        FittedBox(
+                          child: Text(
+                            event.id,
+                            style: Theme.of(context).textTheme.caption,
+                          ),
+                        ),
+                    ],
                   ),
                 );
               },

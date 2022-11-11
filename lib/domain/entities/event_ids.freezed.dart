@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$EventIds {
   String get providerId => throw _privateConstructorUsedError;
   String get eventId => throw _privateConstructorUsedError;
-  String? get subEventId => throw _privateConstructorUsedError;
+  String? get sessionId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $EventIdsCopyWith<EventIds> get copyWith =>
@@ -30,7 +30,7 @@ abstract class $EventIdsCopyWith<$Res> {
   factory $EventIdsCopyWith(EventIds value, $Res Function(EventIds) then) =
       _$EventIdsCopyWithImpl<$Res, EventIds>;
   @useResult
-  $Res call({String providerId, String eventId, String? subEventId});
+  $Res call({String providerId, String eventId, String? sessionId});
 }
 
 /// @nodoc
@@ -48,7 +48,7 @@ class _$EventIdsCopyWithImpl<$Res, $Val extends EventIds>
   $Res call({
     Object? providerId = null,
     Object? eventId = null,
-    Object? subEventId = freezed,
+    Object? sessionId = freezed,
   }) {
     return _then(_value.copyWith(
       providerId: null == providerId
@@ -59,9 +59,9 @@ class _$EventIdsCopyWithImpl<$Res, $Val extends EventIds>
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
               as String,
-      subEventId: freezed == subEventId
-          ? _value.subEventId
-          : subEventId // ignore: cast_nullable_to_non_nullable
+      sessionId: freezed == sessionId
+          ? _value.sessionId
+          : sessionId // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -74,7 +74,7 @@ abstract class _$$_EventIdsCopyWith<$Res> implements $EventIdsCopyWith<$Res> {
       __$$_EventIdsCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String providerId, String eventId, String? subEventId});
+  $Res call({String providerId, String eventId, String? sessionId});
 }
 
 /// @nodoc
@@ -90,7 +90,7 @@ class __$$_EventIdsCopyWithImpl<$Res>
   $Res call({
     Object? providerId = null,
     Object? eventId = null,
-    Object? subEventId = freezed,
+    Object? sessionId = freezed,
   }) {
     return _then(_$_EventIds(
       providerId: null == providerId
@@ -101,9 +101,9 @@ class __$$_EventIdsCopyWithImpl<$Res>
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
               as String,
-      subEventId: freezed == subEventId
-          ? _value.subEventId
-          : subEventId // ignore: cast_nullable_to_non_nullable
+      sessionId: freezed == sessionId
+          ? _value.sessionId
+          : sessionId // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -113,18 +113,18 @@ class __$$_EventIdsCopyWithImpl<$Res>
 
 class _$_EventIds implements _EventIds {
   const _$_EventIds(
-      {required this.providerId, required this.eventId, this.subEventId});
+      {required this.providerId, required this.eventId, this.sessionId});
 
   @override
   final String providerId;
   @override
   final String eventId;
   @override
-  final String? subEventId;
+  final String? sessionId;
 
   @override
   String toString() {
-    return 'EventIds(providerId: $providerId, eventId: $eventId, subEventId: $subEventId)';
+    return 'EventIds(providerId: $providerId, eventId: $eventId, sessionId: $sessionId)';
   }
 
   @override
@@ -135,12 +135,12 @@ class _$_EventIds implements _EventIds {
             (identical(other.providerId, providerId) ||
                 other.providerId == providerId) &&
             (identical(other.eventId, eventId) || other.eventId == eventId) &&
-            (identical(other.subEventId, subEventId) ||
-                other.subEventId == subEventId));
+            (identical(other.sessionId, sessionId) ||
+                other.sessionId == sessionId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, providerId, eventId, subEventId);
+  int get hashCode => Object.hash(runtimeType, providerId, eventId, sessionId);
 
   @JsonKey(ignore: true)
   @override
@@ -153,14 +153,14 @@ abstract class _EventIds implements EventIds {
   const factory _EventIds(
       {required final String providerId,
       required final String eventId,
-      final String? subEventId}) = _$_EventIds;
+      final String? sessionId}) = _$_EventIds;
 
   @override
   String get providerId;
   @override
   String get eventId;
   @override
-  String? get subEventId;
+  String? get sessionId;
   @override
   @JsonKey(ignore: true)
   _$$_EventIdsCopyWith<_$_EventIds> get copyWith =>

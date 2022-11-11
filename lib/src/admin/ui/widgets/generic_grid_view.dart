@@ -19,7 +19,6 @@ class GenericGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       final crossAxisCount = calculateCrossAxisCount(constraints.maxWidth);
-      logger.i('${constraints.maxWidth} with $crossAxisCount every row');
       return GridView.builder(
         shrinkWrap: true,
         physics: scroolEnabled ? null : const NeverScrollableScrollPhysics(),

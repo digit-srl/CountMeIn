@@ -25,7 +25,6 @@ mixin _$CMIEvent {
   bool get acceptPassepartout => throw _privateConstructorUsedError;
   bool get anonymous => throw _privateConstructorUsedError;
   bool get recurring => throw _privateConstructorUsedError;
-  bool get isOpen => throw _privateConstructorUsedError;
   bool get emailShowed => throw _privateConstructorUsedError;
   @FrequencyTypeConverter()
   FrequencyType? get frequency => throw _privateConstructorUsedError;
@@ -33,12 +32,14 @@ mixin _$CMIEvent {
   int? get remaining => throw _privateConstructorUsedError;
   int? get totalUsers => throw _privateConstructorUsedError;
   GenderCount? get genderCount => throw _privateConstructorUsedError;
-  String? get currentSubEvent => throw _privateConstructorUsedError;
+  String? get activeSessionId => throw _privateConstructorUsedError;
   @EventAccessTypeConverter()
   EventAccessType get accessType => throw _privateConstructorUsedError;
   int get maxWomCount => throw _privateConstructorUsedError;
   @EventStatusConverter()
   EventStatus? get status => throw _privateConstructorUsedError;
+  @EventTypeConverter()
+  EventType get type => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime get createdOn => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
@@ -63,17 +64,17 @@ abstract class $CMIEventCopyWith<$Res> {
       bool acceptPassepartout,
       bool anonymous,
       bool recurring,
-      bool isOpen,
       bool emailShowed,
       @FrequencyTypeConverter() FrequencyType? frequency,
       int? recurrence,
       int? remaining,
       int? totalUsers,
       GenderCount? genderCount,
-      String? currentSubEvent,
+      String? activeSessionId,
       @EventAccessTypeConverter() EventAccessType accessType,
       int maxWomCount,
       @EventStatusConverter() EventStatus? status,
+      @EventTypeConverter() EventType type,
       @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime? subEventDeadline,
       @MyDateTimeConverter() DateTime startAt});
@@ -99,17 +100,17 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
     Object? acceptPassepartout = null,
     Object? anonymous = null,
     Object? recurring = null,
-    Object? isOpen = null,
     Object? emailShowed = null,
     Object? frequency = freezed,
     Object? recurrence = freezed,
     Object? remaining = freezed,
     Object? totalUsers = freezed,
     Object? genderCount = freezed,
-    Object? currentSubEvent = freezed,
+    Object? activeSessionId = freezed,
     Object? accessType = null,
     Object? maxWomCount = null,
     Object? status = freezed,
+    Object? type = null,
     Object? createdOn = null,
     Object? subEventDeadline = freezed,
     Object? startAt = null,
@@ -135,10 +136,6 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
           ? _value.recurring
           : recurring // ignore: cast_nullable_to_non_nullable
               as bool,
-      isOpen: null == isOpen
-          ? _value.isOpen
-          : isOpen // ignore: cast_nullable_to_non_nullable
-              as bool,
       emailShowed: null == emailShowed
           ? _value.emailShowed
           : emailShowed // ignore: cast_nullable_to_non_nullable
@@ -163,9 +160,9 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
           ? _value.genderCount
           : genderCount // ignore: cast_nullable_to_non_nullable
               as GenderCount?,
-      currentSubEvent: freezed == currentSubEvent
-          ? _value.currentSubEvent
-          : currentSubEvent // ignore: cast_nullable_to_non_nullable
+      activeSessionId: freezed == activeSessionId
+          ? _value.activeSessionId
+          : activeSessionId // ignore: cast_nullable_to_non_nullable
               as String?,
       accessType: null == accessType
           ? _value.accessType
@@ -179,6 +176,10 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as EventStatus?,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as EventType,
       createdOn: null == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -220,17 +221,17 @@ abstract class _$$_CMIEventCopyWith<$Res> implements $CMIEventCopyWith<$Res> {
       bool acceptPassepartout,
       bool anonymous,
       bool recurring,
-      bool isOpen,
       bool emailShowed,
       @FrequencyTypeConverter() FrequencyType? frequency,
       int? recurrence,
       int? remaining,
       int? totalUsers,
       GenderCount? genderCount,
-      String? currentSubEvent,
+      String? activeSessionId,
       @EventAccessTypeConverter() EventAccessType accessType,
       int maxWomCount,
       @EventStatusConverter() EventStatus? status,
+      @EventTypeConverter() EventType type,
       @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime? subEventDeadline,
       @MyDateTimeConverter() DateTime startAt});
@@ -255,17 +256,17 @@ class __$$_CMIEventCopyWithImpl<$Res>
     Object? acceptPassepartout = null,
     Object? anonymous = null,
     Object? recurring = null,
-    Object? isOpen = null,
     Object? emailShowed = null,
     Object? frequency = freezed,
     Object? recurrence = freezed,
     Object? remaining = freezed,
     Object? totalUsers = freezed,
     Object? genderCount = freezed,
-    Object? currentSubEvent = freezed,
+    Object? activeSessionId = freezed,
     Object? accessType = null,
     Object? maxWomCount = null,
     Object? status = freezed,
+    Object? type = null,
     Object? createdOn = null,
     Object? subEventDeadline = freezed,
     Object? startAt = null,
@@ -291,10 +292,6 @@ class __$$_CMIEventCopyWithImpl<$Res>
           ? _value.recurring
           : recurring // ignore: cast_nullable_to_non_nullable
               as bool,
-      isOpen: null == isOpen
-          ? _value.isOpen
-          : isOpen // ignore: cast_nullable_to_non_nullable
-              as bool,
       emailShowed: null == emailShowed
           ? _value.emailShowed
           : emailShowed // ignore: cast_nullable_to_non_nullable
@@ -319,9 +316,9 @@ class __$$_CMIEventCopyWithImpl<$Res>
           ? _value.genderCount
           : genderCount // ignore: cast_nullable_to_non_nullable
               as GenderCount?,
-      currentSubEvent: freezed == currentSubEvent
-          ? _value.currentSubEvent
-          : currentSubEvent // ignore: cast_nullable_to_non_nullable
+      activeSessionId: freezed == activeSessionId
+          ? _value.activeSessionId
+          : activeSessionId // ignore: cast_nullable_to_non_nullable
               as String?,
       accessType: null == accessType
           ? _value.accessType
@@ -335,6 +332,10 @@ class __$$_CMIEventCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as EventStatus?,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as EventType,
       createdOn: null == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -360,17 +361,17 @@ class _$_CMIEvent implements _CMIEvent {
       this.acceptPassepartout = true,
       this.anonymous = true,
       this.recurring = true,
-      this.isOpen = true,
       this.emailShowed = false,
       @FrequencyTypeConverter() this.frequency,
       this.recurrence,
       this.remaining,
       this.totalUsers = 0,
       this.genderCount,
-      this.currentSubEvent,
+      this.activeSessionId,
       @EventAccessTypeConverter() required this.accessType,
       required this.maxWomCount,
       @EventStatusConverter() this.status,
+      @EventTypeConverter() required this.type,
       @MyDateTimeConverter() required this.createdOn,
       @MyDateTimeConverter() this.subEventDeadline,
       @MyDateTimeConverter() required this.startAt});
@@ -393,9 +394,6 @@ class _$_CMIEvent implements _CMIEvent {
   final bool recurring;
   @override
   @JsonKey()
-  final bool isOpen;
-  @override
-  @JsonKey()
   final bool emailShowed;
   @override
   @FrequencyTypeConverter()
@@ -410,7 +408,7 @@ class _$_CMIEvent implements _CMIEvent {
   @override
   final GenderCount? genderCount;
   @override
-  final String? currentSubEvent;
+  final String? activeSessionId;
   @override
   @EventAccessTypeConverter()
   final EventAccessType accessType;
@@ -419,6 +417,9 @@ class _$_CMIEvent implements _CMIEvent {
   @override
   @EventStatusConverter()
   final EventStatus? status;
+  @override
+  @EventTypeConverter()
+  final EventType type;
   @override
   @MyDateTimeConverter()
   final DateTime createdOn;
@@ -431,7 +432,7 @@ class _$_CMIEvent implements _CMIEvent {
 
   @override
   String toString() {
-    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, isOpen: $isOpen, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, currentSubEvent: $currentSubEvent, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt)';
+    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, activeSessionId: $activeSessionId, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, type: $type, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt)';
   }
 
   @override
@@ -447,7 +448,6 @@ class _$_CMIEvent implements _CMIEvent {
                 other.anonymous == anonymous) &&
             (identical(other.recurring, recurring) ||
                 other.recurring == recurring) &&
-            (identical(other.isOpen, isOpen) || other.isOpen == isOpen) &&
             (identical(other.emailShowed, emailShowed) ||
                 other.emailShowed == emailShowed) &&
             (identical(other.frequency, frequency) ||
@@ -460,13 +460,14 @@ class _$_CMIEvent implements _CMIEvent {
                 other.totalUsers == totalUsers) &&
             (identical(other.genderCount, genderCount) ||
                 other.genderCount == genderCount) &&
-            (identical(other.currentSubEvent, currentSubEvent) ||
-                other.currentSubEvent == currentSubEvent) &&
+            (identical(other.activeSessionId, activeSessionId) ||
+                other.activeSessionId == activeSessionId) &&
             (identical(other.accessType, accessType) ||
                 other.accessType == accessType) &&
             (identical(other.maxWomCount, maxWomCount) ||
                 other.maxWomCount == maxWomCount) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.createdOn, createdOn) ||
                 other.createdOn == createdOn) &&
             (identical(other.subEventDeadline, subEventDeadline) ||
@@ -483,17 +484,17 @@ class _$_CMIEvent implements _CMIEvent {
         acceptPassepartout,
         anonymous,
         recurring,
-        isOpen,
         emailShowed,
         frequency,
         recurrence,
         remaining,
         totalUsers,
         genderCount,
-        currentSubEvent,
+        activeSessionId,
         accessType,
         maxWomCount,
         status,
+        type,
         createdOn,
         subEventDeadline,
         startAt
@@ -520,17 +521,17 @@ abstract class _CMIEvent implements CMIEvent {
       final bool acceptPassepartout,
       final bool anonymous,
       final bool recurring,
-      final bool isOpen,
       final bool emailShowed,
       @FrequencyTypeConverter() final FrequencyType? frequency,
       final int? recurrence,
       final int? remaining,
       final int? totalUsers,
       final GenderCount? genderCount,
-      final String? currentSubEvent,
+      final String? activeSessionId,
       @EventAccessTypeConverter() required final EventAccessType accessType,
       required final int maxWomCount,
       @EventStatusConverter() final EventStatus? status,
+      @EventTypeConverter() required final EventType type,
       @MyDateTimeConverter() required final DateTime createdOn,
       @MyDateTimeConverter() final DateTime? subEventDeadline,
       @MyDateTimeConverter() required final DateTime startAt}) = _$_CMIEvent;
@@ -548,8 +549,6 @@ abstract class _CMIEvent implements CMIEvent {
   @override
   bool get recurring;
   @override
-  bool get isOpen;
-  @override
   bool get emailShowed;
   @override
   @FrequencyTypeConverter()
@@ -563,7 +562,7 @@ abstract class _CMIEvent implements CMIEvent {
   @override
   GenderCount? get genderCount;
   @override
-  String? get currentSubEvent;
+  String? get activeSessionId;
   @override
   @EventAccessTypeConverter()
   EventAccessType get accessType;
@@ -572,6 +571,9 @@ abstract class _CMIEvent implements CMIEvent {
   @override
   @EventStatusConverter()
   EventStatus? get status;
+  @override
+  @EventTypeConverter()
+  EventType get type;
   @override
   @MyDateTimeConverter()
   DateTime get createdOn;
@@ -594,12 +596,13 @@ CMISubEvent _$CMISubEventFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CMISubEvent {
   String get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   GenderCount? get genderCount => throw _privateConstructorUsedError;
   int get totalUsers => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime get startAt => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
-  DateTime get endAt => throw _privateConstructorUsedError;
+  DateTime? get endAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -615,10 +618,11 @@ abstract class $CMISubEventCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      String? name,
       GenderCount? genderCount,
       int totalUsers,
       @MyDateTimeConverter() DateTime startAt,
-      @MyDateTimeConverter() DateTime endAt});
+      @MyDateTimeConverter() DateTime? endAt});
 
   $GenderCountCopyWith<$Res>? get genderCount;
 }
@@ -637,16 +641,21 @@ class _$CMISubEventCopyWithImpl<$Res, $Val extends CMISubEvent>
   @override
   $Res call({
     Object? id = null,
+    Object? name = freezed,
     Object? genderCount = freezed,
     Object? totalUsers = null,
     Object? startAt = null,
-    Object? endAt = null,
+    Object? endAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
       genderCount: freezed == genderCount
           ? _value.genderCount
           : genderCount // ignore: cast_nullable_to_non_nullable
@@ -659,10 +668,10 @@ class _$CMISubEventCopyWithImpl<$Res, $Val extends CMISubEvent>
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      endAt: null == endAt
+      endAt: freezed == endAt
           ? _value.endAt
           : endAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ) as $Val);
   }
 
@@ -689,10 +698,11 @@ abstract class _$$_CMISubEventCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
+      String? name,
       GenderCount? genderCount,
       int totalUsers,
       @MyDateTimeConverter() DateTime startAt,
-      @MyDateTimeConverter() DateTime endAt});
+      @MyDateTimeConverter() DateTime? endAt});
 
   @override
   $GenderCountCopyWith<$Res>? get genderCount;
@@ -710,16 +720,21 @@ class __$$_CMISubEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? name = freezed,
     Object? genderCount = freezed,
     Object? totalUsers = null,
     Object? startAt = null,
-    Object? endAt = null,
+    Object? endAt = freezed,
   }) {
     return _then(_$_CMISubEvent(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
       genderCount: freezed == genderCount
           ? _value.genderCount
           : genderCount // ignore: cast_nullable_to_non_nullable
@@ -732,10 +747,10 @@ class __$$_CMISubEventCopyWithImpl<$Res>
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      endAt: null == endAt
+      endAt: freezed == endAt
           ? _value.endAt
           : endAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -745,16 +760,19 @@ class __$$_CMISubEventCopyWithImpl<$Res>
 class _$_CMISubEvent implements _CMISubEvent {
   const _$_CMISubEvent(
       {required this.id,
+      this.name,
       this.genderCount,
       this.totalUsers = 0,
       @MyDateTimeConverter() required this.startAt,
-      @MyDateTimeConverter() required this.endAt});
+      @MyDateTimeConverter() this.endAt});
 
   factory _$_CMISubEvent.fromJson(Map<String, dynamic> json) =>
       _$$_CMISubEventFromJson(json);
 
   @override
   final String id;
+  @override
+  final String? name;
   @override
   final GenderCount? genderCount;
   @override
@@ -765,11 +783,11 @@ class _$_CMISubEvent implements _CMISubEvent {
   final DateTime startAt;
   @override
   @MyDateTimeConverter()
-  final DateTime endAt;
+  final DateTime? endAt;
 
   @override
   String toString() {
-    return 'CMISubEvent(id: $id, genderCount: $genderCount, totalUsers: $totalUsers, startAt: $startAt, endAt: $endAt)';
+    return 'CMISubEvent(id: $id, name: $name, genderCount: $genderCount, totalUsers: $totalUsers, startAt: $startAt, endAt: $endAt)';
   }
 
   @override
@@ -778,6 +796,7 @@ class _$_CMISubEvent implements _CMISubEvent {
         (other.runtimeType == runtimeType &&
             other is _$_CMISubEvent &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.genderCount, genderCount) ||
                 other.genderCount == genderCount) &&
             (identical(other.totalUsers, totalUsers) ||
@@ -788,8 +807,8 @@ class _$_CMISubEvent implements _CMISubEvent {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, genderCount, totalUsers, startAt, endAt);
+  int get hashCode => Object.hash(
+      runtimeType, id, name, genderCount, totalUsers, startAt, endAt);
 
   @JsonKey(ignore: true)
   @override
@@ -808,16 +827,19 @@ class _$_CMISubEvent implements _CMISubEvent {
 abstract class _CMISubEvent implements CMISubEvent {
   const factory _CMISubEvent(
       {required final String id,
+      final String? name,
       final GenderCount? genderCount,
       final int totalUsers,
       @MyDateTimeConverter() required final DateTime startAt,
-      @MyDateTimeConverter() required final DateTime endAt}) = _$_CMISubEvent;
+      @MyDateTimeConverter() final DateTime? endAt}) = _$_CMISubEvent;
 
   factory _CMISubEvent.fromJson(Map<String, dynamic> json) =
       _$_CMISubEvent.fromJson;
 
   @override
   String get id;
+  @override
+  String? get name;
   @override
   GenderCount? get genderCount;
   @override
@@ -827,7 +849,7 @@ abstract class _CMISubEvent implements CMISubEvent {
   DateTime get startAt;
   @override
   @MyDateTimeConverter()
-  DateTime get endAt;
+  DateTime? get endAt;
   @override
   @JsonKey(ignore: true)
   _$$_CMISubEventCopyWith<_$_CMISubEvent> get copyWith =>

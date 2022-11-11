@@ -26,19 +26,33 @@ enum EventAccessType {
 
 // enum FrequencyType { daily, monthly, yearly }
 
+enum EventType {
+  manual,
+  periodic;
+
+  String get text {
+    switch (this) {
+      case EventType.manual:
+        return 'Manuale';
+      case EventType.periodic:
+        return 'Periodico';
+    }
+  }
+}
+
 enum FrequencyType {
-  daily,
-  monthly,
-  yearly;
+  daily;
+  // monthly,
+  // yearly;
 
   String get text {
     switch (this) {
       case FrequencyType.daily:
         return 'Giornaliero';
-      case FrequencyType.monthly:
-        return 'Settimanale';
-      case FrequencyType.yearly:
-        return 'Annuale';
+      // case FrequencyType.monthly:
+      //   return 'Settimanale';
+      // case FrequencyType.yearly:
+      //   return 'Annuale';
     }
   }
 
@@ -46,10 +60,10 @@ enum FrequencyType {
     switch (this) {
       case FrequencyType.daily:
         return 1;
-      case FrequencyType.monthly:
-        return 31;
-      case FrequencyType.yearly:
-        return 365;
+      // case FrequencyType.monthly:
+      //   return 31;
+      // case FrequencyType.yearly:
+      //   return 365;
     }
   }
 }
@@ -84,17 +98,17 @@ class CMIEvent with _$CMIEvent {
     @Default(true) bool acceptPassepartout,
     @Default(true) bool anonymous,
     @Default(true) bool recurring,
-    @Default(true) bool isOpen,
     @Default(false) bool emailShowed,
     @FrequencyTypeConverter() FrequencyType? frequency,
     int? recurrence,
     int? remaining,
     @Default(0) int? totalUsers,
     GenderCount? genderCount,
-    String? currentSubEvent,
+    String? activeSessionId,
     @EventAccessTypeConverter() required EventAccessType accessType,
     required int maxWomCount,
     @EventStatusConverter() EventStatus? status,
+    @EventTypeConverter() required EventType type,
     @MyDateTimeConverter() required DateTime createdOn,
     @MyDateTimeConverter() DateTime? subEventDeadline,
     @MyDateTimeConverter() required DateTime startAt,
@@ -104,14 +118,21 @@ class CMIEvent with _$CMIEvent {
       _$CMIEventFromJson(json);
 }
 
+extension CMIEventX on CMIEvent {
+  bool get isActive => status == EventStatus.live;
+  bool get isPeriodic => type == EventType.periodic;
+  bool get isManual => type == EventType.manual;
+}
+
 @freezed
 class CMISubEvent with _$CMISubEvent {
   const factory CMISubEvent({
     required String id,
+    String? name,
     GenderCount? genderCount,
     @Default(0) int totalUsers,
     @MyDateTimeConverter() required DateTime startAt,
-    @MyDateTimeConverter() required DateTime endAt,
+    @MyDateTimeConverter() DateTime? endAt,
   }) = _CMISubEvent;
 
   factory CMISubEvent.fromJson(Map<String, Object?> json) =>
@@ -153,6 +174,21 @@ class EventAccessTypeConverter
 
   @override
   String toJson(EventAccessType? type) => enumToString(type) ?? 'single';
+}
+
+class EventTypeConverter implements JsonConverter<EventType?, String> {
+  const EventTypeConverter();
+
+  @override
+  EventType? fromJson(String? status) {
+    if (status == null) {
+      return null;
+    }
+    return enumFromString(status, EventType.values);
+  }
+
+  @override
+  String toJson(EventType? type) => enumToString(type) ?? 'single';
 }
 
 class FrequencyTypeConverter implements JsonConverter<FrequencyType?, String?> {
