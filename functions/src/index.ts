@@ -763,12 +763,11 @@ export const updateSubEventsCron = functions
   .timeZone("Etc/UTC")
   .onRun(async (_) => {
     const now = new Date();
-    console.log(
-      "This will be run every 30 minutes at 00:00 UTC " + now.toISOString()
-    );
+    console.log("This will be run every 30 minutes" + now.toISOString());
 
     const nowUTC = dateToUTC(new Date());
     console.log(nowUTC);
+
     //prendo tutti gli eventi attivi ricorrenti che sono da aggiornare (query su subEventDeadline)
     const querySnapshot = await db
       .collectionGroup("events")
@@ -795,16 +794,16 @@ export const updateSubEventsCron = functions
           var multiplier = 1;
           if (recurrence === "daily") {
             multiplier = 1;
-          } else if (recurrence === "monthly") {
-            multiplier = 31;
-          } else if (recurrence === "yearly") {
-            multiplier = 365;
+          } else if (recurrence === "weekly") {
+            multiplier = 7;
           }
 
+          // Data di fine sessione
           const subEventDeadlineTimestamp: FirebaseFirestore.Timestamp =
             data.subEventDeadline;
           const subEventDeadlineDate = subEventDeadlineTimestamp.toDate();
 
+          // Prossima data di fine sessione
           let nextSubEventDeadlineDate: Date = addDays(
             multiplier,
             subEventDeadlineDate
@@ -854,9 +853,7 @@ export const updateSubEventsCron = functions
     );
   });
 
-//Only for testing
 /*
-
 //Only for testing
 export const processEvents = functions
   .region("europe-west3")
@@ -864,9 +861,7 @@ export const processEvents = functions
     async (request: functions.https.Request, response: functions.Response) => {
       cors(request, response, async () => {
         const now = new Date();
-        console.log(
-          "This will be run every day at 00:00 UTC " + now.toISOString()
-        );
+        console.log("This will be run every 30 minutes" + now.toISOString());
 
         const nowUTC = dateToUTC(new Date());
         console.log(nowUTC);
@@ -875,8 +870,11 @@ export const processEvents = functions
           .collectionGroup("events")
           .where("status", "==", "live")
           //.where("recurring", "==", true)
+          .where("type", "==", "periodic")
           .where("subEventDeadline", "<=", nowUTC)
           .get();
+
+        console.log("trovati " + querySnapshot.size + " docs");
 
         querySnapshot.forEach(
           async (doc: FirebaseFirestore.QueryDocumentSnapshot) => {
@@ -895,16 +893,16 @@ export const processEvents = functions
               var multiplier = 1;
               if (recurrence === "daily") {
                 multiplier = 1;
-              } else if (recurrence === "monthly") {
-                multiplier = 31;
-              } else if (recurrence === "yearly") {
-                multiplier = 365;
+              } else if (recurrence === "weekly") {
+                multiplier = 7;
               }
 
+              // Data di fine sessione
               const subEventDeadlineTimestamp: FirebaseFirestore.Timestamp =
                 data.subEventDeadline;
               const subEventDeadlineDate = subEventDeadlineTimestamp.toDate();
 
+              // Prossima data di fine sessione
               let nextSubEventDeadlineDate: Date = addDays(
                 multiplier,
                 subEventDeadlineDate
@@ -922,7 +920,7 @@ export const processEvents = functions
 
               console.log("nextSubEventId " + nextSubEventId);
 
-              const nextReimaining = remaining - 1;
+              const nextRemaining = remaining - 1;
 
               const nextSubEventDeadlineTimestamp: firestore.Timestamp =
                 firestore.Timestamp.fromDate(nextSubEventDeadlineDate);
@@ -934,13 +932,13 @@ export const processEvents = functions
               };
 
               await docRef.update({
-                remaining: nextReimaining,
+                remaining: nextRemaining,
                 activeSessionId: nextSubEventId,
                 subEventDeadline: nextSubEventDeadlineTimestamp,
               });
 
               await docRef
-                .collection("subEvents")
+                .collection("sessions")
                 .doc(nextSubEventId)
                 .set(nextSubEvent);
             } else {
@@ -958,7 +956,8 @@ export const processEvents = functions
       });
     }
   );
-  
+
+/*
 export const exportDbToJson = functions
   .region("europe-west3")
   .https.onRequest(
