@@ -13,6 +13,7 @@ import 'package:collection/collection.dart' show IterableExtension;
 final eventsStreamProvider =
     StreamProvider.family<List<CMIEvent>, String>((ref, providerId) async* {
   final authUserState = ref.watch(authStateProvider);
+  final isCMIAdmin = ref.watch(platformUserRoleProvider) == PlatformRole.cmi;
   if (authUserState is Authenticated) {
     final user = authUserState.user;
     final pManagers = ref
@@ -20,7 +21,7 @@ final eventsStreamProvider =
             .valueOrNull
             ?.managers ??
         {};
-    if (pManagers.containsKey(user.uid)) {
+    if (isCMIAdmin || pManagers.containsKey(user.uid)) {
       final stream = Cloud.eventsCollection(providerId).snapshots();
 
       await for (final snap in stream) {
@@ -46,11 +47,11 @@ final eventsStreamProvider =
       }
     } else {
       logger.i(
-          'eventsStreamProvider user is not manager of this provider $providerId');
+          'eventsStreamProvider: user is not manager of this provider $providerId');
       yield <CMIEvent>[];
     }
   } else {
-    logger.i('eventsStreamProvider user is not authenticated');
+    logger.i('eventsStreamProvider: user is not authenticated');
     yield <CMIEvent>[];
   }
 });

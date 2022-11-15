@@ -18,7 +18,7 @@ class HomeWebScreen extends StatelessWidget {
             child: MUButton(
               text: 'Dashboard',
               onPressed: () {
-                context.go("/${AdminDashboardScreen.routeName}");
+                context.go(AdminDashboardScreen.path);
               },
             ),
           ),

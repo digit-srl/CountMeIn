@@ -54,7 +54,7 @@ final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
                 final u = dto.toDomain();
                 yield AuthState.authenticated(u);
               } else {
-                yield const Unautenticated();
+                yield const Unauthenticated();
               }
             },
             error: (err, stack) async* {
@@ -67,7 +67,7 @@ final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
           );
         }
       } else {
-        yield const Unautenticated();
+        yield const Unauthenticated();
       }
     },
     error: (err, stack) async* {
@@ -87,11 +87,15 @@ final authStateProvider = Provider<AuthState>((ref) {
   );
 });
 
-final authUserRoleProvider = Provider<PlatformRole>((ref) {
+final platformUserRoleProvider = Provider<PlatformRole>((ref) {
   return ref.watch(authStateProvider).maybeWhen(
     authenticated: (user) => user.role,
     orElse: () => PlatformRole.unknown,
   );
+});
+
+final isUserScannerProvider = Provider.family<bool, String>((ref, providerId) {
+  return ref.watch(userRoleProvider(providerId)) == UserRole.scanner;
 });
 
 final userRoleProvider = Provider.family<UserRole, String>((ref, providerId) {
@@ -149,14 +153,14 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
                 final dto = AuthUserDTO.fromJson(map);
                 return AuthState.authenticated(dto.toDomain());
               } else {
-                return const Unautenticated();
+                return const Unauthenticated();
               }
             },
             error: (err, stack) => AuthError(err, stack),
             loading: () => const AuthLoading());
       }
     } else {
-      return const Unautenticated();
+      return const Unauthenticated();
     }
 
     if(user!= null){

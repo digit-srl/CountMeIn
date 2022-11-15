@@ -18,18 +18,20 @@ class CMIDropdownButton<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<T>(
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: label,
+    return DropdownButtonHideUnderline(
+      child: DropdownButtonFormField<T>(
+        decoration: InputDecoration(
+          // enabledBorder: InputBorder.none,
+          labelText: label,
+          hintText: label,
+        ),
+        validator: validator,
+        isDense: true,
+        isExpanded: true,
+        value: value,
+        items: items,
+        onChanged: onChanged,
       ),
-      validator: validator,
-      isDense: true,
-      isExpanded: true,
-      // underline: Container(),
-      value: value,
-      items: items,
-      onChanged: onChanged,
     );
   }
 }

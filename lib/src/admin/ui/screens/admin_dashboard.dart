@@ -21,7 +21,7 @@ class AdminDashboardScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final platformUserRole = ref.watch(authUserRoleProvider);
+    final platformUserRole = ref.watch(platformUserRoleProvider);
     final authState = ref.watch(authStateProvider);
     final isEmailNotVerified = authState is EmailNotVerified;
     return Scaffold(
@@ -40,7 +40,7 @@ class AdminDashboardScreen extends ConsumerWidget {
                   const SizedBox(height: 16),
                   LayoutBuilder(builder: (context, constraints) {
                     final cr = calculateCrossAxisCount(constraints.maxWidth);
-                    print('${constraints.maxWidth} con ${cr}');
+                    debugPrint('${constraints.maxWidth} con ${cr}');
                     return GridView.count(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,

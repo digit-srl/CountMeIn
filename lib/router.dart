@@ -24,9 +24,11 @@ import 'package:countmein/src/auth/ui/screens/reset_password.dart';
 import 'package:countmein/ui/screens/email_verification.dart';
 import 'package:countmein/ui/screens/request_activity.dart';
 import 'package:flutter/material.dart';
+import 'package:universal_io/io.dart';
 
 import 'src/admin/ui/screens/admin_dashboard.dart';
 import 'src/admin/ui/screens/admin_providers.dart';
+import 'src/auth/domain/entities/user.dart';
 import 'src/auth/ui/screens/sign_in.dart';
 import 'ui/screens/admin_user_details.dart';
 import 'ui/screens/error.dart';
@@ -42,7 +44,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     // For demo purposes
     refreshListenable: router,
     // This notifiies `GoRouter` for refresh events
-    initialLocation: AuthGate.routeName,
+    initialLocation: kIsWeb ?  AuthGate.routeName : AdminDashboardScreen.path,
     routes: router._routes,
     // redirect to the login page if the user is not logged in
     redirect: router._redirectLogic,
@@ -92,8 +94,9 @@ class RouterNotifier extends ChangeNotifier {
     // logger.i('Query: ${state.queryParams}');
 
     final authState = _ref.read(authStateProvider);
-    final isGoingToAdmin = state.subloc == '/admin';
-    final isGoingSignIn = state.subloc == '/signIn';
+
+    final isGoingToAdmin = state.subloc.startsWith('/admin');
+    final isGoingSignIn = state.subloc.startsWith('/signIn');
     // final isGoingToHome = state.subloc == '/';
     // final isGoingToVerificationEmail =
     //     state.subloc.startsWith(EmailVerificationScreen.routeName);
@@ -129,7 +132,7 @@ class RouterNotifier extends ChangeNotifier {
 
     final fromp = state.subloc == '/' ? '' : '?from=${state.location}';
 
-    if (authState is Unautenticated) {
+    if (authState is Unauthenticated) {
       return isGoingToSignIn ? null : '${SignInScreen.routeName}$fromp';
     }
     // We are authenticated
@@ -137,6 +140,11 @@ class RouterNotifier extends ChangeNotifier {
     // if the user is logged in, send them where they were going before (or
     // home if they weren't going anywhere)
     if (isGoingToSignIn) return state.queryParams['from'] ?? '/';
+
+    if(authState is Authenticated){
+      final isScanner = authState.user.role == UserRole.scanner;
+      print('user authenticated is scanner? $isScanner');
+    }
 
     // There's no need for a redirect at this point.
     return null;

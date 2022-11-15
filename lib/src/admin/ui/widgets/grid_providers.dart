@@ -18,7 +18,7 @@ class GridProvidersWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GenericGridView(
+    return GenericGridViewBuilder(
       itemCount: providers.length,
       scroolEnabled: true,
       itemBuilder: (BuildContext context, int index) {
@@ -32,6 +32,7 @@ class GridProvidersWidget extends StatelessWidget {
           },
           child: Text(
             p.name,
+            textAlign: TextAlign.center,
             // style: Theme.of(context).textTheme.subtitle1,
           ),
         );

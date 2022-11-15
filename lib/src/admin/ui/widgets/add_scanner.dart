@@ -14,7 +14,8 @@ import 'package:uuid/uuid.dart';
 final scannersProvider = Provider.family
     .autoDispose<List<ProviderManager>, String>((ref, providerId) {
   final managers =
-      ref.watch(singleCMIProviderProvider(providerId)).valueOrNull?.managers ?? {};
+      ref.watch(singleCMIProviderProvider(providerId)).valueOrNull?.managers ??
+          {};
   return managers.values
       .where((element) => element.role == UserRole.scanner)
       .toList();
@@ -107,10 +108,12 @@ class AddScannerWidget extends HookConsumerWidget {
           const SizedBox(height: 32),
           Center(
               child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     final name = nameController.text.trim();
                     final email = emailController.text.trim();
-                    add(name, email);
+                    final n = Navigator.of(context);
+                    await addScanner(name, email);
+                    n.pop();
                   },
                   child: const Text('Aggiungi'))),
         ],
@@ -118,7 +121,7 @@ class AddScannerWidget extends HookConsumerWidget {
     );
   }
 
-  add(String name, String email) async {
+  addScanner(String name, String email) async {
     final newManager = PendingProviderManager(
       id: const Uuid().v4(),
       role: UserRole.scanner,
@@ -128,9 +131,7 @@ class AddScannerWidget extends HookConsumerWidget {
       email: email,
       secret: '',
       providerName: provider.name,
-      eventsRestriction: [
-        event.id
-      ],
+      eventsRestriction: [event.id],
     );
     await Cloud.pendingInviteCollection(provider.id)
         .doc(newManager.id)

@@ -1,4 +1,10 @@
 {
+    "usersPrivateData": [
+        {
+            "gender": "male",
+            "id": "IjmIif1fWM4oQgP7xEo5"
+        }
+    ],
     "credentials": [
         {
             "uid": "XPxs8hhz7CwdXA3qrJ2P3XvC7bOF",
@@ -17,8 +23,18 @@
                         {
                             "users": [
                                 {
-                                    "id": "xxxx",
-                                    "cf": "XXXXXXXXXXX",
+                                    "cf": "DFRGMR89M02I348U",
+                                    "surname": "Di Francesco",
+                                    "name": "Gian Marco",
+                                    "id": "sdfghjasghjgfd",
+                                    "email": "difrancescogianmarco@gmail.com",
+                                    "isGroup": true,
+                                    "averageAge": 12,
+                                    "groupCount": 12,
+                                    "groupName": 12,
+                                    "manPercentage": 0.2,
+                                    "womanPercentage": 0.6,
+                                    "fromExternalOrganization": false,
                                     "checkInAt": {
                                         "_seconds": 1657104332,
                                         "_nanoseconds": 386000000
@@ -26,11 +42,29 @@
                                     "checkOutAt": {
                                         "_seconds": 1657104332,
                                         "_nanoseconds": 386000000
+                                    }
+                                },
+                                {
+                                    "cf": "ASDFGHJHGFDSDFGHJ",
+                                    "surname": "dfghjki",
+                                    "name": "dfghj",
+                                    "id": "6ii20pzyvwhvnzw7dIaM",
+                                    "email": "gianmarco@gmail.com",
+                                    "isGroup": false,
+                                    "averageAge": null,
+                                    "groupCount": null,
+                                    "groupName": null,
+                                    "manPercentage": null,
+                                    "womanPercentage": null,
+                                    "fromExternalOrganization": false,
+                                    "checkInAt": {
+                                        "_seconds": 1657104332,
+                                        "_nanoseconds": 386000000
                                     },
-                                    "fromExternalOrganization": true,
-                                    "name": "nome",
-                                    "surname": "cognome",
-                                    "privateId": "yyyyyyyyyyyyy"
+                                    "checkOutAt": {
+                                        "_seconds": 1657104332,
+                                        "_nanoseconds": 386000000
+                                    }
                                 }
                             ],
                             "privateUsers": [
@@ -48,7 +82,8 @@
                                 "female": 1,
                                 "notBinary": 1,
                                 "notAvailable": 1
-                            }
+                            },
+                            "totalUsers": 15
                         }
                     ],
                     "subEventDeadline": {
@@ -62,6 +97,13 @@
                         "_seconds": 1662711225,
                         "_nanoseconds": 387794000
                     },
+                    "genderCount": {
+                        "male": 12,
+                        "female": 1,
+                        "notBinary": 1,
+                        "notAvailable": 1
+                    },
+                    "totalUsers": 15,
                     "remaining": 0,
                     "frequency": null,
                     "accessType": "single",
@@ -76,7 +118,42 @@
                         "_seconds": 1662681600,
                         "_nanoseconds": 0
                     },
-                    "status": "live"
+                    "status": "live",
+                    "users": [
+                        {
+                            "cf": "DFRGMR89M02I348U",
+                            "surname": "Di Francesco",
+                            "name": "Gian Marco",
+                            "id": "sdfghjasghjgfd",
+                            "email": "difrancescogianmarco@gmail.com",
+                            "isGroup": true,
+                            "averageAge": 12,
+                            "groupCount": 12,
+                            "groupName": 12,
+                            "manPercentage": 0.2,
+                            "womanPercentage": 0.6,
+                            "fromExternalOrganization": false
+                        },
+                        {
+                            "cf": "ASDFGHJHGFDSDFGHJ",
+                            "surname": "dfghjki",
+                            "name": "dfghj",
+                            "id": "6ii20pzyvwhvnzw7dIaM",
+                            "email": "gianmarco@gmail.com",
+                            "isGroup": false,
+                            "averageAge": null,
+                            "groupCount": null,
+                            "groupName": null,
+                            "manPercentage": null,
+                            "womanPercentage": null,
+                            "fromExternalOrganization": false
+                        }
+                    ],
+                    "privateUsers": [
+                        {
+                            "privateId": "yyyyyyyyyyyyy"
+                        }
+                    ]
                 }
             ],
             "users": [
@@ -91,17 +168,20 @@
                         "_seconds": 1663231935,
                         "_nanoseconds": 486000000
                     },
-                    "email": "difrancescogianmarco@gmail.com"
-                }
-            ],
-            "usersPrivateData": [
-                {
-                    "bornIn": {
-                        "_seconds": 618019200,
-                        "_nanoseconds": 0
-                    },
-                    "gender": "male",
-                    "id": "IjmIif1fWM4oQgP7xEo5"
+                    "email": "difrancescogianmarco@gmail.com",
+                    "groups": [
+                        {
+                            "id": "asdfghgjhkj",
+                            "averageAge": 12,
+                            "groupCount": 12,
+                            "groupName": 12,
+                            "manPercentage": 0.2,
+                            "womanPercentage": 0.6
+                        }
+                    ],
+                    "accesses": [
+                        {}
+                    ]
                 }
             ],
             "adminName": "Gian Marco",

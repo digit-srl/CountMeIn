@@ -1,4 +1,5 @@
 import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -17,7 +18,7 @@ class AdminAppBar extends ConsumerWidget with PreferredSizeWidget {
     return AppBar(
       title: Text(title),
       actions: [
-        if (goToHome)
+        if (kIsWeb && goToHome)
           IconButton(
               icon: const Icon(Icons.home),
               onPressed: () {

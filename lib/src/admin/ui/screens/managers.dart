@@ -4,6 +4,7 @@ import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/auth/ui/screens/sign_in.dart';
+import 'package:countmein/src/common/ui/widgets/cmi_dropdown.dart';
 import 'package:countmein/src/common/ui/widgets/my_button.dart';
 import 'package:countmein/src/common/ui/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../cloud.dart';
@@ -73,16 +75,18 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
       ),
       body: Center(
         child: Container(
-          constraints: const BoxConstraints(maxWidth: 1000),
-          padding: const EdgeInsets.all(16.0),
+          constraints: const BoxConstraints(maxWidth: 600),
+          // padding: const EdgeInsets.all(8.0),
           // alignment:Alignment.center,
           child: CMICard(
+            enabled: false,
             child: state.when(
               data: (list) {
                 return Form(
                   key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: ListView(
+                    padding: const EdgeInsets.all(16.0),
+                    // crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const SizedBox(height: 8),
                       if (!addingMode)
@@ -110,7 +114,7 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                Text('Nuovo manager'),
+                                const Text('Nuovo manager'),
                                 const SizedBox(height: 32),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -143,25 +147,22 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                   alignment: Alignment.centerLeft,
                                   child: SizedBox(
                                     width: 300,
-                                    child: InputDecorator(
-                                      decoration: const InputDecoration(isDense: true,),
-                                      child: DropdownButton<UserRole>(
-                                        value: selectedRole,
-                                        items: UserRole.values.sublist(0,2)
-                                            .map((e) => DropdownMenuItem<
-                                            UserRole>(
-                                            value: e,
-                                            child: Text(
-                                                enumToString(e) ?? '-')))
-                                            .toList(),
-                                        onChanged: (role) {
-                                          if (role == null) return;
-                                          ref
-                                              .read(selectedRoleProvider
-                                              .notifier)
-                                              .state = role;
-                                        },
-                                      ),
+                                    child: CMIDropdownButton<UserRole>(
+                                      value: selectedRole,
+                                      items: UserRole.values
+                                          .sublist(0, 2)
+                                          .map((e) =>
+                                              DropdownMenuItem<UserRole>(
+                                                  value: e,
+                                                  child: Text(
+                                                      enumToString(e) ?? '-')))
+                                          .toList(),
+                                      onChanged: (role) {
+                                        if (role == null) return;
+                                        ref
+                                            .read(selectedRoleProvider.notifier)
+                                            .state = role;
+                                      },
                                     ),
                                   ),
                                 ),
@@ -175,7 +176,7 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                             addingMode = !addingMode;
                                           });
                                         },
-                                        child: Text('Annulla')),
+                                        child: const Text('Annulla')),
                                     MUButton(
                                       text: 'Invita',
                                       onPressed: () async {
@@ -220,14 +221,14 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                             ),
                           ),
                         ),
-                      Row(
-                        children: const [
-                          Expanded(flex: 2, child: Text('Membro')),
-                          Expanded(child: Text('Ruolo')),
-                          Expanded(flex: 2, child: Text('Email')),
-                          Spacer(),
-                        ],
-                      ),
+                      // Row(
+                      //   children: const [
+                      //     Expanded(flex: 2, child: Text('Membro')),
+                      //     Expanded(child: Text('Ruolo')),
+                      //     Expanded(flex: 2, child: Text('Email')),
+                      //     Spacer(),
+                      //   ],
+                      // ),
                       const SizedBox(height: 8),
                       const Divider(),
                       for (final m in widget.provider.managers!.values)
@@ -236,7 +237,7 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                           role: m.role,
                           email: m.email,
                           onDelete: () {
-                            final managers = widget.provider.managers!;
+                            final managers = {...widget.provider.managers!};
                             managers.removeWhere((key, value) => key == m.id);
                             Cloud.providerCollection
                                 .doc(widget.provider.id)
@@ -275,6 +276,8 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
   }
 }
 
+enum ManagerAction { copyEmail, delete }
+
 class MemberRow extends StatelessWidget {
   final Function()? onDelete;
   final String? subtitle;
@@ -295,6 +298,64 @@ class MemberRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Chip(label: Text(role.text)),
+                PopupMenuButton<ManagerAction>(
+                  icon: const Icon(Icons.more_vert),
+                  onSelected: (ManagerAction item) async {
+                    switch (item) {
+                      case ManagerAction.copyEmail:
+                        Clipboard.setData(ClipboardData(text: email));
+                        showCustomToast('Email copiata negli appunti');
+                        return;
+                      case ManagerAction.delete:
+                        final res = await ask(context,
+                            'Sicuro di voler rimuovere $name dai manager?');
+                        if (res ?? false) {
+                          onDelete?.call();
+                        }
+                    }
+                  },
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<ManagerAction>>[
+                    const PopupMenuItem<ManagerAction>(
+                      value: ManagerAction.copyEmail,
+                      child: Text('Copia email'),
+                    ),
+                    PopupMenuItem<ManagerAction>(
+                      value: ManagerAction.delete,
+                      textStyle: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(color: Colors.red),
+                      child: const Text('Elimina'),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            Text(
+              name,
+              textAlign: TextAlign.start,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            Text(
+              email,
+              textAlign: TextAlign.start,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ],
+        ),
+      ),
+    );
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -343,5 +404,3 @@ class MemberRow extends StatelessWidget {
     );
   }
 }
-
-

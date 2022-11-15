@@ -11,7 +11,20 @@ enum UserRole {
   admin,
   collaborator,
   scanner,
-  unknown,
+  unknown;
+
+  String get text{
+    switch(this){
+      case UserRole.admin:
+        return 'Admin';
+      case UserRole.collaborator:
+        return 'Collaboratore';
+      case UserRole.scanner:
+        return 'Scanner';
+      case UserRole.unknown:
+        return 'Sconosciuto';
+    }
+  }
 }
 
 @freezed

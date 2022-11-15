@@ -2,6 +2,7 @@ import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/auth/ui/screens/auht_gate.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/ui/screens/request_activity.dart';
+import 'package:countmein/utils.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -67,14 +68,16 @@ class SignInScreen extends HookConsumerWidget {
     final isLoading = ref.watch(signInNotifierProvider);
     return Scaffold(
       appBar: AppBar(
+        title: Text('Count Me In'),
         actions: [
-          IconButton(
-            icon: Icon(Icons.home),
-            color: Colors.white,
-            onPressed: () {
-              context.go(AuthGate.routeName);
-            },
-          ),
+          if (isWebDevice)
+            IconButton(
+              icon: Icon(Icons.home),
+              color: Colors.white,
+              onPressed: () {
+                context.go(AuthGate.routeName);
+              },
+            ),
         ],
       ),
       body: LoadingOverlay(
@@ -85,7 +88,8 @@ class SignInScreen extends HookConsumerWidget {
             child: CMICard(
               child: Form(
                 key: _formKey,
-                child: ListView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       'Accedi',
@@ -135,25 +139,33 @@ class SignInScreen extends HookConsumerWidget {
                         },
                       ),
                     ),
-                    const SizedBox(height: 32),
-                    EasyRichText(
-                      "Vuoi registrare un tuo provider? Clicca qui",
-                      defaultStyle: Theme.of(context).textTheme.bodyText1,
-                      patternList: [
-                        EasyRichTextPattern(
-                            targetString: 'qui',
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                context.push(ActivityRequestScreen.routeName);
-                              },
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                ?.bold
-                                .underline),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
+
+                    if (isWebDevice) ...[
+                      const SizedBox(height: 32),
+                      EasyRichText(
+                        "Vuoi registrare un tuo provider? Clicca qui",
+                        defaultStyle: Theme.of(context).textTheme.bodyText1,
+                        patternList: [
+                          EasyRichTextPattern(
+                              targetString: 'qui',
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  if (isWebDevice) {
+                                    context
+                                        .push(ActivityRequestScreen.routeName);
+                                  } else {
+                                    final uri = 'https://cmi.digit.srl';
+                                  }
+                                },
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.bold
+                                  .underline),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                    ]
                     // EasyRichText(
                     //   "Hai dimenticato la password? Clicca qui",
                     //   defaultStyle: Theme.of(context).textTheme.bodyText1,

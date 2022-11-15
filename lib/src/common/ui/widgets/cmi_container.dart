@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
 
 class CMICard extends StatefulWidget {
@@ -11,6 +12,7 @@ class CMICard extends StatefulWidget {
   final BoxConstraints? constraints;
   final bool center;
   final bool animated;
+  final bool enabled;
   final Widget? trailing;
   final Widget? leading;
 
@@ -27,6 +29,7 @@ class CMICard extends StatefulWidget {
     this.collapsedWidget,
     this.trailing,
     this.leading,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -44,6 +47,99 @@ class _CMICardState extends State<CMICard> {
 
   @override
   Widget build(BuildContext context) {
+    final child2 = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (widget.trailing != null || widget.leading != null)
+          Row(
+            children: [
+              if (widget.leading != null) widget.leading!,
+              const Spacer(),
+              if (widget.trailing != null) widget.trailing!
+              /*else if (widget.collapsedWidget != null)
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      opened = !opened;
+                    });
+                  },
+                  icon: Icon(opened
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down),
+                ),*/
+            ],
+          ),
+        Stack(
+          children: [
+            if (widget.collapsedWidget == null || opened)
+              Center(child: widget.child)
+            else
+              widget.collapsedWidget!,
+            if (widget.collapsedWidget != null)
+              Positioned(
+                right: 4.0,
+                top: 4.0,
+                child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      opened = !opened;
+                    });
+                  },
+                  icon: Icon(opened
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down),
+                ),
+              )
+          ],
+        )
+      ],
+    );
+
+    /*final child = Stack(
+      // fit: StackFit.expand,
+      children: [
+        if (widget.collapsedWidget == null || opened)
+          if (widget.center) Center(child: widget.child) else widget.child
+        else
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              widget.collapsedWidget!,
+            ],
+          ),
+        if (widget.collapsedWidget != null ||
+            widget.trailing != null ||
+            widget.leading != null)
+          Positioned(
+            right: 4,
+            left: 4,
+            top: 0,
+            child: Row(
+              children: [
+                if (widget.leading != null) widget.leading!,
+                const Spacer(),
+                if (widget.trailing != null)
+                  widget.trailing!
+                else if (widget.collapsedWidget != null)
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        opened = !opened;
+                      });
+                    },
+                    icon: Icon(opened
+                        ? Icons.keyboard_arrow_up
+                        : Icons.keyboard_arrow_down),
+                  ),
+              ],
+            ),
+          ),
+      ],
+    );*/
+    if (!widget.enabled) {
+      return child2;
+    }
     return Badge(
       badgeColor: Colors.orange,
       showBadge: widget.iconBadge != null,
@@ -71,52 +167,9 @@ class _CMICardState extends State<CMICard> {
                 ? const Duration(milliseconds: 500)
                 : Duration.zero,
             constraints: widget.constraints,
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(isLargeScreen(context) ? 16 : 8),
             // alignment: widget.center ? Alignment.center : null,
-            child: Stack(
-              // fit: StackFit.expand,
-              children: [
-                if (widget.collapsedWidget == null || opened)
-                  if (widget.center)
-                    Center(child: widget.child)
-                  else
-                    widget.child
-                else
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      widget.collapsedWidget!,
-                    ],
-                  ),
-                if (widget.collapsedWidget != null ||
-                    widget.trailing != null ||
-                    widget.leading != null)
-                  Positioned(
-                    right: 4,
-                    left: 4,
-                    top: 4,
-                    child: Row(
-                      children: [
-                        if (widget.leading != null) widget.leading!,
-                        const Spacer(),
-                        if (widget.trailing != null)
-                          widget.trailing!
-                        else if (widget.collapsedWidget != null)
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                opened = !opened;
-                              });
-                            },
-                            icon: Icon(opened
-                                ? Icons.keyboard_arrow_up
-                                : Icons.keyboard_arrow_down),
-                          ),
-                      ],
-                    ),
-                  ),
-              ],
-            ),
+            child: child2,
           ),
         ),
       ),
