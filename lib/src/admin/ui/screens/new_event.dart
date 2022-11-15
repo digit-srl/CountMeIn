@@ -7,6 +7,7 @@ import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/ui/widgets/my_text_field.dart';
 import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -41,10 +42,13 @@ class NewEventFormScreen extends HookConsumerWidget {
 
   final _formKey = GlobalKey<FormState>();
 
+  final dayFormat = DateFormat('EEEE', 'it');
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final durationController = useTextEditingController();
-    final repsController = useTextEditingController();
+    final repsController = useTextEditingController(text: "2");
+    final repsCount = useState<int>(2);
     final nameController = useTextEditingController();
     final womController = useTextEditingController();
     final accessType = useState<EventAccessType>(EventAccessType.single);
@@ -207,10 +211,20 @@ class NewEventFormScreen extends HookConsumerWidget {
                             controller: repsController,
                             hintText: 'Numero di ripetizioni',
                             validator: numberValidator,
+                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                            onChanged: (v) {
+                              final value = int.tryParse(v.trim());
+                              if (value != null && value > 0) {
+                                repsCount.value = value;
+                              }
+                            },
                           ),
                         ),
                       ],
-                    )
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                        'L\'evento si ripeterà ogni ${selectedFrequency.value == FrequencyType.weekly ? dayFormat.format(startAt.value) : 'giorno'} per ${repsCount.value} volte'),
                   ],
                   const Divider(),
                   const SizedBox(height: 8),
@@ -284,9 +298,6 @@ class NewEventFormScreen extends HookConsumerWidget {
 
                           final start = startAt.value.midnightUTC;
 
-                          final days =
-                              recurrence * selectedFrequency.value.multiplier;
-
                           // Data di fine prima sessione
                           final subEventEndAt = start.add(
                             Duration(
@@ -295,7 +306,6 @@ class NewEventFormScreen extends HookConsumerWidget {
                                     : 1),
                           );
 
-                          logger.i('days to end: $days');
                           //TODO
                           final subEventDeadline = subEventEndAt;
 

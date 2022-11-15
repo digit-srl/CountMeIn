@@ -2,6 +2,7 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:countmein/cloud.dart';
 import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:countmein/my_logger.dart';
+import 'package:countmein/src/common/ui/widgets/cf_text_field.dart';
 import '../../../src/common/mu_styles.dart';
 import 'package:dart_wom_connector/dart_wom_connector.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
@@ -133,10 +134,9 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
                           labelText: 'Email Richiedente',
                           validator: emailValidator,
                         ),
-                        MUTextField(
+                        CFTextField(
                           controller: adminCfController,
                           labelText: 'C.F. Richiedente',
-                          validator: textValidator,
                         ),
                         const SizedBox(height: 16),
                         const WomIntegrationPanel(),

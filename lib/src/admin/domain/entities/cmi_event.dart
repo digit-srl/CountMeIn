@@ -41,7 +41,8 @@ enum EventType {
 }
 
 enum FrequencyType {
-  daily;
+  daily,
+  weekly;
   // monthly,
   // yearly;
 
@@ -53,6 +54,8 @@ enum FrequencyType {
       //   return 'Settimanale';
       // case FrequencyType.yearly:
       //   return 'Annuale';
+      case FrequencyType.weekly:
+        return 'Settimanale';
     }
   }
 
@@ -64,6 +67,8 @@ enum FrequencyType {
       //   return 31;
       // case FrequencyType.yearly:
       //   return 365;
+      case FrequencyType.weekly:
+        return 7;
     }
   }
 }

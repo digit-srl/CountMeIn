@@ -1,3 +1,4 @@
+import 'package:countmein/src/common/ui/widgets/cf_text_field.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/common/upper_case_formatter.dart';
 import 'package:countmein/src/user/application/user_card_recovering_notifier.dart';
@@ -51,14 +52,8 @@ class _RestoreUserCardState extends ConsumerState<RecoverUserCard> {
                     Row(
                       children: [
                         Flexible(
-                          child: CMITextField(
+                          child: CFTextField(
                             controller: cfController,
-                            hintText: 'Codice Fiscale',
-                            inputFormatters: [
-                              UpperCaseTextFormatter()
-                            ],
-                            textCapitalization: TextCapitalization.characters,
-                            validator: CFValidator(),
                           ),
                         ),
                         /*TextButton(
