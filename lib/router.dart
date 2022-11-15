@@ -70,8 +70,8 @@ class RouterNotifier extends ChangeNotifier {
     _ref.listen<AuthState?>(
       authStateProvider,
       (_, currentState) {
-        logger.i('router listing auth state');
-        logger.i(currentState);
+        debugPrint('router listing auth state');
+        debugPrint(currentState.toString());
         // if (currentState is Authenticated) {
         notifyListeners();
         // }
@@ -90,15 +90,10 @@ class RouterNotifier extends ChangeNotifier {
     // logger.i('Subloc: ${state.subloc}');
     // logger.i('Params: ${state.params}');
     // logger.i('Query: ${state.queryParams}');
-    final isEventRoute = state.subloc.startsWith('/event/');
-
-    if (isEventRoute) {
-      logger.i('is event route');
-      return state.subloc.replaceFirst('/event', '/provider');
-    }
 
     final authState = _ref.read(authStateProvider);
     final isGoingToAdmin = state.subloc == '/admin';
+    final isGoingSignIn = state.subloc == '/signIn';
     // final isGoingToHome = state.subloc == '/';
     // final isGoingToVerificationEmail =
     //     state.subloc.startsWith(EmailVerificationScreen.routeName);
@@ -113,7 +108,8 @@ class RouterNotifier extends ChangeNotifier {
     //     state.subloc == ActivityRequestScreen.routeName;
     // final isGoingToRecoverUserCard = state.subloc
 
-    if(!isGoingToAdmin){
+    if(!isGoingToAdmin && !isGoingSignIn){
+      debugPrint('Skip redirect');
       return null;
     }
 

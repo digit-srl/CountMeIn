@@ -36,11 +36,11 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     CMIProvider? provider;
-    if (extraProvider != null) {
-      provider = extraProvider!;
-    } else {
+    // if (extraProvider != null) {
+    //   provider = extraProvider!;
+    // } else {
       provider = ref.watch(singleCMIProviderProvider(providerId)).valueOrNull;
-    }
+    // }
     final platformUserRole = ref.watch(authUserRoleProvider);
     final userRole = ref.watch(userRoleProvider(providerId));
     logger.i('platformUserRole: $platformUserRole');

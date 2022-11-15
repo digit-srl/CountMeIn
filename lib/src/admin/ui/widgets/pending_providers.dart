@@ -1,3 +1,4 @@
+import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -18,7 +19,9 @@ class PendingProviders extends ConsumerWidget {
             ? () {
                 context.push(AdminPendingProvidersScreen.routeName,
                     extra: data);
-              }
+                context.go("${AdminDashboardScreen.path}/${AdminPendingProvidersScreen.routeName}", extra: data);
+
+        }
             : null,
         iconBadge: data != null && data.isNotEmpty
             ? Icons.account_balance_wallet
