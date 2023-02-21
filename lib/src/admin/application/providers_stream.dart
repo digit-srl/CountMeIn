@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../cloud.dart';
 import '../../../domain/entities/cmi_provider.dart';
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 
 
 final pendingProvidersStreamProvider =

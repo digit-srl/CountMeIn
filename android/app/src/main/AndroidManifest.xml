@@ -51,5 +51,5 @@
 
 <!--adb shell am start -a android.intent.action.VIEW \
     -c android.intent.category.BROWSABLE \
-    -d "http://cmi.digit.srl/admin/providers/dashboard/countmein/event/3b1c42b0-61e8-4877-b533-428c0cb4f9fb"
+    -d "http://cmi.digit.srl/admin/providers/dashboard/40af44d9-1074-4833-9410-dd203f73fc1f/event/6385055e-024a-4e98-af13-ccb11bee1c54"
 -->
