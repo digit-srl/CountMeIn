@@ -118,7 +118,7 @@ export const onSessionUserCheckIn = functions
       const eventRef = snap.after.ref.parent.parent;
 
       console.log(
-        "onUserCheckIn: providerId" +
+        "start onUserCheckIn: providerId: " +
           providerId +
           " eventId: " +
           eventId +
@@ -219,7 +219,7 @@ export const onSessionUserCheckIn = functions
       const womCount = event.maxWomCount;
       const eventName = event.name;
       const eventAccessType = event.accessType;
-      console.log(eventName);
+      console.log("onUserCheckIn: eventName => " + eventName);
 
       if (womCount === undefined || womCount === null || womCount === 0) {
         console.log(
@@ -243,6 +243,7 @@ export const onSessionUserCheckIn = functions
       // se il tesserino è di una organizzazione esterna (es: università)
       // prendo i dati direttamente dal doc del checkin/out
       if (fromExternalOrganization) {
+        console.log("onUserCheckIn: tesserino di un organizzazione esterna");
         if (
           !(
             user.email == null ||
@@ -259,16 +260,26 @@ export const onSessionUserCheckIn = functions
             surname: user.surname,
             cf: user.cf,
           };
+        } else {
+          console.log(
+            "onUserCheckIn: parametro mancante nel documento del checkin/out "
+          );
         }
       }
 
       if (!fromExternalOrganization && userData == null) {
-        const userDoc: FirebaseFirestore.DocumentData = await userDocRef(
-          providerId,
-          userId
-        ).get();
+        console.log("onUserCheckIn: tesserino da una organizzazione interna ");
+        let ref = userDocRef(providerId, userId);
+        const userDoc: FirebaseFirestore.DocumentData = await ref.get();
 
         userData = userDoc.data();
+
+        if (!userDoc.exists || userData == null) {
+          console.log("onUserCheckIn: user not exists on " + ref.path);
+          return null;
+        }
+
+        console.log(userData);
       }
 
       const email = userData.email;
@@ -525,7 +536,7 @@ export const onGlobalUserCheckIn = functions
           console.log(
             "onGlobalUserCheckIn: increment total user with " + groupCount
           );
-          await db.runTransaction(
+          return db.runTransaction(
             async (transaction: FirebaseFirestore.Transaction) => {
               await transaction.update(eventRef, {
                 totalUsers: firestore.FieldValue.increment(groupCount),
@@ -534,7 +545,11 @@ export const onGlobalUserCheckIn = functions
           );
         }
       }
-      return new Promise((resolve, reject) => {});
+      return new Promise<void>(() => {
+        //console.log("onGlobalUserCheckIn: end");
+      }).then(() => {
+        console.log("onGlobalUserCheckIn: end");
+      });
     } catch (ex) {
       console.log("onGlobalUserCheckIn failed");
       console.log(ex);
