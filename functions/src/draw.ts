@@ -182,6 +182,7 @@ export async function getQrCode(value: string) {
   return canvas.toBuffer("image/png");
 }
 
+/*
 export async function getBarcode(value: string) {
   const height = 150;
   const width = 450;
@@ -193,4 +194,4 @@ export async function getBarcode(value: string) {
   const barcode = JsBarcode(canvas, value);
   ctx.drawImage(barcode, height, width);
   return canvas.toBuffer("image/png");
-}
+}*/

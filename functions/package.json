@@ -21,7 +21,7 @@
     "codice-fiscale-js": "^2.3.20",
     "dotenv": "^16.0.1",
     "firebase-admin": "^11.5.0",
-    "firebase-functions": "^3.23.0",
+    "firebase-functions": "^4.2.1",
     "form-data": "^4.0.0",
     "jsbarcode": "^3.11.5",
     "mailgun.js": "^7.0.2",
