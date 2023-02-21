@@ -16,6 +16,7 @@ import 'package:soundpool/soundpool.dart';
 import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/event_ids.dart';
 import '../../domain/entities/user_card.dart';
+import 'package:collection/collection.dart';
 
 final usersCountProvider =
     Provider.autoDispose.family<int, EventIds>((ref, ids) {
@@ -105,14 +106,15 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                 Expanded(
                   flex: 6,
                   child: MobileScanner(
-                    allowDuplicates: true,
                     controller: MobileScannerController(
                         facing: CameraFacing.back, torchEnabled: false),
-                    onDetect: (barcode, args) {
-                      final data = barcode.rawValue;
-                      if (data == null) return;
-                      ref.read(scanControllerProvider(widget.event.id)).processScan2(
-                            data,
+                    onDetect: (BarcodeCapture barcodeCapture) {
+                      final barcode = barcodeCapture.barcodes.firstOrNull;
+                      if (barcode == null || barcode.rawValue == null) return;
+                      ref
+                          .read(scanControllerProvider(widget.event.id))
+                          .processScan2(
+                            barcode.rawValue!,
                             widget.provider,
                             widget.event,
                             widget.scanMode,

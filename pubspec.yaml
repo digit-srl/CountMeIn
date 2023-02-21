@@ -51,10 +51,10 @@ dependencies:
   hive_flutter:
   form_field_validator: ^1.1.0
   qr_flutter: ^4.0.0
-  loading_overlay:
-  easy_rich_text:
-  cool_alert:
-  badges:
+  loading_overlay: ^0.3.0
+  easy_rich_text: ^1.2.0
+  cool_alert: ^1.1.0
+  badges: ^3.0.2
   flex_color_scheme:
   fl_chart: ^0.60.0
   dropdown_search: ^5.0.5

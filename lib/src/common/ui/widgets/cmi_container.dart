@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as customBadge;
 import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -140,8 +140,12 @@ class _CMICardState extends State<CMICard> {
     if (!widget.enabled) {
       return child2;
     }
-    return Badge(
+
+    return customBadge.Badge(
+      badgeStyle: customBadge.BadgeStyle(
+
       badgeColor: Colors.orange,
+      ),
       showBadge: widget.iconBadge != null,
       badgeContent: widget.iconBadge != null
           ? Icon(
