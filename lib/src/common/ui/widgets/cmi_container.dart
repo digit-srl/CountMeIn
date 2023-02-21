@@ -143,7 +143,6 @@ class _CMICardState extends State<CMICard> {
 
     return customBadge.Badge(
       badgeStyle: customBadge.BadgeStyle(
-
       badgeColor: Colors.orange,
       ),
       showBadge: widget.iconBadge != null,

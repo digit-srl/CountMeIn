@@ -719,16 +719,6 @@ class ScanSimulationWidget extends HookConsumerWidget {
               style: Theme.of(context).textTheme.headline6),
           const SizedBox(height: 16),
           ToggleButtons(
-            children: [
-              const Icon(
-                Icons.arrow_downward,
-                color: Colors.green,
-              ),
-              const Icon(
-                Icons.arrow_upward,
-                color: Colors.red,
-              )
-            ],
             isSelected:
                 ScanMode.values.map((e) => e == scanMode.value).toList(),
             onPressed: event.accessType == EventAccessType.inOut
@@ -736,10 +726,21 @@ class ScanSimulationWidget extends HookConsumerWidget {
                     scanMode.value = ScanMode.values[index];
                   }
                 : null,
+            children: const [
+              Icon(
+                Icons.arrow_downward,
+                color: Colors.green,
+              ),
+              Icon(
+                Icons.arrow_upward,
+                color: Colors.red,
+              )
+            ],
           ),
           const SizedBox(height: 16),
           ElevatedButton(
               onPressed: () {
+// https://cmi.digit.srl/profile/27KEQsVlgbHsNONPSP5V?name=Gian Marco&surname=Di Francesco&cf=DFRGMR89M02I348U&pId=countmein
 // https://cmi.digit.srl/profile/27KEQsVlgbHsNONPSP5V?name=Gian Marco&surname=Di Francesco&cf=DFRGMR89M02I348U&pId=countmein&gId=g2f90soy5Xf1tvX3xrsW&gN=GRUPPO JANMARC&gC=6&aA=12
                 ref.read(scanControllerProvider(event.id)).processScan2(
                       dataController.text.trim(),
