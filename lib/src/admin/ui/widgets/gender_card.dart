@@ -126,7 +126,7 @@ class GenderCard extends ConsumerWidget {
   }
 
   List<PieChartSectionData> showingSections(int m, int f, int nB, int na) {
-    final total = m + f + na;
+    final total = m + f + nB + na;
     final mPercentage = m / total * 100;
     final fPercentage = f / total * 100;
     final nbPercentage = nB / total * 100;

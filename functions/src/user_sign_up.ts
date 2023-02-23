@@ -314,14 +314,13 @@ async function sendGroupCard(
   if (averageAge != null) {
     url = url + "&aA=" + averageAge;
   }
-
   const buffer = await draw.drawGroupCard(
     providerName,
     name,
     surname,
     cf,
     email,
-    url,
+    encodeURI(url),
     groupName,
     groupCount.toString(),
     averageAge?.toString(),

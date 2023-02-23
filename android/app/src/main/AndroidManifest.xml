@@ -7,6 +7,7 @@
 
     <application
         android:label="CountMeIn"
+        android:usesCleartextTraffic="true"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
