@@ -230,23 +230,22 @@ exports.recoverUser = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {
+      console.log(request.body);
       cors(request, response, async () => {
-        console.log(request.body);
-
         if (request.method !== "POST") {
           response.status(403).send("Forbidden!");
           return;
         }
         const now = new Date();
         const data = request.body;
-        const cf = data.cf.toUpperCase();
-        const providerId = data.providerId;
 
-        if (providerId == null || cf == null) {
+        if (data.providerId == null || data.cf == null) {
           const message = "CF or providerId are missing";
           console.log(message);
           throw new functions.https.HttpsError("invalid-argument", message);
         }
+        const cf = data.cf.toUpperCase();
+        const providerId = data.providerId;
 
         if (!CodiceFiscale.check(cf)) {
           response
