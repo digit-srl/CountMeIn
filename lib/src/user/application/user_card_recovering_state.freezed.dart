@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user_card_recovering_state.dart';
 
@@ -20,6 +20,8 @@ mixin _$UserCardRecoveringState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() userNotExists,
+    required TResult Function() invalidFiscalCode,
     required TResult Function(UserIds ids) waitingOtpCode,
     required TResult Function(UserIds ids) profile,
     required TResult Function(Object? error, StackTrace? st) error,
@@ -29,6 +31,8 @@ mixin _$UserCardRecoveringState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? userNotExists,
+    TResult? Function()? invalidFiscalCode,
     TResult? Function(UserIds ids)? waitingOtpCode,
     TResult? Function(UserIds ids)? profile,
     TResult? Function(Object? error, StackTrace? st)? error,
@@ -38,6 +42,8 @@ mixin _$UserCardRecoveringState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? userNotExists,
+    TResult Function()? invalidFiscalCode,
     TResult Function(UserIds ids)? waitingOtpCode,
     TResult Function(UserIds ids)? profile,
     TResult Function(Object? error, StackTrace? st)? error,
@@ -48,6 +54,10 @@ mixin _$UserCardRecoveringState {
   TResult map<TResult extends Object?>({
     required TResult Function(UserCardRecoveringInitial value) initial,
     required TResult Function(UserCardRecoveringLoading value) loading,
+    required TResult Function(UserCardRecoveringUserNotExists value)
+        userNotExists,
+    required TResult Function(UserCardRecoveringInvalidFiscalCode value)
+        invalidFiscalCode,
     required TResult Function(UserCardRecoveringWaitingOtpCode value)
         waitingOtpCode,
     required TResult Function(UserCardRecoveringProfile value) profile,
@@ -58,6 +68,9 @@ mixin _$UserCardRecoveringState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(UserCardRecoveringInitial value)? initial,
     TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult? Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
     TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
     TResult? Function(UserCardRecoveringProfile value)? profile,
     TResult? Function(UserCardRecoveringError value)? error,
@@ -67,6 +80,9 @@ mixin _$UserCardRecoveringState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(UserCardRecoveringInitial value)? initial,
     TResult Function(UserCardRecoveringLoading value)? loading,
+    TResult Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
     TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
     TResult Function(UserCardRecoveringProfile value)? profile,
     TResult Function(UserCardRecoveringError value)? error,
@@ -137,6 +153,8 @@ class _$UserCardRecoveringInitial implements UserCardRecoveringInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() userNotExists,
+    required TResult Function() invalidFiscalCode,
     required TResult Function(UserIds ids) waitingOtpCode,
     required TResult Function(UserIds ids) profile,
     required TResult Function(Object? error, StackTrace? st) error,
@@ -149,6 +167,8 @@ class _$UserCardRecoveringInitial implements UserCardRecoveringInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? userNotExists,
+    TResult? Function()? invalidFiscalCode,
     TResult? Function(UserIds ids)? waitingOtpCode,
     TResult? Function(UserIds ids)? profile,
     TResult? Function(Object? error, StackTrace? st)? error,
@@ -161,6 +181,8 @@ class _$UserCardRecoveringInitial implements UserCardRecoveringInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? userNotExists,
+    TResult Function()? invalidFiscalCode,
     TResult Function(UserIds ids)? waitingOtpCode,
     TResult Function(UserIds ids)? profile,
     TResult Function(Object? error, StackTrace? st)? error,
@@ -177,6 +199,10 @@ class _$UserCardRecoveringInitial implements UserCardRecoveringInitial {
   TResult map<TResult extends Object?>({
     required TResult Function(UserCardRecoveringInitial value) initial,
     required TResult Function(UserCardRecoveringLoading value) loading,
+    required TResult Function(UserCardRecoveringUserNotExists value)
+        userNotExists,
+    required TResult Function(UserCardRecoveringInvalidFiscalCode value)
+        invalidFiscalCode,
     required TResult Function(UserCardRecoveringWaitingOtpCode value)
         waitingOtpCode,
     required TResult Function(UserCardRecoveringProfile value) profile,
@@ -190,6 +216,9 @@ class _$UserCardRecoveringInitial implements UserCardRecoveringInitial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(UserCardRecoveringInitial value)? initial,
     TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult? Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
     TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
     TResult? Function(UserCardRecoveringProfile value)? profile,
     TResult? Function(UserCardRecoveringError value)? error,
@@ -202,6 +231,9 @@ class _$UserCardRecoveringInitial implements UserCardRecoveringInitial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(UserCardRecoveringInitial value)? initial,
     TResult Function(UserCardRecoveringLoading value)? loading,
+    TResult Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
     TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
     TResult Function(UserCardRecoveringProfile value)? profile,
     TResult Function(UserCardRecoveringError value)? error,
@@ -261,6 +293,8 @@ class _$UserCardRecoveringLoading implements UserCardRecoveringLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() userNotExists,
+    required TResult Function() invalidFiscalCode,
     required TResult Function(UserIds ids) waitingOtpCode,
     required TResult Function(UserIds ids) profile,
     required TResult Function(Object? error, StackTrace? st) error,
@@ -273,6 +307,8 @@ class _$UserCardRecoveringLoading implements UserCardRecoveringLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? userNotExists,
+    TResult? Function()? invalidFiscalCode,
     TResult? Function(UserIds ids)? waitingOtpCode,
     TResult? Function(UserIds ids)? profile,
     TResult? Function(Object? error, StackTrace? st)? error,
@@ -285,6 +321,8 @@ class _$UserCardRecoveringLoading implements UserCardRecoveringLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? userNotExists,
+    TResult Function()? invalidFiscalCode,
     TResult Function(UserIds ids)? waitingOtpCode,
     TResult Function(UserIds ids)? profile,
     TResult Function(Object? error, StackTrace? st)? error,
@@ -301,6 +339,10 @@ class _$UserCardRecoveringLoading implements UserCardRecoveringLoading {
   TResult map<TResult extends Object?>({
     required TResult Function(UserCardRecoveringInitial value) initial,
     required TResult Function(UserCardRecoveringLoading value) loading,
+    required TResult Function(UserCardRecoveringUserNotExists value)
+        userNotExists,
+    required TResult Function(UserCardRecoveringInvalidFiscalCode value)
+        invalidFiscalCode,
     required TResult Function(UserCardRecoveringWaitingOtpCode value)
         waitingOtpCode,
     required TResult Function(UserCardRecoveringProfile value) profile,
@@ -314,6 +356,9 @@ class _$UserCardRecoveringLoading implements UserCardRecoveringLoading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(UserCardRecoveringInitial value)? initial,
     TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult? Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
     TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
     TResult? Function(UserCardRecoveringProfile value)? profile,
     TResult? Function(UserCardRecoveringError value)? error,
@@ -326,6 +371,9 @@ class _$UserCardRecoveringLoading implements UserCardRecoveringLoading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(UserCardRecoveringInitial value)? initial,
     TResult Function(UserCardRecoveringLoading value)? loading,
+    TResult Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
     TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
     TResult Function(UserCardRecoveringProfile value)? profile,
     TResult Function(UserCardRecoveringError value)? error,
@@ -340,6 +388,294 @@ class _$UserCardRecoveringLoading implements UserCardRecoveringLoading {
 
 abstract class UserCardRecoveringLoading implements UserCardRecoveringState {
   const factory UserCardRecoveringLoading() = _$UserCardRecoveringLoading;
+}
+
+/// @nodoc
+abstract class _$$UserCardRecoveringUserNotExistsCopyWith<$Res> {
+  factory _$$UserCardRecoveringUserNotExistsCopyWith(
+          _$UserCardRecoveringUserNotExists value,
+          $Res Function(_$UserCardRecoveringUserNotExists) then) =
+      __$$UserCardRecoveringUserNotExistsCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$UserCardRecoveringUserNotExistsCopyWithImpl<$Res>
+    extends _$UserCardRecoveringStateCopyWithImpl<$Res,
+        _$UserCardRecoveringUserNotExists>
+    implements _$$UserCardRecoveringUserNotExistsCopyWith<$Res> {
+  __$$UserCardRecoveringUserNotExistsCopyWithImpl(
+      _$UserCardRecoveringUserNotExists _value,
+      $Res Function(_$UserCardRecoveringUserNotExists) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$UserCardRecoveringUserNotExists
+    implements UserCardRecoveringUserNotExists {
+  const _$UserCardRecoveringUserNotExists();
+
+  @override
+  String toString() {
+    return 'UserCardRecoveringState.userNotExists()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserCardRecoveringUserNotExists);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() userNotExists,
+    required TResult Function() invalidFiscalCode,
+    required TResult Function(UserIds ids) waitingOtpCode,
+    required TResult Function(UserIds ids) profile,
+    required TResult Function(Object? error, StackTrace? st) error,
+  }) {
+    return userNotExists();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? userNotExists,
+    TResult? Function()? invalidFiscalCode,
+    TResult? Function(UserIds ids)? waitingOtpCode,
+    TResult? Function(UserIds ids)? profile,
+    TResult? Function(Object? error, StackTrace? st)? error,
+  }) {
+    return userNotExists?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? userNotExists,
+    TResult Function()? invalidFiscalCode,
+    TResult Function(UserIds ids)? waitingOtpCode,
+    TResult Function(UserIds ids)? profile,
+    TResult Function(Object? error, StackTrace? st)? error,
+    required TResult orElse(),
+  }) {
+    if (userNotExists != null) {
+      return userNotExists();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UserCardRecoveringInitial value) initial,
+    required TResult Function(UserCardRecoveringLoading value) loading,
+    required TResult Function(UserCardRecoveringUserNotExists value)
+        userNotExists,
+    required TResult Function(UserCardRecoveringInvalidFiscalCode value)
+        invalidFiscalCode,
+    required TResult Function(UserCardRecoveringWaitingOtpCode value)
+        waitingOtpCode,
+    required TResult Function(UserCardRecoveringProfile value) profile,
+    required TResult Function(UserCardRecoveringError value) error,
+  }) {
+    return userNotExists(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UserCardRecoveringInitial value)? initial,
+    TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult? Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
+    TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserCardRecoveringProfile value)? profile,
+    TResult? Function(UserCardRecoveringError value)? error,
+  }) {
+    return userNotExists?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserCardRecoveringInitial value)? initial,
+    TResult Function(UserCardRecoveringLoading value)? loading,
+    TResult Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
+    TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
+    TResult Function(UserCardRecoveringProfile value)? profile,
+    TResult Function(UserCardRecoveringError value)? error,
+    required TResult orElse(),
+  }) {
+    if (userNotExists != null) {
+      return userNotExists(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UserCardRecoveringUserNotExists
+    implements UserCardRecoveringState {
+  const factory UserCardRecoveringUserNotExists() =
+      _$UserCardRecoveringUserNotExists;
+}
+
+/// @nodoc
+abstract class _$$UserCardRecoveringInvalidFiscalCodeCopyWith<$Res> {
+  factory _$$UserCardRecoveringInvalidFiscalCodeCopyWith(
+          _$UserCardRecoveringInvalidFiscalCode value,
+          $Res Function(_$UserCardRecoveringInvalidFiscalCode) then) =
+      __$$UserCardRecoveringInvalidFiscalCodeCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$UserCardRecoveringInvalidFiscalCodeCopyWithImpl<$Res>
+    extends _$UserCardRecoveringStateCopyWithImpl<$Res,
+        _$UserCardRecoveringInvalidFiscalCode>
+    implements _$$UserCardRecoveringInvalidFiscalCodeCopyWith<$Res> {
+  __$$UserCardRecoveringInvalidFiscalCodeCopyWithImpl(
+      _$UserCardRecoveringInvalidFiscalCode _value,
+      $Res Function(_$UserCardRecoveringInvalidFiscalCode) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$UserCardRecoveringInvalidFiscalCode
+    implements UserCardRecoveringInvalidFiscalCode {
+  const _$UserCardRecoveringInvalidFiscalCode();
+
+  @override
+  String toString() {
+    return 'UserCardRecoveringState.invalidFiscalCode()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserCardRecoveringInvalidFiscalCode);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() userNotExists,
+    required TResult Function() invalidFiscalCode,
+    required TResult Function(UserIds ids) waitingOtpCode,
+    required TResult Function(UserIds ids) profile,
+    required TResult Function(Object? error, StackTrace? st) error,
+  }) {
+    return invalidFiscalCode();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? userNotExists,
+    TResult? Function()? invalidFiscalCode,
+    TResult? Function(UserIds ids)? waitingOtpCode,
+    TResult? Function(UserIds ids)? profile,
+    TResult? Function(Object? error, StackTrace? st)? error,
+  }) {
+    return invalidFiscalCode?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? userNotExists,
+    TResult Function()? invalidFiscalCode,
+    TResult Function(UserIds ids)? waitingOtpCode,
+    TResult Function(UserIds ids)? profile,
+    TResult Function(Object? error, StackTrace? st)? error,
+    required TResult orElse(),
+  }) {
+    if (invalidFiscalCode != null) {
+      return invalidFiscalCode();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UserCardRecoveringInitial value) initial,
+    required TResult Function(UserCardRecoveringLoading value) loading,
+    required TResult Function(UserCardRecoveringUserNotExists value)
+        userNotExists,
+    required TResult Function(UserCardRecoveringInvalidFiscalCode value)
+        invalidFiscalCode,
+    required TResult Function(UserCardRecoveringWaitingOtpCode value)
+        waitingOtpCode,
+    required TResult Function(UserCardRecoveringProfile value) profile,
+    required TResult Function(UserCardRecoveringError value) error,
+  }) {
+    return invalidFiscalCode(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UserCardRecoveringInitial value)? initial,
+    TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult? Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
+    TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
+    TResult? Function(UserCardRecoveringProfile value)? profile,
+    TResult? Function(UserCardRecoveringError value)? error,
+  }) {
+    return invalidFiscalCode?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserCardRecoveringInitial value)? initial,
+    TResult Function(UserCardRecoveringLoading value)? loading,
+    TResult Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
+    TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
+    TResult Function(UserCardRecoveringProfile value)? profile,
+    TResult Function(UserCardRecoveringError value)? error,
+    required TResult orElse(),
+  }) {
+    if (invalidFiscalCode != null) {
+      return invalidFiscalCode(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UserCardRecoveringInvalidFiscalCode
+    implements UserCardRecoveringState {
+  const factory UserCardRecoveringInvalidFiscalCode() =
+      _$UserCardRecoveringInvalidFiscalCode;
 }
 
 /// @nodoc
@@ -424,6 +760,8 @@ class _$UserCardRecoveringWaitingOtpCode
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() userNotExists,
+    required TResult Function() invalidFiscalCode,
     required TResult Function(UserIds ids) waitingOtpCode,
     required TResult Function(UserIds ids) profile,
     required TResult Function(Object? error, StackTrace? st) error,
@@ -436,6 +774,8 @@ class _$UserCardRecoveringWaitingOtpCode
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? userNotExists,
+    TResult? Function()? invalidFiscalCode,
     TResult? Function(UserIds ids)? waitingOtpCode,
     TResult? Function(UserIds ids)? profile,
     TResult? Function(Object? error, StackTrace? st)? error,
@@ -448,6 +788,8 @@ class _$UserCardRecoveringWaitingOtpCode
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? userNotExists,
+    TResult Function()? invalidFiscalCode,
     TResult Function(UserIds ids)? waitingOtpCode,
     TResult Function(UserIds ids)? profile,
     TResult Function(Object? error, StackTrace? st)? error,
@@ -464,6 +806,10 @@ class _$UserCardRecoveringWaitingOtpCode
   TResult map<TResult extends Object?>({
     required TResult Function(UserCardRecoveringInitial value) initial,
     required TResult Function(UserCardRecoveringLoading value) loading,
+    required TResult Function(UserCardRecoveringUserNotExists value)
+        userNotExists,
+    required TResult Function(UserCardRecoveringInvalidFiscalCode value)
+        invalidFiscalCode,
     required TResult Function(UserCardRecoveringWaitingOtpCode value)
         waitingOtpCode,
     required TResult Function(UserCardRecoveringProfile value) profile,
@@ -477,6 +823,9 @@ class _$UserCardRecoveringWaitingOtpCode
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(UserCardRecoveringInitial value)? initial,
     TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult? Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
     TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
     TResult? Function(UserCardRecoveringProfile value)? profile,
     TResult? Function(UserCardRecoveringError value)? error,
@@ -489,6 +838,9 @@ class _$UserCardRecoveringWaitingOtpCode
   TResult maybeMap<TResult extends Object?>({
     TResult Function(UserCardRecoveringInitial value)? initial,
     TResult Function(UserCardRecoveringLoading value)? loading,
+    TResult Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
     TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
     TResult Function(UserCardRecoveringProfile value)? profile,
     TResult Function(UserCardRecoveringError value)? error,
@@ -592,6 +944,8 @@ class _$UserCardRecoveringProfile implements UserCardRecoveringProfile {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() userNotExists,
+    required TResult Function() invalidFiscalCode,
     required TResult Function(UserIds ids) waitingOtpCode,
     required TResult Function(UserIds ids) profile,
     required TResult Function(Object? error, StackTrace? st) error,
@@ -604,6 +958,8 @@ class _$UserCardRecoveringProfile implements UserCardRecoveringProfile {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? userNotExists,
+    TResult? Function()? invalidFiscalCode,
     TResult? Function(UserIds ids)? waitingOtpCode,
     TResult? Function(UserIds ids)? profile,
     TResult? Function(Object? error, StackTrace? st)? error,
@@ -616,6 +972,8 @@ class _$UserCardRecoveringProfile implements UserCardRecoveringProfile {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? userNotExists,
+    TResult Function()? invalidFiscalCode,
     TResult Function(UserIds ids)? waitingOtpCode,
     TResult Function(UserIds ids)? profile,
     TResult Function(Object? error, StackTrace? st)? error,
@@ -632,6 +990,10 @@ class _$UserCardRecoveringProfile implements UserCardRecoveringProfile {
   TResult map<TResult extends Object?>({
     required TResult Function(UserCardRecoveringInitial value) initial,
     required TResult Function(UserCardRecoveringLoading value) loading,
+    required TResult Function(UserCardRecoveringUserNotExists value)
+        userNotExists,
+    required TResult Function(UserCardRecoveringInvalidFiscalCode value)
+        invalidFiscalCode,
     required TResult Function(UserCardRecoveringWaitingOtpCode value)
         waitingOtpCode,
     required TResult Function(UserCardRecoveringProfile value) profile,
@@ -645,6 +1007,9 @@ class _$UserCardRecoveringProfile implements UserCardRecoveringProfile {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(UserCardRecoveringInitial value)? initial,
     TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult? Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
     TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
     TResult? Function(UserCardRecoveringProfile value)? profile,
     TResult? Function(UserCardRecoveringError value)? error,
@@ -657,6 +1022,9 @@ class _$UserCardRecoveringProfile implements UserCardRecoveringProfile {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(UserCardRecoveringInitial value)? initial,
     TResult Function(UserCardRecoveringLoading value)? loading,
+    TResult Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
     TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
     TResult Function(UserCardRecoveringProfile value)? profile,
     TResult Function(UserCardRecoveringError value)? error,
@@ -753,6 +1121,8 @@ class _$UserCardRecoveringError implements UserCardRecoveringError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() userNotExists,
+    required TResult Function() invalidFiscalCode,
     required TResult Function(UserIds ids) waitingOtpCode,
     required TResult Function(UserIds ids) profile,
     required TResult Function(Object? error, StackTrace? st) error,
@@ -765,6 +1135,8 @@ class _$UserCardRecoveringError implements UserCardRecoveringError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? userNotExists,
+    TResult? Function()? invalidFiscalCode,
     TResult? Function(UserIds ids)? waitingOtpCode,
     TResult? Function(UserIds ids)? profile,
     TResult? Function(Object? error, StackTrace? st)? error,
@@ -777,6 +1149,8 @@ class _$UserCardRecoveringError implements UserCardRecoveringError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? userNotExists,
+    TResult Function()? invalidFiscalCode,
     TResult Function(UserIds ids)? waitingOtpCode,
     TResult Function(UserIds ids)? profile,
     TResult Function(Object? error, StackTrace? st)? error,
@@ -793,6 +1167,10 @@ class _$UserCardRecoveringError implements UserCardRecoveringError {
   TResult map<TResult extends Object?>({
     required TResult Function(UserCardRecoveringInitial value) initial,
     required TResult Function(UserCardRecoveringLoading value) loading,
+    required TResult Function(UserCardRecoveringUserNotExists value)
+        userNotExists,
+    required TResult Function(UserCardRecoveringInvalidFiscalCode value)
+        invalidFiscalCode,
     required TResult Function(UserCardRecoveringWaitingOtpCode value)
         waitingOtpCode,
     required TResult Function(UserCardRecoveringProfile value) profile,
@@ -806,6 +1184,9 @@ class _$UserCardRecoveringError implements UserCardRecoveringError {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(UserCardRecoveringInitial value)? initial,
     TResult? Function(UserCardRecoveringLoading value)? loading,
+    TResult? Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult? Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
     TResult? Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
     TResult? Function(UserCardRecoveringProfile value)? profile,
     TResult? Function(UserCardRecoveringError value)? error,
@@ -818,6 +1199,9 @@ class _$UserCardRecoveringError implements UserCardRecoveringError {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(UserCardRecoveringInitial value)? initial,
     TResult Function(UserCardRecoveringLoading value)? loading,
+    TResult Function(UserCardRecoveringUserNotExists value)? userNotExists,
+    TResult Function(UserCardRecoveringInvalidFiscalCode value)?
+        invalidFiscalCode,
     TResult Function(UserCardRecoveringWaitingOtpCode value)? waitingOtpCode,
     TResult Function(UserCardRecoveringProfile value)? profile,
     TResult Function(UserCardRecoveringError value)? error,

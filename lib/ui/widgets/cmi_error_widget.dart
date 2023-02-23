@@ -43,3 +43,35 @@ class CMIErrorWidget extends StatelessWidget {
     );
   }
 }
+
+class CMIWarningWidget extends StatelessWidget {
+  final String message;
+  final Function()? tryAgain;
+
+  const CMIWarningWidget({Key? key, required this.message, this.tryAgain})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints:
+      BoxConstraints(maxHeight: MediaQuery.of(context).size.height / 1.5),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [Padding(
+              padding: const EdgeInsets.only(top:24.0),
+              child: Text(message),
+            ),
+            if (tryAgain != null) ...[
+              ElevatedButton(
+                  onPressed: () {
+                    tryAgain?.call();
+                  },
+                  child: Text('Riprova')),
+            ]
+          ],
+        ),
+      ),
+    );
+  }
+}

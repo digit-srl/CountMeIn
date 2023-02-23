@@ -8,7 +8,11 @@ import '../../../constants.dart';
 import 'confirm_invite_state.dart';
 
 final dioProvider = Provider<Dio>((ref) {
-  final dio = Dio();
+  final dio = Dio(
+    BaseOptions(
+      headers: {'content-type': 'application/json'},
+    ),
+  );
   dio.interceptors.add(
     PrettyDioLogger(
       requestHeader: true,
@@ -26,8 +30,8 @@ final dioProvider = Provider<Dio>((ref) {
 final confirmInviteProvider = StateNotifierProvider.autoDispose
     .family<ConfirmInviteNotifier, ConfirmInviteState, InviteRequest>(
         (ref, request) {
-      return ConfirmInviteNotifier(request, ref);
-    });
+  return ConfirmInviteNotifier(request, ref);
+});
 
 class ConfirmInviteNotifier extends StateNotifier<ConfirmInviteState> {
   final InviteRequest request;
@@ -46,8 +50,8 @@ class ConfirmInviteNotifier extends StateNotifier<ConfirmInviteState> {
     }
   }
 
-  void confirmInviteNewUser(String name, String surname, String email,
-      String cf) {}
+  void confirmInviteNewUser(
+      String name, String surname, String email, String cf) {}
 
   void confirmInvite({String? name, String? surname, String? cf}) async {
     final data = <String, dynamic>{};
@@ -72,13 +76,11 @@ class ConfirmInviteNotifier extends StateNotifier<ConfirmInviteState> {
 
     //http://localhost:5003/count-me-in-ef93b/europe-west3/confirmPendingInvite
     try {
-      final url =
-          '$functionBaseUrl/confirmPendingInvite';
-      final res = await ref.read(dioProvider).post(url,
-          data: data);
+      final url = '$functionBaseUrl/confirmPendingInvite';
+      final res = await ref.read(dioProvider).post(url, data: data);
       final map = Map.from(res.data);
       final status =
-      enumFromString(map['status'], ConfirmInviteResponseStatus.values);
+          enumFromString(map['status'], ConfirmInviteResponseStatus.values);
       logger.i(status);
       state = ConfirmResponse(status);
     } catch (ex, st) {

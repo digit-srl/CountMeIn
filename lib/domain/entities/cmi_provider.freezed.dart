@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'cmi_provider.dart';
 
@@ -308,6 +308,7 @@ class _$_CMIProvider implements _CMIProvider {
   Map<String, ProviderManager>? get managers {
     final value = _managers;
     if (value == null) return null;
+    if (_managers is EqualUnmodifiableMapView) return _managers;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(value);
   }
@@ -319,6 +320,7 @@ class _$_CMIProvider implements _CMIProvider {
   List<String>? get aims {
     final value = _aims;
     if (value == null) return null;
+    if (_aims is EqualUnmodifiableListView) return _aims;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -697,6 +699,8 @@ class _$_PendingProviderManager implements _PendingProviderManager {
   @override
   @JsonKey()
   List<String> get eventsRestriction {
+    if (_eventsRestriction is EqualUnmodifiableListView)
+      return _eventsRestriction;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_eventsRestriction);
   }
@@ -958,6 +962,8 @@ class _$_ProviderManager implements _ProviderManager {
   @override
   @JsonKey()
   List<String> get eventsRestriction {
+    if (_eventsRestriction is EqualUnmodifiableListView)
+      return _eventsRestriction;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_eventsRestriction);
   }

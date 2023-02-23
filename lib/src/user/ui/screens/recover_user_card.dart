@@ -91,9 +91,7 @@ class _RestoreUserCardState extends ConsumerState<RecoverUserCard> {
                 ),
               );
             },
-            loading: () {
-              return const LoadingWidget();
-            },
+            loading: () => const LoadingWidget(),
             profile: (ids) {
               return UserProfileDataWidget(
                 userIds: ids,
@@ -116,6 +114,18 @@ class _RestoreUserCardState extends ConsumerState<RecoverUserCard> {
                         .verifyOtpCode(ids, otpCode);
                   });
             },
+            userNotExists: () => CMIWarningWidget(
+              message: 'Non esiste nessun utente con questo codice fiscale!',
+              tryAgain: () {
+                ref.read(userCardRecoveringProvider.notifier).reset();
+              },
+            ),
+            invalidFiscalCode: () => CMIWarningWidget(
+              message: 'Il codice fiscale inserito non è valido',
+              tryAgain: () {
+                ref.read(userCardRecoveringProvider.notifier).reset();
+              },
+            ),
           ),
         ),
       ),

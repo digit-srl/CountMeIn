@@ -19,28 +19,47 @@ class UserCardRecoveringNotifier
       : super(const UserCardRecoveringInitial());
 
   late UserCardRecoveringState _cache;
+
   Future check(String cf, String providerId) async {
     _cache = state;
     state = const UserCardRecoveringLoading();
-    try{
+    try {
       final res = await ref.read(dioProvider).post(
         recoverUserUrl,
-        data: {'cf': cf.toUpperCase(), 'providerId': providerId},
+        data: <String, dynamic>{
+          'cf': cf.toUpperCase(),
+          'providerId': providerId
+        },
       );
       if (res.statusCode == 200) {
         final map = Map<String, dynamic>.from(res.data);
-        final userId = map['userId'];
-        state = UserCardRecoveringWaitingOtpCode(
-          ids: UserIds(
-            providerId: providerId,
-            userId: userId,
-          ),
-        );
+        final status = map['status'];
+
+        switch (status) {
+          case 'email_sent':
+            final userId = map['userId'];
+            state = UserCardRecoveringWaitingOtpCode(
+              ids: UserIds(
+                providerId: providerId,
+                userId: userId,
+              ),
+            );
+            break;
+          case 'invalid_fiscal_code':
+            state = UserCardRecoveringInvalidFiscalCode();
+            break;
+          case 'user_not_exists':
+            state = UserCardRecoveringUserNotExists();
+            break;
+          default:
+            state = const UserCardRecoveringError();
+        }
       } else {
         state = const UserCardRecoveringError();
       }
-    }catch(ex,st){
-      state = UserCardRecoveringError(st: st);
+    } catch (ex, st) {
+      state = UserCardRecoveringError(error: ex, st: st);
+      logger.i(ex);
       logger.i(st);
     }
   }
