@@ -12,11 +12,12 @@ import 'package:oktoast/oktoast.dart';
 
 final scanControllerProvider =
     Provider.autoDispose.family<ScanController, String>((ref, eventId) {
+      logger.wtf('Scan controller create');
   return ScanController();
 });
 
 class ScanController {
-  final list = <String>[];
+  final alreadyScannedUser = <String>[];
 
   // Lista di appoggio per evitare che lo scanner continuo faccia chiamate al
   // db per utenti che non hanno effettuato il check in ma stanno
@@ -32,10 +33,10 @@ class ScanController {
     ScanMode scanMode,
     Function(EventUser user)? onUpdate,
   ) async {
+    logger.i('processScan2 start');
     if (processing) return;
 
-    logger.i('processScan2 detected data');
-
+    logger.i('onProcessing');
     try {
       final userQrCode = QrCodeData.fromQrCode(data);
       final isGroupCard = userQrCode.isGroupCard;
@@ -50,7 +51,8 @@ class ScanController {
             eventId: event.id,
             sessionId: event.activeSessionId);
 
-        if (!list.contains(userQrCode.id)) {
+        if (!alreadyScannedUser.contains(userQrCode.id)) {
+          logger.i('onProcessing new user id on local list');
           processing = true;
 
           var eventUser = EventUser(
@@ -160,10 +162,10 @@ class ScanController {
               ),
             )
                 .doc(eventUser.id)
-                .set({'participationCount': FieldValue.increment(1)},SetOptions(merge: true));
+                .update({'participationCount': FieldValue.increment(1)});
           }
 
-          list.add(userQrCode.id);
+          alreadyScannedUser.add(userQrCode.id);
           processing = false;
         } else {
           const message = 'Utente già scansionato';

@@ -18,6 +18,15 @@ import '../../domain/entities/event_ids.dart';
 import '../../domain/entities/user_card.dart';
 import 'package:collection/collection.dart';
 
+
+final mobileScannerControllerProvider = Provider.autoDispose<MobileScannerController>((ref) {
+  final c = MobileScannerController(
+      facing: CameraFacing.back, torchEnabled: false);
+  ref.onDispose(() {
+    c.dispose();
+  });
+  return c;
+});
 final usersCountProvider =
     Provider.autoDispose.family<int, EventIds>((ref, ids) {
   return ref.watch(eventUsersStreamProvider(ids)).asData?.value.length ?? 0;
@@ -97,6 +106,8 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     final count = ref.watch(usersCountProvider(ids));
+    final scanner = ref.watch(mobileScannerControllerProvider);
+    ref.listen(scanControllerProvider(ids.eventId), (previous, next) { });
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -106,8 +117,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                 Expanded(
                   flex: 6,
                   child: MobileScanner(
-                    controller: MobileScannerController(
-                        facing: CameraFacing.back, torchEnabled: false),
+                    controller: scanner,
                     onDetect: (BarcodeCapture barcodeCapture) {
                       final barcode = barcodeCapture.barcodes.firstOrNull;
                       if (barcode == null || barcode.rawValue == null) return;
