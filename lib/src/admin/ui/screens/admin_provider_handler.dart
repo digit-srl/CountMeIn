@@ -108,7 +108,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                 InfoText2(
                     label: 'Managers',
                     labelWidget: IconButton(
-                      icon: Icon((provider?.managers?.isEmpty ?? true)
+                      icon: Icon((provider?.managers.isEmpty ?? true)
                           ? Icons.add
                           : Icons.edit),
                       onPressed: provider?.managers != null
@@ -131,7 +131,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                     value: Wrap(
                       children: [
                         if (provider?.managers != null)
-                          ...provider!.managers!.values
+                          ...provider!.managers.values
                               .map(
                                 (e) => Padding(
                                   padding: const EdgeInsets.only(right: 8.0),

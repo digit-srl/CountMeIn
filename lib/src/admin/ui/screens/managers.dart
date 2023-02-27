@@ -1,5 +1,6 @@
 import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:countmein/my_logger.dart';
+import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
@@ -48,9 +49,9 @@ final selectedRoleProvider = StateProvider.autoDispose<UserRole>((ref) {
 
 class ManagersHandlerScreen extends StatefulHookConsumerWidget {
   static const String routeName = 'managers';
-  final CMIProvider provider;
+  final String providerId;
 
-  const ManagersHandlerScreen({Key? key, required this.provider})
+  const ManagersHandlerScreen({Key? key, required this.providerId})
       : super(key: key);
 
   @override
@@ -67,7 +68,9 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
     final emailController = useTextEditingController();
     final nameController = useTextEditingController();
     final selectedRole = ref.watch(selectedRoleProvider);
-    final state = ref.watch(pendingInviteStreamProvider(widget.provider.id));
+    final provider =
+        ref.watch(singleCMIProviderProvider(widget.providerId)).valueOrNull;
+    final state = ref.watch(pendingInviteStreamProvider(widget.providerId));
 
     return Scaffold(
       appBar: const AdminAppBar(
@@ -75,201 +78,213 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
       ),
       body: Center(
         child: Container(
+          // color: Colors.green,
           constraints: const BoxConstraints(maxWidth: 600),
-          // padding: const EdgeInsets.all(8.0),
+          margin: const EdgeInsets.all(24.0),
           // alignment:Alignment.center,
-          child: CMICard(
-            enabled: false,
-            child: state.when(
-              data: (list) {
-                return Form(
-                  key: _formKey,
-                  child: ListView(
-                    padding: const EdgeInsets.all(16.0),
-                    // crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const SizedBox(height: 8),
-                      if (!addingMode)
-                        Row(
-                          children: [
-                            const Spacer(),
-                            MUButton(
-                              text: 'Nuovo membro',
-                              onPressed: () {
-                                setState(() {
-                                  addingMode = !addingMode;
-                                });
-                              },
-                            ),
-                          ],
-                        )
-                      else
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 32.0),
-                          child: CMICard(
-                            inverseColor: true,
-                            // height: 55,
-                            margin: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: provider != null
+              ? state.when(
+                  data: (pendingInvites) {
+                    return Form(
+                      key: _formKey,
+                      child: ListView(
+                        padding: const EdgeInsets.all(16.0),
+                        children: [
+                          const SizedBox(height: 8),
+                          if (!addingMode)
+                            Row(
                               children: [
-                                const Text('Nuovo manager'),
-                                const SizedBox(height: 32),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Flexible(
-                                      flex: 2,
-                                      child: MUTextField(
-                                        paddingTop: 0,
-                                        hintText: 'Nome',
-                                        maxLines: 1,
-                                        controller: nameController,
-                                        validator: textValidator,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 16),
-                                    Flexible(
-                                      flex: 2,
-                                      child: MUTextField(
-                                        paddingTop: 0,
-                                        hintText: 'Email',
-                                        maxLines: 1,
-                                        controller: emailController,
-                                        validator: emailValidator,
-                                      ),
-                                    ),
-                                  ],
+                                const Spacer(),
+                                MUButton(
+                                  text: 'Nuovo membro',
+                                  onPressed: () {
+                                    setState(() {
+                                      addingMode = !addingMode;
+                                    });
+                                  },
                                 ),
-                                const SizedBox(height: 16),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: SizedBox(
-                                    width: 300,
-                                    child: CMIDropdownButton<UserRole>(
-                                      value: selectedRole,
-                                      items: UserRole.values
-                                          .sublist(0, 2)
-                                          .map((e) =>
-                                              DropdownMenuItem<UserRole>(
+                              ],
+                            )
+                          else
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 32.0),
+                              child: CMICard(
+                                inverseColor: true,
+                                // height: 55,
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 16.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    const Text('Nuovo manager'),
+                                    const SizedBox(height: 32),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Flexible(
+                                          flex: 2,
+                                          child: MUTextField(
+                                            paddingTop: 0,
+                                            hintText: 'Nome',
+                                            maxLines: 1,
+                                            controller: nameController,
+                                            validator: textValidator,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        Flexible(
+                                          flex: 2,
+                                          child: MUTextField(
+                                            paddingTop: 0,
+                                            hintText: 'Email',
+                                            maxLines: 1,
+                                            controller: emailController,
+                                            validator: emailValidator,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: SizedBox(
+                                        width: 300,
+                                        child: CMIDropdownButton<UserRole>(
+                                          value: selectedRole,
+                                          items: UserRole.values
+                                              .sublist(0, 2)
+                                              .map((e) => DropdownMenuItem<
+                                                      UserRole>(
                                                   value: e,
                                                   child: Text(
                                                       enumToString(e) ?? '-')))
-                                          .toList(),
-                                      onChanged: (role) {
-                                        if (role == null) return;
-                                        ref
-                                            .read(selectedRoleProvider.notifier)
-                                            .state = role;
-                                      },
+                                              .toList(),
+                                          onChanged: (role) {
+                                            if (role == null) return;
+                                            ref
+                                                .read(selectedRoleProvider
+                                                    .notifier)
+                                                .state = role;
+                                          },
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(height: 32),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    TextButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            addingMode = !addingMode;
-                                          });
-                                        },
-                                        child: const Text('Annulla')),
-                                    MUButton(
-                                      text: 'Invita',
-                                      onPressed: () async {
-                                        if (_formKey.currentState!.validate()) {
-                                          final email =
-                                              emailController.text.trim();
-                                          final name =
-                                              nameController.text.trim();
-                                          final newManager =
-                                              PendingProviderManager(
-                                            id: const Uuid().v4(),
-                                            role: selectedRole,
-                                            name: name,
-                                            status:
-                                                ProviderManagerStatus.pending,
-                                            invitedOn: DateTime.now(),
-                                            email: email,
-                                            secret: '',
-                                            providerName: widget.provider.name,
-                                            eventsRestriction: [],
-                                          );
+                                    const SizedBox(height: 32),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        TextButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                addingMode = !addingMode;
+                                              });
+                                            },
+                                            child: const Text('Annulla')),
+                                        MUButton(
+                                          text: 'Invita',
+                                          onPressed: () async {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              final email =
+                                                  emailController.text.trim();
+                                              final name =
+                                                  nameController.text.trim();
+                                              final newManager =
+                                                  PendingProviderManager(
+                                                id: const Uuid().v4(),
+                                                role: selectedRole,
+                                                name: name,
+                                                status: ProviderManagerStatus
+                                                    .pending,
+                                                invitedOn: DateTime.now(),
+                                                email: email,
+                                                secret: '',
+                                                providerName: provider.name,
+                                                eventsRestriction: [],
+                                              );
 
-                                          try {
-                                            await Cloud.pendingInviteCollection(
-                                                    widget.provider.id)
-                                                .doc(newManager.id)
-                                                .set(newManager.toJson());
-                                            setState(() {
-                                              addingMode = false;
-                                            });
-                                            nameController.clear();
-                                            emailController.clear();
-                                          } catch (ex) {
-                                            logger.i(ex);
-                                          }
-                                        }
-                                      },
+                                              try {
+                                                await Cloud
+                                                        .pendingInviteCollection(
+                                                            provider.id)
+                                                    .doc(newManager.id)
+                                                    .set(newManager.toJson());
+                                                setState(() {
+                                                  addingMode = false;
+                                                });
+                                                nameController.clear();
+                                                emailController.clear();
+                                              } catch (ex) {
+                                                logger.i(ex);
+                                              }
+                                            }
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      // Row(
-                      //   children: const [
-                      //     Expanded(flex: 2, child: Text('Membro')),
-                      //     Expanded(child: Text('Ruolo')),
-                      //     Expanded(flex: 2, child: Text('Email')),
-                      //     Spacer(),
-                      //   ],
-                      // ),
-                      const SizedBox(height: 8),
-                      const Divider(),
-                      for (final m in widget.provider.managers!.values)
-                        MemberRow(
-                          name: m.name,
-                          role: m.role,
-                          email: m.email,
-                          onDelete: () {
-                            final managers = {...widget.provider.managers!};
-                            managers.removeWhere((key, value) => key == m.id);
-                            Cloud.providerCollection
-                                .doc(widget.provider.id)
-                                .update({'managers': managers});
-                          },
-                          status: ProviderManagerStatus.completed,
-                        ),
-                      for (final m in list)
-                        MemberRow(
-                          name: m.name,
-                          email: m.email,
-                          role: m.role,
-                          subtitle: m.status == ProviderManagerStatus.pending
-                              ? m.invitedOn.toString()
-                              : null,
-                          onDelete: () {
-                            Cloud.pendingInviteCollection(widget.provider.id)
-                                .doc(m.id)
-                                .update({'status': 'deleted'});
-                          },
-                          status: m.status,
-                        ),
-                    ],
-                  ),
-                );
-              },
-              error: (err, st) {
-                return Text(err.toString());
-              },
-              loading: () => const LoadingWidget(),
-            ),
-          ),
+                          const SizedBox(height: 8),
+                          const Divider(),
+                          if (pendingInvites.isEmpty &&
+                              provider.managers.isEmpty)
+                            Text('Non ci sono managers per questo provider')
+                          else ...[
+                            for (final m in pendingInvites)
+                              MemberRow(
+                                name: m.name,
+                                email: m.email,
+                                role: m.role,
+                                pending: true,
+                                subtitle:
+                                    m.status == ProviderManagerStatus.pending
+                                        ? m.invitedOn.toString()
+                                        : null,
+                                onDelete: () {
+                                  Cloud.pendingInviteCollection(provider.id)
+                                      .doc(m.id)
+                                      .update({'status': 'deleted'});
+                                },
+                                status: m.status,
+                              ),
+                            for (final m in provider.managers.values)
+                              MemberRow(
+                                name: m.name,
+                                role: m.role,
+                                email: m.email,
+                                onDelete: () {
+                                  final managers = <String, ProviderManager>{};
+                                  managers.addAll(provider.managers);
+                                  managers
+                                      .removeWhere((key, value) => key == m.id);
+                                  final map = <String, dynamic>{};
+                                  for (final k in managers.keys) {
+                                    map[k] = managers[k]!.toJson();
+                                  }
+                                  Cloud.providerCollection
+                                      .doc(provider.id)
+                                      .update({'managers': map});
+                                },
+                                status: ProviderManagerStatus.completed,
+                              ),
+                          ]
+                        ],
+                      ),
+                    );
+                  },
+                  error: (err, st) {
+                    return Text(err.toString());
+                  },
+                  loading: () => const LoadingWidget(),
+                )
+              : const LoadingWidget(),
         ),
       ),
     );
@@ -284,11 +299,13 @@ class MemberRow extends StatelessWidget {
   final String name;
   final String email;
   final UserRole role;
+  final bool pending;
   final ProviderManagerStatus status;
 
   const MemberRow({
     Key? key,
     required this.name,
+    this.pending = false,
     required this.email,
     this.onDelete,
     this.subtitle,
@@ -305,9 +322,18 @@ class MemberRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Chip(label: Text(role.text)),
+                if (pending)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: const Text(
+                      'PENDING',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                Spacer(),
                 PopupMenuButton<ManagerAction>(
                   icon: const Icon(Icons.more_vert),
                   onSelected: (ManagerAction item) async {
@@ -318,7 +344,7 @@ class MemberRow extends StatelessWidget {
                         return;
                       case ManagerAction.delete:
                         final res = await ask(context,
-                            'Sicuro di voler rimuovere $name dai manager?');
+                            'Sicuro di voler ${pending ? 'revocare l\'invito di' : 'rimuovere'} $name dai manager?');
                         if (res ?? false) {
                           onDelete?.call();
                         }
@@ -336,12 +362,13 @@ class MemberRow extends StatelessWidget {
                           .textTheme
                           .bodyText1
                           ?.copyWith(color: Colors.red),
-                      child: const Text('Elimina'),
+                      child: Text(pending ? 'Revoca invito' : 'Elimina'),
                     ),
                   ],
                 )
               ],
             ),
+            const SizedBox(height: 8),
             Text(
               name,
               textAlign: TextAlign.start,

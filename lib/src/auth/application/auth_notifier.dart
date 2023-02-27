@@ -21,7 +21,7 @@ final signUpErrorProvider = StateProvider.autoDispose<SignUpException?>((ref) {
 });
 
 final _userProvider =
-StreamProvider.family<Map<String, dynamic>?, String>((ref, userId) async* {
+    StreamProvider.family<Map<String, dynamic>?, String>((ref, userId) async* {
   final stream = Cloud.credentialsCollection.doc(userId).snapshots();
   await for (final doc in stream) {
     final data = doc.data();
@@ -81,17 +81,17 @@ final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
 
 final authStateProvider = Provider<AuthState>((ref) {
   return ref.watch(authStateStreamProvider).when(
-    data: (state) => state,
-    error: (err, stack) => AuthState.error(err, stack),
-    loading: () => const AuthState.loading(),
-  );
+        data: (state) => state,
+        error: (err, stack) => AuthState.error(err, stack),
+        loading: () => const AuthState.loading(),
+      );
 });
 
 final platformUserRoleProvider = Provider<PlatformRole>((ref) {
   return ref.watch(authStateProvider).maybeWhen(
-    authenticated: (user) => user.role,
-    orElse: () => PlatformRole.unknown,
-  );
+        authenticated: (user) => user.role,
+        orElse: () => PlatformRole.unknown,
+      );
 });
 
 final isUserScannerProvider = Provider.family<bool, String>((ref, providerId) {
@@ -102,9 +102,12 @@ final userRoleProvider = Provider.family<UserRole, String>((ref, providerId) {
   final state = ref.watch(authStateProvider);
   var role = UserRole.unknown;
   if (state is Authenticated) {
+    if (state.user.role == PlatformRole.cmi) {
+      return UserRole.admin;
+    }
     final provider = ref.watch(singleCMIProviderProvider(providerId));
-    final manager = provider.valueOrNull?.managers?.values.firstWhereOrNull((element) =>
-    element.id == state.user.uid);
+    final manager = provider.valueOrNull?.managers.values
+        .firstWhereOrNull((element) => element.id == state.user.uid);
     role = manager?.role ?? UserRole.unknown;
   }
   return role;
@@ -185,7 +188,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 }*/
 
 final signInNotifierProvider =
-StateNotifierProvider.autoDispose<SignInNotifier, bool>((ref) {
+    StateNotifierProvider.autoDispose<SignInNotifier, bool>((ref) {
   return SignInNotifier(ref);
 });
 
@@ -230,7 +233,7 @@ class SignInNotifier extends StateNotifier<bool> {
 }
 
 final signUpNotifierProvider =
-StateNotifierProvider.autoDispose<SignUpNotifier, bool>((ref) {
+    StateNotifierProvider.autoDispose<SignUpNotifier, bool>((ref) {
   return SignUpNotifier(ref);
 });
 
@@ -239,11 +242,13 @@ class SignUpNotifier extends StateNotifier<bool> {
 
   SignUpNotifier(this.ref) : super(false);
 
-  Future<bool> signUp(String name, String surname, String email,
-      String password) async {
+  Future<bool> signUp(
+      String name, String surname, String email, String password) async {
     state = true;
     try {
-      await ref.read(authRepositoryProvider).signUp(name, surname, email, password);
+      await ref
+          .read(authRepositoryProvider)
+          .signUp(name, surname, email, password);
       return true;
     } on SignUpException catch (ex) {
       logger.i(ex);

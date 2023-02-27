@@ -25,7 +25,7 @@ mixin _$CMIProvider {
   String get adminName => throw _privateConstructorUsedError;
   String get adminSurname => throw _privateConstructorUsedError;
   String get adminEmail => throw _privateConstructorUsedError;
-  Map<String, ProviderManager>? get managers =>
+  Map<String, ProviderManager> get managers =>
       throw _privateConstructorUsedError;
   String? get apiKey => throw _privateConstructorUsedError;
   List<String>? get aims => throw _privateConstructorUsedError;
@@ -57,7 +57,7 @@ abstract class $CMIProviderCopyWith<$Res> {
       String adminName,
       String adminSurname,
       String adminEmail,
-      Map<String, ProviderManager>? managers,
+      Map<String, ProviderManager> managers,
       String? apiKey,
       List<String>? aims,
       String? aim,
@@ -86,7 +86,7 @@ class _$CMIProviderCopyWithImpl<$Res, $Val extends CMIProvider>
     Object? adminName = null,
     Object? adminSurname = null,
     Object? adminEmail = null,
-    Object? managers = freezed,
+    Object? managers = null,
     Object? apiKey = freezed,
     Object? aims = freezed,
     Object? aim = freezed,
@@ -117,10 +117,10 @@ class _$CMIProviderCopyWithImpl<$Res, $Val extends CMIProvider>
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
-      managers: freezed == managers
+      managers: null == managers
           ? _value.managers
           : managers // ignore: cast_nullable_to_non_nullable
-              as Map<String, ProviderManager>?,
+              as Map<String, ProviderManager>,
       apiKey: freezed == apiKey
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
@@ -171,7 +171,7 @@ abstract class _$$_CMIProviderCopyWith<$Res>
       String adminName,
       String adminSurname,
       String adminEmail,
-      Map<String, ProviderManager>? managers,
+      Map<String, ProviderManager> managers,
       String? apiKey,
       List<String>? aims,
       String? aim,
@@ -198,7 +198,7 @@ class __$$_CMIProviderCopyWithImpl<$Res>
     Object? adminName = null,
     Object? adminSurname = null,
     Object? adminEmail = null,
-    Object? managers = freezed,
+    Object? managers = null,
     Object? apiKey = freezed,
     Object? aims = freezed,
     Object? aim = freezed,
@@ -229,10 +229,10 @@ class __$$_CMIProviderCopyWithImpl<$Res>
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
-      managers: freezed == managers
+      managers: null == managers
           ? _value._managers
           : managers // ignore: cast_nullable_to_non_nullable
-              as Map<String, ProviderManager>?,
+              as Map<String, ProviderManager>,
       apiKey: freezed == apiKey
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
@@ -278,7 +278,7 @@ class _$_CMIProvider implements _CMIProvider {
       required this.adminName,
       required this.adminSurname,
       required this.adminEmail,
-      final Map<String, ProviderManager>? managers,
+      required final Map<String, ProviderManager> managers,
       this.apiKey,
       final List<String>? aims,
       this.aim,
@@ -303,14 +303,12 @@ class _$_CMIProvider implements _CMIProvider {
   final String adminSurname;
   @override
   final String adminEmail;
-  final Map<String, ProviderManager>? _managers;
+  final Map<String, ProviderManager> _managers;
   @override
-  Map<String, ProviderManager>? get managers {
-    final value = _managers;
-    if (value == null) return null;
+  Map<String, ProviderManager> get managers {
     if (_managers is EqualUnmodifiableMapView) return _managers;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableMapView(_managers);
   }
 
   @override
@@ -415,7 +413,7 @@ abstract class _CMIProvider implements CMIProvider {
           required final String adminName,
           required final String adminSurname,
           required final String adminEmail,
-          final Map<String, ProviderManager>? managers,
+          required final Map<String, ProviderManager> managers,
           final String? apiKey,
           final List<String>? aims,
           final String? aim,
@@ -440,7 +438,7 @@ abstract class _CMIProvider implements CMIProvider {
   @override
   String get adminEmail;
   @override
-  Map<String, ProviderManager>? get managers;
+  Map<String, ProviderManager> get managers;
   @override
   String? get apiKey;
   @override

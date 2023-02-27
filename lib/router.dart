@@ -185,7 +185,7 @@ class RouterNotifier extends ChangeNotifier {
                       GoRoute(
                         path: ManagersHandlerScreen.routeName,
                         builder: (context, state) => ManagersHandlerScreen(
-                          provider: state.extra as CMIProvider,
+                          providerId: state.params['providerId'] as String,
                         ),
                       ),
                       GoRoute(

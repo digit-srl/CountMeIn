@@ -12,7 +12,8 @@ part 'cmi_provider.freezed.dart';
 part 'cmi_provider.g.dart';
 
 enum CMIProviderStatus { unknown, pending, live, archived }
-enum ProviderManagerStatus { unknown, pending, completed, deleted, expired}
+
+enum ProviderManagerStatus { unknown, pending, completed, deleted, expired }
 
 @freezed
 class CMIProvider with _$CMIProvider {
@@ -22,7 +23,7 @@ class CMIProvider with _$CMIProvider {
     required String adminName,
     required String adminSurname,
     required String adminEmail,
-    Map<String,ProviderManager>? managers,
+    required Map<String, ProviderManager> managers,
     String? apiKey,
     List<String>? aims,
     String? aim,
@@ -82,12 +83,13 @@ class ProviderManager with _$ProviderManager {
       _$ProviderManagerFromJson(json);
 }
 
-class CMIProviderStatusConverter implements JsonConverter<CMIProviderStatus, String> {
+class CMIProviderStatusConverter
+    implements JsonConverter<CMIProviderStatus, String> {
   const CMIProviderStatusConverter();
 
   @override
   CMIProviderStatus fromJson(String? status) {
-    if(status == null){
+    if (status == null) {
       return CMIProviderStatus.unknown;
     }
     return enumFromString(status, CMIProviderStatus.values);
@@ -97,28 +99,30 @@ class CMIProviderStatusConverter implements JsonConverter<CMIProviderStatus, Str
   String toJson(CMIProviderStatus status) => enumToString(status) ?? 'unknown';
 }
 
-class ManagerStatusConverter implements JsonConverter<ProviderManagerStatus, String> {
+class ManagerStatusConverter
+    implements JsonConverter<ProviderManagerStatus, String> {
   const ManagerStatusConverter();
 
   @override
   ProviderManagerStatus fromJson(String? status) {
-    if(status == null){
+    if (status == null) {
       return ProviderManagerStatus.unknown;
     }
     return enumFromString(status, ProviderManagerStatus.values);
   }
 
   @override
-  String toJson(ProviderManagerStatus status) => enumToString(status) ?? 'unknown';
+  String toJson(ProviderManagerStatus status) =>
+      enumToString(status) ?? 'unknown';
 }
 
-extension CMIProviderX on CMIProvider{
+extension CMIProviderX on CMIProvider {
   String get adminFullName => '$adminName $adminSurname';
 }
 
-extension ProviderManagerStatusX on ProviderManagerStatus{
-  Color get color{
-    switch(this){
+extension ProviderManagerStatusX on ProviderManagerStatus {
+  Color get color {
+    switch (this) {
       case ProviderManagerStatus.unknown:
         return Colors.grey;
       case ProviderManagerStatus.pending:
