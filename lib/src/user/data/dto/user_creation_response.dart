@@ -8,6 +8,7 @@ part 'user_creation_response.g.dart';
 class UserCreationResponse with _$UserCreationResponse {
   const factory UserCreationResponse({
     required String status,
+    required String cf,
     String? userId,
     bool? emailVerified,
   }) = _UserCreationResponse;

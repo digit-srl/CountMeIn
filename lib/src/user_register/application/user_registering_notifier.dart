@@ -23,32 +23,35 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
 
   Future<void> register(UserRequest request) async {
     try {
-        state = const UserRegisteringLoading();
-        final res = await _createUser(request);
-        if (res.status == 'user_already_exist') {
-          if (res.emailVerified != null && res.userId != null) {
-            if (res.emailVerified!) {
-              // await sendUserCardByEmail(
-              //     res.userId!, request.providerId, request.providerName);
-              state = UserRegisteringUserCardSentByEmail(
-                  email: request.email);
-            } else {
-              // await sendVerificationEmail();
-              state = UserRegisteringVerificationEmailSent(
-                newUser: false,
-                email: request.email,
-              );
-            }
+      state = const UserRegisteringLoading();
+      final res = await _createUser(request);
+      if (res.status == 'user_already_exist') {
+        if (res.emailVerified != null && res.userId != null) {
+          if (res.emailVerified!) {
+            // await sendUserCardByEmail(
+            //     res.userId!, request.providerId, request.providerName);
+            state = UserRegisteringUserAlreadySubscribed(
+              email: request.email,
+              cf: res.cf,
+              userId: res.userId!,
+              providerId: request.providerId,
+            );
+          } else {
+            // await sendVerificationEmail();
+            state = UserRegisteringVerificationEmailSent(
+              newUser: false,
+              email: request.email,
+            );
           }
-        } else if (res.status == 'invalid_fiscal_code') {
-          state = const UserRegisteringInvalidFiscalCode(
-          );
-        } else if (res.status == 'success') {
-          state = UserRegisteringVerificationEmailSent(
-            newUser: true,
-            email: request.email,
-          );
         }
+      } else if (res.status == 'invalid_fiscal_code') {
+        state = const UserRegisteringInvalidFiscalCode();
+      } else if (res.status == 'success') {
+        state = UserRegisteringVerificationEmailSent(
+          newUser: true,
+          email: request.email,
+        );
+      }
     } catch (ex, st) {
       logger.i(ex);
       logger.i(st);
@@ -56,15 +59,17 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
     }
   }
 
-  registerLocalUser(UserCard user){
+  registerLocalUser(UserCard user) {
     final json = user.toJson();
     json.remove('addedOn');
     Hive.box('user').put('myUser', json);
   }
+
   Future<UserCreationResponse> _createUser(UserRequest request) async {
     try {
-      final res =
-          await ref.read(dioProvider).post(createUserUrl, data: request.toJson());
+      final res = await ref
+          .read(dioProvider)
+          .post(createUserUrl, data: request.toJson());
       final map = Map<String, dynamic>.from(res.data);
       return UserCreationResponse.fromJson(map);
     } catch (ex, st) {

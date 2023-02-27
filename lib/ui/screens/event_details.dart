@@ -254,10 +254,9 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (isAdmin) ...[
+                        if (isAdmin && eventData != null && provider != null) ...[
                           ElevatedButton(
                             onPressed: () async {
-                              if (provider == null || eventData == null) return;
                               showDialog(
                                 context: context,
                                 builder: (c) => Dialog(
@@ -271,6 +270,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                             child: const Text('Aggiungi scanner'),
                           ),
                           const SizedBox(width: 16),
+                          //TODO solo per debug
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.red),
@@ -283,6 +283,20 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                             },
                             child: const Text('Elimina'),
                           ),
+                          const SizedBox(width: 16),
+                          if (eventData.status == EventStatus.live)
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green),
+                              onPressed: () async {
+                                final n = Navigator.of(context);
+                                await Cloud.eventDoc(
+                                        widget.providerId, widget.eventId)
+                                    .update({'status': 'closed'});
+                                n.pop();
+                              },
+                              child: const Text('Termina'),
+                            ),
                         ],
                       ],
                     ),

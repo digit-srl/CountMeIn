@@ -27,66 +27,69 @@ class _UserConsoleScreenState extends ConsumerState<UserConsoleScreen> {
     final state = ref.watch(userProfileNotifierProvider(widget.userIds));
     return Scaffold(
       body: Center(
-        child: CMICard(
-          child: state.when(
-            initial: () {
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: CMICard(
+            child: state.when(
+              initial: () {
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                          'Richiedi il codice otp per accedere al tuo profilo'),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                          onPressed: () {
+                            ref
+                                .read(userProfileNotifierProvider(widget.userIds)
+                                    .notifier)
+                                .getOtpCode();
+                          },
+                          child: const Text('Richiedi codice')),
+                    ],
+                  ),
+                );
+              },
+              loading: () {
+                return const CircularProgressIndicator();
+              },
+              error: (ex, st) {
+                return Text(ex.toString());
+              },
+              waitingOtpCode: () {
+                return WaitingOtpCode(
+                  userIds: widget.userIds,
+                    verify:(otpCode){
+                      ref
+                          .read(userProfileNotifierProvider(widget.userIds).notifier)
+                          .verifyOtpCode(otpCode);
+                    }
+                );
+              },
+              wrongCode: () {
+                return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
-                        'Richiedi il codice otp per accedere al tuo profilo'),
-                    const SizedBox(height: 16),
+                    const Text('Otp non valido'),
                     ElevatedButton(
                         onPressed: () {
                           ref
                               .read(userProfileNotifierProvider(widget.userIds)
                                   .notifier)
-                              .getOtpCode();
+                              .reset();
                         },
-                        child: const Text('Richiedi codice')),
+                        child: const Text('Riprova')),
                   ],
-                ),
-              );
-            },
-            loading: () {
-              return const CircularProgressIndicator();
-            },
-            error: (ex, st) {
-              return Text(ex.toString());
-            },
-            waitingOtpCode: () {
-              return WaitingOtpCode(
-                userIds: widget.userIds,
-                  verify:(otpCode){
-                    ref
-                        .read(userProfileNotifierProvider(widget.userIds).notifier)
-                        .verifyOtpCode(otpCode);
-                  }
-              );
-            },
-            wrongCode: () {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Otp non valido'),
-                  ElevatedButton(
-                      onPressed: () {
-                        ref
-                            .read(userProfileNotifierProvider(widget.userIds)
-                                .notifier)
-                            .reset();
-                      },
-                      child: Text('Riprova')),
-                ],
-              );
-            },
-            data: () {
-              return UserProfileDataWidget(
-                userIds: widget.userIds,
-              );
-            },
+                );
+              },
+              data: () {
+                return UserProfileDataWidget(
+                  userIds: widget.userIds,
+                );
+              },
+            ),
           ),
         ),
       ),

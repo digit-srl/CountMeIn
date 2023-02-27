@@ -47,6 +47,7 @@ exports.createUser = functions
           response
             .send({
               status: "invalid_fiscal_code",
+              cf: cf,
             })
             .end();
           return;
@@ -58,6 +59,7 @@ exports.createUser = functions
           .limit(1)
           .get();
 
+        // se c'è almeno 1 doc l utente è già registrato nella piattaforma
         if (d.docs.length > 0) {
           console.log(d.docs[0].data());
           const userData = d.docs[0].data();
@@ -74,6 +76,7 @@ exports.createUser = functions
               status: "user_already_exist",
               emailVerified: userData.emailVerified,
               userId: userData.id,
+              cf: cf,
             })
             .end();
           return;
@@ -137,6 +140,7 @@ exports.createUser = functions
           response
             .send({
               status: "success",
+              cf: cf,
             })
             .end();
         } catch (err: any) {

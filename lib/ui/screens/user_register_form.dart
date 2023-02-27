@@ -8,6 +8,7 @@ import 'package:countmein/src/common/ui/widgets/cmi_dropdown.dart';
 import 'package:countmein/src/common/upper_case_formatter.dart';
 import 'package:countmein/src/user/application/user_card_recovering_notifier.dart';
 import 'package:countmein/src/user/data/dto/user_request.dart';
+import 'package:countmein/src/user/ui/screens/user_dashboard.dart';
 import 'package:countmein/src/user/ui/widgets/user_profile.dart';
 import 'package:countmein/src/user/ui/widgets/waiting_otp_code.dart';
 import 'package:countmein/src/user_register/application/user_registering_notifier.dart';
@@ -24,6 +25,7 @@ import 'package:flutter_codice_fiscale/dao/city_dao.dart';
 import 'package:flutter_codice_fiscale/models/city.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import '../../src/common/mu_styles.dart';
@@ -112,10 +114,9 @@ class _State extends ConsumerState<UserFormScreen> {
             builder: (c) => const Dialog(
                   child: UserRegisteringDialog(),
                 ));
-      }
-
-      if (next is UserRegisteringUserCardSentByEmail ||
-          next is UserRegisteringVerificationEmailSent) {
+      } else if (next is UserRegisteringUserAlreadySubscribed) {
+        context.go('${UserConsoleScreen.routeName}/${next.providerId}/${next.userId}');
+      } else if (next is UserRegisteringVerificationEmailSent) {
         nameController.clear();
         surnameController.clear();
         cfController.clear();
@@ -160,7 +161,7 @@ class _State extends ConsumerState<UserFormScreen> {
                   ),
                   const SizedBox(height: 16),
                   // CMIDropdownButton<Gender>(
-                  //   label: 'Sesso percepito',
+                  //   label: 'Generd percepito',
                   //   validator: (v) {
                   //     if (v == null) {
                   //       return 'Questo campo è obbligatorio';
@@ -185,9 +186,7 @@ class _State extends ConsumerState<UserFormScreen> {
                         child: CMITextField(
                           controller: cfController,
                           hintText: 'Codice Fiscale',
-                          inputFormatters: [
-                            UpperCaseTextFormatter()
-                          ],
+                          inputFormatters: [UpperCaseTextFormatter()],
                           textCapitalization: TextCapitalization.characters,
                           validator: CFValidator(),
                         ),
@@ -286,9 +285,10 @@ class UserRegisteringDialog extends ConsumerWidget {
             const SizedBox(height: 100, width: 100, child: LoadingWidget()),
         loading: () =>
             const SizedBox(height: 100, width: 100, child: LoadingWidget()),
-        userCardSentByEmail: (email) {
+        userAlreadySubscribed: (email, cf, userId, providerId) {
           return EasyRichText(
-            "Potrai scaricare il tuo tesserino dall'email che abbiamo inviato all'indirizzo $email. ",
+            "Sei gìà iscritto con il codice fiscale $cf.\nTorna indietro e recupera il tuo tesserino",
+            // "Potrai scaricare il tuo tesserino dall'email che abbiamo inviato all'indirizzo $email. ",
             defaultStyle: Theme.of(context).textTheme.bodyText1,
             patternList: [
               EasyRichTextPattern(
@@ -303,7 +303,7 @@ class UserRegisteringDialog extends ConsumerWidget {
             newUser
                 ? "Abbiamo inviato una email di verifica all'indirizzo $email. "
                     "Una volta verificata la tua identità riceverai una mail con il tuo tesserino.\n\n"
-                    "Non ha ricevuto la nostra email di verifica? Invia di nuovo"
+                // "Non ha ricevuto la nostra email di verifica? Invia di nuovo"
                 : "Non hai ancora verificato la tua email $email, controlla la tua casella postale e completa la verifica",
             defaultStyle: Theme.of(context).textTheme.bodyText1,
             patternList: [
@@ -311,10 +311,10 @@ class UserRegisteringDialog extends ConsumerWidget {
                   targetString: email,
                   recognizer: TapGestureRecognizer()..onTap = () {},
                   style: Theme.of(context).textTheme.bodyText1?.bold.underline),
-              EasyRichTextPattern(
-                  targetString: 'Invia di nuovo',
-                  recognizer: TapGestureRecognizer()..onTap = () {},
-                  style: Theme.of(context).textTheme.bodyText1?.bold.underline),
+              // EasyRichTextPattern(
+              //     targetString: 'Invia di nuovo',
+              //     recognizer: TapGestureRecognizer()..onTap = () {},
+              //     style: Theme.of(context).textTheme.bodyText1?.bold.underline),
             ],
           );
         },

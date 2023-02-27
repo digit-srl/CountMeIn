@@ -36,7 +36,7 @@ class UserProfileNotifier extends StateNotifier<UserProfileState> {
     state = const UserProfileLoading();
     final res = await ref.read(dioProvider).post(
       requestOtpCodeUrl,
-      data: {'userId': userIds.userId},
+      data: {'userId': userIds.userId, 'providerId': userIds.providerId},
     );
     if (res.statusCode == 200) {
       // final map = Map<String, dynamic>.from(res.data);

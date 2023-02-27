@@ -20,7 +20,9 @@ mixin _$UserRegisteringState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool newUser, String email) verificationEmailSent,
-    required TResult Function(String email) userCardSentByEmail,
+    required TResult Function(
+            String email, String cf, String userId, String providerId)
+        userAlreadySubscribed,
     required TResult Function() loading,
     required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
@@ -30,7 +32,9 @@ mixin _$UserRegisteringState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool newUser, String email)? verificationEmailSent,
-    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function(
+            String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult? Function()? loading,
     TResult? Function()? invalidFiscalCode,
     TResult? Function(Object error, StackTrace st)? error,
@@ -40,7 +44,8 @@ mixin _$UserRegisteringState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
+    TResult Function(String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult Function()? loading,
     TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
@@ -52,8 +57,8 @@ mixin _$UserRegisteringState {
     required TResult Function(UserRegisteringInitial value) initial,
     required TResult Function(UserRegisteringVerificationEmailSent value)
         verificationEmailSent,
-    required TResult Function(UserRegisteringUserCardSentByEmail value)
-        userCardSentByEmail,
+    required TResult Function(UserRegisteringUserAlreadySubscribed value)
+        userAlreadySubscribed,
     required TResult Function(UserRegisteringLoading value) loading,
     required TResult Function(UserRegisteringInvalidFiscalCode value)
         invalidFiscalCode,
@@ -65,8 +70,8 @@ mixin _$UserRegisteringState {
     TResult? Function(UserRegisteringInitial value)? initial,
     TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult? Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult? Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult? Function(UserRegisteringLoading value)? loading,
     TResult? Function(UserRegisteringInvalidFiscalCode value)?
         invalidFiscalCode,
@@ -78,8 +83,8 @@ mixin _$UserRegisteringState {
     TResult Function(UserRegisteringInitial value)? initial,
     TResult Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult Function(UserRegisteringLoading value)? loading,
     TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
@@ -147,7 +152,9 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool newUser, String email) verificationEmailSent,
-    required TResult Function(String email) userCardSentByEmail,
+    required TResult Function(
+            String email, String cf, String userId, String providerId)
+        userAlreadySubscribed,
     required TResult Function() loading,
     required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
@@ -160,7 +167,9 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool newUser, String email)? verificationEmailSent,
-    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function(
+            String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult? Function()? loading,
     TResult? Function()? invalidFiscalCode,
     TResult? Function(Object error, StackTrace st)? error,
@@ -173,7 +182,8 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
+    TResult Function(String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult Function()? loading,
     TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
@@ -191,8 +201,8 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
     required TResult Function(UserRegisteringInitial value) initial,
     required TResult Function(UserRegisteringVerificationEmailSent value)
         verificationEmailSent,
-    required TResult Function(UserRegisteringUserCardSentByEmail value)
-        userCardSentByEmail,
+    required TResult Function(UserRegisteringUserAlreadySubscribed value)
+        userAlreadySubscribed,
     required TResult Function(UserRegisteringLoading value) loading,
     required TResult Function(UserRegisteringInvalidFiscalCode value)
         invalidFiscalCode,
@@ -207,8 +217,8 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
     TResult? Function(UserRegisteringInitial value)? initial,
     TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult? Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult? Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult? Function(UserRegisteringLoading value)? loading,
     TResult? Function(UserRegisteringInvalidFiscalCode value)?
         invalidFiscalCode,
@@ -223,8 +233,8 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
     TResult Function(UserRegisteringInitial value)? initial,
     TResult Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult Function(UserRegisteringLoading value)? loading,
     TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
@@ -323,7 +333,9 @@ class _$UserRegisteringVerificationEmailSent
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool newUser, String email) verificationEmailSent,
-    required TResult Function(String email) userCardSentByEmail,
+    required TResult Function(
+            String email, String cf, String userId, String providerId)
+        userAlreadySubscribed,
     required TResult Function() loading,
     required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
@@ -336,7 +348,9 @@ class _$UserRegisteringVerificationEmailSent
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool newUser, String email)? verificationEmailSent,
-    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function(
+            String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult? Function()? loading,
     TResult? Function()? invalidFiscalCode,
     TResult? Function(Object error, StackTrace st)? error,
@@ -349,7 +363,8 @@ class _$UserRegisteringVerificationEmailSent
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
+    TResult Function(String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult Function()? loading,
     TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
@@ -367,8 +382,8 @@ class _$UserRegisteringVerificationEmailSent
     required TResult Function(UserRegisteringInitial value) initial,
     required TResult Function(UserRegisteringVerificationEmailSent value)
         verificationEmailSent,
-    required TResult Function(UserRegisteringUserCardSentByEmail value)
-        userCardSentByEmail,
+    required TResult Function(UserRegisteringUserAlreadySubscribed value)
+        userAlreadySubscribed,
     required TResult Function(UserRegisteringLoading value) loading,
     required TResult Function(UserRegisteringInvalidFiscalCode value)
         invalidFiscalCode,
@@ -383,8 +398,8 @@ class _$UserRegisteringVerificationEmailSent
     TResult? Function(UserRegisteringInitial value)? initial,
     TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult? Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult? Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult? Function(UserRegisteringLoading value)? loading,
     TResult? Function(UserRegisteringInvalidFiscalCode value)?
         invalidFiscalCode,
@@ -399,8 +414,8 @@ class _$UserRegisteringVerificationEmailSent
     TResult Function(UserRegisteringInitial value)? initial,
     TResult Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult Function(UserRegisteringLoading value)? loading,
     TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
@@ -428,34 +443,49 @@ abstract class UserRegisteringVerificationEmailSent
 }
 
 /// @nodoc
-abstract class _$$UserRegisteringUserCardSentByEmailCopyWith<$Res> {
-  factory _$$UserRegisteringUserCardSentByEmailCopyWith(
-          _$UserRegisteringUserCardSentByEmail value,
-          $Res Function(_$UserRegisteringUserCardSentByEmail) then) =
-      __$$UserRegisteringUserCardSentByEmailCopyWithImpl<$Res>;
+abstract class _$$UserRegisteringUserAlreadySubscribedCopyWith<$Res> {
+  factory _$$UserRegisteringUserAlreadySubscribedCopyWith(
+          _$UserRegisteringUserAlreadySubscribed value,
+          $Res Function(_$UserRegisteringUserAlreadySubscribed) then) =
+      __$$UserRegisteringUserAlreadySubscribedCopyWithImpl<$Res>;
   @useResult
-  $Res call({String email});
+  $Res call({String email, String cf, String userId, String providerId});
 }
 
 /// @nodoc
-class __$$UserRegisteringUserCardSentByEmailCopyWithImpl<$Res>
+class __$$UserRegisteringUserAlreadySubscribedCopyWithImpl<$Res>
     extends _$UserRegisteringStateCopyWithImpl<$Res,
-        _$UserRegisteringUserCardSentByEmail>
-    implements _$$UserRegisteringUserCardSentByEmailCopyWith<$Res> {
-  __$$UserRegisteringUserCardSentByEmailCopyWithImpl(
-      _$UserRegisteringUserCardSentByEmail _value,
-      $Res Function(_$UserRegisteringUserCardSentByEmail) _then)
+        _$UserRegisteringUserAlreadySubscribed>
+    implements _$$UserRegisteringUserAlreadySubscribedCopyWith<$Res> {
+  __$$UserRegisteringUserAlreadySubscribedCopyWithImpl(
+      _$UserRegisteringUserAlreadySubscribed _value,
+      $Res Function(_$UserRegisteringUserAlreadySubscribed) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? email = null,
+    Object? cf = null,
+    Object? userId = null,
+    Object? providerId = null,
   }) {
-    return _then(_$UserRegisteringUserCardSentByEmail(
+    return _then(_$UserRegisteringUserAlreadySubscribed(
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      cf: null == cf
+          ? _value.cf
+          : cf // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      providerId: null == providerId
+          ? _value.providerId
+          : providerId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -463,48 +493,64 @@ class __$$UserRegisteringUserCardSentByEmailCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserRegisteringUserCardSentByEmail
-    implements UserRegisteringUserCardSentByEmail {
-  const _$UserRegisteringUserCardSentByEmail({required this.email});
+class _$UserRegisteringUserAlreadySubscribed
+    implements UserRegisteringUserAlreadySubscribed {
+  const _$UserRegisteringUserAlreadySubscribed(
+      {required this.email,
+      required this.cf,
+      required this.userId,
+      required this.providerId});
 
   @override
   final String email;
+  @override
+  final String cf;
+  @override
+  final String userId;
+  @override
+  final String providerId;
 
   @override
   String toString() {
-    return 'UserRegisteringState.userCardSentByEmail(email: $email)';
+    return 'UserRegisteringState.userAlreadySubscribed(email: $email, cf: $cf, userId: $userId, providerId: $providerId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserRegisteringUserCardSentByEmail &&
-            (identical(other.email, email) || other.email == email));
+            other is _$UserRegisteringUserAlreadySubscribed &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.cf, cf) || other.cf == cf) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.providerId, providerId) ||
+                other.providerId == providerId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, email);
+  int get hashCode => Object.hash(runtimeType, email, cf, userId, providerId);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserRegisteringUserCardSentByEmailCopyWith<
-          _$UserRegisteringUserCardSentByEmail>
-      get copyWith => __$$UserRegisteringUserCardSentByEmailCopyWithImpl<
-          _$UserRegisteringUserCardSentByEmail>(this, _$identity);
+  _$$UserRegisteringUserAlreadySubscribedCopyWith<
+          _$UserRegisteringUserAlreadySubscribed>
+      get copyWith => __$$UserRegisteringUserAlreadySubscribedCopyWithImpl<
+          _$UserRegisteringUserAlreadySubscribed>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool newUser, String email) verificationEmailSent,
-    required TResult Function(String email) userCardSentByEmail,
+    required TResult Function(
+            String email, String cf, String userId, String providerId)
+        userAlreadySubscribed,
     required TResult Function() loading,
     required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
   }) {
-    return userCardSentByEmail(email);
+    return userAlreadySubscribed(email, cf, userId, providerId);
   }
 
   @override
@@ -512,12 +558,14 @@ class _$UserRegisteringUserCardSentByEmail
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool newUser, String email)? verificationEmailSent,
-    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function(
+            String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult? Function()? loading,
     TResult? Function()? invalidFiscalCode,
     TResult? Function(Object error, StackTrace st)? error,
   }) {
-    return userCardSentByEmail?.call(email);
+    return userAlreadySubscribed?.call(email, cf, userId, providerId);
   }
 
   @override
@@ -525,14 +573,15 @@ class _$UserRegisteringUserCardSentByEmail
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
+    TResult Function(String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult Function()? loading,
     TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
     required TResult orElse(),
   }) {
-    if (userCardSentByEmail != null) {
-      return userCardSentByEmail(email);
+    if (userAlreadySubscribed != null) {
+      return userAlreadySubscribed(email, cf, userId, providerId);
     }
     return orElse();
   }
@@ -543,14 +592,14 @@ class _$UserRegisteringUserCardSentByEmail
     required TResult Function(UserRegisteringInitial value) initial,
     required TResult Function(UserRegisteringVerificationEmailSent value)
         verificationEmailSent,
-    required TResult Function(UserRegisteringUserCardSentByEmail value)
-        userCardSentByEmail,
+    required TResult Function(UserRegisteringUserAlreadySubscribed value)
+        userAlreadySubscribed,
     required TResult Function(UserRegisteringLoading value) loading,
     required TResult Function(UserRegisteringInvalidFiscalCode value)
         invalidFiscalCode,
     required TResult Function(UserRegisteringError value) error,
   }) {
-    return userCardSentByEmail(this);
+    return userAlreadySubscribed(this);
   }
 
   @override
@@ -559,14 +608,14 @@ class _$UserRegisteringUserCardSentByEmail
     TResult? Function(UserRegisteringInitial value)? initial,
     TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult? Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult? Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult? Function(UserRegisteringLoading value)? loading,
     TResult? Function(UserRegisteringInvalidFiscalCode value)?
         invalidFiscalCode,
     TResult? Function(UserRegisteringError value)? error,
   }) {
-    return userCardSentByEmail?.call(this);
+    return userAlreadySubscribed?.call(this);
   }
 
   @override
@@ -575,29 +624,36 @@ class _$UserRegisteringUserCardSentByEmail
     TResult Function(UserRegisteringInitial value)? initial,
     TResult Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult Function(UserRegisteringLoading value)? loading,
     TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
     required TResult orElse(),
   }) {
-    if (userCardSentByEmail != null) {
-      return userCardSentByEmail(this);
+    if (userAlreadySubscribed != null) {
+      return userAlreadySubscribed(this);
     }
     return orElse();
   }
 }
 
-abstract class UserRegisteringUserCardSentByEmail
+abstract class UserRegisteringUserAlreadySubscribed
     implements UserRegisteringState {
-  const factory UserRegisteringUserCardSentByEmail(
-      {required final String email}) = _$UserRegisteringUserCardSentByEmail;
+  const factory UserRegisteringUserAlreadySubscribed(
+          {required final String email,
+          required final String cf,
+          required final String userId,
+          required final String providerId}) =
+      _$UserRegisteringUserAlreadySubscribed;
 
   String get email;
+  String get cf;
+  String get userId;
+  String get providerId;
   @JsonKey(ignore: true)
-  _$$UserRegisteringUserCardSentByEmailCopyWith<
-          _$UserRegisteringUserCardSentByEmail>
+  _$$UserRegisteringUserAlreadySubscribedCopyWith<
+          _$UserRegisteringUserAlreadySubscribed>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -641,7 +697,9 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool newUser, String email) verificationEmailSent,
-    required TResult Function(String email) userCardSentByEmail,
+    required TResult Function(
+            String email, String cf, String userId, String providerId)
+        userAlreadySubscribed,
     required TResult Function() loading,
     required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
@@ -654,7 +712,9 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool newUser, String email)? verificationEmailSent,
-    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function(
+            String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult? Function()? loading,
     TResult? Function()? invalidFiscalCode,
     TResult? Function(Object error, StackTrace st)? error,
@@ -667,7 +727,8 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
+    TResult Function(String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult Function()? loading,
     TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
@@ -685,8 +746,8 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
     required TResult Function(UserRegisteringInitial value) initial,
     required TResult Function(UserRegisteringVerificationEmailSent value)
         verificationEmailSent,
-    required TResult Function(UserRegisteringUserCardSentByEmail value)
-        userCardSentByEmail,
+    required TResult Function(UserRegisteringUserAlreadySubscribed value)
+        userAlreadySubscribed,
     required TResult Function(UserRegisteringLoading value) loading,
     required TResult Function(UserRegisteringInvalidFiscalCode value)
         invalidFiscalCode,
@@ -701,8 +762,8 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
     TResult? Function(UserRegisteringInitial value)? initial,
     TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult? Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult? Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult? Function(UserRegisteringLoading value)? loading,
     TResult? Function(UserRegisteringInvalidFiscalCode value)?
         invalidFiscalCode,
@@ -717,8 +778,8 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
     TResult Function(UserRegisteringInitial value)? initial,
     TResult Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult Function(UserRegisteringLoading value)? loading,
     TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
@@ -780,7 +841,9 @@ class _$UserRegisteringInvalidFiscalCode
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool newUser, String email) verificationEmailSent,
-    required TResult Function(String email) userCardSentByEmail,
+    required TResult Function(
+            String email, String cf, String userId, String providerId)
+        userAlreadySubscribed,
     required TResult Function() loading,
     required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
@@ -793,7 +856,9 @@ class _$UserRegisteringInvalidFiscalCode
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool newUser, String email)? verificationEmailSent,
-    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function(
+            String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult? Function()? loading,
     TResult? Function()? invalidFiscalCode,
     TResult? Function(Object error, StackTrace st)? error,
@@ -806,7 +871,8 @@ class _$UserRegisteringInvalidFiscalCode
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
+    TResult Function(String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult Function()? loading,
     TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
@@ -824,8 +890,8 @@ class _$UserRegisteringInvalidFiscalCode
     required TResult Function(UserRegisteringInitial value) initial,
     required TResult Function(UserRegisteringVerificationEmailSent value)
         verificationEmailSent,
-    required TResult Function(UserRegisteringUserCardSentByEmail value)
-        userCardSentByEmail,
+    required TResult Function(UserRegisteringUserAlreadySubscribed value)
+        userAlreadySubscribed,
     required TResult Function(UserRegisteringLoading value) loading,
     required TResult Function(UserRegisteringInvalidFiscalCode value)
         invalidFiscalCode,
@@ -840,8 +906,8 @@ class _$UserRegisteringInvalidFiscalCode
     TResult? Function(UserRegisteringInitial value)? initial,
     TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult? Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult? Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult? Function(UserRegisteringLoading value)? loading,
     TResult? Function(UserRegisteringInvalidFiscalCode value)?
         invalidFiscalCode,
@@ -856,8 +922,8 @@ class _$UserRegisteringInvalidFiscalCode
     TResult Function(UserRegisteringInitial value)? initial,
     TResult Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult Function(UserRegisteringLoading value)? loading,
     TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,
@@ -949,7 +1015,9 @@ class _$UserRegisteringError implements UserRegisteringError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(bool newUser, String email) verificationEmailSent,
-    required TResult Function(String email) userCardSentByEmail,
+    required TResult Function(
+            String email, String cf, String userId, String providerId)
+        userAlreadySubscribed,
     required TResult Function() loading,
     required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
@@ -962,7 +1030,9 @@ class _$UserRegisteringError implements UserRegisteringError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(bool newUser, String email)? verificationEmailSent,
-    TResult? Function(String email)? userCardSentByEmail,
+    TResult? Function(
+            String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult? Function()? loading,
     TResult? Function()? invalidFiscalCode,
     TResult? Function(Object error, StackTrace st)? error,
@@ -975,7 +1045,8 @@ class _$UserRegisteringError implements UserRegisteringError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(bool newUser, String email)? verificationEmailSent,
-    TResult Function(String email)? userCardSentByEmail,
+    TResult Function(String email, String cf, String userId, String providerId)?
+        userAlreadySubscribed,
     TResult Function()? loading,
     TResult Function()? invalidFiscalCode,
     TResult Function(Object error, StackTrace st)? error,
@@ -993,8 +1064,8 @@ class _$UserRegisteringError implements UserRegisteringError {
     required TResult Function(UserRegisteringInitial value) initial,
     required TResult Function(UserRegisteringVerificationEmailSent value)
         verificationEmailSent,
-    required TResult Function(UserRegisteringUserCardSentByEmail value)
-        userCardSentByEmail,
+    required TResult Function(UserRegisteringUserAlreadySubscribed value)
+        userAlreadySubscribed,
     required TResult Function(UserRegisteringLoading value) loading,
     required TResult Function(UserRegisteringInvalidFiscalCode value)
         invalidFiscalCode,
@@ -1009,8 +1080,8 @@ class _$UserRegisteringError implements UserRegisteringError {
     TResult? Function(UserRegisteringInitial value)? initial,
     TResult? Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult? Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult? Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult? Function(UserRegisteringLoading value)? loading,
     TResult? Function(UserRegisteringInvalidFiscalCode value)?
         invalidFiscalCode,
@@ -1025,8 +1096,8 @@ class _$UserRegisteringError implements UserRegisteringError {
     TResult Function(UserRegisteringInitial value)? initial,
     TResult Function(UserRegisteringVerificationEmailSent value)?
         verificationEmailSent,
-    TResult Function(UserRegisteringUserCardSentByEmail value)?
-        userCardSentByEmail,
+    TResult Function(UserRegisteringUserAlreadySubscribed value)?
+        userAlreadySubscribed,
     TResult Function(UserRegisteringLoading value)? loading,
     TResult Function(UserRegisteringInvalidFiscalCode value)? invalidFiscalCode,
     TResult Function(UserRegisteringError value)? error,

@@ -173,7 +173,7 @@ class GenderRequestWidget extends HookConsumerWidget {
           const Text('Indica il genere percepito'),
           const SizedBox(height: 16),
           CMIDropdownButton<Gender>(
-            label: 'Sesso percepito',
+            label: 'Genere percepito',
             validator: (v) {
               if (v == null) {
                 return 'Questo campo è obbligatorio';

@@ -21,6 +21,7 @@ UserCreationResponse _$UserCreationResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserCreationResponse {
   String get status => throw _privateConstructorUsedError;
+  String get cf => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
   bool? get emailVerified => throw _privateConstructorUsedError;
 
@@ -36,7 +37,7 @@ abstract class $UserCreationResponseCopyWith<$Res> {
           $Res Function(UserCreationResponse) then) =
       _$UserCreationResponseCopyWithImpl<$Res, UserCreationResponse>;
   @useResult
-  $Res call({String status, String? userId, bool? emailVerified});
+  $Res call({String status, String cf, String? userId, bool? emailVerified});
 }
 
 /// @nodoc
@@ -54,6 +55,7 @@ class _$UserCreationResponseCopyWithImpl<$Res,
   @override
   $Res call({
     Object? status = null,
+    Object? cf = null,
     Object? userId = freezed,
     Object? emailVerified = freezed,
   }) {
@@ -61,6 +63,10 @@ class _$UserCreationResponseCopyWithImpl<$Res,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      cf: null == cf
+          ? _value.cf
+          : cf // ignore: cast_nullable_to_non_nullable
               as String,
       userId: freezed == userId
           ? _value.userId
@@ -82,7 +88,7 @@ abstract class _$$_UserCreationResponseCopyWith<$Res>
       __$$_UserCreationResponseCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String status, String? userId, bool? emailVerified});
+  $Res call({String status, String cf, String? userId, bool? emailVerified});
 }
 
 /// @nodoc
@@ -97,6 +103,7 @@ class __$$_UserCreationResponseCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
+    Object? cf = null,
     Object? userId = freezed,
     Object? emailVerified = freezed,
   }) {
@@ -104,6 +111,10 @@ class __$$_UserCreationResponseCopyWithImpl<$Res>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      cf: null == cf
+          ? _value.cf
+          : cf // ignore: cast_nullable_to_non_nullable
               as String,
       userId: freezed == userId
           ? _value.userId
@@ -121,7 +132,10 @@ class __$$_UserCreationResponseCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_UserCreationResponse implements _UserCreationResponse {
   const _$_UserCreationResponse(
-      {required this.status, this.userId, this.emailVerified});
+      {required this.status,
+      required this.cf,
+      this.userId,
+      this.emailVerified});
 
   factory _$_UserCreationResponse.fromJson(Map<String, dynamic> json) =>
       _$$_UserCreationResponseFromJson(json);
@@ -129,13 +143,15 @@ class _$_UserCreationResponse implements _UserCreationResponse {
   @override
   final String status;
   @override
+  final String cf;
+  @override
   final String? userId;
   @override
   final bool? emailVerified;
 
   @override
   String toString() {
-    return 'UserCreationResponse(status: $status, userId: $userId, emailVerified: $emailVerified)';
+    return 'UserCreationResponse(status: $status, cf: $cf, userId: $userId, emailVerified: $emailVerified)';
   }
 
   @override
@@ -144,6 +160,7 @@ class _$_UserCreationResponse implements _UserCreationResponse {
         (other.runtimeType == runtimeType &&
             other is _$_UserCreationResponse &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.cf, cf) || other.cf == cf) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.emailVerified, emailVerified) ||
                 other.emailVerified == emailVerified));
@@ -151,7 +168,8 @@ class _$_UserCreationResponse implements _UserCreationResponse {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, status, userId, emailVerified);
+  int get hashCode =>
+      Object.hash(runtimeType, status, cf, userId, emailVerified);
 
   @JsonKey(ignore: true)
   @override
@@ -171,6 +189,7 @@ class _$_UserCreationResponse implements _UserCreationResponse {
 abstract class _UserCreationResponse implements UserCreationResponse {
   const factory _UserCreationResponse(
       {required final String status,
+      required final String cf,
       final String? userId,
       final bool? emailVerified}) = _$_UserCreationResponse;
 
@@ -179,6 +198,8 @@ abstract class _UserCreationResponse implements UserCreationResponse {
 
   @override
   String get status;
+  @override
+  String get cf;
   @override
   String? get userId;
   @override
