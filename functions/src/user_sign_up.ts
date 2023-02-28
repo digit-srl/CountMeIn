@@ -257,7 +257,7 @@ async function sendUserCard(
     surname,
     cf,
     email,
-    url,
+    encodeURI(url),
     privateId,
     providerId
   );

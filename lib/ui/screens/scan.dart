@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/scan_notifier.dart';
 import 'package:countmein/src/admin/application/users_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
+import 'package:countmein/ui/screens/event_details.dart';
 import 'package:countmein/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +20,10 @@ import '../../domain/entities/event_ids.dart';
 import '../../domain/entities/user_card.dart';
 import 'package:collection/collection.dart';
 
-
-final mobileScannerControllerProvider = Provider.autoDispose<MobileScannerController>((ref) {
-  final c = MobileScannerController(
-      facing: CameraFacing.back, torchEnabled: false);
+final mobileScannerControllerProvider =
+    Provider.autoDispose<MobileScannerController>((ref) {
+  final c =
+      MobileScannerController(facing: CameraFacing.back, torchEnabled: false);
   ref.onDispose(() {
     c.dispose();
   });
@@ -53,6 +55,8 @@ class ScanScreen extends ConsumerStatefulWidget {
 class _ScanScreenState extends ConsumerState<ScanScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
+  final Duration messageDuration = const Duration(seconds: 2);
+
   String get eventId => widget.event.id;
 
   EventUser? lastUser;
@@ -75,6 +79,42 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
   int? soundId;
   late Soundpool pool;
 
+  String? error;
+  String? message;
+  bool waitingTimer = false;
+
+  onError(EventUser? user, String message) {
+    setState(() {
+      error = message;
+    });
+    if (waitingTimer) return;
+    logger.i('ScanScreen set timer');
+    waitingTimer = true;
+    Future.delayed(messageDuration, () {
+      logger.i('ScanScreen reset info');
+      waitingTimer = false;
+      setState(() {
+        error = null;
+      });
+    });
+  }
+
+  onMessage(EventUser? user, String m) {
+    setState(() {
+      message = m;
+    });
+    if (waitingTimer) return;
+    logger.i('ScanScreen set timer');
+    waitingTimer = true;
+    Future.delayed(messageDuration, () {
+      logger.i('ScanScreen reset info');
+      waitingTimer = false;
+      setState(() {
+        message = null;
+      });
+    });
+  }
+
   showUpdate(Barcode? barcode, EventUser user) {
     if (soundId != null) {
       pool.play(soundId!);
@@ -83,16 +123,21 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
       result = barcode;
       lastUser = user;
     });
-    Future.delayed(const Duration(seconds: 1), () {
+    showToast('${user.name} ${user.surname} aggiunto al database',
+        duration: const Duration(milliseconds: 250),
+        position: ToastPosition.bottom);
+
+    if (waitingTimer) return;
+    logger.i('ScanScreen set timer');
+    waitingTimer = true;
+    Future.delayed(messageDuration, () {
+      logger.i('ScanScreen reset info');
+      waitingTimer = false;
       setState(() {
         result = null;
         lastUser = null;
       });
     });
-
-    showToast('${user.name} ${user.surname} aggiunto al database',
-        duration: const Duration(milliseconds: 250),
-        position: ToastPosition.bottom);
   }
 
   loadSound() async {
@@ -107,7 +152,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
   Widget build(BuildContext context) {
     final count = ref.watch(usersCountProvider(ids));
     final scanner = ref.watch(mobileScannerControllerProvider);
-    ref.listen(scanControllerProvider(ids.eventId), (previous, next) { });
+    ref.listen(scanControllerProvider(ids.eventId), (previous, next) {});
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -128,7 +173,9 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                             widget.provider,
                             widget.event,
                             widget.scanMode,
-                            (user) => showUpdate(barcode, user),
+                            onUpdate: (user) => showUpdate(barcode, user),
+                            onMessage: onMessage,
+                            onError: onError,
                           );
                     },
                   ),
@@ -136,7 +183,13 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                 Expanded(
                   flex: 1,
                   child: Container(
-                    color: lastUser != null ? Colors.green : Colors.white,
+                    color: error != null
+                        ? Colors.red
+                        : lastUser != null
+                            ? Colors.green
+                            : message != null
+                                ? Colors.blue
+                                : Colors.white,
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -144,26 +197,78 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                       children: [
                         if (kDebugMode && result != null)
                           Text(
-                              'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.rawValue}'),
+                              'Barcode Type: ${describeEnum(result!.format)}  Data: ${result!.rawValue}'),
                         const SizedBox(height: 8),
-                        Text(
-                          lastUser != null
-                              ? '${lastUser!.name} ${lastUser!.surname} ${lastUser!.cf}'
-                              : 'SCAN QR CODE',
-                          textAlign: lastUser != null
-                              ? TextAlign.start
-                              : TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                        if (error == null && message == null)
+                          if (lastUser != null)
+                            Text(
+                              '${lastUser!.isGroup ? 'GRUPPO ' : ''}AGGIUNTO\n${lastUser!.name} ${lastUser!.surname}\n${lastUser!.cf}',
+                              textAlign: lastUser != null
+                                  ? TextAlign.start
+                                  : TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 22,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          else
+                            Text(
+                              'SCAN QR CODE',
+                              textAlign: lastUser != null
+                                  ? TextAlign.start
+                                  : TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                        else
+                          Text(
+                            error ?? message ?? '',
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 24),
                           ),
-                        ),
                       ],
                     ),
                   ),
                 )
               ],
             ),
+            if (kDebugMode)
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: const Icon(Icons.developer_mode),
+                  onPressed: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (c) {
+                        return Dialog(
+                          child: ScanSimulationWidget(
+                            event: widget.event,
+                            provider: widget.provider,
+                            onScan: (url) {
+                              ref
+                                  .read(scanControllerProvider(widget.event.id))
+                                  .processScan2(
+                                    url,
+                                    widget.provider,
+                                    widget.event,
+                                    widget.scanMode,
+                                    onUpdate: (user) => showUpdate(null, user),
+                                    onMessage: onMessage,
+                                    onError: onError,
+                                  );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
             if (widget.event.accessType != EventAccessType.single)
               Align(
                 alignment: Alignment.topLeft,

@@ -12,7 +12,7 @@ import 'package:oktoast/oktoast.dart';
 
 final scanControllerProvider =
     Provider.autoDispose.family<ScanController, String>((ref, eventId) {
-      logger.wtf('Scan controller create');
+  logger.wtf('Scan controller create');
   return ScanController();
 });
 
@@ -30,9 +30,11 @@ class ScanController {
     String data,
     CMIProvider provider,
     CMIEvent event,
-    ScanMode scanMode,
+    ScanMode scanMode, {
     Function(EventUser user)? onUpdate,
-  ) async {
+    Function(EventUser? user, String message)? onError,
+    Function(EventUser? user, String message)? onMessage,
+  }) async {
     logger.i('processScan2 start');
     if (processing) return;
 
@@ -51,27 +53,29 @@ class ScanController {
             eventId: event.id,
             sessionId: event.activeSessionId);
 
-        if (!alreadyScannedUser.contains(userQrCode.id)) {
+        var eventUser = EventUser(
+          isGroup: isGroupCard,
+          id: isGroupCard ? userQrCode.groupId! : userQrCode.id,
+          name: userQrCode.name,
+          surname: userQrCode.surname,
+          email: userQrCode.isExternalOrganization
+              ? '${userQrCode.email}${provider.domainRequirement}'
+              : userQrCode.email,
+          cf: userQrCode.cf,
+          fromExternalOrganization: userQrCode.isExternalOrganization,
+          privateId: userQrCode.privateId,
+          groupName: userQrCode.groupName,
+          groupCount: userQrCode.groupCount,
+          averageAge: userQrCode.averageAge,
+          manPercentage: userQrCode.manPercentage,
+          womanPercentage: userQrCode.womanPercentage,
+        );
+
+        if (!alreadyScannedUser.contains(eventUser.id)) {
           logger.i('onProcessing new user id on local list');
           processing = true;
 
-          var eventUser = EventUser(
-            isGroup: isGroupCard,
-            id: isGroupCard ? userQrCode.groupId! : userQrCode.id,
-            name: userQrCode.name,
-            surname: userQrCode.surname,
-            email: userQrCode.isExternalOrganization
-                ? '${userQrCode.email}${provider.domainRequirement}'
-                : userQrCode.email,
-            cf: userQrCode.cf,
-            fromExternalOrganization: userQrCode.isExternalOrganization,
-            privateId: userQrCode.privateId,
-            groupName: userQrCode.groupName,
-            groupCount: userQrCode.groupCount,
-            averageAge: userQrCode.averageAge,
-            manPercentage: userQrCode.manPercentage,
-            womanPercentage: userQrCode.womanPercentage,
-          );
+
 
           final isSingleAccessType = event.accessType == EventAccessType.single;
 
@@ -101,9 +105,10 @@ class ScanController {
               final message = eventUser.isGroup
                   ? '${eventUser.groupName ?? 'Il gruppo'} non ha effettuato il check in!'
                   : '${eventUser.name} ${eventUser.surname} non ha effettuato il check in!';
-              showToast(message,
-                  duration: const Duration(seconds: 1),
-                  position: ToastPosition.bottom);
+              // showToast(message,
+              //     duration: const Duration(seconds: 1),
+              //     position: ToastPosition.bottom);
+              onError?.call(eventUser, message);
               return;
             }
           }
@@ -111,6 +116,21 @@ class ScanController {
           //Check in
           if (!userSubEventDoc.exists) {
             logger.i('processScan2: checkin user doesnt exist');
+
+            // Se è un gruppo controllo che il rappresentante abbia fatto checkin
+            if (eventUser.isGroup) {
+              final groupLeaderDoc = await Cloud.sessionDoc(ids)
+                  .collection('users')
+                  .doc(userQrCode.id)
+                  .get();
+              if (!groupLeaderDoc.exists) {
+                processing = false;
+                onError?.call(
+                    eventUser, 'Il capogruppo non ha effettuato il check in');
+                return;
+              }
+            }
+
             if (isSingleAccessType && scanMode == ScanMode.checkOut) {
               eventUser = eventUser.copyWith(checkOutAt: DateTime.now());
             } else if (!isSingleAccessType && scanMode == ScanMode.checkIn) {
@@ -165,20 +185,22 @@ class ScanController {
                 .update({'participationCount': FieldValue.increment(1)});
           }
 
-          alreadyScannedUser.add(userQrCode.id);
+          alreadyScannedUser.add(eventUser.id);
           processing = false;
         } else {
           const message = 'Utente già scansionato';
           logger.i(message);
-          showToast(message,
-              duration: const Duration(milliseconds: 250),
-              position: ToastPosition.bottom);
+          onMessage?.call(null, message);
+          // showToast(message,
+          //     duration: const Duration(milliseconds: 250),
+          //     position: ToastPosition.bottom);
         }
       } else {
         const message =
             'Il provider del tesserino non è valido per questo evento.';
         logger.i(message);
-        showToast(message, position: ToastPosition.bottom);
+        onMessage?.call(null, message);
+        // showToast(message, position: ToastPosition.bottom);
       }
     } catch (ex, st) {
       logger.e(ex);
@@ -186,7 +208,8 @@ class ScanController {
       processing = false;
       const message = 'QR-Code non valido';
       logger.i(message);
-      showToast(message, position: ToastPosition.bottom);
+      onError?.call(null, message);
+      // showToast(message, position: ToastPosition.bottom);
     }
   }
 }

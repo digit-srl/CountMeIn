@@ -1,4 +1,5 @@
 import 'package:countmein/cloud.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/application/scan_notifier.dart';
@@ -155,26 +156,6 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                   //   'Link evento copiato negli appunti',
                   // );
                 }),
-            if (kDebugMode &&
-                provider != null &&
-                eventData != null &&
-                eventData.activeSessionId != null)
-              IconButton(
-                icon: const Icon(Icons.developer_mode),
-                onPressed: () async {
-                  await showDialog(
-                    context: context,
-                    builder: (c) {
-                      return Dialog(
-                        child: ScanSimulationWidget(
-                          event: eventData,
-                          provider: provider,
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
             IconButton(
               icon: const Icon(Icons.qr_code_scanner),
               onPressed: eventData != null &&
@@ -706,10 +687,12 @@ class SessionItem extends StatelessWidget {
 class ScanSimulationWidget extends HookConsumerWidget {
   final CMIEvent event;
   final CMIProvider provider;
+  final Function(String) onScan;
 
   const ScanSimulationWidget({
     Key? key,
     required this.event,
+    required this.onScan,
     required this.provider,
   }) : super(key: key);
 
@@ -755,17 +738,7 @@ class ScanSimulationWidget extends HookConsumerWidget {
           const SizedBox(height: 16),
           ElevatedButton(
               onPressed: () {
-// https://cmi.digit.srl/profile/27KEQsVlgbHsNONPSP5V?name=Gian Marco&surname=Di Francesco&cf=DFRGMR89M02I348U&pId=countmein
-// https://cmi.digit.srl/profile/27KEQsVlgbHsNONPSP5V?name=Gian Marco&surname=Di Francesco&cf=DFRGMR89M02I348U&pId=countmein&gId=g2f90soy5Xf1tvX3xrsW&gN=GRUPPO JANMARC&gC=6&aA=12
-
-                // https://cmi.digit.srl/profile/9km0qgaLHKpJ3HnDmw8E?upid=wPchczGr0qfv7DJ43S8w&name=Gian Marco&surname=Di Francesco&cf=DFRGMR89M02I348U&pId=Yy31B32YBDJDUt7TbZEl
-                ref.read(scanControllerProvider(event.id)).processScan2(
-                      dataController.text.trim(),
-                      provider,
-                      event,
-                      scanMode.value,
-                      null,
-                    );
+                onScan(dataController.text.trim());
               },
               child: const Text('Try'))
         ],

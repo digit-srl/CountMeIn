@@ -9,7 +9,7 @@ import 'package:url_strategy/url_strategy.dart';
 import 'app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
+import 'package:stack_trace/stack_trace.dart' as stack_trace;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:intl/date_symbol_data_local.dart';
@@ -25,6 +25,13 @@ enum AppFlavor { master, collab }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  FlutterError.demangleStackTrace = (StackTrace stack) {
+    if (stack is stack_trace.Trace) return stack.vmTrace;
+    if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
+    return stack;
+  };
+
   await Hive.initFlutter();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
