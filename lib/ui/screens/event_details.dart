@@ -254,7 +254,9 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (isAdmin && eventData != null && provider != null) ...[
+                        if (isAdmin &&
+                            eventData != null &&
+                            provider != null) ...[
                           ElevatedButton(
                             onPressed: () async {
                               showDialog(
@@ -559,9 +561,8 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                         if (eventData.totalUsers != null &&
                             eventData.totalUsers! > 0)
                           Text(
-                            // subEvent.id,
-                            '${eventData.totalUsers} utenti',
-                            style: Theme.of(context).textTheme.caption,
+                            '${eventData.totalUsers} utent${eventData.totalUsers! > 1 ? 'i' : 'e'}',
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                       ],
                     ),
