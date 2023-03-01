@@ -94,7 +94,7 @@ class UserProfileDataWidget extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 24),
                     ElevatedButton(
-                      onPressed: userData != null && !hideCardRequest.value
+                      onPressed: userData != null //&& !hideCardRequest.value
                           ? () async {
                               final gender = await showDialog(
                                   context: context,
@@ -286,67 +286,70 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
                       sliderEnabled.value = v;
                     }),
                 const SizedBox(width: 16),
-                Text('Aggiungi info sul genere dei partecipanti'),
+                const Text('Aggiungi info sul genere dei partecipanti'),
               ],
             ),
-            SliderTheme(
-              data: SliderTheme.of(context).copyWith(
-                trackHeight: 10.0,
-                trackShape: const RoundedRectSliderTrackShape(),
-                // activeTrackColor: Colors.purple.shade800,
-                // inactiveTrackColor: Colors.p,
-                thumbShape: const RoundSliderThumbShape(
-                  enabledThumbRadius: 14.0,
-                  pressedElevation: 8.0,
-                ),
-                thumbColor: Colors.grey,
-                // overlayColor: Colors.pink.withOpacity(0.2),
-                // overlayShape: RoundSliderOverlayShape(overlayRadius: 32.0),
-                // tickMarkShape: RoundSliderTickMarkShape(),
-                // activeTickMarkColor: Colors.pinkAccent,
-                inactiveTickMarkColor: Colors.transparent,
-                activeTickMarkColor: Colors.yellow,
-                inactiveTrackColor: Colors.purple,
-                valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-                valueIndicatorColor: Colors.grey,
-                activeTrackColor: Colors.yellow,
-                valueIndicatorTextStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                ),
-              ),
-              child: Slider(
-                min: 0,
-                max: 1,
-                divisions: sliderDivisions.value ?? 1,
-                // activeColor: Colors.lightBlue,
-                // inactiveColor: Colors.pink,
-                label: '${(manPercentage.value * 100).toStringAsFixed(0)} %',
-                value: manPercentage.value,
-                onChanged: sliderDivisions.value == null || !sliderEnabled.value
-                    ? null
-                    : (double value) {
-                        manPercentage.value = value;
-                      },
-              ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                    child: Text(
-                  'Maschi: ${((sliderDivisions.value ?? 1) * manPercentage.value).toStringAsFixed(0)}',
-                  // 'Maschi: ${(manPercentage.value * 100).toStringAsFixed(0)} %',
-                  textAlign: TextAlign.center,
-                )),
-                Expanded(
-                  child: Text(
-                    'Femmine: ${((1 - manPercentage.value) * (sliderDivisions.value ?? 1)).toStringAsFixed(0)}',
-                    // 'Femmine: ${(100 - manPercentage.value * 100).toStringAsFixed(0)} %',
-                    textAlign: TextAlign.center,
+            if (sliderEnabled.value) ...[
+              SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  trackHeight: 10.0,
+                  trackShape: const RoundedRectSliderTrackShape(),
+                  // activeTrackColor: Colors.purple.shade800,
+                  // inactiveTrackColor: Colors.p,
+                  thumbShape: const RoundSliderThumbShape(
+                    enabledThumbRadius: 14.0,
+                    pressedElevation: 8.0,
+                  ),
+                  thumbColor: Colors.grey,
+                  // overlayColor: Colors.pink.withOpacity(0.2),
+                  // overlayShape: RoundSliderOverlayShape(overlayRadius: 32.0),
+                  // tickMarkShape: RoundSliderTickMarkShape(),
+                  // activeTickMarkColor: Colors.pinkAccent,
+                  inactiveTickMarkColor: Colors.transparent,
+                  activeTickMarkColor: Colors.yellow,
+                  inactiveTrackColor: Colors.purple,
+                  valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
+                  valueIndicatorColor: Colors.grey,
+                  activeTrackColor: Colors.yellow,
+                  valueIndicatorTextStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
                   ),
                 ),
-              ],
-            ),
+                child: Slider(
+                  min: 0,
+                  max: 1,
+                  divisions: sliderDivisions.value ?? 1,
+                  // activeColor: Colors.lightBlue,
+                  // inactiveColor: Colors.pink,
+                  label: '${(manPercentage.value * 100).toStringAsFixed(0)} %',
+                  value: manPercentage.value,
+                  onChanged:
+                      sliderDivisions.value == null || !sliderEnabled.value
+                          ? null
+                          : (double value) {
+                              manPercentage.value = value;
+                            },
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                      child: Text(
+                    'Maschi: ${((sliderDivisions.value ?? 1) * manPercentage.value).toStringAsFixed(0)}',
+                    // 'Maschi: ${(manPercentage.value * 100).toStringAsFixed(0)} %',
+                    textAlign: TextAlign.center,
+                  )),
+                  Expanded(
+                    child: Text(
+                      'Femmine: ${((1 - manPercentage.value) * (sliderDivisions.value ?? 1)).toStringAsFixed(0)}',
+                      // 'Femmine: ${(100 - manPercentage.value * 100).toStringAsFixed(0)} %',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ],
             const SizedBox(height: 32),
             Center(
               child: ElevatedButton(

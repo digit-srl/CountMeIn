@@ -54,6 +54,7 @@ _$_EventUser _$$_EventUserFromJson(Map<String, dynamic> json) => _$_EventUser(
       privateId: json['privateId'] as String?,
       fromExternalOrganization: json['fromExternalOrganization'] as bool,
       isGroup: json['isGroup'] as bool,
+      isAnonymous: json['isAnonymous'] as bool,
       checkInAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['checkInAt'], const MyDateTimeConverter().fromJson),
       checkOutAt: _$JsonConverterFromJson<Timestamp, DateTime>(
@@ -76,6 +77,7 @@ Map<String, dynamic> _$$_EventUserToJson(_$_EventUser instance) =>
       'privateId': instance.privateId,
       'fromExternalOrganization': instance.fromExternalOrganization,
       'isGroup': instance.isGroup,
+      'isAnonymous': instance.isAnonymous,
       'checkInAt': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.checkInAt, const MyDateTimeConverter().toJson),
       'checkOutAt': _$JsonConverterToJson<Timestamp, DateTime>(

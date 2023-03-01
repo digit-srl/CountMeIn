@@ -90,6 +90,7 @@ class EventUser with _$EventUser {
     String? privateId,
     required bool fromExternalOrganization,
     required bool isGroup,
+    required bool isAnonymous,
     @MyDateTimeConverter() DateTime? checkInAt,
     @MyDateTimeConverter() DateTime? checkOutAt,
     String? groupName,

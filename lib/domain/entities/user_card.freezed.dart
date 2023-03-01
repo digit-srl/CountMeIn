@@ -331,6 +331,7 @@ mixin _$EventUser {
   String? get privateId => throw _privateConstructorUsedError;
   bool get fromExternalOrganization => throw _privateConstructorUsedError;
   bool get isGroup => throw _privateConstructorUsedError;
+  bool get isAnonymous => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get checkInAt => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
@@ -362,6 +363,7 @@ abstract class $EventUserCopyWith<$Res> {
       String? privateId,
       bool fromExternalOrganization,
       bool isGroup,
+      bool isAnonymous,
       @MyDateTimeConverter() DateTime? checkInAt,
       @MyDateTimeConverter() DateTime? checkOutAt,
       String? groupName,
@@ -393,6 +395,7 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
     Object? privateId = freezed,
     Object? fromExternalOrganization = null,
     Object? isGroup = null,
+    Object? isAnonymous = null,
     Object? checkInAt = freezed,
     Object? checkOutAt = freezed,
     Object? groupName = freezed,
@@ -434,6 +437,10 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
       isGroup: null == isGroup
           ? _value.isGroup
           : isGroup // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAnonymous: null == isAnonymous
+          ? _value.isAnonymous
+          : isAnonymous // ignore: cast_nullable_to_non_nullable
               as bool,
       checkInAt: freezed == checkInAt
           ? _value.checkInAt
@@ -487,6 +494,7 @@ abstract class _$$_EventUserCopyWith<$Res> implements $EventUserCopyWith<$Res> {
       String? privateId,
       bool fromExternalOrganization,
       bool isGroup,
+      bool isAnonymous,
       @MyDateTimeConverter() DateTime? checkInAt,
       @MyDateTimeConverter() DateTime? checkOutAt,
       String? groupName,
@@ -516,6 +524,7 @@ class __$$_EventUserCopyWithImpl<$Res>
     Object? privateId = freezed,
     Object? fromExternalOrganization = null,
     Object? isGroup = null,
+    Object? isAnonymous = null,
     Object? checkInAt = freezed,
     Object? checkOutAt = freezed,
     Object? groupName = freezed,
@@ -557,6 +566,10 @@ class __$$_EventUserCopyWithImpl<$Res>
       isGroup: null == isGroup
           ? _value.isGroup
           : isGroup // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAnonymous: null == isAnonymous
+          ? _value.isAnonymous
+          : isAnonymous // ignore: cast_nullable_to_non_nullable
               as bool,
       checkInAt: freezed == checkInAt
           ? _value.checkInAt
@@ -606,6 +619,7 @@ class _$_EventUser implements _EventUser {
       this.privateId,
       required this.fromExternalOrganization,
       required this.isGroup,
+      required this.isAnonymous,
       @MyDateTimeConverter() this.checkInAt,
       @MyDateTimeConverter() this.checkOutAt,
       this.groupName,
@@ -635,6 +649,8 @@ class _$_EventUser implements _EventUser {
   @override
   final bool isGroup;
   @override
+  final bool isAnonymous;
+  @override
   @MyDateTimeConverter()
   final DateTime? checkInAt;
   @override
@@ -655,7 +671,7 @@ class _$_EventUser implements _EventUser {
 
   @override
   String toString() {
-    return 'EventUser(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, isGroup: $isGroup, checkInAt: $checkInAt, checkOutAt: $checkOutAt, groupName: $groupName, averageAge: $averageAge, groupCount: $groupCount, participationCount: $participationCount, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
+    return 'EventUser(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, isGroup: $isGroup, isAnonymous: $isAnonymous, checkInAt: $checkInAt, checkOutAt: $checkOutAt, groupName: $groupName, averageAge: $averageAge, groupCount: $groupCount, participationCount: $participationCount, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
   }
 
   @override
@@ -674,6 +690,8 @@ class _$_EventUser implements _EventUser {
                     other.fromExternalOrganization, fromExternalOrganization) ||
                 other.fromExternalOrganization == fromExternalOrganization) &&
             (identical(other.isGroup, isGroup) || other.isGroup == isGroup) &&
+            (identical(other.isAnonymous, isAnonymous) ||
+                other.isAnonymous == isAnonymous) &&
             (identical(other.checkInAt, checkInAt) ||
                 other.checkInAt == checkInAt) &&
             (identical(other.checkOutAt, checkOutAt) ||
@@ -704,6 +722,7 @@ class _$_EventUser implements _EventUser {
       privateId,
       fromExternalOrganization,
       isGroup,
+      isAnonymous,
       checkInAt,
       checkOutAt,
       groupName,
@@ -737,6 +756,7 @@ abstract class _EventUser implements EventUser {
       final String? privateId,
       required final bool fromExternalOrganization,
       required final bool isGroup,
+      required final bool isAnonymous,
       @MyDateTimeConverter() final DateTime? checkInAt,
       @MyDateTimeConverter() final DateTime? checkOutAt,
       final String? groupName,
@@ -765,6 +785,8 @@ abstract class _EventUser implements EventUser {
   bool get fromExternalOrganization;
   @override
   bool get isGroup;
+  @override
+  bool get isAnonymous;
   @override
   @MyDateTimeConverter()
   DateTime? get checkInAt;

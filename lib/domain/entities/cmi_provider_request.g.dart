@@ -17,6 +17,10 @@ _$_CMIProviderRequest _$$_CMIProviderRequestFromJson(
       name: json['name'] as String,
       releaseWom: json['releaseWom'] as bool,
       pIva: json['pIva'] as String,
+      managers: (json['managers'] as Map<String, dynamic>).map(
+        (k, e) =>
+            MapEntry(k, ProviderManager.fromJson(e as Map<String, dynamic>)),
+      ),
       status:
           const CMIProviderStatusConverter().fromJson(json['status'] as String),
       apiKey: json['apiKey'] as String?,
@@ -37,6 +41,7 @@ Map<String, dynamic> _$$_CMIProviderRequestToJson(
       'name': instance.name,
       'releaseWom': instance.releaseWom,
       'pIva': instance.pIva,
+      'managers': instance.managers,
       'status': const CMIProviderStatusConverter().toJson(instance.status),
       'apiKey': instance.apiKey,
       'aims': instance.aims,

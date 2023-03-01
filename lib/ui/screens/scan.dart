@@ -88,10 +88,8 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
       error = message;
     });
     if (waitingTimer) return;
-    logger.i('ScanScreen set timer');
     waitingTimer = true;
     Future.delayed(messageDuration, () {
-      logger.i('ScanScreen reset info');
       waitingTimer = false;
       setState(() {
         error = null;
@@ -104,10 +102,8 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
       message = m;
     });
     if (waitingTimer) return;
-    logger.i('ScanScreen set timer');
     waitingTimer = true;
     Future.delayed(messageDuration, () {
-      logger.i('ScanScreen reset info');
       waitingTimer = false;
       setState(() {
         message = null;
@@ -202,7 +198,9 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                         if (error == null && message == null)
                           if (lastUser != null)
                             Text(
-                              '${lastUser!.isGroup ? 'GRUPPO ' : ''}AGGIUNTO\n${lastUser!.name} ${lastUser!.surname}\n${lastUser!.cf}',
+                              lastUser!.isAnonymous
+                                  ? 'Utente anonimo'
+                                  : '${lastUser!.isGroup ? 'GRUPPO ' : ''}AGGIUNTO\n${lastUser!.name} ${lastUser!.surname}\n${lastUser!.cf}',
                               textAlign: lastUser != null
                                   ? TextAlign.start
                                   : TextAlign.center,

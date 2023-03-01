@@ -28,6 +28,8 @@ mixin _$CMIProviderRequest {
   String get name => throw _privateConstructorUsedError;
   bool get releaseWom => throw _privateConstructorUsedError;
   String get pIva => throw _privateConstructorUsedError;
+  Map<String, ProviderManager> get managers =>
+      throw _privateConstructorUsedError;
   @CMIProviderStatusConverter()
   CMIProviderStatus get status => throw _privateConstructorUsedError;
   String? get apiKey => throw _privateConstructorUsedError;
@@ -57,6 +59,7 @@ abstract class $CMIProviderRequestCopyWith<$Res> {
       String name,
       bool releaseWom,
       String pIva,
+      Map<String, ProviderManager> managers,
       @CMIProviderStatusConverter() CMIProviderStatus status,
       String? apiKey,
       List<String>? aims,
@@ -85,6 +88,7 @@ class _$CMIProviderRequestCopyWithImpl<$Res, $Val extends CMIProviderRequest>
     Object? name = null,
     Object? releaseWom = null,
     Object? pIva = null,
+    Object? managers = null,
     Object? status = null,
     Object? apiKey = freezed,
     Object? aims = freezed,
@@ -124,6 +128,10 @@ class _$CMIProviderRequestCopyWithImpl<$Res, $Val extends CMIProviderRequest>
           ? _value.pIva
           : pIva // ignore: cast_nullable_to_non_nullable
               as String,
+      managers: null == managers
+          ? _value.managers
+          : managers // ignore: cast_nullable_to_non_nullable
+              as Map<String, ProviderManager>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -165,6 +173,7 @@ abstract class _$$_CMIProviderRequestCopyWith<$Res>
       String name,
       bool releaseWom,
       String pIva,
+      Map<String, ProviderManager> managers,
       @CMIProviderStatusConverter() CMIProviderStatus status,
       String? apiKey,
       List<String>? aims,
@@ -191,6 +200,7 @@ class __$$_CMIProviderRequestCopyWithImpl<$Res>
     Object? name = null,
     Object? releaseWom = null,
     Object? pIva = null,
+    Object? managers = null,
     Object? status = null,
     Object? apiKey = freezed,
     Object? aims = freezed,
@@ -230,6 +240,10 @@ class __$$_CMIProviderRequestCopyWithImpl<$Res>
           ? _value.pIva
           : pIva // ignore: cast_nullable_to_non_nullable
               as String,
+      managers: null == managers
+          ? _value._managers
+          : managers // ignore: cast_nullable_to_non_nullable
+              as Map<String, ProviderManager>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -266,12 +280,14 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
       required this.name,
       required this.releaseWom,
       required this.pIva,
+      required final Map<String, ProviderManager> managers,
       @CMIProviderStatusConverter() required this.status,
       this.apiKey,
       final List<String>? aims,
       this.domainRequirement,
       @MyDateTimeConverter() required this.requestedOn})
-      : _aims = aims;
+      : _managers = managers,
+        _aims = aims;
 
   factory _$_CMIProviderRequest.fromJson(Map<String, dynamic> json) =>
       _$$_CMIProviderRequestFromJson(json);
@@ -292,6 +308,14 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
   final bool releaseWom;
   @override
   final String pIva;
+  final Map<String, ProviderManager> _managers;
+  @override
+  Map<String, ProviderManager> get managers {
+    if (_managers is EqualUnmodifiableMapView) return _managers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_managers);
+  }
+
   @override
   @CMIProviderStatusConverter()
   final CMIProviderStatus status;
@@ -315,7 +339,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
 
   @override
   String toString() {
-    return 'CMIProviderRequest(id: $id, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, adminCF: $adminCF, name: $name, releaseWom: $releaseWom, pIva: $pIva, status: $status, apiKey: $apiKey, aims: $aims, domainRequirement: $domainRequirement, requestedOn: $requestedOn)';
+    return 'CMIProviderRequest(id: $id, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, adminCF: $adminCF, name: $name, releaseWom: $releaseWom, pIva: $pIva, managers: $managers, status: $status, apiKey: $apiKey, aims: $aims, domainRequirement: $domainRequirement, requestedOn: $requestedOn)';
   }
 
   @override
@@ -335,6 +359,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
             (identical(other.releaseWom, releaseWom) ||
                 other.releaseWom == releaseWom) &&
             (identical(other.pIva, pIva) || other.pIva == pIva) &&
+            const DeepCollectionEquality().equals(other._managers, _managers) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.apiKey, apiKey) || other.apiKey == apiKey) &&
             const DeepCollectionEquality().equals(other._aims, _aims) &&
@@ -356,6 +381,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
       name,
       releaseWom,
       pIva,
+      const DeepCollectionEquality().hash(_managers),
       status,
       apiKey,
       const DeepCollectionEquality().hash(_aims),
@@ -387,6 +413,7 @@ abstract class _CMIProviderRequest implements CMIProviderRequest {
           required final String name,
           required final bool releaseWom,
           required final String pIva,
+          required final Map<String, ProviderManager> managers,
           @CMIProviderStatusConverter() required final CMIProviderStatus status,
           final String? apiKey,
           final List<String>? aims,
@@ -413,6 +440,8 @@ abstract class _CMIProviderRequest implements CMIProviderRequest {
   bool get releaseWom;
   @override
   String get pIva;
+  @override
+  Map<String, ProviderManager> get managers;
   @override
   @CMIProviderStatusConverter()
   CMIProviderStatus get status;

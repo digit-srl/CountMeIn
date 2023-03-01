@@ -37,13 +37,14 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     CMIProvider? provider;
-    // if (extraProvider != null) {
-    //   provider = extraProvider!;
-    // } else {
-    provider = ref.watch(singleCMIProviderProvider(providerId)).valueOrNull;
-    // }
+    if (extraProvider != null) {
+      provider = extraProvider!;
+    } else {
+      provider = ref.watch(singleCMIProviderProvider(providerId)).valueOrNull;
+    }
     final platformUserRole = ref.watch(platformUserRoleProvider);
     final userRole = ref.watch(userRoleProvider(providerId));
+    logger.i('provider status: ${provider?.status}');
     logger.i('platformUserRole: $platformUserRole');
     logger.i('userRole: $userRole');
 
@@ -202,7 +203,8 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                 final event = eventsState.asData!.value[index - 1];
                 return CMICard(
                   center: true,
-                  leading: event.isActive ? const CMIChip(text: 'ATTIVO') : null,
+                  leading:
+                      event.isActive ? const CMIChip(text: 'ATTIVO') : null,
                   onTap: () {
                     final path =
                         '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/$providerId/${EventDetailsScreen.routeName}/${event.id}';

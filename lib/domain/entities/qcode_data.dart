@@ -9,10 +9,11 @@ part 'qcode_data.freezed.dart';
 class QrCodeData with _$QrCodeData {
   const factory QrCodeData({
     required String providerId,
-    required String name,
-    required String surname,
-    required String cf,
     required String id,
+    required bool isAnonymous,
+    String? name,
+    String? surname,
+    String? cf,
     String? email,
     String? privateId,
     String? groupId,
@@ -24,6 +25,10 @@ class QrCodeData with _$QrCodeData {
   }) = _QrCodeData;
 
   factory QrCodeData.fromQrCode(String code) {
+    final privateQrCodeData = decodePrivateQrCode(code);
+    if (privateQrCodeData != null) {
+      return privateQrCodeData;
+    }
     final qData = validateCustomQrCode(code);
     if (qData != null) {
       return qData;
@@ -73,7 +78,6 @@ class QrCodeData with _$QrCodeData {
             params.containsKey('gId') &&
             params.containsKey('gC') &&
             params.containsKey('gN')) {
-
           logger.i("this qrcode is a group card");
           return QrCodeData(
             id: userId,
@@ -85,16 +89,15 @@ class QrCodeData with _$QrCodeData {
             groupName: params['gN'],
             groupId: params['gId'],
             groupCount: int.parse(params['gC'] ?? ''),
-            averageAge: int.tryParse(params['aA'] ??''),
-            womanPercentage: double.tryParse(params['wP'] ??''),
-            manPercentage: double.tryParse(params['mP'] ??''),
+            averageAge: int.tryParse(params['aA'] ?? ''),
+            womanPercentage: double.tryParse(params['wP'] ?? ''),
+            manPercentage: double.tryParse(params['mP'] ?? ''),
+            isAnonymous: false,
           );
         } else if (params.containsKey('name') &&
             params.containsKey('surname') &&
             params.containsKey('cf') &&
             params.containsKey('pId')) {
-
-
           logger.i("this qrcode is a simple card");
           return QrCodeData(
             id: userId,
@@ -103,6 +106,7 @@ class QrCodeData with _$QrCodeData {
             cf: params['cf'] as String,
             providerId: params['pId'] as String,
             privateId: params['upid'],
+            isAnonymous: false,
           );
         } else {
           throw const FormatException('Missing params in url');
@@ -115,5 +119,15 @@ class QrCodeData with _$QrCodeData {
 
 extension QrCodeDataX on QrCodeData {
   bool get isExternalOrganization => email != null;
+
   bool get isGroupCard => groupId != null;
+}
+
+@freezed
+class PrivateQrCodeData with _$PrivateQrCodeData {
+  const factory PrivateQrCodeData({
+    required String providerId,
+    required String userId,
+    required String privateUserId,
+  }) = _PrivateQrCodeData;
 }

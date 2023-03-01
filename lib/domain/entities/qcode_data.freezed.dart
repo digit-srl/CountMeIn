@@ -17,10 +17,11 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$QrCodeData {
   String get providerId => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get surname => throw _privateConstructorUsedError;
-  String get cf => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
+  bool get isAnonymous => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get surname => throw _privateConstructorUsedError;
+  String? get cf => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get privateId => throw _privateConstructorUsedError;
   String? get groupId => throw _privateConstructorUsedError;
@@ -43,10 +44,11 @@ abstract class $QrCodeDataCopyWith<$Res> {
   @useResult
   $Res call(
       {String providerId,
-      String name,
-      String surname,
-      String cf,
       String id,
+      bool isAnonymous,
+      String? name,
+      String? surname,
+      String? cf,
       String? email,
       String? privateId,
       String? groupId,
@@ -71,10 +73,11 @@ class _$QrCodeDataCopyWithImpl<$Res, $Val extends QrCodeData>
   @override
   $Res call({
     Object? providerId = null,
-    Object? name = null,
-    Object? surname = null,
-    Object? cf = null,
     Object? id = null,
+    Object? isAnonymous = null,
+    Object? name = freezed,
+    Object? surname = freezed,
+    Object? cf = freezed,
     Object? email = freezed,
     Object? privateId = freezed,
     Object? groupId = freezed,
@@ -89,22 +92,26 @@ class _$QrCodeDataCopyWithImpl<$Res, $Val extends QrCodeData>
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      surname: null == surname
-          ? _value.surname
-          : surname // ignore: cast_nullable_to_non_nullable
-              as String,
-      cf: null == cf
-          ? _value.cf
-          : cf // ignore: cast_nullable_to_non_nullable
-              as String,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      isAnonymous: null == isAnonymous
+          ? _value.isAnonymous
+          : isAnonymous // ignore: cast_nullable_to_non_nullable
+              as bool,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      surname: freezed == surname
+          ? _value.surname
+          : surname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cf: freezed == cf
+          ? _value.cf
+          : cf // ignore: cast_nullable_to_non_nullable
+              as String?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -151,10 +158,11 @@ abstract class _$$_QrCodeDataCopyWith<$Res>
   @useResult
   $Res call(
       {String providerId,
-      String name,
-      String surname,
-      String cf,
       String id,
+      bool isAnonymous,
+      String? name,
+      String? surname,
+      String? cf,
       String? email,
       String? privateId,
       String? groupId,
@@ -177,10 +185,11 @@ class __$$_QrCodeDataCopyWithImpl<$Res>
   @override
   $Res call({
     Object? providerId = null,
-    Object? name = null,
-    Object? surname = null,
-    Object? cf = null,
     Object? id = null,
+    Object? isAnonymous = null,
+    Object? name = freezed,
+    Object? surname = freezed,
+    Object? cf = freezed,
     Object? email = freezed,
     Object? privateId = freezed,
     Object? groupId = freezed,
@@ -195,22 +204,26 @@ class __$$_QrCodeDataCopyWithImpl<$Res>
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      surname: null == surname
-          ? _value.surname
-          : surname // ignore: cast_nullable_to_non_nullable
-              as String,
-      cf: null == cf
-          ? _value.cf
-          : cf // ignore: cast_nullable_to_non_nullable
-              as String,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      isAnonymous: null == isAnonymous
+          ? _value.isAnonymous
+          : isAnonymous // ignore: cast_nullable_to_non_nullable
+              as bool,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      surname: freezed == surname
+          ? _value.surname
+          : surname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cf: freezed == cf
+          ? _value.cf
+          : cf // ignore: cast_nullable_to_non_nullable
+              as String?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -252,10 +265,11 @@ class __$$_QrCodeDataCopyWithImpl<$Res>
 class _$_QrCodeData implements _QrCodeData {
   const _$_QrCodeData(
       {required this.providerId,
-      required this.name,
-      required this.surname,
-      required this.cf,
       required this.id,
+      required this.isAnonymous,
+      this.name,
+      this.surname,
+      this.cf,
       this.email,
       this.privateId,
       this.groupId,
@@ -268,13 +282,15 @@ class _$_QrCodeData implements _QrCodeData {
   @override
   final String providerId;
   @override
-  final String name;
-  @override
-  final String surname;
-  @override
-  final String cf;
-  @override
   final String id;
+  @override
+  final bool isAnonymous;
+  @override
+  final String? name;
+  @override
+  final String? surname;
+  @override
+  final String? cf;
   @override
   final String? email;
   @override
@@ -294,7 +310,7 @@ class _$_QrCodeData implements _QrCodeData {
 
   @override
   String toString() {
-    return 'QrCodeData(providerId: $providerId, name: $name, surname: $surname, cf: $cf, id: $id, email: $email, privateId: $privateId, groupId: $groupId, groupName: $groupName, groupCount: $groupCount, averageAge: $averageAge, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
+    return 'QrCodeData(providerId: $providerId, id: $id, isAnonymous: $isAnonymous, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, groupId: $groupId, groupName: $groupName, groupCount: $groupCount, averageAge: $averageAge, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
   }
 
   @override
@@ -304,10 +320,12 @@ class _$_QrCodeData implements _QrCodeData {
             other is _$_QrCodeData &&
             (identical(other.providerId, providerId) ||
                 other.providerId == providerId) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.isAnonymous, isAnonymous) ||
+                other.isAnonymous == isAnonymous) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.surname, surname) || other.surname == surname) &&
             (identical(other.cf, cf) || other.cf == cf) &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.privateId, privateId) ||
                 other.privateId == privateId) &&
@@ -328,10 +346,11 @@ class _$_QrCodeData implements _QrCodeData {
   int get hashCode => Object.hash(
       runtimeType,
       providerId,
+      id,
+      isAnonymous,
       name,
       surname,
       cf,
-      id,
       email,
       privateId,
       groupId,
@@ -351,10 +370,11 @@ class _$_QrCodeData implements _QrCodeData {
 abstract class _QrCodeData implements QrCodeData {
   const factory _QrCodeData(
       {required final String providerId,
-      required final String name,
-      required final String surname,
-      required final String cf,
       required final String id,
+      required final bool isAnonymous,
+      final String? name,
+      final String? surname,
+      final String? cf,
       final String? email,
       final String? privateId,
       final String? groupId,
@@ -367,13 +387,15 @@ abstract class _QrCodeData implements QrCodeData {
   @override
   String get providerId;
   @override
-  String get name;
-  @override
-  String get surname;
-  @override
-  String get cf;
-  @override
   String get id;
+  @override
+  bool get isAnonymous;
+  @override
+  String? get name;
+  @override
+  String? get surname;
+  @override
+  String? get cf;
   @override
   String? get email;
   @override
@@ -393,5 +415,164 @@ abstract class _QrCodeData implements QrCodeData {
   @override
   @JsonKey(ignore: true)
   _$$_QrCodeDataCopyWith<_$_QrCodeData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$PrivateQrCodeData {
+  String get providerId => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
+  String get privateUserId => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $PrivateQrCodeDataCopyWith<PrivateQrCodeData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PrivateQrCodeDataCopyWith<$Res> {
+  factory $PrivateQrCodeDataCopyWith(
+          PrivateQrCodeData value, $Res Function(PrivateQrCodeData) then) =
+      _$PrivateQrCodeDataCopyWithImpl<$Res, PrivateQrCodeData>;
+  @useResult
+  $Res call({String providerId, String userId, String privateUserId});
+}
+
+/// @nodoc
+class _$PrivateQrCodeDataCopyWithImpl<$Res, $Val extends PrivateQrCodeData>
+    implements $PrivateQrCodeDataCopyWith<$Res> {
+  _$PrivateQrCodeDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? providerId = null,
+    Object? userId = null,
+    Object? privateUserId = null,
+  }) {
+    return _then(_value.copyWith(
+      providerId: null == providerId
+          ? _value.providerId
+          : providerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      privateUserId: null == privateUserId
+          ? _value.privateUserId
+          : privateUserId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_PrivateQrCodeDataCopyWith<$Res>
+    implements $PrivateQrCodeDataCopyWith<$Res> {
+  factory _$$_PrivateQrCodeDataCopyWith(_$_PrivateQrCodeData value,
+          $Res Function(_$_PrivateQrCodeData) then) =
+      __$$_PrivateQrCodeDataCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String providerId, String userId, String privateUserId});
+}
+
+/// @nodoc
+class __$$_PrivateQrCodeDataCopyWithImpl<$Res>
+    extends _$PrivateQrCodeDataCopyWithImpl<$Res, _$_PrivateQrCodeData>
+    implements _$$_PrivateQrCodeDataCopyWith<$Res> {
+  __$$_PrivateQrCodeDataCopyWithImpl(
+      _$_PrivateQrCodeData _value, $Res Function(_$_PrivateQrCodeData) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? providerId = null,
+    Object? userId = null,
+    Object? privateUserId = null,
+  }) {
+    return _then(_$_PrivateQrCodeData(
+      providerId: null == providerId
+          ? _value.providerId
+          : providerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      privateUserId: null == privateUserId
+          ? _value.privateUserId
+          : privateUserId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_PrivateQrCodeData implements _PrivateQrCodeData {
+  const _$_PrivateQrCodeData(
+      {required this.providerId,
+      required this.userId,
+      required this.privateUserId});
+
+  @override
+  final String providerId;
+  @override
+  final String userId;
+  @override
+  final String privateUserId;
+
+  @override
+  String toString() {
+    return 'PrivateQrCodeData(providerId: $providerId, userId: $userId, privateUserId: $privateUserId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PrivateQrCodeData &&
+            (identical(other.providerId, providerId) ||
+                other.providerId == providerId) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.privateUserId, privateUserId) ||
+                other.privateUserId == privateUserId));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, providerId, userId, privateUserId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PrivateQrCodeDataCopyWith<_$_PrivateQrCodeData> get copyWith =>
+      __$$_PrivateQrCodeDataCopyWithImpl<_$_PrivateQrCodeData>(
+          this, _$identity);
+}
+
+abstract class _PrivateQrCodeData implements PrivateQrCodeData {
+  const factory _PrivateQrCodeData(
+      {required final String providerId,
+      required final String userId,
+      required final String privateUserId}) = _$_PrivateQrCodeData;
+
+  @override
+  String get providerId;
+  @override
+  String get userId;
+  @override
+  String get privateUserId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_PrivateQrCodeDataCopyWith<_$_PrivateQrCodeData> get copyWith =>
       throw _privateConstructorUsedError;
 }

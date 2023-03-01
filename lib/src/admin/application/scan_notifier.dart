@@ -7,6 +7,7 @@ import 'package:countmein/domain/entities/user_card.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/ui/screens/scan.dart';
+import 'package:countmein/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -42,16 +43,16 @@ class ScanController {
     try {
       final userQrCode = QrCodeData.fromQrCode(data);
       final isGroupCard = userQrCode.isGroupCard;
+      final ids = EventIds(
+          providerId: provider.id,
+          eventId: event.id,
+          sessionId: event.activeSessionId);
 
       if (userQrCode.providerId == provider.id ||
           (event.acceptPassepartout && userQrCode.providerId == 'countmein')) {
-        if (userWithoutCheckIn.contains(userQrCode.id)) {
-          return;
-        }
-        final ids = EventIds(
-            providerId: provider.id,
-            eventId: event.id,
-            sessionId: event.activeSessionId);
+        // if (userWithoutCheckIn.contains(userQrCode.id)) {
+        //   return;
+        // }
 
         var eventUser = EventUser(
           isGroup: isGroupCard,
@@ -69,13 +70,12 @@ class ScanController {
           averageAge: userQrCode.averageAge,
           manPercentage: userQrCode.manPercentage,
           womanPercentage: userQrCode.womanPercentage,
+          isAnonymous: userQrCode.isAnonymous,
         );
 
         if (!alreadyScannedUser.contains(eventUser.id)) {
           logger.i('onProcessing new user id on local list');
           processing = true;
-
-
 
           final isSingleAccessType = event.accessType == EventAccessType.single;
 
@@ -100,7 +100,7 @@ class ScanController {
               }
             } else {
               logger.i('processScan2: checkOut user doesnt exist');
-              userWithoutCheckIn.add(eventUser.id);
+              //userWithoutCheckIn.add(eventUser.id);
               processing = false;
               final message = eventUser.isGroup
                   ? '${eventUser.groupName ?? 'Il gruppo'} non ha effettuato il check in!'
@@ -138,7 +138,9 @@ class ScanController {
             }
 
             final batch = FirebaseFirestore.instance.batch();
-            batch.set(userSubEventDocRef, eventUser.toJson());
+            final json = eventUser.toJson();
+            json.removeWhere((key, value) => value == null);
+            batch.set(userSubEventDocRef, json);
             if (!eventUser.isGroup && eventUser.privateId != null) {
               logger.i('processScan2: checkin user has private id');
               final privateUserSubEventDocRef = Cloud.sessionDoc(ids)
@@ -159,12 +161,11 @@ class ScanController {
             final globalUserDoc = await userRef.get();
             if (!globalUserDoc.exists) {
               logger.i('processScan2: checkin global user doesnt exist');
-              final u = eventUser.toJson();
-              u.remove('checkOutAt');
-              u.remove('checkInAt');
-              u.remove('privateId');
-              u.addAll({'participationCount': 1});
-              userRef.set(u, SetOptions(merge: true));
+              json.remove('checkOutAt');
+              json.remove('checkInAt');
+              json.remove('privateId');
+              json.addAll({'participationCount': 1});
+              userRef.set(json, SetOptions(merge: true));
               if (!eventUser.isGroup && eventUser.privateId != null) {
                 logger.i('processScan2: checkin global user has privateId');
                 Cloud.eventDoc(provider.id, event.id)
@@ -191,16 +192,12 @@ class ScanController {
           const message = 'Utente già scansionato';
           logger.i(message);
           onMessage?.call(null, message);
-          // showToast(message,
-          //     duration: const Duration(milliseconds: 250),
-          //     position: ToastPosition.bottom);
         }
       } else {
         const message =
             'Il provider del tesserino non è valido per questo evento.';
         logger.i(message);
         onMessage?.call(null, message);
-        // showToast(message, position: ToastPosition.bottom);
       }
     } catch (ex, st) {
       logger.e(ex);
@@ -209,7 +206,6 @@ class ScanController {
       const message = 'QR-Code non valido';
       logger.i(message);
       onError?.call(null, message);
-      // showToast(message, position: ToastPosition.bottom);
     }
   }
 }

@@ -114,9 +114,42 @@ QrCodeData? validateCustomQrCode(String qrCode) {
       email: email,
       cf: cf,
       id: '${providerId}_$id',
+      isAnonymous: false,
     );
   }
   return null;
+}
+
+QrCodeData? decodePrivateQrCode(String code) {
+  try {
+    const regex = r"^cmi://(.*)/(.*)/(.*)$";
+    final regexp = RegExp(regex);
+
+    if (regexp.hasMatch(code)) {
+      final match = regexp.firstMatch(code);
+      final matchedText = match?.group(0);
+      logger.i(matchedText);
+      logger.i('1: ${match?.group(1)}');
+      logger.i('2: ${match?.group(2)}');
+      logger.i('3: ${match?.group(3)}');
+
+      final providerId = match?.group(1);
+      final userId = match?.group(2);
+      final privateUserId = match?.group(3);
+      if (providerId == null || privateUserId == null || userId == null) {
+        throw Exception();
+      }
+      return QrCodeData(
+          providerId: providerId,
+          id: userId,
+          privateId: privateUserId,
+          isAnonymous: true);
+    }
+    return null;
+  } catch (ex) {
+    logger.e(ex);
+    return null;
+  }
 }
 
 bool isWebDevice = kIsWeb;
@@ -129,7 +162,7 @@ bool isLargeScreen(BuildContext context) {
   }
 }
 
-showCustomToast(String message){
+showCustomToast(String message) {
   showToast(
     message,
     position: ToastPosition.bottom,

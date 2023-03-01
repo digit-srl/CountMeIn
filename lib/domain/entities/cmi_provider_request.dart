@@ -18,6 +18,7 @@ class CMIProviderRequest with _$CMIProviderRequest {
     required String name,
     required bool releaseWom,
     required String pIva,
+    required Map<String, ProviderManager> managers,
     @CMIProviderStatusConverter() required CMIProviderStatus status,
     String? apiKey,
     List<String>? aims,
