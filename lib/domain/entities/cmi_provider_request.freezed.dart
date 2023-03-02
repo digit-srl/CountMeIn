@@ -26,6 +26,7 @@ mixin _$CMIProviderRequest {
   String get adminEmail => throw _privateConstructorUsedError;
   String get adminCF => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String get aim => throw _privateConstructorUsedError;
   bool get releaseWom => throw _privateConstructorUsedError;
   String get pIva => throw _privateConstructorUsedError;
   Map<String, ProviderManager> get managers =>
@@ -57,6 +58,7 @@ abstract class $CMIProviderRequestCopyWith<$Res> {
       String adminEmail,
       String adminCF,
       String name,
+      String aim,
       bool releaseWom,
       String pIva,
       Map<String, ProviderManager> managers,
@@ -86,6 +88,7 @@ class _$CMIProviderRequestCopyWithImpl<$Res, $Val extends CMIProviderRequest>
     Object? adminEmail = null,
     Object? adminCF = null,
     Object? name = null,
+    Object? aim = null,
     Object? releaseWom = null,
     Object? pIva = null,
     Object? managers = null,
@@ -119,6 +122,10 @@ class _$CMIProviderRequestCopyWithImpl<$Res, $Val extends CMIProviderRequest>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      aim: null == aim
+          ? _value.aim
+          : aim // ignore: cast_nullable_to_non_nullable
               as String,
       releaseWom: null == releaseWom
           ? _value.releaseWom
@@ -171,6 +178,7 @@ abstract class _$$_CMIProviderRequestCopyWith<$Res>
       String adminEmail,
       String adminCF,
       String name,
+      String aim,
       bool releaseWom,
       String pIva,
       Map<String, ProviderManager> managers,
@@ -198,6 +206,7 @@ class __$$_CMIProviderRequestCopyWithImpl<$Res>
     Object? adminEmail = null,
     Object? adminCF = null,
     Object? name = null,
+    Object? aim = null,
     Object? releaseWom = null,
     Object? pIva = null,
     Object? managers = null,
@@ -231,6 +240,10 @@ class __$$_CMIProviderRequestCopyWithImpl<$Res>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      aim: null == aim
+          ? _value.aim
+          : aim // ignore: cast_nullable_to_non_nullable
               as String,
       releaseWom: null == releaseWom
           ? _value.releaseWom
@@ -278,6 +291,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
       required this.adminEmail,
       required this.adminCF,
       required this.name,
+      required this.aim,
       required this.releaseWom,
       required this.pIva,
       required final Map<String, ProviderManager> managers,
@@ -304,6 +318,8 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
   final String adminCF;
   @override
   final String name;
+  @override
+  final String aim;
   @override
   final bool releaseWom;
   @override
@@ -339,7 +355,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
 
   @override
   String toString() {
-    return 'CMIProviderRequest(id: $id, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, adminCF: $adminCF, name: $name, releaseWom: $releaseWom, pIva: $pIva, managers: $managers, status: $status, apiKey: $apiKey, aims: $aims, domainRequirement: $domainRequirement, requestedOn: $requestedOn)';
+    return 'CMIProviderRequest(id: $id, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, adminCF: $adminCF, name: $name, aim: $aim, releaseWom: $releaseWom, pIva: $pIva, managers: $managers, status: $status, apiKey: $apiKey, aims: $aims, domainRequirement: $domainRequirement, requestedOn: $requestedOn)';
   }
 
   @override
@@ -356,6 +372,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
                 other.adminEmail == adminEmail) &&
             (identical(other.adminCF, adminCF) || other.adminCF == adminCF) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.aim, aim) || other.aim == aim) &&
             (identical(other.releaseWom, releaseWom) ||
                 other.releaseWom == releaseWom) &&
             (identical(other.pIva, pIva) || other.pIva == pIva) &&
@@ -379,6 +396,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
       adminEmail,
       adminCF,
       name,
+      aim,
       releaseWom,
       pIva,
       const DeepCollectionEquality().hash(_managers),
@@ -411,6 +429,7 @@ abstract class _CMIProviderRequest implements CMIProviderRequest {
           required final String adminEmail,
           required final String adminCF,
           required final String name,
+          required final String aim,
           required final bool releaseWom,
           required final String pIva,
           required final Map<String, ProviderManager> managers,
@@ -436,6 +455,8 @@ abstract class _CMIProviderRequest implements CMIProviderRequest {
   String get adminCF;
   @override
   String get name;
+  @override
+  String get aim;
   @override
   bool get releaseWom;
   @override

@@ -297,7 +297,9 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
         apiKey: apiKey,
         pIva: pIva,
         aims: instrument?.enabledAims.toList() ?? <String>[],
-        status: CMIProviderStatus.pending, managers: {},
+        status: CMIProviderStatus.pending,
+        managers: {},
+        aim: 'P',
       );
 
       setState(() {

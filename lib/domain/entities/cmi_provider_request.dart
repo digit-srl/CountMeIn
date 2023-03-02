@@ -16,6 +16,7 @@ class CMIProviderRequest with _$CMIProviderRequest {
     required String adminEmail,
     required String adminCF,
     required String name,
+    required String aim,
     required bool releaseWom,
     required String pIva,
     required Map<String, ProviderManager> managers,

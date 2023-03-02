@@ -15,6 +15,7 @@ _$_CMIProviderRequest _$$_CMIProviderRequestFromJson(
       adminEmail: json['adminEmail'] as String,
       adminCF: json['adminCF'] as String,
       name: json['name'] as String,
+      aim: json['aim'] as String,
       releaseWom: json['releaseWom'] as bool,
       pIva: json['pIva'] as String,
       managers: (json['managers'] as Map<String, dynamic>).map(
@@ -39,6 +40,7 @@ Map<String, dynamic> _$$_CMIProviderRequestToJson(
       'adminEmail': instance.adminEmail,
       'adminCF': instance.adminCF,
       'name': instance.name,
+      'aim': instance.aim,
       'releaseWom': instance.releaseWom,
       'pIva': instance.pIva,
       'managers': instance.managers,
