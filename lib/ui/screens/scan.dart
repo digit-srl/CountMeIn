@@ -84,30 +84,26 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
   bool waitingTimer = false;
 
   onError(EventUser? user, String message) {
+    if (waitingTimer) return;
     setState(() {
       error = message;
     });
-    if (waitingTimer) return;
     waitingTimer = true;
     Future.delayed(messageDuration, () {
       waitingTimer = false;
-      setState(() {
-        error = null;
-      });
+      reset();
     });
   }
 
   onMessage(EventUser? user, String m) {
+    if (waitingTimer) return;
     setState(() {
       message = m;
     });
-    if (waitingTimer) return;
     waitingTimer = true;
     Future.delayed(messageDuration, () {
       waitingTimer = false;
-      setState(() {
-        message = null;
-      });
+      reset();
     });
   }
 
@@ -118,6 +114,8 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
     setState(() {
       result = barcode;
       lastUser = user;
+      error = null;
+      message = null;
     });
     showToast('${user.name} ${user.surname} aggiunto al database',
         duration: const Duration(milliseconds: 250),
@@ -129,10 +127,15 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
     Future.delayed(messageDuration, () {
       logger.i('ScanScreen reset info');
       waitingTimer = false;
-      setState(() {
-        result = null;
-        lastUser = null;
-      });
+      reset();
+    });
+  }
+
+  reset() {
+    setState(() {
+      result = null;
+      lastUser = null;
+      message = null;
     });
   }
 
@@ -191,7 +194,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        if (kDebugMode && result != null)
+                        if (!kDebugMode && result != null)
                           Text(
                               'Barcode Type: ${describeEnum(result!.format)}  Data: ${result!.rawValue}'),
                         const SizedBox(height: 8),
@@ -199,7 +202,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                           if (lastUser != null)
                             Text(
                               lastUser!.isAnonymous
-                                  ? 'Utente anonimo'
+                                  ? 'AGGIUNTO\nUtente anonimo'
                                   : '${lastUser!.isGroup ? 'GRUPPO ' : ''}AGGIUNTO\n${lastUser!.name} ${lastUser!.surname}\n${lastUser!.cf}',
                               textAlign: lastUser != null
                                   ? TextAlign.start
