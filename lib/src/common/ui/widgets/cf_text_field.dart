@@ -19,7 +19,7 @@ class CFTextField extends StatelessWidget {
         UpperCaseTextFormatter()
       ],
       textCapitalization: TextCapitalization.characters,
-      validator: CFValidator(),
+      validator: cfMultiValidator,
     );
   }
 }

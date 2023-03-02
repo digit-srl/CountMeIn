@@ -188,7 +188,7 @@ class _State extends ConsumerState<UserFormScreen> {
                           hintText: 'Codice Fiscale',
                           inputFormatters: [UpperCaseTextFormatter()],
                           textCapitalization: TextCapitalization.characters,
-                          validator: CFValidator(),
+                          validator: cfMultiValidator,
                         ),
                       ),
                       TextButton(

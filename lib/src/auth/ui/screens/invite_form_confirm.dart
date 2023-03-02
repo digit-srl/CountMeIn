@@ -93,7 +93,7 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
                                 MUTextField(
                                   controller: adminCfController,
                                   labelText: 'C.F.',
-                                  validator: CFValidator(),
+                                  validator: cfMultiValidator,
                                 ),
                                 const SizedBox(height: 32),
                                 Center(

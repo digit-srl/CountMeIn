@@ -13,9 +13,34 @@ class MyEmailValidator extends EmailValidator{
    return value!= null && value.isNotEmpty && super.isValid(value);
   }
 }
+class CFLengthValidator extends TextFieldValidator {
+  CFLengthValidator(
+      {String errorText = 'Il codice fiscale è composto da 16 caratteri'})
+      : super(errorText);
+
+  @override
+  bool get ignoreEmptyValues => false;
+
+  @override
+  bool isValid(String? value) {
+    if (value == null) return false;
+    if(value.length == 16){
+      return true;
+    }
+    return false;
+/*
+    if (value.toUpperCase() == 'NA') {
+      return true;
+    } else if (value.length == 16) {
+      return true;
+    }
+    return false;*/
+  }
+}
+
 class CFValidator extends TextFieldValidator {
   CFValidator(
-      {String errorText = 'Il codice fiscale è composto da 16 caratteri'})
+      {String errorText = 'Il codice fiscale non è valido'})
       : super(errorText);
 
   @override
@@ -37,6 +62,11 @@ class CFValidator extends TextFieldValidator {
     return false;*/
   }
 }
+
+final cfMultiValidator = MultiValidator([
+  CFLengthValidator(),
+  CFValidator(),
+  ]);
 
 final nameSurnameValidator = MultiValidator([
   RequiredValidator(errorText: 'Questo campo è obbligatorio'),

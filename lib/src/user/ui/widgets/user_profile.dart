@@ -246,6 +246,7 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
               'Tesserino di gruppo',
               style: Theme.of(context).textTheme.headline4,
             ),
+            Text('Ricorda che il tesserino di gruppo è valido solo se accompagnato dal tuo tesserino personale!'),
             const SizedBox(height: 32),
             CMITextField(
               controller: groupNameController,
