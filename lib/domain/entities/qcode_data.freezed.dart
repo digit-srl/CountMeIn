@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$QrCodeData {
   String get providerId => throw _privateConstructorUsedError;
-  String get id => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
   bool get isAnonymous => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get surname => throw _privateConstructorUsedError;
@@ -44,7 +44,7 @@ abstract class $QrCodeDataCopyWith<$Res> {
   @useResult
   $Res call(
       {String providerId,
-      String id,
+      String userId,
       bool isAnonymous,
       String? name,
       String? surname,
@@ -73,7 +73,7 @@ class _$QrCodeDataCopyWithImpl<$Res, $Val extends QrCodeData>
   @override
   $Res call({
     Object? providerId = null,
-    Object? id = null,
+    Object? userId = null,
     Object? isAnonymous = null,
     Object? name = freezed,
     Object? surname = freezed,
@@ -92,9 +92,9 @@ class _$QrCodeDataCopyWithImpl<$Res, $Val extends QrCodeData>
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String,
       isAnonymous: null == isAnonymous
           ? _value.isAnonymous
@@ -158,7 +158,7 @@ abstract class _$$_QrCodeDataCopyWith<$Res>
   @useResult
   $Res call(
       {String providerId,
-      String id,
+      String userId,
       bool isAnonymous,
       String? name,
       String? surname,
@@ -185,7 +185,7 @@ class __$$_QrCodeDataCopyWithImpl<$Res>
   @override
   $Res call({
     Object? providerId = null,
-    Object? id = null,
+    Object? userId = null,
     Object? isAnonymous = null,
     Object? name = freezed,
     Object? surname = freezed,
@@ -204,9 +204,9 @@ class __$$_QrCodeDataCopyWithImpl<$Res>
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String,
       isAnonymous: null == isAnonymous
           ? _value.isAnonymous
@@ -265,7 +265,7 @@ class __$$_QrCodeDataCopyWithImpl<$Res>
 class _$_QrCodeData implements _QrCodeData {
   const _$_QrCodeData(
       {required this.providerId,
-      required this.id,
+      required this.userId,
       required this.isAnonymous,
       this.name,
       this.surname,
@@ -282,7 +282,7 @@ class _$_QrCodeData implements _QrCodeData {
   @override
   final String providerId;
   @override
-  final String id;
+  final String userId;
   @override
   final bool isAnonymous;
   @override
@@ -310,7 +310,7 @@ class _$_QrCodeData implements _QrCodeData {
 
   @override
   String toString() {
-    return 'QrCodeData(providerId: $providerId, id: $id, isAnonymous: $isAnonymous, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, groupId: $groupId, groupName: $groupName, groupCount: $groupCount, averageAge: $averageAge, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
+    return 'QrCodeData(providerId: $providerId, userId: $userId, isAnonymous: $isAnonymous, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, groupId: $groupId, groupName: $groupName, groupCount: $groupCount, averageAge: $averageAge, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
   }
 
   @override
@@ -320,7 +320,7 @@ class _$_QrCodeData implements _QrCodeData {
             other is _$_QrCodeData &&
             (identical(other.providerId, providerId) ||
                 other.providerId == providerId) &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.isAnonymous, isAnonymous) ||
                 other.isAnonymous == isAnonymous) &&
             (identical(other.name, name) || other.name == name) &&
@@ -346,7 +346,7 @@ class _$_QrCodeData implements _QrCodeData {
   int get hashCode => Object.hash(
       runtimeType,
       providerId,
-      id,
+      userId,
       isAnonymous,
       name,
       surname,
@@ -370,7 +370,7 @@ class _$_QrCodeData implements _QrCodeData {
 abstract class _QrCodeData implements QrCodeData {
   const factory _QrCodeData(
       {required final String providerId,
-      required final String id,
+      required final String userId,
       required final bool isAnonymous,
       final String? name,
       final String? surname,
@@ -387,7 +387,7 @@ abstract class _QrCodeData implements QrCodeData {
   @override
   String get providerId;
   @override
-  String get id;
+  String get userId;
   @override
   bool get isAnonymous;
   @override

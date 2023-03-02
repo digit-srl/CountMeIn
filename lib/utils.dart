@@ -113,7 +113,7 @@ QrCodeData? validateCustomQrCode(String qrCode) {
       surname: surname,
       email: email,
       cf: cf,
-      id: '${providerId}_$id',
+      userId: '${providerId}_$id',
       isAnonymous: false,
     );
   }
@@ -141,7 +141,7 @@ QrCodeData? decodePrivateQrCode(String code) {
       }
       return QrCodeData(
           providerId: providerId,
-          id: userId,
+          userId: userId,
           privateId: privateUserId,
           isAnonymous: true);
     }

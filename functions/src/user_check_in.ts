@@ -14,17 +14,17 @@ import {
 exports.onPrivateSessionUserCheckIn = functions
   .region("europe-west3")
   .firestore.document(
-    "providers/{providerId}/events/{eventId}/sessions/{sessionId}/privateUsers/{userId}"
+    "providers/{providerId}/events/{eventId}/sessions/{sessionId}/privateUsers/{userDocId}"
   )
   .onWrite(async (snap, context) => {
     try {
       //const providerId = context.params.providerId;
-      const userId = context.params.userId;
+      const userDocId = context.params.userDocId;
 
       //utente cancellato
       if (!snap.after.exists) {
         console.log(
-          "onPrivateUserCheckIn: utente rimosso da " + "eventId: " + userId
+          "onPrivateUserCheckIn: utente rimosso da " + "eventId: " + userDocId
         );
         return;
       }
@@ -107,14 +107,14 @@ exports.onPrivateSessionUserCheckIn = functions
 export const onSessionUserCheckIn = functions
   .region("europe-west3")
   .firestore.document(
-    "providers/{providerId}/events/{eventId}/sessions/{sessionId}/users/{userId}"
+    "providers/{providerId}/events/{eventId}/sessions/{sessionId}/users/{userDocId}"
   )
   .onWrite(async (snap, context) => {
     try {
       const eventId = context.params.eventId;
       const sessionId = context.params.sessionId;
       const providerId = context.params.providerId;
-      const userId = context.params.userId;
+      const userDocId = context.params.userDocId;
       const eventRef = snap.after.ref.parent.parent;
 
       console.log(
@@ -123,12 +123,14 @@ export const onSessionUserCheckIn = functions
           " eventId: " +
           eventId +
           " userId: " +
-          userId
+          userDocId
       );
 
       //utente cancellato
       if (!snap.after.exists) {
-        console.log("onUserCheckIn: utente rimosso da " + "eventId: " + userId);
+        console.log(
+          "onUserCheckIn: utente rimosso da " + "eventId: " + userDocId
+        );
 
         const previousUser: FirebaseFirestore.DocumentData | undefined =
           snap.before.data();
@@ -223,7 +225,7 @@ export const onSessionUserCheckIn = functions
 
       if (womCount === undefined || womCount === null || womCount === 0) {
         console.log(
-          "onUserCheckIn: this event not release wom to user : " + userId
+          "onUserCheckIn: this event not release wom to user : " + userDocId
         );
         return;
       }
@@ -269,7 +271,7 @@ export const onSessionUserCheckIn = functions
 
       if (!fromExternalOrganization && userData == null) {
         console.log("onUserCheckIn: tesserino da una organizzazione interna ");
-        let ref = userDocRef(providerId, userId);
+        let ref = userDocRef(providerId, user.id);
         const userDoc: FirebaseFirestore.DocumentData = await ref.get();
 
         userData = userDoc.data();

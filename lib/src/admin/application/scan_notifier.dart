@@ -54,9 +54,14 @@ class ScanController {
         //   return;
         // }
 
+        if (userQrCode.isAnonymous && userQrCode.privateId == null) {
+          onError?.call(null, 'Utente anonimo deve contenere il privateId');
+          return;
+        }
+
         var eventUser = EventUser(
           isGroup: isGroupCard,
-          id: isGroupCard ? userQrCode.groupId! : userQrCode.id,
+          id: isGroupCard ? userQrCode.groupId! : userQrCode.userId,
           name: userQrCode.name,
           surname: userQrCode.surname,
           email: userQrCode.isExternalOrganization
@@ -73,19 +78,19 @@ class ScanController {
           isAnonymous: userQrCode.isAnonymous,
         );
 
-        if (!alreadyScannedUser.contains(eventUser.id)) {
+        if (!alreadyScannedUser.contains(eventUser.isAnonymous ? eventUser.privateId! : eventUser.id)) {
           logger.i('onProcessing new user id on local list');
           processing = true;
 
           final isSingleAccessType = event.accessType == EventAccessType.single;
 
-          final userSubEventDocRef =
-              Cloud.sessionDoc(ids).collection('users').doc(eventUser.id);
-
           logger.i('get user ${eventUser.id} from ${event.activeSessionId}');
+          final userSubEventDocRef = Cloud.sessionDoc(ids)
+              .collection('users')
+              .doc(eventUser.isAnonymous ? eventUser.privateId : eventUser.id);
           final userSubEventDoc = await userSubEventDocRef.get();
-          logger.i('get user ${eventUser.id} complete');
           final userSubEventData = userSubEventDoc.data() ?? {};
+          logger.i('get user ${eventUser.id} complete');
 
           //Check out
           if (!isSingleAccessType && scanMode == ScanMode.checkOut) {
@@ -104,10 +109,9 @@ class ScanController {
               processing = false;
               final message = eventUser.isGroup
                   ? '${eventUser.groupName ?? 'Il gruppo'} non ha effettuato il check in!'
-                  : '${eventUser.name} ${eventUser.surname} non ha effettuato il check in!';
-              // showToast(message,
-              //     duration: const Duration(seconds: 1),
-              //     position: ToastPosition.bottom);
+                  : eventUser.isAnonymous
+                      ? 'L\'utente anonimo non ha effettuato il check in!'
+                      : '${eventUser.name} ${eventUser.surname} non ha effettuato il check in!';
               onError?.call(eventUser, message);
               return;
             }
@@ -121,7 +125,7 @@ class ScanController {
             if (eventUser.isGroup) {
               final groupLeaderDoc = await Cloud.sessionDoc(ids)
                   .collection('users')
-                  .doc(userQrCode.id)
+                  .doc(userQrCode.userId)
                   .get();
               if (!groupLeaderDoc.exists) {
                 processing = false;
@@ -152,20 +156,18 @@ class ScanController {
             //userSubEventDocRef.set(eventUser.toJson());
             onUpdate?.call(eventUser);
 
-            final userRef = Cloud.eventUsersCollection(
-              EventIds(
-                providerId: provider.id,
-                eventId: event.id,
-              ),
-            ).doc(eventUser.id);
-            final globalUserDoc = await userRef.get();
+            final eventUsersCollectionRef = Cloud.eventUsersCollection(EventIds(
+              providerId: provider.id,
+              eventId: event.id,
+            )).doc(eventUser.isAnonymous ? eventUser.privateId : eventUser.id);
+            final globalUserDoc = await eventUsersCollectionRef.get();
             if (!globalUserDoc.exists) {
               logger.i('processScan2: checkin global user doesnt exist');
               json.remove('checkOutAt');
               json.remove('checkInAt');
               json.remove('privateId');
               json.addAll({'participationCount': 1});
-              userRef.set(json, SetOptions(merge: true));
+              eventUsersCollectionRef.set(json, SetOptions(merge: true));
               if (!eventUser.isGroup && eventUser.privateId != null) {
                 logger.i('processScan2: checkin global user has privateId');
                 Cloud.eventDoc(provider.id, event.id)
@@ -182,11 +184,13 @@ class ScanController {
                 eventId: event.id,
               ),
             )
-                .doc(eventUser.id)
+                .doc(eventUser.isAnonymous ? eventUser.privateId : eventUser.id)
                 .update({'participationCount': FieldValue.increment(1)});
+            const message = 'Utente già presente nel db';
+            onMessage?.call(null, message);
           }
 
-          alreadyScannedUser.add(eventUser.id);
+          alreadyScannedUser.add(eventUser.isAnonymous ? eventUser.privateId! : eventUser.id);
           processing = false;
         } else {
           const message = 'Utente già scansionato';

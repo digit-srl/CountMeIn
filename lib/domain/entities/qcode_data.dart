@@ -9,7 +9,7 @@ part 'qcode_data.freezed.dart';
 class QrCodeData with _$QrCodeData {
   const factory QrCodeData({
     required String providerId,
-    required String id,
+    required String userId,
     required bool isAnonymous,
     String? name,
     String? surname,
@@ -80,7 +80,7 @@ class QrCodeData with _$QrCodeData {
             params.containsKey('gN')) {
           logger.i("this qrcode is a group card");
           return QrCodeData(
-            id: userId,
+            userId: userId,
             name: params['name'] as String,
             surname: params['surname'] as String,
             cf: params['cf'] as String,
@@ -100,7 +100,7 @@ class QrCodeData with _$QrCodeData {
             params.containsKey('pId')) {
           logger.i("this qrcode is a simple card");
           return QrCodeData(
-            id: userId,
+            userId: userId,
             name: params['name'] as String,
             surname: params['surname'] as String,
             cf: params['cf'] as String,
