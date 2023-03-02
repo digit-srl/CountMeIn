@@ -107,7 +107,7 @@ export async function drawUserCard(
   const serraturaWidth = serraturaHeight * serraturaRatio;
 
   const centerPrivateQrCodeY =
-    privateQrCodeY + privateQrCodeSize / 2 - serraturaHeight / 2;
+    privateQrCodeY + privateQrCodeSize / 2 - serraturaHeight / 2 - 4;
   //Draw white box
   ctx.fillStyle = "white";
   ctx.fillRect(
