@@ -4,6 +4,7 @@ import 'package:countmein/domain/entities/user_card.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/users_stream.dart';
+import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/admin/ui/widgets/gender_card.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
@@ -68,6 +69,9 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
     final genderCount = ids.sessionId == null
         ? eventState.valueOrNull?.genderCount
         : subEvent?.genderCount;
+    final eventOrSessionClosed = ids.sessionId == null
+        ? eventState.valueOrNull?.isClosed
+        : eventState.valueOrNull?.activeSessionId != ids.sessionId;
     return Scaffold(
       appBar: const AdminAppBar(
         title: 'Iscritti',
@@ -75,7 +79,10 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          if (genderCount != null) GenderCard(genderCount: genderCount),
+          if ((eventOrSessionClosed ?? false) &&
+              genderCount != null &&
+              genderCount.total > 3)
+            GenderCard(genderCount: genderCount),
           const SizedBox(height: 8),
           Text(
             'Utenti',
@@ -116,7 +123,6 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                                             ? user.id
                                             : user.fullName,
                                   ),
-
                                   if (user.isGroup)
                                     Padding(
                                       padding:
@@ -140,7 +146,6 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                                         ),
                                       ),
                                     ),
-
                                 ],
                               ),
                               subtitle: user.isGroup
@@ -180,7 +185,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                                         color: Colors.red,
                                       ),
                                     ),
-                                  if(user.participationCount != null)
+                                  if (user.participationCount != null)
                                     Text('Presenze ${user.participationCount}'),
                                 ],
                               ),
@@ -326,47 +331,3 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
     }
   }
 }
-
-/*class _Badge extends StatelessWidget {
-  final String svgAsset;
-  final double size;
-  final Color borderColor;
-
-  const _Badge(
-    this.svgAsset, {
-    Key? key,
-    required this.size,
-    required this.borderColor,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: PieChart.defaultDuration,
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: borderColor,
-          width: 2,
-        ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.black.withOpacity(.5),
-            offset: const Offset(3, 3),
-            blurRadius: 3,
-          ),
-        ],
-      ),
-      padding: EdgeInsets.all(size * .15),
-      child: Center(
-        child: SvgPicture.asset(
-          svgAsset,
-          fit: BoxFit.contain,
-        ),
-      ),
-    );
-  }
-}*/

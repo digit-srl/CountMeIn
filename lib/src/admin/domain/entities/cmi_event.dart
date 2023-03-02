@@ -125,7 +125,12 @@ class CMIEvent with _$CMIEvent {
 
 extension CMIEventX on CMIEvent {
   bool get isActive => status == EventStatus.live;
+
+  bool get isClosed =>
+      status == EventStatus.closed || status == EventStatus.archived;
+
   bool get isPeriodic => type == EventType.periodic;
+
   bool get isManual => type == EventType.manual;
 }
 
@@ -155,6 +160,10 @@ class GenderCount with _$GenderCount {
 
   factory GenderCount.fromJson(Map<String, Object?> json) =>
       _$GenderCountFromJson(json);
+}
+
+extension GenderCountX on GenderCount {
+  int get total => male + female + notBinary + notAvailable;
 }
 
 @freezed
