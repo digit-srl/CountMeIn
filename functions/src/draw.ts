@@ -97,7 +97,7 @@ export async function drawUserCard(
   ctx.drawImage(
     spyImg,
     middleLogoX,
-    privateQrCodeY - spyImgHeight,
+    privateQrCodeY - spyImgHeight - 8,
     spyImgWidth,
     spyImgHeight
   );
@@ -107,7 +107,7 @@ export async function drawUserCard(
   const serraturaWidth = serraturaHeight * serraturaRatio;
 
   const centerPrivateQrCodeY =
-    privateQrCodeY + privateQrCodeSize / 2 - serraturaHeight / 2 - 4;
+    privateQrCodeY + privateQrCodeSize / 2 - serraturaHeight / 2;
   //Draw white box
   ctx.fillStyle = "white";
   ctx.fillRect(
