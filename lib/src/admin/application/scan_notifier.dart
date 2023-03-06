@@ -48,8 +48,18 @@ class ScanController {
           eventId: event.id,
           sessionId: event.activeSessionId);
 
-      if (userQrCode.providerId == provider.id ||
-          (event.acceptPassepartout && userQrCode.providerId == 'countmein')) {
+      final passpartoutAndMineCondition =
+          event.acceptedCardType == AcceptedCardType.passpartoutAndMine &&
+              (userQrCode.providerId == provider.id ||
+                  (event.acceptPassepartout &&
+                      userQrCode.providerId == 'countmein'));
+
+      final onlyMineCondition = event.acceptedCardType == AcceptedCardType.mine && userQrCode.providerId == provider.id;
+
+      final allUserCardCondition = event.acceptedCardType == AcceptedCardType.all;
+
+
+      if (allUserCardCondition || passpartoutAndMineCondition || onlyMineCondition) {
         // if (userWithoutCheckIn.contains(userQrCode.id)) {
         //   return;
         // }
@@ -201,8 +211,9 @@ class ScanController {
           onMessage?.call(null, message);
         }
       } else {
-        const message =
-            'Il provider del tesserino non è valido per questo evento.';
+        final message =
+            'Tesserino non è valido per questo evento.\n'
+            'L\'eveno accetta tesserini: ${event.acceptedCardType.text}';
         logger.i(message);
         onMessage?.call(null, message);
       }

@@ -27,6 +27,10 @@ _$_CMIEvent _$$_CMIEventFromJson(Map<String, dynamic> json) => _$_CMIEvent(
       status: _$JsonConverterFromJson<String, EventStatus>(
           json['status'], const EventStatusConverter().fromJson),
       type: $enumDecode(_$EventTypeEnumMap, json['type']),
+      acceptedCardType: json['acceptedCardType'] == null
+          ? AcceptedCardType.passpartoutAndMine
+          : const AcceptedCardTypeConverted()
+              .fromJson(json['acceptedCardType'] as String?),
       createdOn:
           const MyDateTimeConverter().fromJson(json['createdOn'] as Timestamp),
       subEventDeadline: _$JsonConverterFromJson<Timestamp, DateTime>(
@@ -54,6 +58,8 @@ Map<String, dynamic> _$$_CMIEventToJson(_$_CMIEvent instance) =>
       'status': _$JsonConverterToJson<String, EventStatus>(
           instance.status, const EventStatusConverter().toJson),
       'type': _$EventTypeEnumMap[instance.type]!,
+      'acceptedCardType':
+          const AcceptedCardTypeConverted().toJson(instance.acceptedCardType),
       'createdOn': const MyDateTimeConverter().toJson(instance.createdOn),
       'subEventDeadline': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.subEventDeadline, const MyDateTimeConverter().toJson),

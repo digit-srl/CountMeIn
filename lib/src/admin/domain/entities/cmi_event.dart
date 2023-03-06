@@ -40,6 +40,23 @@ enum EventType {
   }
 }
 
+enum AcceptedCardType {
+  mine,
+  passpartoutAndMine,
+  all;
+
+  String get text {
+    switch (this) {
+      case AcceptedCardType.mine:
+        return "Solo miei";
+      case AcceptedCardType.passpartoutAndMine:
+        return 'Count Me In e miei';
+      case AcceptedCardType.all:
+        return 'Tutti';
+    }
+  }
+}
+
 enum FrequencyType {
   daily,
   weekly;
@@ -114,6 +131,7 @@ class CMIEvent with _$CMIEvent {
     required int maxWomCount,
     @EventStatusConverter() EventStatus? status,
     @EventTypeConverter() required EventType type,
+    @Default(AcceptedCardType.passpartoutAndMine) @AcceptedCardTypeConverted() AcceptedCardType acceptedCardType,
     @MyDateTimeConverter() required DateTime createdOn,
     @MyDateTimeConverter() DateTime? subEventDeadline,
     @MyDateTimeConverter() required DateTime startAt,
@@ -203,6 +221,22 @@ class EventTypeConverter implements JsonConverter<EventType?, String> {
 
   @override
   String toJson(EventType? type) => enumToString(type) ?? 'single';
+}
+
+class AcceptedCardTypeConverted
+    implements JsonConverter<AcceptedCardType, String?> {
+  const AcceptedCardTypeConverted();
+
+  @override
+  AcceptedCardType fromJson(String? value) {
+    if (value == null) {
+      return AcceptedCardType.mine;
+    }
+    return AcceptedCardType.values.byName(value);
+  }
+
+  @override
+  String toJson(AcceptedCardType type) => type.name;
 }
 
 class FrequencyTypeConverter implements JsonConverter<FrequencyType?, String?> {

@@ -40,6 +40,8 @@ mixin _$CMIEvent {
   EventStatus? get status => throw _privateConstructorUsedError;
   @EventTypeConverter()
   EventType get type => throw _privateConstructorUsedError;
+  @AcceptedCardTypeConverted()
+  AcceptedCardType get acceptedCardType => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime get createdOn => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
@@ -75,6 +77,7 @@ abstract class $CMIEventCopyWith<$Res> {
       int maxWomCount,
       @EventStatusConverter() EventStatus? status,
       @EventTypeConverter() EventType type,
+      @AcceptedCardTypeConverted() AcceptedCardType acceptedCardType,
       @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime? subEventDeadline,
       @MyDateTimeConverter() DateTime startAt});
@@ -111,6 +114,7 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
     Object? maxWomCount = null,
     Object? status = freezed,
     Object? type = null,
+    Object? acceptedCardType = null,
     Object? createdOn = null,
     Object? subEventDeadline = freezed,
     Object? startAt = null,
@@ -180,6 +184,10 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as EventType,
+      acceptedCardType: null == acceptedCardType
+          ? _value.acceptedCardType
+          : acceptedCardType // ignore: cast_nullable_to_non_nullable
+              as AcceptedCardType,
       createdOn: null == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -232,6 +240,7 @@ abstract class _$$_CMIEventCopyWith<$Res> implements $CMIEventCopyWith<$Res> {
       int maxWomCount,
       @EventStatusConverter() EventStatus? status,
       @EventTypeConverter() EventType type,
+      @AcceptedCardTypeConverted() AcceptedCardType acceptedCardType,
       @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime? subEventDeadline,
       @MyDateTimeConverter() DateTime startAt});
@@ -267,6 +276,7 @@ class __$$_CMIEventCopyWithImpl<$Res>
     Object? maxWomCount = null,
     Object? status = freezed,
     Object? type = null,
+    Object? acceptedCardType = null,
     Object? createdOn = null,
     Object? subEventDeadline = freezed,
     Object? startAt = null,
@@ -336,6 +346,10 @@ class __$$_CMIEventCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as EventType,
+      acceptedCardType: null == acceptedCardType
+          ? _value.acceptedCardType
+          : acceptedCardType // ignore: cast_nullable_to_non_nullable
+              as AcceptedCardType,
       createdOn: null == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -362,19 +376,28 @@ class _$_CMIEvent implements _CMIEvent {
       this.anonymous = true,
       this.recurring = true,
       this.emailShowed = false,
-      @FrequencyTypeConverter() this.frequency,
+      @FrequencyTypeConverter()
+          this.frequency,
       this.recurrence,
       this.remaining,
       this.totalUsers = 0,
       this.genderCount,
       this.activeSessionId,
-      @EventAccessTypeConverter() required this.accessType,
+      @EventAccessTypeConverter()
+          required this.accessType,
       required this.maxWomCount,
-      @EventStatusConverter() this.status,
-      @EventTypeConverter() required this.type,
-      @MyDateTimeConverter() required this.createdOn,
-      @MyDateTimeConverter() this.subEventDeadline,
-      @MyDateTimeConverter() required this.startAt});
+      @EventStatusConverter()
+          this.status,
+      @EventTypeConverter()
+          required this.type,
+      @AcceptedCardTypeConverted()
+          this.acceptedCardType = AcceptedCardType.passpartoutAndMine,
+      @MyDateTimeConverter()
+          required this.createdOn,
+      @MyDateTimeConverter()
+          this.subEventDeadline,
+      @MyDateTimeConverter()
+          required this.startAt});
 
   factory _$_CMIEvent.fromJson(Map<String, dynamic> json) =>
       _$$_CMIEventFromJson(json);
@@ -421,6 +444,10 @@ class _$_CMIEvent implements _CMIEvent {
   @EventTypeConverter()
   final EventType type;
   @override
+  @JsonKey()
+  @AcceptedCardTypeConverted()
+  final AcceptedCardType acceptedCardType;
+  @override
   @MyDateTimeConverter()
   final DateTime createdOn;
   @override
@@ -432,7 +459,7 @@ class _$_CMIEvent implements _CMIEvent {
 
   @override
   String toString() {
-    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, activeSessionId: $activeSessionId, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, type: $type, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt)';
+    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, activeSessionId: $activeSessionId, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, type: $type, acceptedCardType: $acceptedCardType, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt)';
   }
 
   @override
@@ -468,6 +495,8 @@ class _$_CMIEvent implements _CMIEvent {
                 other.maxWomCount == maxWomCount) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.type, type) || other.type == type) &&
+            (identical(other.acceptedCardType, acceptedCardType) ||
+                other.acceptedCardType == acceptedCardType) &&
             (identical(other.createdOn, createdOn) ||
                 other.createdOn == createdOn) &&
             (identical(other.subEventDeadline, subEventDeadline) ||
@@ -495,6 +524,7 @@ class _$_CMIEvent implements _CMIEvent {
         maxWomCount,
         status,
         type,
+        acceptedCardType,
         createdOn,
         subEventDeadline,
         startAt
@@ -532,6 +562,7 @@ abstract class _CMIEvent implements CMIEvent {
       required final int maxWomCount,
       @EventStatusConverter() final EventStatus? status,
       @EventTypeConverter() required final EventType type,
+      @AcceptedCardTypeConverted() final AcceptedCardType acceptedCardType,
       @MyDateTimeConverter() required final DateTime createdOn,
       @MyDateTimeConverter() final DateTime? subEventDeadline,
       @MyDateTimeConverter() required final DateTime startAt}) = _$_CMIEvent;
@@ -574,6 +605,9 @@ abstract class _CMIEvent implements CMIEvent {
   @override
   @EventTypeConverter()
   EventType get type;
+  @override
+  @AcceptedCardTypeConverted()
+  AcceptedCardType get acceptedCardType;
   @override
   @MyDateTimeConverter()
   DateTime get createdOn;
