@@ -76,9 +76,11 @@ class ScanController {
           manPercentage: userQrCode.manPercentage,
           womanPercentage: userQrCode.womanPercentage,
           isAnonymous: userQrCode.isAnonymous,
+          providerId: userQrCode.providerId,
         );
 
-        if (!alreadyScannedUser.contains(eventUser.isAnonymous ? eventUser.privateId! : eventUser.id)) {
+        if (!alreadyScannedUser.contains(
+            eventUser.isAnonymous ? eventUser.privateId! : eventUser.id)) {
           logger.i('onProcessing new user id on local list');
           processing = true;
 
@@ -190,7 +192,8 @@ class ScanController {
             onMessage?.call(null, message);
           }
 
-          alreadyScannedUser.add(eventUser.isAnonymous ? eventUser.privateId! : eventUser.id);
+          alreadyScannedUser
+              .add(eventUser.isAnonymous ? eventUser.privateId! : eventUser.id);
           processing = false;
         } else {
           const message = 'Utente già scansionato';

@@ -83,6 +83,7 @@ extension UserCardX on UserCard {
 class EventUser with _$EventUser {
   const factory EventUser({
     required String id,
+    required String providerId,
     String? name,
     String? surname,
     String? cf,

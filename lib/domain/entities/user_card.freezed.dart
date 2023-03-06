@@ -324,6 +324,7 @@ EventUser _$EventUserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$EventUser {
   String get id => throw _privateConstructorUsedError;
+  String get providerId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get surname => throw _privateConstructorUsedError;
   String? get cf => throw _privateConstructorUsedError;
@@ -356,6 +357,7 @@ abstract class $EventUserCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      String providerId,
       String? name,
       String? surname,
       String? cf,
@@ -388,6 +390,7 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
   @override
   $Res call({
     Object? id = null,
+    Object? providerId = null,
     Object? name = freezed,
     Object? surname = freezed,
     Object? cf = freezed,
@@ -409,6 +412,10 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      providerId: null == providerId
+          ? _value.providerId
+          : providerId // ignore: cast_nullable_to_non_nullable
               as String,
       name: freezed == name
           ? _value.name
@@ -487,6 +494,7 @@ abstract class _$$_EventUserCopyWith<$Res> implements $EventUserCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      String providerId,
       String? name,
       String? surname,
       String? cf,
@@ -517,6 +525,7 @@ class __$$_EventUserCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? providerId = null,
     Object? name = freezed,
     Object? surname = freezed,
     Object? cf = freezed,
@@ -538,6 +547,10 @@ class __$$_EventUserCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      providerId: null == providerId
+          ? _value.providerId
+          : providerId // ignore: cast_nullable_to_non_nullable
               as String,
       name: freezed == name
           ? _value.name
@@ -612,6 +625,7 @@ class __$$_EventUserCopyWithImpl<$Res>
 class _$_EventUser implements _EventUser {
   const _$_EventUser(
       {required this.id,
+      required this.providerId,
       this.name,
       this.surname,
       this.cf,
@@ -634,6 +648,8 @@ class _$_EventUser implements _EventUser {
 
   @override
   final String id;
+  @override
+  final String providerId;
   @override
   final String? name;
   @override
@@ -671,7 +687,7 @@ class _$_EventUser implements _EventUser {
 
   @override
   String toString() {
-    return 'EventUser(id: $id, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, isGroup: $isGroup, isAnonymous: $isAnonymous, checkInAt: $checkInAt, checkOutAt: $checkOutAt, groupName: $groupName, averageAge: $averageAge, groupCount: $groupCount, participationCount: $participationCount, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
+    return 'EventUser(id: $id, providerId: $providerId, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, isGroup: $isGroup, isAnonymous: $isAnonymous, checkInAt: $checkInAt, checkOutAt: $checkOutAt, groupName: $groupName, averageAge: $averageAge, groupCount: $groupCount, participationCount: $participationCount, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
   }
 
   @override
@@ -680,6 +696,8 @@ class _$_EventUser implements _EventUser {
         (other.runtimeType == runtimeType &&
             other is _$_EventUser &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.providerId, providerId) ||
+                other.providerId == providerId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.surname, surname) || other.surname == surname) &&
             (identical(other.cf, cf) || other.cf == cf) &&
@@ -715,6 +733,7 @@ class _$_EventUser implements _EventUser {
   int get hashCode => Object.hash(
       runtimeType,
       id,
+      providerId,
       name,
       surname,
       cf,
@@ -749,6 +768,7 @@ class _$_EventUser implements _EventUser {
 abstract class _EventUser implements EventUser {
   const factory _EventUser(
       {required final String id,
+      required final String providerId,
       final String? name,
       final String? surname,
       final String? cf,
@@ -771,6 +791,8 @@ abstract class _EventUser implements EventUser {
 
   @override
   String get id;
+  @override
+  String get providerId;
   @override
   String? get name;
   @override

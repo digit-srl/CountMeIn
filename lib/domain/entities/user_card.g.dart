@@ -47,6 +47,7 @@ Json? _$JsonConverterToJson<Json, Value>(
 
 _$_EventUser _$$_EventUserFromJson(Map<String, dynamic> json) => _$_EventUser(
       id: json['id'] as String,
+      providerId: json['providerId'] as String,
       name: json['name'] as String?,
       surname: json['surname'] as String?,
       cf: json['cf'] as String?,
@@ -70,6 +71,7 @@ _$_EventUser _$$_EventUserFromJson(Map<String, dynamic> json) => _$_EventUser(
 Map<String, dynamic> _$$_EventUserToJson(_$_EventUser instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'providerId': instance.providerId,
       'name': instance.name,
       'surname': instance.surname,
       'cf': instance.cf,

@@ -18,7 +18,6 @@ exports.onPrivateSessionUserCheckIn = functions
   )
   .onWrite(async (snap, context) => {
     try {
-      //const providerId = context.params.providerId;
       const userDocId = context.params.userDocId;
 
       //utente cancellato
@@ -271,7 +270,7 @@ export const onSessionUserCheckIn = functions
 
       if (!fromExternalOrganization && userData == null) {
         console.log("onUserCheckIn: tesserino da una organizzazione interna ");
-        let ref = userDocRef(providerId, user.id);
+        let ref = userDocRef(user.providerId, user.id);
         const userDoc: FirebaseFirestore.DocumentData = await ref.get();
 
         userData = userDoc.data();
@@ -363,19 +362,18 @@ export const onSessionUserCheckIn = functions
 exports.onGlobalPrivateUserCheckIn = functions
   .region("europe-west3")
   .firestore.document(
-    "providers/{providerId}/events/{eventId}/privateUsers/{userId}"
+    "providers/{providerId}/events/{eventId}/privateUsers/{userDocId}"
   )
   .onWrite(async (snap, context) => {
     try {
-      //const providerId = context.params.providerId;
-      const userId = context.params.userId;
+      const userDocId = context.params.userDocId;
 
       //utente cancellato
       if (!snap.after.exists) {
         console.log(
           "onGlobalPrivateUserCheckIn: utente rimosso da " +
             "eventId: " +
-            userId
+            userDocId
         );
         return new Promise((resolve, reject) => {});
       }
@@ -461,12 +459,14 @@ exports.onGlobalPrivateUserCheckIn = functions
 
 export const onGlobalUserCheckIn = functions
   .region("europe-west3")
-  .firestore.document("providers/{providerId}/events/{eventId}/users/{userId}")
+  .firestore.document(
+    "providers/{providerId}/events/{eventId}/users/{userDocId}"
+  )
   .onWrite(async (snap, context) => {
     try {
       const eventId = context.params.eventId;
       const providerId = context.params.providerId;
-      const userId = context.params.userId;
+      const userDocId = context.params.userDocId;
       const eventRef = snap.after.ref.parent.parent;
 
       console.log(
@@ -475,14 +475,14 @@ export const onGlobalUserCheckIn = functions
           " eventId: " +
           eventId +
           " userId: " +
-          userId
+          userDocId
       );
 
       //utente cancellato
       if (!snap.after.exists) {
         console.log(
           "onGlobalUserCheckIn: utente rimosso da " + "eventId: " + eventId,
-          "userId: " + userId
+          "userId: " + userDocId
         );
 
         const previousUser: FirebaseFirestore.DocumentData | undefined =
