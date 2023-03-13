@@ -53,7 +53,7 @@ exports.onPrivateSessionUserCheckIn = functions
           let increment = 1;
           let m = 0;
           let f = 0;
-          let na = 0;
+          let nb = 0;
           if (snap.after.exists && !snap.before.exists) {
             increment = 1;
           } else if (!snap.after.exists && snap.before.exists) {
@@ -65,12 +65,12 @@ exports.onPrivateSessionUserCheckIn = functions
           } else if (gender == "female") {
             f = increment;
           } else if (gender == "notBinary") {
-            na = increment;
+            nb = increment;
           }
 
-          if (m != 0 || f != 0 || na != 0) {
+          if (m != 0 || f != 0 || nb != 0) {
             console.log(
-              "onPrivateUserCheckIn: m: " + m + ",f: " + f + ",na: " + na
+              "onPrivateUserCheckIn: m: " + m + ",f: " + f + ",nb: " + nb
             );
             const countRef = snap.after.ref.parent.parent;
             if (countRef != null) {
@@ -79,7 +79,7 @@ exports.onPrivateSessionUserCheckIn = functions
                   await transaction.update(countRef, {
                     "genderCount.male": firestore.FieldValue.increment(m),
                     "genderCount.female": firestore.FieldValue.increment(f),
-                    "genderCount.notBinary": firestore.FieldValue.increment(na),
+                    "genderCount.notBinary": firestore.FieldValue.increment(nb),
                   });
                 }
               );
@@ -144,10 +144,27 @@ export const onSessionUserCheckIn = functions
             console.log(
               "onUserCheckIn: decrement total user with " + groupCount
             );
+            const manPercentage = previousUser.manPercentage;
+            const womanPercentage = previousUser.womanPercentage;
+            let man: number = 0;
+            let woman: number = 0;
+            let notAvailable: number = 0;
+            if (manPercentage != null && womanPercentage != null) {
+              man = Math.trunc(groupCount * manPercentage);
+              woman = Math.trunc(groupCount * womanPercentage);
+            } else {
+              notAvailable = groupCount;
+            }
+
             await db.runTransaction(
               async (transaction: FirebaseFirestore.Transaction) => {
                 await transaction.update(eventRef, {
                   totalUsers: firestore.FieldValue.increment(-groupCount),
+                  "genderCount.male": firestore.FieldValue.increment(-man),
+                  "genderCount.female": firestore.FieldValue.increment(-woman),
+                  "genderCount.notAvailable": firestore.FieldValue.increment(
+                    -notAvailable
+                  ),
                 });
               }
             );
@@ -185,10 +202,26 @@ export const onSessionUserCheckIn = functions
             console.log(
               "onUserCheckIn: increment total user with " + groupCount
             );
+            const manPercentage = user.manPercentage;
+            const womanPercentage = user.womanPercentage;
+            let man: number = 0;
+            let woman: number = 0;
+            let notAvailable: number = 0;
+            if (manPercentage != null && womanPercentage != null) {
+              man = Math.trunc(groupCount * manPercentage);
+              woman = Math.trunc(groupCount * womanPercentage);
+            } else {
+              notAvailable = groupCount;
+            }
+
             await db.runTransaction(
               async (transaction: FirebaseFirestore.Transaction) => {
                 await transaction.update(eventRef, {
                   totalUsers: firestore.FieldValue.increment(groupCount),
+                  "genderCount.male": firestore.FieldValue.increment(man),
+                  "genderCount.female": firestore.FieldValue.increment(woman),
+                  "genderCount.notAvailable":
+                    firestore.FieldValue.increment(notAvailable),
                 });
               }
             );
@@ -497,10 +530,26 @@ export const onGlobalUserCheckIn = functions
             console.log(
               "onGlobalUserCheckIn: decrement total user with " + groupCount
             );
+            const manPercentage = previousUser.manPercentage;
+            const womanPercentage = previousUser.womanPercentage;
+            let man: number = 0;
+            let woman: number = 0;
+            let notAvailable: number = 0;
+            if (manPercentage != null && womanPercentage != null) {
+              man = Math.trunc(groupCount * manPercentage);
+              woman = Math.trunc(groupCount * womanPercentage);
+            } else {
+              notAvailable = groupCount;
+            }
             await db.runTransaction(
               async (transaction: FirebaseFirestore.Transaction) => {
                 await transaction.update(eventRef, {
                   totalUsers: firestore.FieldValue.increment(-groupCount),
+                  "genderCount.male": firestore.FieldValue.increment(-man),
+                  "genderCount.female": firestore.FieldValue.increment(-woman),
+                  "genderCount.notAvailable": firestore.FieldValue.increment(
+                    -notAvailable
+                  ),
                 });
               }
             );
@@ -538,10 +587,26 @@ export const onGlobalUserCheckIn = functions
           console.log(
             "onGlobalUserCheckIn: increment total user with " + groupCount
           );
+
+          const manPercentage = user.manPercentage;
+          const womanPercentage = user.womanPercentage;
+          let man: number = 0;
+          let woman: number = 0;
+          let notAvailable: number = 0;
+          if (manPercentage != null && womanPercentage != null) {
+            man = Math.trunc(groupCount * manPercentage);
+            woman = Math.trunc(groupCount * womanPercentage);
+          } else {
+            notAvailable = groupCount;
+          }
           return db.runTransaction(
             async (transaction: FirebaseFirestore.Transaction) => {
               await transaction.update(eventRef, {
                 totalUsers: firestore.FieldValue.increment(groupCount),
+                "genderCount.male": firestore.FieldValue.increment(man),
+                "genderCount.female": firestore.FieldValue.increment(woman),
+                "genderCount.notAvailable":
+                  firestore.FieldValue.increment(notAvailable),
               });
             }
           );
