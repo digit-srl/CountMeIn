@@ -3,6 +3,7 @@ import 'package:countmein/cloud.dart';
 import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/common/ui/widgets/cf_text_field.dart';
+import 'package:universal_io/io.dart';
 import '../../../src/common/mu_styles.dart';
 import 'package:dart_wom_connector/dart_wom_connector.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
@@ -419,17 +420,23 @@ class _WomIntegrationPanelState extends ConsumerState<WomIntegrationPanel> {
                   final username = womEmailController.text.trim();
                   final password = womPasswordController.text;
 
-                  final instrument = await InstrumentClient.authenticate(
-                      username, password, womDomain);
+                  final authResponse = await InstrumentClient.authenticate(
+                    username: username,
+                    password: password,
+                    clientName: '${Platform.localeName}Cmi/1',
+                    domain: womDomain,
+                  );
+
+
                   // final instrument = await InstrumentClient.authenticate(
                   //     'alessandro.bogliolo@uniurb.it',
                   //     'D1GIT!',
                   //     'dev.wom.social');
                   loading.value = false;
-                  logger.i(instrument);
-                  setState(() {
-                    instrumentUser.value = instrument;
-                  });
+                  // logger.i(instrument);
+                  // setState(() {
+                  //   instrumentUser.value = instrument;
+                  // });
                 },
               ),
             ],

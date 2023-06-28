@@ -17,7 +17,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../cloud.dart';
 import '../../../../ui/screens/event_details.dart';
-import '../../../../utils.dart';
 import '../widgets/generic_grid_view.dart';
 import '../widgets/info_text.dart';
 import 'managers.dart';

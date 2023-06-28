@@ -253,7 +253,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                             onScan: (url) {
                               ref
                                   .read(scanControllerProvider(widget.event.id))
-                                  .processScan2(
+                                  .processScan3(
                                     url,
                                     widget.provider,
                                     widget.event,

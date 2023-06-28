@@ -170,10 +170,10 @@ class CMISubEvent with _$CMISubEvent {
 @freezed
 class GenderCount with _$GenderCount {
   const factory GenderCount({
-    required int male,
-    required int female,
-    required int notBinary,
-    @Default(0) int notAvailable,
+    required num male,
+    required num female,
+    required num notBinary,
+    @Default(0) num notAvailable,
   }) = _GenderCount;
 
   factory GenderCount.fromJson(Map<String, Object?> json) =>
@@ -181,7 +181,7 @@ class GenderCount with _$GenderCount {
 }
 
 extension GenderCountX on GenderCount {
-  int get total => male + female + notBinary + notAvailable;
+  int get total => (male + female + notBinary + notAvailable).toInt();
 }
 
 @freezed

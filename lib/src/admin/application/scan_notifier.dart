@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:countmein/cloud.dart';
+import 'package:countmein/constants.dart';
 import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:countmein/domain/entities/event_ids.dart';
-import 'package:countmein/domain/entities/qcode_data.dart';
+import 'package:countmein/domain/entities/qrcode_data.dart';
 import 'package:countmein/domain/entities/user_card.dart';
 import 'package:countmein/my_logger.dart';
+import 'package:countmein/src/admin/application/confirm_invite.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/ui/screens/scan.dart';
-import 'package:countmein/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oktoast/oktoast.dart';
 
 final scanControllerProvider =
     Provider.autoDispose.family<ScanController, String>((ref, eventId) {
   logger.wtf('Scan controller create');
-  return ScanController();
+  return ScanController(ref);
 });
 
 class ScanController {
@@ -25,7 +25,10 @@ class ScanController {
   // facendo il checkout
   final userWithoutCheckIn = <String>{};
 
+  final Ref ref;
   bool processing = false;
+
+  ScanController(this.ref);
 
   processScan2(
     String data,
@@ -54,12 +57,16 @@ class ScanController {
                   (event.acceptPassepartout &&
                       userQrCode.providerId == 'countmein'));
 
-      final onlyMineCondition = event.acceptedCardType == AcceptedCardType.mine && userQrCode.providerId == provider.id;
+      final onlyMineCondition =
+          event.acceptedCardType == AcceptedCardType.mine &&
+              userQrCode.providerId == provider.id;
 
-      final allUserCardCondition = event.acceptedCardType == AcceptedCardType.all;
+      final allUserCardCondition =
+          event.acceptedCardType == AcceptedCardType.all;
 
-
-      if (allUserCardCondition || passpartoutAndMineCondition || onlyMineCondition) {
+      if (allUserCardCondition ||
+          passpartoutAndMineCondition ||
+          onlyMineCondition) {
         // if (userWithoutCheckIn.contains(userQrCode.id)) {
         //   return;
         // }
@@ -211,9 +218,150 @@ class ScanController {
           onMessage?.call(null, message);
         }
       } else {
-        final message =
-            'Tesserino non è valido per questo evento.\n'
+        final message = 'Tesserino non è valido per questo evento.\n'
             'L\'eveno accetta tesserini: ${event.acceptedCardType.text}';
+        logger.i(message);
+        onMessage?.call(null, message);
+      }
+    } catch (ex, st) {
+      logger.e(ex);
+      logger.e(st);
+      processing = false;
+      const message = 'QR-Code non valido';
+      logger.i(message);
+      onError?.call(null, message);
+    }
+  }
+
+  processScan3(
+    String data,
+    CMIProvider provider,
+    CMIEvent event,
+    ScanMode scanMode, {
+    Function(EventUser user)? onUpdate,
+    Function(EventUser? user, String message)? onError,
+    Function(EventUser? user, String message)? onMessage,
+  }) async {
+    logger.i('processScan2 start for ${event.id}');
+    if (processing) return;
+
+    logger.i('onProcessing');
+    try {
+      final userQrCode = QrCodeData.fromQrCode(data);
+      final isGroupCard = userQrCode.isGroupCard;
+      // final ids = EventIds(
+      //     providerId: provider.id,
+      //     eventId: event.id,
+      //     sessionId: event.activeSessionId);
+
+      final passpartoutAndMineCondition =
+          event.acceptedCardType == AcceptedCardType.passpartoutAndMine &&
+              (userQrCode.providerId == provider.id ||
+                  (event.acceptPassepartout &&
+                      userQrCode.providerId == 'countmein'));
+
+      final onlyMineCondition =
+          event.acceptedCardType == AcceptedCardType.mine &&
+              userQrCode.providerId == provider.id;
+
+      final allUserCardCondition =
+          event.acceptedCardType == AcceptedCardType.all;
+
+      if (allUserCardCondition ||
+          passpartoutAndMineCondition ||
+          onlyMineCondition) {
+        if (userQrCode.isAnonymous && userQrCode.privateId == null) {
+          onError?.call(null, 'Utente anonimo deve contenere il privateId');
+          return;
+        }
+
+        /*const eventId = data.eventId;
+      const userId = data.userId;
+      const privateId = data.privateId;
+      const providerId = data.providerId;
+      const isSingleAccessType = data.isSingleAccessType;
+      const scanMode = data.scanMode;
+      const isGroup = data.isGroup;
+      const groupLeaderId = data.groupLeaderId;
+      const isAnonymous = data.isAnonymous;
+      const groupName = data.groupName;
+      const name = data.name;
+      const surname = data.surname;
+      const cf = data.cf;
+      const fromExternalOrganization = data.fromExternalOrganization;
+      const email = data.email;
+      const groupCount = data.groupCount;
+      const averageAge = data.averageAge;
+      const manPercentage = data.manPercentage;
+      const womanPercentage = data.womanPercentage;
+      const timestamp = new Date(data.timestamp);
+      */
+        var eventUser = EventUser(
+          id: isGroupCard ? userQrCode.groupId! : userQrCode.userId,
+          privateId: userQrCode.privateId,
+          providerId: userQrCode.providerId,
+          isGroup: isGroupCard,
+          isAnonymous: userQrCode.isAnonymous,
+          groupName: userQrCode.groupName,
+          name: userQrCode.name,
+          surname: userQrCode.surname,
+          cf: userQrCode.cf,
+          fromExternalOrganization: userQrCode.isExternalOrganization,
+          email: userQrCode.isExternalOrganization
+              ? '${userQrCode.email}${provider.domainRequirement}'
+              : userQrCode.email,
+          groupCount: userQrCode.groupCount,
+          averageAge: userQrCode.averageAge,
+          manPercentage: userQrCode.manPercentage,
+          womanPercentage: userQrCode.womanPercentage,
+        );
+
+        if (!alreadyScannedUser.contains(
+            eventUser.isAnonymous ? eventUser.privateId! : eventUser.id)) {
+          logger.i('onProcessing new user id on local list');
+          processing = true;
+
+          final isSingleAccessType = event.accessType == EventAccessType.single;
+
+          /*
+           check_out_completed: check out successfully
+           missing_check_in: check out is not possible without checkin
+           participation_count_incremented: user exists, check in successfully, user count incremented
+           leader_group_not_exist: group leader didnt made the check in
+           check_in_completed:
+          */
+          // chiamata a firebase function
+          final json = eventUser.toJson();
+          json['eventId'] = event.id;
+          json['groupId'] = userQrCode.groupId;
+          json['userId'] = userQrCode.userId;
+          json['isSingleAccessType'] = isSingleAccessType;
+          json['scanMode'] = scanMode.name;
+          json['groupLeaderId'] = eventUser.isGroup ? userQrCode.userId : null;
+          json['timestamp'] = DateTime.now().millisecondsSinceEpoch;
+
+          const url = '$functionBaseUrl/scanner-scan';
+          final res = await ref.read(dioProvider).post(url, data: json);
+          if (res.statusCode == 200) {
+            final map = Map.from(res.data);
+            final status = map['status'] as String;
+            logger.i(status);
+          } else {
+            logger.e(res);
+            throw Exception(res.statusCode);
+          }
+
+          alreadyScannedUser
+              .add(eventUser.isAnonymous ? eventUser.privateId! : eventUser.id);
+          processing = false;
+        } else {
+          const message = 'Utente già scansionato';
+          logger.i(message);
+          onMessage?.call(null, message);
+        }
+      } else {
+        final message = 'Tesserino non è valido per questo evento.\n'
+            'L\'evento accetta tesserini: ${event.acceptedCardType.text}';
         logger.i(message);
         onMessage?.call(null, message);
       }

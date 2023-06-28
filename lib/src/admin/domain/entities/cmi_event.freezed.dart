@@ -896,10 +896,10 @@ GenderCount _$GenderCountFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$GenderCount {
-  int get male => throw _privateConstructorUsedError;
-  int get female => throw _privateConstructorUsedError;
-  int get notBinary => throw _privateConstructorUsedError;
-  int get notAvailable => throw _privateConstructorUsedError;
+  num get male => throw _privateConstructorUsedError;
+  num get female => throw _privateConstructorUsedError;
+  num get notBinary => throw _privateConstructorUsedError;
+  num get notAvailable => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -913,7 +913,7 @@ abstract class $GenderCountCopyWith<$Res> {
           GenderCount value, $Res Function(GenderCount) then) =
       _$GenderCountCopyWithImpl<$Res, GenderCount>;
   @useResult
-  $Res call({int male, int female, int notBinary, int notAvailable});
+  $Res call({num male, num female, num notBinary, num notAvailable});
 }
 
 /// @nodoc
@@ -938,19 +938,19 @@ class _$GenderCountCopyWithImpl<$Res, $Val extends GenderCount>
       male: null == male
           ? _value.male
           : male // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       female: null == female
           ? _value.female
           : female // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       notBinary: null == notBinary
           ? _value.notBinary
           : notBinary // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       notAvailable: null == notAvailable
           ? _value.notAvailable
           : notAvailable // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
     ) as $Val);
   }
 }
@@ -963,7 +963,7 @@ abstract class _$$_GenderCountCopyWith<$Res>
       __$$_GenderCountCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int male, int female, int notBinary, int notAvailable});
+  $Res call({num male, num female, num notBinary, num notAvailable});
 }
 
 /// @nodoc
@@ -986,19 +986,19 @@ class __$$_GenderCountCopyWithImpl<$Res>
       male: null == male
           ? _value.male
           : male // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       female: null == female
           ? _value.female
           : female // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       notBinary: null == notBinary
           ? _value.notBinary
           : notBinary // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       notAvailable: null == notAvailable
           ? _value.notAvailable
           : notAvailable // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
     ));
   }
 }
@@ -1016,14 +1016,14 @@ class _$_GenderCount implements _GenderCount {
       _$$_GenderCountFromJson(json);
 
   @override
-  final int male;
+  final num male;
   @override
-  final int female;
+  final num female;
   @override
-  final int notBinary;
+  final num notBinary;
   @override
   @JsonKey()
-  final int notAvailable;
+  final num notAvailable;
 
   @override
   String toString() {
@@ -1064,22 +1064,22 @@ class _$_GenderCount implements _GenderCount {
 
 abstract class _GenderCount implements GenderCount {
   const factory _GenderCount(
-      {required final int male,
-      required final int female,
-      required final int notBinary,
-      final int notAvailable}) = _$_GenderCount;
+      {required final num male,
+      required final num female,
+      required final num notBinary,
+      final num notAvailable}) = _$_GenderCount;
 
   factory _GenderCount.fromJson(Map<String, dynamic> json) =
       _$_GenderCount.fromJson;
 
   @override
-  int get male;
+  num get male;
   @override
-  int get female;
+  num get female;
   @override
-  int get notBinary;
+  num get notBinary;
   @override
-  int get notAvailable;
+  num get notAvailable;
   @override
   @JsonKey(ignore: true)
   _$$_GenderCountCopyWith<_$_GenderCount> get copyWith =>

@@ -13,10 +13,11 @@ _$_CMIProvider _$$_CMIProviderFromJson(Map<String, dynamic> json) =>
       adminName: json['adminName'] as String,
       adminSurname: json['adminSurname'] as String,
       adminEmail: json['adminEmail'] as String,
-      managers: (json['managers'] as Map<String, dynamic>).map(
-        (k, e) =>
-            MapEntry(k, ProviderManager.fromJson(e as Map<String, dynamic>)),
-      ),
+      managers: (json['managers'] as Map<String, dynamic>?)?.map(
+            (k, e) => MapEntry(
+                k, ProviderManager.fromJson(e as Map<String, dynamic>)),
+          ) ??
+          const <String, ProviderManager>{},
       apiKey: json['apiKey'] as String?,
       aims: (json['aims'] as List<dynamic>?)?.map((e) => e as String).toList(),
       aim: json['aim'] as String?,

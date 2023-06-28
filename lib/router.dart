@@ -32,7 +32,6 @@ import 'src/auth/domain/entities/user.dart';
 import 'src/auth/ui/screens/sign_in.dart';
 import 'ui/screens/admin_user_details.dart';
 import 'ui/screens/error.dart';
-import 'ui/screens/user_console.dart';
 import 'ui/screens/user_event.dart';
 
 /// Caches and Exposes a [GoRouter]
@@ -95,8 +94,8 @@ class RouterNotifier extends ChangeNotifier {
 
     final authState = _ref.read(authStateProvider);
 
-    final isGoingToAdmin = state.subloc.startsWith('/admin');
-    final isGoingSignIn = state.subloc.startsWith('/signIn');
+    final isGoingToAdmin = state.matchedLocation.startsWith('/admin');
+    final isGoingSignIn = state.matchedLocation.startsWith('/signIn');
     // final isGoingToHome = state.subloc == '/';
     // final isGoingToVerificationEmail =
     //     state.subloc.startsWith(EmailVerificationScreen.routeName);
@@ -128,9 +127,9 @@ class RouterNotifier extends ChangeNotifier {
 
     // From here we can use the state and implement our custom logic
     // final isGoingToDashboard = state.subloc == AdminDashboardScreen.routeName;
-    final isGoingToSignIn = state.subloc == SignInScreen.routeName;
+    final isGoingToSignIn = state.matchedLocation == SignInScreen.routeName;
 
-    final fromp = state.subloc == '/' ? '' : '?from=${state.location}';
+    final fromp = state.matchedLocation == '/' ? '' : '?from=${state.location}';
 
     if (authState is Unauthenticated) {
       return isGoingToSignIn ? null : '${SignInScreen.routeName}$fromp';
@@ -139,7 +138,7 @@ class RouterNotifier extends ChangeNotifier {
 
     // if the user is logged in, send them where they were going before (or
     // home if they weren't going anywhere)
-    if (isGoingToSignIn) return state.queryParams['from'] ?? '/';
+    if (isGoingToSignIn) return state.queryParameters['from'] ?? '/';
 
     if(authState is Authenticated){
       final isScanner = authState.user.role == UserRole.scanner;
@@ -169,7 +168,7 @@ class RouterNotifier extends ChangeNotifier {
                     path: '${AdminProviderHandlerScreen.routeName}/:providerId',
                     builder: (context, state) {
                       return AdminProviderHandlerScreen(
-                        providerId: state.params['providerId'] as String,
+                        providerId: state.pathParameters['providerId'] as String,
                         extraProvider: state.extra as CMIProvider?,
                       );
                     },
@@ -178,22 +177,22 @@ class RouterNotifier extends ChangeNotifier {
                         path: NewEventFormScreen.routeName,
                         builder: (context, state) {
                           return NewEventFormScreen(
-                            providerId: state.params['providerId']!,
+                            providerId: state.pathParameters['providerId']!,
                           );
                         },
                       ),
                       GoRoute(
                         path: ManagersHandlerScreen.routeName,
                         builder: (context, state) => ManagersHandlerScreen(
-                          providerId: state.params['providerId'] as String,
+                          providerId: state.pathParameters['providerId'] as String,
                         ),
                       ),
                       GoRoute(
                         name: EventDetailsScreen.routeName,
                         path: '${EventDetailsScreen.routeName}/:eventId',
                         builder: (context, state) {
-                          final eventId = state.params['eventId'] as String;
-                          final providerId = state.params['providerId'] as String;
+                          final eventId = state.pathParameters['eventId'] as String;
+                          final providerId = state.pathParameters['providerId'] as String;
                           return EventDetailsScreen(
                             eventId: eventId,
                             providerId: providerId,
@@ -204,9 +203,9 @@ class RouterNotifier extends ChangeNotifier {
                             name: EventUsersScreen.routeName,
                             path: EventUsersScreen.routeName,
                             builder: (context, state) {
-                              final eventId = state.params['eventId'] as String;
-                              final providerId = state.params['providerId'] as String;
-                              final subEventId = state.queryParams['s'] as String?;
+                              final eventId = state.pathParameters['eventId'] as String;
+                              final providerId = state.pathParameters['providerId'] as String;
+                              final subEventId = state.queryParameters['s'];
                               return EventUsersScreen(
                                 eventId: eventId,
                                 providerId: providerId,
@@ -237,11 +236,11 @@ class RouterNotifier extends ChangeNotifier {
         GoRoute(
           path: InviteFormConfirmScreen.routeName,
           builder: (context, state) {
-            final providerId = state.queryParams['p'] as String;
-            final inviteId = state.queryParams['i'] as String;
-            final secret = state.queryParams['s'] as String;
-            final providerName = state.queryParams['n'] as String?;
-            final userId = state.queryParams['u'] as String?;
+            final providerId = state.queryParameters['p'] as String;
+            final inviteId = state.queryParameters['i'] as String;
+            final secret = state.queryParameters['s'] as String;
+            final providerName = state.queryParameters['n'] as String?;
+            final userId = state.queryParameters['u'] as String?;
             return InviteFormConfirmScreen(
               request: InviteRequest(
                 providerId: providerId,
@@ -261,8 +260,8 @@ class RouterNotifier extends ChangeNotifier {
           path: '${UserConsoleScreen.routeName}/:providerId/:userId',
           builder: (context, state) => UserConsoleScreen(
             userIds: UserIds(
-              userId: state.params['userId']!,
-              providerId: state.params['providerId']!,
+              userId: state.pathParameters['userId']!,
+              providerId: state.pathParameters['providerId']!,
             ),
           ),
         ),
@@ -270,7 +269,7 @@ class RouterNotifier extends ChangeNotifier {
           path: '${UserProviderScreen.routeName}/:providerId',
           builder: (context, state) {
             return UserProviderScreen(
-              providerId: state.params['providerId']!,
+              providerId: state.pathParameters['providerId']!,
             );
           },
           routes: [
@@ -278,7 +277,7 @@ class RouterNotifier extends ChangeNotifier {
               path: UserFormScreen.routeName,
               builder: (context, state) {
                 return UserFormScreen(
-                  providerId: state.params['providerId']!,
+                  providerId: state.pathParameters['providerId']!,
                 );
               },
             ),
@@ -286,7 +285,7 @@ class RouterNotifier extends ChangeNotifier {
               path: RecoverUserCard.routeName,
               builder: (context, state) {
                 return RecoverUserCard(
-                  providerId: state.params['providerId']!,
+                  providerId: state.pathParameters['providerId']!,
                 );
               },
             ),
@@ -301,9 +300,9 @@ class RouterNotifier extends ChangeNotifier {
         GoRoute(
           path: ResetPasswordScreen.routeName,
           builder: (context, state) {
-            final url = state.queryParams['u'];
-            final oobCode = state.queryParams['oobCode'];
-            final name = state.queryParams['n'];
+            final url = state.queryParameters['u'];
+            final oobCode = state.queryParameters['oobCode'];
+            final name = state.queryParameters['n'];
             if (oobCode == null) {
               return const ErrorScreen();
             }
@@ -319,9 +318,9 @@ class RouterNotifier extends ChangeNotifier {
               '${EmailVerificationScreen.routeName}/:userId/:secret/:providerId',
           builder: (context, state) {
             return EmailVerificationScreen(
-              userId: state.params['userId'] as String,
-              secret: state.params['secret'] as String,
-              providerId: state.params['providerId'] as String,
+              userId: state.pathParameters['userId'] as String,
+              secret: state.pathParameters['secret'] as String,
+              providerId: state.pathParameters['providerId'] as String,
               // privateId: state.params['privateId'] as String,
             );
           },

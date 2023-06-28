@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../utils.dart';
 
-part 'qcode_data.freezed.dart';
+part 'qrcode_data.freezed.dart';
 
 @freezed
 class QrCodeData with _$QrCodeData {

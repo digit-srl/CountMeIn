@@ -52,10 +52,10 @@ class GenderCard extends ConsumerWidget {
                       sections: genderCount.total == 0
                           ? []
                           : showingSections(
-                              genderCount.male,
-                              genderCount.female,
-                              genderCount.notBinary,
-                              genderCount.notAvailable,
+                              genderCount.male.toInt(),
+                              genderCount.female.toInt(),
+                              genderCount.notBinary.toInt(),
+                              genderCount.notAvailable.toInt(),
                             ),
                     ),
                   ),

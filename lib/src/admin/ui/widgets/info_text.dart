@@ -46,7 +46,7 @@ class InfoText extends StatelessWidget {
                     icon: const Icon(Icons.copy),
                     color: Colors.grey,
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: value));
+                      Clipboard.setData(ClipboardData(text: value!));
                     }),
               ]
             ],

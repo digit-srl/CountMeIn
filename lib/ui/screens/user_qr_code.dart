@@ -114,8 +114,9 @@ class _UserCardDialogState extends State<UserCardDialog> {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  QrImage(
-                                    data: widget.user.qrCode(widget.activity.id),
+                                  QrImageView(
+                                    data:
+                                        widget.user.qrCode(widget.activity.id),
                                     version: QrVersions.auto,
                                   ),
                                   const SizedBox(width: 16),
@@ -156,8 +157,12 @@ class _UserCardDialogState extends State<UserCardDialog> {
               onPressed: () async {
                 final bytes = await captureImage();
                 if (bytes == null) return;
-                await FileSaver.instance.saveFile('my_card_1', bytes, 'png',
-                      mimeType: MimeType.PNG);
+                await FileSaver.instance.saveFile(
+                  name: 'my_card_1',
+                  bytes: bytes,
+                  ext: 'png',
+                  mimeType: MimeType.png,
+                );
 
                 /*final fileSaverPlugin = FlutterFileSaver();
                  final path= await fileSaverPlugin.writeFileAsBytes(

@@ -79,9 +79,10 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          if ((eventOrSessionClosed ?? false) &&
-              genderCount != null &&
-              genderCount.total > 3)
+          // if ((eventOrSessionClosed ?? false) &&
+          //     genderCount != null &&
+          //     genderCount.total > 3)
+          if(genderCount != null)
             GenderCard(genderCount: genderCount),
           const SizedBox(height: 8),
           Text(

@@ -19,10 +19,9 @@ class EmailVerificationScreen extends ConsumerStatefulWidget {
 
   const EmailVerificationScreen({
     Key? key,
+    required this.userId,
     required this.secret,
     required this.providerId,
-    required this.userId,
-    // required this.privateId,
   }) : super(key: key);
 
   @override
@@ -55,19 +54,20 @@ class _EmailVerificationScreenState
                       'Clicca il pulsante per verificare il tuo indirizzo email'),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                      onPressed: () {
-                        ref
-                            .read(emailVerificationProvider(
-                              EmailVerificationData(
-                                secret: widget.secret,
-                                userId: widget.userId,
-                                providerId: widget.providerId,
-                                // privateId: widget.privateId,
-                              ),
-                            ).notifier)
-                            .verify();
-                      },
-                      child: Text('Verifica')),
+                    onPressed: () {
+                      ref
+                          .read(emailVerificationProvider(
+                            EmailVerificationData(
+                              secret: widget.secret,
+                              userId: widget.userId,
+                              providerId: widget.providerId,
+                              // privateId: widget.privateId,
+                            ),
+                          ).notifier)
+                          .verify();
+                    },
+                    child: Text('Verifica'),
+                  ),
                 ],
               );
             },

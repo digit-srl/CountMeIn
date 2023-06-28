@@ -77,6 +77,17 @@ export function eventDocRef(
   return eventCollectionRef(providerId).doc(eventId);
 }
 
+export function sessionDocRef(
+  providerId: string,
+  eventId: string,
+  sessionId: string
+): FirebaseFirestore.DocumentReference {
+  return eventCollectionRef(providerId)
+    .doc(eventId)
+    .collection("sessions")
+    .doc(sessionId);
+}
+
 export function userAccessCollectionRef(
   providerId: string,
   userId: string

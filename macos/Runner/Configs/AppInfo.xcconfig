@@ -11,4 +11,4 @@ PRODUCT_NAME = count_me_in
 PRODUCT_BUNDLE_IDENTIFIER = srl.digit.countMeIn
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2022 srl.digit. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 srl.digit. All rights reserved.

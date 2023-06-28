@@ -62,6 +62,8 @@ export const onAuthCreate = functions
 exports.userProfile = require("./user_profile");
 exports.userCheckIn = require("./user_check_in");
 exports.userSignUp = require("./user_sign_up");
+exports.scanner = require("./for_client");
+exports.events = require("./events");
 
 export const onActivityRequested = functions
   .region("europe-west3")

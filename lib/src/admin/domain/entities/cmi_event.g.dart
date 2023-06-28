@@ -115,10 +115,10 @@ Map<String, dynamic> _$$_CMISubEventToJson(_$_CMISubEvent instance) =>
 
 _$_GenderCount _$$_GenderCountFromJson(Map<String, dynamic> json) =>
     _$_GenderCount(
-      male: json['male'] as int,
-      female: json['female'] as int,
-      notBinary: json['notBinary'] as int,
-      notAvailable: json['notAvailable'] as int? ?? 0,
+      male: json['male'] as num,
+      female: json['female'] as num,
+      notBinary: json['notBinary'] as num,
+      notAvailable: json['notAvailable'] as num? ?? 0,
     );
 
 Map<String, dynamic> _$$_GenderCountToJson(_$_GenderCount instance) =>

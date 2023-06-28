@@ -82,7 +82,11 @@ final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
 final authStateProvider = Provider<AuthState>((ref) {
   return ref.watch(authStateStreamProvider).when(
         data: (state) => state,
-        error: (err, stack) => AuthState.error(err, stack),
+        error: (err, stack){
+          logger.e(err);
+          logger.e(stack);
+          return AuthState.error(err, stack);
+        },
         loading: () => const AuthState.loading(),
       );
 });

@@ -3,7 +3,6 @@ import 'package:countmein/my_logger.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../constants.dart';
-import 'date_time_converter.dart';
 
 part 'user_qr_code.freezed.dart';
 

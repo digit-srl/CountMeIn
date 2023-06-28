@@ -23,7 +23,7 @@ class CMIProvider with _$CMIProvider {
     required String adminName,
     required String adminSurname,
     required String adminEmail,
-    required Map<String, ProviderManager> managers,
+    @Default(<String, ProviderManager>{}) Map<String, ProviderManager> managers,
     String? apiKey,
     List<String>? aims,
     String? aim,

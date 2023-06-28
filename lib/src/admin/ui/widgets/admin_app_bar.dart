@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../auth/application/auth_notifier.dart';
 
-class AdminAppBar extends ConsumerWidget with PreferredSizeWidget {
+class AdminAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
   final bool goToHome;
 

@@ -13,6 +13,7 @@ import 'package:stack_trace/stack_trace.dart' as stack_trace;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:intl/date_symbol_data_local.dart';
+
 enum AppFlavor { master, collab }
 
 // fvm flutter build web --web-renderer canvaskit
@@ -48,8 +49,10 @@ void main() async {
     // await FirebaseFirestore.instance
     //     .enablePersistence(const PersistenceSettings(synchronizeTabs: true));
   } else {
-    FirebaseFirestore.instance.settings =
-        const Settings(persistenceEnabled: false);
+    FirebaseFirestore.instance.settings = const Settings(
+      persistenceEnabled: false,
+      cacheSizeBytes: 40,
+    );
   }
 
   await Hive.openBox('user');

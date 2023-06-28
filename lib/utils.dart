@@ -1,4 +1,4 @@
-import 'package:countmein/domain/entities/qcode_data.dart';
+import 'package:countmein/domain/entities/qrcode_data.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

@@ -23,7 +23,9 @@ exports.onPrivateSessionUserCheckIn = functions
       //utente cancellato
       if (!snap.after.exists) {
         console.log(
-          "onPrivateUserCheckIn: utente rimosso da " + "eventId: " + userDocId
+          "onPrivateSessionUserCheckIn: utente rimosso da " +
+            "eventId: " +
+            userDocId
         );
         return;
       }
@@ -31,12 +33,14 @@ exports.onPrivateSessionUserCheckIn = functions
       const privateEventUserData: FirebaseFirestore.DocumentData | undefined =
         snap.after.data();
       console.log(
-        "onPrivateUserCheckIn: user check in private id: " +
+        "onPrivateSessionUserCheckIn: user check in private id: " +
           privateEventUserData?.id
       );
 
       if (privateEventUserData === undefined || privateEventUserData === null) {
-        console.log("onPrivateUserCheckIn: privateEventUserDoc undefined ");
+        console.log(
+          "onPrivateSessionUserCheckIn: privateEventUserDoc undefined "
+        );
         return null;
       }
 
@@ -70,34 +74,27 @@ exports.onPrivateSessionUserCheckIn = functions
 
           if (m != 0 || f != 0 || nb != 0) {
             console.log(
-              "onPrivateUserCheckIn: m: " + m + ",f: " + f + ",nb: " + nb
+              "onPrivateSessionUserCheckIn: m: " + m + ",f: " + f + ",nb: " + nb
             );
             const countRef = snap.after.ref.parent.parent;
             if (countRef != null) {
-              await db.runTransaction(
-                async (transaction: FirebaseFirestore.Transaction) => {
-                  await transaction.update(countRef, {
-                    "genderCount.male": firestore.FieldValue.increment(m),
-                    "genderCount.female": firestore.FieldValue.increment(f),
-                    "genderCount.notBinary": firestore.FieldValue.increment(nb),
-                  });
-                }
-              );
-              //await countRef.update((current) => {
-              //  return (current || 0) + increment;
-              //});
+              await updateCounts(countRef, 1, m, f, nb, 0);
               functions.logger.log("Gender counter updated.");
             }
           }
         } else {
-          console.log("onPrivateUserCheckIn: gender infot doesnt exists");
+          console.log(
+            "onPrivateSessionUserCheckIn: gender infot doesnt exists"
+          );
         }
       } else {
-        console.log("onPrivateUserCheckIn: private user doc doesnt exists");
+        console.log(
+          "onPrivateSessionUserCheckIn: private user doc doesnt exists"
+        );
       }
       return null;
     } catch (ex) {
-      console.log("onPrivateUserCheckIn failed");
+      console.log("onPrivateSessionUserCheckIn failed");
       console.log(ex);
       return null;
     }
@@ -117,7 +114,7 @@ export const onSessionUserCheckIn = functions
       const eventRef = snap.after.ref.parent.parent;
 
       console.log(
-        "start onUserCheckIn: providerId: " +
+        "start onSessionUserCheckIn: providerId: " +
           providerId +
           " eventId: " +
           eventId +
@@ -128,7 +125,7 @@ export const onSessionUserCheckIn = functions
       //utente cancellato
       if (!snap.after.exists) {
         console.log(
-          "onUserCheckIn: utente rimosso da " + "eventId: " + userDocId
+          "onSessionUserCheckIn: utente rimosso da " + "eventId: " + userDocId
         );
 
         const previousUser: FirebaseFirestore.DocumentData | undefined =
@@ -142,7 +139,7 @@ export const onSessionUserCheckIn = functions
 
           if (eventRef != null) {
             console.log(
-              "onUserCheckIn: decrement total user with " + groupCount
+              "onSessionUserCheckIn: decrement total user with " + groupCount
             );
             const manPercentage = previousUser.manPercentage;
             const womanPercentage = previousUser.womanPercentage;
@@ -156,17 +153,13 @@ export const onSessionUserCheckIn = functions
               notAvailable = groupCount;
             }
 
-            await db.runTransaction(
-              async (transaction: FirebaseFirestore.Transaction) => {
-                await transaction.update(eventRef, {
-                  totalUsers: firestore.FieldValue.increment(-groupCount),
-                  "genderCount.male": firestore.FieldValue.increment(-man),
-                  "genderCount.female": firestore.FieldValue.increment(-woman),
-                  "genderCount.notAvailable": firestore.FieldValue.increment(
-                    -notAvailable
-                  ),
-                });
-              }
+            await updateCounts(
+              eventRef,
+              -groupCount,
+              -man,
+              -woman,
+              -0,
+              -notAvailable
             );
           }
         }
@@ -176,11 +169,14 @@ export const onSessionUserCheckIn = functions
       const user: FirebaseFirestore.DocumentData | undefined =
         snap.after.data();
       console.log(
-        "onUserCheckIn: user check in name: " + user?.name + " " + user?.id
+        "onSessionUserCheckIn: user check in name: " +
+          user?.name +
+          " " +
+          user?.id
       );
 
       if (user === undefined || user === null) {
-        console.log("onUserCheckIn: user id undefined ");
+        console.log("onSessionUserCheckIn: user id undefined ");
         return null;
       }
 
@@ -191,16 +187,16 @@ export const onSessionUserCheckIn = functions
 
       // Nuovo utente (può avere checkInAt != null oppure checkOutAt != null mai entrambi != null)
       if (!snap.before.exists && snap.after.exists) {
-        console.log("onUserCheckIn: new user in subevent " + sessionId);
+        console.log("onSessionUserCheckIn: new user in subevent " + sessionId);
         // Utente ha fatto check in
         if (checkInAt != null || checkOutAt != null) {
-          console.log("onUserCheckIn: checkInAt or  checkOutAt != null");
+          console.log("onSessionUserCheckIn: checkInAt or  checkOutAt != null");
           //Incrementiamo il numero degli utenti totali
           const groupCount = isGroup ? user.groupCount ?? 0 : 1;
           if (eventRef != null) {
-            console.log("onUserCheckIn: eventRef : " + eventRef.path);
+            console.log("onSessionUserCheckIn: eventRef : " + eventRef.path);
             console.log(
-              "onUserCheckIn: increment total user with " + groupCount
+              "onSessionUserCheckIn: increment total user with " + groupCount
             );
             const manPercentage = user.manPercentage;
             const womanPercentage = user.womanPercentage;
@@ -214,16 +210,13 @@ export const onSessionUserCheckIn = functions
               notAvailable = groupCount;
             }
 
-            await db.runTransaction(
-              async (transaction: FirebaseFirestore.Transaction) => {
-                await transaction.update(eventRef, {
-                  totalUsers: firestore.FieldValue.increment(groupCount),
-                  "genderCount.male": firestore.FieldValue.increment(man),
-                  "genderCount.female": firestore.FieldValue.increment(woman),
-                  "genderCount.notAvailable":
-                    firestore.FieldValue.increment(notAvailable),
-                });
-              }
+            await updateCounts(
+              eventRef,
+              groupCount,
+              man,
+              woman,
+              0,
+              notAvailable
             );
           }
         }
@@ -232,14 +225,14 @@ export const onSessionUserCheckIn = functions
       //Se è un gruppo terminiamo la funzione in quanto i passaggi successivi sono relativi al rilascio dei wom
       if (isGroup) {
         console.log(
-          "onUserCheckIn: The user is a group, a group will not receive woms"
+          "onSessionUserCheckIn: The user is a group, a group will not receive woms"
         );
         return;
       }
 
       if (checkOutAt === undefined || checkOutAt === null) {
         console.log(
-          "onUserCheckIn: Missing checkOut: this trigger need of checkOut date to release wom"
+          "onSessionUserCheckIn: Missing checkOut: this trigger need of checkOut date to release wom"
         );
         return;
       }
@@ -253,11 +246,12 @@ export const onSessionUserCheckIn = functions
       const womCount = event.maxWomCount;
       const eventName = event.name;
       const eventAccessType = event.accessType;
-      console.log("onUserCheckIn: eventName => " + eventName);
+      console.log("onSessionUserCheckIn: eventName => " + eventName);
 
       if (womCount === undefined || womCount === null || womCount === 0) {
         console.log(
-          "onUserCheckIn: this event not release wom to user : " + userDocId
+          "onSessionUserCheckIn: this event not release wom to user : " +
+            userDocId
         );
         return;
       }
@@ -267,7 +261,7 @@ export const onSessionUserCheckIn = functions
         (checkInAt === undefined || checkInAt === null)
       ) {
         console.log(
-          "onUserCheckIn: Event with in/out access must to have checkInAt defined"
+          "onSessionUserCheckIn: Event with in/out access must to have checkInAt defined"
         );
         return null;
       }
@@ -277,7 +271,9 @@ export const onSessionUserCheckIn = functions
       // se il tesserino è di una organizzazione esterna (es: università)
       // prendo i dati direttamente dal doc del checkin/out
       if (fromExternalOrganization) {
-        console.log("onUserCheckIn: tesserino di un organizzazione esterna");
+        console.log(
+          "onSessionUserCheckIn: tesserino di un organizzazione esterna"
+        );
         if (
           !(
             user.email == null ||
@@ -296,20 +292,22 @@ export const onSessionUserCheckIn = functions
           };
         } else {
           console.log(
-            "onUserCheckIn: parametro mancante nel documento del checkin/out "
+            "onSessionUserCheckIn: parametro mancante nel documento del checkin/out "
           );
         }
       }
 
       if (!fromExternalOrganization && userData == null) {
-        console.log("onUserCheckIn: tesserino da una organizzazione interna ");
+        console.log(
+          "onSessionUserCheckIn: tesserino da una organizzazione interna "
+        );
         let ref = userDocRef(user.providerId, user.id);
         const userDoc: FirebaseFirestore.DocumentData = await ref.get();
 
         userData = userDoc.data();
 
         if (!userDoc.exists || userData == null) {
-          console.log("onUserCheckIn: user not exists on " + ref.path);
+          console.log("onSessionUserCheckIn: user not exists on " + ref.path);
           return null;
         }
 
@@ -318,10 +316,12 @@ export const onSessionUserCheckIn = functions
 
       const email = userData.email;
       if (email === undefined || email === null) {
-        console.log("onUserCheckIn: STOP user not exist email undefined ");
+        console.log(
+          "onSessionUserCheckIn: STOP user not exist email undefined "
+        );
         return null;
       }
-      console.log("onUserCheckIn: user exist email " + userData.email);
+      console.log("onSessionUserCheckIn: user exist email " + userData.email);
 
       const providerDoc: FirebaseFirestore.DocumentData = await providerDocRef(
         providerId
@@ -346,7 +346,7 @@ export const onSessionUserCheckIn = functions
 
       if (apiKey === undefined || apiKey === null) {
         console.log(
-          "onUserCheckIn: ApiKey is null or undefined, providerId: " +
+          "onSessionUserCheckIn: ApiKey is null or undefined, providerId: " +
             providerId
         );
         return null;
@@ -386,7 +386,7 @@ export const onSessionUserCheckIn = functions
         eventName
       );
     } catch (ex) {
-      console.log("onUpdateCheckIn failed");
+      console.log("onSessionUserCheckIn failed");
       console.log(ex);
       return null;
     }
@@ -438,7 +438,7 @@ exports.onGlobalPrivateUserCheckIn = functions
           let increment = 1;
           let m = 0;
           let f = 0;
-          let na = 0;
+          let nb = 0;
           if (snap.after.exists && !snap.before.exists) {
             increment = 1;
           } else if (!snap.after.exists && snap.before.exists) {
@@ -450,25 +450,14 @@ exports.onGlobalPrivateUserCheckIn = functions
           } else if (gender == "female") {
             f = increment;
           } else if (gender == "notBinary") {
-            na = increment;
+            nb = increment;
           }
 
-          if (m != 0 || f != 0 || na != 0) {
-            console.log("m: " + m + ",f: " + f + ",na: " + na);
+          if (m != 0 || f != 0 || nb != 0) {
+            console.log("m: " + m + ",f: " + f + ",nb: " + nb);
             const countRef = snap.after.ref.parent.parent;
             if (countRef != null) {
-              await db.runTransaction(
-                async (transaction: FirebaseFirestore.Transaction) => {
-                  await transaction.update(countRef, {
-                    "genderCount.male": firestore.FieldValue.increment(m),
-                    "genderCount.female": firestore.FieldValue.increment(f),
-                    "genderCount.notBinary": firestore.FieldValue.increment(na),
-                  });
-                }
-              );
-              //await countRef.update((current) => {
-              //  return (current || 0) + increment;
-              //});
+              await updateCounts(countRef, 1, m, f, nb, 0);
               console.log(
                 "onGlobalPrivateUserCheckIn: Gender counter updated."
               );
@@ -541,17 +530,13 @@ export const onGlobalUserCheckIn = functions
             } else {
               notAvailable = groupCount;
             }
-            await db.runTransaction(
-              async (transaction: FirebaseFirestore.Transaction) => {
-                await transaction.update(eventRef, {
-                  totalUsers: firestore.FieldValue.increment(-groupCount),
-                  "genderCount.male": firestore.FieldValue.increment(-man),
-                  "genderCount.female": firestore.FieldValue.increment(-woman),
-                  "genderCount.notAvailable": firestore.FieldValue.increment(
-                    -notAvailable
-                  ),
-                });
-              }
+            await updateCounts(
+              eventRef,
+              -groupCount,
+              -man,
+              -woman,
+              -0,
+              -notAvailable
             );
           }
         }
@@ -599,16 +584,13 @@ export const onGlobalUserCheckIn = functions
           } else {
             notAvailable = groupCount;
           }
-          return db.runTransaction(
-            async (transaction: FirebaseFirestore.Transaction) => {
-              await transaction.update(eventRef, {
-                totalUsers: firestore.FieldValue.increment(groupCount),
-                "genderCount.male": firestore.FieldValue.increment(man),
-                "genderCount.female": firestore.FieldValue.increment(woman),
-                "genderCount.notAvailable":
-                  firestore.FieldValue.increment(notAvailable),
-              });
-            }
+          return updateCounts(
+            eventRef,
+            groupCount,
+            man,
+            woman,
+            0,
+            notAvailable
           );
         }
       }
@@ -623,3 +605,39 @@ export const onGlobalUserCheckIn = functions
       return null;
     }
   });
+
+function updateCounts(
+  reference: FirebaseFirestore.DocumentReference,
+  totalUser: number,
+  manCount: number,
+  womanCount: number,
+  notBinary: number,
+  notAvailable: number
+) {
+  console.log("updateCounts");
+  console.log(reference.path);
+  console.log(
+    "totalUsers: " +
+      totalUser +
+      ", male: " +
+      manCount +
+      ", famale: " +
+      womanCount +
+      ", notBinary: " +
+      notBinary +
+      ", notAvailable: " +
+      notAvailable
+  );
+  return db.runTransaction(
+    async (transaction: FirebaseFirestore.Transaction) => {
+      await transaction.update(reference, {
+        totalUsers: firestore.FieldValue.increment(totalUser),
+        "genderCount.male": firestore.FieldValue.increment(manCount),
+        "genderCount.female": firestore.FieldValue.increment(womanCount),
+        "genderCount.notBinary": firestore.FieldValue.increment(notBinary),
+        "genderCount.notAvailable":
+          firestore.FieldValue.increment(notAvailable),
+      });
+    }
+  );
+}

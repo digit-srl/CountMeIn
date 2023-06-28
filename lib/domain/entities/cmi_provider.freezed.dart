@@ -278,7 +278,8 @@ class _$_CMIProvider implements _CMIProvider {
       required this.adminName,
       required this.adminSurname,
       required this.adminEmail,
-      required final Map<String, ProviderManager> managers,
+      final Map<String, ProviderManager> managers =
+          const <String, ProviderManager>{},
       this.apiKey,
       final List<String>? aims,
       this.aim,
@@ -305,6 +306,7 @@ class _$_CMIProvider implements _CMIProvider {
   final String adminEmail;
   final Map<String, ProviderManager> _managers;
   @override
+  @JsonKey()
   Map<String, ProviderManager> get managers {
     if (_managers is EqualUnmodifiableMapView) return _managers;
     // ignore: implicit_dynamic_type
@@ -413,7 +415,7 @@ abstract class _CMIProvider implements CMIProvider {
           required final String adminName,
           required final String adminSurname,
           required final String adminEmail,
-          required final Map<String, ProviderManager> managers,
+          final Map<String, ProviderManager> managers,
           final String? apiKey,
           final List<String>? aims,
           final String? aim,
