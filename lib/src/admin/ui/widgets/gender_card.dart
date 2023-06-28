@@ -3,6 +3,7 @@ import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class GenderCard extends ConsumerWidget {
   final GenderCount genderCount;
@@ -72,7 +73,9 @@ class GenderCard extends ConsumerWidget {
                           color: Colors.blue,
                         ),
                         const SizedBox(width: 8),
-                        Text(genderCount.male.toString())
+                        Text(
+                          genderCount.male.toStringAsFixed(0),
+                        )
                       ],
                     ),
                     const SizedBox(height: 8),
@@ -85,7 +88,9 @@ class GenderCard extends ConsumerWidget {
                           color: Colors.pink,
                         ),
                         const SizedBox(width: 8),
-                        Text(genderCount.female.toString()),
+                        Text(
+                          genderCount.female.toStringAsFixed(0),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 8),
@@ -93,9 +98,14 @@ class GenderCard extends ConsumerWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         // const Text('?'),
-                        const Icon(Icons.not_interested, color: Colors.green),
+                        Icon(
+                          MdiIcons.genderNonBinary,
+                          color: Colors.green,
+                        ),
                         const SizedBox(width: 8),
-                        Text(genderCount.notBinary.toString()),
+                        Text(
+                          genderCount.notBinary.toStringAsFixed(0),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 8),
@@ -104,7 +114,9 @@ class GenderCard extends ConsumerWidget {
                       children: [
                         const Icon(Icons.not_interested, color: Colors.grey),
                         const SizedBox(width: 8),
-                        Text(genderCount.notAvailable.toString()),
+                        Text(
+                          genderCount.notAvailable.toStringAsFixed(0),
+                        ),
                       ],
                     ),
                   ],
@@ -169,7 +181,7 @@ class GenderCard extends ConsumerWidget {
                 fontSize: fontSize,
                 fontWeight: FontWeight.bold,
                 color: const Color(0xffffffff)),
-            badgeWidget: const Icon(Icons.female),
+            badgeWidget: Icon(MdiIcons.genderNonBinary),
             badgePositionPercentageOffset: .98,
           );
         case 3:
@@ -182,7 +194,7 @@ class GenderCard extends ConsumerWidget {
                 fontSize: fontSize,
                 fontWeight: FontWeight.bold,
                 color: const Color(0xffffffff)),
-            badgeWidget: const Icon(Icons.female),
+            badgeWidget: const Icon(Icons.not_interested),
             badgePositionPercentageOffset: .98,
           );
         default:

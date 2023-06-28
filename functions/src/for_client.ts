@@ -28,6 +28,7 @@ export const scan = functions
       const userId = data.userId;
       const groupId = data.groupId;
       const privateId = data.privateId;
+      const hasPrivateInfo = data.hasPrivateInfo ?? privateId != null;
       const providerId = data.providerId;
       const isSingleAccessType = data.isSingleAccessType;
       const scanMode = data.scanMode;
@@ -167,6 +168,7 @@ export const scan = functions
           womanPercentage: womanPercentage,
           isAnonymous: isAnonymous,
           providerId: providerId,
+          hasPrivateInfo: hasPrivateInfo,
         };
 
         if (isSingleAccessType && scanMode == "checkOut") {
@@ -224,6 +226,7 @@ export const scan = functions
             isAnonymous: isAnonymous,
             providerId: providerId,
             participationCount: 1,
+            hasPrivateInfo: hasPrivateInfo,
           });
 
           if (!isGroup && privateId != null) {

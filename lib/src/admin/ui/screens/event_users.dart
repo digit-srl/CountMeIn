@@ -69,9 +69,9 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
     final genderCount = ids.sessionId == null
         ? eventState.valueOrNull?.genderCount
         : subEvent?.genderCount;
-    final eventOrSessionClosed = ids.sessionId == null
-        ? eventState.valueOrNull?.isClosed
-        : eventState.valueOrNull?.activeSessionId != ids.sessionId;
+    // final eventOrSessionClosed = ids.sessionId == null
+    //     ? eventState.valueOrNull?.isClosed
+    //     : eventState.valueOrNull?.activeSessionId != ids.sessionId;
     return Scaffold(
       appBar: const AdminAppBar(
         title: 'Iscritti',

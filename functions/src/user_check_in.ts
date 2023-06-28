@@ -131,37 +131,16 @@ export const onSessionUserCheckIn = functions
         const previousUser: FirebaseFirestore.DocumentData | undefined =
           snap.before.data();
 
-        if (previousUser != null) {
-          const isGroup = previousUser.isGroup;
-
-          //Decrementiamo il numero degli utenti totali
-          const groupCount = isGroup ? previousUser.groupCount ?? 0 : 1;
-
-          if (eventRef != null) {
-            console.log(
-              "onSessionUserCheckIn: decrement total user with " + groupCount
-            );
-            const manPercentage = previousUser.manPercentage;
-            const womanPercentage = previousUser.womanPercentage;
-            let man: number = 0;
-            let woman: number = 0;
-            let notAvailable: number = 0;
-            if (manPercentage != null && womanPercentage != null) {
-              man = Math.trunc(groupCount * manPercentage);
-              woman = Math.trunc(groupCount * womanPercentage);
-            } else {
-              notAvailable = groupCount;
-            }
-
-            await updateCounts(
-              eventRef,
-              -groupCount,
-              -man,
-              -woman,
-              -0,
-              -notAvailable
-            );
-          }
+        if (previousUser != null && eventRef != null) {
+          await incrementUserCount(
+            UpdateUserCount.decrement,
+            eventRef,
+            previousUser.isGroup,
+            previousUser.hasPrivateInfo,
+            previousUser.groupCount,
+            previousUser.manPercentage,
+            previousUser.womanPercentage
+          );
         }
         return;
       }
@@ -191,32 +170,16 @@ export const onSessionUserCheckIn = functions
         // Utente ha fatto check in
         if (checkInAt != null || checkOutAt != null) {
           console.log("onSessionUserCheckIn: checkInAt or  checkOutAt != null");
-          //Incrementiamo il numero degli utenti totali
-          const groupCount = isGroup ? user.groupCount ?? 0 : 1;
-          if (eventRef != null) {
-            console.log("onSessionUserCheckIn: eventRef : " + eventRef.path);
-            console.log(
-              "onSessionUserCheckIn: increment total user with " + groupCount
-            );
-            const manPercentage = user.manPercentage;
-            const womanPercentage = user.womanPercentage;
-            let man: number = 0;
-            let woman: number = 0;
-            let notAvailable: number = 0;
-            if (manPercentage != null && womanPercentage != null) {
-              man = Math.trunc(groupCount * manPercentage);
-              woman = Math.trunc(groupCount * womanPercentage);
-            } else {
-              notAvailable = groupCount;
-            }
 
-            await updateCounts(
+          if (eventRef != null) {
+            await incrementUserCount(
+              UpdateUserCount.increment,
               eventRef,
-              groupCount,
-              man,
-              woman,
-              0,
-              notAvailable
+              user.isGroup,
+              user.hasPrivateInfo,
+              user.groupCount,
+              user.manPercentage,
+              user.womanPercentage
             );
           }
         }
@@ -510,35 +473,16 @@ export const onGlobalUserCheckIn = functions
         const previousUser: FirebaseFirestore.DocumentData | undefined =
           snap.before.data();
 
-        if (previousUser != null) {
-          const isGroup = previousUser.isGroup;
-
-          //Decrementiamo il numero degli utenti totali
-          const groupCount = isGroup ? previousUser.groupCount ?? 0 : 1;
-          if (eventRef != null) {
-            console.log(
-              "onGlobalUserCheckIn: decrement total user with " + groupCount
-            );
-            const manPercentage = previousUser.manPercentage;
-            const womanPercentage = previousUser.womanPercentage;
-            let man: number = 0;
-            let woman: number = 0;
-            let notAvailable: number = 0;
-            if (manPercentage != null && womanPercentage != null) {
-              man = Math.trunc(groupCount * manPercentage);
-              woman = Math.trunc(groupCount * womanPercentage);
-            } else {
-              notAvailable = groupCount;
-            }
-            await updateCounts(
-              eventRef,
-              -groupCount,
-              -man,
-              -woman,
-              -0,
-              -notAvailable
-            );
-          }
+        if (previousUser != null && eventRef != null) {
+          await incrementUserCount(
+            UpdateUserCount.decrement,
+            eventRef,
+            previousUser.isGroup,
+            previousUser.hasPrivateInfo,
+            previousUser.groupCount,
+            previousUser.manPercentage,
+            previousUser.womanPercentage
+          );
         }
         return new Promise((resolve, reject) => {});
       }
@@ -557,40 +501,20 @@ export const onGlobalUserCheckIn = functions
         return null;
       }
 
-      //const checkOutAt = user.checkOutAt;
-      //const checkInAt = user.checkInAt;
-      const isGroup = user.isGroup;
-
       // Nuovo utente (può avere checkInAt != null oppure checkOutAt != null mai entrambi != null)
       if (!snap.before.exists && snap.after.exists) {
         // Utente ha fatto check in
         console.log("onGlobalUserCheckIn: check in global user " + user.id);
-        //Incrementiamo il numero degli utenti totali
-        const groupCount = isGroup ? user.groupCount ?? 0 : 1;
-        if (eventRef != null) {
-          console.log("onGlobalUserCheckIn: eventRef " + eventRef.path);
-          console.log(
-            "onGlobalUserCheckIn: increment total user with " + groupCount
-          );
 
-          const manPercentage = user.manPercentage;
-          const womanPercentage = user.womanPercentage;
-          let man: number = 0;
-          let woman: number = 0;
-          let notAvailable: number = 0;
-          if (manPercentage != null && womanPercentage != null) {
-            man = Math.trunc(groupCount * manPercentage);
-            woman = Math.trunc(groupCount * womanPercentage);
-          } else {
-            notAvailable = groupCount;
-          }
-          return updateCounts(
+        if (eventRef != null) {
+          return incrementUserCount(
+            UpdateUserCount.increment,
             eventRef,
-            groupCount,
-            man,
-            woman,
-            0,
-            notAvailable
+            user.isGroup,
+            user.hasPrivateInfo,
+            user.groupCount,
+            user.manPercentage,
+            user.womanPercentage
           );
         }
       }
@@ -606,7 +530,7 @@ export const onGlobalUserCheckIn = functions
     }
   });
 
-function updateCounts(
+async function updateCounts(
   reference: FirebaseFirestore.DocumentReference,
   totalUser: number,
   manCount: number,
@@ -640,4 +564,36 @@ function updateCounts(
       });
     }
   );
+}
+
+enum UpdateUserCount {
+  increment,
+  decrement,
+}
+
+async function incrementUserCount(
+  type: UpdateUserCount,
+  eventRef: FirebaseFirestore.DocumentReference,
+  isGroup: boolean,
+  hasPrivateInfo: boolean,
+  groupCount: number,
+  manPercentage: number,
+  womanPercentage: number
+) {
+  console.log("incrementUserCount");
+  //Incrementiamo il numero degli utenti totali
+  const totalUsers = isGroup ? groupCount ?? 0 : hasPrivateInfo ?? true ? 0 : 1;
+  let man: number = 0;
+  let woman: number = 0;
+  let notAvailable: number = 0;
+  if (isGroup && manPercentage != null && womanPercentage != null) {
+    man = Math.trunc(groupCount * manPercentage);
+    woman = Math.trunc(groupCount * womanPercentage);
+  } else {
+    notAvailable = totalUsers;
+  }
+  if (type == UpdateUserCount.increment) {
+    return updateCounts(eventRef, totalUsers, man, woman, 0, notAvailable);
+  }
+  return updateCounts(eventRef, -totalUsers, -man, -woman, 0, -notAvailable);
 }

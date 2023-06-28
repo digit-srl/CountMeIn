@@ -233,7 +233,7 @@ class ScanController {
     }
   }
 
-  processScan3(
+  Future processScan3(
     String data,
     CMIProvider provider,
     CMIEvent event,
@@ -339,6 +339,7 @@ class ScanController {
           json['scanMode'] = scanMode.name;
           json['groupLeaderId'] = eventUser.isGroup ? userQrCode.userId : null;
           json['timestamp'] = DateTime.now().millisecondsSinceEpoch;
+          json['hasPrivateInfo'] = userQrCode.privateId != null;
 
           const url = '$functionBaseUrl/scanner-scan';
           final res = await ref.read(dioProvider).post(url, data: json);
