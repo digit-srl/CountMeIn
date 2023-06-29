@@ -81,6 +81,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
 
   String? error;
   String? message;
+  ScanStatus? scanStatus;
   bool waitingTimer = false;
 
   onError(EventUser? user, String message) {
@@ -103,6 +104,22 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
     waitingTimer = true;
     Future.delayed(messageDuration, () {
       waitingTimer = false;
+      reset();
+    });
+  }
+
+  onMessage2(EventUser? user, ScanStatus s) {
+    if (soundId != null) {
+      pool.play(soundId!);
+    }
+    // if (waitingTimer) return;
+    setState(() {
+      lastUser = user;
+      scanStatus = s;
+    });
+    // waitingTimer = true;
+    Future.delayed(messageDuration, () {
+      // waitingTimer = false;
       reset();
     });
   }
@@ -134,6 +151,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
   reset() {
     setState(() {
       result = null;
+      scanStatus = null;
       lastUser = null;
       message = null;
     });
@@ -167,14 +185,14 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                       if (barcode == null || barcode.rawValue == null) return;
                       ref
                           .read(scanControllerProvider(widget.event.id))
-                          .processScan2(
+                          .processScan3(
                             barcode.rawValue!,
                             widget.provider,
                             widget.event,
                             widget.scanMode,
-                            onUpdate: (user) => showUpdate(barcode, user),
-                            onMessage: onMessage,
-                            onError: onError,
+                            onMessage: onMessage2,
+                            // onUpdate: (user) => showUpdate(barcode, user),
+                            // onError: onError,
                           );
                     },
                   ),
@@ -182,13 +200,11 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                 Expanded(
                   flex: 1,
                   child: Container(
-                    color: error != null
-                        ? Colors.red
+                    color: scanStatus != null
+                        ? scanStatus!.color
                         : lastUser != null
                             ? Colors.green
-                            : message != null
-                                ? Colors.blue
-                                : Colors.white,
+                            : Colors.white,
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -198,39 +214,68 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                           Text(
                               'Barcode Type: ${describeEnum(result!.format)}  Data: ${result!.rawValue}'),
                         const SizedBox(height: 8),
-                        if (error == null && message == null)
+                        if (scanStatus != null) ...[
+                          Text(scanStatus!.message),
                           if (lastUser != null)
                             Text(
                               lastUser!.isAnonymous
-                                  ? 'AGGIUNTO\nUtente anonimo'
+                                  ? 'AGGIUNTO Utente anonimo'
                                   : '${lastUser!.isGroup ? 'GRUPPO ' : ''}AGGIUNTO\n${lastUser!.name} ${lastUser!.surname}\n${lastUser!.cf}',
                               textAlign: lastUser != null
                                   ? TextAlign.start
                                   : TextAlign.center,
                               style: const TextStyle(
-                                fontSize: 22,
+                                fontSize: 18,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             )
-                          else
-                            Text(
-                              'SCAN QR CODE',
-                              textAlign: lastUser != null
-                                  ? TextAlign.start
-                                  : TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 24,
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                        else
+                        ] else
                           Text(
-                            error ?? message ?? '',
+                            'SCAN QR CODE',
+                            textAlign: lastUser != null
+                                ? TextAlign.start
+                                : TextAlign.center,
                             style: const TextStyle(
-                                color: Colors.white, fontSize: 24),
+                              fontSize: 24,
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+
+                        // if (error == null && message == null)
+                        //   if (lastUser != null)
+                        //     Text(
+                        //       lastUser!.isAnonymous
+                        //           ? 'AGGIUNTO\nUtente anonimo'
+                        //           : '${lastUser!.isGroup ? 'GRUPPO ' : ''}AGGIUNTO\n${lastUser!.name} ${lastUser!.surname}\n${lastUser!.cf}',
+                        //       textAlign: lastUser != null
+                        //           ? TextAlign.start
+                        //           : TextAlign.center,
+                        //       style: const TextStyle(
+                        //         fontSize: 22,
+                        //         color: Colors.white,
+                        //         fontWeight: FontWeight.bold,
+                        //       ),
+                        //     )
+                        //   else
+                        //     Text(
+                        //       'SCAN QR CODE',
+                        //       textAlign: lastUser != null
+                        //           ? TextAlign.start
+                        //           : TextAlign.center,
+                        //       style: const TextStyle(
+                        //         fontSize: 24,
+                        //         color: Colors.green,
+                        //         fontWeight: FontWeight.bold,
+                        //       ),
+                        //     )
+                        // else
+                        //   Text(
+                        //     error ?? message ?? '',
+                        //     style: const TextStyle(
+                        //         color: Colors.white, fontSize: 24),
+                        //   ),
                       ],
                     ),
                   ),
@@ -258,9 +303,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                     widget.provider,
                                     widget.event,
                                     widget.scanMode,
-                                    onUpdate: (user) => showUpdate(null, user),
-                                    onMessage: onMessage,
-                                    onError: onError,
+                                    onMessage: onMessage2,
                                   );
                             },
                           ),

@@ -309,11 +309,11 @@ async function sendGroupCard(
     groupCount;
 
   if (manPercentage != null) {
-    url = url + "&mP=" + manPercentage;
+    url = url + "&mP=" + twoDecimalPlaces(manPercentage);
   }
 
   if (womanPercentage != null) {
-    url = url + "&wP=" + womanPercentage;
+    url = url + "&wP=" + twoDecimalPlaces(womanPercentage);
   }
 
   if (averageAge != null) {
@@ -461,8 +461,6 @@ exports.requestGroupCard = functions
         const userId = data.userId;
         const groupCount = data.groupCount;
         const averageAge = data.averageAge;
-        const womanPercentage = data.womanPercentage;
-        const manPercentage = data.manPercentage;
         const groupName = data.groupName;
 
         if (
@@ -473,11 +471,42 @@ exports.requestGroupCard = functions
         ) {
           const message = "Some fields are null";
           console.error(message);
-
           response.status(400).send("invalid-argument");
           return;
         }
 
+        const maleCount = data.maleCount;
+        const femaleCount = data.femaleCount;
+
+        if (
+          maleCount != null &&
+          femaleCount != null &&
+          maleCount + femaleCount != groupCount
+        ) {
+          const message = "There is a error about gender count";
+          console.error(message);
+          response.status(400).send({
+            error: "invalid-argument",
+            message: message,
+          });
+          return;
+        }
+
+        const manPercentage =
+          maleCount != null ? maleCount / groupCount : undefined;
+        const womanPercentage =
+          femaleCount != null ? femaleCount / groupCount : undefined;
+
+        console.log(
+          "maleCount: " +
+            maleCount +
+            ", femaleCount:" +
+            femaleCount +
+            ", manPercentage:" +
+            manPercentage +
+            ", womanPercentage:" +
+            womanPercentage
+        );
         try {
           const userData = await utils.getUserData(providerId, userId);
           const providerData = await getProviderData(providerId);
@@ -488,8 +517,8 @@ exports.requestGroupCard = functions
             groupName: groupName,
             groupCount: groupCount,
             averageAge: averageAge,
-            manPercentage: manPercentage,
-            womanPercentage: womanPercentage,
+            maleCount: maleCount,
+            femaleCount: femaleCount,
           });
           await sendGroupCard(
             userData,
@@ -522,4 +551,8 @@ async function getProviderData(
     throw Error();
   }
   return providerData;
+}
+
+function twoDecimalPlaces(num: number): string {
+  return (Math.round(num * 100) / 100).toFixed(2);
 }

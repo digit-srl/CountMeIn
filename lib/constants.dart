@@ -1,11 +1,7 @@
+import 'package:countmein/env.dart';
 import 'package:countmein/main.dart';
 import 'package:flutter/foundation.dart';
 
-const flavor = String.fromEnvironment('DEFINE_FLAVOR') == 'collab'
-    ? AppFlavor.collab
-    : AppFlavor.master;
-
-final isMaster = flavor == AppFlavor.master;
 const qrCodePrefix = 'cmi';
 const functionBaseUrl = kDebugMode
     ? 'http://localhost:5003/count-me-in-ef93b/europe-west3'
@@ -14,6 +10,8 @@ const authority = kDebugMode ? 'localhost:5003' : 'cmi.digit.srl';
 const baseUrl = 'https://$authority';
 const passepartoutActivityId = 'wom-count-me-in';
 const womDomain = kDebugMode ? 'dev.wom.social': 'wom.social';
+
+const countMeInProviderId = Environment.isEmulator ? 'Yy31B32YBDJDUt7TbZEl' : 'countmein';
 
 const createUserUrl = '$functionBaseUrl/userSignUp-createUser';
 const verifyOtpCodeUrl = '$functionBaseUrl/userProfile-verifyOtpCode';

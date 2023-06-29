@@ -40,8 +40,15 @@ class UserProfileDataWidget extends HookConsumerWidget {
           ? const LoadingWidget()
           : showGroupCardForm.value
               ? GroupCardForm(
-                  onSubmit: (groupName, groupCount, averageAge, manPercentage,
-                      womanPercentage) async {
+                  onSubmit: (
+                    groupName,
+                    groupCount,
+                    averageAge,
+                    maleCount,
+                    femaleCount,
+                    manPercentage,
+                    womanPercentage,
+                  ) async {
                     loading.value = true;
 
                     final res = await ref.read(dioProvider).post(
@@ -52,8 +59,8 @@ class UserProfileDataWidget extends HookConsumerWidget {
                         "userId": userIds.userId,
                         "groupCount": groupCount,
                         "averageAge": averageAge,
-                        "womanPercentage": womanPercentage,
-                        "manPercentage": manPercentage,
+                        "maleCount":maleCount,
+                        "femaleCount":femaleCount,
                       },
                     );
 
@@ -210,6 +217,8 @@ class GroupCardForm extends StatefulHookConsumerWidget {
     String groupName,
     int groupCount,
     int? averageAge,
+    int? male,
+    int? female,
     double? manPercentage,
     double? womanPercentage,
   )? onSubmit;
@@ -235,6 +244,11 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
     final manPercentage = useState<double>(0.5);
     final sliderDivisions = useState<int?>(null);
     final sliderEnabled = useState<bool>(false);
+    final maleCount =
+        ((sliderDivisions.value ?? 1) * manPercentage.value).toStringAsFixed(0);
+    final femaleCount =
+        ((1 - manPercentage.value) * (sliderDivisions.value ?? 1))
+            .toStringAsFixed(0);
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
@@ -246,7 +260,8 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
               'Tesserino di gruppo',
               style: Theme.of(context).textTheme.headline4,
             ),
-            Text('Ricorda che il tesserino di gruppo è valido solo se accompagnato dal tuo tesserino personale!'),
+            Text(
+                'Ricorda che il tesserino di gruppo è valido solo se accompagnato dal tuo tesserino personale!'),
             const SizedBox(height: 32),
             CMITextField(
               controller: groupNameController,
@@ -337,13 +352,13 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
                 children: [
                   Expanded(
                       child: Text(
-                    'Maschi: ${((sliderDivisions.value ?? 1) * manPercentage.value).toStringAsFixed(0)}',
+                    'Maschi: $maleCount',
                     // 'Maschi: ${(manPercentage.value * 100).toStringAsFixed(0)} %',
                     textAlign: TextAlign.center,
                   )),
                   Expanded(
                     child: Text(
-                      'Femmine: ${((1 - manPercentage.value) * (sliderDivisions.value ?? 1)).toStringAsFixed(0)}',
+                      'Femmine: $femaleCount',
                       // 'Femmine: ${(100 - manPercentage.value * 100).toStringAsFixed(0)} %',
                       textAlign: TextAlign.center,
                     ),
@@ -372,6 +387,12 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
                             name,
                             count,
                             averageAge,
+                            sliderEnabled.value
+                                ? int.tryParse(maleCount)
+                                : null,
+                            sliderEnabled.value
+                                ? int.tryParse(femaleCount)
+                                : null,
                             sliderEnabled.value ? manP : null,
                             sliderEnabled.value ? womanP : null,
                           );

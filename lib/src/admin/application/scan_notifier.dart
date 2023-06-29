@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:countmein/cloud.dart';
 import 'package:countmein/constants.dart';
@@ -9,10 +11,11 @@ import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/confirm_invite.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/ui/screens/scan.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final scanControllerProvider =
-    Provider.autoDispose.family<ScanController, String>((ref, eventId) {
+Provider.autoDispose.family<ScanController, String>((ref, eventId) {
   logger.wtf('Scan controller create');
   return ScanController(ref);
 });
@@ -30,15 +33,14 @@ class ScanController {
 
   ScanController(this.ref);
 
-  processScan2(
-    String data,
-    CMIProvider provider,
-    CMIEvent event,
-    ScanMode scanMode, {
-    Function(EventUser user)? onUpdate,
-    Function(EventUser? user, String message)? onError,
-    Function(EventUser? user, String message)? onMessage,
-  }) async {
+  processScan2(String data,
+      CMIProvider provider,
+      CMIEvent event,
+      ScanMode scanMode, {
+        Function(EventUser user)? onUpdate,
+        Function(EventUser? user, String message)? onError,
+        Function(EventUser? user, String message)? onMessage,
+      }) async {
     logger.i('processScan2 start');
     if (processing) return;
 
@@ -127,10 +129,12 @@ class ScanController {
               //userWithoutCheckIn.add(eventUser.id);
               processing = false;
               final message = eventUser.isGroup
-                  ? '${eventUser.groupName ?? 'Il gruppo'} non ha effettuato il check in!'
+                  ? '${eventUser.groupName ??
+                  'Il gruppo'} non ha effettuato il check in!'
                   : eventUser.isAnonymous
-                      ? 'L\'utente anonimo non ha effettuato il check in!'
-                      : '${eventUser.name} ${eventUser.surname} non ha effettuato il check in!';
+                  ? 'L\'utente anonimo non ha effettuato il check in!'
+                  : '${eventUser.name} ${eventUser
+                  .surname} non ha effettuato il check in!';
               onError?.call(eventUser, message);
               return;
             }
@@ -233,15 +237,14 @@ class ScanController {
     }
   }
 
-  Future processScan3(
-    String data,
-    CMIProvider provider,
-    CMIEvent event,
-    ScanMode scanMode, {
-    Function(EventUser user)? onUpdate,
-    Function(EventUser? user, String message)? onError,
-    Function(EventUser? user, String message)? onMessage,
-  }) async {
+  Future processScan3(String data,
+      CMIProvider provider,
+      CMIEvent event,
+      ScanMode scanMode, {
+        // Function(EventUser user)? onUpdate,
+        // Function(EventUser? user, String message)? onError,
+        Function(EventUser? user, ScanStatus status)? onMessage,
+      }) async {
     logger.i('processScan2 start for ${event.id}');
     if (processing) return;
 
@@ -258,7 +261,7 @@ class ScanController {
           event.acceptedCardType == AcceptedCardType.passpartoutAndMine &&
               (userQrCode.providerId == provider.id ||
                   (event.acceptPassepartout &&
-                      userQrCode.providerId == 'countmein'));
+                      userQrCode.providerId == countMeInProviderId));
 
       final onlyMineCondition =
           event.acceptedCardType == AcceptedCardType.mine &&
@@ -271,7 +274,7 @@ class ScanController {
           passpartoutAndMineCondition ||
           onlyMineCondition) {
         if (userQrCode.isAnonymous && userQrCode.privateId == null) {
-          onError?.call(null, 'Utente anonimo deve contenere il privateId');
+          onMessage?.call(null, ScanStatus.missingPrivateId);
           return;
         }
 
@@ -338,7 +341,9 @@ class ScanController {
           json['isSingleAccessType'] = isSingleAccessType;
           json['scanMode'] = scanMode.name;
           json['groupLeaderId'] = eventUser.isGroup ? userQrCode.userId : null;
-          json['timestamp'] = DateTime.now().millisecondsSinceEpoch;
+          json['timestamp'] = DateTime
+              .now()
+              .millisecondsSinceEpoch;
           json['hasPrivateInfo'] = userQrCode.privateId != null;
 
           const url = '$functionBaseUrl/scanner-scan';
@@ -346,33 +351,83 @@ class ScanController {
           if (res.statusCode == 200) {
             final map = Map.from(res.data);
             final status = map['status'] as String;
+            onMessage?.call(eventUser, statusFromString(status));
             logger.i(status);
+            alreadyScannedUser.add(
+                eventUser.isAnonymous ? eventUser.privateId! : eventUser.id);
           } else {
             logger.e(res);
             throw Exception(res.statusCode);
           }
 
-          alreadyScannedUser
-              .add(eventUser.isAnonymous ? eventUser.privateId! : eventUser.id);
           processing = false;
         } else {
           const message = 'Utente già scansionato';
           logger.i(message);
-          onMessage?.call(null, message);
+          onMessage?.call(null, ScanStatus.alreadyScanned);
         }
       } else {
         final message = 'Tesserino non è valido per questo evento.\n'
             'L\'evento accetta tesserini: ${event.acceptedCardType.text}';
         logger.i(message);
-        onMessage?.call(null, message);
+        onMessage?.call(null, ScanStatus.notValidForThisEvent);
       }
     } catch (ex, st) {
       logger.e(ex);
       logger.e(st);
       processing = false;
-      const message = 'QR-Code non valido';
-      logger.i(message);
-      onError?.call(null, message);
+      onMessage?.call(null, ScanStatus.unknown);
     }
+  }
+
+  ScanStatus statusFromString(String status) {
+    return switch (status) {
+      'missing_check_in' => ScanStatus.missingCheckIn,
+      'check_out_completed' => ScanStatus.checkOutCompleted,
+      'participation_count_incremented' =>
+      ScanStatus.participationCountIncremented,
+      'leader_group_not_exist' => ScanStatus.leaderGroupNotExist,
+      'check_in_completed' => ScanStatus.checkInCompleted,
+      _ => ScanStatus.unknown,
+    };
+  }
+}
+
+enum ScanStatus {
+  missingCheckIn,
+  missingPrivateId,
+  checkOutCompleted,
+  participationCountIncremented,
+  leaderGroupNotExist,
+  checkInCompleted,
+  alreadyScanned,
+  notValidForThisEvent,
+  unknown;
+
+  Color get color {
+    return switch (this) {
+      ScanStatus.missingCheckIn || ScanStatus
+          .notValidForThisEvent || missingPrivateId => Colors.red,
+      ScanStatus.leaderGroupNotExist || alreadyScanned => Colors.orange,
+      ScanStatus.checkOutCompleted || ScanStatus
+          .participationCountIncremented || ScanStatus
+          .checkInCompleted => Colors.green,
+      _ => Colors.grey,
+    };
+  }
+
+  String get message {
+    return switch (this) {
+      ScanStatus.missingCheckIn => 'Non hai effettuato il checkIn',
+      ScanStatus
+          .missingPrivateId => 'Utente anonimo deve contenere il privateId',
+    ScanStatus.checkOutCompleted => 'Check out completato',
+    ScanStatus.participationCountIncremented =>
+    'Contatore partecipante incrementato',
+    ScanStatus.leaderGroupNotExist =>
+    'Il leader di questo gruppo non ha effettuato il check in',
+    ScanStatus.checkInCompleted => 'Check in completato',
+    _ => 'Stato sconosciuto',
+    };
   }
 }

@@ -124,7 +124,7 @@ class CMIEvent with _$CMIEvent {
     @FrequencyTypeConverter() FrequencyType? frequency,
     int? recurrence,
     int? remaining,
-    @Default(0) int? totalUsers,
+    @Default(0) num? totalUsers,
     GenderCount? genderCount,
     String? activeSessionId,
     @EventAccessTypeConverter() required EventAccessType accessType,
@@ -158,7 +158,7 @@ class CMISubEvent with _$CMISubEvent {
     required String id,
     String? name,
     GenderCount? genderCount,
-    @Default(0) int totalUsers,
+    @Default(0) num totalUsers,
     @MyDateTimeConverter() required DateTime startAt,
     @MyDateTimeConverter() DateTime? endAt,
   }) = _CMISubEvent;

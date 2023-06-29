@@ -17,7 +17,7 @@ _$_CMIEvent _$$_CMIEventFromJson(Map<String, dynamic> json) => _$_CMIEvent(
           const FrequencyTypeConverter().fromJson(json['frequency'] as String?),
       recurrence: json['recurrence'] as int?,
       remaining: json['remaining'] as int?,
-      totalUsers: json['totalUsers'] as int? ?? 0,
+      totalUsers: json['totalUsers'] as num? ?? 0,
       genderCount: json['genderCount'] == null
           ? null
           : GenderCount.fromJson(json['genderCount'] as Map<String, dynamic>),
@@ -95,7 +95,7 @@ _$_CMISubEvent _$$_CMISubEventFromJson(Map<String, dynamic> json) =>
       genderCount: json['genderCount'] == null
           ? null
           : GenderCount.fromJson(json['genderCount'] as Map<String, dynamic>),
-      totalUsers: json['totalUsers'] as int? ?? 0,
+      totalUsers: json['totalUsers'] as num? ?? 0,
       startAt:
           const MyDateTimeConverter().fromJson(json['startAt'] as Timestamp),
       endAt: _$JsonConverterFromJson<Timestamp, DateTime>(

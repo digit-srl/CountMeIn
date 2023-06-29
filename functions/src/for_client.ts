@@ -173,7 +173,7 @@ export const scan = functions
 
         if (isSingleAccessType && scanMode == "checkOut") {
           //eventUser = eventUser.copyWith(checkOutAt: DateTime.now());
-          json["checkOut"] = firestoreTimestamp;
+          json["checkOutAt"] = firestoreTimestamp;
         } else if (!isSingleAccessType && scanMode == "checkIn") {
           //eventUser = eventUser.copyWith(checkInAt: DateTime.now());
           json["checkInAt"] = firestoreTimestamp;
@@ -253,6 +253,7 @@ export const scan = functions
     }
   );
 
+/*
 export const processQrCode = functions
   .region("europe-west3")
   .https.onRequest(
@@ -278,6 +279,7 @@ export const processQrCode = functions
     }
   );
 
+
 export class URLWrapper {
   private readonly _url!: URL;
   private readonly _params!: URLSearchParams;
@@ -291,11 +293,6 @@ export class URLWrapper {
     }
   }
 
-  /**
-   * Method to get the value from the search params. Also handle any string of 'undefined' or 'null'.
-   * @param name The parameter name to get the value
-   * @return The parameter value. Return empty string if not available.
-   */
   getParam(name: string): string | undefined {
     if (!this._params) {
       return "";
@@ -306,4 +303,5 @@ export class URLWrapper {
       ? undefined
       : value;
   }
-}
+}  
+*/

@@ -39,7 +39,7 @@ void main() async {
   );
 
   initializeDateFormatting('it_IT');
-  if (Environment.launchMode == 'emulator') {
+  if (Environment.isEmulator) {
     final d = "localhost";
     await FirebaseAuth.instance.useAuthEmulator(d, 9099);
     FirebaseFirestore.instance.useFirestoreEmulator(d, 8082);

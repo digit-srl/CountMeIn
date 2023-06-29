@@ -417,7 +417,9 @@ exports.onGlobalPrivateUserCheckIn = functions
           }
 
           if (m != 0 || f != 0 || nb != 0) {
-            console.log("m: " + m + ",f: " + f + ",nb: " + nb);
+            console.log(
+              "onGlobalPrivateUserCheckIn m: " + m + ",f: " + f + ",nb: " + nb
+            );
             const countRef = snap.after.ref.parent.parent;
             if (countRef != null) {
               await updateCounts(countRef, 1, m, f, nb, 0);
@@ -587,8 +589,8 @@ async function incrementUserCount(
   let woman: number = 0;
   let notAvailable: number = 0;
   if (isGroup && manPercentage != null && womanPercentage != null) {
-    man = Math.trunc(groupCount * manPercentage);
-    woman = Math.trunc(groupCount * womanPercentage);
+    man = Math.round(groupCount * manPercentage);
+    woman = Math.round(groupCount * womanPercentage);
   } else {
     notAvailable = totalUsers;
   }
