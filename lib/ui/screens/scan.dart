@@ -180,6 +180,9 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                   flex: 6,
                   child: MobileScanner(
                     controller: scanner,
+                    errorBuilder: (context, exception, child){
+                      return Center(child: Text(exception.errorDetails?.message.toString() ?? ''));
+                    },
                     onDetect: (BarcodeCapture barcodeCapture) {
                       final barcode = barcodeCapture.barcodes.firstOrNull;
                       if (barcode == null || barcode.rawValue == null) return;

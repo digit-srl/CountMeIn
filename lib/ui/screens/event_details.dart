@@ -542,7 +542,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                         if (eventData.totalUsers != null &&
                             eventData.totalUsers! > 0)
                           Text(
-                            '${eventData.totalUsers} utent${eventData.totalUsers! > 1 ? 'i' : 'e'}',
+                            '${eventData.totalUsers!.toStringAsFixed(0)} utent${eventData.totalUsers! > 1 ? 'i' : 'e'}',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                       ],
@@ -668,7 +668,7 @@ class SessionItem extends StatelessWidget {
           ),
           Text(
             // subEvent.id,
-            '${session.totalUsers} utenti',
+            '${session.totalUsers.toStringAsFixed(0)} utent${session.totalUsers > 1 ? 'i' : 'e'}',
             style: Theme.of(context).textTheme.caption,
           ),
           if (kDebugMode)

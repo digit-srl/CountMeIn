@@ -13,13 +13,18 @@ import {
   usersCollectionRef,
   userGroupCollectionRef,
 } from "./firestore_references";
+import {
+  generateAndSendResetPasswordEmail,
+  getProviderData,
+  twoDecimalPlaces,
+} from "./utils";
 const randomstring = require("randomstring");
 const CodiceFiscale = require("codice-fiscale-js");
 
 /// OUTPUT STATUS
 /// user_already_exist:
 /// invalid_fiscal_code:
-exports.createUser = functions
+export const createUser = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {
@@ -151,7 +156,7 @@ exports.createUser = functions
     }
   );
 
-exports.verifyEmail = functions
+export const verifyEmail = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {
@@ -221,6 +226,259 @@ exports.verifyEmail = functions
           return;
         }
       });
+    }
+  );
+
+export const recoverUserCard = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      cors(request, response, async () => {
+        console.log(request.body);
+
+        if (request.method !== "POST") {
+          response.status(403).send("Forbidden!");
+          return;
+        }
+
+        const data = request.body;
+        const userId = data.userId;
+        const cf = data.cf;
+        const providerId = data.providerId;
+        const gender = data.gender;
+
+        if (
+          providerId == null ||
+          userId == null ||
+          cf == null ||
+          gender == null
+        ) {
+          const message =
+            "Missing data: providerId: " +
+            providerId +
+            ", userId: " +
+            userId +
+            ", cf: " +
+            cf +
+            ", gender: " +
+            gender;
+          console.error(message);
+          response.status(400).send("invalid-argument");
+          return;
+        }
+
+        const userDoc = await usersCollectionRef(providerId).doc(userId).get();
+
+        if (!userDoc.exists) {
+          console.log("User not found");
+          throw new functions.https.HttpsError("not-found", "User not found");
+        }
+        const userData = userDoc.data();
+
+        if (userData == null) {
+          console.log("User data null");
+          throw new functions.https.HttpsError("not-found", "User data null");
+        }
+
+        //TODO inserire controllo ultimo accesso, se piu tardi i 2 ore richiedere otp code
+        const providerDoc = await providerDocRef(providerId).get();
+        if (!providerDoc.exists) {
+          console.log("Provider not found");
+          throw new functions.https.HttpsError(
+            "not-found",
+            "Provider not found"
+          );
+        }
+        const providerData = providerDoc.data();
+
+        if (providerData == null) {
+          console.log("Provider data null");
+          throw new functions.https.HttpsError(
+            "not-found",
+            "Provider data null"
+          );
+        }
+
+        const providerName = providerData.name;
+        const fiscalCode = new CodiceFiscale(cf);
+        const bornIn = fiscalCode.birthday;
+        try {
+          const bornInTimestamp = firestore.Timestamp.fromDate(bornIn);
+          const batch = db.batch();
+          const userPrivateRef = privateUsersCollectionRef().doc();
+          const privateId = userPrivateRef.id;
+          batch.set(userPrivateRef, {
+            id: privateId,
+            bornIn: bornInTimestamp,
+            gender: gender,
+          });
+          await batch.commit();
+          console.log("private date set on" + userPrivateRef.path);
+          await sendUserCard(userData, providerId, providerName, privateId);
+          response.sendStatus(200);
+        } catch (err: any) {
+          console.error(err);
+          response.status(500).send(err);
+        }
+      });
+    }
+  );
+
+export const requestGroupCard = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      cors(request, response, async () => {
+        console.log(request.body);
+
+        if (request.method !== "POST") {
+          response.status(403).send("Forbidden!");
+          return;
+        }
+
+        const data = request.body;
+        const providerId = data.providerId;
+        const userId = data.userId;
+        const groupCount = data.groupCount;
+        const averageAge = data.averageAge;
+        const groupName = data.groupName;
+
+        if (
+          providerId == null ||
+          userId == null ||
+          groupCount == null ||
+          groupName == null
+        ) {
+          const message = "Some fields are null";
+          console.error(message);
+          response.status(400).send("invalid-argument");
+          return;
+        }
+
+        const maleCount = data.maleCount;
+        const femaleCount = data.femaleCount;
+
+        if (
+          maleCount != null &&
+          femaleCount != null &&
+          maleCount + femaleCount != groupCount
+        ) {
+          const message = "There is a error about gender count";
+          console.error(message);
+          response.status(400).send({
+            error: "invalid-argument",
+            message: message,
+          });
+          return;
+        }
+
+        const manPercentage =
+          maleCount != null ? maleCount / groupCount : undefined;
+        const womanPercentage =
+          femaleCount != null ? femaleCount / groupCount : undefined;
+
+        console.log(
+          "maleCount: " +
+            maleCount +
+            ", femaleCount:" +
+            femaleCount +
+            ", manPercentage:" +
+            manPercentage +
+            ", womanPercentage:" +
+            womanPercentage
+        );
+        try {
+          const userData = await utils.getUserData(providerId, userId);
+          const providerData = await getProviderData(providerId);
+          const groupDocRef = userGroupCollectionRef(providerId, userId).doc();
+          const groupId = groupDocRef.id;
+          await groupDocRef.set({
+            id: groupId,
+            groupName: groupName,
+            groupCount: groupCount,
+            averageAge: averageAge,
+            maleCount: maleCount,
+            femaleCount: femaleCount,
+          });
+          await sendGroupCard(
+            userData,
+            groupId,
+            providerId,
+            providerData.name,
+            groupName,
+            groupCount,
+            averageAge,
+            manPercentage,
+            womanPercentage
+          );
+
+          response.sendStatus(200);
+        } catch (ex) {
+          console.log(ex);
+          response.status(404).send("error");
+        }
+      });
+    }
+  );
+
+export const sendResetPasswordEmail = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      console.log(request.body);
+
+      if (request.method !== "POST") {
+        response.status(403).send("Forbidden!");
+        return;
+      }
+
+      const data = request.body;
+      const userEmail = data.email;
+      const fullName = data.fullName;
+
+      if (userEmail === undefined || userEmail === null || userEmail === "") {
+        response.status(400).send("invalid userId");
+        return;
+      }
+
+      return generateAndSendResetPasswordEmail(fullName, userEmail)
+        .then(() => {
+          response.status(200).end();
+        })
+        .catch((error: any) => {
+          console.log(error);
+          response.status(500).send(error);
+        });
+      /*    return admin
+        .auth()
+        .generatePasswordResetLink(userEmail)
+        .then((link: string) => {
+          console.log(link);
+
+          let paramString = link.split("?")[1];
+          let queryString = new URLSearchParams(paramString);
+
+          for (let pair of queryString.entries()) {
+            console.log("Key is: " + pair[0]);
+            console.log("Value is: " + pair[1]);
+          }
+
+          const oobCode = queryString.get("oobCode");
+          console.log("oobCode => " + oobCode);
+          if (oobCode === undefined || oobCode === null) {
+            response.status(500).send("Missing oobCode in generated link");
+            return;
+          }
+          Email.sendResetPasswordEmail(fullName, userEmail, oobCode).then(
+            () => {
+              response.status(200).end();
+            }
+          );
+        })
+        .catch((error: any) => {
+          console.log(error);
+          response.status(500).send(error);
+        });*/
     }
   );
 
@@ -347,212 +605,4 @@ async function sendGroupCard(
       console.error(err);
       throw err;
     });
-}
-
-exports.recoverUserCard = functions
-  .region("europe-west3")
-  .https.onRequest(
-    async (request: functions.https.Request, response: functions.Response) => {
-      cors(request, response, async () => {
-        console.log(request.body);
-
-        if (request.method !== "POST") {
-          response.status(403).send("Forbidden!");
-          return;
-        }
-
-        const data = request.body;
-        const userId = data.userId;
-        const cf = data.cf;
-        const providerId = data.providerId;
-        const gender = data.gender;
-
-        if (
-          providerId == null ||
-          userId == null ||
-          cf == null ||
-          gender == null
-        ) {
-          const message =
-            "Missing data: providerId: " +
-            providerId +
-            ", userId: " +
-            userId +
-            ", cf: " +
-            cf +
-            ", gender: " +
-            gender;
-          console.error(message);
-          response.status(400).send("invalid-argument");
-          return;
-        }
-
-        const userDoc = await usersCollectionRef(providerId).doc(userId).get();
-
-        if (!userDoc.exists) {
-          console.log("User not found");
-          throw new functions.https.HttpsError("not-found", "User not found");
-        }
-        const userData = userDoc.data();
-
-        if (userData == null) {
-          console.log("User data null");
-          throw new functions.https.HttpsError("not-found", "User data null");
-        }
-
-        //TODO inserire controllo ultimo accesso, se piu tardi i 2 ore richiedere otp code
-        const providerDoc = await providerDocRef(providerId).get();
-        if (!providerDoc.exists) {
-          console.log("Provider not found");
-          throw new functions.https.HttpsError(
-            "not-found",
-            "Provider not found"
-          );
-        }
-        const providerData = providerDoc.data();
-
-        if (providerData == null) {
-          console.log("Provider data null");
-          throw new functions.https.HttpsError(
-            "not-found",
-            "Provider data null"
-          );
-        }
-
-        const providerName = providerData.name;
-        const fiscalCode = new CodiceFiscale(cf);
-        const bornIn = fiscalCode.birthday;
-        try {
-          const bornInTimestamp = firestore.Timestamp.fromDate(bornIn);
-          const batch = db.batch();
-          const userPrivateRef = privateUsersCollectionRef().doc();
-          const privateId = userPrivateRef.id;
-          batch.set(userPrivateRef, {
-            id: privateId,
-            bornIn: bornInTimestamp,
-            gender: gender,
-          });
-          await batch.commit();
-          console.log("private date set on" + userPrivateRef.path);
-          await sendUserCard(userData, providerId, providerName, privateId);
-          response.sendStatus(200);
-        } catch (err: any) {
-          console.error(err);
-          response.status(500).send(err);
-        }
-      });
-    }
-  );
-
-exports.requestGroupCard = functions
-  .region("europe-west3")
-  .https.onRequest(
-    async (request: functions.https.Request, response: functions.Response) => {
-      cors(request, response, async () => {
-        console.log(request.body);
-
-        if (request.method !== "POST") {
-          response.status(403).send("Forbidden!");
-          return;
-        }
-
-        const data = request.body;
-        const providerId = data.providerId;
-        const userId = data.userId;
-        const groupCount = data.groupCount;
-        const averageAge = data.averageAge;
-        const groupName = data.groupName;
-
-        if (
-          providerId == null ||
-          userId == null ||
-          groupCount == null ||
-          groupName == null
-        ) {
-          const message = "Some fields are null";
-          console.error(message);
-          response.status(400).send("invalid-argument");
-          return;
-        }
-
-        const maleCount = data.maleCount;
-        const femaleCount = data.femaleCount;
-
-        if (
-          maleCount != null &&
-          femaleCount != null &&
-          maleCount + femaleCount != groupCount
-        ) {
-          const message = "There is a error about gender count";
-          console.error(message);
-          response.status(400).send({
-            error: "invalid-argument",
-            message: message,
-          });
-          return;
-        }
-
-        const manPercentage =
-          maleCount != null ? maleCount / groupCount : undefined;
-        const womanPercentage =
-          femaleCount != null ? femaleCount / groupCount : undefined;
-
-        console.log(
-          "maleCount: " +
-            maleCount +
-            ", femaleCount:" +
-            femaleCount +
-            ", manPercentage:" +
-            manPercentage +
-            ", womanPercentage:" +
-            womanPercentage
-        );
-        try {
-          const userData = await utils.getUserData(providerId, userId);
-          const providerData = await getProviderData(providerId);
-          const groupDocRef = userGroupCollectionRef(providerId, userId).doc();
-          const groupId = groupDocRef.id;
-          await groupDocRef.set({
-            id: groupId,
-            groupName: groupName,
-            groupCount: groupCount,
-            averageAge: averageAge,
-            maleCount: maleCount,
-            femaleCount: femaleCount,
-          });
-          await sendGroupCard(
-            userData,
-            groupId,
-            providerId,
-            providerData.name,
-            groupName,
-            groupCount,
-            averageAge,
-            manPercentage,
-            womanPercentage
-          );
-
-          response.sendStatus(200);
-        } catch (ex) {
-          console.log(ex);
-          response.status(404).send("error");
-        }
-      });
-    }
-  );
-
-async function getProviderData(
-  providerId: string
-): Promise<firestore.DocumentData> {
-  const providerDoc = await providerDocRef(providerId).get();
-  const providerData = providerDoc.data();
-  if (!providerDoc.exists || providerData == null) {
-    console.log("User not found");
-    throw Error();
-  }
-  return providerData;
-}
-
-function twoDecimalPlaces(num: number): string {
-  return (Math.round(num * 100) / 100).toFixed(2);
 }

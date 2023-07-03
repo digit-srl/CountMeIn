@@ -54,15 +54,16 @@ class AddScannerWidget extends HookConsumerWidget {
             const Text(
               'Seleziona uno scanner esistente',
             ),
+            const SizedBox(height: 4),
             Row(
               children: [
                 Flexible(
                   child: CMIDropdownButton<ProviderManager?>(
                     value: selectedScanner.value,
                     onChanged: (value) {
-                      nameController.clear();
-                      emailController.clear();
                       selectedScanner.value = value;
+                      nameController.text = value?.name ?? '';
+                      emailController.text = value?.email ?? '';
                     },
                     items: scanners
                         .map(
@@ -79,6 +80,8 @@ class AddScannerWidget extends HookConsumerWidget {
                   color: Colors.red,
                   onPressed: () {
                     selectedScanner.value = null;
+                    nameController.clear();
+                    emailController.clear();
                   },
                   icon: const Icon(Icons.clear),
                 ),
@@ -86,6 +89,8 @@ class AddScannerWidget extends HookConsumerWidget {
             ),
             const SizedBox(height: 16),
           ],
+          const Text('oppure invita un nuovo utente come scanner'),
+          const SizedBox(height: 4),
           Row(
             children: [
               Flexible(
@@ -107,15 +112,23 @@ class AddScannerWidget extends HookConsumerWidget {
           ),
           const SizedBox(height: 32),
           Center(
-              child: ElevatedButton(
-                  onPressed: () async {
-                    final name = nameController.text.trim();
-                    final email = emailController.text.trim();
-                    final n = Navigator.of(context);
-                    await addScanner(name, email);
-                    n.pop();
-                  },
-                  child: const Text('Aggiungi'))),
+            child: ElevatedButton(
+              onPressed: () async {
+                // if(selectedScanner.value == null){
+
+                final name = nameController.text.trim();
+                final email = emailController.text.trim();
+                if (name.isEmpty || email.isEmpty) return;
+                final n = Navigator.of(context);
+                await addScanner(name, email);
+                n.pop();
+                // }else{
+
+                // }
+              },
+              child: const Text('Aggiungi'),
+            ),
+          ),
         ],
       ),
     );

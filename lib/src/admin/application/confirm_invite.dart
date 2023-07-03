@@ -76,7 +76,7 @@ class ConfirmInviteNotifier extends StateNotifier<ConfirmInviteState> {
 
     //http://localhost:5003/count-me-in-ef93b/europe-west3/confirmPendingInvite
     try {
-      final url = '$functionBaseUrl/confirmPendingInvite';
+      const url = '$functionBaseUrl/confirmPendingInvite';
       final res = await ref.read(dioProvider).post(url, data: data);
       final map = Map.from(res.data);
       final status =
