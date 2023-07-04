@@ -325,6 +325,7 @@ EventUser _$EventUserFromJson(Map<String, dynamic> json) {
 mixin _$EventUser {
   String get id => throw _privateConstructorUsedError;
   String get providerId => throw _privateConstructorUsedError;
+  String? get userCardProviderId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get surname => throw _privateConstructorUsedError;
   String? get cf => throw _privateConstructorUsedError;
@@ -358,6 +359,7 @@ abstract class $EventUserCopyWith<$Res> {
   $Res call(
       {String id,
       String providerId,
+      String? userCardProviderId,
       String? name,
       String? surname,
       String? cf,
@@ -391,6 +393,7 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
   $Res call({
     Object? id = null,
     Object? providerId = null,
+    Object? userCardProviderId = freezed,
     Object? name = freezed,
     Object? surname = freezed,
     Object? cf = freezed,
@@ -417,6 +420,10 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
+      userCardProviderId: freezed == userCardProviderId
+          ? _value.userCardProviderId
+          : userCardProviderId // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -495,6 +502,7 @@ abstract class _$$_EventUserCopyWith<$Res> implements $EventUserCopyWith<$Res> {
   $Res call(
       {String id,
       String providerId,
+      String? userCardProviderId,
       String? name,
       String? surname,
       String? cf,
@@ -526,6 +534,7 @@ class __$$_EventUserCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? providerId = null,
+    Object? userCardProviderId = freezed,
     Object? name = freezed,
     Object? surname = freezed,
     Object? cf = freezed,
@@ -552,6 +561,10 @@ class __$$_EventUserCopyWithImpl<$Res>
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
+      userCardProviderId: freezed == userCardProviderId
+          ? _value.userCardProviderId
+          : userCardProviderId // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -626,6 +639,7 @@ class _$_EventUser implements _EventUser {
   const _$_EventUser(
       {required this.id,
       required this.providerId,
+      this.userCardProviderId,
       this.name,
       this.surname,
       this.cf,
@@ -650,6 +664,8 @@ class _$_EventUser implements _EventUser {
   final String id;
   @override
   final String providerId;
+  @override
+  final String? userCardProviderId;
   @override
   final String? name;
   @override
@@ -687,7 +703,7 @@ class _$_EventUser implements _EventUser {
 
   @override
   String toString() {
-    return 'EventUser(id: $id, providerId: $providerId, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, isGroup: $isGroup, isAnonymous: $isAnonymous, checkInAt: $checkInAt, checkOutAt: $checkOutAt, groupName: $groupName, averageAge: $averageAge, groupCount: $groupCount, participationCount: $participationCount, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
+    return 'EventUser(id: $id, providerId: $providerId, userCardProviderId: $userCardProviderId, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, isGroup: $isGroup, isAnonymous: $isAnonymous, checkInAt: $checkInAt, checkOutAt: $checkOutAt, groupName: $groupName, averageAge: $averageAge, groupCount: $groupCount, participationCount: $participationCount, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
   }
 
   @override
@@ -698,6 +714,8 @@ class _$_EventUser implements _EventUser {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.providerId, providerId) ||
                 other.providerId == providerId) &&
+            (identical(other.userCardProviderId, userCardProviderId) ||
+                other.userCardProviderId == userCardProviderId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.surname, surname) || other.surname == surname) &&
             (identical(other.cf, cf) || other.cf == cf) &&
@@ -730,26 +748,28 @@ class _$_EventUser implements _EventUser {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      providerId,
-      name,
-      surname,
-      cf,
-      email,
-      privateId,
-      fromExternalOrganization,
-      isGroup,
-      isAnonymous,
-      checkInAt,
-      checkOutAt,
-      groupName,
-      averageAge,
-      groupCount,
-      participationCount,
-      womanPercentage,
-      manPercentage);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        providerId,
+        userCardProviderId,
+        name,
+        surname,
+        cf,
+        email,
+        privateId,
+        fromExternalOrganization,
+        isGroup,
+        isAnonymous,
+        checkInAt,
+        checkOutAt,
+        groupName,
+        averageAge,
+        groupCount,
+        participationCount,
+        womanPercentage,
+        manPercentage
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -769,6 +789,7 @@ abstract class _EventUser implements EventUser {
   const factory _EventUser(
       {required final String id,
       required final String providerId,
+      final String? userCardProviderId,
       final String? name,
       final String? surname,
       final String? cf,
@@ -793,6 +814,8 @@ abstract class _EventUser implements EventUser {
   String get id;
   @override
   String get providerId;
+  @override
+  String? get userCardProviderId;
   @override
   String? get name;
   @override

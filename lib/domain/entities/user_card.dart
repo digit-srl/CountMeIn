@@ -84,6 +84,7 @@ class EventUser with _$EventUser {
   const factory EventUser({
     required String id,
     required String providerId,
+    String? userCardProviderId,
     String? name,
     String? surname,
     String? cf,

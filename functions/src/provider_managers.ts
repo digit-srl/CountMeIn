@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 const admin = require("firebase-admin");
+const db = admin.firestore();
 import Email = require("./email");
 //const bodyParser = require("body-parser");
 import * as dotenv from "dotenv";
@@ -139,46 +140,77 @@ export const confirmPendingInvite = functions
         //TODO  controlla che l utente esista veramente
 
         // leggo il provider con transaction
+        try {
+          await db.runTransaction(async (t: FirebaseFirestore.Transaction) => {
+            const sfDoc = await t.get(providerDocRef(providerId));
+            const providerData = sfDoc.data();
+            if (!sfDoc.exists || providerData == null) {
+              throw "Document does not exist!";
+            }
 
-        // controllo managers
+            const eventsRestriction: Array<string> =
+              inviteData.eventsRestriction;
 
-        // se esisto aggiungo evento alla restrizione
+            // controllo managers
+            const currentManagers = providerData.managers as Map<String, any>;
+            var map: Object = {};
 
-        // else creo l utente in managers
+            // se esisto aggiungo evento alla restrizione
+            if (currentManagers.has(userId)) {
+              const m = currentManagers.get(userId);
+              const r: Array<string> = m.eventsRestriction;
 
-        const eventsRestriction = inviteData.eventsRestriction;
+              if (eventsRestriction.length > 0) {
+                r.push(eventsRestriction[0]);
+              }
 
-        let map = {
-          id: userId,
-          role: role,
-          email: email,
-          name: fullName,
-          eventsRestriction: eventsRestriction,
-        };
+              map = {
+                id: m.id,
+                role: m.role,
+                email: m.email,
+                name: m.name,
+                eventsRestriction: r,
+              };
+            } else {
+              // else creo l utente in managers
+              map = {
+                id: userId,
+                role: role,
+                email: email,
+                name: fullName,
+                eventsRestriction: eventsRestriction,
+              };
+            }
 
-        let managers = new Map<string, Object>();
-        managers.set("managers." + userId, map);
-        let jManagers = Object.fromEntries(managers);
+            let managers = new Map<string, Object>();
+            managers.set("managers." + userId, map);
+            let jManagers = Object.fromEntries(managers);
 
-        console.log("updating managers");
+            console.log("updating managers");
 
-        console.log(jManagers);
+            console.log(jManagers);
 
-        await providerDocRef(providerId).update(jManagers);
-        await providerPendingInviteDocRef(providerId, inviteId).update({
-          status: "completed",
-        });
-        await Email.sendWelcomeNewProvider(
-          inviteData.providerName,
-          email,
-          fullName,
-          role
-        );
-        response
-          .send({
-            status: "completed",
-          })
-          .end();
+            t.update(providerDocRef(providerId), jManagers);
+            t.update(providerPendingInviteDocRef(providerId, inviteId), {
+              status: "completed",
+            });
+          });
+          console.log("Transaction successfully committed!");
+
+          await Email.sendWelcomeNewProvider(
+            inviteData.providerName,
+            email,
+            fullName,
+            role
+          );
+          response
+            .send({
+              status: "completed",
+            })
+            .end();
+        } catch (ex) {
+          console.log("Transaction failed!");
+        }
 
         //let map = new Map<string, string>();
         //map.set("providersRole." + invite.userId, role);

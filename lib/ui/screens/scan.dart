@@ -287,7 +287,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
             ),
             if (kDebugMode)
               Align(
-                alignment: Alignment.topLeft,
+                alignment: Alignment.bottomLeft,
                 child: IconButton(
                   icon: const Icon(Icons.developer_mode),
                   onPressed: () async {

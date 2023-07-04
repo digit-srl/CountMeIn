@@ -29,7 +29,8 @@ export const scan = functions
       const groupId = data.groupId;
       const privateId = data.privateId;
       const hasPrivateInfo = data.hasPrivateInfo ?? privateId != null;
-      const providerId = data.providerId;
+      const userCardProviderId = data.userCardProviderId;
+      const eventProviderId = data.providerId;
       const isSingleAccessType = data.isSingleAccessType;
       const scanMode = data.scanMode;
       const isGroup = data.isGroup;
@@ -48,8 +49,8 @@ export const scan = functions
       const timestamp = new Date(data.timestamp);
       const firestoreTimestamp = firestore.Timestamp.fromDate(timestamp);
 
-      if (providerId == null) {
-        response.status(400).send("invalid providerId");
+      if (eventProviderId == null || userCardProviderId == null) {
+        response.status(400).send("invalid providerId or userCardProviderId");
         return;
       }
 
@@ -68,17 +69,18 @@ export const scan = functions
         return;
       }
 
-      const eventDoc = await eventDocRef(providerId, eventId).get();
+      const eventRef = eventDocRef(eventProviderId, eventId);
+      const eventDoc = await eventRef.get();
       const event = eventDoc.data();
 
       if (event == null) {
-        response.status(400).send("event is null");
+        response.status(400).send("event is null, " + eventRef.path);
         return;
       }
 
       const id = isGroup ? groupId : userId;
       const userSubEventDocRef = sessionDocRef(
-        providerId,
+        eventProviderId,
         eventId,
         event.activeSessionId!
       )
@@ -121,10 +123,10 @@ export const scan = functions
 
       // Check in
       if (userSubEventExists) {
-        console.log(providerId);
+        console.log(eventProviderId);
         console.log(eventId);
         console.log(id);
-        const ref = await eventDocRef(providerId, eventId)
+        const ref = await eventDocRef(eventProviderId, eventId)
           .collection("users")
           .doc(isAnonymous ? privateId : id);
 
@@ -139,7 +141,7 @@ export const scan = functions
       } else {
         // Se è un gruppo controllo che il rappresentante abbia fatto checkin
         if (isGroup) {
-          const groupLeaderDoc = await eventDocRef(providerId, eventId)
+          const groupLeaderDoc = await eventDocRef(eventProviderId, eventId)
             .collection("users")
             .doc(groupLeaderId)
             .get();
@@ -167,7 +169,7 @@ export const scan = functions
           manPercentage: manPercentage,
           womanPercentage: womanPercentage,
           isAnonymous: isAnonymous,
-          providerId: providerId,
+          providerId: userCardProviderId,
           hasPrivateInfo: hasPrivateInfo,
         };
 
@@ -189,7 +191,7 @@ export const scan = functions
             "Salvo il mio private id nella collezione privateUsers della sessione"
           );
           batch.set(
-            sessionDocRef(providerId, eventId, event.activeSessionId!)
+            sessionDocRef(eventProviderId, eventId, event.activeSessionId!)
               .collection("privateUsers")
               .doc(privateId),
             {
@@ -198,7 +200,7 @@ export const scan = functions
           );
         }
 
-        const globalUserRef = eventDocRef(providerId, eventId)
+        const globalUserRef = eventDocRef(eventProviderId, eventId)
           .collection("users")
           .doc(isAnonymous ? privateId : id);
         const globalUserDoc = await globalUserRef.get();
@@ -224,7 +226,7 @@ export const scan = functions
             manPercentage: manPercentage,
             womanPercentage: womanPercentage,
             isAnonymous: isAnonymous,
-            providerId: providerId,
+            providerId: userCardProviderId,
             participationCount: 1,
             hasPrivateInfo: hasPrivateInfo,
           });
@@ -234,7 +236,7 @@ export const scan = functions
               "Salvo il mio private id nella collezione privateUsers"
             );
             batch.set(
-              eventDocRef(providerId, eventId)
+              eventDocRef(eventProviderId, eventId)
                 .collection("privateUsers")
                 .doc(privateId),
               {

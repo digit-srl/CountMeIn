@@ -33,209 +33,211 @@ class ScanController {
 
   ScanController(this.ref);
 
-  processScan2(String data,
-      CMIProvider provider,
-      CMIEvent event,
-      ScanMode scanMode, {
-        Function(EventUser user)? onUpdate,
-        Function(EventUser? user, String message)? onError,
-        Function(EventUser? user, String message)? onMessage,
-      }) async {
-    logger.i('processScan2 start');
-    if (processing) return;
-
-    logger.i('onProcessing');
-    try {
-      final userQrCode = QrCodeData.fromQrCode(data);
-      final isGroupCard = userQrCode.isGroupCard;
-      final ids = EventIds(
-          providerId: provider.id,
-          eventId: event.id,
-          sessionId: event.activeSessionId);
-
-      final passpartoutAndMineCondition =
-          event.acceptedCardType == AcceptedCardType.passpartoutAndMine &&
-              (userQrCode.providerId == provider.id ||
-                  (event.acceptPassepartout &&
-                      userQrCode.providerId == 'countmein'));
-
-      final onlyMineCondition =
-          event.acceptedCardType == AcceptedCardType.mine &&
-              userQrCode.providerId == provider.id;
-
-      final allUserCardCondition =
-          event.acceptedCardType == AcceptedCardType.all;
-
-      if (allUserCardCondition ||
-          passpartoutAndMineCondition ||
-          onlyMineCondition) {
-        // if (userWithoutCheckIn.contains(userQrCode.id)) {
-        //   return;
-        // }
-
-        if (userQrCode.isAnonymous && userQrCode.privateId == null) {
-          onError?.call(null, 'Utente anonimo deve contenere il privateId');
-          return;
-        }
-
-        var eventUser = EventUser(
-          isGroup: isGroupCard,
-          id: isGroupCard ? userQrCode.groupId! : userQrCode.userId,
-          name: userQrCode.name,
-          surname: userQrCode.surname,
-          email: userQrCode.isExternalOrganization
-              ? '${userQrCode.email}${provider.domainRequirement}'
-              : userQrCode.email,
-          cf: userQrCode.cf,
-          fromExternalOrganization: userQrCode.isExternalOrganization,
-          privateId: userQrCode.privateId,
-          groupName: userQrCode.groupName,
-          groupCount: userQrCode.groupCount,
-          averageAge: userQrCode.averageAge,
-          manPercentage: userQrCode.manPercentage,
-          womanPercentage: userQrCode.womanPercentage,
-          isAnonymous: userQrCode.isAnonymous,
-          providerId: userQrCode.providerId,
-        );
-
-        if (!alreadyScannedUser.contains(
-            eventUser.isAnonymous ? eventUser.privateId! : eventUser.id)) {
-          logger.i('onProcessing new user id on local list');
-          processing = true;
-
-          final isSingleAccessType = event.accessType == EventAccessType.single;
-
-          logger.i('get user ${eventUser.id} from ${event.activeSessionId}');
-          final userSubEventDocRef = Cloud.sessionDoc(ids)
-              .collection('users')
-              .doc(eventUser.isAnonymous ? eventUser.privateId : eventUser.id);
-          final userSubEventDoc = await userSubEventDocRef.get();
-          final userSubEventData = userSubEventDoc.data() ?? {};
-          logger.i('get user ${eventUser.id} complete');
-
-          //Check out
-          if (!isSingleAccessType && scanMode == ScanMode.checkOut) {
-            // se l utente esiste vuol dire che ha fatto il check in
-            if (userSubEventDoc.exists) {
-              logger.i('processScan2: checkOut user exists');
-              // Se non è stato fatto ancora il check out aggiungo la data di check out
-              if (!userSubEventData.containsKey('checkOutAt') ||
-                  userSubEventData['checkOutAt'] == null) {
-                userSubEventDocRef.update({'checkOutAt': DateTime.now()});
-                onUpdate?.call(eventUser);
-              }
-            } else {
-              logger.i('processScan2: checkOut user doesnt exist');
-              //userWithoutCheckIn.add(eventUser.id);
-              processing = false;
-              final message = eventUser.isGroup
-                  ? '${eventUser.groupName ??
-                  'Il gruppo'} non ha effettuato il check in!'
-                  : eventUser.isAnonymous
-                  ? 'L\'utente anonimo non ha effettuato il check in!'
-                  : '${eventUser.name} ${eventUser
-                  .surname} non ha effettuato il check in!';
-              onError?.call(eventUser, message);
-              return;
-            }
-          }
-
-          //Check in
-          if (!userSubEventDoc.exists) {
-            logger.i('processScan2: checkin user doesnt exist');
-
-            // Se è un gruppo controllo che il rappresentante abbia fatto checkin
-            if (eventUser.isGroup) {
-              final groupLeaderDoc = await Cloud.sessionDoc(ids)
-                  .collection('users')
-                  .doc(userQrCode.userId)
-                  .get();
-              if (!groupLeaderDoc.exists) {
-                processing = false;
-                onError?.call(
-                    eventUser, 'Il capogruppo non ha effettuato il check in');
-                return;
-              }
-            }
-
-            if (isSingleAccessType && scanMode == ScanMode.checkOut) {
-              eventUser = eventUser.copyWith(checkOutAt: DateTime.now());
-            } else if (!isSingleAccessType && scanMode == ScanMode.checkIn) {
-              eventUser = eventUser.copyWith(checkInAt: DateTime.now());
-            }
-
-            final batch = FirebaseFirestore.instance.batch();
-            final json = eventUser.toJson();
-            json.removeWhere((key, value) => value == null);
-            batch.set(userSubEventDocRef, json);
-            if (!eventUser.isGroup && eventUser.privateId != null) {
-              logger.i('processScan2: checkin user has private id');
-              final privateUserSubEventDocRef = Cloud.sessionDoc(ids)
-                  .collection('privateUsers')
-                  .doc(eventUser.privateId);
-              batch.set(privateUserSubEventDocRef, {'id': eventUser.privateId});
-            }
-            batch.commit();
-            //userSubEventDocRef.set(eventUser.toJson());
-            onUpdate?.call(eventUser);
-
-            final eventUsersCollectionRef = Cloud.eventUsersCollection(EventIds(
-              providerId: provider.id,
-              eventId: event.id,
-            )).doc(eventUser.isAnonymous ? eventUser.privateId : eventUser.id);
-            final globalUserDoc = await eventUsersCollectionRef.get();
-            if (!globalUserDoc.exists) {
-              logger.i('processScan2: checkin global user doesnt exist');
-              json.remove('checkOutAt');
-              json.remove('checkInAt');
-              json.remove('privateId');
-              json.addAll({'participationCount': 1});
-              eventUsersCollectionRef.set(json, SetOptions(merge: true));
-              if (!eventUser.isGroup && eventUser.privateId != null) {
-                logger.i('processScan2: checkin global user has privateId');
-                Cloud.eventDoc(provider.id, event.id)
-                    .collection('privateUsers')
-                    .doc(eventUser.privateId)
-                    .set({'id': eventUser.privateId});
-              }
-            }
-          } else {
-            logger.i('User exists, increment participation count');
-            await Cloud.eventUsersCollection(
-              EventIds(
-                providerId: provider.id,
-                eventId: event.id,
-              ),
-            )
-                .doc(eventUser.isAnonymous ? eventUser.privateId : eventUser.id)
-                .update({'participationCount': FieldValue.increment(1)});
-            const message = 'Utente già presente nel db';
-            onMessage?.call(null, message);
-          }
-
-          alreadyScannedUser
-              .add(eventUser.isAnonymous ? eventUser.privateId! : eventUser.id);
-          processing = false;
-        } else {
-          const message = 'Utente già scansionato';
-          logger.i(message);
-          onMessage?.call(null, message);
-        }
-      } else {
-        final message = 'Tesserino non è valido per questo evento.\n'
-            'L\'eveno accetta tesserini: ${event.acceptedCardType.text}';
-        logger.i(message);
-        onMessage?.call(null, message);
-      }
-    } catch (ex, st) {
-      logger.e(ex);
-      logger.e(st);
-      processing = false;
-      const message = 'QR-Code non valido';
-      logger.i(message);
-      onError?.call(null, message);
-    }
-  }
+  // processScan2(String data,
+  //     CMIProvider provider,
+  //     CMIEvent event,
+  //     ScanMode scanMode, {
+  //       Function(EventUser user)? onUpdate,
+  //       Function(EventUser? user, String message)? onError,
+  //       Function(EventUser? user, String message)? onMessage,
+  //     }) async {
+  //   logger.i('processScan2 start');
+  //   if (processing) return;
+  //
+  //   logger.i('onProcessing');
+  //   try {
+  //     final userQrCode = QrCodeData.fromQrCode(data);
+  //     final isGroupCard = userQrCode.isGroupCard;
+  //     final ids = EventIds(
+  //         providerId: provider.id,
+  //         eventId: event.id,
+  //         sessionId: event.activeSessionId);
+  //
+  //     final passpartoutAndMineCondition =
+  //         event.acceptedCardType == AcceptedCardType.passpartoutAndMine &&
+  //             (userQrCode.providerId == provider.id ||
+  //                 (event.acceptPassepartout &&
+  //                     userQrCode.providerId == 'countmein'));
+  //
+  //     final onlyMineCondition =
+  //         event.acceptedCardType == AcceptedCardType.mine &&
+  //             userQrCode.providerId == provider.id;
+  //
+  //     final allUserCardCondition =
+  //         event.acceptedCardType == AcceptedCardType.all;
+  //
+  //     if (allUserCardCondition ||
+  //         passpartoutAndMineCondition ||
+  //         onlyMineCondition) {
+  //       // if (userWithoutCheckIn.contains(userQrCode.id)) {
+  //       //   return;
+  //       // }
+  //
+  //       if (userQrCode.isAnonymous && userQrCode.privateId == null) {
+  //         onError?.call(null, 'Utente anonimo deve contenere il privateId');
+  //         return;
+  //       }
+  //
+  //       var eventUser = EventUser(
+  //         isGroup: isGroupCard,
+  //         id: isGroupCard ? userQrCode.groupId! : userQrCode.userId,
+  //         name: userQrCode.name,
+  //         surname: userQrCode.surname,
+  //         email: userQrCode.isExternalOrganization
+  //             ? '${userQrCode.email}${provider.domainRequirement}'
+  //             : userQrCode.email,
+  //         cf: userQrCode.cf,
+  //         fromExternalOrganization: userQrCode.isExternalOrganization,
+  //         privateId: userQrCode.privateId,
+  //         groupName: userQrCode.groupName,
+  //         groupCount: userQrCode.groupCount,
+  //         averageAge: userQrCode.averageAge,
+  //         manPercentage: userQrCode.manPercentage,
+  //         womanPercentage: userQrCode.womanPercentage,
+  //         isAnonymous: userQrCode.isAnonymous,
+  //         providerId: provider.id,
+  //         userCardProviderId: userQrCode.providerId,
+  //
+  //       );
+  //
+  //       if (!alreadyScannedUser.contains(
+  //           eventUser.isAnonymous ? eventUser.privateId! : eventUser.id)) {
+  //         logger.i('onProcessing new user id on local list');
+  //         processing = true;
+  //
+  //         final isSingleAccessType = event.accessType == EventAccessType.single;
+  //
+  //         logger.i('get user ${eventUser.id} from ${event.activeSessionId}');
+  //         final userSubEventDocRef = Cloud.sessionDoc(ids)
+  //             .collection('users')
+  //             .doc(eventUser.isAnonymous ? eventUser.privateId : eventUser.id);
+  //         final userSubEventDoc = await userSubEventDocRef.get();
+  //         final userSubEventData = userSubEventDoc.data() ?? {};
+  //         logger.i('get user ${eventUser.id} complete');
+  //
+  //         //Check out
+  //         if (!isSingleAccessType && scanMode == ScanMode.checkOut) {
+  //           // se l utente esiste vuol dire che ha fatto il check in
+  //           if (userSubEventDoc.exists) {
+  //             logger.i('processScan2: checkOut user exists');
+  //             // Se non è stato fatto ancora il check out aggiungo la data di check out
+  //             if (!userSubEventData.containsKey('checkOutAt') ||
+  //                 userSubEventData['checkOutAt'] == null) {
+  //               userSubEventDocRef.update({'checkOutAt': DateTime.now()});
+  //               onUpdate?.call(eventUser);
+  //             }
+  //           } else {
+  //             logger.i('processScan2: checkOut user doesnt exist');
+  //             //userWithoutCheckIn.add(eventUser.id);
+  //             processing = false;
+  //             final message = eventUser.isGroup
+  //                 ? '${eventUser.groupName ??
+  //                 'Il gruppo'} non ha effettuato il check in!'
+  //                 : eventUser.isAnonymous
+  //                 ? 'L\'utente anonimo non ha effettuato il check in!'
+  //                 : '${eventUser.name} ${eventUser
+  //                 .surname} non ha effettuato il check in!';
+  //             onError?.call(eventUser, message);
+  //             return;
+  //           }
+  //         }
+  //
+  //         //Check in
+  //         if (!userSubEventDoc.exists) {
+  //           logger.i('processScan2: checkin user doesnt exist');
+  //
+  //           // Se è un gruppo controllo che il rappresentante abbia fatto checkin
+  //           if (eventUser.isGroup) {
+  //             final groupLeaderDoc = await Cloud.sessionDoc(ids)
+  //                 .collection('users')
+  //                 .doc(userQrCode.userId)
+  //                 .get();
+  //             if (!groupLeaderDoc.exists) {
+  //               processing = false;
+  //               onError?.call(
+  //                   eventUser, 'Il capogruppo non ha effettuato il check in');
+  //               return;
+  //             }
+  //           }
+  //
+  //           if (isSingleAccessType && scanMode == ScanMode.checkOut) {
+  //             eventUser = eventUser.copyWith(checkOutAt: DateTime.now());
+  //           } else if (!isSingleAccessType && scanMode == ScanMode.checkIn) {
+  //             eventUser = eventUser.copyWith(checkInAt: DateTime.now());
+  //           }
+  //
+  //           final batch = FirebaseFirestore.instance.batch();
+  //           final json = eventUser.toJson();
+  //           json.removeWhere((key, value) => value == null);
+  //           batch.set(userSubEventDocRef, json);
+  //           if (!eventUser.isGroup && eventUser.privateId != null) {
+  //             logger.i('processScan2: checkin user has private id');
+  //             final privateUserSubEventDocRef = Cloud.sessionDoc(ids)
+  //                 .collection('privateUsers')
+  //                 .doc(eventUser.privateId);
+  //             batch.set(privateUserSubEventDocRef, {'id': eventUser.privateId});
+  //           }
+  //           batch.commit();
+  //           //userSubEventDocRef.set(eventUser.toJson());
+  //           onUpdate?.call(eventUser);
+  //
+  //           final eventUsersCollectionRef = Cloud.eventUsersCollection(EventIds(
+  //             providerId: provider.id,
+  //             eventId: event.id,
+  //           )).doc(eventUser.isAnonymous ? eventUser.privateId : eventUser.id);
+  //           final globalUserDoc = await eventUsersCollectionRef.get();
+  //           if (!globalUserDoc.exists) {
+  //             logger.i('processScan2: checkin global user doesnt exist');
+  //             json.remove('checkOutAt');
+  //             json.remove('checkInAt');
+  //             json.remove('privateId');
+  //             json.addAll({'participationCount': 1});
+  //             eventUsersCollectionRef.set(json, SetOptions(merge: true));
+  //             if (!eventUser.isGroup && eventUser.privateId != null) {
+  //               logger.i('processScan2: checkin global user has privateId');
+  //               Cloud.eventDoc(provider.id, event.id)
+  //                   .collection('privateUsers')
+  //                   .doc(eventUser.privateId)
+  //                   .set({'id': eventUser.privateId});
+  //             }
+  //           }
+  //         } else {
+  //           logger.i('User exists, increment participation count');
+  //           await Cloud.eventUsersCollection(
+  //             EventIds(
+  //               providerId: provider.id,
+  //               eventId: event.id,
+  //             ),
+  //           )
+  //               .doc(eventUser.isAnonymous ? eventUser.privateId : eventUser.id)
+  //               .update({'participationCount': FieldValue.increment(1)});
+  //           const message = 'Utente già presente nel db';
+  //           onMessage?.call(null, message);
+  //         }
+  //
+  //         alreadyScannedUser
+  //             .add(eventUser.isAnonymous ? eventUser.privateId! : eventUser.id);
+  //         processing = false;
+  //       } else {
+  //         const message = 'Utente già scansionato';
+  //         logger.i(message);
+  //         onMessage?.call(null, message);
+  //       }
+  //     } else {
+  //       final message = 'Tesserino non è valido per questo evento.\n'
+  //           'L\'eveno accetta tesserini: ${event.acceptedCardType.text}';
+  //       logger.i(message);
+  //       onMessage?.call(null, message);
+  //     }
+  //   } catch (ex, st) {
+  //     logger.e(ex);
+  //     logger.e(st);
+  //     processing = false;
+  //     const message = 'QR-Code non valido';
+  //     logger.i(message);
+  //     onError?.call(null, message);
+  //   }
+  // }
 
   Future processScan3(String data,
       CMIProvider provider,
@@ -302,7 +304,8 @@ class ScanController {
         var eventUser = EventUser(
           id: isGroupCard ? userQrCode.groupId! : userQrCode.userId,
           privateId: userQrCode.privateId,
-          providerId: userQrCode.providerId,
+          providerId: provider.id,
+          userCardProviderId: userQrCode.providerId,
           isGroup: isGroupCard,
           isAnonymous: userQrCode.isAnonymous,
           groupName: userQrCode.groupName,
@@ -375,6 +378,8 @@ class ScanController {
     } catch (ex, st) {
       logger.e(ex);
       logger.e(st);
+      print(ex);
+      print(st);
       processing = false;
       onMessage?.call(null, ScanStatus.unknown);
     }
