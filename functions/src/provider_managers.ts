@@ -134,7 +134,7 @@ export const confirmPendingInvite = functions
           );
           const userData = await utils.getManagerUserData(userId);
           fullName = userData.name + " " + userData.surname;
-          cf = userData.cf;
+          console.log("user retrieved " + fullName);
         }
 
         //TODO  controlla che l utente esista veramente
@@ -145,21 +145,32 @@ export const confirmPendingInvite = functions
             const sfDoc = await t.get(providerDocRef(providerId));
             const providerData = sfDoc.data();
             if (!sfDoc.exists || providerData == null) {
-              throw "Document does not exist!";
+              throw "Provider Document does not exists: " + providerId;
             }
 
             const eventsRestriction: Array<string> =
               inviteData.eventsRestriction;
 
             // controllo managers
-            const currentManagers = providerData.managers as Map<String, any>;
+            console.log("providerData: " + providerData.id);
+            const currentManagers = providerData.managers;
+
+            const transformedTokensMap = new Map<string, any>();
+            Object.keys(currentManagers).forEach((e) => {
+              transformedTokensMap.set(e, currentManagers[e]);
+            });
+
             var map: Object = {};
 
             // se esisto aggiungo evento alla restrizione
-            if (currentManagers.has(userId)) {
-              const m = currentManagers.get(userId);
+            if (transformedTokensMap.has(userId) && role == "scanner") {
+              console.log("current managers has userId: " + userId);
+              const m = transformedTokensMap.get(userId);
+              console.log("manage map + " + m);
               const r: Array<string> = m.eventsRestriction;
 
+              console.log("current event restriction: " + r);
+              console.log("new event restriction: " + eventsRestriction[0]);
               if (eventsRestriction.length > 0) {
                 r.push(eventsRestriction[0]);
               }
@@ -181,6 +192,8 @@ export const confirmPendingInvite = functions
                 eventsRestriction: eventsRestriction,
               };
             }
+
+            console.log("new map: " + map);
 
             let managers = new Map<string, Object>();
             managers.set("managers." + userId, map);
@@ -210,6 +223,9 @@ export const confirmPendingInvite = functions
             .end();
         } catch (ex) {
           console.log("Transaction failed!");
+          console.log(ex);
+
+          response.status(500).send(ex);
         }
 
         //let map = new Map<string, string>();
