@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
@@ -188,7 +190,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                       .toList(),
                 ),
               ),
-               const SizedBox(width: 16),
+              const SizedBox(width: 16),
               Flexible(
                 child: CMIDropdownButton<AcceptedCardType>(
                   label: 'Accettazione',
@@ -305,68 +307,83 @@ class NewEventFormScreen extends HookConsumerWidget {
           Center(
             child: ElevatedButton(
               onPressed: () async {
-                final isRecurring = eventType.value == EventType.periodic;
-                if (_formKey.currentState!.validate()) {
-                  final eventId = const Uuid().v4();
-                  final currentSubEventId =
-                      DateFormat('y-MM-dd').format(startAt.value);
+                try {
+                  final isRecurring = eventType.value == EventType.periodic;
+                  if (_formKey.currentState!.validate()) {
+                    final eventId = const Uuid().v4();
+                    final currentSubEventId =
+                        DateFormat('y-MM-dd').format(startAt.value);
 
-                  final womCount = int.tryParse(womController.text.trim()) ?? 0;
+                    final womCount =
+                        int.tryParse(womController.text.trim()) ?? 0;
 
-                  final recurrence = isRecurring
-                      ? int.tryParse(repsController.text.trim()) ?? 1
-                      : 1;
+                    final recurrence = isRecurring
+                        ? int.tryParse(repsController.text.trim()) ?? 1
+                        : 1;
 
-                  final start = startAt.value.midnightUTC;
+                    final start = startAt.value.midnightUTC;
 
-                  // Data di fine prima sessione
-                  final subEventEndAt = start.add(
-                    Duration(
-                        days: isRecurring
-                            ? selectedFrequency.value.multiplier
-                            : 1),
+                    // Data di fine prima sessione
+                    final subEventEndAt = start.add(
+                      Duration(
+                          days: isRecurring
+                              ? selectedFrequency.value.multiplier
+                              : 1),
+                    );
+
+                    //TODO
+                    final subEventDeadline = subEventEndAt;
+
+                    final s = CMIEvent(
+                      id: eventId,
+                      type: eventType.value,
+                      activeSessionId: currentSubEventId,
+                      recurrence: recurrence,
+                      subEventDeadline: subEventDeadline,
+                      name: nameController.text.trim(),
+                      acceptPassepartout: acceptPassepartout,
+                      anonymous: anonymous.value,
+                      emailShowed: anonymous.value ? false : emailEnabled.value,
+                      recurring: isRecurring,
+                      remaining: isRecurring ? recurrence - 1 : 0,
+                      frequency: isRecurring ? selectedFrequency.value : null,
+                      accessType: accessType.value,
+                      maxWomCount: releaseWom.value ? womCount : 0,
+                      status: EventStatus.live,
+                      createdOn: DateTime.now().toUtc(),
+                      startAt: start,
+                      acceptedCardType: acceptedCardType.value,
+                    );
+
+                    final firstSubEvent = CMISubEvent(
+                      id: currentSubEventId,
+                      startAt: start,
+                      endAt: subEventEndAt,
+                    );
+
+                    final navigator = Navigator.of(context);
+
+                    final batch = FirebaseFirestore.instance.batch();
+                    batch.set(Cloud.eventDoc(providerId, eventId), s.toJson());
+                    batch.set(
+                        Cloud.sessionDoc(EventIds(
+                            providerId: providerId,
+                            eventId: eventId,
+                            sessionId: firstSubEvent.id)),
+                        firstSubEvent.toJson());
+                    await batch.commit();
+                    navigator.pop();
+                  }
+                } catch (ex, st) {
+                  logger.e(ex);
+                  logger.e(st);
+                  CoolAlert.show(
+                    context: context,
+                    type: CoolAlertType.error,
+                    title: 'Si è verificato un errore',
+                    text: ex.toString(),
+                    width: 300,
                   );
-
-                  //TODO
-                  final subEventDeadline = subEventEndAt;
-
-                  final s = CMIEvent(
-                    id: eventId,
-                    type: eventType.value,
-                    activeSessionId: currentSubEventId,
-                    recurrence: recurrence,
-                    subEventDeadline: subEventDeadline,
-                    name: nameController.text.trim(),
-                    acceptPassepartout: acceptPassepartout,
-                    anonymous: anonymous.value,
-                    emailShowed: anonymous.value ? false : emailEnabled.value,
-                    recurring: isRecurring,
-                    remaining: isRecurring ? recurrence - 1 : 0,
-                    frequency: isRecurring ? selectedFrequency.value : null,
-                    accessType: accessType.value,
-                    maxWomCount: releaseWom.value ? womCount : 0,
-                    status: EventStatus.live,
-                    createdOn: DateTime.now().toUtc(),
-                    startAt: start,
-                    acceptedCardType: acceptedCardType.value,
-                  );
-
-                  final firstSubEvent = CMISubEvent(
-                    id: currentSubEventId,
-                    startAt: start,
-                    endAt: subEventEndAt,
-                  );
-
-                  final navigator = Navigator.of(context);
-
-                  //TODO use transaction
-                  await Cloud.eventDoc(providerId, eventId).set(s.toJson());
-                  await Cloud.sessionDoc(EventIds(
-                          providerId: providerId,
-                          eventId: eventId,
-                          sessionId: firstSubEvent.id))
-                      .set(firstSubEvent.toJson());
-                  navigator.pop();
                 }
               },
               child: const Text('Crea evento'),
