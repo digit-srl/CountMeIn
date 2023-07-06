@@ -102,6 +102,7 @@ export const confirmPendingInvite = functions
         var cf = data.cf;
 
         // Create New user
+        let password: string | undefined;
         if (userId === undefined || userId === null) {
           console.log("confirmPendingInvite: new user");
           if (
@@ -119,13 +120,18 @@ export const confirmPendingInvite = functions
           }
           fullName = name + " " + surname;
 
+          // Creo un nuovo utente nel sistema e imposta emailVerified a true in
+          // quanto questa api e invocata dal click di un link nell email inviata all utente
+          password = generateSecret();
           const tmpUser = await createNewAdminForProvider(
             name,
             surname,
             email,
             role,
             providerId,
-            cf
+            cf,
+            true,
+            password
           );
           userId = tmpUser.uid;
         } else {
@@ -214,7 +220,8 @@ export const confirmPendingInvite = functions
             inviteData.providerName,
             email,
             fullName,
-            role
+            role,
+            password
           );
           response
             .send({

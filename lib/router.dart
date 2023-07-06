@@ -7,6 +7,7 @@ import 'package:countmein/src/admin/ui/screens/new_event.dart';
 import 'package:countmein/src/admin/ui/screens/qrcode_validation.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
+import 'package:countmein/src/auth/application/reset_password_notifier.dart';
 import 'package:countmein/src/auth/ui/screens/invite_form_confirm.dart';
 import 'package:countmein/src/user/ui/screens/recover_user_card.dart';
 import 'package:countmein/src/user/ui/screens/user_dashboard.dart';
@@ -43,7 +44,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     // For demo purposes
     refreshListenable: router,
     // This notifiies `GoRouter` for refresh events
-    initialLocation: kIsWeb ?  AuthGate.routeName : AdminDashboardScreen.path,
+    initialLocation: kIsWeb ? AuthGate.routeName : AdminDashboardScreen.path,
     routes: router._routes,
     // redirect to the login page if the user is not logged in
     redirect: router._redirectLogic,
@@ -110,7 +111,7 @@ class RouterNotifier extends ChangeNotifier {
     //     state.subloc == ActivityRequestScreen.routeName;
     // final isGoingToRecoverUserCard = state.subloc
 
-    if(!isGoingToAdmin && !isGoingSignIn){
+    if (!isGoingToAdmin && !isGoingSignIn) {
       debugPrint('Skip redirect');
       return null;
     }
@@ -140,7 +141,7 @@ class RouterNotifier extends ChangeNotifier {
     // home if they weren't going anywhere)
     if (isGoingToSignIn) return state.queryParameters['from'] ?? '/';
 
-    if(authState is Authenticated){
+    if (authState is Authenticated) {
       final isScanner = authState.user.role == UserRole.scanner;
       print('user authenticated is scanner? $isScanner');
     }
@@ -168,7 +169,8 @@ class RouterNotifier extends ChangeNotifier {
                     path: '${AdminProviderHandlerScreen.routeName}/:providerId',
                     builder: (context, state) {
                       return AdminProviderHandlerScreen(
-                        providerId: state.pathParameters['providerId'] as String,
+                        providerId:
+                            state.pathParameters['providerId'] as String,
                         extraProvider: state.extra as CMIProvider?,
                       );
                     },
@@ -184,37 +186,41 @@ class RouterNotifier extends ChangeNotifier {
                       GoRoute(
                         path: ManagersHandlerScreen.routeName,
                         builder: (context, state) => ManagersHandlerScreen(
-                          providerId: state.pathParameters['providerId'] as String,
+                          providerId:
+                              state.pathParameters['providerId'] as String,
                         ),
                       ),
                       GoRoute(
-                        name: EventDetailsScreen.routeName,
-                        path: '${EventDetailsScreen.routeName}/:eventId',
-                        builder: (context, state) {
-                          final eventId = state.pathParameters['eventId'] as String;
-                          final providerId = state.pathParameters['providerId'] as String;
-                          return EventDetailsScreen(
-                            eventId: eventId,
-                            providerId: providerId,
-                          );
-                        },
-                        routes: [
-                          GoRoute(
-                            name: EventUsersScreen.routeName,
-                            path: EventUsersScreen.routeName,
-                            builder: (context, state) {
-                              final eventId = state.pathParameters['eventId'] as String;
-                              final providerId = state.pathParameters['providerId'] as String;
-                              final subEventId = state.queryParameters['s'];
-                              return EventUsersScreen(
-                                eventId: eventId,
-                                providerId: providerId,
-                                subEventId: subEventId,
-                              );
-                            },
-                          ),
-                        ]
-                      ),
+                          name: EventDetailsScreen.routeName,
+                          path: '${EventDetailsScreen.routeName}/:eventId',
+                          builder: (context, state) {
+                            final eventId =
+                                state.pathParameters['eventId'] as String;
+                            final providerId =
+                                state.pathParameters['providerId'] as String;
+                            return EventDetailsScreen(
+                              eventId: eventId,
+                              providerId: providerId,
+                            );
+                          },
+                          routes: [
+                            GoRoute(
+                              name: EventUsersScreen.routeName,
+                              path: EventUsersScreen.routeName,
+                              builder: (context, state) {
+                                final eventId =
+                                    state.pathParameters['eventId'] as String;
+                                final providerId = state
+                                    .pathParameters['providerId'] as String;
+                                final subEventId = state.queryParameters['s'];
+                                return EventUsersScreen(
+                                  eventId: eventId,
+                                  providerId: providerId,
+                                  subEventId: subEventId,
+                                );
+                              },
+                            ),
+                          ]),
                     ],
                   ),
                 ],
@@ -300,15 +306,16 @@ class RouterNotifier extends ChangeNotifier {
         GoRoute(
           path: ResetPasswordScreen.routeName,
           builder: (context, state) {
-            final url = state.queryParameters['u'];
+            //final url = state.queryParameters['u'];
+            final userId = state.queryParameters['uid'];
             final oobCode = state.queryParameters['oobCode'];
             final name = state.queryParameters['n'];
-            if (oobCode == null) {
+            if (oobCode == null || userId == null) {
               return const ErrorScreen();
             }
             return ResetPasswordScreen(
-              oobCode: oobCode,
-              fullName: name ?? 'name',
+              resetPasswordRequest: ResetPasswordRequest(
+                  oobCode: oobCode, fullName: name ?? 'Nome', userId: userId),
             );
           },
         ),

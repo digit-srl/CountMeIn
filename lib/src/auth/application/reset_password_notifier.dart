@@ -1,18 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:countmein/src/auth/application/reset_password_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../my_logger.dart';
 
+part 'reset_password_notifier.freezed.dart';
+
+@freezed
+class ResetPasswordRequest with _$ResetPasswordRequest {
+  factory ResetPasswordRequest({
+    required String oobCode,
+    required String userId,
+    required String fullName,
+  }) = _ResetPasswordRequest;
+}
+
 final resetPasswordProvider = StateNotifierProvider.family<
-    ResetPasswordNotifier, ResetPasswordState, String>((ref, oobCode) {
+    ResetPasswordNotifier,
+    ResetPasswordState,
+    ResetPasswordRequest>((ref, oobCode) {
   return ResetPasswordNotifier(oobCode);
 });
 
 class ResetPasswordNotifier extends StateNotifier<ResetPasswordState> {
-  final String oobCode;
+  final ResetPasswordRequest resetPasswordRequest;
 
-  ResetPasswordNotifier(this.oobCode) : super(const ResetPasswordLoading()) {
+  ResetPasswordNotifier(this.resetPasswordRequest)
+      : super(const ResetPasswordLoading()) {
     _init();
   }
 
@@ -29,13 +45,16 @@ class ResetPasswordNotifier extends StateNotifier<ResetPasswordState> {
   ///    was issued and when this method was called.
   _init() async {
     try {
-      final email =
-          await FirebaseAuth.instance.verifyPasswordResetCode(oobCode);
+      logger.i(resetPasswordRequest.toString());
+      final email = await FirebaseAuth.instance
+          .verifyPasswordResetCode(resetPasswordRequest.oobCode);
       logger.i('email per il reset: $email');
       state = const ResetPasswordData();
     } on FirebaseAuthException catch (ex) {
       handleFirebaseEx(ex);
     } catch (ex, st) {
+      logger.e(ex);
+      logger.e(st);
       state = ResetPasswordError(ex, st);
     }
   }
@@ -56,39 +75,49 @@ class ResetPasswordNotifier extends StateNotifier<ResetPasswordState> {
   ///  - Thrown if the new password is not strong enough.
   confirmNewPassword(String newPassword) async {
     try {
-      logger.i(oobCode);
-      await FirebaseAuth.instance
-          .confirmPasswordReset(code: oobCode, newPassword: newPassword);
+      logger.i(resetPasswordRequest.oobCode);
+      await FirebaseAuth.instance.confirmPasswordReset(
+          code: resetPasswordRequest.oobCode, newPassword: newPassword);
+      FirebaseFirestore.instance
+          .collection('/credentials')
+          .doc(resetPasswordRequest.userId)
+          .update({
+        'temporaryPassword': false,
+      });
       state = const ResetPasswordComplete();
     } on FirebaseAuthException catch (ex) {
       handleFirebaseEx(ex);
+    }catch (ex, st) {
+      logger.e(ex);
+      logger.e(st);
+      state = ResetPasswordError(ex, st);
     }
   }
 
   void handleFirebaseEx(FirebaseAuthException ex) {
+    logger.e(ex);
+    logger.e(ex.code);
     switch (ex.code) {
       case 'expired-action-code':
-        state = const ResetPasswordFirebaseException(
-            const ResetPasswordExExpired());
+        state = const ResetPasswordFirebaseException(ResetPasswordExExpired());
         break;
       case 'invalid-action-code':
-        state = const ResetPasswordFirebaseException(
-            const ResetPasswordExInvalidCode());
+        state =
+            const ResetPasswordFirebaseException(ResetPasswordExInvalidCode());
         break;
       case 'user-disabled':
-        state = const ResetPasswordFirebaseException(
-            const ResetPasswordExUserNotFound());
+        state =
+            const ResetPasswordFirebaseException(ResetPasswordExUserNotFound());
         break;
       case 'user-not-found':
-        state = const ResetPasswordFirebaseException(
-            const ResetPasswordExUserNotFound());
+        state =
+            const ResetPasswordFirebaseException(ResetPasswordExUserNotFound());
         break;
       case 'weak-password':
         state = const ResetPasswordState.weakPassword();
         break;
       default:
-        state = const ResetPasswordFirebaseException(
-            const ResetPasswordExUnknown());
+        state = const ResetPasswordFirebaseException(ResetPasswordExUnknown());
     }
   }
 }

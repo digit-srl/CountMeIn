@@ -130,12 +130,44 @@ export function sendUserCardEmail(
 export function sendResetPasswordEmail(
   fullName: string,
   email: string,
+  userId: string,
   oobCode: string
 ) {
   const emails = [email];
 
   const url =
-    "https://cmi.digit.srl/reset?n=" + fullName + "&oobCode=" + oobCode;
+    "https://cmi.digit.srl/reset?n=" +
+    fullName +
+    "&oobCode=" +
+    oobCode +
+    "&uid=" +
+    userId;
+
+  const json = JSON.stringify({
+    fullName: fullName,
+    url: encodeURI(url),
+  });
+
+  return sendEmail(emails, "Reset password", "reset_password", json, [], null);
+}
+
+// "fullName": "test_fullName",
+// "verificationUrl": "test_verificationUrl"
+export function sendResetPasswordEmailForNotSignedUser(
+  fullName: string,
+  email: string,
+  userId: string,
+  oobCode: string
+) {
+  const emails = [email];
+
+  const url =
+    "https://cmi.digit.srl/reset?n=" +
+    fullName +
+    "&oobCode=" +
+    oobCode +
+    "&uid=" +
+    userId;
 
   const json = JSON.stringify({
     fullName: fullName,
@@ -246,7 +278,8 @@ export async function sendWelcomeNewProvider(
   providerName: string,
   adminEmail: string,
   adminFullName: string,
-  role: string
+  role: string,
+  temporaryPassword: string | undefined
 ) {
   const emails = [adminEmail];
 
@@ -255,6 +288,7 @@ export async function sendWelcomeNewProvider(
     provider: providerName,
     adminEmail: adminEmail,
     role: role,
+    temporaryPassword: temporaryPassword,
   });
 
   console.log(json);

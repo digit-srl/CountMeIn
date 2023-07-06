@@ -434,14 +434,22 @@ export const sendResetPasswordEmail = functions
 
       const data = request.body;
       const userEmail = data.email;
-      const fullName = data.fullName;
 
       if (userEmail === undefined || userEmail === null || userEmail === "") {
         response.status(400).send("invalid userId");
         return;
       }
 
-      return generateAndSendResetPasswordEmail(fullName, userEmail)
+      //TODO controlla che lo userId appartiene a quella email
+      const user = await admin.auth().getUserByEmail(userEmail);
+
+      if (user == null) {
+        response.status(400).send("user doesn't exists");
+        return;
+      }
+      const fullName = user.displayName;
+
+      return generateAndSendResetPasswordEmail(fullName, userEmail, user.uid)
         .then(() => {
           response.status(200).end();
         })

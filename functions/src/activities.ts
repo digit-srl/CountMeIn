@@ -4,7 +4,7 @@ import Email = require("./email");
 //const bodyParser = require("body-parser");
 import * as dotenv from "dotenv";
 dotenv.config();
-import { createNewAdminForProvider } from "./utils";
+import { createNewAdminForProvider, generateSecret } from "./utils";
 import { FirebaseError } from "@firebase/util";
 import { UserRecord } from "firebase-functions/v1/auth";
 import { providerDocRef } from "./firestore_references";
@@ -62,6 +62,8 @@ export const onActivityRequestedUpdated = functions
       );
 
       let user: UserRecord | undefined;
+      let password: string | undefined;
+
       try {
         user = await admin.auth().getUserByEmail(email);
         console.log("user exist");
@@ -71,13 +73,16 @@ export const onActivityRequestedUpdated = functions
           console.error(err.code);
           if (err.code === "auth/user-not-found") {
             console.log("User doesn't exist yet, create it...");
+            password = generateSecret();
             user = await createNewAdminForProvider(
               name,
               surname,
               email,
               "admin",
               providerId,
-              cf
+              cf,
+              false,
+              password
             );
           }
         }
@@ -107,7 +112,8 @@ export const onActivityRequestedUpdated = functions
         provider.name,
         email,
         fullName,
-        "admin"
+        "admin",
+        password
       );
     }
   });

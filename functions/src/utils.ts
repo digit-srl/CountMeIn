@@ -25,13 +25,15 @@ export async function createNewAdminForProvider(
   email: string,
   role: string,
   providerId: string,
-  cf: string
+  cf: string,
+  emailVerified: boolean,
+  password: string
 ): Promise<UserRecord> {
   const fullName = name + " " + surname;
   const user = await admin.auth().createUser({
     email: email,
-    emailVerified: true,
-    password: "123456",
+    emailVerified: emailVerified,
+    password: password,
     displayName: fullName,
   });
   console.log("user created " + user.uid);
@@ -53,6 +55,7 @@ export async function createNewAdminForProvider(
     emailVerified: user.emailVerified,
     providersRole: jsonObject,
     cf: cf,
+    temporaryPassword: true,
   });
   //await generateAndSendResetPasswordEmail(fullName, email);
   return user;
@@ -60,7 +63,8 @@ export async function createNewAdminForProvider(
 
 export async function generateAndSendResetPasswordEmail(
   fullName: string,
-  userEmail: string
+  userEmail: string,
+  userId: string
 ) {
   try {
     const link = await admin.auth().generatePasswordResetLink(userEmail);
@@ -80,7 +84,7 @@ export async function generateAndSendResetPasswordEmail(
     if (oobCode === undefined || oobCode === null) {
       throw Error();
     }
-    await Email.sendResetPasswordEmail(fullName, userEmail, oobCode);
+    await Email.sendResetPasswordEmail(fullName, userEmail, userId, oobCode);
   } catch (ex) {
     throw ex;
   }
