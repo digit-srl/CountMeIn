@@ -145,7 +145,7 @@ class SignInScreen extends HookConsumerWidget {
                         },
                       ),
                     ),
-                    if (isWebDevice) ...[
+                    // if (isWebDevice) ...[
                       const SizedBox(height: 32),
                       EasyRichText(
                         "Vuoi registrare un tuo provider? Clicca qui",
@@ -158,12 +158,12 @@ class SignInScreen extends HookConsumerWidget {
                               targetString: 'qui',
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  if (isWebDevice) {
+                                  // if (isWebDevice) {
                                     context
                                         .push(ActivityRequestScreen.routeName);
-                                  } else {
-                                    final uri = 'https://cmi.digit.srl';
-                                  }
+                                  // } else {
+                                    // final uri = 'https://cmi.digit.srl';
+                                  // }
                                 },
                               style: Theme
                                   .of(context)
@@ -174,7 +174,7 @@ class SignInScreen extends HookConsumerWidget {
                         ],
                       ),
                       const SizedBox(height: 8),
-                    ],
+                    // ],
                     EasyRichText(
                       "Hai dimenticato la password? Clicca qui",
                       defaultStyle: Theme

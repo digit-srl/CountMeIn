@@ -291,7 +291,7 @@ class _ActivityRequestScreenState extends ConsumerState<ActivityRequestScreen> {
         adminEmail: email,
         adminName: name,
         adminSurname: surname,
-        adminCF: cf,
+        adminCf: cf,
         requestedOn: DateTime.now(),
         domainRequirement: restrictionDomain,
         releaseWom: releaseWom,

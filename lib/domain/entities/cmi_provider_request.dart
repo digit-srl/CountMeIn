@@ -14,7 +14,7 @@ class CMIProviderRequest with _$CMIProviderRequest {
     required String adminName,
     required String adminSurname,
     required String adminEmail,
-    required String adminCF,
+    required String adminCf,
     required String name,
     required String aim,
     required bool releaseWom,

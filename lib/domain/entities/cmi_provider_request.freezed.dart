@@ -24,7 +24,7 @@ mixin _$CMIProviderRequest {
   String get adminName => throw _privateConstructorUsedError;
   String get adminSurname => throw _privateConstructorUsedError;
   String get adminEmail => throw _privateConstructorUsedError;
-  String get adminCF => throw _privateConstructorUsedError;
+  String get adminCf => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get aim => throw _privateConstructorUsedError;
   bool get releaseWom => throw _privateConstructorUsedError;
@@ -56,7 +56,7 @@ abstract class $CMIProviderRequestCopyWith<$Res> {
       String adminName,
       String adminSurname,
       String adminEmail,
-      String adminCF,
+      String adminCf,
       String name,
       String aim,
       bool releaseWom,
@@ -86,7 +86,7 @@ class _$CMIProviderRequestCopyWithImpl<$Res, $Val extends CMIProviderRequest>
     Object? adminName = null,
     Object? adminSurname = null,
     Object? adminEmail = null,
-    Object? adminCF = null,
+    Object? adminCf = null,
     Object? name = null,
     Object? aim = null,
     Object? releaseWom = null,
@@ -115,9 +115,9 @@ class _$CMIProviderRequestCopyWithImpl<$Res, $Val extends CMIProviderRequest>
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
-      adminCF: null == adminCF
-          ? _value.adminCF
-          : adminCF // ignore: cast_nullable_to_non_nullable
+      adminCf: null == adminCf
+          ? _value.adminCf
+          : adminCf // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -176,7 +176,7 @@ abstract class _$$_CMIProviderRequestCopyWith<$Res>
       String adminName,
       String adminSurname,
       String adminEmail,
-      String adminCF,
+      String adminCf,
       String name,
       String aim,
       bool releaseWom,
@@ -204,7 +204,7 @@ class __$$_CMIProviderRequestCopyWithImpl<$Res>
     Object? adminName = null,
     Object? adminSurname = null,
     Object? adminEmail = null,
-    Object? adminCF = null,
+    Object? adminCf = null,
     Object? name = null,
     Object? aim = null,
     Object? releaseWom = null,
@@ -233,9 +233,9 @@ class __$$_CMIProviderRequestCopyWithImpl<$Res>
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
-      adminCF: null == adminCF
-          ? _value.adminCF
-          : adminCF // ignore: cast_nullable_to_non_nullable
+      adminCf: null == adminCf
+          ? _value.adminCf
+          : adminCf // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -289,7 +289,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
       required this.adminName,
       required this.adminSurname,
       required this.adminEmail,
-      required this.adminCF,
+      required this.adminCf,
       required this.name,
       required this.aim,
       required this.releaseWom,
@@ -315,7 +315,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
   @override
   final String adminEmail;
   @override
-  final String adminCF;
+  final String adminCf;
   @override
   final String name;
   @override
@@ -355,7 +355,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
 
   @override
   String toString() {
-    return 'CMIProviderRequest(id: $id, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, adminCF: $adminCF, name: $name, aim: $aim, releaseWom: $releaseWom, pIva: $pIva, managers: $managers, status: $status, apiKey: $apiKey, aims: $aims, domainRequirement: $domainRequirement, requestedOn: $requestedOn)';
+    return 'CMIProviderRequest(id: $id, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, adminCf: $adminCf, name: $name, aim: $aim, releaseWom: $releaseWom, pIva: $pIva, managers: $managers, status: $status, apiKey: $apiKey, aims: $aims, domainRequirement: $domainRequirement, requestedOn: $requestedOn)';
   }
 
   @override
@@ -370,7 +370,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
                 other.adminSurname == adminSurname) &&
             (identical(other.adminEmail, adminEmail) ||
                 other.adminEmail == adminEmail) &&
-            (identical(other.adminCF, adminCF) || other.adminCF == adminCF) &&
+            (identical(other.adminCf, adminCf) || other.adminCf == adminCf) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.aim, aim) || other.aim == aim) &&
             (identical(other.releaseWom, releaseWom) ||
@@ -394,7 +394,7 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
       adminName,
       adminSurname,
       adminEmail,
-      adminCF,
+      adminCf,
       name,
       aim,
       releaseWom,
@@ -427,7 +427,7 @@ abstract class _CMIProviderRequest implements CMIProviderRequest {
           required final String adminName,
           required final String adminSurname,
           required final String adminEmail,
-          required final String adminCF,
+          required final String adminCf,
           required final String name,
           required final String aim,
           required final bool releaseWom,
@@ -452,7 +452,7 @@ abstract class _CMIProviderRequest implements CMIProviderRequest {
   @override
   String get adminEmail;
   @override
-  String get adminCF;
+  String get adminCf;
   @override
   String get name;
   @override

@@ -5,7 +5,7 @@ import Email = require("./email");
 import * as dotenv from "dotenv";
 dotenv.config();
 import { createNewAdminForProvider, generateSecret } from "./utils";
-import { FirebaseError } from "@firebase/util";
+//import { FirebaseError } from "@firebase/util";
 import { UserRecord } from "firebase-functions/v1/auth";
 import { providerDocRef } from "./firestore_references";
 
@@ -67,25 +67,26 @@ export const onActivityRequestedUpdated = functions
       try {
         user = await admin.auth().getUserByEmail(email);
         console.log("user exist");
-      } catch (err) {
+      } catch (err: any) {
         console.log(err);
-        if (err instanceof FirebaseError) {
-          console.error(err.code);
-          if (err.code === "auth/user-not-found") {
-            console.log("User doesn't exist yet, create it...");
-            password = generateSecret();
-            user = await createNewAdminForProvider(
-              name,
-              surname,
-              email,
-              "admin",
-              providerId,
-              cf,
-              false,
-              password
-            );
-          }
+        console.log(typeof err);
+        //if (err instanceof FirebaseError) {
+        //console.error(err.code);
+        if (err.code === "auth/user-not-found") {
+          console.log("User doesn't exist yet, create it...");
+          password = generateSecret();
+          user = await createNewAdminForProvider(
+            name,
+            surname,
+            email,
+            "admin",
+            providerId,
+            cf,
+            false,
+            password
+          );
         }
+        // }
       }
 
       if (user === undefined || user === null) {
