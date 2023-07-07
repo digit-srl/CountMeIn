@@ -18,11 +18,11 @@ class AdminAppBar extends ConsumerWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(title),
       actions: [
-        if (kIsWeb && goToHome)
+        // if (kIsWeb && goToHome)
           IconButton(
               icon: const Icon(Icons.home),
               onPressed: () {
-                context.go(AdminDashboardScreen.routeName);
+                context.go(AdminDashboardScreen.path);
               }),
         TextButton(
             onPressed: () async {

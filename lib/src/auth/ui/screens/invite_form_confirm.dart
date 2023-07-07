@@ -142,7 +142,7 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
                                 MUButton(
                                 text: 'Vai alla dashboard',
                                 onPressed: () {
-                                  context.push(AdminDashboardScreen.routeName);
+                                  context.go(AdminDashboardScreen.path);
                                 },
                               ),
                         ]
