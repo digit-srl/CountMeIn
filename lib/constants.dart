@@ -21,3 +21,4 @@ const recoverUserCardUrl = '$functionBaseUrl/userSignUp-recoverUserCard';
 const requestOtpCodeUrl = '$functionBaseUrl/userProfile-requestOtpCode';
 const verifyEmailUrl = '$functionBaseUrl/userSignUp-verifyEmail';
 const sendResetPasswordUrl = '$functionBaseUrl/userSignUp-sendResetPasswordEmail';
+const confirmPendingInviteUrl = '$functionBaseUrl/managers-confirmPendingInvite';

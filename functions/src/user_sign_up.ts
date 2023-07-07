@@ -436,7 +436,7 @@ export const sendResetPasswordEmail = functions
       const userEmail = data.email;
 
       if (userEmail === undefined || userEmail === null || userEmail === "") {
-        response.status(400).send("invalid userId");
+        response.status(400).send("userEmail userId");
         return;
       }
 
