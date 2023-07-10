@@ -177,99 +177,126 @@ export const updateSubEventsCron = functions
   //.pubsub.schedule("0 0 * * *")
   .timeZone("Etc/UTC")
   .onRun(async (_) => {
-    const now = new Date();
-    console.log("This will be run every 30 minutes" + now.toISOString());
-
-    const nowUTC = dateToUTC(new Date());
-    console.log(nowUTC);
-
-    //prendo tutti gli eventi attivi ricorrenti che sono da aggiornare (query su subEventDeadline)
-    const querySnapshot = await db
-      .collectionGroup("events")
-      .where("status", "==", "live")
-      //.where("recurring", "==", true)
-      .where("type", "==", "periodic")
-      .where("subEventDeadline", "<=", nowUTC)
-      .get();
-
-    querySnapshot.forEach(
-      async (doc: FirebaseFirestore.QueryDocumentSnapshot) => {
-        console.log(doc.id, " => ", doc.data());
-
-        const docRef = doc.ref;
-        const providerId = docRef.parent.parent?.id;
-
-        console.log("providerId:" + providerId);
-
-        const data = doc.data();
-        const recurrence = data.recurrence;
-        const remaining = data.remaining;
-
-        if (remaining > 0) {
-          var multiplier = 1;
-          if (recurrence === "daily") {
-            multiplier = 1;
-          } else if (recurrence === "weekly") {
-            multiplier = 7;
-          }
-
-          // Data di fine sessione
-          const subEventDeadlineTimestamp: FirebaseFirestore.Timestamp =
-            data.subEventDeadline;
-          const subEventDeadlineDate = subEventDeadlineTimestamp.toDate();
-
-          // Prossima data di fine sessione
-          let nextSubEventDeadlineDate: Date = addDays(
-            multiplier,
-            subEventDeadlineDate
-          );
-
-          console.log(subEventDeadlineDate);
-          console.log(nextSubEventDeadlineDate);
-
-          const nextSubEventId =
-            subEventDeadlineDate.getFullYear() +
-            "-" +
-            ("0" + (subEventDeadlineDate.getMonth() + 1)).slice(-2) +
-            "-" +
-            ("0" + subEventDeadlineDate.getDate()).slice(-2);
-
-          console.log("nextSubEventId " + nextSubEventId);
-
-          const nextRemaining = remaining - 1;
-
-          const nextSubEventDeadlineTimestamp: firestore.Timestamp =
-            firestore.Timestamp.fromDate(nextSubEventDeadlineDate);
-
-          const nextSubEvent = {
-            id: nextSubEventId,
-            startAt: subEventDeadlineTimestamp,
-            endAt: nextSubEventDeadlineTimestamp,
-          };
-
-          await docRef.update({
-            remaining: nextRemaining,
-            activeSessionId: nextSubEventId,
-            subEventDeadline: nextSubEventDeadlineTimestamp,
-          });
-
-          await docRef
-            .collection("sessions")
-            .doc(nextSubEventId)
-            .set(nextSubEvent);
-        } else {
-          //chiudo l evento
-          await docRef.update({
-            subEventDeadline: null,
-            status: "closed",
-          });
-        }
-      }
-    );
+    return updateSubEvent();
   });
 
+async function updateSubEvent(): Promise<void> {
+  const now = new Date();
+  console.log("This will be run every 30 minutes" + now.toISOString());
+
+  var nowUTC = dateToUTC(new Date());
+
+  // For Test
+  //nowUTC = dateToUTC(new Date(2023, 7, 18, 3));
+  console.log(nowUTC);
+
+  //prendo tutti gli eventi attivi ricorrenti che sono da aggiornare (query su subEventDeadline)
+  const querySnapshot = await db
+    .collectionGroup("events")
+    .where("status", "==", "live")
+    //.where("recurring", "==", true)
+    .where("type", "==", "periodic")
+    .where("subEventDeadline", "<=", nowUTC)
+    .get();
+
+  querySnapshot.forEach(
+    async (doc: FirebaseFirestore.QueryDocumentSnapshot) => {
+      console.log(doc.id, " => ", doc.data());
+
+      const docRef = doc.ref;
+      const providerId = docRef.parent.parent?.id;
+
+      console.log("providerId:" + providerId);
+
+      const data = doc.data();
+      const frequency = data.frequency;
+      const remaining = data.remaining;
+
+      if (remaining > 0) {
+        var multiplier = 1;
+        if (frequency === "daily") {
+          multiplier = 1;
+        } else if (frequency === "weekly") {
+          multiplier = 7;
+        }
+
+        console.log("multiplier is: " + multiplier);
+
+        // Data di fine sessione
+        const subEventDeadlineTimestamp: FirebaseFirestore.Timestamp =
+          data.subEventDeadline;
+        const subEventDeadlineDate = subEventDeadlineTimestamp.toDate();
+
+        // Date evento corrente
+        const currentSubEventDate = addDays(-1, subEventDeadlineDate);
+        console.log("currentSubEventDate " + currentSubEventDate);
+        const nextSubEventDate = addDays(multiplier, currentSubEventDate);
+        console.log("nextSubEventDate " + nextSubEventDate);
+
+        // Prossima data di fine sessione
+        let nextSubEventDeadlineDate: Date = addDays(
+          multiplier,
+          subEventDeadlineDate
+        );
+
+        console.log(subEventDeadlineDate);
+        console.log(nextSubEventDeadlineDate);
+
+        const nextSubEventId =
+          nextSubEventDate.getFullYear() +
+          "-" +
+          ("0" + (nextSubEventDate.getMonth() + 1)).slice(-2) +
+          "-" +
+          ("0" + nextSubEventDate.getDate()).slice(-2);
+
+        console.log("nextSubEventId " + nextSubEventId);
+
+        const nextRemaining = remaining - 1;
+
+        const nextSubEvent = {
+          id: nextSubEventId,
+          startAt: firestore.Timestamp.fromDate(nextSubEventDate),
+          endAt: firestore.Timestamp.fromDate(nextSubEventDeadlineDate),
+        };
+
+        const batch = db.batch();
+
+        batch.update(docRef, {
+          remaining: nextRemaining,
+          activeSessionId: nextSubEventId,
+          subEventDeadline: firestore.Timestamp.fromDate(
+            nextSubEventDeadlineDate
+          ),
+        });
+        batch.set(
+          docRef.collection("sessions").doc(nextSubEventId),
+          nextSubEvent
+        );
+        return batch.commit();
+      } else {
+        //chiudo l evento
+        return docRef.update({
+          subEventDeadline: null,
+          status: "closed",
+        });
+      }
+    }
+  );
+}
+
 // only internals
-export const changeClaim = functions
+/*
+export const cronForTest = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      await updateSubEvent();
+    }
+  );
+*/
+
+// only internals
+/*export const changeClaim = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {
@@ -279,6 +306,8 @@ export const changeClaim = functions
         response.status(403).send("Forbidden!");
         return;
       }
+
+
 
       const data = request.body;
       const userId = data.userId;
@@ -307,6 +336,7 @@ export const changeClaim = functions
       }
     }
   );
+*/
 
 // Only for testing
 /*

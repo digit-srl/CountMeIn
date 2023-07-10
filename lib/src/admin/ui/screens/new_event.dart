@@ -322,9 +322,10 @@ class NewEventFormScreen extends HookConsumerWidget {
                         : 1;
 
                     final start = startAt.value.midnightUTC;
+                    final end = start.add(Duration(days: 1));
 
                     // Data di fine prima sessione
-                    final subEventEndAt = start.add(
+                    final subEventEndAt = end.add(
                       Duration(
                           days: isRecurring
                               ? selectedFrequency.value.multiplier

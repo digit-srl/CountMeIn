@@ -214,7 +214,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                         child: InfoText(
                           label: 'Ricorrenza',
                           value: (eventData?.recurring ?? false)
-                              ? 'Giornaliera x${eventData!.recurrence})'
+                              ? 'Giornaliera x${eventData!.recurrence}'
                               : 'Singola',
                         ),
                       ),
