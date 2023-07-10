@@ -143,7 +143,7 @@ class RouterNotifier extends ChangeNotifier {
 
     if (authState is Authenticated) {
       final isScanner = authState.user.role == UserRole.scanner;
-      print('user authenticated is scanner? $isScanner');
+      logger.i('user authenticated is scanner? $isScanner');
     }
 
     // There's no need for a redirect at this point.
@@ -315,7 +315,10 @@ class RouterNotifier extends ChangeNotifier {
             }
             return ResetPasswordScreen(
               resetPasswordRequest: ResetPasswordRequest(
-                  oobCode: oobCode, fullName: name ?? 'Nome', userId: userId),
+                oobCode: oobCode,
+                fullName: name ?? 'Nome',
+                userId: userId,
+              ),
             );
           },
         ),

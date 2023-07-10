@@ -130,7 +130,6 @@ export const confirmPendingInvite = functions
             role,
             providerId,
             cf,
-            true,
             password
           );
           userId = tmpUser.uid;

@@ -1,6 +1,7 @@
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/utils.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -13,17 +14,19 @@ final dioProvider = Provider<Dio>((ref) {
       headers: {'content-type': 'application/json'},
     ),
   );
-  dio.interceptors.add(
-    PrettyDioLogger(
-      requestHeader: true,
-      requestBody: true,
-      responseBody: true,
-      responseHeader: false,
-      error: true,
-      compact: true,
-      maxWidth: 90,
-    ),
-  );
+  if (kDebugMode) {
+    dio.interceptors.add(
+      PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: false,
+        error: true,
+        compact: true,
+        maxWidth: 90,
+      ),
+    );
+  }
   return dio;
 });
 
@@ -76,7 +79,8 @@ class ConfirmInviteNotifier extends StateNotifier<ConfirmInviteState> {
 
     //http://localhost:5003/count-me-in-ef93b/europe-west3/confirmPendingInvite
     try {
-      final res = await ref.read(dioProvider).post(confirmPendingInviteUrl, data: data);
+      final res =
+          await ref.read(dioProvider).post(confirmPendingInviteUrl, data: data);
       final map = Map.from(res.data);
       final status =
           enumFromString(map['status'], ConfirmInviteResponseStatus.values);

@@ -39,10 +39,7 @@ final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
   yield* userAsync.when(
     data: (user) async* {
       if (user != null) {
-        if (!user.emailVerified) {
-          yield EmailNotVerified(user);
-        } else {
-          final userFromFirestore = ref.watch(_userProvider(user.uid));
+        final userFromFirestore = ref.watch(_userProvider(user.uid));
           yield* userFromFirestore.when(
             data: (data) async* {
               if (data != null) {
@@ -65,7 +62,7 @@ final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
               yield const AuthLoading();
             },
           );
-        }
+
       } else {
         yield const Unauthenticated();
       }

@@ -21,7 +21,6 @@ mixin _$AuthState {
     required TResult Function(AuthUser user) authenticated,
     required TResult Function() loading,
     required TResult Function() unauthenticated,
-    required TResult Function(User user) emailNotVerified,
     required TResult Function(Object err, StackTrace? stack) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -30,7 +29,6 @@ mixin _$AuthState {
     TResult? Function(AuthUser user)? authenticated,
     TResult? Function()? loading,
     TResult? Function()? unauthenticated,
-    TResult? Function(User user)? emailNotVerified,
     TResult? Function(Object err, StackTrace? stack)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -39,7 +37,6 @@ mixin _$AuthState {
     TResult Function(AuthUser user)? authenticated,
     TResult Function()? loading,
     TResult Function()? unauthenticated,
-    TResult Function(User user)? emailNotVerified,
     TResult Function(Object err, StackTrace? stack)? error,
     required TResult orElse(),
   }) =>
@@ -49,7 +46,6 @@ mixin _$AuthState {
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(AuthLoading value) loading,
     required TResult Function(Unauthenticated value) unauthenticated,
-    required TResult Function(EmailNotVerified value) emailNotVerified,
     required TResult Function(AuthError value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -58,7 +54,6 @@ mixin _$AuthState {
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(AuthLoading value)? loading,
     TResult? Function(Unauthenticated value)? unauthenticated,
-    TResult? Function(EmailNotVerified value)? emailNotVerified,
     TResult? Function(AuthError value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -67,7 +62,6 @@ mixin _$AuthState {
     TResult Function(Authenticated value)? authenticated,
     TResult Function(AuthLoading value)? loading,
     TResult Function(Unauthenticated value)? unauthenticated,
-    TResult Function(EmailNotVerified value)? emailNotVerified,
     TResult Function(AuthError value)? error,
     required TResult orElse(),
   }) =>
@@ -168,7 +162,6 @@ class _$Authenticated implements Authenticated {
     required TResult Function(AuthUser user) authenticated,
     required TResult Function() loading,
     required TResult Function() unauthenticated,
-    required TResult Function(User user) emailNotVerified,
     required TResult Function(Object err, StackTrace? stack) error,
   }) {
     return authenticated(user);
@@ -180,7 +173,6 @@ class _$Authenticated implements Authenticated {
     TResult? Function(AuthUser user)? authenticated,
     TResult? Function()? loading,
     TResult? Function()? unauthenticated,
-    TResult? Function(User user)? emailNotVerified,
     TResult? Function(Object err, StackTrace? stack)? error,
   }) {
     return authenticated?.call(user);
@@ -192,7 +184,6 @@ class _$Authenticated implements Authenticated {
     TResult Function(AuthUser user)? authenticated,
     TResult Function()? loading,
     TResult Function()? unauthenticated,
-    TResult Function(User user)? emailNotVerified,
     TResult Function(Object err, StackTrace? stack)? error,
     required TResult orElse(),
   }) {
@@ -208,7 +199,6 @@ class _$Authenticated implements Authenticated {
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(AuthLoading value) loading,
     required TResult Function(Unauthenticated value) unauthenticated,
-    required TResult Function(EmailNotVerified value) emailNotVerified,
     required TResult Function(AuthError value) error,
   }) {
     return authenticated(this);
@@ -220,7 +210,6 @@ class _$Authenticated implements Authenticated {
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(AuthLoading value)? loading,
     TResult? Function(Unauthenticated value)? unauthenticated,
-    TResult? Function(EmailNotVerified value)? emailNotVerified,
     TResult? Function(AuthError value)? error,
   }) {
     return authenticated?.call(this);
@@ -232,7 +221,6 @@ class _$Authenticated implements Authenticated {
     TResult Function(Authenticated value)? authenticated,
     TResult Function(AuthLoading value)? loading,
     TResult Function(Unauthenticated value)? unauthenticated,
-    TResult Function(EmailNotVerified value)? emailNotVerified,
     TResult Function(AuthError value)? error,
     required TResult orElse(),
   }) {
@@ -293,7 +281,6 @@ class _$AuthLoading implements AuthLoading {
     required TResult Function(AuthUser user) authenticated,
     required TResult Function() loading,
     required TResult Function() unauthenticated,
-    required TResult Function(User user) emailNotVerified,
     required TResult Function(Object err, StackTrace? stack) error,
   }) {
     return loading();
@@ -305,7 +292,6 @@ class _$AuthLoading implements AuthLoading {
     TResult? Function(AuthUser user)? authenticated,
     TResult? Function()? loading,
     TResult? Function()? unauthenticated,
-    TResult? Function(User user)? emailNotVerified,
     TResult? Function(Object err, StackTrace? stack)? error,
   }) {
     return loading?.call();
@@ -317,7 +303,6 @@ class _$AuthLoading implements AuthLoading {
     TResult Function(AuthUser user)? authenticated,
     TResult Function()? loading,
     TResult Function()? unauthenticated,
-    TResult Function(User user)? emailNotVerified,
     TResult Function(Object err, StackTrace? stack)? error,
     required TResult orElse(),
   }) {
@@ -333,7 +318,6 @@ class _$AuthLoading implements AuthLoading {
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(AuthLoading value) loading,
     required TResult Function(Unauthenticated value) unauthenticated,
-    required TResult Function(EmailNotVerified value) emailNotVerified,
     required TResult Function(AuthError value) error,
   }) {
     return loading(this);
@@ -345,7 +329,6 @@ class _$AuthLoading implements AuthLoading {
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(AuthLoading value)? loading,
     TResult? Function(Unauthenticated value)? unauthenticated,
-    TResult? Function(EmailNotVerified value)? emailNotVerified,
     TResult? Function(AuthError value)? error,
   }) {
     return loading?.call(this);
@@ -357,7 +340,6 @@ class _$AuthLoading implements AuthLoading {
     TResult Function(Authenticated value)? authenticated,
     TResult Function(AuthLoading value)? loading,
     TResult Function(Unauthenticated value)? unauthenticated,
-    TResult Function(EmailNotVerified value)? emailNotVerified,
     TResult Function(AuthError value)? error,
     required TResult orElse(),
   }) {
@@ -413,7 +395,6 @@ class _$Unauthenticated implements Unauthenticated {
     required TResult Function(AuthUser user) authenticated,
     required TResult Function() loading,
     required TResult Function() unauthenticated,
-    required TResult Function(User user) emailNotVerified,
     required TResult Function(Object err, StackTrace? stack) error,
   }) {
     return unauthenticated();
@@ -425,7 +406,6 @@ class _$Unauthenticated implements Unauthenticated {
     TResult? Function(AuthUser user)? authenticated,
     TResult? Function()? loading,
     TResult? Function()? unauthenticated,
-    TResult? Function(User user)? emailNotVerified,
     TResult? Function(Object err, StackTrace? stack)? error,
   }) {
     return unauthenticated?.call();
@@ -437,7 +417,6 @@ class _$Unauthenticated implements Unauthenticated {
     TResult Function(AuthUser user)? authenticated,
     TResult Function()? loading,
     TResult Function()? unauthenticated,
-    TResult Function(User user)? emailNotVerified,
     TResult Function(Object err, StackTrace? stack)? error,
     required TResult orElse(),
   }) {
@@ -453,7 +432,6 @@ class _$Unauthenticated implements Unauthenticated {
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(AuthLoading value) loading,
     required TResult Function(Unauthenticated value) unauthenticated,
-    required TResult Function(EmailNotVerified value) emailNotVerified,
     required TResult Function(AuthError value) error,
   }) {
     return unauthenticated(this);
@@ -465,7 +443,6 @@ class _$Unauthenticated implements Unauthenticated {
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(AuthLoading value)? loading,
     TResult? Function(Unauthenticated value)? unauthenticated,
-    TResult? Function(EmailNotVerified value)? emailNotVerified,
     TResult? Function(AuthError value)? error,
   }) {
     return unauthenticated?.call(this);
@@ -477,7 +454,6 @@ class _$Unauthenticated implements Unauthenticated {
     TResult Function(Authenticated value)? authenticated,
     TResult Function(AuthLoading value)? loading,
     TResult Function(Unauthenticated value)? unauthenticated,
-    TResult Function(EmailNotVerified value)? emailNotVerified,
     TResult Function(AuthError value)? error,
     required TResult orElse(),
   }) {
@@ -490,157 +466,6 @@ class _$Unauthenticated implements Unauthenticated {
 
 abstract class Unauthenticated implements AuthState {
   const factory Unauthenticated() = _$Unauthenticated;
-}
-
-/// @nodoc
-abstract class _$$EmailNotVerifiedCopyWith<$Res> {
-  factory _$$EmailNotVerifiedCopyWith(
-          _$EmailNotVerified value, $Res Function(_$EmailNotVerified) then) =
-      __$$EmailNotVerifiedCopyWithImpl<$Res>;
-  @useResult
-  $Res call({User user});
-}
-
-/// @nodoc
-class __$$EmailNotVerifiedCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$EmailNotVerified>
-    implements _$$EmailNotVerifiedCopyWith<$Res> {
-  __$$EmailNotVerifiedCopyWithImpl(
-      _$EmailNotVerified _value, $Res Function(_$EmailNotVerified) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? user = null,
-  }) {
-    return _then(_$EmailNotVerified(
-      null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$EmailNotVerified implements EmailNotVerified {
-  const _$EmailNotVerified(this.user);
-
-  @override
-  final User user;
-
-  @override
-  String toString() {
-    return 'AuthState.emailNotVerified(user: $user)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$EmailNotVerified &&
-            (identical(other.user, user) || other.user == user));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, user);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$EmailNotVerifiedCopyWith<_$EmailNotVerified> get copyWith =>
-      __$$EmailNotVerifiedCopyWithImpl<_$EmailNotVerified>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(AuthUser user) authenticated,
-    required TResult Function() loading,
-    required TResult Function() unauthenticated,
-    required TResult Function(User user) emailNotVerified,
-    required TResult Function(Object err, StackTrace? stack) error,
-  }) {
-    return emailNotVerified(user);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(AuthUser user)? authenticated,
-    TResult? Function()? loading,
-    TResult? Function()? unauthenticated,
-    TResult? Function(User user)? emailNotVerified,
-    TResult? Function(Object err, StackTrace? stack)? error,
-  }) {
-    return emailNotVerified?.call(user);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(AuthUser user)? authenticated,
-    TResult Function()? loading,
-    TResult Function()? unauthenticated,
-    TResult Function(User user)? emailNotVerified,
-    TResult Function(Object err, StackTrace? stack)? error,
-    required TResult orElse(),
-  }) {
-    if (emailNotVerified != null) {
-      return emailNotVerified(user);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Authenticated value) authenticated,
-    required TResult Function(AuthLoading value) loading,
-    required TResult Function(Unauthenticated value) unauthenticated,
-    required TResult Function(EmailNotVerified value) emailNotVerified,
-    required TResult Function(AuthError value) error,
-  }) {
-    return emailNotVerified(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Authenticated value)? authenticated,
-    TResult? Function(AuthLoading value)? loading,
-    TResult? Function(Unauthenticated value)? unauthenticated,
-    TResult? Function(EmailNotVerified value)? emailNotVerified,
-    TResult? Function(AuthError value)? error,
-  }) {
-    return emailNotVerified?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Authenticated value)? authenticated,
-    TResult Function(AuthLoading value)? loading,
-    TResult Function(Unauthenticated value)? unauthenticated,
-    TResult Function(EmailNotVerified value)? emailNotVerified,
-    TResult Function(AuthError value)? error,
-    required TResult orElse(),
-  }) {
-    if (emailNotVerified != null) {
-      return emailNotVerified(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class EmailNotVerified implements AuthState {
-  const factory EmailNotVerified(final User user) = _$EmailNotVerified;
-
-  User get user;
-  @JsonKey(ignore: true)
-  _$$EmailNotVerifiedCopyWith<_$EmailNotVerified> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -716,7 +541,6 @@ class _$AuthError implements AuthError {
     required TResult Function(AuthUser user) authenticated,
     required TResult Function() loading,
     required TResult Function() unauthenticated,
-    required TResult Function(User user) emailNotVerified,
     required TResult Function(Object err, StackTrace? stack) error,
   }) {
     return error(err, stack);
@@ -728,7 +552,6 @@ class _$AuthError implements AuthError {
     TResult? Function(AuthUser user)? authenticated,
     TResult? Function()? loading,
     TResult? Function()? unauthenticated,
-    TResult? Function(User user)? emailNotVerified,
     TResult? Function(Object err, StackTrace? stack)? error,
   }) {
     return error?.call(err, stack);
@@ -740,7 +563,6 @@ class _$AuthError implements AuthError {
     TResult Function(AuthUser user)? authenticated,
     TResult Function()? loading,
     TResult Function()? unauthenticated,
-    TResult Function(User user)? emailNotVerified,
     TResult Function(Object err, StackTrace? stack)? error,
     required TResult orElse(),
   }) {
@@ -756,7 +578,6 @@ class _$AuthError implements AuthError {
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(AuthLoading value) loading,
     required TResult Function(Unauthenticated value) unauthenticated,
-    required TResult Function(EmailNotVerified value) emailNotVerified,
     required TResult Function(AuthError value) error,
   }) {
     return error(this);
@@ -768,7 +589,6 @@ class _$AuthError implements AuthError {
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(AuthLoading value)? loading,
     TResult? Function(Unauthenticated value)? unauthenticated,
-    TResult? Function(EmailNotVerified value)? emailNotVerified,
     TResult? Function(AuthError value)? error,
   }) {
     return error?.call(this);
@@ -780,7 +600,6 @@ class _$AuthError implements AuthError {
     TResult Function(Authenticated value)? authenticated,
     TResult Function(AuthLoading value)? loading,
     TResult Function(Unauthenticated value)? unauthenticated,
-    TResult Function(EmailNotVerified value)? emailNotVerified,
     TResult Function(AuthError value)? error,
     required TResult orElse(),
   }) {

@@ -82,7 +82,6 @@ export const onActivityRequestedUpdated = functions
             "admin",
             providerId,
             cf,
-            false,
             password
           );
         }

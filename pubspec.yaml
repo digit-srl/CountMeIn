@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.8.4+44
+version: 0.9.0+45
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -32,7 +32,7 @@ dependencies:
 
   #Firebase
   firebase_core: ^2.14.0
-  cloud_firestore: ^4.8.1
+  cloud_firestore: ^4.8.2
   firebase_auth: ^4.6.3
 
   #Network
@@ -79,8 +79,9 @@ dependencies:
   pin_code_fields: ^7.4.0
   dart_wom_connector:
     path: /Users/gianmarcodifrancesco/Work/Digit/Dart/dart_wom_connector
-  file_saver:
-    git: https://github.com/incrediblezayed/file_saver
+  file_saver: ^0.2.6
+#  file_saver:
+#    git: https://github.com/incrediblezayed/file_saver
 
 dev_dependencies:
   flutter_test:
@@ -98,6 +99,8 @@ dev_dependencies:
   freezed: ^2.3.5
   json_serializable: ^6.7.0
   soundpool: ^2.3.0
+  riverpod_lint:
+  custom_lint:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -26,13 +26,12 @@ export async function createNewAdminForProvider(
   role: string,
   providerId: string,
   cf: string,
-  emailVerified: boolean,
   password: string
 ): Promise<UserRecord> {
   const fullName = name + " " + surname;
   const user = await admin.auth().createUser({
     email: email,
-    emailVerified: emailVerified,
+    emailVerified: true,
     password: password,
     displayName: fullName,
   });

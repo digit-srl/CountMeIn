@@ -12,12 +12,14 @@ import {
   userDocRef,
   usersCollectionRef,
   userGroupCollectionRef,
+  managerDocRef,
 } from "./firestore_references";
 import {
   generateAndSendResetPasswordEmail,
   getProviderData,
   twoDecimalPlaces,
 } from "./utils";
+import { DecodedIdToken } from "firebase-admin/auth";
 const randomstring = require("randomstring");
 const CodiceFiscale = require("codice-fiscale-js");
 
@@ -425,39 +427,40 @@ export const sendResetPasswordEmail = functions
   .region("europe-west3")
   .https.onRequest(
     async (request: functions.https.Request, response: functions.Response) => {
-      console.log(request.body);
+      cors(request, response, async () => {
+        console.log(request.body);
 
-      if (request.method !== "POST") {
-        response.status(403).send("Forbidden!");
-        return;
-      }
+        if (request.method !== "POST") {
+          response.status(403).send("Forbidden!");
+          return;
+        }
 
-      const data = request.body;
-      const userEmail = data.email;
+        const data = request.body;
+        const userEmail = data.email;
 
-      if (userEmail === undefined || userEmail === null || userEmail === "") {
-        response.status(400).send("userEmail userId");
-        return;
-      }
+        if (userEmail === undefined || userEmail === null || userEmail === "") {
+          response.status(400).send("userEmail userId");
+          return;
+        }
 
-      //TODO controlla che lo userId appartiene a quella email
-      const user = await admin.auth().getUserByEmail(userEmail);
+        //TODO controlla che lo userId appartiene a quella email
+        const user = await admin.auth().getUserByEmail(userEmail);
 
-      if (user == null) {
-        response.status(400).send("user doesn't exists");
-        return;
-      }
-      const fullName = user.displayName;
+        if (user == null) {
+          response.status(400).send("user doesn't exists");
+          return;
+        }
+        const fullName = user.displayName;
 
-      return generateAndSendResetPasswordEmail(fullName, userEmail, user.uid)
-        .then(() => {
-          response.status(200).end();
-        })
-        .catch((error: any) => {
-          console.log(error);
-          response.status(500).send(error);
-        });
-      /*    return admin
+        return generateAndSendResetPasswordEmail(fullName, userEmail, user.uid)
+          .then(() => {
+            response.status(200).end();
+          })
+          .catch((error: any) => {
+            console.log(error);
+            response.status(500).send(error);
+          });
+        /*    return admin
         .auth()
         .generatePasswordResetLink(userEmail)
         .then((link: string) => {
@@ -487,6 +490,59 @@ export const sendResetPasswordEmail = functions
           console.log(error);
           response.status(500).send(error);
         });*/
+      });
+    }
+  );
+
+export const changePassword = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      cors(request, response, async () => {
+        console.log(request.body);
+
+        if (request.method !== "POST") {
+          response.status(403).send("Forbidden!");
+          return;
+        }
+
+        const data = request.body;
+        const newPassword = data.newPassword;
+        const token = data.token;
+
+        if (newPassword == null) {
+          response.status(400).send("passowrd is not valid");
+          return;
+        }
+
+        return admin
+          .auth()
+          .verifyIdToken(token)
+          .then((decodedToken: DecodedIdToken) => {
+            const uid = decodedToken.uid;
+            return admin
+              .auth()
+              .updateUser(uid, {
+                password: newPassword,
+              })
+              .then(async () => {
+                await managerDocRef(uid).update({
+                  temporaryPassword: false,
+                });
+                return response.status(200).send("Ok");
+              })
+              .catch((error: unknown) => {
+                console.log(error);
+                return response
+                  .status(500)
+                  .send("Errore durante aggiornamento password");
+              });
+          })
+          .catch((error: unknown) => {
+            console.log(error);
+            return response.status(500).send("Token non valido");
+          });
+      });
     }
   );
 

@@ -23,6 +23,7 @@ mixin _$AuthUser {
   bool get emailVerified => throw _privateConstructorUsedError;
   DateTime get createdOn => throw _privateConstructorUsedError;
   PlatformRole get role => throw _privateConstructorUsedError;
+  bool get temporaryPassword => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthUserCopyWith<AuthUser> get copyWith =>
@@ -41,7 +42,8 @@ abstract class $AuthUserCopyWith<$Res> {
       String email,
       bool emailVerified,
       DateTime createdOn,
-      PlatformRole role});
+      PlatformRole role,
+      bool temporaryPassword});
 }
 
 /// @nodoc
@@ -64,6 +66,7 @@ class _$AuthUserCopyWithImpl<$Res, $Val extends AuthUser>
     Object? emailVerified = null,
     Object? createdOn = null,
     Object? role = null,
+    Object? temporaryPassword = null,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -94,6 +97,10 @@ class _$AuthUserCopyWithImpl<$Res, $Val extends AuthUser>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as PlatformRole,
+      temporaryPassword: null == temporaryPassword
+          ? _value.temporaryPassword
+          : temporaryPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -112,7 +119,8 @@ abstract class _$$_AuthUserCopyWith<$Res> implements $AuthUserCopyWith<$Res> {
       String email,
       bool emailVerified,
       DateTime createdOn,
-      PlatformRole role});
+      PlatformRole role,
+      bool temporaryPassword});
 }
 
 /// @nodoc
@@ -133,6 +141,7 @@ class __$$_AuthUserCopyWithImpl<$Res>
     Object? emailVerified = null,
     Object? createdOn = null,
     Object? role = null,
+    Object? temporaryPassword = null,
   }) {
     return _then(_$_AuthUser(
       uid: null == uid
@@ -163,6 +172,10 @@ class __$$_AuthUserCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as PlatformRole,
+      temporaryPassword: null == temporaryPassword
+          ? _value.temporaryPassword
+          : temporaryPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -177,7 +190,8 @@ class _$_AuthUser implements _AuthUser {
       required this.email,
       required this.emailVerified,
       required this.createdOn,
-      required this.role});
+      required this.role,
+      this.temporaryPassword = true});
 
   @override
   final String uid;
@@ -193,10 +207,13 @@ class _$_AuthUser implements _AuthUser {
   final DateTime createdOn;
   @override
   final PlatformRole role;
+  @override
+  @JsonKey()
+  final bool temporaryPassword;
 
   @override
   String toString() {
-    return 'AuthUser(uid: $uid, name: $name, surname: $surname, email: $email, emailVerified: $emailVerified, createdOn: $createdOn, role: $role)';
+    return 'AuthUser(uid: $uid, name: $name, surname: $surname, email: $email, emailVerified: $emailVerified, createdOn: $createdOn, role: $role, temporaryPassword: $temporaryPassword)';
   }
 
   @override
@@ -212,12 +229,14 @@ class _$_AuthUser implements _AuthUser {
                 other.emailVerified == emailVerified) &&
             (identical(other.createdOn, createdOn) ||
                 other.createdOn == createdOn) &&
-            (identical(other.role, role) || other.role == role));
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.temporaryPassword, temporaryPassword) ||
+                other.temporaryPassword == temporaryPassword));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, uid, name, surname, email, emailVerified, createdOn, role);
+  int get hashCode => Object.hash(runtimeType, uid, name, surname, email,
+      emailVerified, createdOn, role, temporaryPassword);
 
   @JsonKey(ignore: true)
   @override
@@ -234,7 +253,8 @@ abstract class _AuthUser implements AuthUser {
       required final String email,
       required final bool emailVerified,
       required final DateTime createdOn,
-      required final PlatformRole role}) = _$_AuthUser;
+      required final PlatformRole role,
+      final bool temporaryPassword}) = _$_AuthUser;
 
   @override
   String get uid;
@@ -250,6 +270,8 @@ abstract class _AuthUser implements AuthUser {
   DateTime get createdOn;
   @override
   PlatformRole get role;
+  @override
+  bool get temporaryPassword;
   @override
   @JsonKey(ignore: true)
   _$$_AuthUserCopyWith<_$_AuthUser> get copyWith =>

@@ -378,8 +378,6 @@ class ScanController {
     } catch (ex, st) {
       logger.e(ex);
       logger.e(st);
-      print(ex);
-      print(st);
       processing = false;
       onMessage?.call(null, ScanStatus.unknown);
     }

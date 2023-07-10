@@ -51,7 +51,7 @@ void main() async {
   } else {
     FirebaseFirestore.instance.settings = const Settings(
       persistenceEnabled: false,
-      cacheSizeBytes: 40,
+      // cacheSizeBytes: 40,
     );
   }
 

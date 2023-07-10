@@ -37,24 +37,15 @@ class AuthUser with _$AuthUser {
     required bool emailVerified,
     required DateTime createdOn,
     required PlatformRole role,
+    @Default(true) bool temporaryPassword,
     // required Map<String,UserRole> providersRole
   }) = _AuthUser;
-
-/*  factory AuthUser.signUp(String name, String surname, String email, String uid) {
-    return AuthUser(
-      uid: uid,
-      name: name,
-      surname: surname,
-      email: email,
-      emailVerified: false,
-      activityIds: [],
-      createdAt: DateTime.now().toUtc(),
-    );
-  }*/
 }
 
 extension AuthUserX on AuthUser {
   String get firstNameLetters {
     return '${name[0]}${surname[0]}'.toUpperCase();
   }
+
+  String get fullName => '$name $surname';
 }

@@ -25,6 +25,7 @@ mixin _$AuthUserDTO {
   String get surname => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   bool get emailVerified => throw _privateConstructorUsedError;
+  bool get temporaryPassword => throw _privateConstructorUsedError;
   @CMIRoleConverter()
   PlatformRole get role =>
       throw _privateConstructorUsedError; // Map<String, String>? providersRole,
@@ -49,6 +50,7 @@ abstract class $AuthUserDTOCopyWith<$Res> {
       String surname,
       String email,
       bool emailVerified,
+      bool temporaryPassword,
       @CMIRoleConverter() PlatformRole role,
       @MyDateTimeConverter() DateTime createdOn});
 }
@@ -71,6 +73,7 @@ class _$AuthUserDTOCopyWithImpl<$Res, $Val extends AuthUserDTO>
     Object? surname = null,
     Object? email = null,
     Object? emailVerified = null,
+    Object? temporaryPassword = null,
     Object? role = null,
     Object? createdOn = null,
   }) {
@@ -94,6 +97,10 @@ class _$AuthUserDTOCopyWithImpl<$Res, $Val extends AuthUserDTO>
       emailVerified: null == emailVerified
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
+      temporaryPassword: null == temporaryPassword
+          ? _value.temporaryPassword
+          : temporaryPassword // ignore: cast_nullable_to_non_nullable
               as bool,
       role: null == role
           ? _value.role
@@ -121,6 +128,7 @@ abstract class _$$_AuthUserDTOCopyWith<$Res>
       String surname,
       String email,
       bool emailVerified,
+      bool temporaryPassword,
       @CMIRoleConverter() PlatformRole role,
       @MyDateTimeConverter() DateTime createdOn});
 }
@@ -141,6 +149,7 @@ class __$$_AuthUserDTOCopyWithImpl<$Res>
     Object? surname = null,
     Object? email = null,
     Object? emailVerified = null,
+    Object? temporaryPassword = null,
     Object? role = null,
     Object? createdOn = null,
   }) {
@@ -165,6 +174,10 @@ class __$$_AuthUserDTOCopyWithImpl<$Res>
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool,
+      temporaryPassword: null == temporaryPassword
+          ? _value.temporaryPassword
+          : temporaryPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
@@ -186,6 +199,7 @@ class _$_AuthUserDTO implements _AuthUserDTO {
       required this.surname,
       required this.email,
       required this.emailVerified,
+      this.temporaryPassword = true,
       @CMIRoleConverter() required this.role,
       @MyDateTimeConverter() required this.createdOn});
 
@@ -203,6 +217,9 @@ class _$_AuthUserDTO implements _AuthUserDTO {
   @override
   final bool emailVerified;
   @override
+  @JsonKey()
+  final bool temporaryPassword;
+  @override
   @CMIRoleConverter()
   final PlatformRole role;
 // Map<String, String>? providersRole,
@@ -212,7 +229,7 @@ class _$_AuthUserDTO implements _AuthUserDTO {
 
   @override
   String toString() {
-    return 'AuthUserDTO(uid: $uid, name: $name, surname: $surname, email: $email, emailVerified: $emailVerified, role: $role, createdOn: $createdOn)';
+    return 'AuthUserDTO(uid: $uid, name: $name, surname: $surname, email: $email, emailVerified: $emailVerified, temporaryPassword: $temporaryPassword, role: $role, createdOn: $createdOn)';
   }
 
   @override
@@ -226,6 +243,8 @@ class _$_AuthUserDTO implements _AuthUserDTO {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.emailVerified, emailVerified) ||
                 other.emailVerified == emailVerified) &&
+            (identical(other.temporaryPassword, temporaryPassword) ||
+                other.temporaryPassword == temporaryPassword) &&
             (identical(other.role, role) || other.role == role) &&
             (identical(other.createdOn, createdOn) ||
                 other.createdOn == createdOn));
@@ -233,8 +252,8 @@ class _$_AuthUserDTO implements _AuthUserDTO {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, uid, name, surname, email, emailVerified, role, createdOn);
+  int get hashCode => Object.hash(runtimeType, uid, name, surname, email,
+      emailVerified, temporaryPassword, role, createdOn);
 
   @JsonKey(ignore: true)
   @override
@@ -257,6 +276,7 @@ abstract class _AuthUserDTO implements AuthUserDTO {
           required final String surname,
           required final String email,
           required final bool emailVerified,
+          final bool temporaryPassword,
           @CMIRoleConverter() required final PlatformRole role,
           @MyDateTimeConverter() required final DateTime createdOn}) =
       _$_AuthUserDTO;
@@ -274,6 +294,8 @@ abstract class _AuthUserDTO implements AuthUserDTO {
   String get email;
   @override
   bool get emailVerified;
+  @override
+  bool get temporaryPassword;
   @override
   @CMIRoleConverter()
   PlatformRole get role;
