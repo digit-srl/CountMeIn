@@ -99,28 +99,26 @@ class AdminDashboardScreen extends HookConsumerWidget {
             padding: const EdgeInsets.all(16),
             children: [
               const AdminInfoWidget(),
-              if (platformUserRole != PlatformRole.unknown) ...[
-                const SizedBox(height: 16),
-                LayoutBuilder(builder: (context, constraints) {
-                  final cr = calculateCrossAxisCount(constraints.maxWidth);
-                  logger.i('${constraints.maxWidth} con $cr');
-                  return GridView.count(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    // padding: const EdgeInsets.all(16),
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 16,
-                    crossAxisCount: cr,
-                    childAspectRatio: cr == 1 ? 3 : 4 / 3,
-                    children: [
-                      const ActiveProviders(),
-                      if (platformUserRole == PlatformRole.cmi)
-                        const PendingProviders(),
-                      const QrCodeValidationWidget(),
-                    ],
-                  );
-                }),
-              ]
+              const SizedBox(height: 16),
+              LayoutBuilder(builder: (context, constraints) {
+                final cr = calculateCrossAxisCount(constraints.maxWidth);
+                logger.i('${constraints.maxWidth} con $cr');
+                return GridView.count(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  // padding: const EdgeInsets.all(16),
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                  crossAxisCount: cr,
+                  childAspectRatio: cr == 1 ? 3 : 4 / 3,
+                  children: [
+                    const ActiveProviders(),
+                    if (platformUserRole == PlatformRole.cmi)
+                      const PendingProviders(),
+                    const QrCodeValidationWidget(),
+                  ],
+                );
+              }),
             ],
           );
         },
