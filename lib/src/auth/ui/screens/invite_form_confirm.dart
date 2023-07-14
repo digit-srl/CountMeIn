@@ -1,5 +1,6 @@
 import 'package:countmein/src/admin/application/confirm_invite_state.dart';
 import 'package:countmein/src/auth/ui/screens/sign_in.dart';
+import 'package:countmein/src/common/ui/widgets/cf_text_field.dart';
 import 'package:countmein/ui/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -90,10 +91,8 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
                                   labelText: 'Cognome',
                                   validator: textValidator,
                                 ),
-                                MUTextField(
+                                CFTextField(
                                   controller: adminCfController,
-                                  labelText: 'C.F.',
-                                  validator: cfMultiValidator,
                                 ),
                                 const SizedBox(height: 32),
                                 Center(

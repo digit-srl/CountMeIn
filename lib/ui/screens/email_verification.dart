@@ -79,7 +79,8 @@ class _EmailVerificationScreenState
             // ),
             verifiedWithAnotherEmail: () {
               return const Text(
-                  'Profilo già verificato con un altro link di verifica');
+                'Profilo già verificato con un altro link di verifica',
+              );
             },
             verified: () {
               return UserProfileDataWidget(
