@@ -28,7 +28,8 @@ Future<bool> ask(BuildContext context, String question) async {
         context: context,
         builder: (c) {
           return Dialog(
-            child: Padding(
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 500),
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -61,6 +62,43 @@ Future<bool> ask(BuildContext context, String question) async {
         },
       ) ??
       false);
+}
+
+Future<void> showError(
+  BuildContext context, {
+  required String title,
+  String? description,
+}) async {
+  await showDialog(
+    context: context,
+    builder: (c) {
+      return Dialog(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 500),
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              if (description != null)
+                Text(
+                  description,
+                  style: const TextStyle(fontSize: 14),
+                )
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }
 
 const Pattern _emailPattern =
@@ -168,6 +206,6 @@ showCustomToast(String message) {
     message,
     position: ToastPosition.bottom,
     backgroundColor: Colors.white,
-    textStyle: TextStyle(color: Colors.black),
+    textStyle: const TextStyle(color: Colors.black),
   );
 }

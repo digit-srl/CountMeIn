@@ -1,6 +1,7 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/auth/ui/screens/sign_in.dart';
+import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -100,11 +101,19 @@ class SignUpScreen extends HookConsumerWidget {
   _signUp(String name, String surname, String email, String password,
       WidgetRef ref, BuildContext context) async {
     logger.i('$name, $surname, $email, $password');
-    final result = await ref
-        .read(signUpNotifierProvider.notifier)
-        .signUp(name, surname, email, password);
-    if (result) {
-      context.pop();
+
+    try {
+      final nav = GoRouter.of(context);
+      await ref
+          .read(signUpNotifierProvider.notifier)
+          .signUp(name, surname, email, password);
+      nav.pop();
+    } on SignInException catch (ex) {
+      showError(
+        ref.context,
+        title: 'Spiacenti',
+        description: ex.message,
+      );
     }
   }
 }

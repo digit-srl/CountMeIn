@@ -2,57 +2,76 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../common/errors/mu_exceptions.dart';
 
-
 class SignInException extends MUException {
-  SignInException() : super('SignInException', '');
+  final String message;
+
+  SignInException(this.message) : super('SignInException', message);
 
   factory SignInException.fromFirebaseException(FirebaseAuthException ex) {
-
     switch (ex.code) {
       case 'network-request-failed':
-        return NetworkRequestFailed();
+        return NetworkRequestFailed('Abbiamo riscontrato dei problemi di rete');
       case 'invalid-email':
       case 'wrong-password':
-        return InvalidEmailOrPasswordException();
+        return InvalidEmailOrPasswordException('Email o password errate');
       case 'user-disabled':
-        return UserDisabledException();
+        return UserDisabledException(
+            'L\'utente non è più abilitato a accedere a questo servizio');
       case 'user-not-found':
-        return UserNotFoundException();
+        return UserNotFoundException('Email o password errate');
       default:
         return UnknownException();
     }
   }
 }
 
-class InvalidEmailOrPasswordException extends SignInException {}
+class InvalidEmailOrPasswordException extends SignInException {
+  InvalidEmailOrPasswordException(super.message);
+}
 
-class UserNotFoundException extends SignInException {}
+class UserNotFoundException extends SignInException {
+  UserNotFoundException(super.message);
+}
 
-class UserDisabledException extends SignInException {}
+class UserDisabledException extends SignInException {
+  UserDisabledException(super.message);
+}
 
-class NetworkRequestFailed extends SignInException {}
+class NetworkRequestFailed extends SignInException {
+  NetworkRequestFailed(super.message);
+}
 
-class UnknownException extends SignInException {}
+class UnknownException extends SignInException {
+  UnknownException({String? message}):super(message ?? 'Si è verificato un errore imprevisto');
+}
 
 class SignUpException extends MUException {
-  SignUpException() : super('SignInException', '');
+  final String message;
+
+  SignUpException(this.message) : super('SignInException', message);
 
   factory SignUpException.fromFirebaseException(FirebaseAuthException ex) {
     switch (ex.code) {
       case 'email-already-in-use':
-        return EmailAlreadyInUseException();
+        return EmailAlreadyInUseException('Utente già esistente');
       case 'invalid-email':
-        return InvalidEmailException();
+        return InvalidEmailException('Email non valida');
       case 'weak-password':
-        return WeakPasswordException();
+        return WeakPasswordException('Password troppo debole');
       default:
-        return SignUpException();
+        return SignUpException('Si è verificato un errore imprevisto');
     }
   }
 }
 
-class WeakPasswordException extends SignUpException {}
+class WeakPasswordException extends SignUpException {
+  WeakPasswordException(super.message);
+}
 
-class EmailAlreadyInUseException extends SignUpException {}
+class EmailAlreadyInUseException extends SignUpException {
+  EmailAlreadyInUseException(super.message);
+}
 
-class InvalidEmailException extends SignUpException {}
+class InvalidEmailException extends SignUpException {
+  InvalidEmailException(super.message);
+}

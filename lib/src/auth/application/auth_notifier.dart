@@ -40,29 +40,28 @@ final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
     data: (user) async* {
       if (user != null) {
         final userFromFirestore = ref.watch(_userProvider(user.uid));
-          yield* userFromFirestore.when(
-            data: (data) async* {
-              if (data != null) {
-                final idToken = await user.getIdTokenResult();
-                final map = <String, dynamic>{};
-                map.addAll(data);
-                map['role'] = idToken.claims?['role'];
-                final dto = AuthUserDTO.fromJson(map);
-                final u = dto.toDomain();
-                yield AuthState.authenticated(u);
-              } else {
-                yield const Unauthenticated();
-              }
-            },
-            error: (err, stack) async* {
-              logger.i(stack);
-              yield AuthError(err, stack);
-            },
-            loading: () async* {
-              yield const AuthLoading();
-            },
-          );
-
+        yield* userFromFirestore.when(
+          data: (data) async* {
+            if (data != null) {
+              final idToken = await user.getIdTokenResult();
+              final map = <String, dynamic>{};
+              map.addAll(data);
+              map['role'] = idToken.claims?['role'];
+              final dto = AuthUserDTO.fromJson(map);
+              final u = dto.toDomain();
+              yield AuthState.authenticated(u);
+            } else {
+              yield const Unauthenticated();
+            }
+          },
+          error: (err, stack) async* {
+            logger.i(stack);
+            yield AuthError(err, stack);
+          },
+          loading: () async* {
+            yield const AuthLoading();
+          },
+        );
       } else {
         yield const Unauthenticated();
       }
@@ -79,7 +78,7 @@ final authStateStreamProvider = StreamProvider<AuthState>((ref) async* {
 final authStateProvider = Provider<AuthState>((ref) {
   return ref.watch(authStateStreamProvider).when(
         data: (state) => state,
-        error: (err, stack){
+        error: (err, stack) {
           logger.e(err);
           logger.e(stack);
           return AuthState.error(err, stack);
@@ -198,17 +197,16 @@ class SignInNotifier extends StateNotifier<bool> {
 
   SignInNotifier(this.ref) : super(false);
 
-  Future<bool> signIn(String email, String password) async {
+  Future<void> signIn(String email, String password) async {
     state = true;
     try {
       await ref.read(authRepositoryProvider).signIn(email, password);
       // authChangeNotifier.isLogged = true;
       state = false;
-      return true;
     } on SignInException catch (ex) {
       logger.i(ex);
       state = false;
-      return false;
+      rethrow;
     }
   }
 
@@ -243,19 +241,18 @@ class SignUpNotifier extends StateNotifier<bool> {
 
   SignUpNotifier(this.ref) : super(false);
 
-  Future<bool> signUp(
+  Future<void> signUp(
       String name, String surname, String email, String password) async {
     state = true;
     try {
       await ref
           .read(authRepositoryProvider)
           .signUp(name, surname, email, password);
-      return true;
     } on SignUpException catch (ex) {
       logger.i(ex);
       ref.read(signUpErrorProvider.notifier).state = ex;
       state = false;
-      return false;
+      rethrow;
     }
   }
 }

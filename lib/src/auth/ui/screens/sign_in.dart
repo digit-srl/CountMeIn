@@ -59,15 +59,20 @@ class SignInScreen extends HookConsumerWidget {
       // }
     } on SignInException catch (ex) {
       logger.i(ex);
+      showError(
+        ref.context,
+        title: 'Spiacenti',
+        description: ex.message,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final emailController =
-    useTextEditingController(text: Hive.box('user').get('email'));
+        useTextEditingController(text: Hive.box('user').get('email'));
     final passwordController =
-    useTextEditingController(text: Hive.box('user').get('password'));
+        useTextEditingController(text: Hive.box('user').get('password'));
     final isLoading = ref.watch(signInNotifierProvider);
     return Scaffold(
       appBar: AppBar(
@@ -96,10 +101,7 @@ class SignInScreen extends HookConsumerWidget {
                   children: [
                     Text(
                       'Accedi',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline4,
+                      style: Theme.of(context).textTheme.headline4,
                     ),
                     /*SignInButton(
                       Buttons.Facebook,
@@ -147,41 +149,33 @@ class SignInScreen extends HookConsumerWidget {
                       ),
                     ),
                     // if (isWebDevice) ...[
-                      const SizedBox(height: 32),
-                      EasyRichText(
-                        "Vuoi registrare un tuo provider? Clicca qui",
-                        defaultStyle: Theme
-                            .of(context)
-                            .textTheme
-                            .bodyText1,
-                        patternList: [
-                          EasyRichTextPattern(
-                              targetString: 'qui',
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  // if (isWebDevice) {
-                                    context
-                                        .push(ActivityRequestScreen.routeName);
-                                  // } else {
-                                    // final uri = 'https://cmi.digit.srl';
-                                  // }
-                                },
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.bold
-                                  .underline),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
+                    const SizedBox(height: 32),
+                    EasyRichText(
+                      "Vuoi registrare un tuo provider? Clicca qui",
+                      defaultStyle: Theme.of(context).textTheme.bodyText1,
+                      patternList: [
+                        EasyRichTextPattern(
+                            targetString: 'qui',
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                // if (isWebDevice) {
+                                context.push(ActivityRequestScreen.routeName);
+                                // } else {
+                                // final uri = 'https://cmi.digit.srl';
+                                // }
+                              },
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.bold
+                                .underline),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
                     // ],
                     EasyRichText(
                       "Hai dimenticato la password? Clicca qui",
-                      defaultStyle: Theme
-                          .of(context)
-                          .textTheme
-                          .bodyText1,
+                      defaultStyle: Theme.of(context).textTheme.bodyText1,
                       patternList: [
                         // EasyRichTextPattern(
                         //   targetString: 'https://pub.dev/packages/easy_rich_text',
@@ -198,12 +192,10 @@ class SignInScreen extends HookConsumerWidget {
 
                                 await showDialog(
                                     context: context,
-                                    builder: (_) =>
-                                        Dialog(
-                                            child: ResetPasswordRequestDialog()));
+                                    builder: (_) => Dialog(
+                                        child: ResetPasswordRequestDialog()));
                               },
-                            style: Theme
-                                .of(context)
+                            style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
                                 ?.bold
@@ -237,20 +229,21 @@ class ResetPasswordRequestDialog extends HookConsumerWidget {
         children: [
           if (isLoading.value)
             CircularProgressIndicator()
-          else
-            if (isCompleted.value)
-              ...[
-                Icon(Icons.check, color: Colors.green, size: 50,),
-                Text('Email inviata con successo'),
-                 const SizedBox(height: 16),
-              ]
-            else
-              MUTextField(
-                maxLines: 1,
-                controller: emailController,
-                labelText: 'Email',
-                validator: emailValidator,
-              ),
+          else if (isCompleted.value) ...[
+            Icon(
+              Icons.check,
+              color: Colors.green,
+              size: 50,
+            ),
+            Text('Email inviata con successo'),
+            const SizedBox(height: 16),
+          ] else
+            MUTextField(
+              maxLines: 1,
+              controller: emailController,
+              labelText: 'Email',
+              validator: emailValidator,
+            ),
           if (!isCompleted.value)
             Padding(
               padding: const EdgeInsets.only(top: 24.0),
@@ -258,24 +251,24 @@ class ResetPasswordRequestDialog extends HookConsumerWidget {
                   onPressed: isLoading.value
                       ? null
                       : () async {
-                    try {
-                      isLoading.value = true;
-                      await ref.read(dioProvider).post(
-                        sendResetPasswordUrl,
-                        data: <String, dynamic>{
-                          'email': emailController.text.trim()
+                          try {
+                            isLoading.value = true;
+                            await ref.read(dioProvider).post(
+                              sendResetPasswordUrl,
+                              data: <String, dynamic>{
+                                'email': emailController.text.trim()
+                              },
+                            );
+                            isLoading.value = false;
+                            isCompleted.value = true;
+                          } on DioException catch (ex) {
+                            logger.e(ex);
+                            isLoading.value = false;
+                          } catch (ex) {
+                            logger.e(ex);
+                            isLoading.value = false;
+                          }
                         },
-                      );
-                      isLoading.value = false;
-                      isCompleted.value = true;
-                    } on DioException catch (ex) {
-                      logger.e(ex);
-                      isLoading.value = false;
-                    } catch (ex) {
-                      logger.e(ex);
-                      isLoading.value = false;
-                    }
-                  },
                   child: Text('Richiedi')),
             )
         ],
