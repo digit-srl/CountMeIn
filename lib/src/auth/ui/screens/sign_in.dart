@@ -129,6 +129,7 @@ class SignInScreen extends HookConsumerWidget {
                     MUTextField(
                       maxLines: 1,
                       controller: passwordController,
+                      obscureText: true,
                       labelText: 'Password',
                       validator: passwordValidator,
                     ),

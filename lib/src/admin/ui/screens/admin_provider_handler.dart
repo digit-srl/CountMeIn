@@ -105,6 +105,10 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                   value: "https://cmi.digit.srl/provider/$providerId",
                   copyable: true,
                 ),
+                InfoText(
+                  label: 'IL tuo ruolo',
+                  value: userRole.text,
+                ),
                 InfoText2(
                     label: 'Managers',
                     labelWidget: IconButton(

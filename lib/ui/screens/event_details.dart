@@ -259,10 +259,14 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                                 backgroundColor: Colors.red),
                             onPressed: () async {
                               final n = Navigator.of(context);
-                              await Cloud.eventDoc(
-                                      widget.providerId, widget.eventId)
-                                  .delete();
-                              n.pop();
+                              final res = await ask(context,
+                                  'Sicuro di voler eliminare questo evento');
+                              if (res) {
+                                await Cloud.eventDoc(
+                                        widget.providerId, widget.eventId)
+                                    .delete();
+                                n.pop();
+                              }
                             },
                             child: const Text('Elimina'),
                           ),

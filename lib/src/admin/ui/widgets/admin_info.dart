@@ -35,8 +35,8 @@ class AdminInfoWidget extends ConsumerWidget {
             copyable: true,
           ),
           InfoText(
-            label: 'Ruolo',
-            value: enumToString(user?.role ?? ''),
+            label: 'Ruolo piattaforma',
+            value: user?.role.text,
           ),
           InfoText(
             label: 'ID',

@@ -63,14 +63,18 @@ class SignUpScreen extends HookConsumerWidget {
                 validator: emailValidator,
               ),
               MUTextField(
-                controller: passwordController,
                 labelText: 'Password',
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
+                controller: passwordController,
                 validator: passwordValidator,
               ),
               MUTextField(
                 labelText: 'Ripeti Password',
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
                 validator: (val) =>
-                    MatchValidator(errorText: 'passwords do not match')
+                    MatchValidator(errorText: 'Le password non corrispondono')
                         .validateMatch(val ?? '', passwordController.text),
               ),
               const SizedBox(height: 16),

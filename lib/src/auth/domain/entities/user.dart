@@ -4,7 +4,11 @@ part 'user.freezed.dart';
 
 enum PlatformRole {
   cmi,
-  unknown
+  unknown;
+
+  String get text {
+    return switch (this) { cmi => 'Super admin', _ => 'Admin' };
+  }
 }
 
 enum UserRole {
@@ -13,10 +17,10 @@ enum UserRole {
   scanner,
   unknown;
 
-  String get text{
-    switch(this){
+  String get text {
+    switch (this) {
       case UserRole.admin:
-        return 'Admin';
+        return 'Proprietario';
       case UserRole.collaborator:
         return 'Collaboratore';
       case UserRole.scanner:

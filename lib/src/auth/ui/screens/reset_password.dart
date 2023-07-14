@@ -92,11 +92,15 @@ class ResetPasswordForm extends HookConsumerWidget {
           ),
           MUTextField(
             controller: controller,
+            keyboardType: TextInputType.visiblePassword,
+            obscureText: true,
             hintText: 'Inserisci la nuova password',
             validator: passwordValidator,
           ),
           MUTextField(
             controller: confirmPasswordController,
+            keyboardType: TextInputType.visiblePassword,
+            obscureText: true,
             hintText: 'Conferma la nuova password',
             validator: (value) {
               if (value == null) return null;

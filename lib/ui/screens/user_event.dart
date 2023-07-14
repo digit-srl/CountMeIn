@@ -26,7 +26,7 @@ final singleEventProvider = StreamProvider.autoDispose
       } catch (ex, st) {
         logger.i(st);
       }
-    }else{
+    } else {
       logger.i('Doc not exists');
       throw Exception('Doc not exists');
     }
@@ -45,8 +45,7 @@ class UserProviderScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cmiProvider =
-        ref.watch(singleEventProvider(providerId)).value;
+    final cmiProvider = ref.watch(singleEventProvider(providerId)).value;
     if (cmiProvider == null) {
       return const LoadingWidget();
     }
@@ -74,9 +73,11 @@ class UserProviderScreen extends ConsumerWidget {
                 const Text('oppure'),
                 const SizedBox(height: 24),
                 ElevatedButton(
-                    onPressed: () {
-                      context.go('/provider/$providerId/recover');
-                    }, child: const Text('Recupera il tuo tesserino')),
+                  onPressed: () {
+                    context.go('/provider/$providerId/recover');
+                  },
+                  child: const Text('Recupera il tuo tesserino'),
+                ),
               ],
             ),
           ),
@@ -105,4 +106,3 @@ class UserProviderScreen extends ConsumerWidget {
         });
   }
 }
-

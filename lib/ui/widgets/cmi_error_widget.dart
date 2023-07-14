@@ -63,11 +63,14 @@ class CMIWarningWidget extends StatelessWidget {
               child: Text(message),
             ),
             if (tryAgain != null) ...[
-              ElevatedButton(
-                  onPressed: () {
-                    tryAgain?.call();
-                  },
-                  child: Text('Riprova')),
+              Padding(
+                padding: const EdgeInsets.only(top:16.0),
+                child: ElevatedButton(
+                    onPressed: () {
+                      tryAgain?.call();
+                    },
+                    child: Text('Riprova')),
+              ),
             ]
           ],
         ),

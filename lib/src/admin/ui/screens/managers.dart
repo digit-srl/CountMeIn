@@ -158,11 +158,13 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                           value: selectedRole,
                                           items: UserRole.values
                                               .sublist(0, 2)
-                                              .map((e) => DropdownMenuItem<
-                                                      UserRole>(
+                                              .map(
+                                                (e) =>
+                                                    DropdownMenuItem<UserRole>(
                                                   value: e,
-                                                  child: Text(
-                                                      enumToString(e) ?? '-')))
+                                                  child: Text(e.text),
+                                                ),
+                                              )
                                               .toList(),
                                           onChanged: (role) {
                                             if (role == null) return;
