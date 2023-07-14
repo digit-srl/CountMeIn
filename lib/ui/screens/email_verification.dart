@@ -50,7 +50,7 @@ class _EmailVerificationScreenState
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
+                  const Text(
                       'Clicca il pulsante per verificare il tuo indirizzo email'),
                   const SizedBox(height: 16),
                   ElevatedButton(
@@ -66,7 +66,7 @@ class _EmailVerificationScreenState
                           ).notifier)
                           .verify();
                     },
-                    child: Text('Verifica'),
+                    child: const Text('Verifica'),
                   ),
                 ],
               );
@@ -77,6 +77,10 @@ class _EmailVerificationScreenState
             //       'Il tuo indirizzo email è stato verificato. Riceverai a breve il tuo tesserino.\n'
             //       'Your email address has been properly verified. You\'ll receive your badge shortly.'),
             // ),
+            verifiedWithAnotherEmail: () {
+              return const Text(
+                  'Profilo già verificato con un altro link di verifica');
+            },
             verified: () {
               return UserProfileDataWidget(
                 userIds: UserIds(

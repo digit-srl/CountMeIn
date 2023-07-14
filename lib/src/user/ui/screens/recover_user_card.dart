@@ -115,7 +115,7 @@ class _RestoreUserCardState extends ConsumerState<RecoverUserCard> {
                   });
             },
             userNotExists: () => CMIWarningWidget(
-              message: 'Non esiste nessun utente con questo codice fiscale!',
+              message: 'Non esiste nessun utente verificato con questo codice fiscale!',
               tryAgain: () {
                 ref.read(userCardRecoveringProvider.notifier).reset();
               },

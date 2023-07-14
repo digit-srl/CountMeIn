@@ -50,6 +50,13 @@ export const createUser = functions
           return;
         }
 
+        if (email == null) {
+          const message = "email is missing";
+          console.error(message);
+          response.status(400).send("invalid-argument");
+          return;
+        }
+
         if (!CodiceFiscale.check(cf)) {
           response
             .send({
@@ -60,13 +67,14 @@ export const createUser = functions
           return;
         }
 
-        console.log("user " + email + " request creation");
+        console.log("user " + email + " cf: " + cf + " request creation");
         const d = await usersCollectionRef(providerId)
           .where("cf", "==", cf)
+          .where("emailVerified", "==", true)
           .limit(1)
           .get();
 
-        // se c'è almeno 1 doc l utente è già registrato nella piattaforma
+        // se c'è almeno 1 doc l utente è già registrato e verificato nella piattaforma
         if (d.docs.length > 0) {
           console.log(d.docs[0].data());
           const userData = d.docs[0].data();
@@ -88,6 +96,8 @@ export const createUser = functions
             .end();
           return;
         }
+
+        // Utente non esiste
 
         if (
           email == null ||
@@ -196,18 +206,32 @@ export const verifyEmail = functions
           return;
         }
 
-        if (
-          userData != null &&
-          userData.secret !== null &&
-          userData.secret == secret
-        ) {
-          if (userData.emailVerified) {
-            response.send({
-              status: "user_already_verified",
-            });
-            return;
-          }
+        // Questo utente ha già verificato la sua email
+        if (userData.emailVerified) {
+          response.send({
+            status: "user_already_verified",
+          });
+          return;
+        }
 
+        // Controllo se esiste un utente con cf uguale e verificato
+        const cf = userData.cf;
+        const d = await usersCollectionRef(providerId)
+          .where("cf", "==", cf)
+          .where("emailVerified", "==", true)
+          .limit(1)
+          .get();
+
+        // Esiste già un utente con questo cf con email verificata
+        // quindi non possiamo verificarne un'altra
+        if (d.docs.length > 0) {
+          response.send({
+            status: "user_already_verified_with_another_email",
+          });
+          return;
+        }
+
+        if (userData.secret !== null && userData.secret == secret) {
           await userDocRef(providerId, userId).update({
             secret: null,
             emailVerified: true,
@@ -231,6 +255,8 @@ export const verifyEmail = functions
     }
   );
 
+// Richiede la generazione del tesserino e lo invia all utente
+// che ha già verificato la sua email
 export const recoverUserCard = functions
   .region("europe-west3")
   .https.onRequest(

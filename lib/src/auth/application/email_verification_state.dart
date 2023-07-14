@@ -7,6 +7,7 @@ part 'email_verification_state.g.dart';
 class EmailVerificationState with _$EmailVerificationState {
   const factory EmailVerificationState.initial() = EmailVerificationInitial;
   const factory EmailVerificationState.verified() = EmailVerificationVerified;
+  const factory EmailVerificationState.verifiedWithAnotherEmail() = EmailVerificationVerifiedWithAnotherEmail;
   const factory EmailVerificationState.userNotExist() = EmailVerificationUserNotExist;
   const factory EmailVerificationState.invalidData() = EmailVerificationInvalidData;
   const factory EmailVerificationState.loading() = EmailVerificationLoading;

@@ -258,9 +258,11 @@ exports.recoverUser = functions
 
         const d = await usersCollectionRef(providerId)
           .where("cf", "==", cf)
+          .where("emailVerified", "==", true)
           .limit(1)
           .get();
 
+        // Esiste un utente con quel cf
         if (d.docs.length > 0) {
           console.log(d.docs[0].data());
           const userData = d.docs[0].data();
