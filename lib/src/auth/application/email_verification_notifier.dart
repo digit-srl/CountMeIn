@@ -58,12 +58,19 @@ class EmailVerificationNotifier extends StateNotifier<EmailVerificationState> {
           await ref.read(dioProvider).post(verifyEmailUrl, data: data.toJson());
       // final map = Map<String, dynamic>.from(res.data);
       if (res.statusCode == 200) {
-        final status = res.data['status'];
-        logger.i(status);
-        if (status == 'user_already_verified_with_another_email') {
-          state = const EmailVerificationVerifiedWithAnotherEmail();
-          // final email = res.data['email'] as String?;
-          return;
+        try {
+          final data = Map.from(res.data);
+          if (data.containsKey('status')) {
+            final status = res.data['status'];
+            logger.i(status);
+            if (status == 'user_already_verified_with_another_email') {
+              state = const EmailVerificationVerifiedWithAnotherEmail();
+              // final email = res.data['email'] as String?;
+              return;
+            }
+          }
+        } catch (ex) {
+          logger.e(ex);
         }
         state = const EmailVerificationVerified();
       } else if (res.statusCode == 404) {

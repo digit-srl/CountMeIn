@@ -245,7 +245,9 @@ export const verifyEmail = functions
           }
           //const providerName = providerDoc.data()?.name;
           //await sendUserCard(userData, providerId, providerName, privateId);
-          response.sendStatus(200);
+          response.send({
+            status: "verified",
+          });
         } else {
           console.log("secret is not correct");
           response.status(400).send("invalid-argument");
