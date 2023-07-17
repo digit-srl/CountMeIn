@@ -430,6 +430,8 @@ enum ScanStatus {
     ScanStatus.leaderGroupNotExist =>
     'Il leader di questo gruppo non ha effettuato il check in',
     ScanStatus.checkInCompleted => 'Check in completato',
+    ScanStatus.alreadyScanned => 'Tesserino già scansionato',
+    ScanStatus.notValidForThisEvent => 'Tesserino non valido per questo evento',
     _ => 'Stato sconosciuto',
     };
   }

@@ -84,19 +84,19 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
   ScanStatus? scanStatus;
   bool waitingTimer = false;
 
-  onError(EventUser? user, String message) {
-    if (waitingTimer) return;
-    setState(() {
-      error = message;
-    });
-    waitingTimer = true;
-    Future.delayed(messageDuration, () {
-      waitingTimer = false;
-      reset();
-    });
-  }
+  // onError(EventUser? user, String message) {
+  //   if (waitingTimer) return;
+  //   setState(() {
+  //     error = message;
+  //   });
+  //   waitingTimer = true;
+  //   Future.delayed(messageDuration, () {
+  //     waitingTimer = false;
+  //     reset();
+  //   });
+  // }
 
-  onMessage(EventUser? user, String m) {
+/*  onMessage(EventUser? user, String m) {
     if (waitingTimer) return;
     setState(() {
       message = m;
@@ -106,50 +106,50 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
       waitingTimer = false;
       reset();
     });
-  }
+  }*/
 
   onMessage2(EventUser? user, ScanStatus s) {
+    if (waitingTimer) return;
     if (soundId != null) {
       pool.play(soundId!);
     }
-    // if (waitingTimer) return;
     setState(() {
       lastUser = user;
       scanStatus = s;
+      waitingTimer = true;
     });
-    // waitingTimer = true;
     Future.delayed(messageDuration, () {
-      // waitingTimer = false;
       reset();
     });
   }
 
-  showUpdate(Barcode? barcode, EventUser user) {
-    if (soundId != null) {
-      pool.play(soundId!);
-    }
-    setState(() {
-      result = barcode;
-      lastUser = user;
-      error = null;
-      message = null;
-    });
-    showToast('${user.name} ${user.surname} aggiunto al database',
-        duration: const Duration(milliseconds: 250),
-        position: ToastPosition.bottom);
-
-    if (waitingTimer) return;
-    logger.i('ScanScreen set timer');
-    waitingTimer = true;
-    Future.delayed(messageDuration, () {
-      logger.i('ScanScreen reset info');
-      waitingTimer = false;
-      reset();
-    });
-  }
+  // showUpdate(Barcode? barcode, EventUser user) {
+  //   if (soundId != null) {
+  //     pool.play(soundId!);
+  //   }
+  //   setState(() {
+  //     result = barcode;
+  //     lastUser = user;
+  //     error = null;
+  //     message = null;
+  //   });
+  //   showToast('${user.name} ${user.surname} aggiunto al database',
+  //       duration: const Duration(milliseconds: 250),
+  //       position: ToastPosition.bottom);
+  //
+  //   if (waitingTimer) return;
+  //   logger.i('ScanScreen set timer');
+  //   waitingTimer = true;
+  //   Future.delayed(messageDuration, () {
+  //     logger.i('ScanScreen reset info');
+  //     waitingTimer = false;
+  //     reset();
+  //   });
+  // }
 
   reset() {
     setState(() {
+      waitingTimer = false;
       result = null;
       scanStatus = null;
       lastUser = null;
@@ -180,10 +180,14 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                   flex: 6,
                   child: MobileScanner(
                     controller: scanner,
-                    errorBuilder: (context, exception, child){
-                      return Center(child: Text(exception.errorDetails?.message.toString() ?? ''));
+                    errorBuilder: (context, exception, child) {
+                      return Center(
+                          child: Text(
+                              exception.errorDetails?.message.toString() ??
+                                  ''));
                     },
                     onDetect: (BarcodeCapture barcodeCapture) {
+                      if (waitingTimer) return;
                       final barcode = barcodeCapture.barcodes.firstOrNull;
                       if (barcode == null || barcode.rawValue == null) return;
                       ref
@@ -235,7 +239,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                             )
                         ] else
                           Text(
-                            'SCAN QR CODE',
+                            'Scansiona il tesserino',
                             textAlign: lastUser != null
                                 ? TextAlign.start
                                 : TextAlign.center,
