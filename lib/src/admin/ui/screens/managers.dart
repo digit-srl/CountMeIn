@@ -237,7 +237,7 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                           const Divider(),
                           if (pendingInvites.isEmpty &&
                               provider.managers.isEmpty)
-                            Text('Non ci sono managers per questo provider')
+                            const Text('Non ci sono managers per questo provider')
                           else ...[
                             for (final m in pendingInvites)
                               MemberRow(
@@ -328,14 +328,14 @@ class MemberRow extends StatelessWidget {
               children: [
                 Chip(label: Text(role.text)),
                 if (pending)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: const Text(
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Text(
                       'PENDING',
                       style: TextStyle(color: Colors.red),
                     ),
                   ),
-                Spacer(),
+                const Spacer(),
                 PopupMenuButton<ManagerAction>(
                   icon: const Icon(Icons.more_vert),
                   onSelected: (ManagerAction item) async {

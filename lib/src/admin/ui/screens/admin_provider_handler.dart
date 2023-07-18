@@ -115,7 +115,8 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                       icon: Icon((provider?.managers.isEmpty ?? true)
                           ? Icons.add
                           : Icons.edit),
-                      onPressed: provider?.managers != null
+                      onPressed: provider?.managers != null &&
+                              userRole == UserRole.admin
                           ? () {
                               final path =
                                   '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${provider!.id}/${ManagersHandlerScreen.routeName}';
