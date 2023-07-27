@@ -26,7 +26,7 @@ final womValidator = MultiValidator([
   RangeValidator(
       min: 1,
       max: 1000,
-      errorText: 'Il valore deve essere compresto tra 1 e 100'),
+      errorText: 'Il valore deve essere compreso tra 1 e 100'),
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
 ]);
 

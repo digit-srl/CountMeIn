@@ -54,8 +54,6 @@ class CMITimePicker extends HookWidget {
 
   CMITimePicker({Key? key, required this.onChanged}) : super(key: key);
 
-  _selectDate() {}
-
   final dateFormat = DateFormat('dd MMMM yyyy');
   final timeFormat = DateFormat('HH:mm');
 

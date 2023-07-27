@@ -354,7 +354,7 @@ class ScanController {
           if (res.statusCode == 200) {
             final map = Map.from(res.data);
             final status = map['status'] as String;
-            onMessage?.call(eventUser, statusFromString(status));
+            onMessage?.call(eventUser, ScanStatus.fromString(status));
             logger.i(status);
             alreadyScannedUser.add(
                 eventUser.isAnonymous ? eventUser.privateId! : eventUser.id);
@@ -383,17 +383,17 @@ class ScanController {
     }
   }
 
-  ScanStatus statusFromString(String status) {
-    return switch (status) {
-      'missing_check_in' => ScanStatus.missingCheckIn,
-      'check_out_completed' => ScanStatus.checkOutCompleted,
-      'participation_count_incremented' =>
-      ScanStatus.participationCountIncremented,
-      'leader_group_not_exist' => ScanStatus.leaderGroupNotExist,
-      'check_in_completed' => ScanStatus.checkInCompleted,
-      _ => ScanStatus.unknown,
-    };
-  }
+  // ScanStatus statusFromString(String status) {
+  //   return switch (status) {
+  //     'missing_check_in' => ScanStatus.missingCheckIn,
+  //     'check_out_completed' => ScanStatus.checkOutCompleted,
+  //     'participation_count_incremented' =>
+  //     ScanStatus.participationCountIncremented,
+  //     'leader_group_not_exist' => ScanStatus.leaderGroupNotExist,
+  //     'check_in_completed' => ScanStatus.checkInCompleted,
+  //     _ => ScanStatus.unknown,
+  //   };
+  // }
 }
 
 enum ScanStatus {
@@ -433,6 +433,19 @@ enum ScanStatus {
     ScanStatus.alreadyScanned => 'Tesserino già scansionato',
     ScanStatus.notValidForThisEvent => 'Tesserino non valido per questo evento',
     _ => 'Stato sconosciuto',
+    };
+  }
+
+
+  factory ScanStatus.fromString(String status){
+    return switch (status) {
+      'missing_check_in' => ScanStatus.missingCheckIn,
+      'check_out_completed' => ScanStatus.checkOutCompleted,
+      'participation_count_incremented' =>
+      ScanStatus.participationCountIncremented,
+      'leader_group_not_exist' => ScanStatus.leaderGroupNotExist,
+      'check_in_completed' => ScanStatus.checkInCompleted,
+      _ => ScanStatus.unknown,
     };
   }
 }

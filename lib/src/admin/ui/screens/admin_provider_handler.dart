@@ -200,6 +200,12 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                           'Crea nuovo evento',
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
+                        Text(
+                          'Sei uno scanner quindi non puoi creare un nuovo evento',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        )
                       ],
                     ),
                   );
