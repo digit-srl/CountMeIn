@@ -258,9 +258,8 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                                 eventState.asData?.value.name ?? 'event_csv');
                             final path = await FileSaver.instance.saveFile(
                                 name: fileName,
-                                // file: file,
                                 bytes: bytes,
-                                mimeType: MimeType.pdf,
+                                mimeType: MimeType.csv,
                                 ext: 'csv');
                             logger.i(path);
                           } else {
@@ -271,8 +270,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                                 final path = await FileSaver.instance.saveFile(
                                     name: fileName,
                                     file: file,
-                                    // bytes: bytes,
-                                    mimeType: MimeType.pdf,
+                                    mimeType: MimeType.csv,
                                     ext: 'csv');
                               } else {
                                 Share.shareFiles([file.path]);
