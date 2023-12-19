@@ -7,6 +7,7 @@ dotenv.config();
 const db = admin.firestore();
 import { UserRecord } from "firebase-functions/v1/auth";
 import { providerDocRef } from "./firestore_references";
+const axios = require("axios").default;
 
 export function generateSecret(): string {
   return Math.random().toString(36).slice(-8);
@@ -116,4 +117,34 @@ export async function getProviderData(
 
 export function twoDecimalPlaces(num: number): string {
   return (Math.round(num * 100) / 100).toFixed(2);
+}
+
+export async function generateWom(apiKey: string, wom: number, aim: string) {
+  const data = {
+    apiKey: apiKey,
+    womCount: wom,
+    lat: 0.0,
+    long: 0.0,
+    aim: aim,
+  };
+  console.log(data);
+
+  const headers = {
+    "X-SuperSecret-Key": process.env.SECRET_HEADER_KEY,
+  };
+
+  const response = await axios.post(
+    process.env.WOM_SERVICE_DOMAIN + "/vouchers",
+    data,
+    {
+      headers: headers,
+    }
+  );
+  console.log(response.status);
+  const link = response.data.womLink;
+  const pin = response.data.womPassword;
+  return {
+    link: link,
+    pin: pin,
+  };
 }

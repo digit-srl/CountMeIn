@@ -14,6 +14,7 @@ exports.scanner = require("./scan_processing");
 exports.events = require("./events");
 exports.managers = require("./provider_managers");
 exports.activity = require("./activities");
+exports.embedded = require("./embedded_qr_code");
 
 /*
 export const drawCard = functions.region('europe-west3').https.onRequest((request, response) => {
