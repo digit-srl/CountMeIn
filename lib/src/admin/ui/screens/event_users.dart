@@ -341,7 +341,10 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
 
   String _buildCsv(List<EventUser> users) {
     final data = users.map((e) => e.toCsvList()).toList();
-    final csv = const ListToCsvConverter().convert(data);
+    final csv = const ListToCsvConverter().convert([
+      ['Id', 'Name', 'Surname', 'CF'],
+      ...data
+    ]);
     return csv;
   }
 

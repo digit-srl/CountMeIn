@@ -117,6 +117,7 @@ extension EventUserX on EventUser {
 
   List toCsvList() {
     return [
+      id,
       name,
       surname,
       cf,
