@@ -111,27 +111,28 @@ class _$UserCardRecoveringStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$UserCardRecoveringInitialCopyWith<$Res> {
-  factory _$$UserCardRecoveringInitialCopyWith(
-          _$UserCardRecoveringInitial value,
-          $Res Function(_$UserCardRecoveringInitial) then) =
-      __$$UserCardRecoveringInitialCopyWithImpl<$Res>;
+abstract class _$$UserCardRecoveringInitialImplCopyWith<$Res> {
+  factory _$$UserCardRecoveringInitialImplCopyWith(
+          _$UserCardRecoveringInitialImpl value,
+          $Res Function(_$UserCardRecoveringInitialImpl) then) =
+      __$$UserCardRecoveringInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserCardRecoveringInitialCopyWithImpl<$Res>
+class __$$UserCardRecoveringInitialImplCopyWithImpl<$Res>
     extends _$UserCardRecoveringStateCopyWithImpl<$Res,
-        _$UserCardRecoveringInitial>
-    implements _$$UserCardRecoveringInitialCopyWith<$Res> {
-  __$$UserCardRecoveringInitialCopyWithImpl(_$UserCardRecoveringInitial _value,
-      $Res Function(_$UserCardRecoveringInitial) _then)
+        _$UserCardRecoveringInitialImpl>
+    implements _$$UserCardRecoveringInitialImplCopyWith<$Res> {
+  __$$UserCardRecoveringInitialImplCopyWithImpl(
+      _$UserCardRecoveringInitialImpl _value,
+      $Res Function(_$UserCardRecoveringInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserCardRecoveringInitial implements UserCardRecoveringInitial {
-  const _$UserCardRecoveringInitial();
+class _$UserCardRecoveringInitialImpl implements UserCardRecoveringInitial {
+  const _$UserCardRecoveringInitialImpl();
 
   @override
   String toString() {
@@ -139,10 +140,10 @@ class _$UserCardRecoveringInitial implements UserCardRecoveringInitial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserCardRecoveringInitial);
+            other is _$UserCardRecoveringInitialImpl);
   }
 
   @override
@@ -247,31 +248,32 @@ class _$UserCardRecoveringInitial implements UserCardRecoveringInitial {
 }
 
 abstract class UserCardRecoveringInitial implements UserCardRecoveringState {
-  const factory UserCardRecoveringInitial() = _$UserCardRecoveringInitial;
+  const factory UserCardRecoveringInitial() = _$UserCardRecoveringInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$UserCardRecoveringLoadingCopyWith<$Res> {
-  factory _$$UserCardRecoveringLoadingCopyWith(
-          _$UserCardRecoveringLoading value,
-          $Res Function(_$UserCardRecoveringLoading) then) =
-      __$$UserCardRecoveringLoadingCopyWithImpl<$Res>;
+abstract class _$$UserCardRecoveringLoadingImplCopyWith<$Res> {
+  factory _$$UserCardRecoveringLoadingImplCopyWith(
+          _$UserCardRecoveringLoadingImpl value,
+          $Res Function(_$UserCardRecoveringLoadingImpl) then) =
+      __$$UserCardRecoveringLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserCardRecoveringLoadingCopyWithImpl<$Res>
+class __$$UserCardRecoveringLoadingImplCopyWithImpl<$Res>
     extends _$UserCardRecoveringStateCopyWithImpl<$Res,
-        _$UserCardRecoveringLoading>
-    implements _$$UserCardRecoveringLoadingCopyWith<$Res> {
-  __$$UserCardRecoveringLoadingCopyWithImpl(_$UserCardRecoveringLoading _value,
-      $Res Function(_$UserCardRecoveringLoading) _then)
+        _$UserCardRecoveringLoadingImpl>
+    implements _$$UserCardRecoveringLoadingImplCopyWith<$Res> {
+  __$$UserCardRecoveringLoadingImplCopyWithImpl(
+      _$UserCardRecoveringLoadingImpl _value,
+      $Res Function(_$UserCardRecoveringLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserCardRecoveringLoading implements UserCardRecoveringLoading {
-  const _$UserCardRecoveringLoading();
+class _$UserCardRecoveringLoadingImpl implements UserCardRecoveringLoading {
+  const _$UserCardRecoveringLoadingImpl();
 
   @override
   String toString() {
@@ -279,10 +281,10 @@ class _$UserCardRecoveringLoading implements UserCardRecoveringLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserCardRecoveringLoading);
+            other is _$UserCardRecoveringLoadingImpl);
   }
 
   @override
@@ -387,33 +389,33 @@ class _$UserCardRecoveringLoading implements UserCardRecoveringLoading {
 }
 
 abstract class UserCardRecoveringLoading implements UserCardRecoveringState {
-  const factory UserCardRecoveringLoading() = _$UserCardRecoveringLoading;
+  const factory UserCardRecoveringLoading() = _$UserCardRecoveringLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$UserCardRecoveringUserNotExistsCopyWith<$Res> {
-  factory _$$UserCardRecoveringUserNotExistsCopyWith(
-          _$UserCardRecoveringUserNotExists value,
-          $Res Function(_$UserCardRecoveringUserNotExists) then) =
-      __$$UserCardRecoveringUserNotExistsCopyWithImpl<$Res>;
+abstract class _$$UserCardRecoveringUserNotExistsImplCopyWith<$Res> {
+  factory _$$UserCardRecoveringUserNotExistsImplCopyWith(
+          _$UserCardRecoveringUserNotExistsImpl value,
+          $Res Function(_$UserCardRecoveringUserNotExistsImpl) then) =
+      __$$UserCardRecoveringUserNotExistsImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserCardRecoveringUserNotExistsCopyWithImpl<$Res>
+class __$$UserCardRecoveringUserNotExistsImplCopyWithImpl<$Res>
     extends _$UserCardRecoveringStateCopyWithImpl<$Res,
-        _$UserCardRecoveringUserNotExists>
-    implements _$$UserCardRecoveringUserNotExistsCopyWith<$Res> {
-  __$$UserCardRecoveringUserNotExistsCopyWithImpl(
-      _$UserCardRecoveringUserNotExists _value,
-      $Res Function(_$UserCardRecoveringUserNotExists) _then)
+        _$UserCardRecoveringUserNotExistsImpl>
+    implements _$$UserCardRecoveringUserNotExistsImplCopyWith<$Res> {
+  __$$UserCardRecoveringUserNotExistsImplCopyWithImpl(
+      _$UserCardRecoveringUserNotExistsImpl _value,
+      $Res Function(_$UserCardRecoveringUserNotExistsImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserCardRecoveringUserNotExists
+class _$UserCardRecoveringUserNotExistsImpl
     implements UserCardRecoveringUserNotExists {
-  const _$UserCardRecoveringUserNotExists();
+  const _$UserCardRecoveringUserNotExistsImpl();
 
   @override
   String toString() {
@@ -421,10 +423,10 @@ class _$UserCardRecoveringUserNotExists
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserCardRecoveringUserNotExists);
+            other is _$UserCardRecoveringUserNotExistsImpl);
   }
 
   @override
@@ -531,33 +533,33 @@ class _$UserCardRecoveringUserNotExists
 abstract class UserCardRecoveringUserNotExists
     implements UserCardRecoveringState {
   const factory UserCardRecoveringUserNotExists() =
-      _$UserCardRecoveringUserNotExists;
+      _$UserCardRecoveringUserNotExistsImpl;
 }
 
 /// @nodoc
-abstract class _$$UserCardRecoveringInvalidFiscalCodeCopyWith<$Res> {
-  factory _$$UserCardRecoveringInvalidFiscalCodeCopyWith(
-          _$UserCardRecoveringInvalidFiscalCode value,
-          $Res Function(_$UserCardRecoveringInvalidFiscalCode) then) =
-      __$$UserCardRecoveringInvalidFiscalCodeCopyWithImpl<$Res>;
+abstract class _$$UserCardRecoveringInvalidFiscalCodeImplCopyWith<$Res> {
+  factory _$$UserCardRecoveringInvalidFiscalCodeImplCopyWith(
+          _$UserCardRecoveringInvalidFiscalCodeImpl value,
+          $Res Function(_$UserCardRecoveringInvalidFiscalCodeImpl) then) =
+      __$$UserCardRecoveringInvalidFiscalCodeImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserCardRecoveringInvalidFiscalCodeCopyWithImpl<$Res>
+class __$$UserCardRecoveringInvalidFiscalCodeImplCopyWithImpl<$Res>
     extends _$UserCardRecoveringStateCopyWithImpl<$Res,
-        _$UserCardRecoveringInvalidFiscalCode>
-    implements _$$UserCardRecoveringInvalidFiscalCodeCopyWith<$Res> {
-  __$$UserCardRecoveringInvalidFiscalCodeCopyWithImpl(
-      _$UserCardRecoveringInvalidFiscalCode _value,
-      $Res Function(_$UserCardRecoveringInvalidFiscalCode) _then)
+        _$UserCardRecoveringInvalidFiscalCodeImpl>
+    implements _$$UserCardRecoveringInvalidFiscalCodeImplCopyWith<$Res> {
+  __$$UserCardRecoveringInvalidFiscalCodeImplCopyWithImpl(
+      _$UserCardRecoveringInvalidFiscalCodeImpl _value,
+      $Res Function(_$UserCardRecoveringInvalidFiscalCodeImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserCardRecoveringInvalidFiscalCode
+class _$UserCardRecoveringInvalidFiscalCodeImpl
     implements UserCardRecoveringInvalidFiscalCode {
-  const _$UserCardRecoveringInvalidFiscalCode();
+  const _$UserCardRecoveringInvalidFiscalCodeImpl();
 
   @override
   String toString() {
@@ -565,10 +567,10 @@ class _$UserCardRecoveringInvalidFiscalCode
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserCardRecoveringInvalidFiscalCode);
+            other is _$UserCardRecoveringInvalidFiscalCodeImpl);
   }
 
   @override
@@ -675,15 +677,15 @@ class _$UserCardRecoveringInvalidFiscalCode
 abstract class UserCardRecoveringInvalidFiscalCode
     implements UserCardRecoveringState {
   const factory UserCardRecoveringInvalidFiscalCode() =
-      _$UserCardRecoveringInvalidFiscalCode;
+      _$UserCardRecoveringInvalidFiscalCodeImpl;
 }
 
 /// @nodoc
-abstract class _$$UserCardRecoveringWaitingOtpCodeCopyWith<$Res> {
-  factory _$$UserCardRecoveringWaitingOtpCodeCopyWith(
-          _$UserCardRecoveringWaitingOtpCode value,
-          $Res Function(_$UserCardRecoveringWaitingOtpCode) then) =
-      __$$UserCardRecoveringWaitingOtpCodeCopyWithImpl<$Res>;
+abstract class _$$UserCardRecoveringWaitingOtpCodeImplCopyWith<$Res> {
+  factory _$$UserCardRecoveringWaitingOtpCodeImplCopyWith(
+          _$UserCardRecoveringWaitingOtpCodeImpl value,
+          $Res Function(_$UserCardRecoveringWaitingOtpCodeImpl) then) =
+      __$$UserCardRecoveringWaitingOtpCodeImplCopyWithImpl<$Res>;
   @useResult
   $Res call({UserIds ids});
 
@@ -691,13 +693,13 @@ abstract class _$$UserCardRecoveringWaitingOtpCodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$UserCardRecoveringWaitingOtpCodeCopyWithImpl<$Res>
+class __$$UserCardRecoveringWaitingOtpCodeImplCopyWithImpl<$Res>
     extends _$UserCardRecoveringStateCopyWithImpl<$Res,
-        _$UserCardRecoveringWaitingOtpCode>
-    implements _$$UserCardRecoveringWaitingOtpCodeCopyWith<$Res> {
-  __$$UserCardRecoveringWaitingOtpCodeCopyWithImpl(
-      _$UserCardRecoveringWaitingOtpCode _value,
-      $Res Function(_$UserCardRecoveringWaitingOtpCode) _then)
+        _$UserCardRecoveringWaitingOtpCodeImpl>
+    implements _$$UserCardRecoveringWaitingOtpCodeImplCopyWith<$Res> {
+  __$$UserCardRecoveringWaitingOtpCodeImplCopyWithImpl(
+      _$UserCardRecoveringWaitingOtpCodeImpl _value,
+      $Res Function(_$UserCardRecoveringWaitingOtpCodeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -705,7 +707,7 @@ class __$$UserCardRecoveringWaitingOtpCodeCopyWithImpl<$Res>
   $Res call({
     Object? ids = null,
   }) {
-    return _then(_$UserCardRecoveringWaitingOtpCode(
+    return _then(_$UserCardRecoveringWaitingOtpCodeImpl(
       ids: null == ids
           ? _value.ids
           : ids // ignore: cast_nullable_to_non_nullable
@@ -724,9 +726,9 @@ class __$$UserCardRecoveringWaitingOtpCodeCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserCardRecoveringWaitingOtpCode
+class _$UserCardRecoveringWaitingOtpCodeImpl
     implements UserCardRecoveringWaitingOtpCode {
-  const _$UserCardRecoveringWaitingOtpCode({required this.ids});
+  const _$UserCardRecoveringWaitingOtpCodeImpl({required this.ids});
 
   @override
   final UserIds ids;
@@ -737,10 +739,10 @@ class _$UserCardRecoveringWaitingOtpCode
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserCardRecoveringWaitingOtpCode &&
+            other is _$UserCardRecoveringWaitingOtpCodeImpl &&
             (identical(other.ids, ids) || other.ids == ids));
   }
 
@@ -750,10 +752,10 @@ class _$UserCardRecoveringWaitingOtpCode
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserCardRecoveringWaitingOtpCodeCopyWith<
-          _$UserCardRecoveringWaitingOtpCode>
-      get copyWith => __$$UserCardRecoveringWaitingOtpCodeCopyWithImpl<
-          _$UserCardRecoveringWaitingOtpCode>(this, _$identity);
+  _$$UserCardRecoveringWaitingOtpCodeImplCopyWith<
+          _$UserCardRecoveringWaitingOtpCodeImpl>
+      get copyWith => __$$UserCardRecoveringWaitingOtpCodeImplCopyWithImpl<
+          _$UserCardRecoveringWaitingOtpCodeImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -856,21 +858,21 @@ class _$UserCardRecoveringWaitingOtpCode
 abstract class UserCardRecoveringWaitingOtpCode
     implements UserCardRecoveringState {
   const factory UserCardRecoveringWaitingOtpCode({required final UserIds ids}) =
-      _$UserCardRecoveringWaitingOtpCode;
+      _$UserCardRecoveringWaitingOtpCodeImpl;
 
   UserIds get ids;
   @JsonKey(ignore: true)
-  _$$UserCardRecoveringWaitingOtpCodeCopyWith<
-          _$UserCardRecoveringWaitingOtpCode>
+  _$$UserCardRecoveringWaitingOtpCodeImplCopyWith<
+          _$UserCardRecoveringWaitingOtpCodeImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UserCardRecoveringProfileCopyWith<$Res> {
-  factory _$$UserCardRecoveringProfileCopyWith(
-          _$UserCardRecoveringProfile value,
-          $Res Function(_$UserCardRecoveringProfile) then) =
-      __$$UserCardRecoveringProfileCopyWithImpl<$Res>;
+abstract class _$$UserCardRecoveringProfileImplCopyWith<$Res> {
+  factory _$$UserCardRecoveringProfileImplCopyWith(
+          _$UserCardRecoveringProfileImpl value,
+          $Res Function(_$UserCardRecoveringProfileImpl) then) =
+      __$$UserCardRecoveringProfileImplCopyWithImpl<$Res>;
   @useResult
   $Res call({UserIds ids});
 
@@ -878,12 +880,13 @@ abstract class _$$UserCardRecoveringProfileCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$UserCardRecoveringProfileCopyWithImpl<$Res>
+class __$$UserCardRecoveringProfileImplCopyWithImpl<$Res>
     extends _$UserCardRecoveringStateCopyWithImpl<$Res,
-        _$UserCardRecoveringProfile>
-    implements _$$UserCardRecoveringProfileCopyWith<$Res> {
-  __$$UserCardRecoveringProfileCopyWithImpl(_$UserCardRecoveringProfile _value,
-      $Res Function(_$UserCardRecoveringProfile) _then)
+        _$UserCardRecoveringProfileImpl>
+    implements _$$UserCardRecoveringProfileImplCopyWith<$Res> {
+  __$$UserCardRecoveringProfileImplCopyWithImpl(
+      _$UserCardRecoveringProfileImpl _value,
+      $Res Function(_$UserCardRecoveringProfileImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -891,7 +894,7 @@ class __$$UserCardRecoveringProfileCopyWithImpl<$Res>
   $Res call({
     Object? ids = null,
   }) {
-    return _then(_$UserCardRecoveringProfile(
+    return _then(_$UserCardRecoveringProfileImpl(
       ids: null == ids
           ? _value.ids
           : ids // ignore: cast_nullable_to_non_nullable
@@ -910,8 +913,8 @@ class __$$UserCardRecoveringProfileCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserCardRecoveringProfile implements UserCardRecoveringProfile {
-  const _$UserCardRecoveringProfile({required this.ids});
+class _$UserCardRecoveringProfileImpl implements UserCardRecoveringProfile {
+  const _$UserCardRecoveringProfileImpl({required this.ids});
 
   @override
   final UserIds ids;
@@ -922,10 +925,10 @@ class _$UserCardRecoveringProfile implements UserCardRecoveringProfile {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserCardRecoveringProfile &&
+            other is _$UserCardRecoveringProfileImpl &&
             (identical(other.ids, ids) || other.ids == ids));
   }
 
@@ -935,9 +938,9 @@ class _$UserCardRecoveringProfile implements UserCardRecoveringProfile {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserCardRecoveringProfileCopyWith<_$UserCardRecoveringProfile>
-      get copyWith => __$$UserCardRecoveringProfileCopyWithImpl<
-          _$UserCardRecoveringProfile>(this, _$identity);
+  _$$UserCardRecoveringProfileImplCopyWith<_$UserCardRecoveringProfileImpl>
+      get copyWith => __$$UserCardRecoveringProfileImplCopyWithImpl<
+          _$UserCardRecoveringProfileImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1039,30 +1042,32 @@ class _$UserCardRecoveringProfile implements UserCardRecoveringProfile {
 
 abstract class UserCardRecoveringProfile implements UserCardRecoveringState {
   const factory UserCardRecoveringProfile({required final UserIds ids}) =
-      _$UserCardRecoveringProfile;
+      _$UserCardRecoveringProfileImpl;
 
   UserIds get ids;
   @JsonKey(ignore: true)
-  _$$UserCardRecoveringProfileCopyWith<_$UserCardRecoveringProfile>
+  _$$UserCardRecoveringProfileImplCopyWith<_$UserCardRecoveringProfileImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UserCardRecoveringErrorCopyWith<$Res> {
-  factory _$$UserCardRecoveringErrorCopyWith(_$UserCardRecoveringError value,
-          $Res Function(_$UserCardRecoveringError) then) =
-      __$$UserCardRecoveringErrorCopyWithImpl<$Res>;
+abstract class _$$UserCardRecoveringErrorImplCopyWith<$Res> {
+  factory _$$UserCardRecoveringErrorImplCopyWith(
+          _$UserCardRecoveringErrorImpl value,
+          $Res Function(_$UserCardRecoveringErrorImpl) then) =
+      __$$UserCardRecoveringErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Object? error, StackTrace? st});
 }
 
 /// @nodoc
-class __$$UserCardRecoveringErrorCopyWithImpl<$Res>
+class __$$UserCardRecoveringErrorImplCopyWithImpl<$Res>
     extends _$UserCardRecoveringStateCopyWithImpl<$Res,
-        _$UserCardRecoveringError>
-    implements _$$UserCardRecoveringErrorCopyWith<$Res> {
-  __$$UserCardRecoveringErrorCopyWithImpl(_$UserCardRecoveringError _value,
-      $Res Function(_$UserCardRecoveringError) _then)
+        _$UserCardRecoveringErrorImpl>
+    implements _$$UserCardRecoveringErrorImplCopyWith<$Res> {
+  __$$UserCardRecoveringErrorImplCopyWithImpl(
+      _$UserCardRecoveringErrorImpl _value,
+      $Res Function(_$UserCardRecoveringErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1071,7 +1076,7 @@ class __$$UserCardRecoveringErrorCopyWithImpl<$Res>
     Object? error = freezed,
     Object? st = freezed,
   }) {
-    return _then(_$UserCardRecoveringError(
+    return _then(_$UserCardRecoveringErrorImpl(
       error: freezed == error ? _value.error : error,
       st: freezed == st
           ? _value.st
@@ -1083,8 +1088,8 @@ class __$$UserCardRecoveringErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserCardRecoveringError implements UserCardRecoveringError {
-  const _$UserCardRecoveringError({this.error, this.st});
+class _$UserCardRecoveringErrorImpl implements UserCardRecoveringError {
+  const _$UserCardRecoveringErrorImpl({this.error, this.st});
 
   @override
   final Object? error;
@@ -1097,10 +1102,10 @@ class _$UserCardRecoveringError implements UserCardRecoveringError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserCardRecoveringError &&
+            other is _$UserCardRecoveringErrorImpl &&
             const DeepCollectionEquality().equals(other.error, error) &&
             (identical(other.st, st) || other.st == st));
   }
@@ -1112,9 +1117,9 @@ class _$UserCardRecoveringError implements UserCardRecoveringError {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserCardRecoveringErrorCopyWith<_$UserCardRecoveringError> get copyWith =>
-      __$$UserCardRecoveringErrorCopyWithImpl<_$UserCardRecoveringError>(
-          this, _$identity);
+  _$$UserCardRecoveringErrorImplCopyWith<_$UserCardRecoveringErrorImpl>
+      get copyWith => __$$UserCardRecoveringErrorImplCopyWithImpl<
+          _$UserCardRecoveringErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1216,11 +1221,12 @@ class _$UserCardRecoveringError implements UserCardRecoveringError {
 
 abstract class UserCardRecoveringError implements UserCardRecoveringState {
   const factory UserCardRecoveringError(
-      {final Object? error, final StackTrace? st}) = _$UserCardRecoveringError;
+      {final Object? error,
+      final StackTrace? st}) = _$UserCardRecoveringErrorImpl;
 
   Object? get error;
   StackTrace? get st;
   @JsonKey(ignore: true)
-  _$$UserCardRecoveringErrorCopyWith<_$UserCardRecoveringError> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$UserCardRecoveringErrorImplCopyWith<_$UserCardRecoveringErrorImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

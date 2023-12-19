@@ -89,22 +89,22 @@ class _$AuthFailureCopyWithImpl<$Res, $Val extends AuthFailure>
 }
 
 /// @nodoc
-abstract class _$$AuthUnknownFailureCopyWith<$Res>
+abstract class _$$AuthUnknownFailureImplCopyWith<$Res>
     implements $AuthFailureCopyWith<$Res> {
-  factory _$$AuthUnknownFailureCopyWith(_$AuthUnknownFailure value,
-          $Res Function(_$AuthUnknownFailure) then) =
-      __$$AuthUnknownFailureCopyWithImpl<$Res>;
+  factory _$$AuthUnknownFailureImplCopyWith(_$AuthUnknownFailureImpl value,
+          $Res Function(_$AuthUnknownFailureImpl) then) =
+      __$$AuthUnknownFailureImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String description});
 }
 
 /// @nodoc
-class __$$AuthUnknownFailureCopyWithImpl<$Res>
-    extends _$AuthFailureCopyWithImpl<$Res, _$AuthUnknownFailure>
-    implements _$$AuthUnknownFailureCopyWith<$Res> {
-  __$$AuthUnknownFailureCopyWithImpl(
-      _$AuthUnknownFailure _value, $Res Function(_$AuthUnknownFailure) _then)
+class __$$AuthUnknownFailureImplCopyWithImpl<$Res>
+    extends _$AuthFailureCopyWithImpl<$Res, _$AuthUnknownFailureImpl>
+    implements _$$AuthUnknownFailureImplCopyWith<$Res> {
+  __$$AuthUnknownFailureImplCopyWithImpl(_$AuthUnknownFailureImpl _value,
+      $Res Function(_$AuthUnknownFailureImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -112,7 +112,7 @@ class __$$AuthUnknownFailureCopyWithImpl<$Res>
   $Res call({
     Object? description = null,
   }) {
-    return _then(_$AuthUnknownFailure(
+    return _then(_$AuthUnknownFailureImpl(
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -123,8 +123,8 @@ class __$$AuthUnknownFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthUnknownFailure implements AuthUnknownFailure {
-  const _$AuthUnknownFailure({this.description = 'Unknown error'});
+class _$AuthUnknownFailureImpl implements AuthUnknownFailure {
+  const _$AuthUnknownFailureImpl({this.description = 'Unknown error'});
 
   @override
   @JsonKey()
@@ -136,10 +136,10 @@ class _$AuthUnknownFailure implements AuthUnknownFailure {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AuthUnknownFailure &&
+            other is _$AuthUnknownFailureImpl &&
             (identical(other.description, description) ||
                 other.description == description));
   }
@@ -150,8 +150,8 @@ class _$AuthUnknownFailure implements AuthUnknownFailure {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AuthUnknownFailureCopyWith<_$AuthUnknownFailure> get copyWith =>
-      __$$AuthUnknownFailureCopyWithImpl<_$AuthUnknownFailure>(
+  _$$AuthUnknownFailureImplCopyWith<_$AuthUnknownFailureImpl> get copyWith =>
+      __$$AuthUnknownFailureImplCopyWithImpl<_$AuthUnknownFailureImpl>(
           this, _$identity);
 
   @override
@@ -213,12 +213,12 @@ class _$AuthUnknownFailure implements AuthUnknownFailure {
 
 abstract class AuthUnknownFailure implements AuthFailure {
   const factory AuthUnknownFailure({final String description}) =
-      _$AuthUnknownFailure;
+      _$AuthUnknownFailureImpl;
 
   @override
   String get description;
   @override
   @JsonKey(ignore: true)
-  _$$AuthUnknownFailureCopyWith<_$AuthUnknownFailure> get copyWith =>
+  _$$AuthUnknownFailureImplCopyWith<_$AuthUnknownFailureImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

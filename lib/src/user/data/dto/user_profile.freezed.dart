@@ -99,11 +99,11 @@ class _$UserProfileCopyWithImpl<$Res, $Val extends UserProfile>
 }
 
 /// @nodoc
-abstract class _$$_UserProfileCopyWith<$Res>
+abstract class _$$UserProfileImplCopyWith<$Res>
     implements $UserProfileCopyWith<$Res> {
-  factory _$$_UserProfileCopyWith(
-          _$_UserProfile value, $Res Function(_$_UserProfile) then) =
-      __$$_UserProfileCopyWithImpl<$Res>;
+  factory _$$UserProfileImplCopyWith(
+          _$UserProfileImpl value, $Res Function(_$UserProfileImpl) then) =
+      __$$UserProfileImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -116,11 +116,11 @@ abstract class _$$_UserProfileCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_UserProfileCopyWithImpl<$Res>
-    extends _$UserProfileCopyWithImpl<$Res, _$_UserProfile>
-    implements _$$_UserProfileCopyWith<$Res> {
-  __$$_UserProfileCopyWithImpl(
-      _$_UserProfile _value, $Res Function(_$_UserProfile) _then)
+class __$$UserProfileImplCopyWithImpl<$Res>
+    extends _$UserProfileCopyWithImpl<$Res, _$UserProfileImpl>
+    implements _$$UserProfileImplCopyWith<$Res> {
+  __$$UserProfileImplCopyWithImpl(
+      _$UserProfileImpl _value, $Res Function(_$UserProfileImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -133,7 +133,7 @@ class __$$_UserProfileCopyWithImpl<$Res>
     Object? addedOn = null,
     Object? emailVerified = null,
   }) {
-    return _then(_$_UserProfile(
+    return _then(_$UserProfileImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -164,8 +164,8 @@ class __$$_UserProfileCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserProfile implements _UserProfile {
-  const _$_UserProfile(
+class _$UserProfileImpl implements _UserProfile {
+  const _$UserProfileImpl(
       {required this.name,
       required this.surname,
       required this.cf,
@@ -173,8 +173,8 @@ class _$_UserProfile implements _UserProfile {
       @MyDateTimeConverter() required this.addedOn,
       required this.emailVerified});
 
-  factory _$_UserProfile.fromJson(Map<String, dynamic> json) =>
-      _$$_UserProfileFromJson(json);
+  factory _$UserProfileImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserProfileImplFromJson(json);
 
   @override
   final String name;
@@ -196,10 +196,10 @@ class _$_UserProfile implements _UserProfile {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserProfile &&
+            other is _$UserProfileImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.surname, surname) || other.surname == surname) &&
             (identical(other.cf, cf) || other.cf == cf) &&
@@ -217,12 +217,12 @@ class _$_UserProfile implements _UserProfile {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserProfileCopyWith<_$_UserProfile> get copyWith =>
-      __$$_UserProfileCopyWithImpl<_$_UserProfile>(this, _$identity);
+  _$$UserProfileImplCopyWith<_$UserProfileImpl> get copyWith =>
+      __$$UserProfileImplCopyWithImpl<_$UserProfileImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserProfileToJson(
+    return _$$UserProfileImplToJson(
       this,
     );
   }
@@ -235,10 +235,10 @@ abstract class _UserProfile implements UserProfile {
       required final String cf,
       required final String email,
       @MyDateTimeConverter() required final DateTime addedOn,
-      required final bool emailVerified}) = _$_UserProfile;
+      required final bool emailVerified}) = _$UserProfileImpl;
 
   factory _UserProfile.fromJson(Map<String, dynamic> json) =
-      _$_UserProfile.fromJson;
+      _$UserProfileImpl.fromJson;
 
   @override
   String get name;
@@ -255,6 +255,6 @@ abstract class _UserProfile implements UserProfile {
   bool get emailVerified;
   @override
   @JsonKey(ignore: true)
-  _$$_UserProfileCopyWith<_$_UserProfile> get copyWith =>
+  _$$UserProfileImplCopyWith<_$UserProfileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

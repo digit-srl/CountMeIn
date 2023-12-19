@@ -6,9 +6,9 @@ part of 'cmi_provider_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CMIProviderRequest _$$_CMIProviderRequestFromJson(
+_$CMIProviderRequestImpl _$$CMIProviderRequestImplFromJson(
         Map<String, dynamic> json) =>
-    _$_CMIProviderRequest(
+    _$CMIProviderRequestImpl(
       id: json['id'] as String,
       adminName: json['adminName'] as String,
       adminSurname: json['adminSurname'] as String,
@@ -31,8 +31,8 @@ _$_CMIProviderRequest _$$_CMIProviderRequestFromJson(
           .fromJson(json['requestedOn'] as Timestamp),
     );
 
-Map<String, dynamic> _$$_CMIProviderRequestToJson(
-        _$_CMIProviderRequest instance) =>
+Map<String, dynamic> _$$CMIProviderRequestImplToJson(
+        _$CMIProviderRequestImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'adminName': instance.adminName,

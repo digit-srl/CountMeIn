@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.9.5+50
+version: 0.10.0+51
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -40,10 +40,10 @@ dependencies:
   pretty_dio_logger: ^1.3.1
 
   #State management
-  flutter_hooks: ^0.18.6
-  hooks_riverpod: ^2.3.6
-  riverpod_annotation: ^2.1.1
-  freezed_annotation: ^2.2.0
+  flutter_hooks: ^0.20.3
+  hooks_riverpod: ^2.4.9
+  riverpod_annotation: ^2.3.3
+  freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
 
   #UI
@@ -80,6 +80,7 @@ dependencies:
   dart_wom_connector:
     path: /Users/gianmarcodifrancesco/Work/Digit/Dart/dart_wom_connector
   file_saver: ^0.2.6
+  intl:
 #  file_saver:
 #    git: https://github.com/incrediblezayed/file_saver
 
@@ -95,9 +96,10 @@ dev_dependencies:
 
   flutter_lints: ^2.0.1
   hive_generator:
-  build_runner: ^2.4.5
-  freezed: ^2.3.5
-  json_serializable: ^6.7.0
+  build_runner: ^2.4.7
+  freezed: ^2.4.6
+  json_serializable: ^6.7.1
+  riverpod_generator:
   soundpool: ^2.3.0
   riverpod_lint:
   custom_lint:

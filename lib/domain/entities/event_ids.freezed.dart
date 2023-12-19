@@ -68,21 +68,22 @@ class _$EventIdsCopyWithImpl<$Res, $Val extends EventIds>
 }
 
 /// @nodoc
-abstract class _$$_EventIdsCopyWith<$Res> implements $EventIdsCopyWith<$Res> {
-  factory _$$_EventIdsCopyWith(
-          _$_EventIds value, $Res Function(_$_EventIds) then) =
-      __$$_EventIdsCopyWithImpl<$Res>;
+abstract class _$$EventIdsImplCopyWith<$Res>
+    implements $EventIdsCopyWith<$Res> {
+  factory _$$EventIdsImplCopyWith(
+          _$EventIdsImpl value, $Res Function(_$EventIdsImpl) then) =
+      __$$EventIdsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String providerId, String eventId, String? sessionId});
 }
 
 /// @nodoc
-class __$$_EventIdsCopyWithImpl<$Res>
-    extends _$EventIdsCopyWithImpl<$Res, _$_EventIds>
-    implements _$$_EventIdsCopyWith<$Res> {
-  __$$_EventIdsCopyWithImpl(
-      _$_EventIds _value, $Res Function(_$_EventIds) _then)
+class __$$EventIdsImplCopyWithImpl<$Res>
+    extends _$EventIdsCopyWithImpl<$Res, _$EventIdsImpl>
+    implements _$$EventIdsImplCopyWith<$Res> {
+  __$$EventIdsImplCopyWithImpl(
+      _$EventIdsImpl _value, $Res Function(_$EventIdsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +93,7 @@ class __$$_EventIdsCopyWithImpl<$Res>
     Object? eventId = null,
     Object? sessionId = freezed,
   }) {
-    return _then(_$_EventIds(
+    return _then(_$EventIdsImpl(
       providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
@@ -111,8 +112,8 @@ class __$$_EventIdsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_EventIds implements _EventIds {
-  const _$_EventIds(
+class _$EventIdsImpl implements _EventIds {
+  const _$EventIdsImpl(
       {required this.providerId, required this.eventId, this.sessionId});
 
   @override
@@ -128,10 +129,10 @@ class _$_EventIds implements _EventIds {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EventIds &&
+            other is _$EventIdsImpl &&
             (identical(other.providerId, providerId) ||
                 other.providerId == providerId) &&
             (identical(other.eventId, eventId) || other.eventId == eventId) &&
@@ -145,15 +146,15 @@ class _$_EventIds implements _EventIds {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_EventIdsCopyWith<_$_EventIds> get copyWith =>
-      __$$_EventIdsCopyWithImpl<_$_EventIds>(this, _$identity);
+  _$$EventIdsImplCopyWith<_$EventIdsImpl> get copyWith =>
+      __$$EventIdsImplCopyWithImpl<_$EventIdsImpl>(this, _$identity);
 }
 
 abstract class _EventIds implements EventIds {
   const factory _EventIds(
       {required final String providerId,
       required final String eventId,
-      final String? sessionId}) = _$_EventIds;
+      final String? sessionId}) = _$EventIdsImpl;
 
   @override
   String get providerId;
@@ -163,6 +164,6 @@ abstract class _EventIds implements EventIds {
   String? get sessionId;
   @override
   @JsonKey(ignore: true)
-  _$$_EventIdsCopyWith<_$_EventIds> get copyWith =>
+  _$$EventIdsImplCopyWith<_$EventIdsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

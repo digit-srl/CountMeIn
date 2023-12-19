@@ -6,7 +6,8 @@ part of 'cmi_event.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CMIEvent _$$_CMIEventFromJson(Map<String, dynamic> json) => _$_CMIEvent(
+_$CMIEventImpl _$$CMIEventImplFromJson(Map<String, dynamic> json) =>
+    _$CMIEventImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       acceptPassepartout: json['acceptPassepartout'] as bool? ?? true,
@@ -39,7 +40,7 @@ _$_CMIEvent _$$_CMIEventFromJson(Map<String, dynamic> json) => _$_CMIEvent(
           const MyDateTimeConverter().fromJson(json['startAt'] as Timestamp),
     );
 
-Map<String, dynamic> _$$_CMIEventToJson(_$_CMIEvent instance) =>
+Map<String, dynamic> _$$CMIEventImplToJson(_$CMIEventImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -88,8 +89,8 @@ Json? _$JsonConverterToJson<Json, Value>(
 ) =>
     value == null ? null : toJson(value);
 
-_$_CMISubEvent _$$_CMISubEventFromJson(Map<String, dynamic> json) =>
-    _$_CMISubEvent(
+_$CMISubEventImpl _$$CMISubEventImplFromJson(Map<String, dynamic> json) =>
+    _$CMISubEventImpl(
       id: json['id'] as String,
       name: json['name'] as String?,
       genderCount: json['genderCount'] == null
@@ -102,7 +103,7 @@ _$_CMISubEvent _$$_CMISubEventFromJson(Map<String, dynamic> json) =>
           json['endAt'], const MyDateTimeConverter().fromJson),
     );
 
-Map<String, dynamic> _$$_CMISubEventToJson(_$_CMISubEvent instance) =>
+Map<String, dynamic> _$$CMISubEventImplToJson(_$CMISubEventImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -113,15 +114,15 @@ Map<String, dynamic> _$$_CMISubEventToJson(_$_CMISubEvent instance) =>
           instance.endAt, const MyDateTimeConverter().toJson),
     };
 
-_$_GenderCount _$$_GenderCountFromJson(Map<String, dynamic> json) =>
-    _$_GenderCount(
+_$GenderCountImpl _$$GenderCountImplFromJson(Map<String, dynamic> json) =>
+    _$GenderCountImpl(
       male: json['male'] as num,
       female: json['female'] as num,
       notBinary: json['notBinary'] as num,
       notAvailable: json['notAvailable'] as num? ?? 0,
     );
 
-Map<String, dynamic> _$$_GenderCountToJson(_$_GenderCount instance) =>
+Map<String, dynamic> _$$GenderCountImplToJson(_$GenderCountImpl instance) =>
     <String, dynamic>{
       'male': instance.male,
       'female': instance.female,

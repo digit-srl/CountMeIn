@@ -70,22 +70,22 @@ class _$ResetPasswordRequestCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_ResetPasswordRequestCopyWith<$Res>
+abstract class _$$ResetPasswordRequestImplCopyWith<$Res>
     implements $ResetPasswordRequestCopyWith<$Res> {
-  factory _$$_ResetPasswordRequestCopyWith(_$_ResetPasswordRequest value,
-          $Res Function(_$_ResetPasswordRequest) then) =
-      __$$_ResetPasswordRequestCopyWithImpl<$Res>;
+  factory _$$ResetPasswordRequestImplCopyWith(_$ResetPasswordRequestImpl value,
+          $Res Function(_$ResetPasswordRequestImpl) then) =
+      __$$ResetPasswordRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String oobCode, String userId, String fullName});
 }
 
 /// @nodoc
-class __$$_ResetPasswordRequestCopyWithImpl<$Res>
-    extends _$ResetPasswordRequestCopyWithImpl<$Res, _$_ResetPasswordRequest>
-    implements _$$_ResetPasswordRequestCopyWith<$Res> {
-  __$$_ResetPasswordRequestCopyWithImpl(_$_ResetPasswordRequest _value,
-      $Res Function(_$_ResetPasswordRequest) _then)
+class __$$ResetPasswordRequestImplCopyWithImpl<$Res>
+    extends _$ResetPasswordRequestCopyWithImpl<$Res, _$ResetPasswordRequestImpl>
+    implements _$$ResetPasswordRequestImplCopyWith<$Res> {
+  __$$ResetPasswordRequestImplCopyWithImpl(_$ResetPasswordRequestImpl _value,
+      $Res Function(_$ResetPasswordRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -95,7 +95,7 @@ class __$$_ResetPasswordRequestCopyWithImpl<$Res>
     Object? userId = null,
     Object? fullName = null,
   }) {
-    return _then(_$_ResetPasswordRequest(
+    return _then(_$ResetPasswordRequestImpl(
       oobCode: null == oobCode
           ? _value.oobCode
           : oobCode // ignore: cast_nullable_to_non_nullable
@@ -114,8 +114,8 @@ class __$$_ResetPasswordRequestCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ResetPasswordRequest implements _ResetPasswordRequest {
-  _$_ResetPasswordRequest(
+class _$ResetPasswordRequestImpl implements _ResetPasswordRequest {
+  _$ResetPasswordRequestImpl(
       {required this.oobCode, required this.userId, required this.fullName});
 
   @override
@@ -131,10 +131,10 @@ class _$_ResetPasswordRequest implements _ResetPasswordRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ResetPasswordRequest &&
+            other is _$ResetPasswordRequestImpl &&
             (identical(other.oobCode, oobCode) || other.oobCode == oobCode) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.fullName, fullName) ||
@@ -147,16 +147,17 @@ class _$_ResetPasswordRequest implements _ResetPasswordRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ResetPasswordRequestCopyWith<_$_ResetPasswordRequest> get copyWith =>
-      __$$_ResetPasswordRequestCopyWithImpl<_$_ResetPasswordRequest>(
-          this, _$identity);
+  _$$ResetPasswordRequestImplCopyWith<_$ResetPasswordRequestImpl>
+      get copyWith =>
+          __$$ResetPasswordRequestImplCopyWithImpl<_$ResetPasswordRequestImpl>(
+              this, _$identity);
 }
 
 abstract class _ResetPasswordRequest implements ResetPasswordRequest {
   factory _ResetPasswordRequest(
       {required final String oobCode,
       required final String userId,
-      required final String fullName}) = _$_ResetPasswordRequest;
+      required final String fullName}) = _$ResetPasswordRequestImpl;
 
   @override
   String get oobCode;
@@ -166,6 +167,6 @@ abstract class _ResetPasswordRequest implements ResetPasswordRequest {
   String get fullName;
   @override
   @JsonKey(ignore: true)
-  _$$_ResetPasswordRequestCopyWith<_$_ResetPasswordRequest> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ResetPasswordRequestImplCopyWith<_$ResetPasswordRequestImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

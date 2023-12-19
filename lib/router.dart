@@ -9,6 +9,7 @@ import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/auth/application/reset_password_notifier.dart';
 import 'package:countmein/src/auth/ui/screens/invite_form_confirm.dart';
+import 'package:countmein/src/totem/ui/embedded_screen.dart';
 import 'package:countmein/src/user/ui/screens/recover_user_card.dart';
 import 'package:countmein/src/user/ui/screens/user_dashboard.dart';
 import 'package:countmein/ui/screens/event_details.dart';
@@ -330,6 +331,17 @@ class RouterNotifier extends ChangeNotifier {
             return EmailVerificationScreen(
               userId: state.pathParameters['userId'] as String,
               secret: state.pathParameters['secret'] as String,
+              providerId: state.pathParameters['providerId'] as String,
+              // privateId: state.params['privateId'] as String,
+            );
+          },
+        ),
+        GoRoute(
+          path: '/embedded/:providerId/:eventId/:totemId',
+          builder: (context, state) {
+            return EmbeddedScreen(
+              totemId: state.pathParameters['totemId'] as String,
+              eventId: state.pathParameters['eventId'] as String,
               providerId: state.pathParameters['providerId'] as String,
               // privateId: state.params['privateId'] as String,
             );

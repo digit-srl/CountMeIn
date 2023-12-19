@@ -6,17 +6,17 @@ part of 'user_creation_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UserCreationResponse _$$_UserCreationResponseFromJson(
+_$UserCreationResponseImpl _$$UserCreationResponseImplFromJson(
         Map<String, dynamic> json) =>
-    _$_UserCreationResponse(
+    _$UserCreationResponseImpl(
       status: json['status'] as String,
       cf: json['cf'] as String,
       userId: json['userId'] as String?,
       emailVerified: json['emailVerified'] as bool?,
     );
 
-Map<String, dynamic> _$$_UserCreationResponseToJson(
-        _$_UserCreationResponse instance) =>
+Map<String, dynamic> _$$UserCreationResponseImplToJson(
+        _$UserCreationResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'cf': instance.cf,

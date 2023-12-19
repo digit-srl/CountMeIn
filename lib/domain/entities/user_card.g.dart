@@ -6,7 +6,8 @@ part of 'user_card.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UserCard _$$_UserCardFromJson(Map<String, dynamic> json) => _$_UserCard(
+_$UserCardImpl _$$UserCardImplFromJson(Map<String, dynamic> json) =>
+    _$UserCardImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       surname: json['surname'] as String,
@@ -19,7 +20,7 @@ _$_UserCard _$$_UserCardFromJson(Map<String, dynamic> json) => _$_UserCard(
       emailVerified: json['emailVerified'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$_UserCardToJson(_$_UserCard instance) =>
+Map<String, dynamic> _$$UserCardImplToJson(_$UserCardImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -45,7 +46,8 @@ Json? _$JsonConverterToJson<Json, Value>(
 ) =>
     value == null ? null : toJson(value);
 
-_$_EventUser _$$_EventUserFromJson(Map<String, dynamic> json) => _$_EventUser(
+_$EventUserImpl _$$EventUserImplFromJson(Map<String, dynamic> json) =>
+    _$EventUserImpl(
       id: json['id'] as String,
       providerId: json['providerId'] as String,
       userCardProviderId: json['userCardProviderId'] as String?,
@@ -69,7 +71,7 @@ _$_EventUser _$$_EventUserFromJson(Map<String, dynamic> json) => _$_EventUser(
       manPercentage: (json['manPercentage'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$$_EventUserToJson(_$_EventUser instance) =>
+Map<String, dynamic> _$$EventUserImplToJson(_$EventUserImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'providerId': instance.providerId,

@@ -106,10 +106,11 @@ class _$AuthUserCopyWithImpl<$Res, $Val extends AuthUser>
 }
 
 /// @nodoc
-abstract class _$$_AuthUserCopyWith<$Res> implements $AuthUserCopyWith<$Res> {
-  factory _$$_AuthUserCopyWith(
-          _$_AuthUser value, $Res Function(_$_AuthUser) then) =
-      __$$_AuthUserCopyWithImpl<$Res>;
+abstract class _$$AuthUserImplCopyWith<$Res>
+    implements $AuthUserCopyWith<$Res> {
+  factory _$$AuthUserImplCopyWith(
+          _$AuthUserImpl value, $Res Function(_$AuthUserImpl) then) =
+      __$$AuthUserImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -124,11 +125,11 @@ abstract class _$$_AuthUserCopyWith<$Res> implements $AuthUserCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_AuthUserCopyWithImpl<$Res>
-    extends _$AuthUserCopyWithImpl<$Res, _$_AuthUser>
-    implements _$$_AuthUserCopyWith<$Res> {
-  __$$_AuthUserCopyWithImpl(
-      _$_AuthUser _value, $Res Function(_$_AuthUser) _then)
+class __$$AuthUserImplCopyWithImpl<$Res>
+    extends _$AuthUserCopyWithImpl<$Res, _$AuthUserImpl>
+    implements _$$AuthUserImplCopyWith<$Res> {
+  __$$AuthUserImplCopyWithImpl(
+      _$AuthUserImpl _value, $Res Function(_$AuthUserImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -143,7 +144,7 @@ class __$$_AuthUserCopyWithImpl<$Res>
     Object? role = null,
     Object? temporaryPassword = null,
   }) {
-    return _then(_$_AuthUser(
+    return _then(_$AuthUserImpl(
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -182,8 +183,8 @@ class __$$_AuthUserCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AuthUser implements _AuthUser {
-  const _$_AuthUser(
+class _$AuthUserImpl implements _AuthUser {
+  const _$AuthUserImpl(
       {required this.uid,
       required this.name,
       required this.surname,
@@ -217,10 +218,10 @@ class _$_AuthUser implements _AuthUser {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AuthUser &&
+            other is _$AuthUserImpl &&
             (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.surname, surname) || other.surname == surname) &&
@@ -241,8 +242,8 @@ class _$_AuthUser implements _AuthUser {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AuthUserCopyWith<_$_AuthUser> get copyWith =>
-      __$$_AuthUserCopyWithImpl<_$_AuthUser>(this, _$identity);
+  _$$AuthUserImplCopyWith<_$AuthUserImpl> get copyWith =>
+      __$$AuthUserImplCopyWithImpl<_$AuthUserImpl>(this, _$identity);
 }
 
 abstract class _AuthUser implements AuthUser {
@@ -254,7 +255,7 @@ abstract class _AuthUser implements AuthUser {
       required final bool emailVerified,
       required final DateTime createdOn,
       required final PlatformRole role,
-      final bool temporaryPassword}) = _$_AuthUser;
+      final bool temporaryPassword}) = _$AuthUserImpl;
 
   @override
   String get uid;
@@ -274,6 +275,6 @@ abstract class _AuthUser implements AuthUser {
   bool get temporaryPassword;
   @override
   @JsonKey(ignore: true)
-  _$$_AuthUserCopyWith<_$_AuthUser> get copyWith =>
+  _$$AuthUserImplCopyWith<_$AuthUserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

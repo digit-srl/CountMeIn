@@ -113,25 +113,28 @@ class _$UserRegisteringStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$UserRegisteringInitialCopyWith<$Res> {
-  factory _$$UserRegisteringInitialCopyWith(_$UserRegisteringInitial value,
-          $Res Function(_$UserRegisteringInitial) then) =
-      __$$UserRegisteringInitialCopyWithImpl<$Res>;
+abstract class _$$UserRegisteringInitialImplCopyWith<$Res> {
+  factory _$$UserRegisteringInitialImplCopyWith(
+          _$UserRegisteringInitialImpl value,
+          $Res Function(_$UserRegisteringInitialImpl) then) =
+      __$$UserRegisteringInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserRegisteringInitialCopyWithImpl<$Res>
-    extends _$UserRegisteringStateCopyWithImpl<$Res, _$UserRegisteringInitial>
-    implements _$$UserRegisteringInitialCopyWith<$Res> {
-  __$$UserRegisteringInitialCopyWithImpl(_$UserRegisteringInitial _value,
-      $Res Function(_$UserRegisteringInitial) _then)
+class __$$UserRegisteringInitialImplCopyWithImpl<$Res>
+    extends _$UserRegisteringStateCopyWithImpl<$Res,
+        _$UserRegisteringInitialImpl>
+    implements _$$UserRegisteringInitialImplCopyWith<$Res> {
+  __$$UserRegisteringInitialImplCopyWithImpl(
+      _$UserRegisteringInitialImpl _value,
+      $Res Function(_$UserRegisteringInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserRegisteringInitial implements UserRegisteringInitial {
-  const _$UserRegisteringInitial();
+class _$UserRegisteringInitialImpl implements UserRegisteringInitial {
+  const _$UserRegisteringInitialImpl();
 
   @override
   String toString() {
@@ -139,9 +142,10 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UserRegisteringInitial);
+        (other.runtimeType == runtimeType &&
+            other is _$UserRegisteringInitialImpl);
   }
 
   @override
@@ -248,27 +252,27 @@ class _$UserRegisteringInitial implements UserRegisteringInitial {
 }
 
 abstract class UserRegisteringInitial implements UserRegisteringState {
-  const factory UserRegisteringInitial() = _$UserRegisteringInitial;
+  const factory UserRegisteringInitial() = _$UserRegisteringInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$UserRegisteringVerificationEmailSentCopyWith<$Res> {
-  factory _$$UserRegisteringVerificationEmailSentCopyWith(
-          _$UserRegisteringVerificationEmailSent value,
-          $Res Function(_$UserRegisteringVerificationEmailSent) then) =
-      __$$UserRegisteringVerificationEmailSentCopyWithImpl<$Res>;
+abstract class _$$UserRegisteringVerificationEmailSentImplCopyWith<$Res> {
+  factory _$$UserRegisteringVerificationEmailSentImplCopyWith(
+          _$UserRegisteringVerificationEmailSentImpl value,
+          $Res Function(_$UserRegisteringVerificationEmailSentImpl) then) =
+      __$$UserRegisteringVerificationEmailSentImplCopyWithImpl<$Res>;
   @useResult
   $Res call({bool newUser, String email});
 }
 
 /// @nodoc
-class __$$UserRegisteringVerificationEmailSentCopyWithImpl<$Res>
+class __$$UserRegisteringVerificationEmailSentImplCopyWithImpl<$Res>
     extends _$UserRegisteringStateCopyWithImpl<$Res,
-        _$UserRegisteringVerificationEmailSent>
-    implements _$$UserRegisteringVerificationEmailSentCopyWith<$Res> {
-  __$$UserRegisteringVerificationEmailSentCopyWithImpl(
-      _$UserRegisteringVerificationEmailSent _value,
-      $Res Function(_$UserRegisteringVerificationEmailSent) _then)
+        _$UserRegisteringVerificationEmailSentImpl>
+    implements _$$UserRegisteringVerificationEmailSentImplCopyWith<$Res> {
+  __$$UserRegisteringVerificationEmailSentImplCopyWithImpl(
+      _$UserRegisteringVerificationEmailSentImpl _value,
+      $Res Function(_$UserRegisteringVerificationEmailSentImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -277,7 +281,7 @@ class __$$UserRegisteringVerificationEmailSentCopyWithImpl<$Res>
     Object? newUser = null,
     Object? email = null,
   }) {
-    return _then(_$UserRegisteringVerificationEmailSent(
+    return _then(_$UserRegisteringVerificationEmailSentImpl(
       newUser: null == newUser
           ? _value.newUser
           : newUser // ignore: cast_nullable_to_non_nullable
@@ -292,9 +296,9 @@ class __$$UserRegisteringVerificationEmailSentCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserRegisteringVerificationEmailSent
+class _$UserRegisteringVerificationEmailSentImpl
     implements UserRegisteringVerificationEmailSent {
-  const _$UserRegisteringVerificationEmailSent(
+  const _$UserRegisteringVerificationEmailSentImpl(
       {this.newUser = false, required this.email});
 
   @override
@@ -309,10 +313,10 @@ class _$UserRegisteringVerificationEmailSent
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserRegisteringVerificationEmailSent &&
+            other is _$UserRegisteringVerificationEmailSentImpl &&
             (identical(other.newUser, newUser) || other.newUser == newUser) &&
             (identical(other.email, email) || other.email == email));
   }
@@ -323,10 +327,10 @@ class _$UserRegisteringVerificationEmailSent
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserRegisteringVerificationEmailSentCopyWith<
-          _$UserRegisteringVerificationEmailSent>
-      get copyWith => __$$UserRegisteringVerificationEmailSentCopyWithImpl<
-          _$UserRegisteringVerificationEmailSent>(this, _$identity);
+  _$$UserRegisteringVerificationEmailSentImplCopyWith<
+          _$UserRegisteringVerificationEmailSentImpl>
+      get copyWith => __$$UserRegisteringVerificationEmailSentImplCopyWithImpl<
+          _$UserRegisteringVerificationEmailSentImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -431,35 +435,35 @@ class _$UserRegisteringVerificationEmailSent
 abstract class UserRegisteringVerificationEmailSent
     implements UserRegisteringState {
   const factory UserRegisteringVerificationEmailSent(
-      {final bool newUser,
-      required final String email}) = _$UserRegisteringVerificationEmailSent;
+          {final bool newUser, required final String email}) =
+      _$UserRegisteringVerificationEmailSentImpl;
 
   bool get newUser;
   String get email;
   @JsonKey(ignore: true)
-  _$$UserRegisteringVerificationEmailSentCopyWith<
-          _$UserRegisteringVerificationEmailSent>
+  _$$UserRegisteringVerificationEmailSentImplCopyWith<
+          _$UserRegisteringVerificationEmailSentImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UserRegisteringUserAlreadySubscribedCopyWith<$Res> {
-  factory _$$UserRegisteringUserAlreadySubscribedCopyWith(
-          _$UserRegisteringUserAlreadySubscribed value,
-          $Res Function(_$UserRegisteringUserAlreadySubscribed) then) =
-      __$$UserRegisteringUserAlreadySubscribedCopyWithImpl<$Res>;
+abstract class _$$UserRegisteringUserAlreadySubscribedImplCopyWith<$Res> {
+  factory _$$UserRegisteringUserAlreadySubscribedImplCopyWith(
+          _$UserRegisteringUserAlreadySubscribedImpl value,
+          $Res Function(_$UserRegisteringUserAlreadySubscribedImpl) then) =
+      __$$UserRegisteringUserAlreadySubscribedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String email, String cf, String userId, String providerId});
 }
 
 /// @nodoc
-class __$$UserRegisteringUserAlreadySubscribedCopyWithImpl<$Res>
+class __$$UserRegisteringUserAlreadySubscribedImplCopyWithImpl<$Res>
     extends _$UserRegisteringStateCopyWithImpl<$Res,
-        _$UserRegisteringUserAlreadySubscribed>
-    implements _$$UserRegisteringUserAlreadySubscribedCopyWith<$Res> {
-  __$$UserRegisteringUserAlreadySubscribedCopyWithImpl(
-      _$UserRegisteringUserAlreadySubscribed _value,
-      $Res Function(_$UserRegisteringUserAlreadySubscribed) _then)
+        _$UserRegisteringUserAlreadySubscribedImpl>
+    implements _$$UserRegisteringUserAlreadySubscribedImplCopyWith<$Res> {
+  __$$UserRegisteringUserAlreadySubscribedImplCopyWithImpl(
+      _$UserRegisteringUserAlreadySubscribedImpl _value,
+      $Res Function(_$UserRegisteringUserAlreadySubscribedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -470,7 +474,7 @@ class __$$UserRegisteringUserAlreadySubscribedCopyWithImpl<$Res>
     Object? userId = null,
     Object? providerId = null,
   }) {
-    return _then(_$UserRegisteringUserAlreadySubscribed(
+    return _then(_$UserRegisteringUserAlreadySubscribedImpl(
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -493,9 +497,9 @@ class __$$UserRegisteringUserAlreadySubscribedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserRegisteringUserAlreadySubscribed
+class _$UserRegisteringUserAlreadySubscribedImpl
     implements UserRegisteringUserAlreadySubscribed {
-  const _$UserRegisteringUserAlreadySubscribed(
+  const _$UserRegisteringUserAlreadySubscribedImpl(
       {required this.email,
       required this.cf,
       required this.userId,
@@ -516,10 +520,10 @@ class _$UserRegisteringUserAlreadySubscribed
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserRegisteringUserAlreadySubscribed &&
+            other is _$UserRegisteringUserAlreadySubscribedImpl &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.cf, cf) || other.cf == cf) &&
             (identical(other.userId, userId) || other.userId == userId) &&
@@ -533,10 +537,10 @@ class _$UserRegisteringUserAlreadySubscribed
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserRegisteringUserAlreadySubscribedCopyWith<
-          _$UserRegisteringUserAlreadySubscribed>
-      get copyWith => __$$UserRegisteringUserAlreadySubscribedCopyWithImpl<
-          _$UserRegisteringUserAlreadySubscribed>(this, _$identity);
+  _$$UserRegisteringUserAlreadySubscribedImplCopyWith<
+          _$UserRegisteringUserAlreadySubscribedImpl>
+      get copyWith => __$$UserRegisteringUserAlreadySubscribedImplCopyWithImpl<
+          _$UserRegisteringUserAlreadySubscribedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -645,38 +649,41 @@ abstract class UserRegisteringUserAlreadySubscribed
           required final String cf,
           required final String userId,
           required final String providerId}) =
-      _$UserRegisteringUserAlreadySubscribed;
+      _$UserRegisteringUserAlreadySubscribedImpl;
 
   String get email;
   String get cf;
   String get userId;
   String get providerId;
   @JsonKey(ignore: true)
-  _$$UserRegisteringUserAlreadySubscribedCopyWith<
-          _$UserRegisteringUserAlreadySubscribed>
+  _$$UserRegisteringUserAlreadySubscribedImplCopyWith<
+          _$UserRegisteringUserAlreadySubscribedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UserRegisteringLoadingCopyWith<$Res> {
-  factory _$$UserRegisteringLoadingCopyWith(_$UserRegisteringLoading value,
-          $Res Function(_$UserRegisteringLoading) then) =
-      __$$UserRegisteringLoadingCopyWithImpl<$Res>;
+abstract class _$$UserRegisteringLoadingImplCopyWith<$Res> {
+  factory _$$UserRegisteringLoadingImplCopyWith(
+          _$UserRegisteringLoadingImpl value,
+          $Res Function(_$UserRegisteringLoadingImpl) then) =
+      __$$UserRegisteringLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserRegisteringLoadingCopyWithImpl<$Res>
-    extends _$UserRegisteringStateCopyWithImpl<$Res, _$UserRegisteringLoading>
-    implements _$$UserRegisteringLoadingCopyWith<$Res> {
-  __$$UserRegisteringLoadingCopyWithImpl(_$UserRegisteringLoading _value,
-      $Res Function(_$UserRegisteringLoading) _then)
+class __$$UserRegisteringLoadingImplCopyWithImpl<$Res>
+    extends _$UserRegisteringStateCopyWithImpl<$Res,
+        _$UserRegisteringLoadingImpl>
+    implements _$$UserRegisteringLoadingImplCopyWith<$Res> {
+  __$$UserRegisteringLoadingImplCopyWithImpl(
+      _$UserRegisteringLoadingImpl _value,
+      $Res Function(_$UserRegisteringLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserRegisteringLoading implements UserRegisteringLoading {
-  const _$UserRegisteringLoading();
+class _$UserRegisteringLoadingImpl implements UserRegisteringLoading {
+  const _$UserRegisteringLoadingImpl();
 
   @override
   String toString() {
@@ -684,9 +691,10 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UserRegisteringLoading);
+        (other.runtimeType == runtimeType &&
+            other is _$UserRegisteringLoadingImpl);
   }
 
   @override
@@ -793,33 +801,33 @@ class _$UserRegisteringLoading implements UserRegisteringLoading {
 }
 
 abstract class UserRegisteringLoading implements UserRegisteringState {
-  const factory UserRegisteringLoading() = _$UserRegisteringLoading;
+  const factory UserRegisteringLoading() = _$UserRegisteringLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$UserRegisteringInvalidFiscalCodeCopyWith<$Res> {
-  factory _$$UserRegisteringInvalidFiscalCodeCopyWith(
-          _$UserRegisteringInvalidFiscalCode value,
-          $Res Function(_$UserRegisteringInvalidFiscalCode) then) =
-      __$$UserRegisteringInvalidFiscalCodeCopyWithImpl<$Res>;
+abstract class _$$UserRegisteringInvalidFiscalCodeImplCopyWith<$Res> {
+  factory _$$UserRegisteringInvalidFiscalCodeImplCopyWith(
+          _$UserRegisteringInvalidFiscalCodeImpl value,
+          $Res Function(_$UserRegisteringInvalidFiscalCodeImpl) then) =
+      __$$UserRegisteringInvalidFiscalCodeImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserRegisteringInvalidFiscalCodeCopyWithImpl<$Res>
+class __$$UserRegisteringInvalidFiscalCodeImplCopyWithImpl<$Res>
     extends _$UserRegisteringStateCopyWithImpl<$Res,
-        _$UserRegisteringInvalidFiscalCode>
-    implements _$$UserRegisteringInvalidFiscalCodeCopyWith<$Res> {
-  __$$UserRegisteringInvalidFiscalCodeCopyWithImpl(
-      _$UserRegisteringInvalidFiscalCode _value,
-      $Res Function(_$UserRegisteringInvalidFiscalCode) _then)
+        _$UserRegisteringInvalidFiscalCodeImpl>
+    implements _$$UserRegisteringInvalidFiscalCodeImplCopyWith<$Res> {
+  __$$UserRegisteringInvalidFiscalCodeImplCopyWithImpl(
+      _$UserRegisteringInvalidFiscalCodeImpl _value,
+      $Res Function(_$UserRegisteringInvalidFiscalCodeImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserRegisteringInvalidFiscalCode
+class _$UserRegisteringInvalidFiscalCodeImpl
     implements UserRegisteringInvalidFiscalCode {
-  const _$UserRegisteringInvalidFiscalCode();
+  const _$UserRegisteringInvalidFiscalCodeImpl();
 
   @override
   String toString() {
@@ -827,10 +835,10 @@ class _$UserRegisteringInvalidFiscalCode
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserRegisteringInvalidFiscalCode);
+            other is _$UserRegisteringInvalidFiscalCodeImpl);
   }
 
   @override
@@ -939,24 +947,24 @@ class _$UserRegisteringInvalidFiscalCode
 abstract class UserRegisteringInvalidFiscalCode
     implements UserRegisteringState {
   const factory UserRegisteringInvalidFiscalCode() =
-      _$UserRegisteringInvalidFiscalCode;
+      _$UserRegisteringInvalidFiscalCodeImpl;
 }
 
 /// @nodoc
-abstract class _$$UserRegisteringErrorCopyWith<$Res> {
-  factory _$$UserRegisteringErrorCopyWith(_$UserRegisteringError value,
-          $Res Function(_$UserRegisteringError) then) =
-      __$$UserRegisteringErrorCopyWithImpl<$Res>;
+abstract class _$$UserRegisteringErrorImplCopyWith<$Res> {
+  factory _$$UserRegisteringErrorImplCopyWith(_$UserRegisteringErrorImpl value,
+          $Res Function(_$UserRegisteringErrorImpl) then) =
+      __$$UserRegisteringErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Object error, StackTrace st});
 }
 
 /// @nodoc
-class __$$UserRegisteringErrorCopyWithImpl<$Res>
-    extends _$UserRegisteringStateCopyWithImpl<$Res, _$UserRegisteringError>
-    implements _$$UserRegisteringErrorCopyWith<$Res> {
-  __$$UserRegisteringErrorCopyWithImpl(_$UserRegisteringError _value,
-      $Res Function(_$UserRegisteringError) _then)
+class __$$UserRegisteringErrorImplCopyWithImpl<$Res>
+    extends _$UserRegisteringStateCopyWithImpl<$Res, _$UserRegisteringErrorImpl>
+    implements _$$UserRegisteringErrorImplCopyWith<$Res> {
+  __$$UserRegisteringErrorImplCopyWithImpl(_$UserRegisteringErrorImpl _value,
+      $Res Function(_$UserRegisteringErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -965,7 +973,7 @@ class __$$UserRegisteringErrorCopyWithImpl<$Res>
     Object? error = null,
     Object? st = null,
   }) {
-    return _then(_$UserRegisteringError(
+    return _then(_$UserRegisteringErrorImpl(
       null == error ? _value.error : error,
       null == st
           ? _value.st
@@ -977,8 +985,8 @@ class __$$UserRegisteringErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserRegisteringError implements UserRegisteringError {
-  const _$UserRegisteringError(this.error, this.st);
+class _$UserRegisteringErrorImpl implements UserRegisteringError {
+  const _$UserRegisteringErrorImpl(this.error, this.st);
 
   @override
   final Object error;
@@ -991,10 +999,10 @@ class _$UserRegisteringError implements UserRegisteringError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserRegisteringError &&
+            other is _$UserRegisteringErrorImpl &&
             const DeepCollectionEquality().equals(other.error, error) &&
             (identical(other.st, st) || other.st == st));
   }
@@ -1006,9 +1014,10 @@ class _$UserRegisteringError implements UserRegisteringError {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserRegisteringErrorCopyWith<_$UserRegisteringError> get copyWith =>
-      __$$UserRegisteringErrorCopyWithImpl<_$UserRegisteringError>(
-          this, _$identity);
+  _$$UserRegisteringErrorImplCopyWith<_$UserRegisteringErrorImpl>
+      get copyWith =>
+          __$$UserRegisteringErrorImplCopyWithImpl<_$UserRegisteringErrorImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1112,11 +1121,11 @@ class _$UserRegisteringError implements UserRegisteringError {
 
 abstract class UserRegisteringError implements UserRegisteringState {
   const factory UserRegisteringError(final Object error, final StackTrace st) =
-      _$UserRegisteringError;
+      _$UserRegisteringErrorImpl;
 
   Object get error;
   StackTrace get st;
   @JsonKey(ignore: true)
-  _$$UserRegisteringErrorCopyWith<_$UserRegisteringError> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$UserRegisteringErrorImplCopyWith<_$UserRegisteringErrorImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

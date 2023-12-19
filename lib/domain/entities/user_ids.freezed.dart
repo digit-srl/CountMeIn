@@ -61,20 +61,21 @@ class _$UserIdsCopyWithImpl<$Res, $Val extends UserIds>
 }
 
 /// @nodoc
-abstract class _$$_UserIdsCopyWith<$Res> implements $UserIdsCopyWith<$Res> {
-  factory _$$_UserIdsCopyWith(
-          _$_UserIds value, $Res Function(_$_UserIds) then) =
-      __$$_UserIdsCopyWithImpl<$Res>;
+abstract class _$$UserIdsImplCopyWith<$Res> implements $UserIdsCopyWith<$Res> {
+  factory _$$UserIdsImplCopyWith(
+          _$UserIdsImpl value, $Res Function(_$UserIdsImpl) then) =
+      __$$UserIdsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String providerId, String userId});
 }
 
 /// @nodoc
-class __$$_UserIdsCopyWithImpl<$Res>
-    extends _$UserIdsCopyWithImpl<$Res, _$_UserIds>
-    implements _$$_UserIdsCopyWith<$Res> {
-  __$$_UserIdsCopyWithImpl(_$_UserIds _value, $Res Function(_$_UserIds) _then)
+class __$$UserIdsImplCopyWithImpl<$Res>
+    extends _$UserIdsCopyWithImpl<$Res, _$UserIdsImpl>
+    implements _$$UserIdsImplCopyWith<$Res> {
+  __$$UserIdsImplCopyWithImpl(
+      _$UserIdsImpl _value, $Res Function(_$UserIdsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -83,7 +84,7 @@ class __$$_UserIdsCopyWithImpl<$Res>
     Object? providerId = null,
     Object? userId = null,
   }) {
-    return _then(_$_UserIds(
+    return _then(_$UserIdsImpl(
       providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
@@ -98,8 +99,8 @@ class __$$_UserIdsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UserIds implements _UserIds {
-  const _$_UserIds({required this.providerId, required this.userId});
+class _$UserIdsImpl implements _UserIds {
+  const _$UserIdsImpl({required this.providerId, required this.userId});
 
   @override
   final String providerId;
@@ -112,10 +113,10 @@ class _$_UserIds implements _UserIds {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserIds &&
+            other is _$UserIdsImpl &&
             (identical(other.providerId, providerId) ||
                 other.providerId == providerId) &&
             (identical(other.userId, userId) || other.userId == userId));
@@ -127,14 +128,14 @@ class _$_UserIds implements _UserIds {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserIdsCopyWith<_$_UserIds> get copyWith =>
-      __$$_UserIdsCopyWithImpl<_$_UserIds>(this, _$identity);
+  _$$UserIdsImplCopyWith<_$UserIdsImpl> get copyWith =>
+      __$$UserIdsImplCopyWithImpl<_$UserIdsImpl>(this, _$identity);
 }
 
 abstract class _UserIds implements UserIds {
   const factory _UserIds(
       {required final String providerId,
-      required final String userId}) = _$_UserIds;
+      required final String userId}) = _$UserIdsImpl;
 
   @override
   String get providerId;
@@ -142,6 +143,6 @@ abstract class _UserIds implements UserIds {
   String get userId;
   @override
   @JsonKey(ignore: true)
-  _$$_UserIdsCopyWith<_$_UserIds> get copyWith =>
+  _$$UserIdsImplCopyWith<_$UserIdsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

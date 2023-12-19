@@ -98,11 +98,11 @@ class _$UserQrCodeCopyWithImpl<$Res, $Val extends UserQrCode>
 }
 
 /// @nodoc
-abstract class _$$_UserQrCodeCopyWith<$Res>
+abstract class _$$UserQrCodeImplCopyWith<$Res>
     implements $UserQrCodeCopyWith<$Res> {
-  factory _$$_UserQrCodeCopyWith(
-          _$_UserQrCode value, $Res Function(_$_UserQrCode) then) =
-      __$$_UserQrCodeCopyWithImpl<$Res>;
+  factory _$$UserQrCodeImplCopyWith(
+          _$UserQrCodeImpl value, $Res Function(_$UserQrCodeImpl) then) =
+      __$$UserQrCodeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -115,11 +115,11 @@ abstract class _$$_UserQrCodeCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_UserQrCodeCopyWithImpl<$Res>
-    extends _$UserQrCodeCopyWithImpl<$Res, _$_UserQrCode>
-    implements _$$_UserQrCodeCopyWith<$Res> {
-  __$$_UserQrCodeCopyWithImpl(
-      _$_UserQrCode _value, $Res Function(_$_UserQrCode) _then)
+class __$$UserQrCodeImplCopyWithImpl<$Res>
+    extends _$UserQrCodeCopyWithImpl<$Res, _$UserQrCodeImpl>
+    implements _$$UserQrCodeImplCopyWith<$Res> {
+  __$$UserQrCodeImplCopyWithImpl(
+      _$UserQrCodeImpl _value, $Res Function(_$UserQrCodeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -132,7 +132,7 @@ class __$$_UserQrCodeCopyWithImpl<$Res>
     Object? activityId = null,
     Object? email = freezed,
   }) {
-    return _then(_$_UserQrCode(
+    return _then(_$UserQrCodeImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -163,8 +163,8 @@ class __$$_UserQrCodeCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserQrCode implements _UserQrCode {
-  const _$_UserQrCode(
+class _$UserQrCodeImpl implements _UserQrCode {
+  const _$UserQrCodeImpl(
       {required this.id,
       required this.name,
       required this.surname,
@@ -172,8 +172,8 @@ class _$_UserQrCode implements _UserQrCode {
       required this.activityId,
       this.email});
 
-  factory _$_UserQrCode.fromJson(Map<String, dynamic> json) =>
-      _$$_UserQrCodeFromJson(json);
+  factory _$UserQrCodeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserQrCodeImplFromJson(json);
 
   @override
   final String id;
@@ -194,10 +194,10 @@ class _$_UserQrCode implements _UserQrCode {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserQrCode &&
+            other is _$UserQrCodeImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.surname, surname) || other.surname == surname) &&
@@ -215,12 +215,12 @@ class _$_UserQrCode implements _UserQrCode {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserQrCodeCopyWith<_$_UserQrCode> get copyWith =>
-      __$$_UserQrCodeCopyWithImpl<_$_UserQrCode>(this, _$identity);
+  _$$UserQrCodeImplCopyWith<_$UserQrCodeImpl> get copyWith =>
+      __$$UserQrCodeImplCopyWithImpl<_$UserQrCodeImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserQrCodeToJson(
+    return _$$UserQrCodeImplToJson(
       this,
     );
   }
@@ -233,10 +233,10 @@ abstract class _UserQrCode implements UserQrCode {
       required final String surname,
       required final String cf,
       required final String activityId,
-      final String? email}) = _$_UserQrCode;
+      final String? email}) = _$UserQrCodeImpl;
 
   factory _UserQrCode.fromJson(Map<String, dynamic> json) =
-      _$_UserQrCode.fromJson;
+      _$UserQrCodeImpl.fromJson;
 
   @override
   String get id;
@@ -252,6 +252,6 @@ abstract class _UserQrCode implements UserQrCode {
   String? get email;
   @override
   @JsonKey(ignore: true)
-  _$$_UserQrCodeCopyWith<_$_UserQrCode> get copyWith =>
+  _$$UserQrCodeImplCopyWith<_$UserQrCodeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

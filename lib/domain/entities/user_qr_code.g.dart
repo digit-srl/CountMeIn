@@ -6,8 +6,8 @@ part of 'user_qr_code.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UserQrCode _$$_UserQrCodeFromJson(Map<String, dynamic> json) =>
-    _$_UserQrCode(
+_$UserQrCodeImpl _$$UserQrCodeImplFromJson(Map<String, dynamic> json) =>
+    _$UserQrCodeImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       surname: json['surname'] as String,
@@ -16,7 +16,7 @@ _$_UserQrCode _$$_UserQrCodeFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String?,
     );
 
-Map<String, dynamic> _$$_UserQrCodeToJson(_$_UserQrCode instance) =>
+Map<String, dynamic> _$$UserQrCodeImplToJson(_$UserQrCodeImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

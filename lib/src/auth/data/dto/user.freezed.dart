@@ -115,11 +115,11 @@ class _$AuthUserDTOCopyWithImpl<$Res, $Val extends AuthUserDTO>
 }
 
 /// @nodoc
-abstract class _$$_AuthUserDTOCopyWith<$Res>
+abstract class _$$AuthUserDTOImplCopyWith<$Res>
     implements $AuthUserDTOCopyWith<$Res> {
-  factory _$$_AuthUserDTOCopyWith(
-          _$_AuthUserDTO value, $Res Function(_$_AuthUserDTO) then) =
-      __$$_AuthUserDTOCopyWithImpl<$Res>;
+  factory _$$AuthUserDTOImplCopyWith(
+          _$AuthUserDTOImpl value, $Res Function(_$AuthUserDTOImpl) then) =
+      __$$AuthUserDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -134,11 +134,11 @@ abstract class _$$_AuthUserDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AuthUserDTOCopyWithImpl<$Res>
-    extends _$AuthUserDTOCopyWithImpl<$Res, _$_AuthUserDTO>
-    implements _$$_AuthUserDTOCopyWith<$Res> {
-  __$$_AuthUserDTOCopyWithImpl(
-      _$_AuthUserDTO _value, $Res Function(_$_AuthUserDTO) _then)
+class __$$AuthUserDTOImplCopyWithImpl<$Res>
+    extends _$AuthUserDTOCopyWithImpl<$Res, _$AuthUserDTOImpl>
+    implements _$$AuthUserDTOImplCopyWith<$Res> {
+  __$$AuthUserDTOImplCopyWithImpl(
+      _$AuthUserDTOImpl _value, $Res Function(_$AuthUserDTOImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -153,7 +153,7 @@ class __$$_AuthUserDTOCopyWithImpl<$Res>
     Object? role = null,
     Object? createdOn = null,
   }) {
-    return _then(_$_AuthUserDTO(
+    return _then(_$AuthUserDTOImpl(
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -192,8 +192,8 @@ class __$$_AuthUserDTOCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AuthUserDTO implements _AuthUserDTO {
-  const _$_AuthUserDTO(
+class _$AuthUserDTOImpl implements _AuthUserDTO {
+  const _$AuthUserDTOImpl(
       {required this.uid,
       required this.name,
       required this.surname,
@@ -203,8 +203,8 @@ class _$_AuthUserDTO implements _AuthUserDTO {
       @CMIRoleConverter() required this.role,
       @MyDateTimeConverter() required this.createdOn});
 
-  factory _$_AuthUserDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_AuthUserDTOFromJson(json);
+  factory _$AuthUserDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AuthUserDTOImplFromJson(json);
 
   @override
   final String uid;
@@ -233,10 +233,10 @@ class _$_AuthUserDTO implements _AuthUserDTO {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AuthUserDTO &&
+            other is _$AuthUserDTOImpl &&
             (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.surname, surname) || other.surname == surname) &&
@@ -258,12 +258,12 @@ class _$_AuthUserDTO implements _AuthUserDTO {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AuthUserDTOCopyWith<_$_AuthUserDTO> get copyWith =>
-      __$$_AuthUserDTOCopyWithImpl<_$_AuthUserDTO>(this, _$identity);
+  _$$AuthUserDTOImplCopyWith<_$AuthUserDTOImpl> get copyWith =>
+      __$$AuthUserDTOImplCopyWithImpl<_$AuthUserDTOImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthUserDTOToJson(
+    return _$$AuthUserDTOImplToJson(
       this,
     );
   }
@@ -279,10 +279,10 @@ abstract class _AuthUserDTO implements AuthUserDTO {
           final bool temporaryPassword,
           @CMIRoleConverter() required final PlatformRole role,
           @MyDateTimeConverter() required final DateTime createdOn}) =
-      _$_AuthUserDTO;
+      _$AuthUserDTOImpl;
 
   factory _AuthUserDTO.fromJson(Map<String, dynamic> json) =
-      _$_AuthUserDTO.fromJson;
+      _$AuthUserDTOImpl.fromJson;
 
   @override
   String get uid;
@@ -304,6 +304,6 @@ abstract class _AuthUserDTO implements AuthUserDTO {
   DateTime get createdOn;
   @override
   @JsonKey(ignore: true)
-  _$$_AuthUserDTOCopyWith<_$_AuthUserDTO> get copyWith =>
+  _$$AuthUserDTOImplCopyWith<_$AuthUserDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

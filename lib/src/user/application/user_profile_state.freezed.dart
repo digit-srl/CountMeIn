@@ -99,25 +99,25 @@ class _$UserProfileStateCopyWithImpl<$Res, $Val extends UserProfileState>
 }
 
 /// @nodoc
-abstract class _$$UserProfileInitialCopyWith<$Res> {
-  factory _$$UserProfileInitialCopyWith(_$UserProfileInitial value,
-          $Res Function(_$UserProfileInitial) then) =
-      __$$UserProfileInitialCopyWithImpl<$Res>;
+abstract class _$$UserProfileInitialImplCopyWith<$Res> {
+  factory _$$UserProfileInitialImplCopyWith(_$UserProfileInitialImpl value,
+          $Res Function(_$UserProfileInitialImpl) then) =
+      __$$UserProfileInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserProfileInitialCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileInitial>
-    implements _$$UserProfileInitialCopyWith<$Res> {
-  __$$UserProfileInitialCopyWithImpl(
-      _$UserProfileInitial _value, $Res Function(_$UserProfileInitial) _then)
+class __$$UserProfileInitialImplCopyWithImpl<$Res>
+    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileInitialImpl>
+    implements _$$UserProfileInitialImplCopyWith<$Res> {
+  __$$UserProfileInitialImplCopyWithImpl(_$UserProfileInitialImpl _value,
+      $Res Function(_$UserProfileInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserProfileInitial implements UserProfileInitial {
-  const _$UserProfileInitial();
+class _$UserProfileInitialImpl implements UserProfileInitial {
+  const _$UserProfileInitialImpl();
 
   @override
   String toString() {
@@ -125,9 +125,9 @@ class _$UserProfileInitial implements UserProfileInitial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UserProfileInitial);
+        (other.runtimeType == runtimeType && other is _$UserProfileInitialImpl);
   }
 
   @override
@@ -221,29 +221,29 @@ class _$UserProfileInitial implements UserProfileInitial {
 }
 
 abstract class UserProfileInitial implements UserProfileState {
-  const factory UserProfileInitial() = _$UserProfileInitial;
+  const factory UserProfileInitial() = _$UserProfileInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$UserProfileDataCopyWith<$Res> {
-  factory _$$UserProfileDataCopyWith(
-          _$UserProfileData value, $Res Function(_$UserProfileData) then) =
-      __$$UserProfileDataCopyWithImpl<$Res>;
+abstract class _$$UserProfileDataImplCopyWith<$Res> {
+  factory _$$UserProfileDataImplCopyWith(_$UserProfileDataImpl value,
+          $Res Function(_$UserProfileDataImpl) then) =
+      __$$UserProfileDataImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserProfileDataCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileData>
-    implements _$$UserProfileDataCopyWith<$Res> {
-  __$$UserProfileDataCopyWithImpl(
-      _$UserProfileData _value, $Res Function(_$UserProfileData) _then)
+class __$$UserProfileDataImplCopyWithImpl<$Res>
+    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileDataImpl>
+    implements _$$UserProfileDataImplCopyWith<$Res> {
+  __$$UserProfileDataImplCopyWithImpl(
+      _$UserProfileDataImpl _value, $Res Function(_$UserProfileDataImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserProfileData implements UserProfileData {
-  const _$UserProfileData();
+class _$UserProfileDataImpl implements UserProfileData {
+  const _$UserProfileDataImpl();
 
   @override
   String toString() {
@@ -251,9 +251,9 @@ class _$UserProfileData implements UserProfileData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UserProfileData);
+        (other.runtimeType == runtimeType && other is _$UserProfileDataImpl);
   }
 
   @override
@@ -347,29 +347,29 @@ class _$UserProfileData implements UserProfileData {
 }
 
 abstract class UserProfileData implements UserProfileState {
-  const factory UserProfileData() = _$UserProfileData;
+  const factory UserProfileData() = _$UserProfileDataImpl;
 }
 
 /// @nodoc
-abstract class _$$UserProfileWrongCodeCopyWith<$Res> {
-  factory _$$UserProfileWrongCodeCopyWith(_$UserProfileWrongCode value,
-          $Res Function(_$UserProfileWrongCode) then) =
-      __$$UserProfileWrongCodeCopyWithImpl<$Res>;
+abstract class _$$UserProfileWrongCodeImplCopyWith<$Res> {
+  factory _$$UserProfileWrongCodeImplCopyWith(_$UserProfileWrongCodeImpl value,
+          $Res Function(_$UserProfileWrongCodeImpl) then) =
+      __$$UserProfileWrongCodeImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserProfileWrongCodeCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileWrongCode>
-    implements _$$UserProfileWrongCodeCopyWith<$Res> {
-  __$$UserProfileWrongCodeCopyWithImpl(_$UserProfileWrongCode _value,
-      $Res Function(_$UserProfileWrongCode) _then)
+class __$$UserProfileWrongCodeImplCopyWithImpl<$Res>
+    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileWrongCodeImpl>
+    implements _$$UserProfileWrongCodeImplCopyWith<$Res> {
+  __$$UserProfileWrongCodeImplCopyWithImpl(_$UserProfileWrongCodeImpl _value,
+      $Res Function(_$UserProfileWrongCodeImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserProfileWrongCode implements UserProfileWrongCode {
-  const _$UserProfileWrongCode();
+class _$UserProfileWrongCodeImpl implements UserProfileWrongCode {
+  const _$UserProfileWrongCodeImpl();
 
   @override
   String toString() {
@@ -377,9 +377,10 @@ class _$UserProfileWrongCode implements UserProfileWrongCode {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UserProfileWrongCode);
+        (other.runtimeType == runtimeType &&
+            other is _$UserProfileWrongCodeImpl);
   }
 
   @override
@@ -473,30 +474,32 @@ class _$UserProfileWrongCode implements UserProfileWrongCode {
 }
 
 abstract class UserProfileWrongCode implements UserProfileState {
-  const factory UserProfileWrongCode() = _$UserProfileWrongCode;
+  const factory UserProfileWrongCode() = _$UserProfileWrongCodeImpl;
 }
 
 /// @nodoc
-abstract class _$$UserProfileWaitingOtpCodeCopyWith<$Res> {
-  factory _$$UserProfileWaitingOtpCodeCopyWith(
-          _$UserProfileWaitingOtpCode value,
-          $Res Function(_$UserProfileWaitingOtpCode) then) =
-      __$$UserProfileWaitingOtpCodeCopyWithImpl<$Res>;
+abstract class _$$UserProfileWaitingOtpCodeImplCopyWith<$Res> {
+  factory _$$UserProfileWaitingOtpCodeImplCopyWith(
+          _$UserProfileWaitingOtpCodeImpl value,
+          $Res Function(_$UserProfileWaitingOtpCodeImpl) then) =
+      __$$UserProfileWaitingOtpCodeImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserProfileWaitingOtpCodeCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileWaitingOtpCode>
-    implements _$$UserProfileWaitingOtpCodeCopyWith<$Res> {
-  __$$UserProfileWaitingOtpCodeCopyWithImpl(_$UserProfileWaitingOtpCode _value,
-      $Res Function(_$UserProfileWaitingOtpCode) _then)
+class __$$UserProfileWaitingOtpCodeImplCopyWithImpl<$Res>
+    extends _$UserProfileStateCopyWithImpl<$Res,
+        _$UserProfileWaitingOtpCodeImpl>
+    implements _$$UserProfileWaitingOtpCodeImplCopyWith<$Res> {
+  __$$UserProfileWaitingOtpCodeImplCopyWithImpl(
+      _$UserProfileWaitingOtpCodeImpl _value,
+      $Res Function(_$UserProfileWaitingOtpCodeImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserProfileWaitingOtpCode implements UserProfileWaitingOtpCode {
-  const _$UserProfileWaitingOtpCode();
+class _$UserProfileWaitingOtpCodeImpl implements UserProfileWaitingOtpCode {
+  const _$UserProfileWaitingOtpCodeImpl();
 
   @override
   String toString() {
@@ -504,10 +507,10 @@ class _$UserProfileWaitingOtpCode implements UserProfileWaitingOtpCode {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserProfileWaitingOtpCode);
+            other is _$UserProfileWaitingOtpCodeImpl);
   }
 
   @override
@@ -601,29 +604,29 @@ class _$UserProfileWaitingOtpCode implements UserProfileWaitingOtpCode {
 }
 
 abstract class UserProfileWaitingOtpCode implements UserProfileState {
-  const factory UserProfileWaitingOtpCode() = _$UserProfileWaitingOtpCode;
+  const factory UserProfileWaitingOtpCode() = _$UserProfileWaitingOtpCodeImpl;
 }
 
 /// @nodoc
-abstract class _$$UserProfileLoadingCopyWith<$Res> {
-  factory _$$UserProfileLoadingCopyWith(_$UserProfileLoading value,
-          $Res Function(_$UserProfileLoading) then) =
-      __$$UserProfileLoadingCopyWithImpl<$Res>;
+abstract class _$$UserProfileLoadingImplCopyWith<$Res> {
+  factory _$$UserProfileLoadingImplCopyWith(_$UserProfileLoadingImpl value,
+          $Res Function(_$UserProfileLoadingImpl) then) =
+      __$$UserProfileLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserProfileLoadingCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileLoading>
-    implements _$$UserProfileLoadingCopyWith<$Res> {
-  __$$UserProfileLoadingCopyWithImpl(
-      _$UserProfileLoading _value, $Res Function(_$UserProfileLoading) _then)
+class __$$UserProfileLoadingImplCopyWithImpl<$Res>
+    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileLoadingImpl>
+    implements _$$UserProfileLoadingImplCopyWith<$Res> {
+  __$$UserProfileLoadingImplCopyWithImpl(_$UserProfileLoadingImpl _value,
+      $Res Function(_$UserProfileLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserProfileLoading implements UserProfileLoading {
-  const _$UserProfileLoading();
+class _$UserProfileLoadingImpl implements UserProfileLoading {
+  const _$UserProfileLoadingImpl();
 
   @override
   String toString() {
@@ -631,9 +634,9 @@ class _$UserProfileLoading implements UserProfileLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UserProfileLoading);
+        (other.runtimeType == runtimeType && other is _$UserProfileLoadingImpl);
   }
 
   @override
@@ -727,24 +730,24 @@ class _$UserProfileLoading implements UserProfileLoading {
 }
 
 abstract class UserProfileLoading implements UserProfileState {
-  const factory UserProfileLoading() = _$UserProfileLoading;
+  const factory UserProfileLoading() = _$UserProfileLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$UserProfileErrorCopyWith<$Res> {
-  factory _$$UserProfileErrorCopyWith(
-          _$UserProfileError value, $Res Function(_$UserProfileError) then) =
-      __$$UserProfileErrorCopyWithImpl<$Res>;
+abstract class _$$UserProfileErrorImplCopyWith<$Res> {
+  factory _$$UserProfileErrorImplCopyWith(_$UserProfileErrorImpl value,
+          $Res Function(_$UserProfileErrorImpl) then) =
+      __$$UserProfileErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Object? error, StackTrace? st});
 }
 
 /// @nodoc
-class __$$UserProfileErrorCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileError>
-    implements _$$UserProfileErrorCopyWith<$Res> {
-  __$$UserProfileErrorCopyWithImpl(
-      _$UserProfileError _value, $Res Function(_$UserProfileError) _then)
+class __$$UserProfileErrorImplCopyWithImpl<$Res>
+    extends _$UserProfileStateCopyWithImpl<$Res, _$UserProfileErrorImpl>
+    implements _$$UserProfileErrorImplCopyWith<$Res> {
+  __$$UserProfileErrorImplCopyWithImpl(_$UserProfileErrorImpl _value,
+      $Res Function(_$UserProfileErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -753,7 +756,7 @@ class __$$UserProfileErrorCopyWithImpl<$Res>
     Object? error = freezed,
     Object? st = freezed,
   }) {
-    return _then(_$UserProfileError(
+    return _then(_$UserProfileErrorImpl(
       error: freezed == error ? _value.error : error,
       st: freezed == st
           ? _value.st
@@ -765,8 +768,8 @@ class __$$UserProfileErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UserProfileError implements UserProfileError {
-  const _$UserProfileError({this.error, this.st});
+class _$UserProfileErrorImpl implements UserProfileError {
+  const _$UserProfileErrorImpl({this.error, this.st});
 
   @override
   final Object? error;
@@ -779,10 +782,10 @@ class _$UserProfileError implements UserProfileError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserProfileError &&
+            other is _$UserProfileErrorImpl &&
             const DeepCollectionEquality().equals(other.error, error) &&
             (identical(other.st, st) || other.st == st));
   }
@@ -794,8 +797,9 @@ class _$UserProfileError implements UserProfileError {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserProfileErrorCopyWith<_$UserProfileError> get copyWith =>
-      __$$UserProfileErrorCopyWithImpl<_$UserProfileError>(this, _$identity);
+  _$$UserProfileErrorImplCopyWith<_$UserProfileErrorImpl> get copyWith =>
+      __$$UserProfileErrorImplCopyWithImpl<_$UserProfileErrorImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -886,11 +890,11 @@ class _$UserProfileError implements UserProfileError {
 
 abstract class UserProfileError implements UserProfileState {
   const factory UserProfileError({final Object? error, final StackTrace? st}) =
-      _$UserProfileError;
+      _$UserProfileErrorImpl;
 
   Object? get error;
   StackTrace? get st;
   @JsonKey(ignore: true)
-  _$$UserProfileErrorCopyWith<_$UserProfileError> get copyWith =>
+  _$$UserProfileErrorImplCopyWith<_$UserProfileErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

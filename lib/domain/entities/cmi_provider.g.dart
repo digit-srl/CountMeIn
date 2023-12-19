@@ -6,8 +6,8 @@ part of 'cmi_provider.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CMIProvider _$$_CMIProviderFromJson(Map<String, dynamic> json) =>
-    _$_CMIProvider(
+_$CMIProviderImpl _$$CMIProviderImplFromJson(Map<String, dynamic> json) =>
+    _$CMIProviderImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       adminName: json['adminName'] as String,
@@ -31,7 +31,7 @@ _$_CMIProvider _$$_CMIProviderFromJson(Map<String, dynamic> json) =>
           .fromJson(json['requestedOn'] as Timestamp),
     );
 
-Map<String, dynamic> _$$_CMIProviderToJson(_$_CMIProvider instance) =>
+Map<String, dynamic> _$$CMIProviderImplToJson(_$CMIProviderImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -63,9 +63,9 @@ Json? _$JsonConverterToJson<Json, Value>(
 ) =>
     value == null ? null : toJson(value);
 
-_$_PendingProviderManager _$$_PendingProviderManagerFromJson(
+_$PendingProviderManagerImpl _$$PendingProviderManagerImplFromJson(
         Map<String, dynamic> json) =>
-    _$_PendingProviderManager(
+    _$PendingProviderManagerImpl(
       id: json['id'] as String,
       role: const UserRoleConverter().fromJson(json['role'] as String?),
       name: json['name'] as String,
@@ -81,8 +81,8 @@ _$_PendingProviderManager _$$_PendingProviderManagerFromJson(
           const <String>[],
     );
 
-Map<String, dynamic> _$$_PendingProviderManagerToJson(
-        _$_PendingProviderManager instance) =>
+Map<String, dynamic> _$$PendingProviderManagerImplToJson(
+        _$PendingProviderManagerImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'role': const UserRoleConverter().toJson(instance.role),
@@ -95,8 +95,9 @@ Map<String, dynamic> _$$_PendingProviderManagerToJson(
       'eventsRestriction': instance.eventsRestriction,
     };
 
-_$_ProviderManager _$$_ProviderManagerFromJson(Map<String, dynamic> json) =>
-    _$_ProviderManager(
+_$ProviderManagerImpl _$$ProviderManagerImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ProviderManagerImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       email: json['email'] as String,
@@ -107,7 +108,8 @@ _$_ProviderManager _$$_ProviderManagerFromJson(Map<String, dynamic> json) =>
           const <String>[],
     );
 
-Map<String, dynamic> _$$_ProviderManagerToJson(_$_ProviderManager instance) =>
+Map<String, dynamic> _$$ProviderManagerImplToJson(
+        _$ProviderManagerImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

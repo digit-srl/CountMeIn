@@ -164,11 +164,11 @@ class _$CMIProviderRequestCopyWithImpl<$Res, $Val extends CMIProviderRequest>
 }
 
 /// @nodoc
-abstract class _$$_CMIProviderRequestCopyWith<$Res>
+abstract class _$$CMIProviderRequestImplCopyWith<$Res>
     implements $CMIProviderRequestCopyWith<$Res> {
-  factory _$$_CMIProviderRequestCopyWith(_$_CMIProviderRequest value,
-          $Res Function(_$_CMIProviderRequest) then) =
-      __$$_CMIProviderRequestCopyWithImpl<$Res>;
+  factory _$$CMIProviderRequestImplCopyWith(_$CMIProviderRequestImpl value,
+          $Res Function(_$CMIProviderRequestImpl) then) =
+      __$$CMIProviderRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -190,11 +190,11 @@ abstract class _$$_CMIProviderRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CMIProviderRequestCopyWithImpl<$Res>
-    extends _$CMIProviderRequestCopyWithImpl<$Res, _$_CMIProviderRequest>
-    implements _$$_CMIProviderRequestCopyWith<$Res> {
-  __$$_CMIProviderRequestCopyWithImpl(
-      _$_CMIProviderRequest _value, $Res Function(_$_CMIProviderRequest) _then)
+class __$$CMIProviderRequestImplCopyWithImpl<$Res>
+    extends _$CMIProviderRequestCopyWithImpl<$Res, _$CMIProviderRequestImpl>
+    implements _$$CMIProviderRequestImplCopyWith<$Res> {
+  __$$CMIProviderRequestImplCopyWithImpl(_$CMIProviderRequestImpl _value,
+      $Res Function(_$CMIProviderRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -216,7 +216,7 @@ class __$$_CMIProviderRequestCopyWithImpl<$Res>
     Object? domainRequirement = freezed,
     Object? requestedOn = null,
   }) {
-    return _then(_$_CMIProviderRequest(
+    return _then(_$CMIProviderRequestImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -283,8 +283,8 @@ class __$$_CMIProviderRequestCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CMIProviderRequest implements _CMIProviderRequest {
-  const _$_CMIProviderRequest(
+class _$CMIProviderRequestImpl implements _CMIProviderRequest {
+  const _$CMIProviderRequestImpl(
       {required this.id,
       required this.adminName,
       required this.adminSurname,
@@ -303,8 +303,8 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
       : _managers = managers,
         _aims = aims;
 
-  factory _$_CMIProviderRequest.fromJson(Map<String, dynamic> json) =>
-      _$$_CMIProviderRequestFromJson(json);
+  factory _$CMIProviderRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CMIProviderRequestImplFromJson(json);
 
   @override
   final String id;
@@ -359,10 +359,10 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CMIProviderRequest &&
+            other is _$CMIProviderRequestImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.adminName, adminName) ||
                 other.adminName == adminName) &&
@@ -409,13 +409,13 @@ class _$_CMIProviderRequest implements _CMIProviderRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CMIProviderRequestCopyWith<_$_CMIProviderRequest> get copyWith =>
-      __$$_CMIProviderRequestCopyWithImpl<_$_CMIProviderRequest>(
+  _$$CMIProviderRequestImplCopyWith<_$CMIProviderRequestImpl> get copyWith =>
+      __$$CMIProviderRequestImplCopyWithImpl<_$CMIProviderRequestImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CMIProviderRequestToJson(
+    return _$$CMIProviderRequestImplToJson(
       this,
     );
   }
@@ -438,10 +438,10 @@ abstract class _CMIProviderRequest implements CMIProviderRequest {
           final List<String>? aims,
           final String? domainRequirement,
           @MyDateTimeConverter() required final DateTime requestedOn}) =
-      _$_CMIProviderRequest;
+      _$CMIProviderRequestImpl;
 
   factory _CMIProviderRequest.fromJson(Map<String, dynamic> json) =
-      _$_CMIProviderRequest.fromJson;
+      _$CMIProviderRequestImpl.fromJson;
 
   @override
   String get id;
@@ -477,6 +477,6 @@ abstract class _CMIProviderRequest implements CMIProviderRequest {
   DateTime get requestedOn;
   @override
   @JsonKey(ignore: true)
-  _$$_CMIProviderRequestCopyWith<_$_CMIProviderRequest> get copyWith =>
+  _$$CMIProviderRequestImplCopyWith<_$CMIProviderRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

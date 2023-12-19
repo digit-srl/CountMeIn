@@ -217,10 +217,11 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
 }
 
 /// @nodoc
-abstract class _$$_CMIEventCopyWith<$Res> implements $CMIEventCopyWith<$Res> {
-  factory _$$_CMIEventCopyWith(
-          _$_CMIEvent value, $Res Function(_$_CMIEvent) then) =
-      __$$_CMIEventCopyWithImpl<$Res>;
+abstract class _$$CMIEventImplCopyWith<$Res>
+    implements $CMIEventCopyWith<$Res> {
+  factory _$$CMIEventImplCopyWith(
+          _$CMIEventImpl value, $Res Function(_$CMIEventImpl) then) =
+      __$$CMIEventImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -250,11 +251,11 @@ abstract class _$$_CMIEventCopyWith<$Res> implements $CMIEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_CMIEventCopyWithImpl<$Res>
-    extends _$CMIEventCopyWithImpl<$Res, _$_CMIEvent>
-    implements _$$_CMIEventCopyWith<$Res> {
-  __$$_CMIEventCopyWithImpl(
-      _$_CMIEvent _value, $Res Function(_$_CMIEvent) _then)
+class __$$CMIEventImplCopyWithImpl<$Res>
+    extends _$CMIEventCopyWithImpl<$Res, _$CMIEventImpl>
+    implements _$$CMIEventImplCopyWith<$Res> {
+  __$$CMIEventImplCopyWithImpl(
+      _$CMIEventImpl _value, $Res Function(_$CMIEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -281,7 +282,7 @@ class __$$_CMIEventCopyWithImpl<$Res>
     Object? subEventDeadline = freezed,
     Object? startAt = null,
   }) {
-    return _then(_$_CMIEvent(
+    return _then(_$CMIEventImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -368,39 +369,32 @@ class __$$_CMIEventCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CMIEvent implements _CMIEvent {
-  const _$_CMIEvent(
+class _$CMIEventImpl implements _CMIEvent {
+  const _$CMIEventImpl(
       {required this.id,
       required this.name,
       this.acceptPassepartout = true,
       this.anonymous = true,
       this.recurring = true,
       this.emailShowed = false,
-      @FrequencyTypeConverter()
-          this.frequency,
+      @FrequencyTypeConverter() this.frequency,
       this.recurrence,
       this.remaining,
       this.totalUsers = 0,
       this.genderCount,
       this.activeSessionId,
-      @EventAccessTypeConverter()
-          required this.accessType,
+      @EventAccessTypeConverter() required this.accessType,
       required this.maxWomCount,
-      @EventStatusConverter()
-          this.status,
-      @EventTypeConverter()
-          required this.type,
+      @EventStatusConverter() this.status,
+      @EventTypeConverter() required this.type,
       @AcceptedCardTypeConverted()
-          this.acceptedCardType = AcceptedCardType.passpartoutAndMine,
-      @MyDateTimeConverter()
-          required this.createdOn,
-      @MyDateTimeConverter()
-          this.subEventDeadline,
-      @MyDateTimeConverter()
-          required this.startAt});
+      this.acceptedCardType = AcceptedCardType.passpartoutAndMine,
+      @MyDateTimeConverter() required this.createdOn,
+      @MyDateTimeConverter() this.subEventDeadline,
+      @MyDateTimeConverter() required this.startAt});
 
-  factory _$_CMIEvent.fromJson(Map<String, dynamic> json) =>
-      _$$_CMIEventFromJson(json);
+  factory _$CMIEventImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CMIEventImplFromJson(json);
 
   @override
   final String id;
@@ -463,10 +457,10 @@ class _$_CMIEvent implements _CMIEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CMIEvent &&
+            other is _$CMIEventImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.acceptPassepartout, acceptPassepartout) ||
@@ -533,12 +527,12 @@ class _$_CMIEvent implements _CMIEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CMIEventCopyWith<_$_CMIEvent> get copyWith =>
-      __$$_CMIEventCopyWithImpl<_$_CMIEvent>(this, _$identity);
+  _$$CMIEventImplCopyWith<_$CMIEventImpl> get copyWith =>
+      __$$CMIEventImplCopyWithImpl<_$CMIEventImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CMIEventToJson(
+    return _$$CMIEventImplToJson(
       this,
     );
   }
@@ -565,9 +559,10 @@ abstract class _CMIEvent implements CMIEvent {
       @AcceptedCardTypeConverted() final AcceptedCardType acceptedCardType,
       @MyDateTimeConverter() required final DateTime createdOn,
       @MyDateTimeConverter() final DateTime? subEventDeadline,
-      @MyDateTimeConverter() required final DateTime startAt}) = _$_CMIEvent;
+      @MyDateTimeConverter() required final DateTime startAt}) = _$CMIEventImpl;
 
-  factory _CMIEvent.fromJson(Map<String, dynamic> json) = _$_CMIEvent.fromJson;
+  factory _CMIEvent.fromJson(Map<String, dynamic> json) =
+      _$CMIEventImpl.fromJson;
 
   @override
   String get id;
@@ -619,7 +614,7 @@ abstract class _CMIEvent implements CMIEvent {
   DateTime get startAt;
   @override
   @JsonKey(ignore: true)
-  _$$_CMIEventCopyWith<_$_CMIEvent> get copyWith =>
+  _$$CMIEventImplCopyWith<_$CMIEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -723,11 +718,11 @@ class _$CMISubEventCopyWithImpl<$Res, $Val extends CMISubEvent>
 }
 
 /// @nodoc
-abstract class _$$_CMISubEventCopyWith<$Res>
+abstract class _$$CMISubEventImplCopyWith<$Res>
     implements $CMISubEventCopyWith<$Res> {
-  factory _$$_CMISubEventCopyWith(
-          _$_CMISubEvent value, $Res Function(_$_CMISubEvent) then) =
-      __$$_CMISubEventCopyWithImpl<$Res>;
+  factory _$$CMISubEventImplCopyWith(
+          _$CMISubEventImpl value, $Res Function(_$CMISubEventImpl) then) =
+      __$$CMISubEventImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -743,11 +738,11 @@ abstract class _$$_CMISubEventCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CMISubEventCopyWithImpl<$Res>
-    extends _$CMISubEventCopyWithImpl<$Res, _$_CMISubEvent>
-    implements _$$_CMISubEventCopyWith<$Res> {
-  __$$_CMISubEventCopyWithImpl(
-      _$_CMISubEvent _value, $Res Function(_$_CMISubEvent) _then)
+class __$$CMISubEventImplCopyWithImpl<$Res>
+    extends _$CMISubEventCopyWithImpl<$Res, _$CMISubEventImpl>
+    implements _$$CMISubEventImplCopyWith<$Res> {
+  __$$CMISubEventImplCopyWithImpl(
+      _$CMISubEventImpl _value, $Res Function(_$CMISubEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -760,7 +755,7 @@ class __$$_CMISubEventCopyWithImpl<$Res>
     Object? startAt = null,
     Object? endAt = freezed,
   }) {
-    return _then(_$_CMISubEvent(
+    return _then(_$CMISubEventImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -791,8 +786,8 @@ class __$$_CMISubEventCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CMISubEvent implements _CMISubEvent {
-  const _$_CMISubEvent(
+class _$CMISubEventImpl implements _CMISubEvent {
+  const _$CMISubEventImpl(
       {required this.id,
       this.name,
       this.genderCount,
@@ -800,8 +795,8 @@ class _$_CMISubEvent implements _CMISubEvent {
       @MyDateTimeConverter() required this.startAt,
       @MyDateTimeConverter() this.endAt});
 
-  factory _$_CMISubEvent.fromJson(Map<String, dynamic> json) =>
-      _$$_CMISubEventFromJson(json);
+  factory _$CMISubEventImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CMISubEventImplFromJson(json);
 
   @override
   final String id;
@@ -825,10 +820,10 @@ class _$_CMISubEvent implements _CMISubEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CMISubEvent &&
+            other is _$CMISubEventImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.genderCount, genderCount) ||
@@ -847,12 +842,12 @@ class _$_CMISubEvent implements _CMISubEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CMISubEventCopyWith<_$_CMISubEvent> get copyWith =>
-      __$$_CMISubEventCopyWithImpl<_$_CMISubEvent>(this, _$identity);
+  _$$CMISubEventImplCopyWith<_$CMISubEventImpl> get copyWith =>
+      __$$CMISubEventImplCopyWithImpl<_$CMISubEventImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CMISubEventToJson(
+    return _$$CMISubEventImplToJson(
       this,
     );
   }
@@ -865,10 +860,10 @@ abstract class _CMISubEvent implements CMISubEvent {
       final GenderCount? genderCount,
       final num totalUsers,
       @MyDateTimeConverter() required final DateTime startAt,
-      @MyDateTimeConverter() final DateTime? endAt}) = _$_CMISubEvent;
+      @MyDateTimeConverter() final DateTime? endAt}) = _$CMISubEventImpl;
 
   factory _CMISubEvent.fromJson(Map<String, dynamic> json) =
-      _$_CMISubEvent.fromJson;
+      _$CMISubEventImpl.fromJson;
 
   @override
   String get id;
@@ -886,7 +881,7 @@ abstract class _CMISubEvent implements CMISubEvent {
   DateTime? get endAt;
   @override
   @JsonKey(ignore: true)
-  _$$_CMISubEventCopyWith<_$_CMISubEvent> get copyWith =>
+  _$$CMISubEventImplCopyWith<_$CMISubEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -956,22 +951,22 @@ class _$GenderCountCopyWithImpl<$Res, $Val extends GenderCount>
 }
 
 /// @nodoc
-abstract class _$$_GenderCountCopyWith<$Res>
+abstract class _$$GenderCountImplCopyWith<$Res>
     implements $GenderCountCopyWith<$Res> {
-  factory _$$_GenderCountCopyWith(
-          _$_GenderCount value, $Res Function(_$_GenderCount) then) =
-      __$$_GenderCountCopyWithImpl<$Res>;
+  factory _$$GenderCountImplCopyWith(
+          _$GenderCountImpl value, $Res Function(_$GenderCountImpl) then) =
+      __$$GenderCountImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({num male, num female, num notBinary, num notAvailable});
 }
 
 /// @nodoc
-class __$$_GenderCountCopyWithImpl<$Res>
-    extends _$GenderCountCopyWithImpl<$Res, _$_GenderCount>
-    implements _$$_GenderCountCopyWith<$Res> {
-  __$$_GenderCountCopyWithImpl(
-      _$_GenderCount _value, $Res Function(_$_GenderCount) _then)
+class __$$GenderCountImplCopyWithImpl<$Res>
+    extends _$GenderCountCopyWithImpl<$Res, _$GenderCountImpl>
+    implements _$$GenderCountImplCopyWith<$Res> {
+  __$$GenderCountImplCopyWithImpl(
+      _$GenderCountImpl _value, $Res Function(_$GenderCountImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -982,7 +977,7 @@ class __$$_GenderCountCopyWithImpl<$Res>
     Object? notBinary = null,
     Object? notAvailable = null,
   }) {
-    return _then(_$_GenderCount(
+    return _then(_$GenderCountImpl(
       male: null == male
           ? _value.male
           : male // ignore: cast_nullable_to_non_nullable
@@ -1005,15 +1000,15 @@ class __$$_GenderCountCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_GenderCount implements _GenderCount {
-  const _$_GenderCount(
+class _$GenderCountImpl implements _GenderCount {
+  const _$GenderCountImpl(
       {required this.male,
       required this.female,
       required this.notBinary,
       this.notAvailable = 0});
 
-  factory _$_GenderCount.fromJson(Map<String, dynamic> json) =>
-      _$$_GenderCountFromJson(json);
+  factory _$GenderCountImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GenderCountImplFromJson(json);
 
   @override
   final num male;
@@ -1031,10 +1026,10 @@ class _$_GenderCount implements _GenderCount {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_GenderCount &&
+            other is _$GenderCountImpl &&
             (identical(other.male, male) || other.male == male) &&
             (identical(other.female, female) || other.female == female) &&
             (identical(other.notBinary, notBinary) ||
@@ -1051,12 +1046,12 @@ class _$_GenderCount implements _GenderCount {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_GenderCountCopyWith<_$_GenderCount> get copyWith =>
-      __$$_GenderCountCopyWithImpl<_$_GenderCount>(this, _$identity);
+  _$$GenderCountImplCopyWith<_$GenderCountImpl> get copyWith =>
+      __$$GenderCountImplCopyWithImpl<_$GenderCountImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_GenderCountToJson(
+    return _$$GenderCountImplToJson(
       this,
     );
   }
@@ -1067,10 +1062,10 @@ abstract class _GenderCount implements GenderCount {
       {required final num male,
       required final num female,
       required final num notBinary,
-      final num notAvailable}) = _$_GenderCount;
+      final num notAvailable}) = _$GenderCountImpl;
 
   factory _GenderCount.fromJson(Map<String, dynamic> json) =
-      _$_GenderCount.fromJson;
+      _$GenderCountImpl.fromJson;
 
   @override
   num get male;
@@ -1082,7 +1077,7 @@ abstract class _GenderCount implements GenderCount {
   num get notAvailable;
   @override
   @JsonKey(ignore: true)
-  _$$_GenderCountCopyWith<_$_GenderCount> get copyWith =>
+  _$$GenderCountImplCopyWith<_$GenderCountImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1135,22 +1130,22 @@ class _$CMIQuerySubEventCopyWithImpl<$Res, $Val extends CMIQuerySubEvent>
 }
 
 /// @nodoc
-abstract class _$$_CMIQuerySubEventCopyWith<$Res>
+abstract class _$$CMIQuerySubEventImplCopyWith<$Res>
     implements $CMIQuerySubEventCopyWith<$Res> {
-  factory _$$_CMIQuerySubEventCopyWith(
-          _$_CMIQuerySubEvent value, $Res Function(_$_CMIQuerySubEvent) then) =
-      __$$_CMIQuerySubEventCopyWithImpl<$Res>;
+  factory _$$CMIQuerySubEventImplCopyWith(_$CMIQuerySubEventImpl value,
+          $Res Function(_$CMIQuerySubEventImpl) then) =
+      __$$CMIQuerySubEventImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String providerId, String eventId});
 }
 
 /// @nodoc
-class __$$_CMIQuerySubEventCopyWithImpl<$Res>
-    extends _$CMIQuerySubEventCopyWithImpl<$Res, _$_CMIQuerySubEvent>
-    implements _$$_CMIQuerySubEventCopyWith<$Res> {
-  __$$_CMIQuerySubEventCopyWithImpl(
-      _$_CMIQuerySubEvent _value, $Res Function(_$_CMIQuerySubEvent) _then)
+class __$$CMIQuerySubEventImplCopyWithImpl<$Res>
+    extends _$CMIQuerySubEventCopyWithImpl<$Res, _$CMIQuerySubEventImpl>
+    implements _$$CMIQuerySubEventImplCopyWith<$Res> {
+  __$$CMIQuerySubEventImplCopyWithImpl(_$CMIQuerySubEventImpl _value,
+      $Res Function(_$CMIQuerySubEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1159,7 +1154,7 @@ class __$$_CMIQuerySubEventCopyWithImpl<$Res>
     Object? providerId = null,
     Object? eventId = null,
   }) {
-    return _then(_$_CMIQuerySubEvent(
+    return _then(_$CMIQuerySubEventImpl(
       providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
@@ -1174,8 +1169,9 @@ class __$$_CMIQuerySubEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CMIQuerySubEvent implements _CMIQuerySubEvent {
-  const _$_CMIQuerySubEvent({required this.providerId, required this.eventId});
+class _$CMIQuerySubEventImpl implements _CMIQuerySubEvent {
+  const _$CMIQuerySubEventImpl(
+      {required this.providerId, required this.eventId});
 
   @override
   final String providerId;
@@ -1188,10 +1184,10 @@ class _$_CMIQuerySubEvent implements _CMIQuerySubEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CMIQuerySubEvent &&
+            other is _$CMIQuerySubEventImpl &&
             (identical(other.providerId, providerId) ||
                 other.providerId == providerId) &&
             (identical(other.eventId, eventId) || other.eventId == eventId));
@@ -1203,14 +1199,15 @@ class _$_CMIQuerySubEvent implements _CMIQuerySubEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CMIQuerySubEventCopyWith<_$_CMIQuerySubEvent> get copyWith =>
-      __$$_CMIQuerySubEventCopyWithImpl<_$_CMIQuerySubEvent>(this, _$identity);
+  _$$CMIQuerySubEventImplCopyWith<_$CMIQuerySubEventImpl> get copyWith =>
+      __$$CMIQuerySubEventImplCopyWithImpl<_$CMIQuerySubEventImpl>(
+          this, _$identity);
 }
 
 abstract class _CMIQuerySubEvent implements CMIQuerySubEvent {
   const factory _CMIQuerySubEvent(
       {required final String providerId,
-      required final String eventId}) = _$_CMIQuerySubEvent;
+      required final String eventId}) = _$CMIQuerySubEventImpl;
 
   @override
   String get providerId;
@@ -1218,6 +1215,6 @@ abstract class _CMIQuerySubEvent implements CMIQuerySubEvent {
   String get eventId;
   @override
   @JsonKey(ignore: true)
-  _$$_CMIQuerySubEventCopyWith<_$_CMIQuerySubEvent> get copyWith =>
+  _$$CMIQuerySubEventImplCopyWith<_$CMIQuerySubEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

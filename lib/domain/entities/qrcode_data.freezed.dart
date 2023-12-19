@@ -149,11 +149,11 @@ class _$QrCodeDataCopyWithImpl<$Res, $Val extends QrCodeData>
 }
 
 /// @nodoc
-abstract class _$$_QrCodeDataCopyWith<$Res>
+abstract class _$$QrCodeDataImplCopyWith<$Res>
     implements $QrCodeDataCopyWith<$Res> {
-  factory _$$_QrCodeDataCopyWith(
-          _$_QrCodeData value, $Res Function(_$_QrCodeData) then) =
-      __$$_QrCodeDataCopyWithImpl<$Res>;
+  factory _$$QrCodeDataImplCopyWith(
+          _$QrCodeDataImpl value, $Res Function(_$QrCodeDataImpl) then) =
+      __$$QrCodeDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -174,11 +174,11 @@ abstract class _$$_QrCodeDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_QrCodeDataCopyWithImpl<$Res>
-    extends _$QrCodeDataCopyWithImpl<$Res, _$_QrCodeData>
-    implements _$$_QrCodeDataCopyWith<$Res> {
-  __$$_QrCodeDataCopyWithImpl(
-      _$_QrCodeData _value, $Res Function(_$_QrCodeData) _then)
+class __$$QrCodeDataImplCopyWithImpl<$Res>
+    extends _$QrCodeDataCopyWithImpl<$Res, _$QrCodeDataImpl>
+    implements _$$QrCodeDataImplCopyWith<$Res> {
+  __$$QrCodeDataImplCopyWithImpl(
+      _$QrCodeDataImpl _value, $Res Function(_$QrCodeDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -199,7 +199,7 @@ class __$$_QrCodeDataCopyWithImpl<$Res>
     Object? womanPercentage = freezed,
     Object? manPercentage = freezed,
   }) {
-    return _then(_$_QrCodeData(
+    return _then(_$QrCodeDataImpl(
       providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
@@ -262,8 +262,8 @@ class __$$_QrCodeDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_QrCodeData implements _QrCodeData {
-  const _$_QrCodeData(
+class _$QrCodeDataImpl implements _QrCodeData {
+  const _$QrCodeDataImpl(
       {required this.providerId,
       required this.userId,
       required this.isAnonymous,
@@ -314,10 +314,10 @@ class _$_QrCodeData implements _QrCodeData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_QrCodeData &&
+            other is _$QrCodeDataImpl &&
             (identical(other.providerId, providerId) ||
                 other.providerId == providerId) &&
             (identical(other.userId, userId) || other.userId == userId) &&
@@ -363,8 +363,8 @@ class _$_QrCodeData implements _QrCodeData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_QrCodeDataCopyWith<_$_QrCodeData> get copyWith =>
-      __$$_QrCodeDataCopyWithImpl<_$_QrCodeData>(this, _$identity);
+  _$$QrCodeDataImplCopyWith<_$QrCodeDataImpl> get copyWith =>
+      __$$QrCodeDataImplCopyWithImpl<_$QrCodeDataImpl>(this, _$identity);
 }
 
 abstract class _QrCodeData implements QrCodeData {
@@ -382,7 +382,7 @@ abstract class _QrCodeData implements QrCodeData {
       final int? groupCount,
       final int? averageAge,
       final double? womanPercentage,
-      final double? manPercentage}) = _$_QrCodeData;
+      final double? manPercentage}) = _$QrCodeDataImpl;
 
   @override
   String get providerId;
@@ -414,7 +414,7 @@ abstract class _QrCodeData implements QrCodeData {
   double? get manPercentage;
   @override
   @JsonKey(ignore: true)
-  _$$_QrCodeDataCopyWith<_$_QrCodeData> get copyWith =>
+  _$$QrCodeDataImplCopyWith<_$QrCodeDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -473,22 +473,22 @@ class _$PrivateQrCodeDataCopyWithImpl<$Res, $Val extends PrivateQrCodeData>
 }
 
 /// @nodoc
-abstract class _$$_PrivateQrCodeDataCopyWith<$Res>
+abstract class _$$PrivateQrCodeDataImplCopyWith<$Res>
     implements $PrivateQrCodeDataCopyWith<$Res> {
-  factory _$$_PrivateQrCodeDataCopyWith(_$_PrivateQrCodeData value,
-          $Res Function(_$_PrivateQrCodeData) then) =
-      __$$_PrivateQrCodeDataCopyWithImpl<$Res>;
+  factory _$$PrivateQrCodeDataImplCopyWith(_$PrivateQrCodeDataImpl value,
+          $Res Function(_$PrivateQrCodeDataImpl) then) =
+      __$$PrivateQrCodeDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String providerId, String userId, String privateUserId});
 }
 
 /// @nodoc
-class __$$_PrivateQrCodeDataCopyWithImpl<$Res>
-    extends _$PrivateQrCodeDataCopyWithImpl<$Res, _$_PrivateQrCodeData>
-    implements _$$_PrivateQrCodeDataCopyWith<$Res> {
-  __$$_PrivateQrCodeDataCopyWithImpl(
-      _$_PrivateQrCodeData _value, $Res Function(_$_PrivateQrCodeData) _then)
+class __$$PrivateQrCodeDataImplCopyWithImpl<$Res>
+    extends _$PrivateQrCodeDataCopyWithImpl<$Res, _$PrivateQrCodeDataImpl>
+    implements _$$PrivateQrCodeDataImplCopyWith<$Res> {
+  __$$PrivateQrCodeDataImplCopyWithImpl(_$PrivateQrCodeDataImpl _value,
+      $Res Function(_$PrivateQrCodeDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -498,7 +498,7 @@ class __$$_PrivateQrCodeDataCopyWithImpl<$Res>
     Object? userId = null,
     Object? privateUserId = null,
   }) {
-    return _then(_$_PrivateQrCodeData(
+    return _then(_$PrivateQrCodeDataImpl(
       providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
@@ -517,8 +517,8 @@ class __$$_PrivateQrCodeDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PrivateQrCodeData implements _PrivateQrCodeData {
-  const _$_PrivateQrCodeData(
+class _$PrivateQrCodeDataImpl implements _PrivateQrCodeData {
+  const _$PrivateQrCodeDataImpl(
       {required this.providerId,
       required this.userId,
       required this.privateUserId});
@@ -536,10 +536,10 @@ class _$_PrivateQrCodeData implements _PrivateQrCodeData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PrivateQrCodeData &&
+            other is _$PrivateQrCodeDataImpl &&
             (identical(other.providerId, providerId) ||
                 other.providerId == providerId) &&
             (identical(other.userId, userId) || other.userId == userId) &&
@@ -554,8 +554,8 @@ class _$_PrivateQrCodeData implements _PrivateQrCodeData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PrivateQrCodeDataCopyWith<_$_PrivateQrCodeData> get copyWith =>
-      __$$_PrivateQrCodeDataCopyWithImpl<_$_PrivateQrCodeData>(
+  _$$PrivateQrCodeDataImplCopyWith<_$PrivateQrCodeDataImpl> get copyWith =>
+      __$$PrivateQrCodeDataImplCopyWithImpl<_$PrivateQrCodeDataImpl>(
           this, _$identity);
 }
 
@@ -563,7 +563,7 @@ abstract class _PrivateQrCodeData implements PrivateQrCodeData {
   const factory _PrivateQrCodeData(
       {required final String providerId,
       required final String userId,
-      required final String privateUserId}) = _$_PrivateQrCodeData;
+      required final String privateUserId}) = _$PrivateQrCodeDataImpl;
 
   @override
   String get providerId;
@@ -573,6 +573,6 @@ abstract class _PrivateQrCodeData implements PrivateQrCodeData {
   String get privateUserId;
   @override
   @JsonKey(ignore: true)
-  _$$_PrivateQrCodeDataCopyWith<_$_PrivateQrCodeData> get copyWith =>
+  _$$PrivateQrCodeDataImplCopyWith<_$PrivateQrCodeDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

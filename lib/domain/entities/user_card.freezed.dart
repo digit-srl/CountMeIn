@@ -119,10 +119,11 @@ class _$UserCardCopyWithImpl<$Res, $Val extends UserCard>
 }
 
 /// @nodoc
-abstract class _$$_UserCardCopyWith<$Res> implements $UserCardCopyWith<$Res> {
-  factory _$$_UserCardCopyWith(
-          _$_UserCard value, $Res Function(_$_UserCard) then) =
-      __$$_UserCardCopyWithImpl<$Res>;
+abstract class _$$UserCardImplCopyWith<$Res>
+    implements $UserCardCopyWith<$Res> {
+  factory _$$UserCardImplCopyWith(
+          _$UserCardImpl value, $Res Function(_$UserCardImpl) then) =
+      __$$UserCardImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -138,11 +139,11 @@ abstract class _$$_UserCardCopyWith<$Res> implements $UserCardCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_UserCardCopyWithImpl<$Res>
-    extends _$UserCardCopyWithImpl<$Res, _$_UserCard>
-    implements _$$_UserCardCopyWith<$Res> {
-  __$$_UserCardCopyWithImpl(
-      _$_UserCard _value, $Res Function(_$_UserCard) _then)
+class __$$UserCardImplCopyWithImpl<$Res>
+    extends _$UserCardCopyWithImpl<$Res, _$UserCardImpl>
+    implements _$$UserCardImplCopyWith<$Res> {
+  __$$UserCardImplCopyWithImpl(
+      _$UserCardImpl _value, $Res Function(_$UserCardImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -158,7 +159,7 @@ class __$$_UserCardCopyWithImpl<$Res>
     Object? addedOn = freezed,
     Object? emailVerified = null,
   }) {
-    return _then(_$_UserCard(
+    return _then(_$UserCardImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -201,8 +202,8 @@ class __$$_UserCardCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserCard implements _UserCard {
-  const _$_UserCard(
+class _$UserCardImpl implements _UserCard {
+  const _$UserCardImpl(
       {required this.id,
       required this.name,
       required this.surname,
@@ -213,8 +214,8 @@ class _$_UserCard implements _UserCard {
       @MyDateTimeConverter() this.addedOn,
       this.emailVerified = false});
 
-  factory _$_UserCard.fromJson(Map<String, dynamic> json) =>
-      _$$_UserCardFromJson(json);
+  factory _$UserCardImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserCardImplFromJson(json);
 
   @override
   final String id;
@@ -243,10 +244,10 @@ class _$_UserCard implements _UserCard {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserCard &&
+            other is _$UserCardImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.surname, surname) || other.surname == surname) &&
@@ -267,12 +268,12 @@ class _$_UserCard implements _UserCard {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserCardCopyWith<_$_UserCard> get copyWith =>
-      __$$_UserCardCopyWithImpl<_$_UserCard>(this, _$identity);
+  _$$UserCardImplCopyWith<_$UserCardImpl> get copyWith =>
+      __$$UserCardImplCopyWithImpl<_$UserCardImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserCardToJson(
+    return _$$UserCardImplToJson(
       this,
     );
   }
@@ -288,9 +289,10 @@ abstract class _UserCard implements UserCard {
       final String? secret,
       final String? gender,
       @MyDateTimeConverter() final DateTime? addedOn,
-      final bool emailVerified}) = _$_UserCard;
+      final bool emailVerified}) = _$UserCardImpl;
 
-  factory _UserCard.fromJson(Map<String, dynamic> json) = _$_UserCard.fromJson;
+  factory _UserCard.fromJson(Map<String, dynamic> json) =
+      _$UserCardImpl.fromJson;
 
   @override
   String get id;
@@ -313,7 +315,7 @@ abstract class _UserCard implements UserCard {
   bool get emailVerified;
   @override
   @JsonKey(ignore: true)
-  _$$_UserCardCopyWith<_$_UserCard> get copyWith =>
+  _$$UserCardImplCopyWith<_$UserCardImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -493,10 +495,11 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
 }
 
 /// @nodoc
-abstract class _$$_EventUserCopyWith<$Res> implements $EventUserCopyWith<$Res> {
-  factory _$$_EventUserCopyWith(
-          _$_EventUser value, $Res Function(_$_EventUser) then) =
-      __$$_EventUserCopyWithImpl<$Res>;
+abstract class _$$EventUserImplCopyWith<$Res>
+    implements $EventUserCopyWith<$Res> {
+  factory _$$EventUserImplCopyWith(
+          _$EventUserImpl value, $Res Function(_$EventUserImpl) then) =
+      __$$EventUserImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -522,11 +525,11 @@ abstract class _$$_EventUserCopyWith<$Res> implements $EventUserCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_EventUserCopyWithImpl<$Res>
-    extends _$EventUserCopyWithImpl<$Res, _$_EventUser>
-    implements _$$_EventUserCopyWith<$Res> {
-  __$$_EventUserCopyWithImpl(
-      _$_EventUser _value, $Res Function(_$_EventUser) _then)
+class __$$EventUserImplCopyWithImpl<$Res>
+    extends _$EventUserCopyWithImpl<$Res, _$EventUserImpl>
+    implements _$$EventUserImplCopyWith<$Res> {
+  __$$EventUserImplCopyWithImpl(
+      _$EventUserImpl _value, $Res Function(_$EventUserImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -552,7 +555,7 @@ class __$$_EventUserCopyWithImpl<$Res>
     Object? womanPercentage = freezed,
     Object? manPercentage = freezed,
   }) {
-    return _then(_$_EventUser(
+    return _then(_$EventUserImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -635,8 +638,8 @@ class __$$_EventUserCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_EventUser implements _EventUser {
-  const _$_EventUser(
+class _$EventUserImpl implements _EventUser {
+  const _$EventUserImpl(
       {required this.id,
       required this.providerId,
       this.userCardProviderId,
@@ -657,8 +660,8 @@ class _$_EventUser implements _EventUser {
       this.womanPercentage,
       this.manPercentage});
 
-  factory _$_EventUser.fromJson(Map<String, dynamic> json) =>
-      _$$_EventUserFromJson(json);
+  factory _$EventUserImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EventUserImplFromJson(json);
 
   @override
   final String id;
@@ -707,10 +710,10 @@ class _$_EventUser implements _EventUser {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EventUser &&
+            other is _$EventUserImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.providerId, providerId) ||
                 other.providerId == providerId) &&
@@ -774,12 +777,12 @@ class _$_EventUser implements _EventUser {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_EventUserCopyWith<_$_EventUser> get copyWith =>
-      __$$_EventUserCopyWithImpl<_$_EventUser>(this, _$identity);
+  _$$EventUserImplCopyWith<_$EventUserImpl> get copyWith =>
+      __$$EventUserImplCopyWithImpl<_$EventUserImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EventUserToJson(
+    return _$$EventUserImplToJson(
       this,
     );
   }
@@ -805,10 +808,10 @@ abstract class _EventUser implements EventUser {
       final int? groupCount,
       final int? participationCount,
       final double? womanPercentage,
-      final double? manPercentage}) = _$_EventUser;
+      final double? manPercentage}) = _$EventUserImpl;
 
   factory _EventUser.fromJson(Map<String, dynamic> json) =
-      _$_EventUser.fromJson;
+      _$EventUserImpl.fromJson;
 
   @override
   String get id;
@@ -852,6 +855,6 @@ abstract class _EventUser implements EventUser {
   double? get manPercentage;
   @override
   @JsonKey(ignore: true)
-  _$$_EventUserCopyWith<_$_EventUser> get copyWith =>
+  _$$EventUserImplCopyWith<_$EventUserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

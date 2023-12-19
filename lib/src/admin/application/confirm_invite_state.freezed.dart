@@ -100,25 +100,25 @@ class _$ConfirmInviteStateCopyWithImpl<$Res, $Val extends ConfirmInviteState>
 }
 
 /// @nodoc
-abstract class _$$ConfirmInviteLoadingCopyWith<$Res> {
-  factory _$$ConfirmInviteLoadingCopyWith(_$ConfirmInviteLoading value,
-          $Res Function(_$ConfirmInviteLoading) then) =
-      __$$ConfirmInviteLoadingCopyWithImpl<$Res>;
+abstract class _$$ConfirmInviteLoadingImplCopyWith<$Res> {
+  factory _$$ConfirmInviteLoadingImplCopyWith(_$ConfirmInviteLoadingImpl value,
+          $Res Function(_$ConfirmInviteLoadingImpl) then) =
+      __$$ConfirmInviteLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ConfirmInviteLoadingCopyWithImpl<$Res>
-    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$ConfirmInviteLoading>
-    implements _$$ConfirmInviteLoadingCopyWith<$Res> {
-  __$$ConfirmInviteLoadingCopyWithImpl(_$ConfirmInviteLoading _value,
-      $Res Function(_$ConfirmInviteLoading) _then)
+class __$$ConfirmInviteLoadingImplCopyWithImpl<$Res>
+    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$ConfirmInviteLoadingImpl>
+    implements _$$ConfirmInviteLoadingImplCopyWith<$Res> {
+  __$$ConfirmInviteLoadingImplCopyWithImpl(_$ConfirmInviteLoadingImpl _value,
+      $Res Function(_$ConfirmInviteLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$ConfirmInviteLoading implements ConfirmInviteLoading {
-  const _$ConfirmInviteLoading();
+class _$ConfirmInviteLoadingImpl implements ConfirmInviteLoading {
+  const _$ConfirmInviteLoadingImpl();
 
   @override
   String toString() {
@@ -126,9 +126,10 @@ class _$ConfirmInviteLoading implements ConfirmInviteLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ConfirmInviteLoading);
+        (other.runtimeType == runtimeType &&
+            other is _$ConfirmInviteLoadingImpl);
   }
 
   @override
@@ -223,29 +224,29 @@ class _$ConfirmInviteLoading implements ConfirmInviteLoading {
 }
 
 abstract class ConfirmInviteLoading implements ConfirmInviteState {
-  const factory ConfirmInviteLoading() = _$ConfirmInviteLoading;
+  const factory ConfirmInviteLoading() = _$ConfirmInviteLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$InviteExpiredCopyWith<$Res> {
-  factory _$$InviteExpiredCopyWith(
-          _$InviteExpired value, $Res Function(_$InviteExpired) then) =
-      __$$InviteExpiredCopyWithImpl<$Res>;
+abstract class _$$InviteExpiredImplCopyWith<$Res> {
+  factory _$$InviteExpiredImplCopyWith(
+          _$InviteExpiredImpl value, $Res Function(_$InviteExpiredImpl) then) =
+      __$$InviteExpiredImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$InviteExpiredCopyWithImpl<$Res>
-    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$InviteExpired>
-    implements _$$InviteExpiredCopyWith<$Res> {
-  __$$InviteExpiredCopyWithImpl(
-      _$InviteExpired _value, $Res Function(_$InviteExpired) _then)
+class __$$InviteExpiredImplCopyWithImpl<$Res>
+    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$InviteExpiredImpl>
+    implements _$$InviteExpiredImplCopyWith<$Res> {
+  __$$InviteExpiredImplCopyWithImpl(
+      _$InviteExpiredImpl _value, $Res Function(_$InviteExpiredImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$InviteExpired implements InviteExpired {
-  const _$InviteExpired();
+class _$InviteExpiredImpl implements InviteExpired {
+  const _$InviteExpiredImpl();
 
   @override
   String toString() {
@@ -253,9 +254,9 @@ class _$InviteExpired implements InviteExpired {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InviteExpired);
+        (other.runtimeType == runtimeType && other is _$InviteExpiredImpl);
   }
 
   @override
@@ -350,29 +351,30 @@ class _$InviteExpired implements InviteExpired {
 }
 
 abstract class InviteExpired implements ConfirmInviteState {
-  const factory InviteExpired() = _$InviteExpired;
+  const factory InviteExpired() = _$InviteExpiredImpl;
 }
 
 /// @nodoc
-abstract class _$$UserAlreadyRegisteredCopyWith<$Res> {
-  factory _$$UserAlreadyRegisteredCopyWith(_$UserAlreadyRegistered value,
-          $Res Function(_$UserAlreadyRegistered) then) =
-      __$$UserAlreadyRegisteredCopyWithImpl<$Res>;
+abstract class _$$UserAlreadyRegisteredImplCopyWith<$Res> {
+  factory _$$UserAlreadyRegisteredImplCopyWith(
+          _$UserAlreadyRegisteredImpl value,
+          $Res Function(_$UserAlreadyRegisteredImpl) then) =
+      __$$UserAlreadyRegisteredImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UserAlreadyRegisteredCopyWithImpl<$Res>
-    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$UserAlreadyRegistered>
-    implements _$$UserAlreadyRegisteredCopyWith<$Res> {
-  __$$UserAlreadyRegisteredCopyWithImpl(_$UserAlreadyRegistered _value,
-      $Res Function(_$UserAlreadyRegistered) _then)
+class __$$UserAlreadyRegisteredImplCopyWithImpl<$Res>
+    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$UserAlreadyRegisteredImpl>
+    implements _$$UserAlreadyRegisteredImplCopyWith<$Res> {
+  __$$UserAlreadyRegisteredImplCopyWithImpl(_$UserAlreadyRegisteredImpl _value,
+      $Res Function(_$UserAlreadyRegisteredImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UserAlreadyRegistered implements UserAlreadyRegistered {
-  const _$UserAlreadyRegistered();
+class _$UserAlreadyRegisteredImpl implements UserAlreadyRegistered {
+  const _$UserAlreadyRegisteredImpl();
 
   @override
   String toString() {
@@ -380,9 +382,10 @@ class _$UserAlreadyRegistered implements UserAlreadyRegistered {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UserAlreadyRegistered);
+        (other.runtimeType == runtimeType &&
+            other is _$UserAlreadyRegisteredImpl);
   }
 
   @override
@@ -477,27 +480,29 @@ class _$UserAlreadyRegistered implements UserAlreadyRegistered {
 }
 
 abstract class UserAlreadyRegistered implements ConfirmInviteState {
-  const factory UserAlreadyRegistered() = _$UserAlreadyRegistered;
+  const factory UserAlreadyRegistered() = _$UserAlreadyRegisteredImpl;
 }
 
 /// @nodoc
-abstract class _$$NewUserCopyWith<$Res> {
-  factory _$$NewUserCopyWith(_$NewUser value, $Res Function(_$NewUser) then) =
-      __$$NewUserCopyWithImpl<$Res>;
+abstract class _$$NewUserImplCopyWith<$Res> {
+  factory _$$NewUserImplCopyWith(
+          _$NewUserImpl value, $Res Function(_$NewUserImpl) then) =
+      __$$NewUserImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$NewUserCopyWithImpl<$Res>
-    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$NewUser>
-    implements _$$NewUserCopyWith<$Res> {
-  __$$NewUserCopyWithImpl(_$NewUser _value, $Res Function(_$NewUser) _then)
+class __$$NewUserImplCopyWithImpl<$Res>
+    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$NewUserImpl>
+    implements _$$NewUserImplCopyWith<$Res> {
+  __$$NewUserImplCopyWithImpl(
+      _$NewUserImpl _value, $Res Function(_$NewUserImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$NewUser implements NewUser {
-  const _$NewUser();
+class _$NewUserImpl implements NewUser {
+  const _$NewUserImpl();
 
   @override
   String toString() {
@@ -505,9 +510,9 @@ class _$NewUser implements NewUser {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$NewUser);
+        (other.runtimeType == runtimeType && other is _$NewUserImpl);
   }
 
   @override
@@ -602,24 +607,24 @@ class _$NewUser implements NewUser {
 }
 
 abstract class NewUser implements ConfirmInviteState {
-  const factory NewUser() = _$NewUser;
+  const factory NewUser() = _$NewUserImpl;
 }
 
 /// @nodoc
-abstract class _$$ConfirmResponseCopyWith<$Res> {
-  factory _$$ConfirmResponseCopyWith(
-          _$ConfirmResponse value, $Res Function(_$ConfirmResponse) then) =
-      __$$ConfirmResponseCopyWithImpl<$Res>;
+abstract class _$$ConfirmResponseImplCopyWith<$Res> {
+  factory _$$ConfirmResponseImplCopyWith(_$ConfirmResponseImpl value,
+          $Res Function(_$ConfirmResponseImpl) then) =
+      __$$ConfirmResponseImplCopyWithImpl<$Res>;
   @useResult
   $Res call({ConfirmInviteResponseStatus status});
 }
 
 /// @nodoc
-class __$$ConfirmResponseCopyWithImpl<$Res>
-    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$ConfirmResponse>
-    implements _$$ConfirmResponseCopyWith<$Res> {
-  __$$ConfirmResponseCopyWithImpl(
-      _$ConfirmResponse _value, $Res Function(_$ConfirmResponse) _then)
+class __$$ConfirmResponseImplCopyWithImpl<$Res>
+    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$ConfirmResponseImpl>
+    implements _$$ConfirmResponseImplCopyWith<$Res> {
+  __$$ConfirmResponseImplCopyWithImpl(
+      _$ConfirmResponseImpl _value, $Res Function(_$ConfirmResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -627,7 +632,7 @@ class __$$ConfirmResponseCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
   }) {
-    return _then(_$ConfirmResponse(
+    return _then(_$ConfirmResponseImpl(
       null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -638,8 +643,8 @@ class __$$ConfirmResponseCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ConfirmResponse implements ConfirmResponse {
-  const _$ConfirmResponse(this.status);
+class _$ConfirmResponseImpl implements ConfirmResponse {
+  const _$ConfirmResponseImpl(this.status);
 
   @override
   final ConfirmInviteResponseStatus status;
@@ -650,10 +655,10 @@ class _$ConfirmResponse implements ConfirmResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ConfirmResponse &&
+            other is _$ConfirmResponseImpl &&
             (identical(other.status, status) || other.status == status));
   }
 
@@ -663,8 +668,9 @@ class _$ConfirmResponse implements ConfirmResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ConfirmResponseCopyWith<_$ConfirmResponse> get copyWith =>
-      __$$ConfirmResponseCopyWithImpl<_$ConfirmResponse>(this, _$identity);
+  _$$ConfirmResponseImplCopyWith<_$ConfirmResponseImpl> get copyWith =>
+      __$$ConfirmResponseImplCopyWithImpl<_$ConfirmResponseImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -756,29 +762,29 @@ class _$ConfirmResponse implements ConfirmResponse {
 
 abstract class ConfirmResponse implements ConfirmInviteState {
   const factory ConfirmResponse(final ConfirmInviteResponseStatus status) =
-      _$ConfirmResponse;
+      _$ConfirmResponseImpl;
 
   ConfirmInviteResponseStatus get status;
   @JsonKey(ignore: true)
-  _$$ConfirmResponseCopyWith<_$ConfirmResponse> get copyWith =>
+  _$$ConfirmResponseImplCopyWith<_$ConfirmResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ConfirmInviteErrorCopyWith<$Res> {
-  factory _$$ConfirmInviteErrorCopyWith(_$ConfirmInviteError value,
-          $Res Function(_$ConfirmInviteError) then) =
-      __$$ConfirmInviteErrorCopyWithImpl<$Res>;
+abstract class _$$ConfirmInviteErrorImplCopyWith<$Res> {
+  factory _$$ConfirmInviteErrorImplCopyWith(_$ConfirmInviteErrorImpl value,
+          $Res Function(_$ConfirmInviteErrorImpl) then) =
+      __$$ConfirmInviteErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Object error, StackTrace st});
 }
 
 /// @nodoc
-class __$$ConfirmInviteErrorCopyWithImpl<$Res>
-    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$ConfirmInviteError>
-    implements _$$ConfirmInviteErrorCopyWith<$Res> {
-  __$$ConfirmInviteErrorCopyWithImpl(
-      _$ConfirmInviteError _value, $Res Function(_$ConfirmInviteError) _then)
+class __$$ConfirmInviteErrorImplCopyWithImpl<$Res>
+    extends _$ConfirmInviteStateCopyWithImpl<$Res, _$ConfirmInviteErrorImpl>
+    implements _$$ConfirmInviteErrorImplCopyWith<$Res> {
+  __$$ConfirmInviteErrorImplCopyWithImpl(_$ConfirmInviteErrorImpl _value,
+      $Res Function(_$ConfirmInviteErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -787,7 +793,7 @@ class __$$ConfirmInviteErrorCopyWithImpl<$Res>
     Object? error = null,
     Object? st = null,
   }) {
-    return _then(_$ConfirmInviteError(
+    return _then(_$ConfirmInviteErrorImpl(
       null == error ? _value.error : error,
       null == st
           ? _value.st
@@ -799,8 +805,8 @@ class __$$ConfirmInviteErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ConfirmInviteError implements ConfirmInviteError {
-  const _$ConfirmInviteError(this.error, this.st);
+class _$ConfirmInviteErrorImpl implements ConfirmInviteError {
+  const _$ConfirmInviteErrorImpl(this.error, this.st);
 
   @override
   final Object error;
@@ -813,10 +819,10 @@ class _$ConfirmInviteError implements ConfirmInviteError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ConfirmInviteError &&
+            other is _$ConfirmInviteErrorImpl &&
             const DeepCollectionEquality().equals(other.error, error) &&
             (identical(other.st, st) || other.st == st));
   }
@@ -828,8 +834,8 @@ class _$ConfirmInviteError implements ConfirmInviteError {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ConfirmInviteErrorCopyWith<_$ConfirmInviteError> get copyWith =>
-      __$$ConfirmInviteErrorCopyWithImpl<_$ConfirmInviteError>(
+  _$$ConfirmInviteErrorImplCopyWith<_$ConfirmInviteErrorImpl> get copyWith =>
+      __$$ConfirmInviteErrorImplCopyWithImpl<_$ConfirmInviteErrorImpl>(
           this, _$identity);
 
   @override
@@ -922,12 +928,12 @@ class _$ConfirmInviteError implements ConfirmInviteError {
 
 abstract class ConfirmInviteError implements ConfirmInviteState {
   const factory ConfirmInviteError(final Object error, final StackTrace st) =
-      _$ConfirmInviteError;
+      _$ConfirmInviteErrorImpl;
 
   Object get error;
   StackTrace get st;
   @JsonKey(ignore: true)
-  _$$ConfirmInviteErrorCopyWith<_$ConfirmInviteError> get copyWith =>
+  _$$ConfirmInviteErrorImplCopyWith<_$ConfirmInviteErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1003,11 +1009,11 @@ class _$InviteRequestCopyWithImpl<$Res, $Val extends InviteRequest>
 }
 
 /// @nodoc
-abstract class _$$_InviteRequestCopyWith<$Res>
+abstract class _$$InviteRequestImplCopyWith<$Res>
     implements $InviteRequestCopyWith<$Res> {
-  factory _$$_InviteRequestCopyWith(
-          _$_InviteRequest value, $Res Function(_$_InviteRequest) then) =
-      __$$_InviteRequestCopyWithImpl<$Res>;
+  factory _$$InviteRequestImplCopyWith(
+          _$InviteRequestImpl value, $Res Function(_$InviteRequestImpl) then) =
+      __$$InviteRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1019,11 +1025,11 @@ abstract class _$$_InviteRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_InviteRequestCopyWithImpl<$Res>
-    extends _$InviteRequestCopyWithImpl<$Res, _$_InviteRequest>
-    implements _$$_InviteRequestCopyWith<$Res> {
-  __$$_InviteRequestCopyWithImpl(
-      _$_InviteRequest _value, $Res Function(_$_InviteRequest) _then)
+class __$$InviteRequestImplCopyWithImpl<$Res>
+    extends _$InviteRequestCopyWithImpl<$Res, _$InviteRequestImpl>
+    implements _$$InviteRequestImplCopyWith<$Res> {
+  __$$InviteRequestImplCopyWithImpl(
+      _$InviteRequestImpl _value, $Res Function(_$InviteRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1035,7 +1041,7 @@ class __$$_InviteRequestCopyWithImpl<$Res>
     Object? providerName = null,
     Object? secret = null,
   }) {
-    return _then(_$_InviteRequest(
+    return _then(_$InviteRequestImpl(
       providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
@@ -1062,8 +1068,8 @@ class __$$_InviteRequestCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_InviteRequest implements _InviteRequest {
-  const _$_InviteRequest(
+class _$InviteRequestImpl implements _InviteRequest {
+  const _$InviteRequestImpl(
       {required this.providerId,
       this.userId,
       required this.inviteId,
@@ -1087,10 +1093,10 @@ class _$_InviteRequest implements _InviteRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_InviteRequest &&
+            other is _$InviteRequestImpl &&
             (identical(other.providerId, providerId) ||
                 other.providerId == providerId) &&
             (identical(other.userId, userId) || other.userId == userId) &&
@@ -1108,8 +1114,8 @@ class _$_InviteRequest implements _InviteRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_InviteRequestCopyWith<_$_InviteRequest> get copyWith =>
-      __$$_InviteRequestCopyWithImpl<_$_InviteRequest>(this, _$identity);
+  _$$InviteRequestImplCopyWith<_$InviteRequestImpl> get copyWith =>
+      __$$InviteRequestImplCopyWithImpl<_$InviteRequestImpl>(this, _$identity);
 }
 
 abstract class _InviteRequest implements InviteRequest {
@@ -1118,7 +1124,7 @@ abstract class _InviteRequest implements InviteRequest {
       final String? userId,
       required final String inviteId,
       required final String providerName,
-      required final String secret}) = _$_InviteRequest;
+      required final String secret}) = _$InviteRequestImpl;
 
   @override
   String get providerId;
@@ -1132,6 +1138,6 @@ abstract class _InviteRequest implements InviteRequest {
   String get secret;
   @override
   @JsonKey(ignore: true)
-  _$$_InviteRequestCopyWith<_$_InviteRequest> get copyWith =>
+  _$$InviteRequestImplCopyWith<_$InviteRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

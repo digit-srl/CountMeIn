@@ -81,22 +81,22 @@ class _$UserCreationResponseCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_UserCreationResponseCopyWith<$Res>
+abstract class _$$UserCreationResponseImplCopyWith<$Res>
     implements $UserCreationResponseCopyWith<$Res> {
-  factory _$$_UserCreationResponseCopyWith(_$_UserCreationResponse value,
-          $Res Function(_$_UserCreationResponse) then) =
-      __$$_UserCreationResponseCopyWithImpl<$Res>;
+  factory _$$UserCreationResponseImplCopyWith(_$UserCreationResponseImpl value,
+          $Res Function(_$UserCreationResponseImpl) then) =
+      __$$UserCreationResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String status, String cf, String? userId, bool? emailVerified});
 }
 
 /// @nodoc
-class __$$_UserCreationResponseCopyWithImpl<$Res>
-    extends _$UserCreationResponseCopyWithImpl<$Res, _$_UserCreationResponse>
-    implements _$$_UserCreationResponseCopyWith<$Res> {
-  __$$_UserCreationResponseCopyWithImpl(_$_UserCreationResponse _value,
-      $Res Function(_$_UserCreationResponse) _then)
+class __$$UserCreationResponseImplCopyWithImpl<$Res>
+    extends _$UserCreationResponseCopyWithImpl<$Res, _$UserCreationResponseImpl>
+    implements _$$UserCreationResponseImplCopyWith<$Res> {
+  __$$UserCreationResponseImplCopyWithImpl(_$UserCreationResponseImpl _value,
+      $Res Function(_$UserCreationResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -107,7 +107,7 @@ class __$$_UserCreationResponseCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? emailVerified = freezed,
   }) {
-    return _then(_$_UserCreationResponse(
+    return _then(_$UserCreationResponseImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -130,15 +130,15 @@ class __$$_UserCreationResponseCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserCreationResponse implements _UserCreationResponse {
-  const _$_UserCreationResponse(
+class _$UserCreationResponseImpl implements _UserCreationResponse {
+  const _$UserCreationResponseImpl(
       {required this.status,
       required this.cf,
       this.userId,
       this.emailVerified});
 
-  factory _$_UserCreationResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_UserCreationResponseFromJson(json);
+  factory _$UserCreationResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserCreationResponseImplFromJson(json);
 
   @override
   final String status;
@@ -155,10 +155,10 @@ class _$_UserCreationResponse implements _UserCreationResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserCreationResponse &&
+            other is _$UserCreationResponseImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.cf, cf) || other.cf == cf) &&
             (identical(other.userId, userId) || other.userId == userId) &&
@@ -174,13 +174,14 @@ class _$_UserCreationResponse implements _UserCreationResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserCreationResponseCopyWith<_$_UserCreationResponse> get copyWith =>
-      __$$_UserCreationResponseCopyWithImpl<_$_UserCreationResponse>(
-          this, _$identity);
+  _$$UserCreationResponseImplCopyWith<_$UserCreationResponseImpl>
+      get copyWith =>
+          __$$UserCreationResponseImplCopyWithImpl<_$UserCreationResponseImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserCreationResponseToJson(
+    return _$$UserCreationResponseImplToJson(
       this,
     );
   }
@@ -191,10 +192,10 @@ abstract class _UserCreationResponse implements UserCreationResponse {
       {required final String status,
       required final String cf,
       final String? userId,
-      final bool? emailVerified}) = _$_UserCreationResponse;
+      final bool? emailVerified}) = _$UserCreationResponseImpl;
 
   factory _UserCreationResponse.fromJson(Map<String, dynamic> json) =
-      _$_UserCreationResponse.fromJson;
+      _$UserCreationResponseImpl.fromJson;
 
   @override
   String get status;
@@ -206,6 +207,6 @@ abstract class _UserCreationResponse implements UserCreationResponse {
   bool? get emailVerified;
   @override
   @JsonKey(ignore: true)
-  _$$_UserCreationResponseCopyWith<_$_UserCreationResponse> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$UserCreationResponseImplCopyWith<_$UserCreationResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

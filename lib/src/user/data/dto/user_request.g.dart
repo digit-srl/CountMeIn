@@ -6,8 +6,8 @@ part of 'user_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UserRequest _$$_UserRequestFromJson(Map<String, dynamic> json) =>
-    _$_UserRequest(
+_$UserRequestImpl _$$UserRequestImplFromJson(Map<String, dynamic> json) =>
+    _$UserRequestImpl(
       name: json['name'] as String,
       surname: json['surname'] as String,
       cf: json['cf'] as String,
@@ -16,7 +16,7 @@ _$_UserRequest _$$_UserRequestFromJson(Map<String, dynamic> json) =>
       providerName: json['providerName'] as String,
     );
 
-Map<String, dynamic> _$$_UserRequestToJson(_$_UserRequest instance) =>
+Map<String, dynamic> _$$UserRequestImplToJson(_$UserRequestImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'surname': instance.surname,

@@ -158,11 +158,11 @@ class _$CMIProviderCopyWithImpl<$Res, $Val extends CMIProvider>
 }
 
 /// @nodoc
-abstract class _$$_CMIProviderCopyWith<$Res>
+abstract class _$$CMIProviderImplCopyWith<$Res>
     implements $CMIProviderCopyWith<$Res> {
-  factory _$$_CMIProviderCopyWith(
-          _$_CMIProvider value, $Res Function(_$_CMIProvider) then) =
-      __$$_CMIProviderCopyWithImpl<$Res>;
+  factory _$$CMIProviderImplCopyWith(
+          _$CMIProviderImpl value, $Res Function(_$CMIProviderImpl) then) =
+      __$$CMIProviderImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -183,11 +183,11 @@ abstract class _$$_CMIProviderCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CMIProviderCopyWithImpl<$Res>
-    extends _$CMIProviderCopyWithImpl<$Res, _$_CMIProvider>
-    implements _$$_CMIProviderCopyWith<$Res> {
-  __$$_CMIProviderCopyWithImpl(
-      _$_CMIProvider _value, $Res Function(_$_CMIProvider) _then)
+class __$$CMIProviderImplCopyWithImpl<$Res>
+    extends _$CMIProviderCopyWithImpl<$Res, _$CMIProviderImpl>
+    implements _$$CMIProviderImplCopyWith<$Res> {
+  __$$CMIProviderImplCopyWithImpl(
+      _$CMIProviderImpl _value, $Res Function(_$CMIProviderImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -208,7 +208,7 @@ class __$$_CMIProviderCopyWithImpl<$Res>
     Object? createdOn = freezed,
     Object? requestedOn = null,
   }) {
-    return _then(_$_CMIProvider(
+    return _then(_$CMIProviderImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -271,8 +271,8 @@ class __$$_CMIProviderCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CMIProvider implements _CMIProvider {
-  const _$_CMIProvider(
+class _$CMIProviderImpl implements _CMIProvider {
+  const _$CMIProviderImpl(
       {required this.id,
       required this.name,
       required this.adminName,
@@ -291,8 +291,8 @@ class _$_CMIProvider implements _CMIProvider {
       : _managers = managers,
         _aims = aims;
 
-  factory _$_CMIProvider.fromJson(Map<String, dynamic> json) =>
-      _$$_CMIProviderFromJson(json);
+  factory _$CMIProviderImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CMIProviderImplFromJson(json);
 
   @override
   final String id;
@@ -348,10 +348,10 @@ class _$_CMIProvider implements _CMIProvider {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CMIProvider &&
+            other is _$CMIProviderImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.adminName, adminName) ||
@@ -397,12 +397,12 @@ class _$_CMIProvider implements _CMIProvider {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CMIProviderCopyWith<_$_CMIProvider> get copyWith =>
-      __$$_CMIProviderCopyWithImpl<_$_CMIProvider>(this, _$identity);
+  _$$CMIProviderImplCopyWith<_$CMIProviderImpl> get copyWith =>
+      __$$CMIProviderImplCopyWithImpl<_$CMIProviderImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CMIProviderToJson(
+    return _$$CMIProviderImplToJson(
       this,
     );
   }
@@ -424,10 +424,10 @@ abstract class _CMIProvider implements CMIProvider {
           @CMIProviderStatusConverter() final CMIProviderStatus? status,
           @MyDateTimeConverter() final DateTime? createdOn,
           @MyDateTimeConverter() required final DateTime requestedOn}) =
-      _$_CMIProvider;
+      _$CMIProviderImpl;
 
   factory _CMIProvider.fromJson(Map<String, dynamic> json) =
-      _$_CMIProvider.fromJson;
+      _$CMIProviderImpl.fromJson;
 
   @override
   String get id;
@@ -462,7 +462,7 @@ abstract class _CMIProvider implements CMIProvider {
   DateTime get requestedOn;
   @override
   @JsonKey(ignore: true)
-  _$$_CMIProviderCopyWith<_$_CMIProvider> get copyWith =>
+  _$$CMIProviderImplCopyWith<_$CMIProviderImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -576,11 +576,12 @@ class _$PendingProviderManagerCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_PendingProviderManagerCopyWith<$Res>
+abstract class _$$PendingProviderManagerImplCopyWith<$Res>
     implements $PendingProviderManagerCopyWith<$Res> {
-  factory _$$_PendingProviderManagerCopyWith(_$_PendingProviderManager value,
-          $Res Function(_$_PendingProviderManager) then) =
-      __$$_PendingProviderManagerCopyWithImpl<$Res>;
+  factory _$$PendingProviderManagerImplCopyWith(
+          _$PendingProviderManagerImpl value,
+          $Res Function(_$PendingProviderManagerImpl) then) =
+      __$$PendingProviderManagerImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -596,12 +597,13 @@ abstract class _$$_PendingProviderManagerCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PendingProviderManagerCopyWithImpl<$Res>
+class __$$PendingProviderManagerImplCopyWithImpl<$Res>
     extends _$PendingProviderManagerCopyWithImpl<$Res,
-        _$_PendingProviderManager>
-    implements _$$_PendingProviderManagerCopyWith<$Res> {
-  __$$_PendingProviderManagerCopyWithImpl(_$_PendingProviderManager _value,
-      $Res Function(_$_PendingProviderManager) _then)
+        _$PendingProviderManagerImpl>
+    implements _$$PendingProviderManagerImplCopyWith<$Res> {
+  __$$PendingProviderManagerImplCopyWithImpl(
+      _$PendingProviderManagerImpl _value,
+      $Res Function(_$PendingProviderManagerImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -617,7 +619,7 @@ class __$$_PendingProviderManagerCopyWithImpl<$Res>
     Object? status = null,
     Object? eventsRestriction = null,
   }) {
-    return _then(_$_PendingProviderManager(
+    return _then(_$PendingProviderManagerImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -660,8 +662,8 @@ class __$$_PendingProviderManagerCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PendingProviderManager implements _PendingProviderManager {
-  const _$_PendingProviderManager(
+class _$PendingProviderManagerImpl implements _PendingProviderManager {
+  const _$PendingProviderManagerImpl(
       {required this.id,
       @UserRoleConverter() required this.role,
       required this.name,
@@ -673,8 +675,8 @@ class _$_PendingProviderManager implements _PendingProviderManager {
       final List<String> eventsRestriction = const <String>[]})
       : _eventsRestriction = eventsRestriction;
 
-  factory _$_PendingProviderManager.fromJson(Map<String, dynamic> json) =>
-      _$$_PendingProviderManagerFromJson(json);
+  factory _$PendingProviderManagerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PendingProviderManagerImplFromJson(json);
 
   @override
   final String id;
@@ -711,10 +713,10 @@ class _$_PendingProviderManager implements _PendingProviderManager {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PendingProviderManager &&
+            other is _$PendingProviderManagerImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.role, role) || other.role == role) &&
             (identical(other.name, name) || other.name == name) &&
@@ -746,13 +748,13 @@ class _$_PendingProviderManager implements _PendingProviderManager {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PendingProviderManagerCopyWith<_$_PendingProviderManager> get copyWith =>
-      __$$_PendingProviderManagerCopyWithImpl<_$_PendingProviderManager>(
-          this, _$identity);
+  _$$PendingProviderManagerImplCopyWith<_$PendingProviderManagerImpl>
+      get copyWith => __$$PendingProviderManagerImplCopyWithImpl<
+          _$PendingProviderManagerImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PendingProviderManagerToJson(
+    return _$$PendingProviderManagerImplToJson(
       this,
     );
   }
@@ -768,10 +770,10 @@ abstract class _PendingProviderManager implements PendingProviderManager {
       required final String email,
       @MyDateTimeConverter() required final DateTime invitedOn,
       @ManagerStatusConverter() required final ProviderManagerStatus status,
-      final List<String> eventsRestriction}) = _$_PendingProviderManager;
+      final List<String> eventsRestriction}) = _$PendingProviderManagerImpl;
 
   factory _PendingProviderManager.fromJson(Map<String, dynamic> json) =
-      _$_PendingProviderManager.fromJson;
+      _$PendingProviderManagerImpl.fromJson;
 
   @override
   String get id;
@@ -796,8 +798,8 @@ abstract class _PendingProviderManager implements PendingProviderManager {
   List<String> get eventsRestriction;
   @override
   @JsonKey(ignore: true)
-  _$$_PendingProviderManagerCopyWith<_$_PendingProviderManager> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$PendingProviderManagerImplCopyWith<_$PendingProviderManagerImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 ProviderManager _$ProviderManagerFromJson(Map<String, dynamic> json) {
@@ -878,11 +880,11 @@ class _$ProviderManagerCopyWithImpl<$Res, $Val extends ProviderManager>
 }
 
 /// @nodoc
-abstract class _$$_ProviderManagerCopyWith<$Res>
+abstract class _$$ProviderManagerImplCopyWith<$Res>
     implements $ProviderManagerCopyWith<$Res> {
-  factory _$$_ProviderManagerCopyWith(
-          _$_ProviderManager value, $Res Function(_$_ProviderManager) then) =
-      __$$_ProviderManagerCopyWithImpl<$Res>;
+  factory _$$ProviderManagerImplCopyWith(_$ProviderManagerImpl value,
+          $Res Function(_$ProviderManagerImpl) then) =
+      __$$ProviderManagerImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -894,11 +896,11 @@ abstract class _$$_ProviderManagerCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ProviderManagerCopyWithImpl<$Res>
-    extends _$ProviderManagerCopyWithImpl<$Res, _$_ProviderManager>
-    implements _$$_ProviderManagerCopyWith<$Res> {
-  __$$_ProviderManagerCopyWithImpl(
-      _$_ProviderManager _value, $Res Function(_$_ProviderManager) _then)
+class __$$ProviderManagerImplCopyWithImpl<$Res>
+    extends _$ProviderManagerCopyWithImpl<$Res, _$ProviderManagerImpl>
+    implements _$$ProviderManagerImplCopyWith<$Res> {
+  __$$ProviderManagerImplCopyWithImpl(
+      _$ProviderManagerImpl _value, $Res Function(_$ProviderManagerImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -910,7 +912,7 @@ class __$$_ProviderManagerCopyWithImpl<$Res>
     Object? role = null,
     Object? eventsRestriction = null,
   }) {
-    return _then(_$_ProviderManager(
+    return _then(_$ProviderManagerImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -937,8 +939,8 @@ class __$$_ProviderManagerCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ProviderManager implements _ProviderManager {
-  const _$_ProviderManager(
+class _$ProviderManagerImpl implements _ProviderManager {
+  const _$ProviderManagerImpl(
       {required this.id,
       required this.name,
       required this.email,
@@ -946,8 +948,8 @@ class _$_ProviderManager implements _ProviderManager {
       final List<String> eventsRestriction = const <String>[]})
       : _eventsRestriction = eventsRestriction;
 
-  factory _$_ProviderManager.fromJson(Map<String, dynamic> json) =>
-      _$$_ProviderManagerFromJson(json);
+  factory _$ProviderManagerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProviderManagerImplFromJson(json);
 
   @override
   final String id;
@@ -974,10 +976,10 @@ class _$_ProviderManager implements _ProviderManager {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ProviderManager &&
+            other is _$ProviderManagerImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
@@ -994,12 +996,13 @@ class _$_ProviderManager implements _ProviderManager {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ProviderManagerCopyWith<_$_ProviderManager> get copyWith =>
-      __$$_ProviderManagerCopyWithImpl<_$_ProviderManager>(this, _$identity);
+  _$$ProviderManagerImplCopyWith<_$ProviderManagerImpl> get copyWith =>
+      __$$ProviderManagerImplCopyWithImpl<_$ProviderManagerImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ProviderManagerToJson(
+    return _$$ProviderManagerImplToJson(
       this,
     );
   }
@@ -1011,10 +1014,10 @@ abstract class _ProviderManager implements ProviderManager {
       required final String name,
       required final String email,
       @UserRoleConverter() required final UserRole role,
-      final List<String> eventsRestriction}) = _$_ProviderManager;
+      final List<String> eventsRestriction}) = _$ProviderManagerImpl;
 
   factory _ProviderManager.fromJson(Map<String, dynamic> json) =
-      _$_ProviderManager.fromJson;
+      _$ProviderManagerImpl.fromJson;
 
   @override
   String get id;
@@ -1029,6 +1032,6 @@ abstract class _ProviderManager implements ProviderManager {
   List<String> get eventsRestriction;
   @override
   @JsonKey(ignore: true)
-  _$$_ProviderManagerCopyWith<_$_ProviderManager> get copyWith =>
+  _$$ProviderManagerImplCopyWith<_$ProviderManagerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
