@@ -38,6 +38,8 @@ _$CMIEventImpl _$$CMIEventImplFromJson(Map<String, dynamic> json) =>
           json['subEventDeadline'], const MyDateTimeConverter().fromJson),
       startAt:
           const MyDateTimeConverter().fromJson(json['startAt'] as Timestamp),
+      position: _$JsonConverterFromJson<GeoPoint, GeoPoint>(
+          json['position'], const GeoPointConverter().fromJson),
     );
 
 Map<String, dynamic> _$$CMIEventImplToJson(_$CMIEventImpl instance) =>
@@ -65,6 +67,8 @@ Map<String, dynamic> _$$CMIEventImplToJson(_$CMIEventImpl instance) =>
       'subEventDeadline': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.subEventDeadline, const MyDateTimeConverter().toJson),
       'startAt': const MyDateTimeConverter().toJson(instance.startAt),
+      'position': _$JsonConverterToJson<GeoPoint, GeoPoint>(
+          instance.position, const GeoPointConverter().toJson),
     };
 
 const _$EventAccessTypeEnumMap = {

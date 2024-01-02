@@ -11,18 +11,21 @@ final dateFormat = DateFormat('dd MMMM yyyy HH:mm');
 class EmbeddedScreen extends ConsumerWidget {
   final String totemId;
   final String eventId;
+
+  final String sessionId;
   final String providerId;
 
   const EmbeddedScreen({
     Key? key,
     required this.totemId,
     required this.eventId,
+    required this.sessionId,
     required this.providerId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(getTotemDataProvider(providerId, eventId, totemId));
+    final state = ref.watch(getTotemDataProvider(providerId, eventId, sessionId, totemId));
     final size = MediaQuery.sizeOf(context);
     final width = min(size.width, size.height) / 2;
     return Scaffold(
@@ -40,7 +43,7 @@ class EmbeddedScreen extends ConsumerWidget {
                         backgroundColor: Colors.white,
                         padding: const EdgeInsets.all(16),
                         data:
-                            'https://dev.wom.social/embedded/$providerId/$eventId/$totemId/${data.requestId}',
+                            'https://dev.wom.social/embedded/$providerId/$eventId/$sessionId/$totemId/${data.requestId}',
                       ),
                     ),
                     const SizedBox(height: 16),

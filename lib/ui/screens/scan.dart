@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/scan_notifier.dart';
 import 'package:countmein/src/admin/application/users_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
@@ -12,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:soundpool/soundpool.dart';
 
 import '../../domain/entities/cmi_provider.dart';

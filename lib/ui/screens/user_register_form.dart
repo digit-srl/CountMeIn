@@ -1,16 +1,12 @@
 import 'package:countmein/domain/entities/nation.dart';
 import 'package:countmein/nazioni.dart';
-import 'package:countmein/src/auth/ui/screens/sign_in.dart';
 import 'package:countmein/src/common/domain/entities/gender.dart';
 import 'package:countmein/src/common/ui/cmi_date_picker.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_dropdown.dart';
 import 'package:countmein/src/common/upper_case_formatter.dart';
-import 'package:countmein/src/user/application/user_card_recovering_notifier.dart';
 import 'package:countmein/src/user/data/dto/user_request.dart';
 import 'package:countmein/src/user/ui/screens/user_dashboard.dart';
-import 'package:countmein/src/user/ui/widgets/user_profile.dart';
-import 'package:countmein/src/user/ui/widgets/waiting_otp_code.dart';
 import 'package:countmein/src/user_register/application/user_registering_notifier.dart';
 import 'package:countmein/src/user_register/application/user_registering_state.dart';
 import 'package:countmein/ui/screens/user_event.dart';
@@ -21,18 +17,11 @@ import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_codice_fiscale/codice_fiscale.dart';
-import 'package:flutter_codice_fiscale/dao/city_dao.dart';
-import 'package:flutter_codice_fiscale/models/city.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:form_field_validator/form_field_validator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:uuid/uuid.dart';
 import '../../src/common/mu_styles.dart';
-import '../../domain/entities/cmi_provider.dart';
-import '../../domain/entities/user_card.dart';
 import '../validators.dart';
-import '../widgets/cmi_error_widget.dart';
 import '../widgets/my_text_field.dart';
 
 final nameControllerProvider =

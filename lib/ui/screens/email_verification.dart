@@ -4,7 +4,6 @@ import 'package:countmein/src/auth/application/email_verification_state.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/user/ui/widgets/user_profile.dart';
 import 'package:countmein/ui/screens/error.dart';
-import 'package:countmein/ui/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

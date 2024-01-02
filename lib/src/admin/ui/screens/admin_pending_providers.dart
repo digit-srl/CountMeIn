@@ -3,7 +3,6 @@ import 'package:countmein/ui/screens/error.dart';
 import 'package:countmein/ui/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../domain/entities/cmi_provider.dart';
 import '../../application/providers_stream.dart';
 import '../widgets/grid_providers.dart';
 

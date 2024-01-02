@@ -1,6 +1,5 @@
 import 'package:countmein/domain/entities/date_time_converter.dart';
 import 'package:countmein/src/auth/data/dto/cmi_role_converter.dart';
-import 'package:countmein/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' show Timestamp;
 import 'package:freezed_annotation/freezed_annotation.dart';
 

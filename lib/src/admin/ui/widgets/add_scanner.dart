@@ -3,7 +3,6 @@ import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
-import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_dropdown.dart';
 import 'package:countmein/ui/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';

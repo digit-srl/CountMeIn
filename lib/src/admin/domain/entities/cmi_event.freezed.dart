@@ -48,6 +48,8 @@ mixin _$CMIEvent {
   DateTime? get subEventDeadline => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime get startAt => throw _privateConstructorUsedError;
+  @GeoPointConverter()
+  GeoPoint? get position => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -80,7 +82,8 @@ abstract class $CMIEventCopyWith<$Res> {
       @AcceptedCardTypeConverted() AcceptedCardType acceptedCardType,
       @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime? subEventDeadline,
-      @MyDateTimeConverter() DateTime startAt});
+      @MyDateTimeConverter() DateTime startAt,
+      @GeoPointConverter() GeoPoint? position});
 
   $GenderCountCopyWith<$Res>? get genderCount;
 }
@@ -118,6 +121,7 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
     Object? createdOn = null,
     Object? subEventDeadline = freezed,
     Object? startAt = null,
+    Object? position = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -200,6 +204,10 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as GeoPoint?,
     ) as $Val);
   }
 
@@ -244,7 +252,8 @@ abstract class _$$CMIEventImplCopyWith<$Res>
       @AcceptedCardTypeConverted() AcceptedCardType acceptedCardType,
       @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime? subEventDeadline,
-      @MyDateTimeConverter() DateTime startAt});
+      @MyDateTimeConverter() DateTime startAt,
+      @GeoPointConverter() GeoPoint? position});
 
   @override
   $GenderCountCopyWith<$Res>? get genderCount;
@@ -281,6 +290,7 @@ class __$$CMIEventImplCopyWithImpl<$Res>
     Object? createdOn = null,
     Object? subEventDeadline = freezed,
     Object? startAt = null,
+    Object? position = freezed,
   }) {
     return _then(_$CMIEventImpl(
       id: null == id
@@ -363,6 +373,10 @@ class __$$CMIEventImplCopyWithImpl<$Res>
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as GeoPoint?,
     ));
   }
 }
@@ -391,7 +405,8 @@ class _$CMIEventImpl implements _CMIEvent {
       this.acceptedCardType = AcceptedCardType.passpartoutAndMine,
       @MyDateTimeConverter() required this.createdOn,
       @MyDateTimeConverter() this.subEventDeadline,
-      @MyDateTimeConverter() required this.startAt});
+      @MyDateTimeConverter() required this.startAt,
+      @GeoPointConverter() this.position});
 
   factory _$CMIEventImpl.fromJson(Map<String, dynamic> json) =>
       _$$CMIEventImplFromJson(json);
@@ -450,10 +465,13 @@ class _$CMIEventImpl implements _CMIEvent {
   @override
   @MyDateTimeConverter()
   final DateTime startAt;
+  @override
+  @GeoPointConverter()
+  final GeoPoint? position;
 
   @override
   String toString() {
-    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, activeSessionId: $activeSessionId, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, type: $type, acceptedCardType: $acceptedCardType, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt)';
+    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, activeSessionId: $activeSessionId, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, type: $type, acceptedCardType: $acceptedCardType, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt, position: $position)';
   }
 
   @override
@@ -495,7 +513,9 @@ class _$CMIEventImpl implements _CMIEvent {
                 other.createdOn == createdOn) &&
             (identical(other.subEventDeadline, subEventDeadline) ||
                 other.subEventDeadline == subEventDeadline) &&
-            (identical(other.startAt, startAt) || other.startAt == startAt));
+            (identical(other.startAt, startAt) || other.startAt == startAt) &&
+            (identical(other.position, position) ||
+                other.position == position));
   }
 
   @JsonKey(ignore: true)
@@ -521,7 +541,8 @@ class _$CMIEventImpl implements _CMIEvent {
         acceptedCardType,
         createdOn,
         subEventDeadline,
-        startAt
+        startAt,
+        position
       ]);
 
   @JsonKey(ignore: true)
@@ -559,7 +580,8 @@ abstract class _CMIEvent implements CMIEvent {
       @AcceptedCardTypeConverted() final AcceptedCardType acceptedCardType,
       @MyDateTimeConverter() required final DateTime createdOn,
       @MyDateTimeConverter() final DateTime? subEventDeadline,
-      @MyDateTimeConverter() required final DateTime startAt}) = _$CMIEventImpl;
+      @MyDateTimeConverter() required final DateTime startAt,
+      @GeoPointConverter() final GeoPoint? position}) = _$CMIEventImpl;
 
   factory _CMIEvent.fromJson(Map<String, dynamic> json) =
       _$CMIEventImpl.fromJson;
@@ -612,6 +634,9 @@ abstract class _CMIEvent implements CMIEvent {
   @override
   @MyDateTimeConverter()
   DateTime get startAt;
+  @override
+  @GeoPointConverter()
+  GeoPoint? get position;
   @override
   @JsonKey(ignore: true)
   _$$CMIEventImplCopyWith<_$CMIEventImpl> get copyWith =>

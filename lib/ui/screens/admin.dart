@@ -1,14 +1,8 @@
 
-import 'package:countmein/src/admin/application/events_stream.dart';
-import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:countmein/cloud.dart';
 
 import '../../domain/entities/cmi_provider.dart';
-import '../../domain/entities/event_ids.dart';
-import '../../domain/entities/user_card.dart';
-import '../../utils.dart';
 
 final adminProvider =
     StateNotifierProvider<AdminNotifier, AsyncValue<List<CMIProvider>>>((ref) {

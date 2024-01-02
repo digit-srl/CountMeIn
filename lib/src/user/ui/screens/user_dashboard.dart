@@ -1,15 +1,11 @@
 import 'package:countmein/domain/entities/user_ids.dart';
-import 'package:countmein/src/admin/ui/widgets/info_text.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/user/application/user_profile_notifier.dart';
 import 'package:countmein/src/user/ui/widgets/user_profile.dart';
 import 'package:countmein/src/user/ui/widgets/waiting_otp_code.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 class UserConsoleScreen extends ConsumerStatefulWidget {
   static const routeName = '/profile';

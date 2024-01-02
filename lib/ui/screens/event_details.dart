@@ -1,5 +1,4 @@
 import 'package:countmein/cloud.dart';
-import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/application/scan_notifier.dart';
@@ -13,18 +12,17 @@ import 'package:countmein/src/admin/ui/widgets/info_text.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
+import 'package:countmein/src/totem/ui/totems.dart';
 import 'package:countmein/ui/widgets/cmi_chip.dart';
 import 'package:countmein/ui/widgets/my_text_field.dart';
 import 'package:countmein/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:countmein/ui/screens/scan.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 
@@ -486,7 +484,14 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                   );
                 },
               ),*/
-            if (eventData != null)
+
+            if (eventData != null) ...[
+              if (eventData.activeSessionId != null)
+                TotemsCardWidget(
+                  providerId: ids.providerId,
+                  eventId: ids.eventId,
+                  sessionId: eventData.activeSessionId!,
+                ),
               GenericGridView(
                 children: [
                   if (isAdmin && eventData.isManual)
@@ -562,6 +567,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                     ),
                 ],
               ),
+            ]
           ],
         ),
       ),

@@ -2,7 +2,6 @@ import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
-import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

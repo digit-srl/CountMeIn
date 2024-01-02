@@ -1,6 +1,5 @@
 import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
 import 'package:countmein/src/common/ui/widgets/my_button.dart';
-import 'package:countmein/ui/screens/user_event.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

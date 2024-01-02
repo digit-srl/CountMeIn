@@ -5,14 +5,12 @@ import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/common/ui/cmi_date_picker.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_dropdown.dart';
-import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
+import 'package:countmein/src/totem/data/embedded_data.dart';
 import 'package:countmein/ui/widgets/my_text_field.dart';
 import 'package:countmein/utils.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:countmein/cloud.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -47,10 +45,24 @@ class NewEventFormScreen extends HookConsumerWidget {
 
   final dayFormat = DateFormat('EEEE', 'it');
 
+  String? geoValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Il campo non può essere vuoto';
+    }
+
+    if (double.tryParse(value) == null) {
+      return 'Valore non valido';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final durationController = useTextEditingController();
     final repsController = useTextEditingController(text: "2");
+    final latController = useTextEditingController();
+    final longController = useTextEditingController();
+    final radiusController = useTextEditingController(text: '100');
     final repsCount = useState<int>(2);
     final nameController = useTextEditingController();
     final womController = useTextEditingController();
@@ -59,6 +71,8 @@ class NewEventFormScreen extends HookConsumerWidget {
     final acceptedCardType = useState<AcceptedCardType>(AcceptedCardType.mine);
     final anonymous = useState<bool>(false);
     // final recurring = useState<bool>(false);
+    final totemEnabled = useState<bool>(false);
+    final totems = useState<List<TextEditingController>>([]);
     final releaseWom = useState<bool>(false);
     final emailEnabled = useState<bool>(false);
     final startAt = useState<DateTime>(DateTime.now());
@@ -178,6 +192,9 @@ class NewEventFormScreen extends HookConsumerWidget {
                   value: eventType.value,
                   onChanged: (t) {
                     if (t == null) return;
+                    if (t == EventType.periodic) {
+                      totemEnabled.value = false;
+                    }
                     eventType.value = t;
                   },
                   items: EventType.values
@@ -253,6 +270,124 @@ class NewEventFormScreen extends HookConsumerWidget {
           const SizedBox(height: 16),
           const Divider(),
           const SizedBox(height: 16),
+          Text('Posizione Evento', style: titleStyle),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Flexible(
+                child: TextFormField(
+                  controller: latController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'^(\d+)?\.?\d{0,8}'))
+                  ],
+                  decoration: const InputDecoration(hintText: 'Latitude'),
+                  validator: (value) {
+                    if (!totemEnabled.value &&
+                        (value == null || value.isEmpty)) {
+                      return null;
+                    }
+                    return geoValidator(value);
+                  },
+                ),
+              ),
+              const SizedBox(width: 16),
+              Flexible(
+                child: TextFormField(
+                  controller: longController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'^(\d+)?\.?\d{0,8}'))
+                  ],
+                  decoration: const InputDecoration(hintText: 'Longitude'),
+                  validator: (value) {
+                    if (!totemEnabled.value &&
+                        (value == null || value.isEmpty)) {
+                      return null;
+                    }
+                    return geoValidator(value);
+                  },
+                ),
+              ),
+              const SizedBox(width: 16),
+              Flexible(
+                child: TextFormField(
+                  controller: radiusController,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  decoration: const InputDecoration(
+                      hintText: 'Raggio', suffixText: 'metri'),
+                  validator: (value) {
+                    if (!totemEnabled.value &&
+                        (value == null || value.isEmpty)) {
+                      return null;
+                    }
+                    return geoValidator(value);
+                  },
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Text('Totem', style: titleStyle),
+              Switch(
+                value: totemEnabled.value,
+                onChanged: (v) {
+                  totemEnabled.value = v;
+                  totems.value = [TextEditingController(text: 'Totem 1')];
+                },
+              ),
+            ],
+          ),
+          if (totemEnabled.value) ...[
+            const SizedBox(height: 16),
+            const Text(
+              'Posizione obbligatoria con totem attivi',
+              style: TextStyle(color: Colors.red),
+            ),
+            const SizedBox(height: 8),
+            for (int i = 0; i < totems.value.length; i++)
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Row(
+                  children: [
+                    CircleAvatar(child: Text('${i + 1}')),
+                    const SizedBox(width: 16),
+                    Flexible(
+                      child: TextFormField(
+                        controller: totems.value[i],
+                        validator: nameSurnameValidator,
+                        decoration: InputDecoration(
+                          suffix: totems.value.length == 1
+                              ? null
+                              : IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  color: Colors.red,
+                                  onPressed: () {
+                                    final tmp = totems.value.toList();
+                                    tmp.removeAt(i);
+                                    totems.value = tmp;
+                                  },
+                                ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ElevatedButton(
+                onPressed: () {
+                  totems.value.forEach((element) => print(element.text));
+                  totems.value = [
+                    ...totems.value,
+                    TextEditingController(
+                        text: 'Totem ${totems.value.length + 1}')
+                  ];
+                },
+                child: const Text('Nuovo totem'))
+          ],
+          const SizedBox(height: 16),
           Row(
             children: [
               Text('WOM', style: titleStyle),
@@ -321,26 +456,41 @@ class NewEventFormScreen extends HookConsumerWidget {
                         ? int.tryParse(repsController.text.trim()) ?? 1
                         : 1;
 
-                    final start = startAt.value.midnightUTC;
-                    final end = start.add(Duration(days: 1));
+                    final sessionStartAt = startAt.value.midnightUTC;
+                    final end = sessionStartAt.add(const Duration(days: 1));
 
                     // Data di fine prima sessione
-                    final subEventEndAt = end.add(
+                    final sessionEndAt = end.add(
                       Duration(
                           days: isRecurring
                               ? selectedFrequency.value.multiplier
                               : 1),
                     );
 
-                    //TODO
-                    final subEventDeadline = subEventEndAt;
+                    final position = latController.text.trim().isNotEmpty &&
+                            longController.text.trim().isNotEmpty
+                        ? GeoPoint(double.parse(latController.text.trim()),
+                            double.parse(longController.text.trim()))
+                        : null;
+
+                    if (totemEnabled.value && position == null) {
+                      CoolAlert.show(
+                        context: context,
+                        type: CoolAlertType.error,
+                        title: 'Posizione obbligatoria',
+                        text:
+                            'Con i totem abilitati devi inserire una posizione valida',
+                        width: 300,
+                      );
+                      return;
+                    }
 
                     final s = CMIEvent(
                       id: eventId,
                       type: eventType.value,
                       activeSessionId: currentSubEventId,
                       recurrence: recurrence,
-                      subEventDeadline: subEventDeadline,
+                      subEventDeadline: sessionEndAt,
                       name: nameController.text.trim(),
                       acceptPassepartout: acceptPassepartout,
                       anonymous: anonymous.value,
@@ -352,15 +502,32 @@ class NewEventFormScreen extends HookConsumerWidget {
                       maxWomCount: releaseWom.value ? womCount : 0,
                       status: EventStatus.live,
                       createdOn: DateTime.now().toUtc(),
-                      startAt: start,
+                      startAt: sessionStartAt,
                       acceptedCardType: acceptedCardType.value,
+                      position: position,
                     );
 
-                    final firstSubEvent = CMISubEvent(
+                    final session = CMISubEvent(
                       id: currentSubEventId,
-                      startAt: start,
-                      endAt: subEventEndAt,
+                      startAt: sessionStartAt,
+                      endAt: sessionEndAt,
                     );
+
+                    final t = <EmbeddedData>[];
+                    if (!isRecurring && totemEnabled.value) {
+                      for (int i = 0; i < totems.value.length; i++) {
+                        final tmp = EmbeddedData(
+                          name: totems.value[i].text.trim(),
+                          id: Uuid().v4(),
+                          requestId: 'abcded',
+                          position: position!,
+                          updatedOn: DateTime.now(),
+                          startAt: sessionStartAt,
+                          endAt: sessionEndAt,
+                        );
+                        t.add(tmp);
+                      }
+                    }
 
                     final navigator = Navigator.of(context);
 
@@ -370,14 +537,26 @@ class NewEventFormScreen extends HookConsumerWidget {
                         Cloud.sessionDoc(EventIds(
                             providerId: providerId,
                             eventId: eventId,
-                            sessionId: firstSubEvent.id)),
-                        firstSubEvent.toJson());
+                            sessionId: session.id)),
+                        session.toJson());
+                    for (int i = 0; i < t.length; i++) {
+                      batch.set(
+                        Cloud.totemDoc(
+                          providerId,
+                          eventId,
+                          session.id,
+                          t[i].id,
+                        ),
+                        t[i].toJson(),
+                      );
+                    }
                     await batch.commit();
                     navigator.pop();
                   }
                 } catch (ex, st) {
                   logger.e(ex);
                   logger.e(st);
+
                   CoolAlert.show(
                     context: context,
                     type: CoolAlertType.error,

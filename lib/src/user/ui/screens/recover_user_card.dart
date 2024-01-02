@@ -1,13 +1,10 @@
 import 'package:countmein/src/common/ui/widgets/cf_text_field.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
-import 'package:countmein/src/common/upper_case_formatter.dart';
 import 'package:countmein/src/user/application/user_card_recovering_notifier.dart';
 import 'package:countmein/src/user/ui/widgets/user_profile.dart';
 import 'package:countmein/src/user/ui/widgets/waiting_otp_code.dart';
-import 'package:countmein/ui/validators.dart';
 import 'package:countmein/ui/widgets/cmi_error_widget.dart';
 import 'package:countmein/ui/widgets/loading.dart';
-import 'package:countmein/ui/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

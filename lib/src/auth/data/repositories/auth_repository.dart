@@ -1,8 +1,6 @@
 import 'package:countmein/my_logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../../cloud.dart';
-import '../../data/dto/user.dart';
 import '../../domain/entities/exceptions.dart';
 import '../../domain/repositories/i_auth_repository.dart';
 

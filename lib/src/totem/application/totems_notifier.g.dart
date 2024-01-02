@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'embedded_notifier.dart';
+part of 'totems_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getTotemDataHash() => r'0c6e6e19975aa8363fd6f2a8a57edb04185896b1';
+String _$getTotemsHash() => r'258c2d77ebfdf4ed05f442d502b2416b59d9be38';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,39 +29,36 @@ class _SystemHash {
   }
 }
 
-/// See also [getTotemData].
-@ProviderFor(getTotemData)
-const getTotemDataProvider = GetTotemDataFamily();
+/// See also [getTotems].
+@ProviderFor(getTotems)
+const getTotemsProvider = GetTotemsFamily();
 
-/// See also [getTotemData].
-class GetTotemDataFamily extends Family<AsyncValue<EmbeddedData>> {
-  /// See also [getTotemData].
-  const GetTotemDataFamily();
+/// See also [getTotems].
+class GetTotemsFamily extends Family<AsyncValue<List<EmbeddedData>>> {
+  /// See also [getTotems].
+  const GetTotemsFamily();
 
-  /// See also [getTotemData].
-  GetTotemDataProvider call(
+  /// See also [getTotems].
+  GetTotemsProvider call(
     String providerId,
     String eventId,
     String sessionId,
-    String totemId,
   ) {
-    return GetTotemDataProvider(
+    return GetTotemsProvider(
       providerId,
       eventId,
       sessionId,
-      totemId,
     );
   }
 
   @override
-  GetTotemDataProvider getProviderOverride(
-    covariant GetTotemDataProvider provider,
+  GetTotemsProvider getProviderOverride(
+    covariant GetTotemsProvider provider,
   ) {
     return call(
       provider.providerId,
       provider.eventId,
       provider.sessionId,
-      provider.totemId,
     );
   }
 
@@ -77,41 +74,37 @@ class GetTotemDataFamily extends Family<AsyncValue<EmbeddedData>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'getTotemDataProvider';
+  String? get name => r'getTotemsProvider';
 }
 
-/// See also [getTotemData].
-class GetTotemDataProvider extends AutoDisposeStreamProvider<EmbeddedData> {
-  /// See also [getTotemData].
-  GetTotemDataProvider(
+/// See also [getTotems].
+class GetTotemsProvider extends AutoDisposeStreamProvider<List<EmbeddedData>> {
+  /// See also [getTotems].
+  GetTotemsProvider(
     String providerId,
     String eventId,
     String sessionId,
-    String totemId,
   ) : this._internal(
-          (ref) => getTotemData(
-            ref as GetTotemDataRef,
+          (ref) => getTotems(
+            ref as GetTotemsRef,
             providerId,
             eventId,
             sessionId,
-            totemId,
           ),
-          from: getTotemDataProvider,
-          name: r'getTotemDataProvider',
+          from: getTotemsProvider,
+          name: r'getTotemsProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$getTotemDataHash,
-          dependencies: GetTotemDataFamily._dependencies,
-          allTransitiveDependencies:
-              GetTotemDataFamily._allTransitiveDependencies,
+                  : _$getTotemsHash,
+          dependencies: GetTotemsFamily._dependencies,
+          allTransitiveDependencies: GetTotemsFamily._allTransitiveDependencies,
           providerId: providerId,
           eventId: eventId,
           sessionId: sessionId,
-          totemId: totemId,
         );
 
-  GetTotemDataProvider._internal(
+  GetTotemsProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -121,22 +114,20 @@ class GetTotemDataProvider extends AutoDisposeStreamProvider<EmbeddedData> {
     required this.providerId,
     required this.eventId,
     required this.sessionId,
-    required this.totemId,
   }) : super.internal();
 
   final String providerId;
   final String eventId;
   final String sessionId;
-  final String totemId;
 
   @override
   Override overrideWith(
-    Stream<EmbeddedData> Function(GetTotemDataRef provider) create,
+    Stream<List<EmbeddedData>> Function(GetTotemsRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: GetTotemDataProvider._internal(
-        (ref) => create(ref as GetTotemDataRef),
+      override: GetTotemsProvider._internal(
+        (ref) => create(ref as GetTotemsRef),
         from: from,
         name: null,
         dependencies: null,
@@ -145,23 +136,21 @@ class GetTotemDataProvider extends AutoDisposeStreamProvider<EmbeddedData> {
         providerId: providerId,
         eventId: eventId,
         sessionId: sessionId,
-        totemId: totemId,
       ),
     );
   }
 
   @override
-  AutoDisposeStreamProviderElement<EmbeddedData> createElement() {
-    return _GetTotemDataProviderElement(this);
+  AutoDisposeStreamProviderElement<List<EmbeddedData>> createElement() {
+    return _GetTotemsProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is GetTotemDataProvider &&
+    return other is GetTotemsProvider &&
         other.providerId == providerId &&
         other.eventId == eventId &&
-        other.sessionId == sessionId &&
-        other.totemId == totemId;
+        other.sessionId == sessionId;
   }
 
   @override
@@ -170,13 +159,12 @@ class GetTotemDataProvider extends AutoDisposeStreamProvider<EmbeddedData> {
     hash = _SystemHash.combine(hash, providerId.hashCode);
     hash = _SystemHash.combine(hash, eventId.hashCode);
     hash = _SystemHash.combine(hash, sessionId.hashCode);
-    hash = _SystemHash.combine(hash, totemId.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin GetTotemDataRef on AutoDisposeStreamProviderRef<EmbeddedData> {
+mixin GetTotemsRef on AutoDisposeStreamProviderRef<List<EmbeddedData>> {
   /// The parameter `providerId` of this provider.
   String get providerId;
 
@@ -185,24 +173,19 @@ mixin GetTotemDataRef on AutoDisposeStreamProviderRef<EmbeddedData> {
 
   /// The parameter `sessionId` of this provider.
   String get sessionId;
-
-  /// The parameter `totemId` of this provider.
-  String get totemId;
 }
 
-class _GetTotemDataProviderElement
-    extends AutoDisposeStreamProviderElement<EmbeddedData>
-    with GetTotemDataRef {
-  _GetTotemDataProviderElement(super.provider);
+class _GetTotemsProviderElement
+    extends AutoDisposeStreamProviderElement<List<EmbeddedData>>
+    with GetTotemsRef {
+  _GetTotemsProviderElement(super.provider);
 
   @override
-  String get providerId => (origin as GetTotemDataProvider).providerId;
+  String get providerId => (origin as GetTotemsProvider).providerId;
   @override
-  String get eventId => (origin as GetTotemDataProvider).eventId;
+  String get eventId => (origin as GetTotemsProvider).eventId;
   @override
-  String get sessionId => (origin as GetTotemDataProvider).sessionId;
-  @override
-  String get totemId => (origin as GetTotemDataProvider).totemId;
+  String get sessionId => (origin as GetTotemsProvider).sessionId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

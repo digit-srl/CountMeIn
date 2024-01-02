@@ -1,5 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart' show Timestamp;
+import 'package:cloud_firestore/cloud_firestore.dart' show GeoPoint, Timestamp;
 import 'package:countmein/domain/entities/date_time_converter.dart';
+import 'package:countmein/domain/entities/geopoint_converter.dart';
 import 'package:countmein/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -131,10 +132,13 @@ class CMIEvent with _$CMIEvent {
     required int maxWomCount,
     @EventStatusConverter() EventStatus? status,
     @EventTypeConverter() required EventType type,
-    @Default(AcceptedCardType.passpartoutAndMine) @AcceptedCardTypeConverted() AcceptedCardType acceptedCardType,
+    @Default(AcceptedCardType.passpartoutAndMine)
+    @AcceptedCardTypeConverted()
+    AcceptedCardType acceptedCardType,
     @MyDateTimeConverter() required DateTime createdOn,
     @MyDateTimeConverter() DateTime? subEventDeadline,
     @MyDateTimeConverter() required DateTime startAt,
+    @GeoPointConverter() GeoPoint? position,
   }) = _CMIEvent;
 
   factory CMIEvent.fromJson(Map<String, Object?> json) =>

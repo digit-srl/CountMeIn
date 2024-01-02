@@ -26,7 +26,6 @@ import 'package:countmein/src/auth/ui/screens/reset_password.dart';
 import 'package:countmein/ui/screens/email_verification.dart';
 import 'package:countmein/ui/screens/request_activity.dart';
 import 'package:flutter/material.dart';
-import 'package:universal_io/io.dart';
 
 import 'src/admin/ui/screens/admin_dashboard.dart';
 import 'src/admin/ui/screens/admin_providers.dart';
@@ -337,11 +336,12 @@ class RouterNotifier extends ChangeNotifier {
           },
         ),
         GoRoute(
-          path: '/embedded/:providerId/:eventId/:totemId',
+          path: '/embedded/:providerId/:eventId/:sessionId/:totemId',
           builder: (context, state) {
             return EmbeddedScreen(
               totemId: state.pathParameters['totemId'] as String,
               eventId: state.pathParameters['eventId'] as String,
+              sessionId: state.pathParameters['sessionId'] as String,
               providerId: state.pathParameters['providerId'] as String,
               // privateId: state.params['privateId'] as String,
             );

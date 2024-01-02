@@ -1,5 +1,4 @@
 import 'package:countmein/env.dart';
-import 'package:countmein/main.dart';
 import 'package:flutter/foundation.dart';
 
 const qrCodePrefix = 'cmi';

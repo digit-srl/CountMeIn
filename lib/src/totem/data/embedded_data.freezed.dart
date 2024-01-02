@@ -20,11 +20,18 @@ EmbeddedData _$EmbeddedDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$EmbeddedData {
+  String get name => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   String get requestId => throw _privateConstructorUsedError;
   int get count => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime get updatedOn => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
+  DateTime get startAt => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
+  DateTime get endAt => throw _privateConstructorUsedError;
+  @GeoPointConverter()
+  GeoPoint get position => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,10 +46,14 @@ abstract class $EmbeddedDataCopyWith<$Res> {
       _$EmbeddedDataCopyWithImpl<$Res, EmbeddedData>;
   @useResult
   $Res call(
-      {String id,
+      {String name,
+      String id,
       String requestId,
       int count,
-      @MyDateTimeConverter() DateTime updatedOn});
+      @MyDateTimeConverter() DateTime updatedOn,
+      @MyDateTimeConverter() DateTime startAt,
+      @MyDateTimeConverter() DateTime endAt,
+      @GeoPointConverter() GeoPoint position});
 }
 
 /// @nodoc
@@ -58,12 +69,20 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? name = null,
     Object? id = null,
     Object? requestId = null,
     Object? count = null,
     Object? updatedOn = null,
+    Object? startAt = null,
+    Object? endAt = null,
+    Object? position = null,
   }) {
     return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -80,6 +99,18 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
           ? _value.updatedOn
           : updatedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      startAt: null == startAt
+          ? _value.startAt
+          : startAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endAt: null == endAt
+          ? _value.endAt
+          : endAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as GeoPoint,
     ) as $Val);
   }
 }
@@ -93,10 +124,14 @@ abstract class _$$EmbeddedDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {String name,
+      String id,
       String requestId,
       int count,
-      @MyDateTimeConverter() DateTime updatedOn});
+      @MyDateTimeConverter() DateTime updatedOn,
+      @MyDateTimeConverter() DateTime startAt,
+      @MyDateTimeConverter() DateTime endAt,
+      @GeoPointConverter() GeoPoint position});
 }
 
 /// @nodoc
@@ -110,12 +145,20 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? name = null,
     Object? id = null,
     Object? requestId = null,
     Object? count = null,
     Object? updatedOn = null,
+    Object? startAt = null,
+    Object? endAt = null,
+    Object? position = null,
   }) {
     return _then(_$EmbeddedDataImpl(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -132,6 +175,18 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
           ? _value.updatedOn
           : updatedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      startAt: null == startAt
+          ? _value.startAt
+          : startAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endAt: null == endAt
+          ? _value.endAt
+          : endAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as GeoPoint,
     ));
   }
 }
@@ -140,14 +195,20 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$EmbeddedDataImpl implements _EmbeddedData {
   const _$EmbeddedDataImpl(
-      {required this.id,
+      {required this.name,
+      required this.id,
       required this.requestId,
       this.count = 0,
-      @MyDateTimeConverter() required this.updatedOn});
+      @MyDateTimeConverter() required this.updatedOn,
+      @MyDateTimeConverter() required this.startAt,
+      @MyDateTimeConverter() required this.endAt,
+      @GeoPointConverter() required this.position});
 
   factory _$EmbeddedDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$EmbeddedDataImplFromJson(json);
 
+  @override
+  final String name;
   @override
   final String id;
   @override
@@ -158,10 +219,19 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
   @override
   @MyDateTimeConverter()
   final DateTime updatedOn;
+  @override
+  @MyDateTimeConverter()
+  final DateTime startAt;
+  @override
+  @MyDateTimeConverter()
+  final DateTime endAt;
+  @override
+  @GeoPointConverter()
+  final GeoPoint position;
 
   @override
   String toString() {
-    return 'EmbeddedData(id: $id, requestId: $requestId, count: $count, updatedOn: $updatedOn)';
+    return 'EmbeddedData(name: $name, id: $id, requestId: $requestId, count: $count, updatedOn: $updatedOn, startAt: $startAt, endAt: $endAt, position: $position)';
   }
 
   @override
@@ -169,17 +239,23 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EmbeddedDataImpl &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.requestId, requestId) ||
                 other.requestId == requestId) &&
             (identical(other.count, count) || other.count == count) &&
             (identical(other.updatedOn, updatedOn) ||
-                other.updatedOn == updatedOn));
+                other.updatedOn == updatedOn) &&
+            (identical(other.startAt, startAt) || other.startAt == startAt) &&
+            (identical(other.endAt, endAt) || other.endAt == endAt) &&
+            (identical(other.position, position) ||
+                other.position == position));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, requestId, count, updatedOn);
+  int get hashCode => Object.hash(runtimeType, name, id, requestId, count,
+      updatedOn, startAt, endAt, position);
 
   @JsonKey(ignore: true)
   @override
@@ -197,15 +273,21 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
 
 abstract class _EmbeddedData implements EmbeddedData {
   const factory _EmbeddedData(
-          {required final String id,
+          {required final String name,
+          required final String id,
           required final String requestId,
           final int count,
-          @MyDateTimeConverter() required final DateTime updatedOn}) =
+          @MyDateTimeConverter() required final DateTime updatedOn,
+          @MyDateTimeConverter() required final DateTime startAt,
+          @MyDateTimeConverter() required final DateTime endAt,
+          @GeoPointConverter() required final GeoPoint position}) =
       _$EmbeddedDataImpl;
 
   factory _EmbeddedData.fromJson(Map<String, dynamic> json) =
       _$EmbeddedDataImpl.fromJson;
 
+  @override
+  String get name;
   @override
   String get id;
   @override
@@ -215,6 +297,15 @@ abstract class _EmbeddedData implements EmbeddedData {
   @override
   @MyDateTimeConverter()
   DateTime get updatedOn;
+  @override
+  @MyDateTimeConverter()
+  DateTime get startAt;
+  @override
+  @MyDateTimeConverter()
+  DateTime get endAt;
+  @override
+  @GeoPointConverter()
+  GeoPoint get position;
   @override
   @JsonKey(ignore: true)
   _$$EmbeddedDataImplCopyWith<_$EmbeddedDataImpl> get copyWith =>

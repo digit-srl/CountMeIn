@@ -1,10 +1,7 @@
 import 'dart:ui';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:countmein/cloud.dart';
 import 'package:countmein/constants.dart';
 import 'package:countmein/domain/entities/cmi_provider.dart';
-import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/domain/entities/qrcode_data.dart';
 import 'package:countmein/domain/entities/user_card.dart';
 import 'package:countmein/my_logger.dart';
