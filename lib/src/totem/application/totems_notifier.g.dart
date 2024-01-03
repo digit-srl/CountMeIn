@@ -6,7 +6,7 @@ part of 'totems_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getTotemsHash() => r'258c2d77ebfdf4ed05f442d502b2416b59d9be38';
+String _$getTotemsHash() => r'cc4546e54974f16db5e67a76dc6ebbef5e9d1c49';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -42,12 +42,10 @@ class GetTotemsFamily extends Family<AsyncValue<List<EmbeddedData>>> {
   GetTotemsProvider call(
     String providerId,
     String eventId,
-    String sessionId,
   ) {
     return GetTotemsProvider(
       providerId,
       eventId,
-      sessionId,
     );
   }
 
@@ -58,7 +56,6 @@ class GetTotemsFamily extends Family<AsyncValue<List<EmbeddedData>>> {
     return call(
       provider.providerId,
       provider.eventId,
-      provider.sessionId,
     );
   }
 
@@ -83,13 +80,11 @@ class GetTotemsProvider extends AutoDisposeStreamProvider<List<EmbeddedData>> {
   GetTotemsProvider(
     String providerId,
     String eventId,
-    String sessionId,
   ) : this._internal(
           (ref) => getTotems(
             ref as GetTotemsRef,
             providerId,
             eventId,
-            sessionId,
           ),
           from: getTotemsProvider,
           name: r'getTotemsProvider',
@@ -101,7 +96,6 @@ class GetTotemsProvider extends AutoDisposeStreamProvider<List<EmbeddedData>> {
           allTransitiveDependencies: GetTotemsFamily._allTransitiveDependencies,
           providerId: providerId,
           eventId: eventId,
-          sessionId: sessionId,
         );
 
   GetTotemsProvider._internal(
@@ -113,12 +107,10 @@ class GetTotemsProvider extends AutoDisposeStreamProvider<List<EmbeddedData>> {
     required super.from,
     required this.providerId,
     required this.eventId,
-    required this.sessionId,
   }) : super.internal();
 
   final String providerId;
   final String eventId;
-  final String sessionId;
 
   @override
   Override overrideWith(
@@ -135,7 +127,6 @@ class GetTotemsProvider extends AutoDisposeStreamProvider<List<EmbeddedData>> {
         debugGetCreateSourceHash: null,
         providerId: providerId,
         eventId: eventId,
-        sessionId: sessionId,
       ),
     );
   }
@@ -149,8 +140,7 @@ class GetTotemsProvider extends AutoDisposeStreamProvider<List<EmbeddedData>> {
   bool operator ==(Object other) {
     return other is GetTotemsProvider &&
         other.providerId == providerId &&
-        other.eventId == eventId &&
-        other.sessionId == sessionId;
+        other.eventId == eventId;
   }
 
   @override
@@ -158,7 +148,6 @@ class GetTotemsProvider extends AutoDisposeStreamProvider<List<EmbeddedData>> {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, providerId.hashCode);
     hash = _SystemHash.combine(hash, eventId.hashCode);
-    hash = _SystemHash.combine(hash, sessionId.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -170,9 +159,6 @@ mixin GetTotemsRef on AutoDisposeStreamProviderRef<List<EmbeddedData>> {
 
   /// The parameter `eventId` of this provider.
   String get eventId;
-
-  /// The parameter `sessionId` of this provider.
-  String get sessionId;
 }
 
 class _GetTotemsProviderElement
@@ -184,8 +170,6 @@ class _GetTotemsProviderElement
   String get providerId => (origin as GetTotemsProvider).providerId;
   @override
   String get eventId => (origin as GetTotemsProvider).eventId;
-  @override
-  String get sessionId => (origin as GetTotemsProvider).sessionId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

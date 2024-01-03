@@ -21,10 +21,10 @@ class TotemsCardWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final totems = ref
-            .watch(getTotemsProvider(providerId, eventId, sessionId))
+            .watch(getTotemsProvider(providerId, eventId))
             .valueOrNull ??
         [];
-    if (totems.isEmpty) return SizedBox.shrink();
+    if (totems.isEmpty) return const SizedBox.shrink();
     return CMICard(
       child: GenericGridViewBuilder(
         itemCount: totems.length,

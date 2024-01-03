@@ -13,10 +13,9 @@ class EmbeddedData with _$EmbeddedData {
     required String name,
     required String id,
     required String requestId,
+    required int radius,
     @Default(0) int count,
     @MyDateTimeConverter() required DateTime updatedOn,
-    @MyDateTimeConverter() required DateTime startAt,
-    @MyDateTimeConverter() required DateTime endAt,
     @GeoPointConverter() required GeoPoint position,
   }) = _EmbeddedData;
 

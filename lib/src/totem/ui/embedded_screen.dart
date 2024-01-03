@@ -43,7 +43,7 @@ class EmbeddedScreen extends ConsumerWidget {
                         backgroundColor: Colors.white,
                         padding: const EdgeInsets.all(16),
                         data:
-                            'https://dev.wom.social/embedded/$providerId/$eventId/$sessionId/$totemId/${data.requestId}',
+                            'https://dev.wom.social/embedded/$providerId/$eventId/$totemId/${data.requestId}',
                       ),
                     ),
                     const SizedBox(height: 16),

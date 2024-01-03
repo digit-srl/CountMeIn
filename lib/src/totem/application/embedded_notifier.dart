@@ -12,7 +12,7 @@ Stream<EmbeddedData> getTotemData(
   String sessionId,
   String totemId,
 ) async* {
-  final stream = Cloud.totemDoc(providerId, eventId, sessionId, totemId).snapshots();
+  final stream = Cloud.totemDoc(providerId, eventId, totemId).snapshots();
   await for (final snap in stream) {
     final data = snap.data();
     if (snap.exists && data != null) {

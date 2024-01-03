@@ -192,9 +192,6 @@ class NewEventFormScreen extends HookConsumerWidget {
                   value: eventType.value,
                   onChanged: (t) {
                     if (t == null) return;
-                    if (t == EventType.periodic) {
-                      totemEnabled.value = false;
-                    }
                     eventType.value = t;
                   },
                   items: EventType.values
@@ -514,16 +511,14 @@ class NewEventFormScreen extends HookConsumerWidget {
                     );
 
                     final t = <EmbeddedData>[];
-                    if (!isRecurring && totemEnabled.value) {
+                    if (totemEnabled.value) {
                       for (int i = 0; i < totems.value.length; i++) {
                         final tmp = EmbeddedData(
                           name: totems.value[i].text.trim(),
                           id: Uuid().v4(),
                           requestId: 'abcded',
                           position: position!,
-                          updatedOn: DateTime.now(),
-                          startAt: sessionStartAt,
-                          endAt: sessionEndAt,
+                          updatedOn: DateTime.now(), radius: int.parse(radiusController.text.trim()),
                         );
                         t.add(tmp);
                       }
@@ -544,7 +539,6 @@ class NewEventFormScreen extends HookConsumerWidget {
                         Cloud.totemDoc(
                           providerId,
                           eventId,
-                          session.id,
                           t[i].id,
                         ),
                         t[i].toJson(),

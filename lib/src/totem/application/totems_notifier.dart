@@ -10,12 +10,10 @@ Stream<List<EmbeddedData>> getTotems(
   GetTotemsRef ref,
   String providerId,
   String eventId,
-  String sessionId,
 ) async* {
-  final stream =
-      Cloud.totemCollection(providerId, eventId, sessionId).snapshots();
-  final list = <EmbeddedData>[];
+  final stream = Cloud.totemCollection(providerId, eventId).snapshots();
   await for (final snap in stream) {
+    final list = <EmbeddedData>[];
     for (int i = 0; i < snap.docs.length; i++) {
       try {
         final d = snap.docs[i].data();

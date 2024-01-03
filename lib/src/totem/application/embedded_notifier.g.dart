@@ -6,7 +6,7 @@ part of 'embedded_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getTotemDataHash() => r'0c6e6e19975aa8363fd6f2a8a57edb04185896b1';
+String _$getTotemDataHash() => r'0eb56fbe28e926a73ffb5ce00fa5c90ebe8c255d';
 
 /// Copied from Dart SDK
 class _SystemHash {

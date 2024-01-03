@@ -23,13 +23,10 @@ mixin _$EmbeddedData {
   String get name => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   String get requestId => throw _privateConstructorUsedError;
+  int get radius => throw _privateConstructorUsedError;
   int get count => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime get updatedOn => throw _privateConstructorUsedError;
-  @MyDateTimeConverter()
-  DateTime get startAt => throw _privateConstructorUsedError;
-  @MyDateTimeConverter()
-  DateTime get endAt => throw _privateConstructorUsedError;
   @GeoPointConverter()
   GeoPoint get position => throw _privateConstructorUsedError;
 
@@ -49,10 +46,9 @@ abstract class $EmbeddedDataCopyWith<$Res> {
       {String name,
       String id,
       String requestId,
+      int radius,
       int count,
       @MyDateTimeConverter() DateTime updatedOn,
-      @MyDateTimeConverter() DateTime startAt,
-      @MyDateTimeConverter() DateTime endAt,
       @GeoPointConverter() GeoPoint position});
 }
 
@@ -72,10 +68,9 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
     Object? name = null,
     Object? id = null,
     Object? requestId = null,
+    Object? radius = null,
     Object? count = null,
     Object? updatedOn = null,
-    Object? startAt = null,
-    Object? endAt = null,
     Object? position = null,
   }) {
     return _then(_value.copyWith(
@@ -91,6 +86,10 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
           ? _value.requestId
           : requestId // ignore: cast_nullable_to_non_nullable
               as String,
+      radius: null == radius
+          ? _value.radius
+          : radius // ignore: cast_nullable_to_non_nullable
+              as int,
       count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
@@ -98,14 +97,6 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
       updatedOn: null == updatedOn
           ? _value.updatedOn
           : updatedOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      startAt: null == startAt
-          ? _value.startAt
-          : startAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      endAt: null == endAt
-          ? _value.endAt
-          : endAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       position: null == position
           ? _value.position
@@ -127,10 +118,9 @@ abstract class _$$EmbeddedDataImplCopyWith<$Res>
       {String name,
       String id,
       String requestId,
+      int radius,
       int count,
       @MyDateTimeConverter() DateTime updatedOn,
-      @MyDateTimeConverter() DateTime startAt,
-      @MyDateTimeConverter() DateTime endAt,
       @GeoPointConverter() GeoPoint position});
 }
 
@@ -148,10 +138,9 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
     Object? name = null,
     Object? id = null,
     Object? requestId = null,
+    Object? radius = null,
     Object? count = null,
     Object? updatedOn = null,
-    Object? startAt = null,
-    Object? endAt = null,
     Object? position = null,
   }) {
     return _then(_$EmbeddedDataImpl(
@@ -167,6 +156,10 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
           ? _value.requestId
           : requestId // ignore: cast_nullable_to_non_nullable
               as String,
+      radius: null == radius
+          ? _value.radius
+          : radius // ignore: cast_nullable_to_non_nullable
+              as int,
       count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
@@ -174,14 +167,6 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
       updatedOn: null == updatedOn
           ? _value.updatedOn
           : updatedOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      startAt: null == startAt
-          ? _value.startAt
-          : startAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      endAt: null == endAt
-          ? _value.endAt
-          : endAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       position: null == position
           ? _value.position
@@ -198,10 +183,9 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
       {required this.name,
       required this.id,
       required this.requestId,
+      required this.radius,
       this.count = 0,
       @MyDateTimeConverter() required this.updatedOn,
-      @MyDateTimeConverter() required this.startAt,
-      @MyDateTimeConverter() required this.endAt,
       @GeoPointConverter() required this.position});
 
   factory _$EmbeddedDataImpl.fromJson(Map<String, dynamic> json) =>
@@ -214,24 +198,20 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
   @override
   final String requestId;
   @override
+  final int radius;
+  @override
   @JsonKey()
   final int count;
   @override
   @MyDateTimeConverter()
   final DateTime updatedOn;
   @override
-  @MyDateTimeConverter()
-  final DateTime startAt;
-  @override
-  @MyDateTimeConverter()
-  final DateTime endAt;
-  @override
   @GeoPointConverter()
   final GeoPoint position;
 
   @override
   String toString() {
-    return 'EmbeddedData(name: $name, id: $id, requestId: $requestId, count: $count, updatedOn: $updatedOn, startAt: $startAt, endAt: $endAt, position: $position)';
+    return 'EmbeddedData(name: $name, id: $id, requestId: $requestId, radius: $radius, count: $count, updatedOn: $updatedOn, position: $position)';
   }
 
   @override
@@ -243,19 +223,18 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.requestId, requestId) ||
                 other.requestId == requestId) &&
+            (identical(other.radius, radius) || other.radius == radius) &&
             (identical(other.count, count) || other.count == count) &&
             (identical(other.updatedOn, updatedOn) ||
                 other.updatedOn == updatedOn) &&
-            (identical(other.startAt, startAt) || other.startAt == startAt) &&
-            (identical(other.endAt, endAt) || other.endAt == endAt) &&
             (identical(other.position, position) ||
                 other.position == position));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, id, requestId, count,
-      updatedOn, startAt, endAt, position);
+  int get hashCode => Object.hash(
+      runtimeType, name, id, requestId, radius, count, updatedOn, position);
 
   @JsonKey(ignore: true)
   @override
@@ -276,10 +255,9 @@ abstract class _EmbeddedData implements EmbeddedData {
           {required final String name,
           required final String id,
           required final String requestId,
+          required final int radius,
           final int count,
           @MyDateTimeConverter() required final DateTime updatedOn,
-          @MyDateTimeConverter() required final DateTime startAt,
-          @MyDateTimeConverter() required final DateTime endAt,
           @GeoPointConverter() required final GeoPoint position}) =
       _$EmbeddedDataImpl;
 
@@ -293,16 +271,12 @@ abstract class _EmbeddedData implements EmbeddedData {
   @override
   String get requestId;
   @override
+  int get radius;
+  @override
   int get count;
   @override
   @MyDateTimeConverter()
   DateTime get updatedOn;
-  @override
-  @MyDateTimeConverter()
-  DateTime get startAt;
-  @override
-  @MyDateTimeConverter()
-  DateTime get endAt;
   @override
   @GeoPointConverter()
   GeoPoint get position;
