@@ -35,8 +35,8 @@ export const scan = functions
         const eventId = data.eventId;
         const requestId = data.requestId;
         const totemId = data.totemId;
-        const userLat = data.latitude;
-        const userLong = data.longitude;
+        const userLat: number = data.latitude;
+        const userLong: number = data.longitude;
         const gender = data.gender;
 
         const now = new Date();
@@ -66,6 +66,13 @@ export const scan = functions
         if (eventData.activeSessionId == null) {
           response.status(200).send({
             status: "eventIsClosed",
+          });
+          return;
+        }
+
+        if (eventData.maxWomCount == null || eventData.maxWomCount == 0) {
+          response.status(200).send({
+            status: "noWomForThisEvent",
           });
           return;
         }
@@ -262,7 +269,7 @@ export const scan = functions
           userLat,
           userLong
         );
-        console.log(eventData.maxWomCount);
+
         response.status(200).send({
           status: "success",
           link: wom.link,

@@ -55,33 +55,14 @@ exports.onPrivateSessionUserCheckIn = functions
 
         const gender = userData.gender;
         if (gender != null) {
-          let increment = 1;
-          let m = 0;
-          let f = 0;
-          let nb = 0;
-          if (snap.after.exists && !snap.before.exists) {
-            increment = 1;
-          } else if (!snap.after.exists && snap.before.exists) {
-            increment = -1;
-          }
-
-          if (gender == "male") {
-            m = increment;
-          } else if (gender == "female") {
-            f = increment;
-          } else if (gender == "notBinary") {
-            nb = increment;
-          }
-
-          if (m != 0 || f != 0 || nb != 0) {
-            console.log(
-              "onPrivateSessionUserCheckIn: m: " + m + ",f: " + f + ",nb: " + nb
+          const countRef = snap.after.ref.parent.parent;
+          if (countRef != null) {
+            await updateGender(
+              snap.after.exists,
+              snap.before.exists,
+              gender,
+              countRef
             );
-            const countRef = snap.after.ref.parent.parent;
-            if (countRef != null) {
-              await updateCounts(countRef, 1, m, f, nb, 0);
-              functions.logger.log("Gender counter updated.");
-            }
           }
         } else {
           console.log(
@@ -123,6 +104,7 @@ async function updateGender(
   let m = 0;
   let f = 0;
   let nb = 0;
+  let na = 0;
   if (snapAfterExists && !snapBeforeExists) {
     increment = 1;
   } else if (!snapAfterExists && snapBeforeExists) {
@@ -135,12 +117,16 @@ async function updateGender(
     f = increment;
   } else if (gender == "notBinary") {
     nb = increment;
+  } else if (gender == "notAvailable") {
+    na = increment;
   }
 
-  if (m != 0 || f != 0 || nb != 0) {
-    console.log("updateGender: m: " + m + ",f: " + f + ",nb: " + nb);
+  if (m != 0 || f != 0 || nb != 0 || na != 0) {
+    console.log(
+      "updateGender: m: " + m + ",f: " + f + ",nb: " + nb + ",na: " + na
+    );
     if (countRef != null) {
-      await updateCounts(countRef, 1, m, f, nb, 0);
+      await updateCounts(countRef, 1, m, f, nb, na);
       functions.logger.log("Gender counter updated.");
     }
   }
@@ -445,35 +431,14 @@ exports.onGlobalPrivateUserCheckIn = functions
 
         const gender = userData.gender;
         if (gender != null) {
-          let increment = 1;
-          let m = 0;
-          let f = 0;
-          let nb = 0;
-          if (snap.after.exists && !snap.before.exists) {
-            increment = 1;
-          } else if (!snap.after.exists && snap.before.exists) {
-            increment = -1;
-          }
-
-          if (gender == "male") {
-            m = increment;
-          } else if (gender == "female") {
-            f = increment;
-          } else if (gender == "notBinary") {
-            nb = increment;
-          }
-
-          if (m != 0 || f != 0 || nb != 0) {
-            console.log(
-              "onGlobalPrivateUserCheckIn m: " + m + ",f: " + f + ",nb: " + nb
+          const countRef = snap.after.ref.parent.parent;
+          if (countRef != null) {
+            await updateGender(
+              snap.after.exists,
+              snap.before.exists,
+              gender,
+              countRef
             );
-            const countRef = snap.after.ref.parent.parent;
-            if (countRef != null) {
-              await updateCounts(countRef, 1, m, f, nb, 0);
-              console.log(
-                "onGlobalPrivateUserCheckIn: Gender counter updated."
-              );
-            }
           }
         } else {
           console.log("onGlobalPrivateUserCheckIn: gender infot doesnt exists");
@@ -632,6 +597,7 @@ enum UpdateUserCount {
   decrement,
 }
 
+// Usata per incrementare/decrementare i contatori di di gruppi e utenti senza riferimento al genere
 async function incrementUserCount(
   type: UpdateUserCount,
   eventRef: FirebaseFirestore.DocumentReference,
@@ -653,7 +619,10 @@ async function incrementUserCount(
   } else {
     notAvailable = totalUsers;
   }
-  //TODO non invocare se i valori sono tutti a zero
+  if (man == 0 && woman == 0 && notAvailable == 0 && totalUsers == 0) {
+    return;
+  }
+
   if (type == UpdateUserCount.increment) {
     return updateCounts(eventRef, totalUsers, man, woman, 0, notAvailable);
   }
