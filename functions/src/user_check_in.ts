@@ -45,6 +45,7 @@ exports.onPrivateSessionUserCheckIn = functions
       }
 
       const privateId = privateEventUserData.id;
+      const genderWithoutCard = privateEventUserData.genderWithoutCard;
 
       const privateUserDoc: FirebaseFirestore.DocumentData =
         await privateUserDocRef(privateId).get();
@@ -87,6 +88,18 @@ exports.onPrivateSessionUserCheckIn = functions
             "onPrivateSessionUserCheckIn: gender infot doesnt exists"
           );
         }
+      } else if (genderWithoutCard != null) {
+        console.log("onPrivateSessionUserCheckIn: gender from pocket scan");
+
+        const countRef = snap.after.ref.parent.parent;
+        if (countRef != null) {
+          await updateGender(
+            snap.after.exists,
+            snap.before.exists,
+            genderWithoutCard,
+            countRef
+          );
+        }
       } else {
         console.log(
           "onPrivateSessionUserCheckIn: private user doc doesnt exists"
@@ -99,6 +112,39 @@ exports.onPrivateSessionUserCheckIn = functions
       return null;
     }
   });
+
+async function updateGender(
+  snapAfterExists: boolean,
+  snapBeforeExists: boolean,
+  gender: string,
+  countRef: FirebaseFirestore.DocumentReference
+) {
+  let increment = 1;
+  let m = 0;
+  let f = 0;
+  let nb = 0;
+  if (snapAfterExists && !snapBeforeExists) {
+    increment = 1;
+  } else if (!snapAfterExists && snapBeforeExists) {
+    increment = -1;
+  }
+
+  if (gender == "male") {
+    m = increment;
+  } else if (gender == "female") {
+    f = increment;
+  } else if (gender == "notBinary") {
+    nb = increment;
+  }
+
+  if (m != 0 || f != 0 || nb != 0) {
+    console.log("updateGender: m: " + m + ",f: " + f + ",nb: " + nb);
+    if (countRef != null) {
+      await updateCounts(countRef, 1, m, f, nb, 0);
+      functions.logger.log("Gender counter updated.");
+    }
+  }
+}
 
 export const onSessionUserCheckIn = functions
   .region("europe-west3")
@@ -389,6 +435,7 @@ exports.onGlobalPrivateUserCheckIn = functions
       }
 
       const privateId = privateEventUserData.id;
+      const genderWithoutCard = privateEventUserData.genderWithoutCard;
 
       const privateUserDoc: FirebaseFirestore.DocumentData =
         await privateUserDocRef(privateId).get();
@@ -430,6 +477,18 @@ exports.onGlobalPrivateUserCheckIn = functions
           }
         } else {
           console.log("onGlobalPrivateUserCheckIn: gender infot doesnt exists");
+        }
+      } else if (genderWithoutCard != null) {
+        console.log("onPrivateSessionUserCheckIn: gender from pocket scan");
+
+        const countRef = snap.after.ref.parent.parent;
+        if (countRef != null) {
+          await updateGender(
+            snap.after.exists,
+            snap.before.exists,
+            genderWithoutCard,
+            countRef
+          );
         }
       } else {
         console.log(
@@ -594,6 +653,7 @@ async function incrementUserCount(
   } else {
     notAvailable = totalUsers;
   }
+  //TODO non invocare se i valori sono tutti a zero
   if (type == UpdateUserCount.increment) {
     return updateCounts(eventRef, totalUsers, man, woman, 0, notAvailable);
   }

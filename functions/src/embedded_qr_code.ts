@@ -1,12 +1,17 @@
 import * as functions from "firebase-functions";
 import * as dotenv from "dotenv";
 dotenv.config();
+const admin = require("firebase-admin");
+const db = admin.firestore();
 import * as firestore from "@google-cloud/firestore";
 const cors = require("cors")({ origin: true });
 import {
   eventDocRef,
+  eventPrivateUsersCollection,
+  eventPrivateUsersDoc,
   providerDocRef,
   sessionDocRef,
+  sessionPrivateUsersDoc,
   totemDocRef,
 } from "./firestore_references";
 import { generateSecret, generateWom } from "./utils";
@@ -26,21 +31,20 @@ export const scan = functions
 
         const data = request.body;
         const providerId = data.providerId;
+        const lastSessionIdScanned = data.lastSessionIdScanned;
         const eventId = data.eventId;
         const requestId = data.requestId;
         const totemId = data.totemId;
         const userLat = data.latitude;
         const userLong = data.longitude;
+        const gender = data.gender;
 
         const now = new Date();
-        //const timestamp = new Date(data.timestamp);
-        //const firestoreTimestamp = firestore.Timestamp.fromDate(timestamp);
 
         if (
           providerId == null ||
           eventId == null ||
           totemId == null ||
-          requestId == null ||
           userLat == null ||
           userLong == null
         ) {
@@ -60,39 +64,17 @@ export const scan = functions
         }
 
         if (eventData.activeSessionId == null) {
-          response.status(400).send("activeSessionId null");
-          return;
-        }
-
-        const sessionId = eventData.activeSessionId;
-        const sessionRef = sessionDocRef(providerId, eventId, sessionId);
-        const sessionDoc = await sessionRef.get();
-        const sessionData = sessionDoc.data();
-
-        if (!sessionDoc.exists || sessionData == null) {
-          response
-            .status(400)
-            .send("sessionData document doesn't exists, " + sessionRef.path);
-          return;
-        }
-
-        const startAt = sessionData.startAt.toDate();
-        const endAt = sessionData.endAt.toDate();
-
-        const isExpired = now.getTime() - endAt.getTime() > 0;
-        const isStarted = now.getTime() - startAt.getTime() > 0;
-
-        if (isExpired) {
           response.status(200).send({
-            status: "sessionExpired",
-            sessionId: sessionId,
+            status: "eventIsClosed",
           });
           return;
         }
 
-        if (!isStarted) {
+        const sessionId = eventData.activeSessionId;
+
+        if (lastSessionIdScanned == sessionId) {
           response.status(200).send({
-            status: "sessionNotStarted",
+            status: "sessionAlreadyScanned",
             sessionId: sessionId,
           });
           return;
@@ -115,45 +97,157 @@ export const scan = functions
           return;
         }
 
-        // Check requestId on doc
-        if (requestId != totemData.requestId) {
-          response.status(200).send({
-            status: "wrongRequestId",
-            sessionId: sessionId,
-          });
-          return;
+        // Check static or dynamic totem
+        if (!totemData.isStatic) {
+          if (requestId == null) {
+            response.status(200).send({
+              status: "dynamicTotemNeedRequestId",
+              sessionId: sessionId,
+            });
+            return;
+          } else if (requestId != totemData.requestId) {
+            // Check requestId on doc
+            response.status(200).send({
+              status: "wrongRequestId",
+              sessionId: sessionId,
+            });
+            return;
+          }
         }
 
-        // Update requestId on doc
+        // Update requestId on doc and totalCount
         totemRef.update({
-          count: totemData.count + 1,
-          requestId: generateSecret(),
+          totalCount: firestore.FieldValue.increment(1),
+          requestId: totemData.isStatic ? null : generateSecret(),
           updatedOn: firestore.Timestamp.fromDate(now),
         });
 
-        // check position
-        const latitude = totemData.position.latitude;
-        const longitude = totemData.position.longitude;
-        const radius = totemData.radius;
-        const coordinates = [longitude, latitude]; //[lon, lat]
-        const userCoordinates = [userLong, userLat];
-        const numberOfEdges = 32;
+        const sessionRef = sessionDocRef(providerId, eventId, sessionId);
+        const sessionDoc = await sessionRef.get();
+        const sessionData = sessionDoc.data();
 
-        let polygon = circleToPolygon(coordinates, radius, numberOfEdges);
-        const isInside = getIsPointInsidePolygon(
-          userCoordinates,
-          polygon.coordinates[0]
-        );
+        if (!sessionDoc.exists || sessionData == null) {
+          response
+            .status(400)
+            .send("sessionData document doesn't exists, " + sessionRef.path);
+          return;
+        }
 
-        console.log("isInside2: " + isInside);
-        if (!isInside) {
+        const startAt = sessionData.startAt.toDate();
+
+        // endAt can be null if the event has manual session opening
+        const endAt = sessionData.endAt?.toDate();
+
+        const isExpired =
+          endAt == null ? false : now.getTime() - endAt.getTime() > 0;
+        const isStarted = now.getTime() - startAt.getTime() > 0;
+
+        if (isExpired) {
           response.status(200).send({
-            status: "outOfPolygon",
+            status: "sessionExpired",
             sessionId: sessionId,
-            polygon: polygon.coordinates[0],
           });
           return;
         }
+
+        if (!isStarted) {
+          response.status(200).send({
+            status: "sessionNotStarted",
+            sessionId: sessionId,
+          });
+          return;
+        }
+
+        // check position
+        const latitude = totemData.position?.latitude;
+        const longitude = totemData.position?.longitude;
+        const radius = totemData.radius;
+
+        if (latitude != null && longitude != null) {
+          const coordinates = [longitude, latitude]; //[lon, lat]
+          const userCoordinates = [userLong, userLat];
+          const numberOfEdges = 32;
+
+          let polygon = circleToPolygon(coordinates, radius, numberOfEdges);
+          const isInside = getIsPointInsidePolygon(
+            userCoordinates,
+            polygon.coordinates[0]
+          );
+
+          console.log("isInside2: " + isInside);
+          if (!isInside) {
+            response.status(200).send({
+              status: "outOfPolygon",
+              sessionId: sessionId,
+              polygon: polygon.coordinates[0],
+            });
+            return;
+          }
+        }
+
+        // Update effective count
+        totemRef.update({
+          count: firestore.FieldValue.increment(1),
+          updatedOn: firestore.Timestamp.fromDate(now),
+        });
+
+        const batch = db.batch();
+        const userSubEventDocRef = sessionDocRef(providerId, eventId, sessionId)
+          .collection("users")
+          .doc();
+
+        const userId = userSubEventDocRef.id;
+
+        const json = {
+          totemId: totemData.id,
+          position: new firestore.GeoPoint(userLat, userLong),
+          isGroup: false,
+          id: userId,
+          name: "Utente anonimo",
+          surname: "",
+          cf: "",
+          fromExternalOrganization: false,
+          privateId: null,
+          isAnonymous: true,
+          providerId: providerId,
+          checkOutAt: firestore.Timestamp.fromDate(now),
+          hasPrivateInfo: gender != null,
+        };
+
+        batch.set(userSubEventDocRef, json);
+
+        let privateId: string | null = null;
+        // se c'è il genere allora salviamo l utente con info private
+        if (gender != null) {
+          const privateRef = eventPrivateUsersCollection(providerId, eventId);
+          const docRef = privateRef.doc();
+          privateId = docRef.id;
+          batch.set(
+            sessionPrivateUsersDoc(providerId, eventId, sessionId, privateId),
+            {
+              id: privateId,
+              genderWithoutCard: gender,
+            }
+          );
+        }
+
+        // se prima scansiona per questo evento salviamo l utente unico
+        if (lastSessionIdScanned == null) {
+          const globalUserRef = eventDocRef(providerId, eventId)
+            .collection("users")
+            .doc(userId);
+
+          batch.set(globalUserRef, json);
+
+          if (privateId != null) {
+            batch.set(eventPrivateUsersDoc(providerId, eventId, privateId), {
+              id: privateId,
+              genderWithoutCard: gender,
+            });
+          }
+        }
+
+        batch.commit();
 
         // generate wom
         const providerDoc: FirebaseFirestore.DocumentData =
@@ -161,7 +255,14 @@ export const scan = functions
 
         const apiKey = providerDoc.data().apiKey;
         const aim = providerDoc.data().aim;
-        const wom = await generateWom(apiKey, 1, aim);
+        const wom = await generateWom(
+          apiKey,
+          eventData.maxWomCount,
+          aim,
+          userLat,
+          userLong
+        );
+        console.log(eventData.maxWomCount);
         response.status(200).send({
           status: "success",
           link: wom.link,

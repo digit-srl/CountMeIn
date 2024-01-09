@@ -96,6 +96,42 @@ export function sessionDocRef(
     .doc(sessionId);
 }
 
+export function sessionPrivateUsersCollection(
+  providerId: string,
+  eventId: string,
+  sessionId: string
+): FirebaseFirestore.CollectionReference {
+  return sessionDocRef(providerId, eventId, sessionId).collection(
+    "privateUsers"
+  );
+}
+
+export function sessionPrivateUsersDoc(
+  providerId: string,
+  eventId: string,
+  sessionId: string,
+  privateId: string
+): FirebaseFirestore.DocumentReference {
+  return sessionPrivateUsersCollection(providerId, eventId, sessionId).doc(
+    privateId
+  );
+}
+
+export function eventPrivateUsersCollection(
+  providerId: string,
+  eventId: string
+): FirebaseFirestore.CollectionReference {
+  return eventDocRef(providerId, eventId).collection("privateUsers");
+}
+
+export function eventPrivateUsersDoc(
+  providerId: string,
+  eventId: string,
+  privateId: string
+): FirebaseFirestore.DocumentReference {
+  return eventPrivateUsersCollection(providerId, eventId).doc(privateId);
+}
+
 export function userAccessCollectionRef(
   providerId: string,
   userId: string

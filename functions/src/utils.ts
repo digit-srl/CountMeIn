@@ -119,12 +119,18 @@ export function twoDecimalPlaces(num: number): string {
   return (Math.round(num * 100) / 100).toFixed(2);
 }
 
-export async function generateWom(apiKey: string, wom: number, aim: string) {
+export async function generateWom(
+  apiKey: string,
+  wom: number,
+  aim: string,
+  lat: number,
+  long: number
+) {
   const data = {
     apiKey: apiKey,
     womCount: wom,
-    lat: 0.0,
-    long: 0.0,
+    lat: lat,
+    long: long,
     aim: aim,
   };
   console.log(data);

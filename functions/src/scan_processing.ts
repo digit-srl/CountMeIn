@@ -7,10 +7,10 @@ const db = admin.firestore();
 import * as firestore from "@google-cloud/firestore";
 const cors = require("cors")({ origin: true });
 import {
-  //userDocRef,
-  //privateUserDocRef,
   eventDocRef,
+  eventPrivateUsersDoc,
   sessionDocRef,
+  sessionPrivateUsersDoc,
 } from "./firestore_references";
 
 export const scan = functions
@@ -195,9 +195,12 @@ export const scan = functions
               "Salvo il mio private id nella collezione privateUsers della sessione"
             );
             batch.set(
-              sessionDocRef(eventProviderId, eventId, event.activeSessionId!)
-                .collection("privateUsers")
-                .doc(privateId),
+              sessionPrivateUsersDoc(
+                eventProviderId,
+                eventId,
+                event.activeSessionId!,
+                privateId
+              ),
               {
                 id: privateId,
               }
@@ -240,9 +243,7 @@ export const scan = functions
                 "Salvo il mio private id nella collezione privateUsers"
               );
               batch.set(
-                eventDocRef(eventProviderId, eventId)
-                  .collection("privateUsers")
-                  .doc(privateId),
+                eventPrivateUsersDoc(eventProviderId, eventId, privateId),
                 {
                   id: privateId,
                 }
