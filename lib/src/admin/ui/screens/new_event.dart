@@ -47,7 +47,7 @@ class NewEventFormScreen extends HookConsumerWidget {
 
   String? geoValidator(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Il campo non può essere vuoto';
+      return null;
     }
 
     if (double.tryParse(value) == null) {
@@ -70,9 +70,8 @@ class NewEventFormScreen extends HookConsumerWidget {
     final eventType = useState<EventType>(EventType.manual);
     final acceptedCardType = useState<AcceptedCardType>(AcceptedCardType.mine);
     final anonymous = useState<bool>(false);
-    // final recurring = useState<bool>(false);
     final totemEnabled = useState<bool>(false);
-    final totems = useState<List<TextEditingController>>([]);
+    final totems = useState<List<(TextEditingController, bool)>>([]);
     final releaseWom = useState<bool>(false);
     final emailEnabled = useState<bool>(false);
     final startAt = useState<DateTime>(DateTime.now());
@@ -122,6 +121,9 @@ class NewEventFormScreen extends HookConsumerWidget {
                   value: accessType.value,
                   onChanged: (t) {
                     if (t == null) return;
+                    if (t == EventAccessType.inOut) {
+                      totemEnabled.value = false;
+                    }
                     accessType.value = t;
                   },
                   items: EventAccessType.values
@@ -269,6 +271,13 @@ class NewEventFormScreen extends HookConsumerWidget {
           const SizedBox(height: 16),
           Text('Posizione Evento', style: titleStyle),
           const SizedBox(height: 8),
+          // if (totemEnabled.value) ...[
+          //   const Text(
+          //     'Posizione obbligatoria con totem attivi',
+          //     style: TextStyle(color: Colors.orange),
+          //   ),
+          //   const SizedBox(height: 8),
+          // ],
           Row(
             children: [
               Flexible(
@@ -279,13 +288,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                         RegExp(r'^(\d+)?\.?\d{0,8}'))
                   ],
                   decoration: const InputDecoration(hintText: 'Latitude'),
-                  validator: (value) {
-                    if (!totemEnabled.value &&
-                        (value == null || value.isEmpty)) {
-                      return null;
-                    }
-                    return geoValidator(value);
-                  },
+                  validator: geoValidator,
                 ),
               ),
               const SizedBox(width: 16),
@@ -297,13 +300,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                         RegExp(r'^(\d+)?\.?\d{0,8}'))
                   ],
                   decoration: const InputDecoration(hintText: 'Longitude'),
-                  validator: (value) {
-                    if (!totemEnabled.value &&
-                        (value == null || value.isEmpty)) {
-                      return null;
-                    }
-                    return geoValidator(value);
-                  },
+                  validator: geoValidator,
                 ),
               ),
               const SizedBox(width: 16),
@@ -313,13 +310,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(
                       hintText: 'Raggio', suffixText: 'metri'),
-                  validator: (value) {
-                    if (!totemEnabled.value &&
-                        (value == null || value.isEmpty)) {
-                      return null;
-                    }
-                    return geoValidator(value);
-                  },
+                  validator: geoValidator,
                 ),
               ),
             ],
@@ -330,19 +321,24 @@ class NewEventFormScreen extends HookConsumerWidget {
               Text('Totem', style: titleStyle),
               Switch(
                 value: totemEnabled.value,
-                onChanged: (v) {
-                  totemEnabled.value = v;
-                  totems.value = [TextEditingController(text: 'Totem 1')];
-                },
+                onChanged: accessType.value == EventAccessType.single
+                    ? (v) {
+                        totemEnabled.value = v;
+                        totems.value = [
+                          (TextEditingController(text: 'Totem 1'), false)
+                        ];
+                      }
+                    : null,
               ),
             ],
           ),
+          if (accessType.value == EventAccessType.inOut)
+            Text(
+              'I totem non possono essere aggiunti per eventi con accesso in/out',
+              style: TextStyle(color: Colors.orange),
+            ),
           if (totemEnabled.value) ...[
             const SizedBox(height: 16),
-            const Text(
-              'Posizione obbligatoria con totem attivi',
-              style: TextStyle(color: Colors.red),
-            ),
             const SizedBox(height: 8),
             for (int i = 0; i < totems.value.length; i++)
               Padding(
@@ -353,7 +349,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                     const SizedBox(width: 16),
                     Flexible(
                       child: TextFormField(
-                        controller: totems.value[i],
+                        controller: totems.value[i].$1,
                         validator: nameSurnameValidator,
                         decoration: InputDecoration(
                           suffix: totems.value.length == 1
@@ -370,16 +366,36 @@ class NewEventFormScreen extends HookConsumerWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(width: 16),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Statico'),
+                        Switch(
+                          value: totems.value[i].$2,
+                          onChanged: (value) {
+                            if (value == null) return;
+                            final tmp = totems.value.toList();
+                            final o = tmp.removeAt(i);
+                            tmp.insert(i, (o.$1, value));
+                            totems.value = tmp;
+                          },
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
             ElevatedButton(
                 onPressed: () {
-                  totems.value.forEach((element) => print(element.text));
+                  totems.value.forEach((element) => print(element.$1.text));
                   totems.value = [
                     ...totems.value,
-                    TextEditingController(
-                        text: 'Totem ${totems.value.length + 1}')
+                    (
+                      TextEditingController(
+                          text: 'Totem ${totems.value.length + 1}'),
+                      false
+                    )
                   ];
                 },
                 child: const Text('Nuovo totem'))
@@ -470,17 +486,17 @@ class NewEventFormScreen extends HookConsumerWidget {
                             double.parse(longController.text.trim()))
                         : null;
 
-                    if (totemEnabled.value && position == null) {
-                      CoolAlert.show(
-                        context: context,
-                        type: CoolAlertType.error,
-                        title: 'Posizione obbligatoria',
-                        text:
-                            'Con i totem abilitati devi inserire una posizione valida',
-                        width: 300,
-                      );
-                      return;
-                    }
+                    // if (totemEnabled.value && position == null) {
+                    //   CoolAlert.show(
+                    //     context: context,
+                    //     type: CoolAlertType.error,
+                    //     title: 'Posizione obbligatoria',
+                    //     text:
+                    //         'Con i totem abilitati devi inserire una posizione valida',
+                    //     width: 300,
+                    //   );
+                    //   return;
+                    // }
 
                     final s = CMIEvent(
                       id: eventId,
@@ -514,11 +530,13 @@ class NewEventFormScreen extends HookConsumerWidget {
                     if (totemEnabled.value) {
                       for (int i = 0; i < totems.value.length; i++) {
                         final tmp = EmbeddedData(
-                          name: totems.value[i].text.trim(),
+                          name: totems.value[i].$1.text.trim(),
                           id: Uuid().v4(),
-                          requestId: 'abcded',
-                          position: position!,
-                          updatedOn: DateTime.now(), radius: int.parse(radiusController.text.trim()),
+                          isStatic: totems.value[i].$2,
+                          requestId: totems.value[i].$2 ? null : 'abcded',
+                          position: position,
+                          updatedOn: DateTime.now(),
+                          radius: int.parse(radiusController.text.trim()),
                         );
                         t.add(tmp);
                       }

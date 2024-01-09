@@ -6,7 +6,7 @@ part of 'embedded_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getTotemDataHash() => r'0eb56fbe28e926a73ffb5ce00fa5c90ebe8c255d';
+String _$getTotemDataHash() => r'5e47ebf46a457490c3480ad2e3cf4c6ed877bcfa';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -203,6 +203,213 @@ class _GetTotemDataProviderElement
   String get sessionId => (origin as GetTotemDataProvider).sessionId;
   @override
   String get totemId => (origin as GetTotemDataProvider).totemId;
+}
+
+String _$totemNotifierHash() => r'52b5b7fc63bd46e1599127fd49db5a372d61dfee';
+
+abstract class _$TotemNotifier
+    extends BuildlessAutoDisposeNotifier<AsyncValue<EmbeddedData>> {
+  late final String providerId;
+  late final String eventId;
+  late final String sessionId;
+  late final String totemId;
+
+  AsyncValue<EmbeddedData> build(
+    String providerId,
+    String eventId,
+    String sessionId,
+    String totemId,
+  );
+}
+
+/// See also [TotemNotifier].
+@ProviderFor(TotemNotifier)
+const totemNotifierProvider = TotemNotifierFamily();
+
+/// See also [TotemNotifier].
+class TotemNotifierFamily extends Family<AsyncValue<EmbeddedData>> {
+  /// See also [TotemNotifier].
+  const TotemNotifierFamily();
+
+  /// See also [TotemNotifier].
+  TotemNotifierProvider call(
+    String providerId,
+    String eventId,
+    String sessionId,
+    String totemId,
+  ) {
+    return TotemNotifierProvider(
+      providerId,
+      eventId,
+      sessionId,
+      totemId,
+    );
+  }
+
+  @override
+  TotemNotifierProvider getProviderOverride(
+    covariant TotemNotifierProvider provider,
+  ) {
+    return call(
+      provider.providerId,
+      provider.eventId,
+      provider.sessionId,
+      provider.totemId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'totemNotifierProvider';
+}
+
+/// See also [TotemNotifier].
+class TotemNotifierProvider extends AutoDisposeNotifierProviderImpl<
+    TotemNotifier, AsyncValue<EmbeddedData>> {
+  /// See also [TotemNotifier].
+  TotemNotifierProvider(
+    String providerId,
+    String eventId,
+    String sessionId,
+    String totemId,
+  ) : this._internal(
+          () => TotemNotifier()
+            ..providerId = providerId
+            ..eventId = eventId
+            ..sessionId = sessionId
+            ..totemId = totemId,
+          from: totemNotifierProvider,
+          name: r'totemNotifierProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$totemNotifierHash,
+          dependencies: TotemNotifierFamily._dependencies,
+          allTransitiveDependencies:
+              TotemNotifierFamily._allTransitiveDependencies,
+          providerId: providerId,
+          eventId: eventId,
+          sessionId: sessionId,
+          totemId: totemId,
+        );
+
+  TotemNotifierProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.providerId,
+    required this.eventId,
+    required this.sessionId,
+    required this.totemId,
+  }) : super.internal();
+
+  final String providerId;
+  final String eventId;
+  final String sessionId;
+  final String totemId;
+
+  @override
+  AsyncValue<EmbeddedData> runNotifierBuild(
+    covariant TotemNotifier notifier,
+  ) {
+    return notifier.build(
+      providerId,
+      eventId,
+      sessionId,
+      totemId,
+    );
+  }
+
+  @override
+  Override overrideWith(TotemNotifier Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: TotemNotifierProvider._internal(
+        () => create()
+          ..providerId = providerId
+          ..eventId = eventId
+          ..sessionId = sessionId
+          ..totemId = totemId,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        providerId: providerId,
+        eventId: eventId,
+        sessionId: sessionId,
+        totemId: totemId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeNotifierProviderElement<TotemNotifier, AsyncValue<EmbeddedData>>
+      createElement() {
+    return _TotemNotifierProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is TotemNotifierProvider &&
+        other.providerId == providerId &&
+        other.eventId == eventId &&
+        other.sessionId == sessionId &&
+        other.totemId == totemId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, providerId.hashCode);
+    hash = _SystemHash.combine(hash, eventId.hashCode);
+    hash = _SystemHash.combine(hash, sessionId.hashCode);
+    hash = _SystemHash.combine(hash, totemId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin TotemNotifierRef
+    on AutoDisposeNotifierProviderRef<AsyncValue<EmbeddedData>> {
+  /// The parameter `providerId` of this provider.
+  String get providerId;
+
+  /// The parameter `eventId` of this provider.
+  String get eventId;
+
+  /// The parameter `sessionId` of this provider.
+  String get sessionId;
+
+  /// The parameter `totemId` of this provider.
+  String get totemId;
+}
+
+class _TotemNotifierProviderElement extends AutoDisposeNotifierProviderElement<
+    TotemNotifier, AsyncValue<EmbeddedData>> with TotemNotifierRef {
+  _TotemNotifierProviderElement(super.provider);
+
+  @override
+  String get providerId => (origin as TotemNotifierProvider).providerId;
+  @override
+  String get eventId => (origin as TotemNotifierProvider).eventId;
+  @override
+  String get sessionId => (origin as TotemNotifierProvider).sessionId;
+  @override
+  String get totemId => (origin as TotemNotifierProvider).totemId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

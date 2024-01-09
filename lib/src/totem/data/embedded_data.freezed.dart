@@ -22,13 +22,15 @@ EmbeddedData _$EmbeddedDataFromJson(Map<String, dynamic> json) {
 mixin _$EmbeddedData {
   String get name => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
-  String get requestId => throw _privateConstructorUsedError;
+  String? get requestId => throw _privateConstructorUsedError;
   int get radius => throw _privateConstructorUsedError;
+  bool get isStatic => throw _privateConstructorUsedError;
   int get count => throw _privateConstructorUsedError;
+  int get totalCount => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime get updatedOn => throw _privateConstructorUsedError;
   @GeoPointConverter()
-  GeoPoint get position => throw _privateConstructorUsedError;
+  GeoPoint? get position => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,11 +47,13 @@ abstract class $EmbeddedDataCopyWith<$Res> {
   $Res call(
       {String name,
       String id,
-      String requestId,
+      String? requestId,
       int radius,
+      bool isStatic,
       int count,
+      int totalCount,
       @MyDateTimeConverter() DateTime updatedOn,
-      @GeoPointConverter() GeoPoint position});
+      @GeoPointConverter() GeoPoint? position});
 }
 
 /// @nodoc
@@ -67,11 +71,13 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
   $Res call({
     Object? name = null,
     Object? id = null,
-    Object? requestId = null,
+    Object? requestId = freezed,
     Object? radius = null,
+    Object? isStatic = null,
     Object? count = null,
+    Object? totalCount = null,
     Object? updatedOn = null,
-    Object? position = null,
+    Object? position = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -82,26 +88,34 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      requestId: null == requestId
+      requestId: freezed == requestId
           ? _value.requestId
           : requestId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       radius: null == radius
           ? _value.radius
           : radius // ignore: cast_nullable_to_non_nullable
               as int,
+      isStatic: null == isStatic
+          ? _value.isStatic
+          : isStatic // ignore: cast_nullable_to_non_nullable
+              as bool,
       count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalCount: null == totalCount
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
               as int,
       updatedOn: null == updatedOn
           ? _value.updatedOn
           : updatedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      position: null == position
+      position: freezed == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
-              as GeoPoint,
+              as GeoPoint?,
     ) as $Val);
   }
 }
@@ -117,11 +131,13 @@ abstract class _$$EmbeddedDataImplCopyWith<$Res>
   $Res call(
       {String name,
       String id,
-      String requestId,
+      String? requestId,
       int radius,
+      bool isStatic,
       int count,
+      int totalCount,
       @MyDateTimeConverter() DateTime updatedOn,
-      @GeoPointConverter() GeoPoint position});
+      @GeoPointConverter() GeoPoint? position});
 }
 
 /// @nodoc
@@ -137,11 +153,13 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? id = null,
-    Object? requestId = null,
+    Object? requestId = freezed,
     Object? radius = null,
+    Object? isStatic = null,
     Object? count = null,
+    Object? totalCount = null,
     Object? updatedOn = null,
-    Object? position = null,
+    Object? position = freezed,
   }) {
     return _then(_$EmbeddedDataImpl(
       name: null == name
@@ -152,26 +170,34 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      requestId: null == requestId
+      requestId: freezed == requestId
           ? _value.requestId
           : requestId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       radius: null == radius
           ? _value.radius
           : radius // ignore: cast_nullable_to_non_nullable
               as int,
+      isStatic: null == isStatic
+          ? _value.isStatic
+          : isStatic // ignore: cast_nullable_to_non_nullable
+              as bool,
       count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalCount: null == totalCount
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
               as int,
       updatedOn: null == updatedOn
           ? _value.updatedOn
           : updatedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      position: null == position
+      position: freezed == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
-              as GeoPoint,
+              as GeoPoint?,
     ));
   }
 }
@@ -182,11 +208,13 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
   const _$EmbeddedDataImpl(
       {required this.name,
       required this.id,
-      required this.requestId,
+      this.requestId,
       required this.radius,
+      this.isStatic = false,
       this.count = 0,
+      this.totalCount = 0,
       @MyDateTimeConverter() required this.updatedOn,
-      @GeoPointConverter() required this.position});
+      @GeoPointConverter() this.position});
 
   factory _$EmbeddedDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$EmbeddedDataImplFromJson(json);
@@ -196,22 +224,28 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
   @override
   final String id;
   @override
-  final String requestId;
+  final String? requestId;
   @override
   final int radius;
   @override
   @JsonKey()
+  final bool isStatic;
+  @override
+  @JsonKey()
   final int count;
+  @override
+  @JsonKey()
+  final int totalCount;
   @override
   @MyDateTimeConverter()
   final DateTime updatedOn;
   @override
   @GeoPointConverter()
-  final GeoPoint position;
+  final GeoPoint? position;
 
   @override
   String toString() {
-    return 'EmbeddedData(name: $name, id: $id, requestId: $requestId, radius: $radius, count: $count, updatedOn: $updatedOn, position: $position)';
+    return 'EmbeddedData(name: $name, id: $id, requestId: $requestId, radius: $radius, isStatic: $isStatic, count: $count, totalCount: $totalCount, updatedOn: $updatedOn, position: $position)';
   }
 
   @override
@@ -224,7 +258,11 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
             (identical(other.requestId, requestId) ||
                 other.requestId == requestId) &&
             (identical(other.radius, radius) || other.radius == radius) &&
+            (identical(other.isStatic, isStatic) ||
+                other.isStatic == isStatic) &&
             (identical(other.count, count) || other.count == count) &&
+            (identical(other.totalCount, totalCount) ||
+                other.totalCount == totalCount) &&
             (identical(other.updatedOn, updatedOn) ||
                 other.updatedOn == updatedOn) &&
             (identical(other.position, position) ||
@@ -233,8 +271,8 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, name, id, requestId, radius, count, updatedOn, position);
+  int get hashCode => Object.hash(runtimeType, name, id, requestId, radius,
+      isStatic, count, totalCount, updatedOn, position);
 
   @JsonKey(ignore: true)
   @override
@@ -252,14 +290,15 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
 
 abstract class _EmbeddedData implements EmbeddedData {
   const factory _EmbeddedData(
-          {required final String name,
-          required final String id,
-          required final String requestId,
-          required final int radius,
-          final int count,
-          @MyDateTimeConverter() required final DateTime updatedOn,
-          @GeoPointConverter() required final GeoPoint position}) =
-      _$EmbeddedDataImpl;
+      {required final String name,
+      required final String id,
+      final String? requestId,
+      required final int radius,
+      final bool isStatic,
+      final int count,
+      final int totalCount,
+      @MyDateTimeConverter() required final DateTime updatedOn,
+      @GeoPointConverter() final GeoPoint? position}) = _$EmbeddedDataImpl;
 
   factory _EmbeddedData.fromJson(Map<String, dynamic> json) =
       _$EmbeddedDataImpl.fromJson;
@@ -269,17 +308,21 @@ abstract class _EmbeddedData implements EmbeddedData {
   @override
   String get id;
   @override
-  String get requestId;
+  String? get requestId;
   @override
   int get radius;
   @override
+  bool get isStatic;
+  @override
   int get count;
+  @override
+  int get totalCount;
   @override
   @MyDateTimeConverter()
   DateTime get updatedOn;
   @override
   @GeoPointConverter()
-  GeoPoint get position;
+  GeoPoint? get position;
   @override
   @JsonKey(ignore: true)
   _$$EmbeddedDataImplCopyWith<_$EmbeddedDataImpl> get copyWith =>

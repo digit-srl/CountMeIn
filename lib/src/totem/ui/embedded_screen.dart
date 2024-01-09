@@ -25,7 +25,8 @@ class EmbeddedScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(getTotemDataProvider(providerId, eventId, sessionId, totemId));
+    final state = ref
+        .watch(getTotemDataProvider(providerId, eventId, sessionId, totemId));
     final size = MediaQuery.sizeOf(context);
     final width = min(size.width, size.height) / 2;
     return Scaffold(
@@ -43,7 +44,7 @@ class EmbeddedScreen extends ConsumerWidget {
                         backgroundColor: Colors.white,
                         padding: const EdgeInsets.all(16),
                         data:
-                            'https://dev.wom.social/embedded/$providerId/$eventId/$totemId/${data.requestId}',
+                            'https://link.wom.social/cmi/$providerId/$eventId/$totemId${data.requestId != null ? '/${data.requestId}' : ''}',
                       ),
                     ),
                     const SizedBox(height: 16),

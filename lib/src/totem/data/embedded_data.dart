@@ -12,11 +12,13 @@ class EmbeddedData with _$EmbeddedData {
   const factory EmbeddedData({
     required String name,
     required String id,
-    required String requestId,
+    String? requestId,
     required int radius,
+    @Default(false) bool isStatic,
     @Default(0) int count,
+    @Default(0) int totalCount,
     @MyDateTimeConverter() required DateTime updatedOn,
-    @GeoPointConverter() required GeoPoint position,
+    @GeoPointConverter() GeoPoint? position,
   }) = _EmbeddedData;
 
   factory EmbeddedData.fromJson(Map<String, dynamic> json) =>

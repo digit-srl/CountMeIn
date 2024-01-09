@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:countmein/cloud.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
@@ -486,12 +487,11 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
               ),*/
 
             if (eventData != null) ...[
-              if (eventData.activeSessionId != null)
-                TotemsCardWidget(
-                  providerId: ids.providerId,
-                  eventId: ids.eventId,
-                  sessionId: eventData.activeSessionId!,
-                ),
+              TotemsCardWidget(
+                providerId: ids.providerId,
+                eventId: ids.eventId,
+                sessionId: eventData.activeSessionId,
+              ),
               GenericGridView(
                 children: [
                   if (isAdmin && eventData.isManual)
@@ -606,14 +606,39 @@ class SessionItem extends StatelessWidget {
               onSelected: (SessionAction item) async {
                 switch (item) {
                   case SessionAction.close:
-                    Cloud.eventDoc(providerId, eventId).update({
-                      'activeSessionId': null,
-                    });
+                    final batch = FirebaseFirestore.instance.batch();
+                    batch.set(Cloud.eventDoc(providerId, eventId),
+                        {'activeSessionId': null}, SetOptions(merge: true));
+                    batch.set(
+                        Cloud.sessionDoc(
+                          EventIds(
+                            providerId: providerId,
+                            eventId: eventId,
+                            sessionId: session.id,
+                          ),
+                        ),
+                        {'endAt': Timestamp.fromDate(DateTime.now())},
+                        SetOptions(merge: true));
+                    batch.commit();
                     return;
                   case SessionAction.open:
-                    Cloud.eventDoc(providerId, eventId).update({
-                      'activeSessionId': session.id,
-                    });
+                    final batch = FirebaseFirestore.instance.batch();
+                    batch.set(
+                        Cloud.eventDoc(providerId, eventId),
+                        {'activeSessionId': session.id},
+                        SetOptions(merge: true));
+                    batch.set(
+                        Cloud.sessionDoc(
+                          EventIds(
+                            providerId: providerId,
+                            eventId: eventId,
+                            sessionId: session.id,
+                          ),
+                        ),
+                        {'endAt': null},
+                        SetOptions(merge: true));
+                    batch.commit();
+
                     return;
                   case SessionAction.delete:
                     final res = await ask(context,
