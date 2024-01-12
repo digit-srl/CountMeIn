@@ -193,8 +193,11 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                                         ),
                                       ),
                                     if (user.participationCount != null)
-                                      Text(
-                                          'Presenze ${user.participationCount}'),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left:8.0),
+                                        child: Text(
+                                            '[${user.participationCount} presenze]'),
+                                      ),
                                   ],
                                 ),
                                 // trailing: isOwner

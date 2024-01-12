@@ -32,6 +32,7 @@ export const scan = functions
         const data = request.body;
         const providerId = data.providerId;
         const lastSessionIdScanned = data.lastSessionIdScanned;
+        const participationCount = data.participationCount;
         const eventId = data.eventId;
         const requestId = data.requestId;
         const totemId = data.totemId;
@@ -219,6 +220,7 @@ export const scan = functions
           providerId: providerId,
           checkOutAt: firestore.Timestamp.fromDate(now),
           hasPrivateInfo: gender != null,
+          participationCount: participationCount,
         };
 
         batch.set(userSubEventDocRef, json);

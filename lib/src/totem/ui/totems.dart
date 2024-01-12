@@ -1,4 +1,5 @@
 import 'package:countmein/cloud.dart';
+import 'package:countmein/constants.dart';
 import 'package:countmein/src/admin/ui/widgets/generic_grid_view.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/totem/application/totems_notifier.dart';
@@ -74,7 +75,7 @@ class TotemsCardWidget extends ConsumerWidget {
                           child: const Text('Copia QR-Code'),
                           onTap: () {
                             final qr =
-                                'https://dev.wom.social/embedded/$providerId/$eventId/${totems[index].id}${totems[index].requestId != null ? '/${totems[index].requestId}' : ''}';
+                                '$totemBaseUrl/$providerId/$eventId/${totems[index].id}${totems[index].requestId != null ? '/${totems[index].requestId}' : ''}';
                             Clipboard.setData(ClipboardData(
                               text: qr,
                             ));

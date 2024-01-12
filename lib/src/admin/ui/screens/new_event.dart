@@ -323,6 +323,9 @@ class NewEventFormScreen extends HookConsumerWidget {
                 value: totemEnabled.value,
                 onChanged: accessType.value == EventAccessType.single
                     ? (v) {
+                        if (v) {
+                          releaseWom.value = true;
+                        }
                         totemEnabled.value = v;
                         totems.value = [
                           (TextEditingController(text: 'Totem 1'), false)
@@ -333,12 +336,11 @@ class NewEventFormScreen extends HookConsumerWidget {
             ],
           ),
           if (accessType.value == EventAccessType.inOut)
-            Text(
+            const Text(
               'I totem non possono essere aggiunti per eventi con accesso in/out',
               style: TextStyle(color: Colors.orange),
             ),
           if (totemEnabled.value) ...[
-            const SizedBox(height: 16),
             const SizedBox(height: 8),
             for (int i = 0; i < totems.value.length; i++)
               Padding(
@@ -370,11 +372,10 @@ class NewEventFormScreen extends HookConsumerWidget {
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('Statico'),
+                        const Text('Statico'),
                         Switch(
                           value: totems.value[i].$2,
                           onChanged: (value) {
-                            if (value == null) return;
                             final tmp = totems.value.toList();
                             final o = tmp.removeAt(i);
                             tmp.insert(i, (o.$1, value));
@@ -406,11 +407,18 @@ class NewEventFormScreen extends HookConsumerWidget {
               Text('WOM', style: titleStyle),
               Switch(
                   value: releaseWom.value,
-                  onChanged: (v) {
-                    releaseWom.value = v;
-                  }),
+                  onChanged: totemEnabled.value
+                      ? null
+                      : (v) {
+                          releaseWom.value = v;
+                        }),
             ],
           ),
+          if (totemEnabled.value)
+            const Text(
+              'I WOM sono obbligatori con i totem',
+              style: TextStyle(color: Colors.orange),
+            ),
           if (releaseWom.value) ...[
             const SizedBox(height: 16),
             Row(
@@ -531,7 +539,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                       for (int i = 0; i < totems.value.length; i++) {
                         final tmp = EmbeddedData(
                           name: totems.value[i].$1.text.trim(),
-                          id: Uuid().v4(),
+                          id: const Uuid().v4(),
                           isStatic: totems.value[i].$2,
                           requestId: totems.value[i].$2 ? null : 'abcded',
                           position: position,

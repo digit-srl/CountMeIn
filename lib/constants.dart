@@ -22,3 +22,5 @@ const verifyEmailUrl = '$functionBaseUrl/userSignUp-verifyEmail';
 const sendResetPasswordUrl = '$functionBaseUrl/userSignUp-sendResetPasswordEmail';
 const confirmPendingInviteUrl = '$functionBaseUrl/managers-confirmPendingInvite';
 const changePasswordUrl = '$functionBaseUrl/userSignUp-changePassword';
+
+const totemBaseUrl = 'https://link.wom.social/cmi';
