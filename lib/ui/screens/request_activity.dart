@@ -335,6 +335,7 @@ class _WomIntegrationPanelState extends ConsumerState<WomIntegrationPanel> {
     final womPasswordController = ref.watch(womPasswordControllerProvider);
     final instrumentUser = useState<InstrumentUser?>(null);
     final loading = useState<bool>(false);
+    final instruments = useState<List<Instrument>>([]);
     final selectedInstrument = ref.watch(selectedInstrumentProvider);
 
     return CMICard(
@@ -360,18 +361,19 @@ class _WomIntegrationPanelState extends ConsumerState<WomIntegrationPanel> {
           const Text(
               'Se sei già proprietario di un Instrument puoi collegare le due piattaforme'),
           if (womIntegration)
-            if (loading.value)
-              SizedBox(
+            if (loading.value) ...[
+              const SizedBox(
                 width: 200,
                 height: 200,
                 child: Center(
                   child: CircularProgressIndicator(),
                 ),
-              )
-            else if (instrumentUser.value != null) ...[
+              ),
+              TextButton(onPressed: () {}, child: Text('Annulla')),
+            ] else if (instrumentUser.value != null) ...[
               const SizedBox(height: 16),
               InputDecorator(
-                decoration: InputDecoration(),
+                decoration: const InputDecoration(),
                 child: DropdownButton<Instrument>(
                   isDense: true,
                   isExpanded: true,
@@ -400,7 +402,13 @@ class _WomIntegrationPanelState extends ConsumerState<WomIntegrationPanel> {
                           Tooltip(message: e, child: Chip(label: Text(e))))
                       .toList(),
                 ),
-              ]
+              ],
+              TextButton(
+                  onPressed: () {
+                      instrumentUser.value = null;
+                      ref.read(selectedInstrumentProvider.notifier).state = null;
+                  },
+                  child: Text('Reset'))
             ] else ...[
               MUTextField(
                 controller: womEmailController,
@@ -427,16 +435,12 @@ class _WomIntegrationPanelState extends ConsumerState<WomIntegrationPanel> {
                     domain: womDomain,
                   );
 
+                  final user = await InstrumentClient.getUser(
+                      authResponse.token, womDomain);
 
-                  // final instrument = await InstrumentClient.authenticate(
-                  //     'alessandro.bogliolo@uniurb.it',
-                  //     'D1GIT!',
-                  //     'dev.wom.social');
+                  logger.i(user.instruments.first);
+                  instrumentUser.value = user;
                   loading.value = false;
-                  // logger.i(instrument);
-                  // setState(() {
-                  //   instrumentUser.value = instrument;
-                  // });
                 },
               ),
             ],
