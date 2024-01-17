@@ -478,15 +478,14 @@ class NewEventFormScreen extends HookConsumerWidget {
                         : 1;
 
                     final sessionStartAt = startAt.value.midnightUTC;
-                    final end = sessionStartAt.add(const Duration(days: 1));
+                    // final end = sessionStartAt.add(const Duration(days: 1));
 
                     // Data di fine prima sessione
-                    final sessionEndAt = end.add(
-                      Duration(
-                          days: isRecurring
-                              ? selectedFrequency.value.multiplier
-                              : 1),
-                    );
+                    final sessionEndAt = isRecurring
+                        ? sessionStartAt.add(
+                            Duration(days: selectedFrequency.value.multiplier),
+                          )
+                        : null;
 
                     final position = latController.text.trim().isNotEmpty &&
                             longController.text.trim().isNotEmpty
