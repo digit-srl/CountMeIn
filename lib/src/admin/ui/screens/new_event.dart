@@ -328,7 +328,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                         }
                         totemEnabled.value = v;
                         totems.value = [
-                          (TextEditingController(text: 'Totem 1'), false)
+                          (TextEditingController(text: 'Totem 1'), true)
                         ];
                       }
                     : null,
@@ -395,7 +395,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                     (
                       TextEditingController(
                           text: 'Totem ${totems.value.length + 1}'),
-                      false
+                      true
                     )
                   ];
                 },
