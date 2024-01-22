@@ -32,7 +32,7 @@ export const scan = functions
         const data = request.body;
         const providerId = data.providerId;
         const lastSessionIdScanned = data.lastSessionIdScanned;
-        const participationCount = data.participationCount;
+        const participationCount = data.participationCount ?? 0;
         const eventId = data.eventId;
         const requestId = data.requestId;
         const totemId = data.totemId;
@@ -261,9 +261,10 @@ export const scan = functions
         // generate wom
         const providerDoc: FirebaseFirestore.DocumentData =
           await providerDocRef(providerId).get();
+        const providerData = providerDoc.data();
 
-        const apiKey = providerDoc.data().apiKey;
-        const aim = providerDoc.data().aim;
+        const apiKey = providerData.apiKey;
+        const aim = eventData.aim ?? providerData.aim;
         const wom = await generateWom(
           apiKey,
           eventData.maxWomCount,
@@ -276,6 +277,7 @@ export const scan = functions
           status: "success",
           link: wom.link,
           pin: wom.pin,
+          aim: aim,
           sessionId: sessionId,
         });
       });
