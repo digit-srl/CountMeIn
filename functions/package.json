@@ -11,21 +11,24 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "16"
+    "node": "20"
   },
   "main": "lib/index.js",
   "dependencies": {
-    "axios": "^1.4.0",
+    "audit": "^0.0.6",
+    "axios": "^1.6.5",
     "body-parser": "^1.20.0",
-    "canvas": "2.11.0",
+    "canvas": "2.11.2",
     "circle-to-polygon": "^2.2.0",
     "codice-fiscale-js": "^2.3.20",
     "dotenv": "^16.0.1",
     "firebase-admin": "^11.5.0",
     "firebase-functions": "^4.4.1",
+    "fix": "^0.0.6",
     "form-data": "^4.0.0",
     "jsbarcode": "^3.11.5",
     "mailgun.js": "^7.0.2",
+    "npm": "^10.3.0",
     "qrcode": "1.4.2",
     "randomstring": "^1.2.2"
   },
