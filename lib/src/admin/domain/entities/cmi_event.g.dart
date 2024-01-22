@@ -23,6 +23,7 @@ _$CMIEventImpl _$$CMIEventImplFromJson(Map<String, dynamic> json) =>
           ? null
           : GenderCount.fromJson(json['genderCount'] as Map<String, dynamic>),
       activeSessionId: json['activeSessionId'] as String?,
+      aim: json['aim'] as String?,
       accessType: $enumDecode(_$EventAccessTypeEnumMap, json['accessType']),
       maxWomCount: json['maxWomCount'] as int,
       status: _$JsonConverterFromJson<String, EventStatus>(
@@ -56,6 +57,7 @@ Map<String, dynamic> _$$CMIEventImplToJson(_$CMIEventImpl instance) =>
       'totalUsers': instance.totalUsers,
       'genderCount': instance.genderCount,
       'activeSessionId': instance.activeSessionId,
+      'aim': instance.aim,
       'accessType': _$EventAccessTypeEnumMap[instance.accessType]!,
       'maxWomCount': instance.maxWomCount,
       'status': _$JsonConverterToJson<String, EventStatus>(

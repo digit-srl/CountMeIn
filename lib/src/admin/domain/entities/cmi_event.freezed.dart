@@ -33,6 +33,7 @@ mixin _$CMIEvent {
   num? get totalUsers => throw _privateConstructorUsedError;
   GenderCount? get genderCount => throw _privateConstructorUsedError;
   String? get activeSessionId => throw _privateConstructorUsedError;
+  String? get aim => throw _privateConstructorUsedError;
   @EventAccessTypeConverter()
   EventAccessType get accessType => throw _privateConstructorUsedError;
   int get maxWomCount => throw _privateConstructorUsedError;
@@ -75,6 +76,7 @@ abstract class $CMIEventCopyWith<$Res> {
       num? totalUsers,
       GenderCount? genderCount,
       String? activeSessionId,
+      String? aim,
       @EventAccessTypeConverter() EventAccessType accessType,
       int maxWomCount,
       @EventStatusConverter() EventStatus? status,
@@ -113,6 +115,7 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
     Object? totalUsers = freezed,
     Object? genderCount = freezed,
     Object? activeSessionId = freezed,
+    Object? aim = freezed,
     Object? accessType = null,
     Object? maxWomCount = null,
     Object? status = freezed,
@@ -171,6 +174,10 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
       activeSessionId: freezed == activeSessionId
           ? _value.activeSessionId
           : activeSessionId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      aim: freezed == aim
+          ? _value.aim
+          : aim // ignore: cast_nullable_to_non_nullable
               as String?,
       accessType: null == accessType
           ? _value.accessType
@@ -245,6 +252,7 @@ abstract class _$$CMIEventImplCopyWith<$Res>
       num? totalUsers,
       GenderCount? genderCount,
       String? activeSessionId,
+      String? aim,
       @EventAccessTypeConverter() EventAccessType accessType,
       int maxWomCount,
       @EventStatusConverter() EventStatus? status,
@@ -282,6 +290,7 @@ class __$$CMIEventImplCopyWithImpl<$Res>
     Object? totalUsers = freezed,
     Object? genderCount = freezed,
     Object? activeSessionId = freezed,
+    Object? aim = freezed,
     Object? accessType = null,
     Object? maxWomCount = null,
     Object? status = freezed,
@@ -341,6 +350,10 @@ class __$$CMIEventImplCopyWithImpl<$Res>
           ? _value.activeSessionId
           : activeSessionId // ignore: cast_nullable_to_non_nullable
               as String?,
+      aim: freezed == aim
+          ? _value.aim
+          : aim // ignore: cast_nullable_to_non_nullable
+              as String?,
       accessType: null == accessType
           ? _value.accessType
           : accessType // ignore: cast_nullable_to_non_nullable
@@ -397,6 +410,7 @@ class _$CMIEventImpl implements _CMIEvent {
       this.totalUsers = 0,
       this.genderCount,
       this.activeSessionId,
+      this.aim,
       @EventAccessTypeConverter() required this.accessType,
       required this.maxWomCount,
       @EventStatusConverter() this.status,
@@ -442,6 +456,8 @@ class _$CMIEventImpl implements _CMIEvent {
   @override
   final String? activeSessionId;
   @override
+  final String? aim;
+  @override
   @EventAccessTypeConverter()
   final EventAccessType accessType;
   @override
@@ -471,7 +487,7 @@ class _$CMIEventImpl implements _CMIEvent {
 
   @override
   String toString() {
-    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, activeSessionId: $activeSessionId, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, type: $type, acceptedCardType: $acceptedCardType, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt, position: $position)';
+    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, activeSessionId: $activeSessionId, aim: $aim, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, type: $type, acceptedCardType: $acceptedCardType, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt, position: $position)';
   }
 
   @override
@@ -501,6 +517,7 @@ class _$CMIEventImpl implements _CMIEvent {
                 other.genderCount == genderCount) &&
             (identical(other.activeSessionId, activeSessionId) ||
                 other.activeSessionId == activeSessionId) &&
+            (identical(other.aim, aim) || other.aim == aim) &&
             (identical(other.accessType, accessType) ||
                 other.accessType == accessType) &&
             (identical(other.maxWomCount, maxWomCount) ||
@@ -534,6 +551,7 @@ class _$CMIEventImpl implements _CMIEvent {
         totalUsers,
         genderCount,
         activeSessionId,
+        aim,
         accessType,
         maxWomCount,
         status,
@@ -573,6 +591,7 @@ abstract class _CMIEvent implements CMIEvent {
       final num? totalUsers,
       final GenderCount? genderCount,
       final String? activeSessionId,
+      final String? aim,
       @EventAccessTypeConverter() required final EventAccessType accessType,
       required final int maxWomCount,
       @EventStatusConverter() final EventStatus? status,
@@ -611,6 +630,8 @@ abstract class _CMIEvent implements CMIEvent {
   GenderCount? get genderCount;
   @override
   String? get activeSessionId;
+  @override
+  String? get aim;
   @override
   @EventAccessTypeConverter()
   EventAccessType get accessType;

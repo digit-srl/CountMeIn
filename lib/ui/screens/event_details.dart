@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:countmein/cloud.dart';
+import 'package:countmein/src/admin/application/aim_notifier.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/application/scan_notifier.dart';
@@ -17,6 +18,7 @@ import 'package:countmein/src/totem/ui/totems.dart';
 import 'package:countmein/ui/widgets/cmi_chip.dart';
 import 'package:countmein/ui/widgets/my_text_field.dart';
 import 'package:countmein/utils.dart';
+import 'package:dart_wom_connector/dart_wom_connector.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -26,7 +28,7 @@ import 'package:countmein/ui/screens/scan.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
-
+import 'package:collection/collection.dart';
 import '../../domain/entities/cmi_provider.dart';
 import '../../domain/entities/event_ids.dart';
 import '../../src/admin/ui/widgets/generic_grid_view.dart';
@@ -188,9 +190,28 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                     value: eventData?.id,
                     copyable: true,
                   ),
-                  InfoText(
-                    label: 'WOM',
-                    value: eventData?.maxWomCount.toString(),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: InfoText(
+                          label: 'WOM',
+                          value: eventData?.maxWomCount.toString(),
+                        ),
+                      ),
+                      Flexible(
+                        child: Consumer(builder: (context, ref, child) {
+                          final aims =
+                              ref.watch(getAimsProvider).valueOrNull ?? [];
+                          final aim = aims.firstWhereOrNull((Aim a) =>
+                              a.code == (eventData?.aim ?? provider?.aim));
+                          return InfoText(
+                            label: 'AIM',
+                            value:
+                                aim?.title(languageCode: 'it'),
+                          );
+                        }),
+                      ),
+                    ],
                   ),
                   Row(
                     children: [

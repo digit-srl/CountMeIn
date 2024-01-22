@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/my_logger.dart';
+import 'package:dart_wom_connector/dart_wom_connector.dart';
+import 'package:countmein/src/admin/application/aim_notifier.dart';
+import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/common/ui/cmi_date_picker.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_dropdown.dart';
@@ -15,7 +18,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:countmein/cloud.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:uuid/uuid.dart';
-
+import 'package:collection/collection.dart';
 import '../../../../ui/validators.dart';
 import 'package:intl/intl.dart';
 
@@ -58,7 +61,8 @@ class NewEventFormScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final durationController = useTextEditingController();
+    final provider =
+        ref.watch(singleCMIProviderProvider(providerId)).valueOrNull;
     final repsController = useTextEditingController(text: "2");
     final latController = useTextEditingController();
     final longController = useTextEditingController();
@@ -78,6 +82,8 @@ class NewEventFormScreen extends HookConsumerWidget {
     final acceptPassepartout = ref.watch(acceptPassepartoutProvider);
     final selectedFrequency = useState<FrequencyType>(FrequencyType.daily);
     final titleStyle = Theme.of(context).textTheme.headline6;
+    final selectedAim = useState<String?>(null);
+    final aims = ref.watch(getAimsProvider)?.valueOrNull;
 
     final form = Form(
       key: _formKey,
@@ -271,13 +277,6 @@ class NewEventFormScreen extends HookConsumerWidget {
           const SizedBox(height: 16),
           Text('Posizione Evento', style: titleStyle),
           const SizedBox(height: 8),
-          // if (totemEnabled.value) ...[
-          //   const Text(
-          //     'Posizione obbligatoria con totem attivi',
-          //     style: TextStyle(color: Colors.orange),
-          //   ),
-          //   const SizedBox(height: 8),
-          // ],
           Row(
             children: [
               Flexible(
@@ -423,26 +422,6 @@ class NewEventFormScreen extends HookConsumerWidget {
             const SizedBox(height: 16),
             Row(
               children: [
-                /* Flexible(
-                            flex: 1,
-                            child: CMIDropdownButton<WomReleaseType>(
-                              value: releaseType.value,
-                              onChanged: (t) {
-                                if (t == null) return;
-                                releaseType.value = t;
-                              },
-                              items: WomReleaseType.values
-                                  .map(
-                                    (e) => DropdownMenuItem<WomReleaseType>(
-                                      value: e,
-                                      child: Text(enumToString(e)),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                          ),*/
-                // if (releaseType.value == WomReleaseType.fixed) ...[
-                //   const SizedBox(width: 8),
                 Flexible(
                   child: CMITextField(
                     controller: womController,
@@ -453,7 +432,26 @@ class NewEventFormScreen extends HookConsumerWidget {
                     validator: womValidator,
                   ),
                 ),
-                // ]
+                if (provider?.aims != null && provider!.aims!.isNotEmpty) ...[
+                  const SizedBox(width: 16),
+                  Flexible(
+                    child: CMIDropdownButton<String>(
+                      label: 'Seleziona l\'AIM',
+                      value: selectedAim.value,
+                      items: provider.aims!
+                          .map((e) => DropdownMenuItem<String>(
+                              value: e,
+                              child: Text(aims
+                                      ?.firstWhereOrNull((a) => a.code == e)
+                                      ?.title(languageCode: 'it') ??
+                                  e)))
+                          .toList(),
+                      onChanged: (item) {
+                        selectedAim.value = item;
+                      },
+                    ),
+                  ),
+                ],
               ],
             ),
           ],
@@ -525,6 +523,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                       startAt: sessionStartAt,
                       acceptedCardType: acceptedCardType.value,
                       position: position,
+                      aim: selectedAim.value,
                     );
 
                     final session = CMISubEvent(

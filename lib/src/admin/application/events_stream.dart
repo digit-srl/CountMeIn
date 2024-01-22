@@ -22,7 +22,7 @@ final eventsStreamProvider =
             ?.managers ??
         {};
     if (isCMIAdmin || pManagers.containsKey(user.uid)) {
-      final stream = Cloud.eventsCollection(providerId).snapshots();
+      final stream = Cloud.eventsCollection(providerId).orderBy('name').snapshots();
 
       await for (final snap in stream) {
         logger.i('${snap.docs.length} eventi trovati');
