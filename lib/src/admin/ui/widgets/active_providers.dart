@@ -7,7 +7,7 @@ import '../../application/providers_stream.dart';
 import '../screens/admin_providers.dart';
 
 class ActiveProviders extends ConsumerWidget {
-  const ActiveProviders({Key? key}) : super(key: key);
+  const ActiveProviders({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

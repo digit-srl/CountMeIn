@@ -5,9 +5,12 @@ import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/domain/entities/user_card.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
+import 'package:countmein/src/admin/application/session_notifier.dart';
 import 'package:countmein/src/admin/application/users_stream.dart';
+import 'package:countmein/src/admin/csv_mixin.dart';
 import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/admin/ui/widgets/gender_card.dart';
+import 'package:countmein/src/admin/ui/widgets/user_list_widget.dart';
 import 'package:countmein/ui/screens/admin_user_details.dart';
 import 'package:countmein/ui/widgets/loading.dart';
 import 'package:csv/csv.dart';
@@ -31,20 +34,21 @@ class EventUsersScreen extends StatefulHookConsumerWidget {
 
   final String eventId;
   final String providerId;
-  final String? subEventId;
+  final String? sessionId;
 
   const EventUsersScreen({
-    Key? key,
+    super.key,
     required this.eventId,
     required this.providerId,
-    this.subEventId,
-  }) : super(key: key);
+    this.sessionId,
+  });
 
   @override
   ConsumerState<EventUsersScreen> createState() => _EventUsersScreenState();
 }
 
-class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
+class _EventUsersScreenState extends ConsumerState<EventUsersScreen>
+    with CSVMixin {
   late EventIds ids;
 
   late DateFormat dateFormat;
@@ -56,7 +60,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
     ids = EventIds(
       providerId: widget.providerId,
       eventId: widget.eventId,
-      sessionId: widget.subEventId,
+      sessionId: widget.sessionId,
     );
   }
 
@@ -66,7 +70,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
     final eventState = ref.watch(eventProvider(ids));
     final usersState = ref.watch(eventUsersStreamProvider(ids));
     final subEvent =
-        ids.sessionId == null ? null : ref.watch(subEventProvider(ids)).value;
+        ids.sessionId == null ? null : ref.watch(getSessionProvider(ids)).value;
     // final role = ref.watch(userRoleProvider(widget.providerId));
     // final isOwner = role == UserRole.admin;
     final hasData = usersState is AsyncData;
@@ -86,136 +90,10 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            // if ((eventOrSessionClosed ?? false) &&
-            //     genderCount != null &&
-            //     genderCount.total > 3)
-            if (genderCount != null) GenderCard(genderCount: genderCount),
-            const SizedBox(height: 8),
-            Text(
-              'Utenti',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            const SizedBox(height: 16),
-            usersState.when(
-              data: (list) {
-                return list.isEmpty
-                    ? const Center(
-                        child: Text(
-                          'Non ci sono utenti per questo evento',
-                        ),
-                      )
-                    : anonymous
-                        ? Text(list.length == 1
-                            ? 'C\'è un iscritto'
-                            : 'Ci sono ${list.length} iscritti')
-                        : ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: list.length,
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 48),
-                            itemBuilder: (c, index) {
-                              final user = list[index];
-                              return ListTile(
-                                onTap: () {
-                                  context.push(UserDetailsScreen.routeName,
-                                      extra: user);
-                                },
-                                title: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      user.isGroup
-                                          ? user.groupName ?? 'Gruppo'
-                                          : anonymous
-                                              ? user.id
-                                              : user.fullName,
-                                    ),
-                                    if (user.isGroup)
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 16.0),
-                                        child: Chip(
-                                          label: Text(
-                                            'GROUP',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .caption,
-                                          ),
-                                          backgroundColor: Colors.green,
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 0,
-                                            vertical: 0,
-                                          ),
-                                          labelPadding:
-                                              const EdgeInsets.symmetric(
-                                            horizontal: 4,
-                                            vertical: 0,
-                                          ),
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                                subtitle: user.isGroup
-                                    ? Text(
-                                        '${user.groupCount} persone',
-                                        style:
-                                            Theme.of(context).textTheme.caption,
-                                      )
-                                    : anonymous
-                                        ? null
-                                        : Text(
-                                            user.cf ?? '-',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .caption,
-                                          ),
-                                leading: Text('${index + 1}'),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    if (user.checkInAt != null)
-                                      Tooltip(
-                                        message:
-                                            dateFormat.format(user.checkInAt!),
-                                        child: const Icon(
-                                          Icons.arrow_circle_down,
-                                          color: Colors.green,
-                                        ),
-                                      ),
-                                    const SizedBox(width: 16),
-                                    if (user.checkOutAt != null)
-                                      Tooltip(
-                                        message:
-                                            dateFormat.format(user.checkOutAt!),
-                                        child: const Icon(
-                                          Icons.arrow_circle_up,
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                    if (user.participationCount != null)
-                                      Padding(
-                                        padding: const EdgeInsets.only(left:8.0),
-                                        child: Text(
-                                            '[${user.participationCount} presenze]'),
-                                      ),
-                                  ],
-                                ),
-                                // trailing: isOwner
-                                //     ? IconButton(
-                                //         icon: const Icon(Icons.delete),
-                                //         color: Colors.red,
-                                //         onPressed: () {
-                                //           _deleteUser(user.id, user.fullName);
-                                //         })
-                                //     : null,
-                              );
-                            },
-                          );
-              },
-              error: (err, stack) {
-                return Center(child: Text(err.toString()));
-              },
-              loading: () => const Center(child: LoadingWidget()),
+            UsersListWidget(
+              anonymous: anonymous,
+              genderCount: genderCount,
+              usersState: usersState,
             ),
           ],
         ),
@@ -228,56 +106,10 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
                   return FloatingActionButton(
                     child: const Icon(Icons.import_export),
                     onPressed: () async {
-                      // final activity = eventState.asData!.value;
-                      // final event = activity.copyWith(id: Uuid().v4());
-                      // await Cloud.activitiesCollection.doc(activity.id)
-                      // .collection('events')
-                      //     .doc(event.id)
-                      //     .set(event.toJson());
-                      // final batch = FirebaseFirestore.instance.batch();
-                      // for (final user in list) {
-                      //   batch.set(
-                      //       Cloud.activitiesCollection
-                      //           .doc(activity.id)
-                      //           .collection('events')
-                      //           .doc('47969dfe-038c-406a-8bf6-a9cec914391d')
-                      //           .collection('users')
-                      //           .doc(user.id),
-                      //       user.toJson());
-                      // }
-                      // batch.commit();
-                      // return;
                       if (hasData) {
                         isLoading.value = true;
                         try {
-                          final list = (usersState as AsyncData).value;
-                          final fileName =
-                              eventState.asData?.value.name ?? 'event_csv';
-                          if (kIsWeb) {
-                            final bytes = getCsvBytes(list,
-                                eventState.asData?.value.name ?? 'event_csv');
-                            final path = await FileSaver.instance.saveFile(
-                                name: fileName,
-                                bytes: bytes,
-                                mimeType: MimeType.csv,
-                                ext: 'csv');
-                            logger.i(path);
-                          } else {
-                            final file = await getCsv(list,
-                                eventState.asData?.value.name ?? 'event_csv');
-                            if (file != null) {
-                              if (Platform.isMacOS) {
-                                final path = await FileSaver.instance.saveFile(
-                                    name: fileName,
-                                    file: file,
-                                    mimeType: MimeType.csv,
-                                    ext: 'csv');
-                              } else {
-                                Share.shareFiles([file.path]);
-                              }
-                            }
-                          }
-
+                          await downloadCSV(eventState.valueOrNull, list);
                           isLoading.value = false;
                         } catch (ex) {
                           isLoading.value = false;
@@ -336,49 +168,6 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen> {
               EventIds(providerId: widget.providerId, eventId: widget.eventId))
           .doc(userId)
           .delete();
-    }
-  }
-
-  String _buildCsv(List<EventUser> users) {
-    final data = users.map((e) => e.toCsvList()).toList();
-    final csv = const ListToCsvConverter().convert([
-      ['Id', 'Name', 'Surname', 'CF'],
-      ...data
-    ]);
-    return csv;
-  }
-
-  Uint8List getCsvBytes(List<EventUser> users, String eventName) {
-    final csv = _buildCsv(users);
-    final bytes = Uint8List.fromList(utf8.encode(csv));
-    return bytes;
-  }
-
-  Future<File?> getCsv(List<EventUser> users, String eventName) async {
-    try {
-      final filename = eventName.replaceAll(' ', '_').toLowerCase();
-      final csv = _buildCsv(users);
-
-      if (kIsWeb) {
-        return null;
-      } else {
-        final statuses = await [
-          Permission.storage,
-        ].request();
-        if (await Permission.storage.request().isGranted) {
-          final dir =
-              "${(await getExternalStorageDirectory())!.path}/$filename.csv";
-
-          final f = File(dir);
-
-          await f.writeAsString(csv);
-          return f;
-        }
-        return null;
-      }
-    } catch (ex) {
-      logger.e(ex);
-      return null;
     }
   }
 }

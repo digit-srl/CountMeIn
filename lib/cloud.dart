@@ -12,12 +12,22 @@ class Cloud {
           String providerId) =>
       providerDoc(providerId).collection('events');
 
+  static CollectionReference<Map<String, dynamic>> providerTotemCollection(
+    String providerId,
+  ) =>
+      providerDoc(providerId).collection('totems');
+
+  static DocumentReference<Map<String, dynamic>> providerTotemDoc(
+    String providerId,
+    String totemId,
+  ) =>
+      providerTotemCollection(providerId).doc(totemId);
+
   static CollectionReference<Map<String, dynamic>> totemCollection(
     String providerId,
     String eventId,
   ) =>
-      eventDoc( providerId, eventId)
-          .collection('totems');
+      eventDoc(providerId, eventId).collection('totems');
 
   static DocumentReference<Map<String, dynamic>> totemDoc(
     String providerId,

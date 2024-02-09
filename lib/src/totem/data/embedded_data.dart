@@ -13,6 +13,8 @@ class EmbeddedData with _$EmbeddedData {
     required String name,
     required String id,
     String? requestId,
+    String? eventId,
+    String? sessionId,
     required int radius,
     @Default(false) bool isStatic,
     @Default(0) int count,

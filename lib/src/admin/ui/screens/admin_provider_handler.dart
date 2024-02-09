@@ -1,12 +1,15 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
+import 'package:countmein/src/admin/ui/screens/admin_archived_events.dart';
 import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
 import 'package:countmein/src/admin/ui/screens/admin_providers.dart';
 import 'package:countmein/src/admin/ui/screens/new_event.dart';
 import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
+import 'package:countmein/src/admin/ui/widgets/provider_totems.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
@@ -16,7 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../cloud.dart';
-import '../../../../ui/screens/event_details.dart';
+import 'event_details.dart';
 import '../widgets/generic_grid_view.dart';
 import '../widgets/info_text.dart';
 import 'managers.dart';
@@ -28,10 +31,10 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
   final CMIProvider? extraProvider;
 
   const AdminProviderHandlerScreen({
-    Key? key,
+    super.key,
     this.extraProvider,
     required this.providerId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,6 +64,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
               value: provider?.name,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [
                 InfoText(
@@ -92,6 +96,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                         value: provider?.aims?.join('-'),
                       ),
                     ),
+                     const SizedBox(width: 32),
                     Flexible(
                       child: InfoText(
                         label: 'AIM',
@@ -136,23 +141,20 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                     value: Wrap(
                       children: [
                         if (provider?.managers != null)
-                          ...provider!.managers.values
-                              .map(
-                                (e) => Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Tooltip(
-                                    message: e.email,
-                                    child: Chip(
-                                      label: Text(
-                                        e.name,
-                                        style:
-                                            Theme.of(context).textTheme.caption,
-                                      ),
-                                    ),
+                          ...provider!.managers.values.map(
+                            (e) => Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Tooltip(
+                                message: e.email,
+                                child: Chip(
+                                  label: Text(
+                                    e.name,
+                                    style: Theme.of(context).textTheme.caption,
                                   ),
                                 ),
-                              )
-                              .toList(),
+                              ),
+                            ),
+                          ),
                       ],
                     )),
                 if (provider?.status == CMIProviderStatus.pending &&
@@ -169,6 +171,44 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
+          Text('Totems'),
+          ProviderTotemsWidget(providerId: providerId,),
+          const SizedBox(height: 16),
+          Text('Eventi'),
+          CMICard(
+            child: Consumer(builder: (context, ref, child) {
+              final eventFilter = ref.watch(eventFilterNotifierProvider);
+              return Row(
+                children: [
+                  const Text('Sort by'),
+                  ...EventFilter.values.map(
+                    (e) => RadioMenuButton<EventFilter>(
+                      value: e,
+                      groupValue: eventFilter,
+                      onChanged: ref
+                          .read(eventFilterNotifierProvider.notifier)
+                          .onChanged,
+                      child: Text(e.name),
+                    ),
+                  ),
+                  const Spacer(),
+                  Tooltip(
+                    message: 'Archiviati',
+                    child: IconButton(
+                        icon: const Icon(Icons.archive),
+                        color: Colors.white,
+                        onPressed: () {
+                          final path =
+                              '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${provider!.id}/${ArchivedEventsScreen.routeName}';
+                          context.go(path, extra: provider);
+                        }),
+                  ),
+                ],
+              );
+            }),
+          ),
+
+          const SizedBox(height: 16),
           if (provider?.status == CMIProviderStatus.live &&
               eventsState is AsyncData<List<CMIEvent>>)
             GenericGridViewBuilder(
@@ -184,13 +224,11 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                             final path =
                                 '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/$providerId/${NewEventFormScreen.routeName}';
                             context.go(path, extra: provider);
-                            // context.push(
-                            //   '${NewEventFormScreen.routeName}/${provider.id}',
-                            // );
                           }
                         : null,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const Icon(
                           Icons.add,
@@ -198,14 +236,17 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                         ),
                         Text(
                           'Crea nuovo evento',
+                          textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
-                        Text(
-                          'Sei uno scanner quindi non puoi creare un nuovo evento',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        )
+                        if (userRole == UserRole.scanner)
+                          const Text(
+                            'Sei uno scanner quindi non puoi creare un nuovo evento',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          )
                       ],
                     ),
                   );
@@ -213,8 +254,14 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                 final event = eventsState.asData!.value[index - 1];
                 return CMICard(
                   center: true,
-                  leading:
-                      event.isActive ? const CMIChip(text: 'ATTIVO') : null,
+                  leading: event.isActive
+                      ? const CMIChip(text: 'ATTIVO')
+                      : event.isClosed
+                          ? const CMIChip(
+                              text: 'Terminato',
+                              color: Colors.red,
+                            )
+                          : null,
                   onTap: () {
                     final path =
                         '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/$providerId/${EventDetailsScreen.routeName}/${event.id}';

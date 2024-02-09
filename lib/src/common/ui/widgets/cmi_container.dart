@@ -17,7 +17,7 @@ class CMICard extends StatefulWidget {
   final Widget? leading;
 
   const CMICard({
-    Key? key,
+    super.key,
     required this.child,
     this.iconBadge,
     this.onTap,
@@ -30,7 +30,7 @@ class CMICard extends StatefulWidget {
     this.trailing,
     this.leading,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   State<CMICard> createState() => _CMICardState();
@@ -48,27 +48,19 @@ class _CMICardState extends State<CMICard> {
   @override
   Widget build(BuildContext context) {
     final child2 = Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      // mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (widget.trailing != null || widget.leading != null)
-          Row(
-            children: [
-              if (widget.leading != null) widget.leading!,
-              const Spacer(),
-              if (widget.trailing != null) widget.trailing!
-              /*else if (widget.collapsedWidget != null)
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      opened = !opened;
-                    });
-                  },
-                  icon: Icon(opened
-                      ? Icons.keyboard_arrow_up
-                      : Icons.keyboard_arrow_down),
-                ),*/
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical:4.0),
+            child: Row(
+              children: [
+                if (widget.leading != null) widget.leading!,
+                const Spacer(),
+                if (widget.trailing != null) widget.trailing!
+              ],
+            ),
           ),
         Stack(
           children: [

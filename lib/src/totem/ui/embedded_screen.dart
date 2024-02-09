@@ -16,12 +16,12 @@ class EmbeddedScreen extends ConsumerWidget {
   final String providerId;
 
   const EmbeddedScreen({
-    Key? key,
+    super.key,
     required this.totemId,
     required this.eventId,
     required this.sessionId,
     required this.providerId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,27 +32,28 @@ class EmbeddedScreen extends ConsumerWidget {
     return Scaffold(
       body: Center(
         child: state.when(
-            data: (data) => Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Scansioni: ${data.count}'),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      width: width,
-                      height: width,
-                      child: QrImageView(
-                        backgroundColor: Colors.white,
-                        padding: const EdgeInsets.all(16),
-                        data:
-                            'https://link.wom.social/cmi/$providerId/$eventId/$totemId${data.requestId != null ? '/${data.requestId}' : ''}',
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text('aggiornato il ${dateFormat.format(data.updatedOn)}'),
-                  ],
+          data: (data) => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Scansioni: ${data.count}'),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: width,
+                height: width,
+                child: QrImageView(
+                  backgroundColor: Colors.white,
+                  padding: const EdgeInsets.all(16),
+                  data:
+                      'https://link.wom.social/cmi/$providerId/$eventId/$totemId${data.requestId != null ? '/${data.requestId}' : ''}',
                 ),
-            error: (e, s) => Text(e.toString()),
-            loading: () => const CircularProgressIndicator()),
+              ),
+              const SizedBox(height: 16),
+              Text('aggiornato il ${dateFormat.format(data.updatedOn)}'),
+            ],
+          ),
+          error: (e, s) => Text(e.toString()),
+          loading: () => const CircularProgressIndicator(),
+        ),
       ),
     );
   }

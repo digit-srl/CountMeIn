@@ -19,7 +19,7 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
 
   final InviteRequest request;
 
-  InviteFormConfirmScreen({Key? key, required this.request}) : super(key: key);
+  InviteFormConfirmScreen({super.key, required this.request});
 
   final _formKey = GlobalKey<FormState>();
 

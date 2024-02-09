@@ -1,5 +1,4 @@
 import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -10,8 +9,7 @@ class AdminAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
   final bool goToHome;
 
-  const AdminAppBar({Key? key, required this.title, this.goToHome = true})
-      : super(key: key);
+  const AdminAppBar({super.key, required this.title, this.goToHome = true});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,17 +17,18 @@ class AdminAppBar extends ConsumerWidget implements PreferredSizeWidget {
       title: Text(title),
       actions: [
         // if (kIsWeb && goToHome)
-          IconButton(
-              icon: const Icon(Icons.home),
-              onPressed: () {
-                context.go(AdminDashboardScreen.path);
-              }),
+        IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () {
+              context.go(AdminDashboardScreen.path);
+            }),
         TextButton(
-            onPressed: () async {
-              await ref.read(signInNotifierProvider.notifier).signOut();
-              // context.push();
-            },
-            child: const Text('Logout'))
+          onPressed: () async {
+            await ref.read(signInNotifierProvider.notifier).signOut();
+            // context.push();
+          },
+          child: const Text('Logout'),
+        )
       ],
     );
   }

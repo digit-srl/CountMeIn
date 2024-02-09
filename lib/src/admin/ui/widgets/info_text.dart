@@ -7,20 +7,20 @@ class InfoText extends StatelessWidget {
   final bool copyable;
   final Widget? iconButton;
 
-  const InfoText(
-      {Key? key,
-      required this.label,
-      required this.value,
-      this.copyable = false,
-      this.iconButton})
-      : super(key: key);
+  const InfoText({
+    super.key,
+    required this.label,
+    required this.value,
+    this.copyable = false,
+    this.iconButton,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
@@ -32,6 +32,7 @@ class InfoText extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Flexible(
                 child: Text(
@@ -65,13 +66,13 @@ class InfoText2 extends StatelessWidget {
   final Widget? labelWidget;
 
   const InfoText2({
-    Key? key,
+    super.key,
     required this.label,
     required this.value,
     this.copyable = false,
     this.iconButton,
     this.labelWidget,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

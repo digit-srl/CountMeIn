@@ -1,18 +1,22 @@
 import 'package:countmein/domain/entities/user_ids.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/confirm_invite_state.dart';
+import 'package:countmein/src/admin/ui/screens/admin_archived_events.dart';
 import 'package:countmein/src/admin/ui/screens/event_users.dart';
 import 'package:countmein/src/admin/ui/screens/managers.dart';
 import 'package:countmein/src/admin/ui/screens/new_event.dart';
+import 'package:countmein/src/admin/ui/screens/new_totem.dart';
 import 'package:countmein/src/admin/ui/screens/qrcode_validation.dart';
+import 'package:countmein/src/admin/ui/screens/session_details.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/auth/application/reset_password_notifier.dart';
 import 'package:countmein/src/auth/ui/screens/invite_form_confirm.dart';
+import 'package:countmein/src/totem/data/embedded_data.dart';
 import 'package:countmein/src/totem/ui/embedded_screen.dart';
 import 'package:countmein/src/user/ui/screens/recover_user_card.dart';
 import 'package:countmein/src/user/ui/screens/user_dashboard.dart';
-import 'package:countmein/ui/screens/event_details.dart';
+import 'package:countmein/src/admin/ui/screens/event_details.dart';
 import 'package:countmein/ui/screens/user_register_form.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -183,6 +187,15 @@ class RouterNotifier extends ChangeNotifier {
                           );
                         },
                       ),
+                      /*GoRoute(
+                        path: NewTotemScreen.routeName,
+                        builder: (context, state) {
+                          return NewTotemScreen(
+                            providerId: state.pathParameters['providerId']!,
+                            totemId: state.queryParameters['totemId'],
+                          );
+                        },
+                      ),*/
                       GoRoute(
                         path: ManagersHandlerScreen.routeName,
                         builder: (context, state) => ManagersHandlerScreen(
@@ -212,15 +225,41 @@ class RouterNotifier extends ChangeNotifier {
                                     state.pathParameters['eventId'] as String;
                                 final providerId = state
                                     .pathParameters['providerId'] as String;
-                                final subEventId = state.queryParameters['s'];
+                                final sessionId = state.queryParameters['s'];
                                 return EventUsersScreen(
                                   eventId: eventId,
                                   providerId: providerId,
-                                  subEventId: subEventId,
+                                  sessionId: sessionId,
+                                );
+                              },
+                            ),
+                            GoRoute(
+                              name: SessionDetailsScreen.routeName,
+                              path:
+                                  '${SessionDetailsScreen.routeName}/:sessionId',
+                              builder: (context, state) {
+                                final eventId =
+                                    state.pathParameters['eventId'] as String;
+                                final providerId = state
+                                    .pathParameters['providerId'] as String;
+                                final sessionId =
+                                    state.pathParameters['sessionId'] as String;
+                                return SessionDetailsScreen(
+                                  eventId: eventId,
+                                  providerId: providerId,
+                                  sessionId: sessionId,
                                 );
                               },
                             ),
                           ]),
+                      GoRoute(
+                        path: ArchivedEventsScreen.routeName,
+                        builder: (context, state) {
+                          return ArchivedEventsScreen(
+                            providerId: state.pathParameters['providerId']!,
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ],
@@ -245,8 +284,8 @@ class RouterNotifier extends ChangeNotifier {
             final providerId = state.queryParameters['p'] as String;
             final inviteId = state.queryParameters['i'] as String;
             final secret = state.queryParameters['s'] as String;
-            final providerName = state.queryParameters['n'] as String?;
-            final userId = state.queryParameters['u'] as String?;
+            final providerName = state.queryParameters['n'];
+            final userId = state.queryParameters['u'];
             return InviteFormConfirmScreen(
               request: InviteRequest(
                 providerId: providerId,

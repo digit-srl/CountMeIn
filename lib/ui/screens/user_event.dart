@@ -39,9 +39,9 @@ class UserProviderScreen extends ConsumerWidget {
   final String providerId;
 
   const UserProviderScreen({
-    Key? key,
+    super.key,
     required this.providerId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

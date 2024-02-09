@@ -9,14 +9,15 @@ import '../widgets/grid_providers.dart';
 class AdminProvidersScreen extends ConsumerWidget {
   static const String routeName = 'providers';
 
-  const AdminProvidersScreen({Key? key})
-      : super(key: key);
+  const AdminProvidersScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(activeProvidersStreamProvider);
     return Scaffold(
-      appBar: const AdminAppBar(title: 'Providers',),
+      appBar: const AdminAppBar(
+        title: 'Providers',
+      ),
       body: state.when(
         data: (providers) => Padding(
           padding: const EdgeInsets.all(16.0),

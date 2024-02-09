@@ -5,14 +5,16 @@ import '../../../../utils.dart';
 class GenericGridViewBuilder extends StatelessWidget {
   final int itemCount;
   final bool scroolEnabled;
+  final EdgeInsets? padding;
   final Widget Function(BuildContext context, int index) itemBuilder;
 
-  const GenericGridViewBuilder(
-      {Key? key,
-      required this.itemCount,
-      required this.itemBuilder,
-      this.scroolEnabled = false})
-      : super(key: key);
+  const GenericGridViewBuilder({
+    super.key,
+    required this.itemCount,
+    this.padding,
+    required this.itemBuilder,
+    this.scroolEnabled = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +23,13 @@ class GenericGridViewBuilder extends StatelessWidget {
       return GridView.builder(
         shrinkWrap: true,
         physics: scroolEnabled ? null : const NeverScrollableScrollPhysics(),
-        // padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: padding,
         itemCount: itemCount,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
           mainAxisSpacing: 8,
           crossAxisSpacing: 8,
-          childAspectRatio: crossAxisCount == 1 ? 3 : 4 / 3,
+          childAspectRatio: crossAxisCount == 1 ? 3 : 2 / 1,
         ),
         itemBuilder: itemBuilder,
       );
@@ -40,9 +42,7 @@ class GenericGridView extends StatelessWidget {
   final List<Widget> children;
 
   const GenericGridView(
-      {Key? key,
-      required this.children,
-      this.scroolEnabled = false})
+      {Key? key, required this.children, this.scroolEnabled = false})
       : super(key: key);
 
   @override

@@ -24,7 +24,7 @@ class AdminDashboardScreen extends HookConsumerWidget {
   static const String routeName = 'admin';
   static const String path = '/admin';
 
-  const AdminDashboardScreen({Key? key}) : super(key: key);
+  const AdminDashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -136,7 +136,7 @@ class AdminDashboardScreen extends HookConsumerWidget {
 }
 
 class QrCodeValidationWidget extends ConsumerWidget {
-  const QrCodeValidationWidget({Key? key}) : super(key: key);
+  const QrCodeValidationWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

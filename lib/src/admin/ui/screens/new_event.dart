@@ -31,6 +31,17 @@ final womValidator = MultiValidator([
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
 ]);
 
+String? geoValidator(String? value) {
+  if (value == null || value.isEmpty) {
+    return null;
+  }
+
+  if (double.tryParse(value) == null) {
+    return 'Valore non valido';
+  }
+  return null;
+}
+
 final acceptPassepartoutProvider = StateProvider.autoDispose<bool>((ref) {
   return true;
 });
@@ -40,24 +51,15 @@ class NewEventFormScreen extends HookConsumerWidget {
   final String providerId;
 
   NewEventFormScreen({
-    Key? key,
+    super.key,
     required this.providerId,
-  }) : super(key: key);
+  });
 
   final _formKey = GlobalKey<FormState>();
 
   final dayFormat = DateFormat('EEEE', 'it');
 
-  String? geoValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return null;
-    }
 
-    if (double.tryParse(value) == null) {
-      return 'Valore non valido';
-    }
-    return null;
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

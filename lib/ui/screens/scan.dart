@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:countmein/src/admin/application/scan_notifier.dart';
 import 'package:countmein/src/admin/application/users_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
-import 'package:countmein/ui/screens/event_details.dart';
+import 'package:countmein/src/admin/ui/screens/event_details.dart';
 import 'package:countmein/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

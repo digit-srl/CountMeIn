@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 
 class CMIChip extends StatelessWidget {
   final String text;
+  final Color? color;
 
-  const CMIChip({Key? key, required this.text}) : super(key: key);
+  const CMIChip({super.key, required this.text, this.color = Colors.green});
 
   @override
   Widget build(BuildContext context) {
-    return Chip(
-      backgroundColor: Colors.green,
-      label: Text(text),
-      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 4),
-      labelPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 4),
+    return Container(
+      decoration:
+          BoxDecoration(color: color, borderRadius: BorderRadius.circular(8)),
+      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+      child: Text(
+        text,
+        style: const TextStyle(fontSize: 12),
+      ),
     );
   }
 }

@@ -85,6 +85,13 @@ export function totemDocRef(
   return eventDocRef(providerId, eventId).collection("totems").doc(totemId);
 }
 
+export function providerTotemDocRef(
+  providerId: string,
+  totemId: string
+): FirebaseFirestore.DocumentReference {
+  return providerDocRef(providerId).collection("totems").doc(totemId);
+}
+
 export function sessionDocRef(
   providerId: string,
   eventId: string,

@@ -4,13 +4,17 @@ import 'package:countmein/src/admin/application/aim_notifier.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/application/scan_notifier.dart';
+import 'package:countmein/src/admin/application/session_notifier.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
 import 'package:countmein/src/admin/ui/screens/admin_provider_handler.dart';
 import 'package:countmein/src/admin/ui/screens/admin_providers.dart';
 import 'package:countmein/src/admin/ui/screens/event_users.dart';
+import 'package:countmein/src/admin/ui/screens/session_details.dart';
 import 'package:countmein/src/admin/ui/widgets/add_scanner.dart';
+import 'package:countmein/src/admin/ui/widgets/assign_totem_dialog.dart';
 import 'package:countmein/src/admin/ui/widgets/info_text.dart';
+import 'package:countmein/src/admin/ui/widgets/start_end_date_form.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
@@ -29,9 +33,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 import 'package:collection/collection.dart';
-import '../../domain/entities/cmi_provider.dart';
-import '../../domain/entities/event_ids.dart';
-import '../../src/admin/ui/widgets/generic_grid_view.dart';
+import '../../../../domain/entities/cmi_provider.dart';
+import '../../../../domain/entities/event_ids.dart';
+import '../widgets/generic_grid_view.dart';
 import 'package:intl/intl.dart';
 
 enum SessionAction { close, open, delete }
@@ -50,10 +54,10 @@ class EventDetailsScreen extends ConsumerStatefulWidget {
   final String providerId;
 
   const EventDetailsScreen({
-    Key? key,
+    super.key,
     required this.eventId,
     required this.providerId,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<EventDetailsScreen> createState() => _EventDetailsScreenState();
@@ -130,8 +134,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
     final role = ref.watch(userRoleProvider(widget.providerId));
     // final isOwner = role == UserRole.admin;
 
-    final subEvents =
-        ref.watch(sessionsStreamProvider(ids)).asData?.value ?? [];
+    final sessions = ref.watch(sessionsStreamProvider(ids)).asData?.value ?? [];
     final isUserScanner = role == UserRole.scanner;
     final isAdmin = role == UserRole.admin;
     return WillPopScope(
@@ -146,7 +149,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
           title: Text(eventState.asData?.value.name ?? ''),
           actions: [
             IconButton(
-                icon: Icon(Icons.share),
+                icon: const Icon(Icons.share),
                 color: Colors.white,
                 onPressed: () {
                   final linkEvent =
@@ -198,6 +201,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                           value: eventData?.maxWomCount.toString(),
                         ),
                       ),
+                      const SizedBox(width: 24),
                       Flexible(
                         child: Consumer(builder: (context, ref, child) {
                           final aims =
@@ -206,8 +210,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                               a.code == (eventData?.aim ?? provider?.aim));
                           return InfoText(
                             label: 'AIM',
-                            value:
-                                aim?.title(languageCode: 'it'),
+                            value: aim?.title(languageCode: 'it'),
                           );
                         }),
                       ),
@@ -220,6 +223,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                             label: 'Anonimo',
                             value: eventData?.anonymous.toString()),
                       ),
+                      const SizedBox(width: 24),
                       Flexible(
                         child: InfoText(
                           label: 'Accetta passpartout',
@@ -238,6 +242,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                               : 'Singola',
                         ),
                       ),
+                      const SizedBox(width: 24),
                       Flexible(
                         child: InfoText(
                           label: 'Accesso',
@@ -273,37 +278,47 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                             child: const Text('Aggiungi scanner'),
                           ),
                           const SizedBox(width: 16),
-                          //TODO solo per debug
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red),
-                            onPressed: () async {
-                              final n = Navigator.of(context);
-                              final res = await ask(context,
-                                  'Sicuro di voler eliminare questo evento');
-                              if (res) {
-                                await Cloud.eventDoc(
-                                        widget.providerId, widget.eventId)
-                                    .delete();
-                                n.pop();
-                              }
-                            },
-                            child: const Text('Elimina'),
-                          ),
-                          const SizedBox(width: 16),
                           if (eventData.status == EventStatus.live)
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green),
+                                backgroundColor: Colors.green,
+                              ),
                               onPressed: () async {
                                 final n = Navigator.of(context);
                                 await Cloud.eventDoc(
                                         widget.providerId, widget.eventId)
-                                    .update({'status': 'closed'});
-                                n.pop();
+                                    .update({
+                                  'status': EventStatus.archived.name,
+                                  'activeSessionId': null,
+                                });
                               },
-                              child: const Text('Termina'),
+                              child: const Text(
+                                'Archivia',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
+                          if (kDebugMode) ...[
+                            const SizedBox(width: 16),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red),
+                              onPressed: () async {
+                                final n = Navigator.of(context);
+                                final res = await ask(context,
+                                    'Sicuro di voler eliminare questo evento');
+                                if (res ?? false) {
+                                  await Cloud.eventDoc(
+                                          widget.providerId, widget.eventId)
+                                      .delete();
+                                  n.pop();
+                                }
+                              },
+                              child: const Text(
+                                'Elimina',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
                         ],
                       ],
                     ),
@@ -508,10 +523,14 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
               ),*/
 
             if (eventData != null) ...[
-              TotemsCardWidget(
+              DedicatedTotemsCardWidget(
                 providerId: ids.providerId,
                 eventId: ids.eventId,
                 sessionId: eventData.activeSessionId,
+              ),
+              TotemsCardWidget(
+                providerId: ids.providerId,
+                eventId: ids.eventId,
               ),
               GenericGridView(
                 children: [
@@ -522,25 +541,32 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                         showDialog(
                             context: context,
                             builder: (c) {
-                              return Dialog(
-                                child: NewSession(
-                                    onSave: (name, createAndEnable) async {
+                              return NewSessionDialog(
+                                onSave: (name, createAndEnable, startDate,
+                                    endDate) async {
                                   final subEv = CMISubEvent(
                                     id: const Uuid().v4(),
                                     name: name,
-                                    startAt: DateTime.now(),
+                                    startAt: startDate,
+                                    endAt: endDate,
                                   );
-                                  await Cloud.sessionCollection(ids)
-                                      .doc(subEv.id)
-                                      .set(subEv.toJson());
+                                  final batch =
+                                      FirebaseFirestore.instance.batch();
+                                  batch.set(
+                                      Cloud.sessionCollection(ids)
+                                          .doc(subEv.id),
+                                      subEv.toJson());
                                   if (createAndEnable) {
-                                    Cloud.eventDoc(
-                                            widget.providerId, widget.eventId)
-                                        .update({
-                                      'activeSessionId': subEv.id,
-                                    });
+                                    batch.set(
+                                        Cloud.eventDoc(
+                                            widget.providerId, widget.eventId),
+                                        {
+                                          'activeSessionId': subEv.id,
+                                        },
+                                        SetOptions(merge: true));
                                   }
-                                }),
+                                  await batch.commit();
+                                },
                               );
                             });
                       },
@@ -578,13 +604,13 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                       ],
                     ),
                   ),
-                  for (int i = 0; i < subEvents.length; i++)
+                  for (int i = 0; i < sessions.length; i++)
                     SessionItem(
                       isAdmin: isAdmin,
-                      session: subEvents[i],
+                      session: sessions[i],
                       ids: ids,
                       manualEvent: eventData.isManual,
-                      isActive: eventData.activeSessionId == subEvents[i].id,
+                      isActive: eventData.activeSessionId == sessions[i].id,
                     ),
                 ],
               ),
@@ -603,14 +629,15 @@ class SessionItem extends StatelessWidget {
   final bool isActive;
   final bool isAdmin;
 
-  const SessionItem(
-      {Key? key,
-      required this.session,
-      required this.manualEvent,
-      required this.isActive,
-      required this.ids,
-      required this.isAdmin})
-      : super(key: key);
+  const SessionItem({
+    super.key,
+    required this.session,
+    required this.manualEvent,
+    required this.isActive,
+    required this.ids,
+    required this.isAdmin,
+  });
+
   static final formatter = DateFormat('EEEE,d MMMM, yyyy', 'it_IT');
 
   String get providerId => ids.providerId;
@@ -628,8 +655,13 @@ class SessionItem extends StatelessWidget {
                 switch (item) {
                   case SessionAction.close:
                     final batch = FirebaseFirestore.instance.batch();
-                    batch.set(Cloud.eventDoc(providerId, eventId),
-                        {'activeSessionId': null}, SetOptions(merge: true));
+                    batch.set(
+                        Cloud.eventDoc(providerId, eventId),
+                        {
+                          'activeSessionId': null,
+                          'status': EventStatus.archived.name
+                        },
+                        SetOptions(merge: true));
                     batch.set(
                         Cloud.sessionDoc(
                           EventIds(
@@ -646,7 +678,10 @@ class SessionItem extends StatelessWidget {
                     final batch = FirebaseFirestore.instance.batch();
                     batch.set(
                         Cloud.eventDoc(providerId, eventId),
-                        {'activeSessionId': session.id},
+                        {
+                          'activeSessionId': session.id,
+                          'status': EventStatus.live.name,
+                        },
                         SetOptions(merge: true));
                     batch.set(
                         Cloud.sessionDoc(
@@ -669,10 +704,13 @@ class SessionItem extends StatelessWidget {
                               ids.copyWith(sessionId: session.id))
                           .delete();
                       if (isActive) {
-                        await Cloud.eventDoc(providerId, eventId)
-                            .update({'activeSessionId': null});
+                        await Cloud.eventDoc(providerId, eventId).update({
+                          'activeSessionId': null,
+                          'status': EventStatus.archived.name
+                        });
                       }
                     }
+                    return;
                 }
               },
               itemBuilder: (BuildContext context) =>
@@ -711,7 +749,7 @@ class SessionItem extends StatelessWidget {
           : null,
       onTap: () {
         final path =
-            '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${providerId}/${EventDetailsScreen.routeName}/${eventId}/${EventUsersScreen.routeName}?s=${session.id}';
+            '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/$providerId/${EventDetailsScreen.routeName}/$eventId/${SessionDetailsScreen.routeName}/${session.id}';
         context.go(path);
       },
       child: Column(
@@ -746,11 +784,11 @@ class ScanSimulationWidget extends HookConsumerWidget {
   final Function(String) onScan;
 
   const ScanSimulationWidget({
-    Key? key,
+    super.key,
     required this.event,
     required this.onScan,
     required this.provider,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -803,52 +841,71 @@ class ScanSimulationWidget extends HookConsumerWidget {
   }
 }
 
-class NewSession extends HookConsumerWidget {
-  final Function(String, bool) onSave;
+class NewSessionDialog extends HookConsumerWidget {
+  final Function(String, bool, DateTime, DateTime?) onSave;
 
-  const NewSession({Key? key, required this.onSave}) : super(key: key);
+  const NewSessionDialog({super.key, required this.onSave});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = useTextEditingController();
     final createAndEnabled = useState<bool>(false);
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text('Nuova sessione'),
-          const SizedBox(height: 16),
-          CMITextField(
-            controller: controller,
-            labelText: 'Nome sessione',
-            hintText: 'Digita il nome della sessione',
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Checkbox(
-                  value: createAndEnabled.value,
-                  onChanged: (value) {
-                    if (value == null) return;
-                    createAndEnabled.value = value;
-                  }),
-              const SizedBox(width: 16),
-              const Text('Attiva sessione alla creazione'),
-            ],
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              final name = controller.text.trim();
-              if (name.isNotEmpty) {
-                onSave(name, createAndEnabled.value);
-                Navigator.of(context).pop();
-              }
-            },
-            child: const Text('Crea'),
-          ),
-        ],
+    final start = useState<DateTime>(DateTime.now());
+    final end = useState<DateTime?>(null);
+    return Dialog(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 600),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Nuova sessione'),
+            const SizedBox(height: 16),
+            CMITextField(
+              controller: controller,
+              labelText: 'Nome sessione',
+              hintText: 'Digita il nome della sessione',
+            ),
+            const SizedBox(height: 16),
+            StartEndDateForm(
+              startAt: start.value,
+              onChanged: (s, e) {
+                if (s != null) {
+                  start.value = s;
+                }
+                if (e != null) {
+                  end.value = e;
+                }
+              },
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Checkbox(
+                    value: createAndEnabled.value,
+                    onChanged: (value) {
+                      if (value == null) return;
+                      createAndEnabled.value = value;
+                    }),
+                const SizedBox(width: 16),
+                const Text('Attiva sessione alla creazione'),
+              ],
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                print(start.value);
+                print(end.value);
+                if (controller.text.trim().isNotEmpty) {
+                  onSave(controller.text.trim(), createAndEnabled.value,
+                      start.value, end.value);
+                  Navigator.of(context).pop();
+                }
+              },
+              child: const Text('Crea'),
+            ),
+          ],
+        ),
       ),
     );
   }

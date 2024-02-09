@@ -10,6 +10,7 @@ import {
   eventPrivateUsersCollection,
   eventPrivateUsersDoc,
   providerDocRef,
+  providerTotemDocRef,
   sessionDocRef,
   sessionPrivateUsersDoc,
   totemDocRef,
@@ -278,6 +279,275 @@ export const scan = functions
           link: wom.link,
           pin: wom.pin,
           aim: aim,
+          sessionId: sessionId,
+        });
+      });
+    }
+  );
+
+export const scan2 = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      cors(request, response, async () => {
+        console.log(request.body);
+
+        if (request.method !== "POST") {
+          response.status(403).send("Forbidden!");
+          return;
+        }
+
+        const data = request.body;
+        const providerId = data.providerId;
+        const totemId = data.totemId;
+
+        // Pocket data
+        const userLat: number = data.latitude;
+        const userLong: number = data.longitude;
+        const gender = data.gender;
+        const lastSessionIdScanned = data.lastSessionIdScanned;
+        const participationCount = data.participationCount ?? 0;
+
+        const now = new Date();
+
+        if (
+          providerId == null ||
+          totemId == null ||
+          userLat == null ||
+          userLong == null
+        ) {
+          response.status(400).send("some body fields are null");
+          return;
+        }
+
+        const totemRef = providerTotemDocRef(providerId, totemId);
+        const totemDoc = await totemRef.get();
+
+        if (!totemDoc.exists) {
+          response
+            .status(400)
+            .send("totemData document doesn't exists, " + totemRef.path);
+          return;
+        }
+
+        const totemData = totemDoc.data();
+
+        if (totemData == null) {
+          response.status(400).send("totemData is null, " + totemRef.path);
+          return;
+        }
+
+        console.log(totemData);
+        const eventId = totemData.eventId;
+        const sessionId = totemData.sessionId;
+
+        if (eventId == null || sessionId == null) {
+          response.status(200).send({
+            status: "totemDisabled",
+            message: "eventId or sessionId is missing",
+          });
+          return;
+        }
+
+        const eventRef = eventDocRef(providerId, eventId);
+        const eventDoc = await eventRef.get();
+        const eventData = eventDoc.data();
+
+        if (!eventDoc.exists || eventData == null) {
+          response
+            .status(400)
+            .send("eventData document doesn't exists, " + eventRef.path);
+          return;
+        }
+
+        if (eventData.activeSessionId == null) {
+          response.status(200).send({
+            status: "eventIsClosed",
+          });
+          return;
+        }
+
+        if (eventData.activeSessionId != sessionId) {
+          response
+            .status(400)
+            .send(
+              "event activeSessionId " +
+                eventData.activeSessionId +
+                " is not equal to totem sessionId " +
+                sessionId
+            );
+          return;
+        }
+
+        if (eventData.maxWomCount == null || eventData.maxWomCount == 0) {
+          response.status(200).send({
+            status: "noWomForThisEvent",
+          });
+          return;
+        }
+
+        if (lastSessionIdScanned == sessionId) {
+          response.status(200).send({
+            status: "sessionAlreadyScanned",
+            sessionId: sessionId,
+          });
+          return;
+        }
+
+        // Update requestId on doc and totalCount
+        totemRef.update({
+          totalCount: firestore.FieldValue.increment(1),
+          updatedOn: firestore.Timestamp.fromDate(now),
+        });
+
+        const sessionRef = sessionDocRef(providerId, eventId, sessionId);
+        const sessionDoc = await sessionRef.get();
+        const sessionData = sessionDoc.data();
+
+        if (!sessionDoc.exists || sessionData == null) {
+          response
+            .status(400)
+            .send("sessionData document doesn't exists, " + sessionRef.path);
+          return;
+        }
+
+        const startAt = sessionData.startAt.toDate();
+
+        // endAt can be null if the event has manual session opening
+        const endAt = sessionData.endAt?.toDate();
+
+        const isExpired =
+          endAt == null ? false : now.getTime() - endAt.getTime() > 0;
+        const isStarted = now.getTime() - startAt.getTime() > 0;
+
+        if (isExpired) {
+          response.status(200).send({
+            status: "sessionExpired",
+            sessionId: sessionId,
+          });
+          return;
+        }
+
+        if (!isStarted) {
+          response.status(200).send({
+            status: "sessionNotStarted",
+            sessionId: sessionId,
+          });
+          return;
+        }
+
+        // check position
+        const latitude = totemData.position?.latitude;
+        const longitude = totemData.position?.longitude;
+        const radius = totemData.radius;
+
+        if (latitude != null && longitude != null) {
+          const coordinates = [longitude, latitude]; //[lon, lat]
+          const userCoordinates = [userLong, userLat];
+          const numberOfEdges = 32;
+
+          let polygon = circleToPolygon(coordinates, radius, numberOfEdges);
+          const isInside = getIsPointInsidePolygon(
+            userCoordinates,
+            polygon.coordinates[0]
+          );
+
+          console.log("isInside2: " + isInside);
+          if (!isInside) {
+            response.status(200).send({
+              status: "outOfPolygon",
+              sessionId: sessionId,
+              polygon: polygon.coordinates[0],
+            });
+            return;
+          }
+        }
+
+        // Update effective count
+        totemRef.update({
+          count: firestore.FieldValue.increment(1),
+          updatedOn: firestore.Timestamp.fromDate(now),
+        });
+
+        const batch = db.batch();
+        const userSubEventDocRef = sessionDocRef(providerId, eventId, sessionId)
+          .collection("users")
+          .doc();
+
+        const userId = userSubEventDocRef.id;
+
+        const json = {
+          totemId: totemData.id,
+          position: new firestore.GeoPoint(userLat, userLong),
+          isGroup: false,
+          id: userId,
+          name: "Utente anonimo",
+          surname: "",
+          cf: "",
+          fromExternalOrganization: false,
+          privateId: null,
+          isAnonymous: true,
+          providerId: providerId,
+          checkOutAt: firestore.Timestamp.fromDate(now),
+          hasPrivateInfo: gender != null,
+          participationCount: participationCount,
+        };
+
+        batch.set(userSubEventDocRef, json);
+
+        let privateId: string | null = null;
+        // se c'è il genere allora salviamo l utente con info private
+        if (gender != null) {
+          const privateRef = eventPrivateUsersCollection(providerId, eventId);
+          const docRef = privateRef.doc();
+          privateId = docRef.id;
+          batch.set(
+            sessionPrivateUsersDoc(providerId, eventId, sessionId, privateId),
+            {
+              id: privateId,
+              genderWithoutCard: gender,
+            }
+          );
+        }
+
+        // se prima scansiona per questo evento salviamo l utente unico
+        if (lastSessionIdScanned == null) {
+          const globalUserRef = eventDocRef(providerId, eventId)
+            .collection("users")
+            .doc(userId);
+
+          batch.set(globalUserRef, json);
+
+          if (privateId != null) {
+            batch.set(eventPrivateUsersDoc(providerId, eventId, privateId), {
+              id: privateId,
+              genderWithoutCard: gender,
+            });
+          }
+        }
+
+        batch.commit();
+
+        // generate wom
+        /*const providerDoc: FirebaseFirestore.DocumentData =
+          await providerDocRef(providerId).get();
+        const providerData = providerDoc.data();
+
+       const apiKey = providerData.apiKey;
+        const aim = eventData.aim ?? providerData.aim;
+        const wom = await generateWom(
+          apiKey,
+          eventData.maxWomCount,
+          aim,
+          userLat,
+          userLong
+        );
+*/
+        response.status(200).send({
+          status: "success",
+          link: " wom.link",
+          pin: "wom.pin",
+          aim: "aim",
           sessionId: sessionId,
         });
       });
