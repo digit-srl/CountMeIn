@@ -82,6 +82,7 @@ dependencies:
   file_saver: ^0.2.9
   intl:
   auto_size_text: ^3.0.0
+  screenshot: ^2.1.0
 #  file_saver:
 #    git: https://github.com/incrediblezayed/file_saver
 

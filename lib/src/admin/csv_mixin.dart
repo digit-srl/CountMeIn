@@ -25,6 +25,7 @@ mixin CSVMixin {
         if (Platform.isMacOS) {
           final path = await FileSaver.instance.saveFile(
               name: fileName, file: file, mimeType: MimeType.csv, ext: 'csv');
+          logger.i(path);
         } else {
           Share.shareFiles([file.path]);
         }

@@ -18,6 +18,7 @@ import 'package:countmein/src/admin/ui/widgets/start_end_date_form.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
+import 'package:countmein/src/totem/ui/dedicated_totems.dart';
 import 'package:countmein/src/totem/ui/totems.dart';
 import 'package:countmein/ui/widgets/cmi_chip.dart';
 import 'package:countmein/ui/widgets/my_text_field.dart';

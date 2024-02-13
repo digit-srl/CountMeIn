@@ -15,6 +15,7 @@ import 'package:countmein/src/admin/ui/widgets/user_list_widget.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/totem/application/totems_notifier.dart';
 import 'package:countmein/src/totem/ui/embedded_screen.dart';
+import 'package:countmein/src/totem/ui/totem_card.dart';
 import 'package:countmein/src/totem/ui/totems.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -205,88 +206,9 @@ class SessionTotemsCardWidget extends ConsumerWidget {
               }
 
               final totem = totems[index - 1];
-              return Card(
-                color: Colors.red[200],
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        PopupMenuButton<QrCodeAction>(
-                          icon: const Icon(Icons.more_vert),
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<QrCodeAction>>[
-                            PopupMenuItem<QrCodeAction>(
-                              enabled: false,
-                              value: QrCodeAction.goToQrCode,
-                              child: const Text('Vai alla pagina'),
-                              onTap: () {
-                                // context.go(
-                                //     '/embedded/$providerId/$eventId/$sessionId/${totem.id}');
-                              },
-                            ),
-                            PopupMenuItem<QrCodeAction>(
-                              value: QrCodeAction.copyQrCodeLink,
-                              enabled: false,
-                              child: const Text('Copia link pagina'),
-                              onTap: () {
-                                Clipboard.setData(ClipboardData(
-                                    text:
-                                        'https://cmi.digit.srl//embedded/$providerId/${totem.id}'));
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                    content: Text(
-                                        'Link ${totem.name} copiato negli appunti')));
-                              },
-                            ),
-                            PopupMenuItem<QrCodeAction>(
-                              value: QrCodeAction.copyQrCode,
-                              child: const Text('Copia QR-Code'),
-                              onTap: () {
-                                final qr =
-                                    '$totemBaseUrl/$providerId/$eventId/${totem.id}${totem.requestId != null ? '/${totem.requestId}' : ''}';
-                                Clipboard.setData(ClipboardData(
-                                  text: qr,
-                                ));
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                    content: Text(
-                                        'QR-Code ${totem.name} copiato negli appunti')));
-                              },
-                            ),
-                            PopupMenuItem<QrCodeAction>(
-                              value: QrCodeAction.resetCounters,
-                              child: const Text('Reset contatori'),
-                              onTap: () {
-                                Cloud.providerTotemDoc(providerId, totem.id)
-                                    .update({
-                                  'count': 0,
-                                  'totalCount': 0,
-                                });
-                              },
-                            ),
-                            PopupMenuItem<QrCodeAction>(
-                              value: QrCodeAction.removeTotem,
-                              child: const Text('Libera totem'),
-                              onTap: () {
-                                Cloud.providerTotemDoc(providerId, totem.id)
-                                    .update({
-                                  'eventId': null,
-                                  'sessionId': null,
-                                  'count': 0,
-                                  'totalCount': 0,
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Text(totem.name),
-                    Text('${totem.count}/${totem.totalCount}'),
-                    const Spacer(),
-                  ],
-                ),
+              return TotemCardWidget(
+                providerId: providerId,
+                totem: totem,
               );
             },
           ),

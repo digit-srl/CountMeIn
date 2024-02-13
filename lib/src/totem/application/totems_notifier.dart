@@ -85,3 +85,25 @@ Stream<List<EmbeddedData>> getSessionTotems(GetSessionTotemsRef ref,
     yield* emb(stream);
   }
 }
+
+@riverpod
+Stream<EmbeddedData> getTotemData(
+    GetTotemDataRef ref, String providerId, String totemId) async* {
+  if (ref.exists(getProviderTotemsProvider(providerId))) {
+    final totems =
+        ref.watch(getProviderTotemsProvider(providerId)).valueOrNull ?? [];
+    yield* Stream.value(
+        totems.firstWhere((element) => element.id == totemId));
+  } else {
+    final stream = Cloud.providerTotemDoc(providerId, totemId).snapshots();
+    await for (final snap in stream) {
+      final data = snap.data();
+      if (snap.exists && data != null) {
+        final totemData = EmbeddedData.fromJson(data);
+        yield totemData;
+      } else {
+        throw Exception('doc not exist');
+      }
+    }
+  }
+}
