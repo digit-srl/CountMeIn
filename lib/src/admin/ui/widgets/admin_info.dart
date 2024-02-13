@@ -16,8 +16,8 @@ class AdminInfoWidget extends ConsumerWidget {
     final user = authUserState is Authenticated ? authUserState.user : null;
     logger.i(user);
     return CMICard(
-      // margin: const EdgeInsets.all(16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
           InfoText(
