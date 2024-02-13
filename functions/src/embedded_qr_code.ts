@@ -33,7 +33,7 @@ export const scan = functions
         const data = request.body;
         const providerId = data.providerId;
         const lastSessionIdScanned = data.lastSessionIdScanned;
-        const participationCount = data.participationCount ?? 0;
+        const participationCount = data.participationCount;
         const eventId = data.eventId;
         const requestId = data.requestId;
         const totemId = data.totemId;
@@ -221,7 +221,7 @@ export const scan = functions
           providerId: providerId,
           checkOutAt: firestore.Timestamp.fromDate(now),
           hasPrivateInfo: gender != null,
-          participationCount: participationCount,
+          participationCount: participationCount ?? 1,
         };
 
         batch.set(userSubEventDocRef, json);
@@ -279,6 +279,7 @@ export const scan = functions
           link: wom.link,
           pin: wom.pin,
           aim: aim,
+          eventId: eventId,
           sessionId: sessionId,
         });
       });
@@ -305,8 +306,7 @@ export const scan2 = functions
         const userLat: number = data.latitude;
         const userLong: number = data.longitude;
         const gender = data.gender;
-        const lastSessionIdScanned = data.lastSessionIdScanned;
-        const participationCount = data.participationCount ?? 0;
+        const scannedSessions = data.sessions;
 
         const now = new Date();
 
@@ -386,7 +386,7 @@ export const scan2 = functions
           return;
         }
 
-        if (lastSessionIdScanned == sessionId) {
+        if (scannedSessions[sessionId] != null) {
           response.status(200).send({
             status: "sessionAlreadyScanned",
             sessionId: sessionId,
@@ -490,7 +490,7 @@ export const scan2 = functions
           providerId: providerId,
           checkOutAt: firestore.Timestamp.fromDate(now),
           hasPrivateInfo: gender != null,
-          participationCount: participationCount,
+          participationCount: scannedSessions[sessionId] ?? 1,
         };
 
         batch.set(userSubEventDocRef, json);
@@ -511,7 +511,7 @@ export const scan2 = functions
         }
 
         // se prima scansiona per questo evento salviamo l utente unico
-        if (lastSessionIdScanned == null) {
+        if (scannedSessions[sessionId] == null) {
           const globalUserRef = eventDocRef(providerId, eventId)
             .collection("users")
             .doc(userId);
@@ -548,6 +548,7 @@ export const scan2 = functions
           link: " wom.link",
           pin: "wom.pin",
           aim: "aim",
+          eventId: eventId,
           sessionId: sessionId,
         });
       });
