@@ -77,12 +77,19 @@ export function eventDocRef(
   return eventCollectionRef(providerId).doc(eventId);
 }
 
+export function totemCollectionRef(
+  providerId: string,
+  eventId: string
+): FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData> {
+  return eventDocRef(providerId, eventId).collection("totems");
+}
+
 export function totemDocRef(
   providerId: string,
   eventId: string,
   totemId: string
 ): FirebaseFirestore.DocumentReference {
-  return eventDocRef(providerId, eventId).collection("totems").doc(totemId);
+  return totemCollectionRef(providerId, eventId).doc(totemId);
 }
 
 export function providerTotemDocRef(

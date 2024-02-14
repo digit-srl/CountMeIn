@@ -6,14 +6,16 @@ const db = admin.firestore();
 import * as firestore from "@google-cloud/firestore";
 const cors = require("cors")({ origin: true });
 import {
+  eventCollectionRef,
   eventDocRef,
   eventPrivateUsersCollection,
   eventPrivateUsersDoc,
   providerDocRef,
   providerTotemDocRef,
+  providersCollectionRef,
   sessionDocRef,
   sessionPrivateUsersDoc,
-  totemDocRef,
+  totemCollectionRef,
 } from "./firestore_references";
 import { generateSecret, generateWom } from "./utils";
 const circleToPolygon = require("circle-to-polygon");
@@ -34,7 +36,6 @@ export const scan = functions
         const providerId = data.providerId;
         const lastSessionIdScanned = data.lastSessionIdScanned;
         const participationCount = data.participationCount;
-        const eventId = data.eventId;
         const requestId = data.requestId;
         const totemId = data.totemId;
         const userLat: number = data.latitude;
@@ -45,12 +46,39 @@ export const scan = functions
 
         if (
           providerId == null ||
-          eventId == null ||
           totemId == null ||
           userLat == null ||
           userLong == null
         ) {
           response.status(400).send("some body fields are null");
+          return;
+        }
+
+        const totemRef = providerTotemDocRef(providerId, totemId);
+        const totemDoc = await totemRef.get();
+
+        if (!totemDoc.exists) {
+          response
+            .status(400)
+            .send("totemData document doesn't exists, " + totemRef.path);
+          return;
+        }
+
+        const totemData = totemDoc.data();
+
+        if (totemData == null) {
+          response.status(400).send("totemData is null, " + totemRef.path);
+          return;
+        }
+
+        const eventId = totemData.eventId;
+        const sessionId = totemData.sessionId;
+
+        if (eventId == null || sessionId == null) {
+          response.status(200).send({
+            status: "totemDisabled",
+            message: "eventId or sessionId is missing",
+          });
           return;
         }
 
@@ -79,30 +107,23 @@ export const scan = functions
           return;
         }
 
-        const sessionId = eventData.activeSessionId;
+        if (eventData.activeSessionId != sessionId) {
+          response
+            .status(400)
+            .send(
+              "event activeSessionId " +
+                eventData.activeSessionId +
+                " is not equal to totem sessionId " +
+                sessionId
+            );
+          return;
+        }
 
         if (lastSessionIdScanned == sessionId) {
           response.status(200).send({
             status: "sessionAlreadyScanned",
             sessionId: sessionId,
           });
-          return;
-        }
-
-        const totemRef = totemDocRef(providerId, eventId, totemId);
-        const totemDoc = await totemRef.get();
-
-        if (!totemDoc.exists) {
-          response
-            .status(400)
-            .send("totemData document doesn't exists, " + totemRef.path);
-          return;
-        }
-
-        const totemData = totemDoc.data();
-
-        if (totemData == null) {
-          response.status(400).send("totemData is null, " + totemRef.path);
           return;
         }
 
@@ -301,6 +322,7 @@ export const scan2 = functions
         const data = request.body;
         const providerId = data.providerId;
         const totemId = data.totemId;
+        const requestId = data.requestId;
 
         // Pocket data
         const userLat: number = data.latitude;
@@ -368,14 +390,13 @@ export const scan2 = functions
         }
 
         if (eventData.activeSessionId != sessionId) {
-          response
-            .status(400)
-            .send(
-              "event activeSessionId " +
-                eventData.activeSessionId +
-                " is not equal to totem sessionId " +
-                sessionId
-            );
+          const message =
+            "event activeSessionId " +
+            eventData.activeSessionId +
+            " is not equal to totem sessionId " +
+            sessionId;
+          console.log(message);
+          response.status(400).send(message);
           return;
         }
 
@@ -394,9 +415,28 @@ export const scan2 = functions
           return;
         }
 
+        // Check static or dynamic totem
+        if (!totemData.isStatic) {
+          if (requestId == null) {
+            response.status(200).send({
+              status: "dynamicTotemNeedRequestId",
+              sessionId: sessionId,
+            });
+            return;
+          } else if (requestId != totemData.requestId) {
+            // Check requestId on doc
+            response.status(200).send({
+              status: "wrongRequestId",
+              sessionId: sessionId,
+            });
+            return;
+          }
+        }
+
         // Update requestId on doc and totalCount
         totemRef.update({
           totalCount: firestore.FieldValue.increment(1),
+          requestId: totemData.isStatic ? null : generateSecret(),
           updatedOn: firestore.Timestamp.fromDate(now),
         });
 
@@ -529,11 +569,11 @@ export const scan2 = functions
         batch.commit();
 
         // generate wom
-        /*const providerDoc: FirebaseFirestore.DocumentData =
+        const providerDoc: FirebaseFirestore.DocumentData =
           await providerDocRef(providerId).get();
         const providerData = providerDoc.data();
 
-       const apiKey = providerData.apiKey;
+        const apiKey = providerData.apiKey;
         const aim = eventData.aim ?? providerData.aim;
         const wom = await generateWom(
           apiKey,
@@ -542,12 +582,12 @@ export const scan2 = functions
           userLat,
           userLong
         );
-*/
+
         response.status(200).send({
           status: "success",
           link: " wom.link",
-          pin: "wom.pin",
-          aim: "aim",
+          pin: wom.pin,
+          aim: aim,
           eventId: eventId,
           sessionId: sessionId,
         });
@@ -573,3 +613,54 @@ const getIsPointInsidePolygon = (point: number[], vertices: number[][]) => {
 
   return inside;
 };
+
+export const moveTotems = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      cors(request, response, async () => {
+        console.log(request.body);
+
+        if (request.method !== "GET") {
+          response.status(403).send("Forbidden!");
+          return;
+        }
+
+        let ob = {};
+        const batch = db.batch();
+        const providers = await providersCollectionRef().get();
+        for (let index = 0; index < providers.docs.length; index++) {
+          const provider = providers.docs[index].data();
+          console.log(provider.name);
+
+          const events = await eventCollectionRef(provider.id).get();
+          for (let k = 0; k < events.docs.length; k++) {
+            const event = events.docs[k].data();
+
+            const totems = await totemCollectionRef(
+              provider.id,
+              event.id
+            ).get();
+
+            for (let i = 0; i < totems.docs.length; i++) {
+              const t = totems.docs[i].data();
+              ob = {
+                ...t,
+                eventId: event.id,
+                sessionId: event.activeSessionId,
+                dedicated: true,
+              };
+              console.log(ob);
+              batch.set(providerTotemDocRef(provider.id, t.id), ob);
+            }
+          }
+        }
+
+        await batch.commit();
+        response.send({
+          providers: providers.docs.length,
+          totem: ob,
+        });
+      });
+    }
+  );
