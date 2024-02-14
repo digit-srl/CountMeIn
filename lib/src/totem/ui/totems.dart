@@ -31,9 +31,11 @@ class TotemsCardWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final totems =
-        ref.watch(getTotemsByEventProvider(providerId, eventId)).valueOrNull ??
-            [];
+    final totems = ref
+            .watch(
+                getTotemsByEventProvider(providerId, eventId, dedicated: false))
+            .valueOrNull ??
+        [];
     if (totems.isEmpty) return const SizedBox.shrink();
     return CMICard(
       child: Column(

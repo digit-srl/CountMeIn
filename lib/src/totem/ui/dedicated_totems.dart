@@ -1,4 +1,5 @@
 import 'package:countmein/src/totem/ui/totems.dart';
+import 'package:countmein/src/totem/util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:countmein/cloud.dart';
 import 'package:countmein/constants.dart';
@@ -25,8 +26,11 @@ class DedicatedTotemsCardWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final totems =
-        ref.watch(getTotemsProvider(providerId, eventId)).valueOrNull ?? [];
+    final totems = ref
+            .watch(
+                getTotemsByEventProvider(providerId, eventId, dedicated: true))
+            .valueOrNull ??
+        [];
     if (totems.isEmpty) return const SizedBox.shrink();
     return CMICard(
       child: Column(
@@ -50,14 +54,14 @@ class DedicatedTotemsCardWidget extends ConsumerWidget {
                         PopupMenuButton<QrCodeAction>(
                           icon: const Icon(Icons.more_vert),
                           itemBuilder: (BuildContext context) =>
-                          <PopupMenuEntry<QrCodeAction>>[
+                              <PopupMenuEntry<QrCodeAction>>[
                             PopupMenuItem<QrCodeAction>(
                               enabled: sessionId != null,
                               value: QrCodeAction.goToQrCode,
                               child: const Text('Vai alla pagina'),
                               onTap: () {
                                 context.go(
-                                    '/embedded/$providerId/$eventId/$sessionId/${totems[index].id}');
+                                    '/embedded/$providerId/${totems[index].id}');
                               },
                             ),
                             PopupMenuItem<QrCodeAction>(
@@ -67,7 +71,7 @@ class DedicatedTotemsCardWidget extends ConsumerWidget {
                               onTap: () {
                                 Clipboard.setData(ClipboardData(
                                     text:
-                                    'https://cmi.digit.srl//embedded/$providerId/$eventId/$sessionId/${totems[index].id}'));
+                                        'https://cmi.digit.srl//embedded/$providerId/${totems[index].id}'));
                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                     content: Text(
                                         'Link ${totems[index].name} copiato negli appunti')));
@@ -77,8 +81,8 @@ class DedicatedTotemsCardWidget extends ConsumerWidget {
                               value: QrCodeAction.copyQrCode,
                               child: const Text('Copia QR-Code'),
                               onTap: () {
-                                final qr =
-                                    '$totemBaseUrl/$providerId/$eventId/${totems[index].id}${totems[index].requestId != null ? '/${totems[index].requestId}' : ''}';
+                                final qr = getTotemQRCode(providerId,
+                                    totems[index].id, totems[index].requestId);
                                 Clipboard.setData(ClipboardData(
                                   text: qr,
                                 ));
@@ -92,8 +96,9 @@ class DedicatedTotemsCardWidget extends ConsumerWidget {
                               child: const Text('Reset contatori'),
                               onTap: () {
                                 Cloud.totemDoc(
-                                    providerId, eventId, totems[index].id)
-                                    .update({
+                                  providerId,
+                                  totems[index].id,
+                                ).update({
                                   'count': 0,
                                   'totalCount': 0,
                                 });

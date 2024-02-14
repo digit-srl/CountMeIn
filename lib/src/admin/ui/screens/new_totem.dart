@@ -50,7 +50,7 @@ class NewTotemScreen extends HookConsumerWidget {
     final initialSelectedEvent =
         events.firstWhereOrNull((e) => e.id == initialTotem?.eventId);
     final selectedEvent = useState<CMIEvent?>(initialSelectedEvent);
-
+    final isStatic = useState<bool>(initialTotem?.isStatic ?? true);
     return Dialog(
       child: Container(
         constraints: BoxConstraints(maxWidth: 700),
@@ -68,6 +68,19 @@ class NewTotemScreen extends HookConsumerWidget {
                       controller: totemController,
                       validator: nameSurnameValidator,
                     ),
+                  ),
+                  const SizedBox(width: 16),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text('Statico'),
+                      Switch(
+                        value: isStatic.value,
+                        onChanged: (value) {
+                          isStatic.value = value;
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -221,11 +234,12 @@ class NewTotemScreen extends HookConsumerWidget {
                   final totem = EmbeddedData(
                     name: totemController.text.trim(),
                     id: initialTotem?.id ?? const Uuid().v4(),
-                    isStatic: true,
-                    requestId: null,
+                    isStatic: isStatic.value,
+                    requestId: isStatic.value ? null : 'abcded',
                     position: position,
                     eventId: selectedEvent.value?.id,
                     updatedOn: DateTime.now(),
+                    dedicated: false,
                     radius: int.parse(radiusController.text.trim()),
                   );
                   final navigator = Navigator.of(context);
@@ -233,7 +247,7 @@ class NewTotemScreen extends HookConsumerWidget {
                   final batch = FirebaseFirestore.instance.batch();
 
                   batch.set(
-                    Cloud.providerTotemDoc(
+                    Cloud.totemDoc(
                       providerId,
                       totem.id,
                     ),

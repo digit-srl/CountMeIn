@@ -17,8 +17,10 @@ class ProviderTotemsWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final totems =
-        ref.watch(getProviderTotemsProvider(providerId)).valueOrNull ?? [];
+    final totems = ref
+            .watch(getProviderTotemsProvider(providerId, dedicated: false))
+            .valueOrNull ??
+        [];
 
     return GenericGridViewBuilder(
       itemCount: totems.length + 1,

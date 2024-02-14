@@ -194,6 +194,10 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                     value: eventData?.id,
                     copyable: true,
                   ),
+                  InfoText(
+                    label: 'Data Creazione',
+                    value: eventData?.createdOn.format,
+                  ),
                   Row(
                     children: [
                       Flexible(
@@ -308,9 +312,11 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                                 final res = await ask(context,
                                     'Sicuro di voler eliminare questo evento');
                                 if (res ?? false) {
-                                  await Cloud.eventDoc(
-                                          widget.providerId, widget.eventId)
-                                      .delete();
+                                  final batch =
+                                      FirebaseFirestore.instance.batch();
+                                  batch.delete(Cloud.eventDoc(
+                                      widget.providerId, widget.eventId));
+                                  await batch.commit();
                                   n.pop();
                                 }
                               },

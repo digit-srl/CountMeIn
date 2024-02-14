@@ -6,7 +6,7 @@ part of 'embedded_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getTotemDataHash() => r'5e47ebf46a457490c3480ad2e3cf4c6ed877bcfa';
+String _$getTotemDataHash() => r'e1832f9fc9dd09b924792ffdfb8701aae475e681';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -205,7 +205,7 @@ class _GetTotemDataProviderElement
   String get totemId => (origin as GetTotemDataProvider).totemId;
 }
 
-String _$totemNotifierHash() => r'52b5b7fc63bd46e1599127fd49db5a372d61dfee';
+String _$totemNotifierHash() => r'dbacb98176d11755791a5ccb1dfce28b3e194ad5';
 
 abstract class _$TotemNotifier
     extends BuildlessAutoDisposeNotifier<AsyncValue<EmbeddedData>> {

@@ -17,6 +17,7 @@ class EmbeddedData with _$EmbeddedData {
     String? sessionId,
     required int radius,
     @Default(false) bool isStatic,
+    @Default(false) bool dedicated,
     @Default(0) int count,
     @Default(0) int totalCount,
     @MyDateTimeConverter() required DateTime updatedOn,

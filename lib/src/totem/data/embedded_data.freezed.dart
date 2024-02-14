@@ -27,6 +27,7 @@ mixin _$EmbeddedData {
   String? get sessionId => throw _privateConstructorUsedError;
   int get radius => throw _privateConstructorUsedError;
   bool get isStatic => throw _privateConstructorUsedError;
+  bool get dedicated => throw _privateConstructorUsedError;
   int get count => throw _privateConstructorUsedError;
   int get totalCount => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
@@ -54,6 +55,7 @@ abstract class $EmbeddedDataCopyWith<$Res> {
       String? sessionId,
       int radius,
       bool isStatic,
+      bool dedicated,
       int count,
       int totalCount,
       @MyDateTimeConverter() DateTime updatedOn,
@@ -80,6 +82,7 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
     Object? sessionId = freezed,
     Object? radius = null,
     Object? isStatic = null,
+    Object? dedicated = null,
     Object? count = null,
     Object? totalCount = null,
     Object? updatedOn = null,
@@ -113,6 +116,10 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
       isStatic: null == isStatic
           ? _value.isStatic
           : isStatic // ignore: cast_nullable_to_non_nullable
+              as bool,
+      dedicated: null == dedicated
+          ? _value.dedicated
+          : dedicated // ignore: cast_nullable_to_non_nullable
               as bool,
       count: null == count
           ? _value.count
@@ -150,6 +157,7 @@ abstract class _$$EmbeddedDataImplCopyWith<$Res>
       String? sessionId,
       int radius,
       bool isStatic,
+      bool dedicated,
       int count,
       int totalCount,
       @MyDateTimeConverter() DateTime updatedOn,
@@ -174,6 +182,7 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
     Object? sessionId = freezed,
     Object? radius = null,
     Object? isStatic = null,
+    Object? dedicated = null,
     Object? count = null,
     Object? totalCount = null,
     Object? updatedOn = null,
@@ -208,6 +217,10 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
           ? _value.isStatic
           : isStatic // ignore: cast_nullable_to_non_nullable
               as bool,
+      dedicated: null == dedicated
+          ? _value.dedicated
+          : dedicated // ignore: cast_nullable_to_non_nullable
+              as bool,
       count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
@@ -239,6 +252,7 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
       this.sessionId,
       required this.radius,
       this.isStatic = false,
+      this.dedicated = false,
       this.count = 0,
       this.totalCount = 0,
       @MyDateTimeConverter() required this.updatedOn,
@@ -264,6 +278,9 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
   final bool isStatic;
   @override
   @JsonKey()
+  final bool dedicated;
+  @override
+  @JsonKey()
   final int count;
   @override
   @JsonKey()
@@ -277,7 +294,7 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
 
   @override
   String toString() {
-    return 'EmbeddedData(name: $name, id: $id, requestId: $requestId, eventId: $eventId, sessionId: $sessionId, radius: $radius, isStatic: $isStatic, count: $count, totalCount: $totalCount, updatedOn: $updatedOn, position: $position)';
+    return 'EmbeddedData(name: $name, id: $id, requestId: $requestId, eventId: $eventId, sessionId: $sessionId, radius: $radius, isStatic: $isStatic, dedicated: $dedicated, count: $count, totalCount: $totalCount, updatedOn: $updatedOn, position: $position)';
   }
 
   @override
@@ -295,6 +312,8 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
             (identical(other.radius, radius) || other.radius == radius) &&
             (identical(other.isStatic, isStatic) ||
                 other.isStatic == isStatic) &&
+            (identical(other.dedicated, dedicated) ||
+                other.dedicated == dedicated) &&
             (identical(other.count, count) || other.count == count) &&
             (identical(other.totalCount, totalCount) ||
                 other.totalCount == totalCount) &&
@@ -306,8 +325,20 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, id, requestId, eventId,
-      sessionId, radius, isStatic, count, totalCount, updatedOn, position);
+  int get hashCode => Object.hash(
+      runtimeType,
+      name,
+      id,
+      requestId,
+      eventId,
+      sessionId,
+      radius,
+      isStatic,
+      dedicated,
+      count,
+      totalCount,
+      updatedOn,
+      position);
 
   @JsonKey(ignore: true)
   @override
@@ -332,6 +363,7 @@ abstract class _EmbeddedData implements EmbeddedData {
       final String? sessionId,
       required final int radius,
       final bool isStatic,
+      final bool dedicated,
       final int count,
       final int totalCount,
       @MyDateTimeConverter() required final DateTime updatedOn,
@@ -354,6 +386,8 @@ abstract class _EmbeddedData implements EmbeddedData {
   int get radius;
   @override
   bool get isStatic;
+  @override
+  bool get dedicated;
   @override
   int get count;
   @override

@@ -4,6 +4,7 @@ import 'package:countmein/src/admin/ui/widgets/gender_card.dart';
 import 'package:countmein/src/totem/ui/embedded_screen.dart';
 import 'package:countmein/ui/screens/admin_user_details.dart';
 import 'package:countmein/ui/widgets/loading.dart';
+import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -109,7 +110,7 @@ class UsersListWidget extends ConsumerWidget {
                               children: [
                                 if (user.checkInAt != null)
                                   Tooltip(
-                                    message: dateFormat.format(user.checkInAt!),
+                                    message: user.checkInAt!.format,
                                     child: const Icon(
                                       Icons.arrow_circle_down,
                                       color: Colors.green,

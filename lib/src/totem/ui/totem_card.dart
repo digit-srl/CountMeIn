@@ -20,7 +20,7 @@ class TotemCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.go('/embedded2/$providerId/${totem.id}');
+        context.go('/embedded/$providerId/${totem.id}');
       },
       child: Card(
         color: Colors.red[200],
@@ -54,7 +54,8 @@ class TotemCardWidget extends StatelessWidget {
                       value: QrCodeAction.copyQrCode,
                       child: const Text('Copia QR-Code'),
                       onTap: () {
-                        final qr = getTotemQRCode(providerId, totem.id);
+                        final qr = getTotemQRCode(
+                            providerId, totem.id, totem.requestId);
                         Clipboard.setData(ClipboardData(
                           text: qr,
                         ));
@@ -70,7 +71,7 @@ class TotemCardWidget extends StatelessWidget {
                       value: QrCodeAction.resetCounters,
                       child: const Text('Reset contatori'),
                       onTap: () {
-                        Cloud.providerTotemDoc(providerId, totem.id).update({
+                        Cloud.totemDoc(providerId, totem.id).update({
                           'count': 0,
                           'totalCount': 0,
                         });

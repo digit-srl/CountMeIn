@@ -15,6 +15,7 @@ _$EmbeddedDataImpl _$$EmbeddedDataImplFromJson(Map<String, dynamic> json) =>
       sessionId: json['sessionId'] as String?,
       radius: json['radius'] as int,
       isStatic: json['isStatic'] as bool? ?? false,
+      dedicated: json['dedicated'] as bool? ?? false,
       count: json['count'] as int? ?? 0,
       totalCount: json['totalCount'] as int? ?? 0,
       updatedOn:
@@ -32,6 +33,7 @@ Map<String, dynamic> _$$EmbeddedDataImplToJson(_$EmbeddedDataImpl instance) =>
       'sessionId': instance.sessionId,
       'radius': instance.radius,
       'isStatic': instance.isStatic,
+      'dedicated': instance.dedicated,
       'count': instance.count,
       'totalCount': instance.totalCount,
       'updatedOn': const MyDateTimeConverter().toJson(instance.updatedOn),

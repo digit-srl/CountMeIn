@@ -27,10 +27,6 @@ class AssignTotemDialog extends HookConsumerWidget {
     final totems =
         ref.watch(getAvailableTotemsProvider(providerId)).valueOrNull ?? [];
     final selectedTotem = useState<EmbeddedData?>(null);
-    final startDate = useState<DateTime>(DateTime.now());
-    final startTime = useState<TimeOfDay?>(null);
-    final endDate = useState<DateTime>(DateTime.now());
-    final endTime = useState<TimeOfDay?>(null);
     return Dialog(
       child: Container(
         margin: const EdgeInsets.all(16.0),
@@ -60,19 +56,7 @@ class AssignTotemDialog extends HookConsumerWidget {
                       final nav = Navigator.of(context);
                       final batch = FirebaseFirestore.instance.batch();
                       batch.set(
-                          Cloud.sessionDoc(
-                            EventIds(
-                                providerId: providerId,
-                                eventId: eventId,
-                                sessionId: sessionId),
-                          ),
-                          {
-                            'startAt': Timestamp.fromDate(startDate.value),
-                            'endAt': Timestamp.fromDate(endDate.value),
-                          },
-                          SetOptions(merge: true));
-                      batch.set(
-                          Cloud.providerTotemDoc(
+                          Cloud.totemDoc(
                               providerId, selectedTotem.value!.id),
                           {
                             'eventId': eventId,
@@ -84,7 +68,7 @@ class AssignTotemDialog extends HookConsumerWidget {
                       nav.pop();
                     }
                   : null,
-              child: Text('Salva'),
+              child: const Text('Salva'),
             ),
           ],
         ),

@@ -2,18 +2,9 @@ import 'package:countmein/cloud.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/totem/data/embedded_data.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:collection/collection.dart';
 
 part 'totems_notifier.g.dart';
-
-@riverpod
-Stream<List<EmbeddedData>> getTotems(
-  GetTotemsRef ref,
-  String providerId,
-  String eventId,
-) async* {
-  final stream = Cloud.totemCollection(providerId, eventId).snapshots();
-  yield* emb(stream);
-}
 
 Stream<List<EmbeddedData>> emb(Stream stream) async* {
   await for (final snap in stream) {
@@ -34,12 +25,11 @@ Stream<List<EmbeddedData>> emb(Stream stream) async* {
 
 @riverpod
 Stream<List<EmbeddedData>> getTotemsByEvent(
-  GetTotemsByEventRef ref,
-  String providerId,
-  String eventId,
-) async* {
-  final stream = Cloud.providerTotemCollection(providerId)
+    GetTotemsByEventRef ref, String providerId, String eventId,
+    {bool dedicated = true}) async* {
+  final stream = Cloud.totemCollection(providerId)
       .where('eventId', isEqualTo: eventId)
+      .where('dedicated', isEqualTo: dedicated)
       .snapshots();
   yield* emb(stream);
 }
@@ -53,7 +43,7 @@ Stream<List<EmbeddedData>> getAvailableTotems(
     yield* Stream.value(
         totems.where((element) => element.eventId == null).toList());
   } else {
-    final stream = Cloud.providerTotemCollection(providerId)
+    final stream = Cloud.totemCollection(providerId)
         .where('eventId', isEqualTo: null)
         .snapshots();
     yield* emb(stream);
@@ -62,9 +52,15 @@ Stream<List<EmbeddedData>> getAvailableTotems(
 
 @riverpod
 Stream<List<EmbeddedData>> getProviderTotems(
-    GetProviderTotemsRef ref, String providerId) async* {
-  var stream = Cloud.providerTotemCollection(providerId).snapshots();
-  yield* emb(stream);
+    GetProviderTotemsRef ref, String providerId,
+    {bool? dedicated}) async* {
+  if (dedicated != null) {
+    yield* emb(Cloud.totemCollection(providerId)
+        .where('dedicated', isEqualTo: dedicated)
+        .snapshots());
+  } else {
+    yield* emb(Cloud.totemCollection(providerId).snapshots());
+  }
 }
 
 @riverpod
@@ -78,7 +74,7 @@ Stream<List<EmbeddedData>> getSessionTotems(GetSessionTotemsRef ref,
             element.eventId == eventId && element.sessionId == sessionId)
         .toList());
   } else {
-    final stream = Cloud.providerTotemCollection(providerId)
+    final stream = Cloud.totemCollection(providerId)
         .where('eventId', isEqualTo: eventId)
         .where('sessionId', isEqualTo: sessionId)
         .snapshots();
@@ -92,18 +88,20 @@ Stream<EmbeddedData> getTotemData(
   if (ref.exists(getProviderTotemsProvider(providerId))) {
     final totems =
         ref.watch(getProviderTotemsProvider(providerId)).valueOrNull ?? [];
-    yield* Stream.value(
-        totems.firstWhere((element) => element.id == totemId));
-  } else {
-    final stream = Cloud.providerTotemDoc(providerId, totemId).snapshots();
-    await for (final snap in stream) {
-      final data = snap.data();
-      if (snap.exists && data != null) {
-        final totemData = EmbeddedData.fromJson(data);
-        yield totemData;
-      } else {
-        throw Exception('doc not exist');
-      }
+    final t = totems.firstWhereOrNull((element) => element.id == totemId);
+    if (t != null) {
+      yield* Stream.value(t);
+      return;
+    }
+  }
+  final stream = Cloud.totemDoc(providerId, totemId).snapshots();
+  await for (final snap in stream) {
+    final data = snap.data();
+    if (snap.exists && data != null) {
+      final totemData = EmbeddedData.fromJson(data);
+      yield totemData;
+    } else {
+      throw Exception('doc not exist');
     }
   }
 }

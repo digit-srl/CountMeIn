@@ -58,7 +58,7 @@ class _EmbeddedScreen2State extends ConsumerState<EmbeddedScreen2> {
   Widget build(BuildContext context) {
     final state =
         ref.watch(getTotemDataProvider(widget.providerId, widget.totemId));
-    final totem = state.value;
+    final totem = state.valueOrNull;
     final size = MediaQuery.sizeOf(context);
     final width = min(size.width, size.height) / 2;
 
@@ -78,7 +78,8 @@ class _EmbeddedScreen2State extends ConsumerState<EmbeddedScreen2> {
               color: Colors.white,
               onPressed: () {
                 Clipboard.setData(ClipboardData(
-                    text: getTotemQRCode(widget.providerId, totem.id)));
+                    text: getTotemQRCode(
+                        widget.providerId, totem.id, totem.requestId)));
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
@@ -96,7 +97,10 @@ class _EmbeddedScreen2State extends ConsumerState<EmbeddedScreen2> {
           data: (data) => Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(data.name,style: TextStyle(fontSize: 26),),
+              Text(
+                data.name,
+                style: const TextStyle(fontSize: 26),
+              ),
               Text('Scansioni: ${data.count}'),
               const SizedBox(height: 16),
               Screenshot(
@@ -107,8 +111,8 @@ class _EmbeddedScreen2State extends ConsumerState<EmbeddedScreen2> {
                   child: QrImageView(
                     backgroundColor: Colors.white,
                     padding: const EdgeInsets.all(16),
-                    data:
-                        'https://link.wom.social/cmi/${widget.providerId}/${widget.totemId}',
+                    data: getTotemQRCode(
+                        widget.providerId, widget.totemId, data.requestId),
                   ),
                 ),
               ),

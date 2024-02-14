@@ -1,12 +1,11 @@
 import 'dart:math';
 
 import 'package:countmein/src/totem/application/embedded_notifier.dart';
+import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:intl/intl.dart';
-
-final dateFormat = DateFormat('dd MMMM yyyy HH:mm');
 
 class EmbeddedScreen extends ConsumerWidget {
   final String totemId;
@@ -48,7 +47,7 @@ class EmbeddedScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text('aggiornato il ${dateFormat.format(data.updatedOn)}'),
+              Text('aggiornato il ${data.updatedOn.format}'),
             ],
           ),
           error: (e, s) => Text(e.toString()),

@@ -375,7 +375,7 @@ class RouterNotifier extends ChangeNotifier {
             );
           },
         ),
-        GoRoute(
+        /*GoRoute(
           path: '/embedded/:providerId/:eventId/:sessionId/:totemId',
           builder: (context, state) {
             return EmbeddedScreen(
@@ -386,13 +386,13 @@ class RouterNotifier extends ChangeNotifier {
               // privateId: state.params['privateId'] as String,
             );
           },
-        ),
+        ),*/
         GoRoute(
-          path: '/embedded2/:providerId/:totemId',
+          path: '/embedded/:providerId/:totemId',
           builder: (context, state) {
             return EmbeddedScreen2(
-              totemId: state.pathParameters['totemId'] as String,
               providerId: state.pathParameters['providerId'] as String,
+              totemId: state.pathParameters['totemId'] as String,
             );
           },
         ),

@@ -17,6 +17,7 @@ import 'package:countmein/src/totem/application/totems_notifier.dart';
 import 'package:countmein/src/totem/ui/embedded_screen.dart';
 import 'package:countmein/src/totem/ui/totem_card.dart';
 import 'package:countmein/src/totem/ui/totems.dart';
+import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -92,7 +93,7 @@ class SessionDetailsScreen extends HookConsumerWidget with CSVMixin {
                   children: [
                     InfoText(
                       label: 'Inizio',
-                      value: dateFormat.format(session.startAt),
+                      value: session.startAt.format,
                       iconButton: editDateButton,
                     ),
                     InfoText(
@@ -175,7 +176,6 @@ class SessionTotemsCardWidget extends ConsumerWidget {
             .watch(getSessionTotemsProvider(providerId, eventId, sessionId))
             .valueOrNull ??
         [];
-    if (totems.isEmpty) return const SizedBox.shrink();
     return CMICard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

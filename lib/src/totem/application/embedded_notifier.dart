@@ -15,7 +15,7 @@ Stream<EmbeddedData> getTotemData(
   String sessionId,
   String totemId,
 ) async* {
-  final stream = Cloud.totemDoc(providerId, eventId, totemId).snapshots();
+  final stream = Cloud.totemDoc(providerId, totemId).snapshots();
   late EmbeddedData totemData;
   await for (final snap in stream) {
     final data = snap.data();
@@ -45,7 +45,7 @@ class TotemNotifier extends _$TotemNotifier {
     });
 
     subscription =
-        Cloud.totemDoc(providerId, eventId, totemId).snapshots().listen((snap) {
+        Cloud.totemDoc(providerId, totemId).snapshots().listen((snap) {
       final data = snap.data();
       if (snap.exists && data != null) {
         final totemData = EmbeddedData.fromJson(data);

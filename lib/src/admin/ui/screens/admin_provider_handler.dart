@@ -171,10 +171,10 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Text('Totems'),
+          const Text('Totems'),
           ProviderTotemsWidget(providerId: providerId,),
           const SizedBox(height: 16),
-          Text('Eventi'),
+          const Text('Eventi'),
           CMICard(
             child: Consumer(builder: (context, ref, child) {
               final eventFilter = ref.watch(eventFilterNotifierProvider);

@@ -2,10 +2,14 @@ import 'package:countmein/domain/entities/qrcode_data.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:oktoast/oktoast.dart';
+
+final dateFormat = DateFormat('dd MMMM yyyy HH:mm');
 
 extension DateTimeX on DateTime {
   DateTime get midnight => DateTime(this.year, this.month, this.day);
+  String get format => dateFormat.format(this);
 
   DateTime get midnightUTC => DateTime.utc(this.year, this.month, this.day);
 }

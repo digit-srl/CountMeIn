@@ -545,6 +545,9 @@ class NewEventFormScreen extends HookConsumerWidget {
                           position: position,
                           updatedOn: DateTime.now(),
                           radius: int.parse(radiusController.text.trim()),
+                          dedicated: true,
+                          eventId: eventId,
+                          sessionId: session.id,
                         );
                         t.add(tmp);
                       }
@@ -564,7 +567,6 @@ class NewEventFormScreen extends HookConsumerWidget {
                       batch.set(
                         Cloud.totemDoc(
                           providerId,
-                          eventId,
                           t[i].id,
                         ),
                         t[i].toJson(),
