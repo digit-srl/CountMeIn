@@ -31,13 +31,41 @@ final womValidator = MultiValidator([
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
 ]);
 
-String? geoValidator(String? value) {
+String? radiusValidator(String? value) {
   if (value == null || value.isEmpty) {
     return null;
   }
 
   if (double.tryParse(value) == null) {
     return 'Valore non valido';
+  }
+  return null;
+}
+
+String? latitudeValidator(String? value) {
+  if (value == null || value.isEmpty) {
+    return null;
+  }
+  final latitude = double.tryParse(value ?? '');
+  if (latitude != null) {
+    if (latitude >= -90 && latitude <= 90) {
+      return null;
+    }
+    return 'La latitudine deve tra [-90,90]';
+  }
+  return null;
+}
+
+String? longitudeValidator(String? value) {
+  if (value == null || value.isEmpty) {
+    return null;
+  }
+  final longitude = double.tryParse(value ?? '');
+  if (longitude != null) {
+    if (longitude >= -180 && longitude <= 180) {
+      return null;
+    }
+    return 'La latitudine deve essere tra [-180,180]';
   }
   return null;
 }
@@ -58,8 +86,6 @@ class NewEventFormScreen extends HookConsumerWidget {
   final _formKey = GlobalKey<FormState>();
 
   final dayFormat = DateFormat('EEEE', 'it');
-
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -116,6 +142,7 @@ class NewEventFormScreen extends HookConsumerWidget {
               // const SizedBox(width: 8),
               Flexible(
                 child: CMIDatePicker(
+                  initialDate: DateTime.now(),
                   onChanged: (d) {
                     startAt.value = d;
                   },
@@ -289,7 +316,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                         RegExp(r'^(\d+)?\.?\d{0,8}'))
                   ],
                   decoration: const InputDecoration(hintText: 'Latitude'),
-                  validator: geoValidator,
+                  validator: latitudeValidator,
                 ),
               ),
               const SizedBox(width: 16),
@@ -301,7 +328,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                         RegExp(r'^(\d+)?\.?\d{0,8}'))
                   ],
                   decoration: const InputDecoration(hintText: 'Longitude'),
-                  validator: geoValidator,
+                  validator: longitudeValidator,
                 ),
               ),
               const SizedBox(width: 16),
@@ -311,7 +338,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(
                       hintText: 'Raggio', suffixText: 'metri'),
-                  validator: geoValidator,
+                  validator: radiusValidator,
                 ),
               ),
             ],

@@ -5,6 +5,7 @@ import 'package:countmein/src/admin/ui/screens/new_totem.dart';
 import 'package:countmein/src/admin/ui/widgets/generic_grid_view.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/totem/application/totems_notifier.dart';
+import 'package:countmein/src/totem/ui/totem_card.dart';
 import 'package:countmein/ui/widgets/cmi_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +19,7 @@ class ProviderTotemsWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final totems = ref
-            .watch(getProviderTotemsProvider(providerId, dedicated: false))
+            .watch(getFreeTotemsProvider(providerId,))
             .valueOrNull ??
         [];
 
@@ -30,7 +31,7 @@ class ProviderTotemsWidget extends ConsumerWidget {
             onTap: () {
               showDialog(
                   context: context,
-                  builder: (context) => NewTotemScreen(providerId: providerId));
+                  builder: (context) => NewTotemDialog(providerId: providerId));
               // final path =
               //     '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/$providerId/${NewTotemScreen.routeName}';
               // context.go(path);
@@ -47,7 +48,8 @@ class ProviderTotemsWidget extends ConsumerWidget {
           );
         }
         final totem = totems[index - 1];
-        return CMICard(
+        return TotemCardWidget(providerId: providerId, totem: totem);
+       /* return CMICard(
           onTap: () {
             showDialog(
                 context: context,
@@ -76,7 +78,7 @@ class ProviderTotemsWidget extends ConsumerWidget {
                 ),
             ],
           ),
-        );
+        );*/
       },
     );
   }

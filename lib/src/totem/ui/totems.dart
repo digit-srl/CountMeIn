@@ -16,14 +16,14 @@ enum QrCodeAction {
   copyQrCodeLink,
   copyQrCode,
   resetCounters,
-  removeTotem,
+  deleteTotem,
 }
 
-class TotemsCardWidget extends ConsumerWidget {
+class AssignedTotemsWidget extends ConsumerWidget {
   final String providerId;
   final String eventId;
 
-  const TotemsCardWidget({
+  const AssignedTotemsWidget({
     super.key,
     required this.providerId,
     required this.eventId,
@@ -33,7 +33,7 @@ class TotemsCardWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final totems = ref
             .watch(
-                getTotemsByEventProvider(providerId, eventId, dedicated: false))
+                getTotemsByEventProvider(providerId, eventId, false))
             .valueOrNull ??
         [];
     if (totems.isEmpty) return const SizedBox.shrink();

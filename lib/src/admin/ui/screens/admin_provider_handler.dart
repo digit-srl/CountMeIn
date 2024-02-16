@@ -139,6 +139,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                           : null,
                     ),
                     value: Wrap(
+                        runSpacing:4,
                       children: [
                         if (provider?.managers != null)
                           ...provider!.managers.values.map(

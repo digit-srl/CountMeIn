@@ -23,8 +23,10 @@ mixin _$EmbeddedData {
   String get name => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   String? get requestId => throw _privateConstructorUsedError;
+  String? get eventName => throw _privateConstructorUsedError;
   String? get eventId => throw _privateConstructorUsedError;
   String? get sessionId => throw _privateConstructorUsedError;
+  String? get sessionName => throw _privateConstructorUsedError;
   int get radius => throw _privateConstructorUsedError;
   bool get isStatic => throw _privateConstructorUsedError;
   bool get dedicated => throw _privateConstructorUsedError;
@@ -51,8 +53,10 @@ abstract class $EmbeddedDataCopyWith<$Res> {
       {String name,
       String id,
       String? requestId,
+      String? eventName,
       String? eventId,
       String? sessionId,
+      String? sessionName,
       int radius,
       bool isStatic,
       bool dedicated,
@@ -78,8 +82,10 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
     Object? name = null,
     Object? id = null,
     Object? requestId = freezed,
+    Object? eventName = freezed,
     Object? eventId = freezed,
     Object? sessionId = freezed,
+    Object? sessionName = freezed,
     Object? radius = null,
     Object? isStatic = null,
     Object? dedicated = null,
@@ -101,6 +107,10 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
           ? _value.requestId
           : requestId // ignore: cast_nullable_to_non_nullable
               as String?,
+      eventName: freezed == eventName
+          ? _value.eventName
+          : eventName // ignore: cast_nullable_to_non_nullable
+              as String?,
       eventId: freezed == eventId
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
@@ -108,6 +118,10 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
       sessionId: freezed == sessionId
           ? _value.sessionId
           : sessionId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sessionName: freezed == sessionName
+          ? _value.sessionName
+          : sessionName // ignore: cast_nullable_to_non_nullable
               as String?,
       radius: null == radius
           ? _value.radius
@@ -153,8 +167,10 @@ abstract class _$$EmbeddedDataImplCopyWith<$Res>
       {String name,
       String id,
       String? requestId,
+      String? eventName,
       String? eventId,
       String? sessionId,
+      String? sessionName,
       int radius,
       bool isStatic,
       bool dedicated,
@@ -178,8 +194,10 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
     Object? name = null,
     Object? id = null,
     Object? requestId = freezed,
+    Object? eventName = freezed,
     Object? eventId = freezed,
     Object? sessionId = freezed,
+    Object? sessionName = freezed,
     Object? radius = null,
     Object? isStatic = null,
     Object? dedicated = null,
@@ -201,6 +219,10 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
           ? _value.requestId
           : requestId // ignore: cast_nullable_to_non_nullable
               as String?,
+      eventName: freezed == eventName
+          ? _value.eventName
+          : eventName // ignore: cast_nullable_to_non_nullable
+              as String?,
       eventId: freezed == eventId
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
@@ -208,6 +230,10 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
       sessionId: freezed == sessionId
           ? _value.sessionId
           : sessionId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sessionName: freezed == sessionName
+          ? _value.sessionName
+          : sessionName // ignore: cast_nullable_to_non_nullable
               as String?,
       radius: null == radius
           ? _value.radius
@@ -248,8 +274,10 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
       {required this.name,
       required this.id,
       this.requestId,
+      this.eventName,
       this.eventId,
       this.sessionId,
+      this.sessionName,
       required this.radius,
       this.isStatic = false,
       this.dedicated = false,
@@ -268,9 +296,13 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
   @override
   final String? requestId;
   @override
+  final String? eventName;
+  @override
   final String? eventId;
   @override
   final String? sessionId;
+  @override
+  final String? sessionName;
   @override
   final int radius;
   @override
@@ -294,7 +326,7 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
 
   @override
   String toString() {
-    return 'EmbeddedData(name: $name, id: $id, requestId: $requestId, eventId: $eventId, sessionId: $sessionId, radius: $radius, isStatic: $isStatic, dedicated: $dedicated, count: $count, totalCount: $totalCount, updatedOn: $updatedOn, position: $position)';
+    return 'EmbeddedData(name: $name, id: $id, requestId: $requestId, eventName: $eventName, eventId: $eventId, sessionId: $sessionId, sessionName: $sessionName, radius: $radius, isStatic: $isStatic, dedicated: $dedicated, count: $count, totalCount: $totalCount, updatedOn: $updatedOn, position: $position)';
   }
 
   @override
@@ -306,9 +338,13 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.requestId, requestId) ||
                 other.requestId == requestId) &&
+            (identical(other.eventName, eventName) ||
+                other.eventName == eventName) &&
             (identical(other.eventId, eventId) || other.eventId == eventId) &&
             (identical(other.sessionId, sessionId) ||
                 other.sessionId == sessionId) &&
+            (identical(other.sessionName, sessionName) ||
+                other.sessionName == sessionName) &&
             (identical(other.radius, radius) || other.radius == radius) &&
             (identical(other.isStatic, isStatic) ||
                 other.isStatic == isStatic) &&
@@ -330,8 +366,10 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
       name,
       id,
       requestId,
+      eventName,
       eventId,
       sessionId,
+      sessionName,
       radius,
       isStatic,
       dedicated,
@@ -359,8 +397,10 @@ abstract class _EmbeddedData implements EmbeddedData {
       {required final String name,
       required final String id,
       final String? requestId,
+      final String? eventName,
       final String? eventId,
       final String? sessionId,
+      final String? sessionName,
       required final int radius,
       final bool isStatic,
       final bool dedicated,
@@ -379,9 +419,13 @@ abstract class _EmbeddedData implements EmbeddedData {
   @override
   String? get requestId;
   @override
+  String? get eventName;
+  @override
   String? get eventId;
   @override
   String? get sessionId;
+  @override
+  String? get sessionName;
   @override
   int get radius;
   @override

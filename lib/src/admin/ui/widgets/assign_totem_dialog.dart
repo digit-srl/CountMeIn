@@ -14,11 +14,15 @@ class AssignTotemDialog extends HookConsumerWidget {
   final String providerId;
   final String eventId;
   final String sessionId;
+  final String? eventName;
+  final String? sessionName;
 
   const AssignTotemDialog({
     super.key,
     required this.providerId,
     required this.eventId,
+    required this.eventName,
+    required this.sessionName,
     required this.sessionId,
   });
 
@@ -35,17 +39,18 @@ class AssignTotemDialog extends HookConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox(height: 16),
-            CMIDropdownButton<EmbeddedData>(
-              value: selectedTotem.value,
+            CMIDropdownButton<String>(
+              value: selectedTotem.value?.id,
               label: 'Seleziona Totem',
               items: totems
-                  .map((e) => DropdownMenuItem<EmbeddedData>(
-                        value: e,
+                  .map((e) => DropdownMenuItem<String>(
+                        value: e.id,
                         child: Text(e.name),
                       ))
                   .toList(),
               onChanged: (value) {
-                selectedTotem.value = value;
+                selectedTotem.value =
+                    totems.firstWhere((element) => element.id == value);
               },
             ),
             const SizedBox(height: 32),
@@ -56,11 +61,12 @@ class AssignTotemDialog extends HookConsumerWidget {
                       final nav = Navigator.of(context);
                       final batch = FirebaseFirestore.instance.batch();
                       batch.set(
-                          Cloud.totemDoc(
-                              providerId, selectedTotem.value!.id),
+                          Cloud.totemDoc(providerId, selectedTotem.value!.id),
                           {
                             'eventId': eventId,
                             'sessionId': sessionId,
+                            'eventName': eventName,
+                            'sessionName': sessionName,
                           },
                           SetOptions(merge: true));
 

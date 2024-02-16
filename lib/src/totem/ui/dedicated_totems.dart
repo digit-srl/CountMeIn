@@ -1,3 +1,4 @@
+import 'package:countmein/src/totem/ui/totem_card.dart';
 import 'package:countmein/src/totem/ui/totems.dart';
 import 'package:countmein/src/totem/util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -27,8 +28,7 @@ class DedicatedTotemsCardWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final totems = ref
-            .watch(
-                getTotemsByEventProvider(providerId, eventId, dedicated: true))
+            .watch(getTotemsByEventProvider(providerId, eventId, true))
             .valueOrNull ??
         [];
     if (totems.isEmpty) return const SizedBox.shrink();
@@ -43,7 +43,11 @@ class DedicatedTotemsCardWidget extends ConsumerWidget {
           GenericGridViewBuilder(
             itemCount: totems.length,
             itemBuilder: (BuildContext context, int index) {
-              return Card(
+              return TotemCardWidget(
+                providerId: providerId,
+                totem: totems[index],
+              );
+              /*return Card(
                 color: Colors.red[200],
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -119,7 +123,7 @@ class DedicatedTotemsCardWidget extends ConsumerWidget {
                     const Spacer(),
                   ],
                 ),
-              );
+              );*/
             },
           ),
         ],

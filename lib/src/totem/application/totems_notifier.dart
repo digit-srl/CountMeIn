@@ -6,6 +6,15 @@ import 'package:collection/collection.dart';
 
 part 'totems_notifier.g.dart';
 
+@Riverpod(keepAlive: true)
+Stream<List<EmbeddedData>> getTotems(
+  GetTotemsRef ref,
+  String providerId,
+) async* {
+  final stream = Cloud.totemCollection(providerId).snapshots();
+  yield* emb(stream);
+}
+
 Stream<List<EmbeddedData>> emb(Stream stream) async* {
   await for (final snap in stream) {
     final list = <EmbeddedData>[];
@@ -25,69 +34,54 @@ Stream<List<EmbeddedData>> emb(Stream stream) async* {
 
 @riverpod
 Stream<List<EmbeddedData>> getTotemsByEvent(
-    GetTotemsByEventRef ref, String providerId, String eventId,
-    {bool dedicated = true}) async* {
-  final stream = Cloud.totemCollection(providerId)
-      .where('eventId', isEqualTo: eventId)
-      .where('dedicated', isEqualTo: dedicated)
-      .snapshots();
-  yield* emb(stream);
+  GetTotemsByEventRef ref,
+  String providerId,
+  String eventId,
+  bool dedicated,
+) async* {
+  final totems = ref.watch(getTotemsProvider(providerId)).valueOrNull ?? [];
+  final output = totems
+      .where((element) =>
+          element.eventId == eventId && element.dedicated == dedicated)
+      .toList();
+  yield* Stream.value(output);
+}
+
+@riverpod
+Stream<List<EmbeddedData>> getFreeTotems(
+  GetFreeTotemsRef ref,
+  String providerId,
+) async* {
+  final totems = ref.watch(getTotemsProvider(providerId)).valueOrNull ?? [];
+  final output = totems.where((element) => !element.dedicated).toList();
+  yield* Stream.value(output);
 }
 
 @riverpod
 Stream<List<EmbeddedData>> getAvailableTotems(
     GetAvailableTotemsRef ref, String providerId) async* {
-  if (ref.exists(getProviderTotemsProvider(providerId))) {
-    final totems =
-        ref.watch(getProviderTotemsProvider(providerId)).valueOrNull ?? [];
-    yield* Stream.value(
-        totems.where((element) => element.eventId == null).toList());
-  } else {
-    final stream = Cloud.totemCollection(providerId)
-        .where('eventId', isEqualTo: null)
-        .snapshots();
-    yield* emb(stream);
-  }
-}
-
-@riverpod
-Stream<List<EmbeddedData>> getProviderTotems(
-    GetProviderTotemsRef ref, String providerId,
-    {bool? dedicated}) async* {
-  if (dedicated != null) {
-    yield* emb(Cloud.totemCollection(providerId)
-        .where('dedicated', isEqualTo: dedicated)
-        .snapshots());
-  } else {
-    yield* emb(Cloud.totemCollection(providerId).snapshots());
-  }
+  final totems = ref.watch(getTotemsProvider(providerId)).valueOrNull ?? [];
+  yield* Stream.value(
+      totems.where((element) => element.eventId == null).toList());
 }
 
 @riverpod
 Stream<List<EmbeddedData>> getSessionTotems(GetSessionTotemsRef ref,
     String providerId, String eventId, String sessionId) async* {
-  if (ref.exists(getProviderTotemsProvider(providerId))) {
-    final totems =
-        ref.watch(getProviderTotemsProvider(providerId)).valueOrNull ?? [];
-    yield* Stream.value(totems
-        .where((element) =>
-            element.eventId == eventId && element.sessionId == sessionId)
-        .toList());
-  } else {
-    final stream = Cloud.totemCollection(providerId)
-        .where('eventId', isEqualTo: eventId)
-        .where('sessionId', isEqualTo: sessionId)
-        .snapshots();
-    yield* emb(stream);
-  }
+  final totems = ref.watch(getTotemsProvider(providerId)).valueOrNull ?? [];
+  yield* Stream.value(totems
+      .where((element) =>
+          element.eventId == eventId &&
+          element.sessionId == sessionId &&
+          element.dedicated == false)
+      .toList());
 }
 
 @riverpod
 Stream<EmbeddedData> getTotemData(
     GetTotemDataRef ref, String providerId, String totemId) async* {
-  if (ref.exists(getProviderTotemsProvider(providerId))) {
-    final totems =
-        ref.watch(getProviderTotemsProvider(providerId)).valueOrNull ?? [];
+  if (ref.exists(getTotemsProvider(providerId))) {
+    final totems = ref.watch(getTotemsProvider(providerId)).valueOrNull ?? [];
     final t = totems.firstWhereOrNull((element) => element.id == totemId);
     if (t != null) {
       yield* Stream.value(t);

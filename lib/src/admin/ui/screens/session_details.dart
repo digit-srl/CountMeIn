@@ -109,6 +109,8 @@ class SessionDetailsScreen extends HookConsumerWidget with CSVMixin {
                   providerId: providerId,
                   eventId: eventId,
                   sessionId: sessionId,
+                  eventName: eventState.valueOrNull?.name,
+                  sessionName: session.name,
                 ),
                 UsersListWidget(
                   anonymous: anonymous,
@@ -150,12 +152,16 @@ class SessionTotemsCardWidget extends ConsumerWidget {
   final String providerId;
   final String eventId;
   final String sessionId;
+  final String? eventName;
+  final String? sessionName;
 
   const SessionTotemsCardWidget({
     super.key,
     required this.providerId,
     required this.eventId,
     required this.sessionId,
+    required this.eventName,
+    required this.sessionName,
   });
 
   void assignTotem(BuildContext context) {
@@ -166,6 +172,8 @@ class SessionTotemsCardWidget extends ConsumerWidget {
             providerId: providerId,
             eventId: eventId,
             sessionId: sessionId,
+            eventName: eventName,
+            sessionName: sessionName,
           );
         });
   }

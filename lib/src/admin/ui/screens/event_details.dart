@@ -535,7 +535,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                 eventId: ids.eventId,
                 sessionId: eventData.activeSessionId,
               ),
-              TotemsCardWidget(
+              AssignedTotemsWidget(
                 providerId: ids.providerId,
                 eventId: ids.eventId,
               ),
