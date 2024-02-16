@@ -6,16 +6,13 @@ const db = admin.firestore();
 import * as firestore from "@google-cloud/firestore";
 const cors = require("cors")({ origin: true });
 import {
-  eventCollectionRef,
   eventDocRef,
   eventPrivateUsersCollection,
   eventPrivateUsersDoc,
   providerDocRef,
   providerTotemDocRef,
-  providersCollectionRef,
   sessionDocRef,
   sessionPrivateUsersDoc,
-  totemCollectionRef,
 } from "./firestore_references";
 import { generateSecret, generateWom } from "./utils";
 const circleToPolygon = require("circle-to-polygon");
@@ -585,7 +582,7 @@ export const scan2 = functions
 
         response.status(200).send({
           status: "success",
-          link: " wom.link",
+          link: wom.link,
           pin: wom.pin,
           aim: aim,
           eventId: eventId,
@@ -613,7 +610,7 @@ const getIsPointInsidePolygon = (point: number[], vertices: number[][]) => {
 
   return inside;
 };
-
+/*
 export const moveTotems = functions
   .region("europe-west3")
   .https.onRequest(
@@ -664,3 +661,4 @@ export const moveTotems = functions
       });
     }
   );
+*/
