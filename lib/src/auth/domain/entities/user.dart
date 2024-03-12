@@ -15,6 +15,7 @@ enum UserRole {
   admin,
   collaborator,
   scanner,
+  eventManager,
   unknown;
 
   String get text {
@@ -25,10 +26,15 @@ enum UserRole {
         return 'Collaboratore';
       case UserRole.scanner:
         return 'Scanner';
+      case UserRole.eventManager:
+        return 'Manager';
       case UserRole.unknown:
         return 'Sconosciuto';
     }
   }
+
+  bool get canSeeAllEvents =>
+      switch (this) { UserRole.admin => true, _ => false };
 }
 
 @freezed

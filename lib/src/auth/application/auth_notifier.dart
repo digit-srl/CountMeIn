@@ -105,8 +105,8 @@ final userRoleProvider = Provider.family<UserRole, String>((ref, providerId) {
     if (state.user.role == PlatformRole.cmi) {
       return UserRole.admin;
     }
-    final provider = ref.watch(singleCMIProviderProvider(providerId));
-    final manager = provider.valueOrNull?.managers.values
+    final provider = ref.watch(singleCMIProviderProvider(providerId)).valueOrNull;
+    final manager = provider?.managers.values
         .firstWhereOrNull((element) => element.id == state.user.uid);
     role = manager?.role ?? UserRole.unknown;
   }

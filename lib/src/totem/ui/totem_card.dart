@@ -14,11 +14,13 @@ import '../../../utils.dart';
 class TotemCardWidget extends StatelessWidget {
   final EmbeddedData totem;
   final String providerId;
+  final bool deleteEnabled;
 
   const TotemCardWidget({
     super.key,
     required this.providerId,
     required this.totem,
+    this.deleteEnabled = false,
   });
 
   @override
@@ -88,32 +90,51 @@ class TotemCardWidget extends StatelessWidget {
                           );
                         },
                       ),
-                      PopupMenuItem<QrCodeAction>(
-                        value: QrCodeAction.resetCounters,
-                        child: const Text('Reset contatori'),
-                        onTap: () {
-                          //TODO dobbiamo scollegare il totem dalla sessione?
-                          Cloud.totemDoc(providerId, totem.id).update({
-                            'count': 0,
-                            'totalCount': 0,
-                          });
-                        },
-                      ),
-                      PopupMenuItem<QrCodeAction>(
-                        value: QrCodeAction.deleteTotem,
-                        enabled: true,
-                        child: const Text(
-                          'Elimina',
-                          style: TextStyle(color: Colors.red),
+                      if (totem.dedicated)
+                        PopupMenuItem<QrCodeAction>(
+                          value: QrCodeAction.resetCounters,
+                          child: const Text('Reset contatori'),
+                          onTap: () {
+                            //TODO dobbiamo scollegare il totem dalla sessione?
+                            Cloud.totemDoc(providerId, totem.id).update({
+                              'count': 0,
+                              'totalCount': 0,
+                            });
+                          },
+                        )
+                      else
+                        PopupMenuItem<QrCodeAction>(
+                          value: QrCodeAction.removeLinking,
+                          child: const Text('Rimuovi collegamento'),
+                          onTap: () async {
+                            final res = await ask(context,
+                                'Sicuro di voler rimuove il collegamento dell\'evento?');
+                            if (res ?? false) {
+                              Cloud.totemDoc(providerId, totem.id).update({
+                                'eventId': null,
+                                'sessionId': null,
+                                'eventName': null,
+                                'sessionName': null,
+                              });
+                            }
+                          },
                         ),
-                        onTap: () async {
-                          final res = await ask(context,
-                              'Sicuro di voler eliminare questo totem?');
-                          if (res ?? false) {
-                            Cloud.totemDoc(providerId, totem.id).delete();
-                          }
-                        },
-                      ),
+                      if (deleteEnabled)
+                        PopupMenuItem<QrCodeAction>(
+                          value: QrCodeAction.deleteTotem,
+                          enabled: true,
+                          child: const Text(
+                            'Elimina',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          onTap: () async {
+                            final res = await ask(context,
+                                'Sicuro di voler eliminare questo totem?');
+                            if (res ?? false) {
+                              Cloud.totemDoc(providerId, totem.id).delete();
+                            }
+                          },
+                        ),
                     ],
                   ),
                 ],

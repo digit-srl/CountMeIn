@@ -17,6 +17,7 @@ enum QrCodeAction {
   copyQrCode,
   resetCounters,
   deleteTotem,
+  removeLinking,
 }
 
 class AssignedTotemsWidget extends ConsumerWidget {
@@ -32,8 +33,7 @@ class AssignedTotemsWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final totems = ref
-            .watch(
-                getTotemsByEventProvider(providerId, eventId, false))
+            .watch(getTotemsByEventProvider(providerId, eventId, false))
             .valueOrNull ??
         [];
     if (totems.isEmpty) return const SizedBox.shrink();

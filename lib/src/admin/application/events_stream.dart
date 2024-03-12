@@ -48,14 +48,15 @@ Stream<List<CMIEvent>> eventsStream(EventsStreamRef ref, String providerId,
 
             try {
               final s = CMIEvent.fromJson(d);
-              if (pManagers[user.uid]?.role != UserRole.scanner ||
+              if (isCMIAdmin ||
+                  pManagers[user.uid]!.role.canSeeAllEvents ||
                   pManagers[user.uid]!.eventsRestriction.contains(s.id)) {
                 list.add(s);
               }
             } catch (ex, st) {
-              logger.i(d);
-              logger.i(ex);
-              logger.i(st);
+              logger.w(d);
+              logger.e(ex);
+              logger.e(st);
             }
           }
           logger.i('${list.length}/${snap.docs.length} eventi mostrati');
@@ -123,5 +124,3 @@ Stream<CMIEvent> event(EventRef ref, EventIds ids) async* {
     }
   }
 }
-
-

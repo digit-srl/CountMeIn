@@ -48,7 +48,7 @@ class ProviderTotemsWidget extends ConsumerWidget {
           );
         }
         final totem = totems[index - 1];
-        return TotemCardWidget(providerId: providerId, totem: totem);
+        return TotemCardWidget(providerId: providerId, totem: totem,deleteEnabled: true,);
        /* return CMICard(
           onTap: () {
             showDialog(

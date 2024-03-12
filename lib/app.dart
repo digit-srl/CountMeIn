@@ -49,7 +49,7 @@ class MyApp extends ConsumerWidget {
             data: MediaQuery.of(context)
                 .copyWith(alwaysUse24HourFormat: true, textScaleFactor: 1),
             child: child!),
-        themeMode: ThemeMode.system,
+        themeMode: ThemeMode.dark,
         routeInformationProvider: router.routeInformationProvider,
         routeInformationParser: router.routeInformationParser,
         routerDelegate: router.routerDelegate,

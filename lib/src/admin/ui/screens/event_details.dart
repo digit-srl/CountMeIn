@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:countmein/cloud.dart';
+import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/aim_notifier.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
@@ -20,6 +21,7 @@ import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/totem/ui/dedicated_totems.dart';
 import 'package:countmein/src/totem/ui/totems.dart';
+import 'package:countmein/ui/validators.dart';
 import 'package:countmein/ui/widgets/cmi_chip.dart';
 import 'package:countmein/ui/widgets/my_text_field.dart';
 import 'package:countmein/utils.dart';
@@ -133,11 +135,12 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
     final provider =
         ref.watch(singleCMIProviderProvider(widget.providerId)).valueOrNull;
     final role = ref.watch(userRoleProvider(widget.providerId));
-    // final isOwner = role == UserRole.admin;
 
     final sessions = ref.watch(sessionsStreamProvider(ids)).asData?.value ?? [];
     final isUserScanner = role == UserRole.scanner;
+    final isManager = role == UserRole.eventManager;
     final isAdmin = role == UserRole.admin;
+
     return WillPopScope(
       onWillPop: () {
         if (isUserScanner) {
@@ -541,7 +544,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
               ),
               GenericGridView(
                 children: [
-                  if (isAdmin && eventData.isManual)
+                  if ((isAdmin || isManager) && eventData.isManual)
                     CMICard(
                       center: true,
                       onTap: () {
@@ -613,7 +616,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                   ),
                   for (int i = 0; i < sessions.length; i++)
                     SessionItem(
-                      isAdmin: isAdmin,
+                      isAdmin: isAdmin || isManager,
                       session: sessions[i],
                       ids: ids,
                       manualEvent: eventData.isManual,
@@ -707,15 +710,16 @@ class SessionItem extends StatelessWidget {
                     final res = await ask(context,
                         'Sicuro di voler eliminare la sessione ${session.name}?');
                     if (res ?? false) {
-                      await Cloud.sessionDoc(
-                              ids.copyWith(sessionId: session.id))
-                          .delete();
+                      final batch = FirebaseFirestore.instance.batch();
+                      batch.delete(Cloud.sessionDoc(
+                          ids.copyWith(sessionId: session.id)));
                       if (isActive) {
-                        await Cloud.eventDoc(providerId, eventId).update({
+                        batch.update(Cloud.eventDoc(providerId, eventId), {
                           'activeSessionId': null,
                           'status': EventStatus.archived.name
                         });
                       }
+                      await batch.commit();
                     }
                     return;
                 }
@@ -855,6 +859,7 @@ class NewSessionDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final formKey = useMemoized(GlobalKey<FormState>.new, const []);
     final controller = useTextEditingController();
     final createAndEnabled = useState<bool>(false);
     final start = useState<DateTime>(DateTime.now());
@@ -863,55 +868,59 @@ class NewSessionDialog extends HookConsumerWidget {
       child: Container(
         constraints: const BoxConstraints(maxWidth: 600),
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Nuova sessione'),
-            const SizedBox(height: 16),
-            CMITextField(
-              controller: controller,
-              labelText: 'Nome sessione',
-              hintText: 'Digita il nome della sessione',
-            ),
-            const SizedBox(height: 16),
-            StartEndDateForm(
-              startAt: start.value,
-              onChanged: (s, e) {
-                if (s != null) {
-                  start.value = s;
-                }
-                if (e != null) {
-                  end.value = e;
-                }
-              },
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Checkbox(
-                    value: createAndEnabled.value,
-                    onChanged: (value) {
-                      if (value == null) return;
-                      createAndEnabled.value = value;
-                    }),
-                const SizedBox(width: 16),
-                const Text('Attiva sessione alla creazione'),
-              ],
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                print(start.value);
-                print(end.value);
-                if (controller.text.trim().isNotEmpty) {
-                  onSave(controller.text.trim(), createAndEnabled.value,
-                      start.value, end.value);
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Text('Crea'),
-            ),
-          ],
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('Nuova sessione'),
+              const SizedBox(height: 16),
+              CMITextField(
+                controller: controller,
+                labelText: 'Nome sessione',
+                hintText: 'Digita il nome della sessione',
+                validator: nameSurnameValidator,
+              ),
+              const SizedBox(height: 16),
+              StartEndDateForm(
+                startAt: start.value,
+                onChanged: (s, e) {
+                  if (s != null) {
+                    start.value = s;
+                  }
+                  if (e != null) {
+                    end.value = e;
+                  }
+                },
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Checkbox(
+                      value: createAndEnabled.value,
+                      onChanged: (value) {
+                        if (value == null) return;
+                        createAndEnabled.value = value;
+                      }),
+                  const SizedBox(width: 16),
+                  const Text('Attiva sessione alla creazione'),
+                ],
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    logger.i(start.value.toString());
+                    logger.i(end.value);
+                    onSave(controller.text.trim(), createAndEnabled.value,
+                        start.value, end.value);
+                    Navigator.of(context).pop();
+                  }
+                },
+                child: const Text('Crea'),
+              ),
+            ],
+          ),
         ),
       ),
     );

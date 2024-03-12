@@ -96,7 +96,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                         value: provider?.aims?.join('-'),
                       ),
                     ),
-                     const SizedBox(width: 32),
+                    const SizedBox(width: 32),
                     Flexible(
                       child: InfoText(
                         label: 'AIM',
@@ -139,7 +139,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                           : null,
                     ),
                     value: Wrap(
-                        runSpacing:4,
+                      runSpacing: 4,
                       children: [
                         if (provider?.managers != null)
                           ...provider!.managers.values.map(
@@ -173,7 +173,9 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           const Text('Totems'),
-          ProviderTotemsWidget(providerId: providerId,),
+          ProviderTotemsWidget(
+            providerId: providerId,
+          ),
           const SizedBox(height: 16),
           const Text('Eventi'),
           CMICard(
@@ -208,7 +210,6 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
               );
             }),
           ),
-
           const SizedBox(height: 16),
           if (provider?.status == CMIProviderStatus.live &&
               eventsState is AsyncData<List<CMIEvent>>)
@@ -240,11 +241,12 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
-                        if (userRole == UserRole.scanner)
-                          const Text(
-                            'Sei uno scanner quindi non puoi creare un nuovo evento',
+                        if (userRole == UserRole.scanner ||
+                            userRole == UserRole.eventManager)
+                          Text(
+                            'Sei ${userRole.text.toUpperCase()} quindi non puoi creare un nuovo evento',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.grey,
                             ),
                           )

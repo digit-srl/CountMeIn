@@ -5,5 +5,5 @@ String getTotemScreenURL(String providerId, String totemId) {
 }
 
 String getTotemQRCode(String providerId, String totemId, String? requestId) {
-  return '$totemBaseUrl/$providerId/$totemId${requestId != null ? '/$requestId' : ''}';
+  return '$totemBaseUrl/$providerId/$totemId${requestId != null ? '?token=$requestId' : ''}';
 }
