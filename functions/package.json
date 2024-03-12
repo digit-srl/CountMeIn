@@ -23,11 +23,10 @@
     "codice-fiscale-js": "^2.3.20",
     "dotenv": "^16.0.1",
     "firebase-admin": "^11.5.0",
-    "firebase-functions": "^4.4.1",
-    "fix": "^0.0.6",
+    "firebase-functions": "^4.7.0",
     "form-data": "^4.0.0",
     "jsbarcode": "^3.11.5",
-    "mailgun.js": "^7.0.2",
+    "mailgun.js": "^10.2.1",
     "npm": "^10.3.0",
     "qrcode": "1.4.2",
     "randomstring": "^1.2.2"

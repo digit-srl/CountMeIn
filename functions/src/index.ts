@@ -6,6 +6,9 @@ dotenv.config();
 const db = admin.firestore();
 import { dateToUTC, addDays } from "./utils";
 import * as firestore from "@google-cloud/firestore";
+const { setGlobalOptions } = require("firebase-functions/v2");
+
+setGlobalOptions({ region: "europe-west3" });
 
 exports.userProfile = require("./user_profile");
 exports.userCheckIn = require("./user_check_in");
@@ -15,6 +18,7 @@ exports.events = require("./events");
 exports.managers = require("./provider_managers");
 exports.activity = require("./activities");
 exports.embedded = require("./embedded_qr_code");
+exports.session = require("./session");
 
 /*
 export const drawCard = functions.region('europe-west3').https.onRequest((request, response) => {

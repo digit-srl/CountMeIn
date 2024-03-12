@@ -304,6 +304,67 @@ export const scan = functions
     }
   );
 
+export const verifyTotem = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      cors(request, response, async () => {
+        console.log(request.body);
+
+        if (request.method !== "POST") {
+          response.status(403).send("Forbidden!");
+          return;
+        }
+
+        const data = request.body;
+        const providerId = data.providerId;
+        const totemId = data.totemId;
+
+        if (providerId == null || totemId == null) {
+          response.status(400).send("some body fields are null");
+          return;
+        }
+
+        const totemRef = providerTotemDocRef(providerId, totemId);
+        const totemDoc = await totemRef.get();
+
+        if (!totemDoc.exists) {
+          response
+            .status(400)
+            .send("totemData document doesn't exists, " + totemRef.path);
+          return;
+        }
+
+        const totemData = totemDoc.data();
+
+        if (totemData == null) {
+          response.status(400).send("totemData is null, " + totemRef.path);
+          return;
+        }
+
+        console.log(totemData);
+        const eventId = totemData.eventId;
+        const sessionId = totemData.sessionId;
+        const dedicated = totemData.dedicated;
+
+        if (eventId == null || sessionId == null) {
+          response.status(200).send({
+            status: "totemDisabled",
+            message: "eventId or sessionId is missing",
+          });
+          return;
+        }
+
+        response.status(200).send({
+          status: "success",
+          eventId: eventId,
+          sessionId: sessionId,
+          dedicated: dedicated,
+        });
+      });
+    }
+  );
+
 export const scan2 = functions
   .region("europe-west3")
   .https.onRequest(
@@ -326,6 +387,11 @@ export const scan2 = functions
         const userLong: number = data.longitude;
         const gender = data.gender;
         const scannedSessions = data.sessions;
+        const lastSessionIdScanned = data.lastSessionIdScanned;
+        const eventParticipationCount = data.eventParticipationCount;
+
+        const v1 = scannedSessions != null;
+        const v2 = scannedSessions == null;
 
         const now = new Date();
 
@@ -359,6 +425,7 @@ export const scan2 = functions
         console.log(totemData);
         const eventId = totemData.eventId;
         const sessionId = totemData.sessionId;
+        const dedicated = totemData.dedicated;
 
         if (eventId == null || sessionId == null) {
           response.status(200).send({
@@ -386,7 +453,7 @@ export const scan2 = functions
           return;
         }
 
-        if (eventData.activeSessionId != sessionId) {
+        if (!dedicated && eventData.activeSessionId != sessionId) {
           const message =
             "event activeSessionId " +
             eventData.activeSessionId +
@@ -404,10 +471,14 @@ export const scan2 = functions
           return;
         }
 
-        if (scannedSessions[sessionId] != null) {
+        if (
+          (lastSessionIdScanned != null &&
+            lastSessionIdScanned == eventData.activeSessionId) ||
+          (v1 && scannedSessions[eventData.activeSessionId] != null)
+        ) {
           response.status(200).send({
             status: "sessionAlreadyScanned",
-            sessionId: sessionId,
+            sessionId: eventData.activeSessionId,
           });
           return;
         }
@@ -417,14 +488,14 @@ export const scan2 = functions
           if (requestId == null) {
             response.status(200).send({
               status: "dynamicTotemNeedRequestId",
-              sessionId: sessionId,
+              sessionId: eventData.activeSessionId,
             });
             return;
           } else if (requestId != totemData.requestId) {
             // Check requestId on doc
             response.status(200).send({
               status: "wrongRequestId",
-              sessionId: sessionId,
+              sessionId: eventData.activeSessionId,
             });
             return;
           }
@@ -437,7 +508,11 @@ export const scan2 = functions
           updatedOn: firestore.Timestamp.fromDate(now),
         });
 
-        const sessionRef = sessionDocRef(providerId, eventId, sessionId);
+        const sessionRef = sessionDocRef(
+          providerId,
+          eventId,
+          eventData.activeSessionId
+        );
         const sessionDoc = await sessionRef.get();
         const sessionData = sessionDoc.data();
 
@@ -460,7 +535,7 @@ export const scan2 = functions
         if (isExpired) {
           response.status(200).send({
             status: "sessionExpired",
-            sessionId: sessionId,
+            sessionId: eventData.activeSessionId,
           });
           return;
         }
@@ -468,7 +543,7 @@ export const scan2 = functions
         if (!isStarted) {
           response.status(200).send({
             status: "sessionNotStarted",
-            sessionId: sessionId,
+            sessionId: eventData.activeSessionId,
           });
           return;
         }
@@ -493,7 +568,7 @@ export const scan2 = functions
           if (!isInside) {
             response.status(200).send({
               status: "outOfPolygon",
-              sessionId: sessionId,
+              sessionId: eventData.activeSessionId,
               polygon: polygon.coordinates[0],
             });
             return;
@@ -507,11 +582,18 @@ export const scan2 = functions
         });
 
         const batch = db.batch();
-        const userSubEventDocRef = sessionDocRef(providerId, eventId, sessionId)
+        const userSubEventDocRef = sessionDocRef(
+          providerId,
+          eventId,
+          eventData.activeSessionId
+        )
           .collection("users")
           .doc();
 
         const userId = userSubEventDocRef.id;
+
+        const participationCount =
+          eventParticipationCount != null ? eventParticipationCount : 1;
 
         const json = {
           totemId: totemData.id,
@@ -527,7 +609,7 @@ export const scan2 = functions
           providerId: providerId,
           checkOutAt: firestore.Timestamp.fromDate(now),
           hasPrivateInfo: gender != null,
-          participationCount: scannedSessions[sessionId] ?? 1,
+          participationCount: participationCount,
         };
 
         batch.set(userSubEventDocRef, json);
@@ -539,7 +621,12 @@ export const scan2 = functions
           const docRef = privateRef.doc();
           privateId = docRef.id;
           batch.set(
-            sessionPrivateUsersDoc(providerId, eventId, sessionId, privateId),
+            sessionPrivateUsersDoc(
+              providerId,
+              eventId,
+              eventData.activeSessionId,
+              privateId
+            ),
             {
               id: privateId,
               genderWithoutCard: gender,
@@ -548,7 +635,10 @@ export const scan2 = functions
         }
 
         // se prima scansiona per questo evento salviamo l utente unico
-        if (scannedSessions[sessionId] == null) {
+        if (
+          (v1 && scannedSessions[eventData.activeSessionId] == null) ||
+          (v2 && lastSessionIdScanned == null)
+        ) {
           const globalUserRef = eventDocRef(providerId, eventId)
             .collection("users")
             .doc(userId);
@@ -586,7 +676,7 @@ export const scan2 = functions
           pin: wom.pin,
           aim: aim,
           eventId: eventId,
-          sessionId: sessionId,
+          sessionId: eventData.activeSessionId,
         });
       });
     }

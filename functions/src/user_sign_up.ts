@@ -574,6 +574,71 @@ export const changePassword = functions
     }
   );
 
+/*
+export const sendCardTest = functions
+  .region("europe-west3")
+  .https.onRequest(
+    async (request: functions.https.Request, response: functions.Response) => {
+      cors(request, response, async () => {
+        console.log(request.body);
+
+        const buffer1 = await draw.drawUserCard(
+          "TEST",
+          "Gian Marco",
+          "Di Francesco",
+          "DFRGMR89M02I348U",
+          "difrancescogianmarco@gmail.com",
+          encodeURI("https://cmi.digit.srl/profile/"),
+          "userId",
+          "privateId",
+          "providerId"
+        );
+
+        const buffer2 = await draw.drawGroupCard(
+          "TEST",
+          "Gian Marco",
+          "Di Francesco",
+          "DFRGMR89M02I348U",
+          "difrancescogianmarco@gmail.com",
+          encodeURI("https://cmi.digit.srl/profile/"),
+          "GROUP NAME",
+          "12",
+          "5",
+          90,
+          10
+        );
+
+        await Email.sendGroupCardEmail(
+          "Gain Marco Di Francesco",
+          "difrancescogianmarco@gmail.com",
+          "DFRGMR89M02I348U",
+
+          buffer2,
+          "TEST PROVIDER",
+          "GROUP NAME"
+        ).catch((err: any) => {
+          console.error(err);
+          throw err;
+        });
+
+        return Email.sendUserCardEmail(
+          "Gain Marco Di Francesco",
+          "difrancescogianmarco@gmail.com",
+          "DFRGMR89M02I348U",
+          buffer1,
+          "TEST PROVIDER"
+        )
+          .then(() => {
+            return true;
+          })
+          .catch((err: any) => {
+            console.error(err);
+            throw err;
+          });
+      });
+    }
+  );*/
+
 async function sendUserCard(
   data: FirebaseFirestore.DocumentData,
   providerId: string,

@@ -1,7 +1,15 @@
-import * as Canvas from "canvas";
+//import * as Canvas from "canvas";
+const { registerFont, createCanvas } = require("canvas");
 import * as QRCode from "qrcode";
 //import JsBarcode = require("jsbarcode");
 import path = require("path");
+import { loadImage } from "canvas";
+registerFont(path.join(__dirname, "fonts", "Raleway.ttf"), {
+  family: "Raleway",
+});
+registerFont(path.join(__dirname, "fonts", "Courier_New.ttf"), {
+  family: "Courier New",
+});
 
 // add the code below
 //module.exports = { drawUserCard, getQrCode, drawGroupCard };
@@ -19,7 +27,7 @@ export async function drawUserCard(
 ): Promise<Buffer> {
   const height = 800;
   const width = height * 1.6;
-  const canvas = Canvas.createCanvas(width, height);
+  const canvas = createCanvas(width, height);
   const ctx = canvas.getContext("2d");
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -41,14 +49,12 @@ export async function drawUserCard(
   const qrCodeY = middleSecondRowY;
   //const qrCodeX = height / 8;
   //const qrCodeY = (height - qrCodeSize) / 2;
-  const qrCodecanvas = Canvas.createCanvas(qrCodeSize, qrCodeSize);
+  const qrCodecanvas = createCanvas(qrCodeSize, qrCodeSize);
   const qrCode = await QRCode.toCanvas(qrCodecanvas, url || "", { margin: 0 });
   ctx.drawImage(qrCode, qrCodeX, qrCodeY, qrCodeSize, qrCodeSize);
 
   // Draw wom logo
-  const img = await Canvas.loadImage(
-    path.join(__dirname, "images", "wom-logo.svg")
-  );
+  const img = await loadImage(path.join(__dirname, "images", "wom-logo.svg"));
   const ratio = img.width / img.height;
   const imgHeight = height / 5;
   const imgWidth = imgHeight * ratio;
@@ -62,7 +68,7 @@ export async function drawUserCard(
   //const privateQrCodeX = thirdColumnX + columnWidth * 0.15;
   const privateQrCodeY = qrCodeY + qrCodeSize - privateQrCodeSize;
   const privateContent = "cmi://" + providerId + "/" + userId + "/" + privateId;
-  const privateQrCodecanvas = Canvas.createCanvas(
+  const privateQrCodecanvas = createCanvas(
     privateQrCodeSize,
     privateQrCodeSize
   );
@@ -79,13 +85,11 @@ export async function drawUserCard(
     privateQrCodeSize
   );
 
-  const serraturaImg = await Canvas.loadImage(
+  const serraturaImg = await loadImage(
     path.join(__dirname, "images", "serratura.svg")
   );
 
-  const spyImg = await Canvas.loadImage(
-    path.join(__dirname, "images", "lock_2.svg")
-  );
+  const spyImg = await loadImage(path.join(__dirname, "images", "lock_2.svg"));
 
   const r = spyImg.width / spyImg.height;
   const spyImgWidth = privateQrCodeSize * 0.8;
@@ -127,25 +131,25 @@ export async function drawUserCard(
   );
 
   ctx.fillStyle = "black";
-  ctx.font = "60px Impact";
+  ctx.font = '60px "Raleway';
   ctx.fillText(eventTitle, qrCodeX, secondRowY);
 
-  ctx.font = "26px Impact";
+  ctx.font = '26px "Raleway"';
   const startTextX = secondColumnX + columnPadding;
   //const startTextX = q + qrCodeSize + height / 10;
 
   const paddingY = qrCodeSize / 11;
   ctx.fillText(name, startTextX, qrCodeY + paddingY * 2);
   ctx.fillText(surname, startTextX, qrCodeY + paddingY * 5);
+  ctx.font = '26px "Courier New"';
   ctx.fillText(cf, startTextX, qrCodeY + paddingY * 8);
 
-  ctx.font = "18px Impact";
-  ctx.fillStyle = "rgba(211,211,211,1.0)";
+  ctx.font = '22px "Raleway"';
+  ctx.fillStyle = "rgba(153,153,153,1.0)";
   ctx.fillText("Nome", startTextX, qrCodeY + paddingY);
   ctx.fillText("Cognome", startTextX, qrCodeY + paddingY * 4);
-  ctx.fillText("C.F.", startTextX, qrCodeY + paddingY * 7);
+  ctx.fillText("Codice Fiscale", startTextX, qrCodeY + paddingY * 7);
   ctx.fillText("Email", startTextX, qrCodeY + paddingY * 10);
-
   ctx.fillText(email, startTextX, qrCodeY + paddingY * 11);
 
   //const emailY = qrCodeY + qrCodeSize + paddingY * 2;
@@ -209,7 +213,7 @@ export async function drawGroupCard(
 ): Promise<Buffer> {
   const height = 800;
   const width = height * 1.6;
-  const canvas = Canvas.createCanvas(width, height);
+  const canvas = createCanvas(width, height);
   const ctx = canvas.getContext("2d");
 
   ctx.fillStyle = "white";
@@ -218,21 +222,23 @@ export async function drawGroupCard(
   const qrCodeSize = height / 2;
   const qrCodeX = height / 8;
   const qrCodeY = (height - qrCodeSize) / 2;
-  const qrCodecanvas = Canvas.createCanvas(qrCodeSize, qrCodeSize);
+  const qrCodecanvas = createCanvas(qrCodeSize, qrCodeSize);
   const qrCode = await QRCode.toCanvas(qrCodecanvas, url || "", { margin: 0 });
   ctx.drawImage(qrCode, qrCodeX, qrCodeY, qrCodeSize, qrCodeSize);
 
   ctx.fillStyle = "black";
-  ctx.font = "60px Impact";
+  ctx.font = '60px "Raleway"';
   ctx.fillText(eventTitle, qrCodeX, height / 5);
 
-  ctx.font = "40px Impact";
+  ctx.font = '40px "Raleway"';
   const startText = qrCodeX + qrCodeSize + height / 10;
 
   const paddingY = height / 22;
   ctx.fillText(name + " " + surname, startText, qrCodeY + paddingY * 2);
   ctx.fillText(groupName, startText, qrCodeY + paddingY * 5);
+  ctx.font = '40px "Courier New"';
   ctx.fillText(cf, startText, qrCodeY + paddingY * 8);
+  ctx.font = '40px "Raleway"';
   ctx.fillText("N: " + groupCount, startText, qrCodeY + paddingY * 11);
 
   if (averageAge != null) {
@@ -256,18 +262,16 @@ export async function drawGroupCard(
   }
 
   const emailY = qrCodeY + qrCodeSize + paddingY * 2;
-  ctx.font = "20px Impact";
-  ctx.fillStyle = "rgba(211,211,211,1.0)";
+  ctx.font = '20px "Raleway"';
+  ctx.fillStyle = "rgba(153,153,153,1.0)";
   ctx.fillText("Accompagnatore", startText, qrCodeY + paddingY);
   ctx.fillText("Gruppo", startText, qrCodeY + paddingY * 4);
-  ctx.fillText("C.F.", startText, qrCodeY + paddingY * 7);
+  ctx.fillText("Codice Fiscale", startText, qrCodeY + paddingY * 7);
   ctx.fillText("Info gruppo", startText, qrCodeY + paddingY * 10);
   ctx.fillText(email, qrCodeX, emailY);
 
   // Draw wom logo
-  const img = await Canvas.loadImage(
-    path.join(__dirname, "images", "wom-logo.svg")
-  );
+  const img = await loadImage(path.join(__dirname, "images", "wom-logo.svg"));
   const ratio = img.width / img.height;
   const imgHeight = height / 5;
   const imgWidth = imgHeight * ratio;
@@ -280,7 +284,7 @@ export async function drawGroupCard(
 export async function getQrCode(value: string) {
   const height = 600;
   const width = height;
-  const canvas = Canvas.createCanvas(width, height);
+  const canvas = createCanvas(width, height);
   const ctx = canvas.getContext("2d");
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
