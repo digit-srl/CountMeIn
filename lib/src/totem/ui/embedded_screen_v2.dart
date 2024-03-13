@@ -65,7 +65,7 @@ class _EmbeddedScreen2State extends ConsumerState<EmbeddedScreen2> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          if (totem != null) ...[
+          if (totem != null && totem.isStatic) ...[
             IconButton(
               icon: const Icon(Icons.download),
               color: Colors.white,

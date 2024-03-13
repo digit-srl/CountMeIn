@@ -54,9 +54,6 @@ class SignInScreen extends HookConsumerWidget {
           .signIn(email, password);
       Hive.box('user').put('email', email);
       Hive.box('user').put('password', password);
-      // if(result){
-      //   ref.read(goRouterProvider).pop();
-      // }
     } on SignInException catch (ex) {
       logger.i(ex);
       showError(
@@ -76,11 +73,11 @@ class SignInScreen extends HookConsumerWidget {
     final isLoading = ref.watch(signInNotifierProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Count Me In'),
+        title: const Text('Count Me In'),
         actions: [
           if (isWebDevice)
             IconButton(
-              icon: Icon(Icons.home),
+              icon: const Icon(Icons.home),
               color: Colors.white,
               onPressed: () {
                 context.go(AuthGate.routeName);
@@ -192,7 +189,7 @@ class SignInScreen extends HookConsumerWidget {
 
                                 await showDialog(
                                     context: context,
-                                    builder: (_) => Dialog(
+                                    builder: (_) => const Dialog(
                                         child: ResetPasswordRequestDialog()));
                               },
                             style: Theme.of(context)
@@ -222,20 +219,20 @@ class ResetPasswordRequestDialog extends HookConsumerWidget {
     final isCompleted = useState(false);
     final emailController = useTextEditingController();
     return Container(
-      margin: EdgeInsets.all(16),
-      constraints: BoxConstraints(maxWidth: 400, maxHeight: 200),
+      margin: const EdgeInsets.all(16),
+      constraints: const BoxConstraints(maxWidth: 400, maxHeight: 200),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (isLoading.value)
-            CircularProgressIndicator()
+            const CircularProgressIndicator()
           else if (isCompleted.value) ...[
-            Icon(
+            const Icon(
               Icons.check,
               color: Colors.green,
               size: 50,
             ),
-            Text('Email inviata con successo'),
+            const Text('Email inviata con successo'),
             const SizedBox(height: 16),
           ] else
             MUTextField(
@@ -269,7 +266,7 @@ class ResetPasswordRequestDialog extends HookConsumerWidget {
                             isLoading.value = false;
                           }
                         },
-                  child: Text('Richiedi')),
+                  child: const Text('Richiedi')),
             )
         ],
       ),

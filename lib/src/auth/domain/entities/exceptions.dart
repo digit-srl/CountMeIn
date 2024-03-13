@@ -3,9 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../../common/errors/mu_exceptions.dart';
 
 class SignInException extends MUException {
-  final String message;
 
-  SignInException(this.message) : super('SignInException', message);
+  SignInException(String message) : super('SignInException', message);
 
   factory SignInException.fromFirebaseException(FirebaseAuthException ex) {
     switch (ex.code) {
@@ -42,13 +41,13 @@ class NetworkRequestFailed extends SignInException {
 }
 
 class UnknownException extends SignInException {
-  UnknownException({String? message}):super(message ?? 'Si è verificato un errore imprevisto');
+  UnknownException({String? message})
+      : super(message ?? 'Si è verificato un errore imprevisto');
 }
 
 class SignUpException extends MUException {
-  final String message;
 
-  SignUpException(this.message) : super('SignInException', message);
+  SignUpException(String message) : super('SignInException', message);
 
   factory SignUpException.fromFirebaseException(FirebaseAuthException ex) {
     switch (ex.code) {
