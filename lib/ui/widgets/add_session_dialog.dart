@@ -28,7 +28,7 @@ final prefixControllerProvider = Provider<TextEditingController>((ref) {
 });
 
 final prefixValidator = MultiValidator([
-  RequiredValidator(errorText: 'Questo campo è obbligatorio'),
+  RequiredValidator(errorText: 'Campo obbligatorio'),
   MinLengthValidator(3, errorText: 'Devi inserire 3 caratteri'),
   MaxLengthValidator(3, errorText: 'Devi inserire 3 caratteri'),
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')

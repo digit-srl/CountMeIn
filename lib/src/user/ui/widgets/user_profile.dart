@@ -183,7 +183,7 @@ class GenderRequestWidget extends HookConsumerWidget {
             label: 'Genere percepito',
             validator: (v) {
               if (v == null) {
-                return 'Questo campo è obbligatorio';
+                return 'Campo obbligatorio';
               }
               return null;
             },

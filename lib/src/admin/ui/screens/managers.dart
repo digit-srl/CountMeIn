@@ -155,7 +155,7 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                         child: CMIDropdownButton<UserRole>(
                                           value: selectedRole,
                                           items: UserRole.values
-                                              .sublist(0, 2)
+                                              .sublist(0, 3)
                                               .map(
                                                 (e) =>
                                                     DropdownMenuItem<UserRole>(
@@ -205,7 +205,6 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                                 email: email,
                                                 secret: '',
                                                 providerName: provider.name,
-                                                eventsRestriction: [],
                                               );
 
                                               try {

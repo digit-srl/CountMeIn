@@ -27,58 +27,64 @@ Stream<List<CMIEvent>> eventsStream(EventsStreamRef ref, String providerId,
             .valueOrNull
             ?.managers ??
         {};
-    if (isCMIAdmin || pManagers.containsKey(user.uid)) {
-      try {
-        var query = Cloud.eventsCollection(providerId)
+    final canSeeAllEvents =
+        isCMIAdmin || pManagers[user.uid]!.role.canSeeAllEvents;
+
+    try {
+      late Query<Map<String, dynamic>> query;
+
+      if (status == EventStatus.archived) {
+        query = Cloud.eventsCollection(providerId).where(Filter.or(
+            Filter("status", isEqualTo: EventStatus.archived.name),
+            Filter("status", isEqualTo: EventStatus.closed.name)));
+      } else {
+        query = Cloud.eventsCollection(providerId)
             .where('status', isEqualTo: status.name);
-
-        if (status == EventStatus.archived) {
-          query = Cloud.eventsCollection(providerId).where(Filter.or(
-              Filter("status", isEqualTo: EventStatus.archived.name),
-              Filter("status", isEqualTo: EventStatus.closed.name)));
-        }
-
-        final stream = query.snapshots();
-
-        await for (final snap in stream) {
-          logger.i('${snap.docs.length} eventi trovati');
-          final list = <CMIEvent>[];
-          for (int i = 0; i < snap.docs.length; i++) {
-            final d = snap.docs[i].data();
-
-            try {
-              final s = CMIEvent.fromJson(d);
-              if (isCMIAdmin ||
-                  pManagers[user.uid]!.role.canSeeAllEvents ||
-                  pManagers[user.uid]!.eventsRestriction.contains(s.id)) {
-                list.add(s);
-              }
-            } catch (ex, st) {
-              logger.w(d);
-              logger.e(ex);
-              logger.e(st);
-            }
-          }
-          logger.i('${list.length}/${snap.docs.length} eventi mostrati');
-          if (filter == EventFilter.byDate) {
-            list.sort((a, b) => a.createdOn.compareTo(b.createdOn));
-          } else {
-            list.sort(
-                (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
-          }
-          yield list;
-        }
-      } catch (ex, st) {
-        logger.e(st);
-        rethrow;
       }
-    } else {
-      logger.i(
-          'eventsStreamProvider: user is not manager of this provider $providerId');
-      yield <CMIEvent>[];
+
+      if (!canSeeAllEvents) {
+        query = query.where(
+          Filter.or(
+              Filter('managers.${user.uid}',
+                  isEqualTo: UserRole.scanner.name),
+              Filter('managers.${user.uid}',
+                  isEqualTo: UserRole.eventManager.name)),
+        );
+      }
+
+      final stream = query.snapshots();
+
+      await for (final snap in stream) {
+        logger.i('${snap.docs.length} eventi trovati');
+        final list = <CMIEvent>[];
+        for (int i = 0; i < snap.docs.length; i++) {
+          final d = snap.docs[i].data();
+
+          try {
+            final s = CMIEvent.fromJson(d);
+            list.add(s);
+          } catch (ex, st) {
+            logger.w(d);
+            logger.e(ex);
+            logger.e(st);
+          }
+        }
+        logger.i('${list.length}/${snap.docs.length} eventi mostrati');
+        if (filter == EventFilter.byDate) {
+          list.sort((a, b) => a.createdOn.compareTo(b.createdOn));
+        } else {
+          list.sort(
+              (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+        }
+        yield list;
+      }
+    } catch (ex, st) {
+      logger.e(st);
+      rethrow;
     }
   } else {
-    logger.i('eventsStreamProvider: user is not authenticated');
+    logger.i(
+        'eventsStreamProvider: user is not manager of this provider $providerId');
     yield <CMIEvent>[];
   }
 }

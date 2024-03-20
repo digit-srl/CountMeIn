@@ -23,7 +23,7 @@ import '../../../../ui/validators.dart';
 import 'package:intl/intl.dart';
 
 final womValidator = MultiValidator([
-  RequiredValidator(errorText: 'Questo campo è obbligatorio'),
+  RequiredValidator(errorText: 'Campo obbligatorio'),
   RangeValidator(
       min: 1,
       max: 1000,
@@ -131,15 +131,6 @@ class NewEventFormScreen extends HookConsumerWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              // Flexible(
-              //   child: MyTextField(
-              //     keyboardType: TextInputType.number,
-              //     controller: durationController,
-              //     hintText: 'Durata in ore',
-              //     validator: numberValidator,
-              //   ),
-              // ),
-              // const SizedBox(width: 8),
               Flexible(
                 child: CMIDatePicker(
                   initialDate: DateTime.now(),

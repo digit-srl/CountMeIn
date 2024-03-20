@@ -12,6 +12,7 @@ enum PlatformRole {
 }
 
 enum UserRole {
+  owner,
   admin,
   collaborator,
   scanner,
@@ -20,8 +21,10 @@ enum UserRole {
 
   String get text {
     switch (this) {
-      case UserRole.admin:
+      case UserRole.owner:
         return 'Proprietario';
+      case UserRole.admin:
+        return 'Amministratore';
       case UserRole.collaborator:
         return 'Collaboratore';
       case UserRole.scanner:
@@ -34,8 +37,13 @@ enum UserRole {
   }
 
   bool get canSeeAllEvents =>
-      switch (this) { UserRole.admin => true, _ => false };
+      switch (this) { UserRole.owner || UserRole.admin => true, _ => false };
 }
+
+const collaboratorsEventRole = [
+  UserRole.scanner,
+  UserRole.eventManager,
+];
 
 @freezed
 class AuthUser with _$AuthUser {

@@ -484,7 +484,7 @@ mixin _$PendingProviderManager {
   DateTime get invitedOn => throw _privateConstructorUsedError;
   @ManagerStatusConverter()
   ProviderManagerStatus get status => throw _privateConstructorUsedError;
-  List<String> get eventsRestriction => throw _privateConstructorUsedError;
+  String? get eventId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -507,7 +507,7 @@ abstract class $PendingProviderManagerCopyWith<$Res> {
       String email,
       @MyDateTimeConverter() DateTime invitedOn,
       @ManagerStatusConverter() ProviderManagerStatus status,
-      List<String> eventsRestriction});
+      String? eventId});
 }
 
 /// @nodoc
@@ -532,7 +532,7 @@ class _$PendingProviderManagerCopyWithImpl<$Res,
     Object? email = null,
     Object? invitedOn = null,
     Object? status = null,
-    Object? eventsRestriction = null,
+    Object? eventId = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -567,10 +567,10 @@ class _$PendingProviderManagerCopyWithImpl<$Res,
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as ProviderManagerStatus,
-      eventsRestriction: null == eventsRestriction
-          ? _value.eventsRestriction
-          : eventsRestriction // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      eventId: freezed == eventId
+          ? _value.eventId
+          : eventId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -593,7 +593,7 @@ abstract class _$$PendingProviderManagerImplCopyWith<$Res>
       String email,
       @MyDateTimeConverter() DateTime invitedOn,
       @ManagerStatusConverter() ProviderManagerStatus status,
-      List<String> eventsRestriction});
+      String? eventId});
 }
 
 /// @nodoc
@@ -617,7 +617,7 @@ class __$$PendingProviderManagerImplCopyWithImpl<$Res>
     Object? email = null,
     Object? invitedOn = null,
     Object? status = null,
-    Object? eventsRestriction = null,
+    Object? eventId = freezed,
   }) {
     return _then(_$PendingProviderManagerImpl(
       id: null == id
@@ -652,10 +652,10 @@ class __$$PendingProviderManagerImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as ProviderManagerStatus,
-      eventsRestriction: null == eventsRestriction
-          ? _value._eventsRestriction
-          : eventsRestriction // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      eventId: freezed == eventId
+          ? _value.eventId
+          : eventId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -672,8 +672,7 @@ class _$PendingProviderManagerImpl implements _PendingProviderManager {
       required this.email,
       @MyDateTimeConverter() required this.invitedOn,
       @ManagerStatusConverter() required this.status,
-      final List<String> eventsRestriction = const <String>[]})
-      : _eventsRestriction = eventsRestriction;
+      this.eventId});
 
   factory _$PendingProviderManagerImpl.fromJson(Map<String, dynamic> json) =>
       _$$PendingProviderManagerImplFromJson(json);
@@ -697,19 +696,12 @@ class _$PendingProviderManagerImpl implements _PendingProviderManager {
   @override
   @ManagerStatusConverter()
   final ProviderManagerStatus status;
-  final List<String> _eventsRestriction;
   @override
-  @JsonKey()
-  List<String> get eventsRestriction {
-    if (_eventsRestriction is EqualUnmodifiableListView)
-      return _eventsRestriction;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_eventsRestriction);
-  }
+  final String? eventId;
 
   @override
   String toString() {
-    return 'PendingProviderManager(id: $id, role: $role, name: $name, secret: $secret, providerName: $providerName, email: $email, invitedOn: $invitedOn, status: $status, eventsRestriction: $eventsRestriction)';
+    return 'PendingProviderManager(id: $id, role: $role, name: $name, secret: $secret, providerName: $providerName, email: $email, invitedOn: $invitedOn, status: $status, eventId: $eventId)';
   }
 
   @override
@@ -727,23 +719,13 @@ class _$PendingProviderManagerImpl implements _PendingProviderManager {
             (identical(other.invitedOn, invitedOn) ||
                 other.invitedOn == invitedOn) &&
             (identical(other.status, status) || other.status == status) &&
-            const DeepCollectionEquality()
-                .equals(other._eventsRestriction, _eventsRestriction));
+            (identical(other.eventId, eventId) || other.eventId == eventId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      role,
-      name,
-      secret,
-      providerName,
-      email,
-      invitedOn,
-      status,
-      const DeepCollectionEquality().hash(_eventsRestriction));
+  int get hashCode => Object.hash(runtimeType, id, role, name, secret,
+      providerName, email, invitedOn, status, eventId);
 
   @JsonKey(ignore: true)
   @override
@@ -770,7 +752,7 @@ abstract class _PendingProviderManager implements PendingProviderManager {
       required final String email,
       @MyDateTimeConverter() required final DateTime invitedOn,
       @ManagerStatusConverter() required final ProviderManagerStatus status,
-      final List<String> eventsRestriction}) = _$PendingProviderManagerImpl;
+      final String? eventId}) = _$PendingProviderManagerImpl;
 
   factory _PendingProviderManager.fromJson(Map<String, dynamic> json) =
       _$PendingProviderManagerImpl.fromJson;
@@ -795,7 +777,7 @@ abstract class _PendingProviderManager implements PendingProviderManager {
   @ManagerStatusConverter()
   ProviderManagerStatus get status;
   @override
-  List<String> get eventsRestriction;
+  String? get eventId;
   @override
   @JsonKey(ignore: true)
   _$$PendingProviderManagerImplCopyWith<_$PendingProviderManagerImpl>
@@ -813,7 +795,6 @@ mixin _$ProviderManager {
   String get email => throw _privateConstructorUsedError;
   @UserRoleConverter()
   UserRole get role => throw _privateConstructorUsedError;
-  List<String> get eventsRestriction => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -831,8 +812,7 @@ abstract class $ProviderManagerCopyWith<$Res> {
       {String id,
       String name,
       String email,
-      @UserRoleConverter() UserRole role,
-      List<String> eventsRestriction});
+      @UserRoleConverter() UserRole role});
 }
 
 /// @nodoc
@@ -852,7 +832,6 @@ class _$ProviderManagerCopyWithImpl<$Res, $Val extends ProviderManager>
     Object? name = null,
     Object? email = null,
     Object? role = null,
-    Object? eventsRestriction = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -871,10 +850,6 @@ class _$ProviderManagerCopyWithImpl<$Res, $Val extends ProviderManager>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
-      eventsRestriction: null == eventsRestriction
-          ? _value.eventsRestriction
-          : eventsRestriction // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ) as $Val);
   }
 }
@@ -891,8 +866,7 @@ abstract class _$$ProviderManagerImplCopyWith<$Res>
       {String id,
       String name,
       String email,
-      @UserRoleConverter() UserRole role,
-      List<String> eventsRestriction});
+      @UserRoleConverter() UserRole role});
 }
 
 /// @nodoc
@@ -910,7 +884,6 @@ class __$$ProviderManagerImplCopyWithImpl<$Res>
     Object? name = null,
     Object? email = null,
     Object? role = null,
-    Object? eventsRestriction = null,
   }) {
     return _then(_$ProviderManagerImpl(
       id: null == id
@@ -929,10 +902,6 @@ class __$$ProviderManagerImplCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
-      eventsRestriction: null == eventsRestriction
-          ? _value._eventsRestriction
-          : eventsRestriction // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ));
   }
 }
@@ -944,9 +913,7 @@ class _$ProviderManagerImpl implements _ProviderManager {
       {required this.id,
       required this.name,
       required this.email,
-      @UserRoleConverter() required this.role,
-      final List<String> eventsRestriction = const <String>[]})
-      : _eventsRestriction = eventsRestriction;
+      @UserRoleConverter() required this.role});
 
   factory _$ProviderManagerImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProviderManagerImplFromJson(json);
@@ -960,19 +927,10 @@ class _$ProviderManagerImpl implements _ProviderManager {
   @override
   @UserRoleConverter()
   final UserRole role;
-  final List<String> _eventsRestriction;
-  @override
-  @JsonKey()
-  List<String> get eventsRestriction {
-    if (_eventsRestriction is EqualUnmodifiableListView)
-      return _eventsRestriction;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_eventsRestriction);
-  }
 
   @override
   String toString() {
-    return 'ProviderManager(id: $id, name: $name, email: $email, role: $role, eventsRestriction: $eventsRestriction)';
+    return 'ProviderManager(id: $id, name: $name, email: $email, role: $role)';
   }
 
   @override
@@ -983,15 +941,12 @@ class _$ProviderManagerImpl implements _ProviderManager {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.role, role) || other.role == role) &&
-            const DeepCollectionEquality()
-                .equals(other._eventsRestriction, _eventsRestriction));
+            (identical(other.role, role) || other.role == role));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, email, role,
-      const DeepCollectionEquality().hash(_eventsRestriction));
+  int get hashCode => Object.hash(runtimeType, id, name, email, role);
 
   @JsonKey(ignore: true)
   @override
@@ -1010,11 +965,11 @@ class _$ProviderManagerImpl implements _ProviderManager {
 
 abstract class _ProviderManager implements ProviderManager {
   const factory _ProviderManager(
-      {required final String id,
-      required final String name,
-      required final String email,
-      @UserRoleConverter() required final UserRole role,
-      final List<String> eventsRestriction}) = _$ProviderManagerImpl;
+          {required final String id,
+          required final String name,
+          required final String email,
+          @UserRoleConverter() required final UserRole role}) =
+      _$ProviderManagerImpl;
 
   factory _ProviderManager.fromJson(Map<String, dynamic> json) =
       _$ProviderManagerImpl.fromJson;
@@ -1028,8 +983,6 @@ abstract class _ProviderManager implements ProviderManager {
   @override
   @UserRoleConverter()
   UserRole get role;
-  @override
-  List<String> get eventsRestriction;
   @override
   @JsonKey(ignore: true)
   _$$ProviderManagerImplCopyWith<_$ProviderManagerImpl> get copyWith =>

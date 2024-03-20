@@ -153,7 +153,7 @@ class _State extends ConsumerState<UserFormScreen> {
                   //   label: 'Generd percepito',
                   //   validator: (v) {
                   //     if (v == null) {
-                  //       return 'Questo campo è obbligatorio';
+                  //       return 'Campo obbligatorio';
                   //     }
                   //     return null;
                   //   },

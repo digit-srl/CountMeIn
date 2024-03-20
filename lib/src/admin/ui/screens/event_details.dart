@@ -283,7 +283,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                                 ),
                               );
                             },
-                            child: const Text('Aggiungi scanner'),
+                            child: const Text('Aggiungi collaboratore'),
                           ),
                           const SizedBox(width: 16),
                           if (eventData.status == EventStatus.live)

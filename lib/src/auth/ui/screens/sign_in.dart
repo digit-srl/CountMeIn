@@ -124,6 +124,7 @@ class SignInScreen extends HookConsumerWidget {
                       controller: emailController,
                       labelText: 'Email',
                       validator: emailValidator,
+                      maxLines: 1,
                     ),
                     MUTextField(
                       maxLines: 1,
