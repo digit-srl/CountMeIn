@@ -11,7 +11,7 @@ import 'package:countmein/ui/screens/user_qr_code.dart';
 import 'package:countmein/ui/widgets/loading.dart';
 import '../../domain/entities/user_card.dart';
 
-final singleEventProvider = StreamProvider.autoDispose
+final singleCMIProvider = StreamProvider.autoDispose
     .family<CMIProvider, String>((ref, providerId) async* {
   var query = Cloud.providerCollection.doc(providerId);
   final stream = query.snapshots();
@@ -45,7 +45,7 @@ class UserProviderScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cmiProvider = ref.watch(singleEventProvider(providerId)).value;
+    final cmiProvider = ref.watch(singleCMIProvider(providerId)).value;
     if (cmiProvider == null) {
       return const LoadingWidget();
     }

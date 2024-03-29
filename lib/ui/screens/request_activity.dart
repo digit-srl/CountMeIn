@@ -405,8 +405,8 @@ class _WomIntegrationPanelState extends ConsumerState<WomIntegrationPanel> {
               ],
               TextButton(
                   onPressed: () {
-                      instrumentUser.value = null;
-                      ref.read(selectedInstrumentProvider.notifier).state = null;
+                    instrumentUser.value = null;
+                    ref.read(selectedInstrumentProvider.notifier).state = null;
                   },
                   child: Text('Reset'))
             ] else ...[
@@ -424,23 +424,29 @@ class _WomIntegrationPanelState extends ConsumerState<WomIntegrationPanel> {
               MUButton(
                 text: 'Connetti piattaforma WOM',
                 onPressed: () async {
-                  loading.value = true;
-                  final username = womEmailController.text.trim();
-                  final password = womPasswordController.text;
+                  try {
+                    loading.value = true;
+                    final username = womEmailController.text.trim();
+                    final password = womPasswordController.text;
 
-                  final authResponse = await InstrumentClient.authenticate(
-                    username: username,
-                    password: password,
-                    clientName: '${Platform.localeName}Cmi/1',
-                    domain: womDomain,
-                  );
+                    final client = AuthenticationClient(womDomain);
+                    final authResponse = await client.authenticate(
+                      username: username,
+                      password: password,
+                      clientName: '${Platform.localeName}Cmi/1',
+                    );
 
-                  final user = await InstrumentClient.getUser(
-                      authResponse.token, womDomain);
+                    final user = await client.getInstrumentUser(
+                      authResponse.token,
+                    );
 
-                  logger.i(user.instruments.first);
-                  instrumentUser.value = user;
-                  loading.value = false;
+                    logger.i(user.instruments.first);
+                    instrumentUser.value = user;
+                    loading.value = false;
+                  } catch (ex) {
+                    loading.value = false;
+                    logger.e(ex);
+                  }
                 },
               ),
             ],

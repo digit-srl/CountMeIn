@@ -85,7 +85,7 @@ class _State extends ConsumerState<UserFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final cmiProvider = ref.watch(singleEventProvider(widget.providerId)).value;
+    final cmiProvider = ref.watch(singleCMIProvider(widget.providerId)).value;
     if (cmiProvider == null) {
       return const LoadingWidget();
     }

@@ -9,6 +9,7 @@ const cors = require("cors")({ origin: true });
 import * as utils from "./firestore_utils";
 import { createNewAdminForProvider, generateSecret } from "./utils";
 import {
+  eventDocRef,
   providerDocRef,
   providerPendingInviteDocRef,
 } from "./firestore_references";
@@ -86,6 +87,7 @@ export const confirmPendingInvite = functions
         const email = inviteData.email;
         var fullName = inviteData.name;
         const role: string = inviteData.role;
+        const eventId = inviteData.eventId;
 
         if (secretOnDb !== secret) {
           console.log("invite secret: " + secretOnDb + " != " + secret);
@@ -96,7 +98,7 @@ export const confirmPendingInvite = functions
         }
 
         console.log("confirmPendingInvite: secret ok");
-        var userId = inviteData.userId;
+        var userId: string = inviteData.userId;
         const name = data.name;
         const surname = data.surname;
         var cf = data.cf;
@@ -153,9 +155,6 @@ export const confirmPendingInvite = functions
               throw "Provider Document does not exists: " + providerId;
             }
 
-            const eventsRestriction: Array<string> =
-              inviteData.eventsRestriction;
-
             // controllo managers
             console.log("providerData: " + providerData.id);
             const currentManagers = providerData.managers;
@@ -165,50 +164,33 @@ export const confirmPendingInvite = functions
               transformedTokensMap.set(e, currentManagers[e]);
             });
 
-            var map: Object = {};
-
-            // se esisto aggiungo evento alla restrizione
-            if (transformedTokensMap.has(userId) && role == "scanner") {
-              console.log("current managers has userId: " + userId);
-              const m = transformedTokensMap.get(userId);
-              console.log("manage map + " + m);
-              const r: Array<string> = m.eventsRestriction;
-
-              console.log("current event restriction: " + r);
-              console.log("new event restriction: " + eventsRestriction[0]);
-              if (eventsRestriction.length > 0) {
-                r.push(eventsRestriction[0]);
-              }
-
-              map = {
-                id: m.id,
-                role: m.role,
-                email: m.email,
-                name: m.name,
-                eventsRestriction: r,
-              };
-            } else {
-              // else creo l utente in managers
-              map = {
+            if (!transformedTokensMap.has(userId)) {
+              var map: Object = {
                 id: userId,
                 role: role,
                 email: email,
                 name: fullName,
-                eventsRestriction: eventsRestriction,
               };
+              let managers = new Map<string, Object>();
+              managers.set("managers." + userId, map);
+              let jManagers = Object.fromEntries(managers);
+
+              console.log("updating managers");
+
+              console.log(jManagers);
+
+              t.update(providerDocRef(providerId), jManagers);
             }
 
-            console.log("new map: " + map);
-
-            let managers = new Map<string, Object>();
-            managers.set("managers." + userId, map);
-            let jManagers = Object.fromEntries(managers);
-
-            console.log("updating managers");
-
-            console.log(jManagers);
-
-            t.update(providerDocRef(providerId), jManagers);
+            if (role == "scanner" || role == "eventManager") {
+              const userKey = "managers." + userId;
+              const eventManagers = new Map<string, Object>();
+              eventManagers.set(userKey, role);
+              t.update(
+                eventDocRef(providerId, eventId),
+                Object.fromEntries(eventManagers)
+              );
+            }
             t.update(providerPendingInviteDocRef(providerId, inviteId), {
               status: "completed",
             });
@@ -228,9 +210,7 @@ export const confirmPendingInvite = functions
             })
             .end();
         } catch (ex) {
-          console.log("Transaction failed!");
-          console.log(ex);
-
+          console.log("Transaction failed: " + ex);
           response.status(500).send(ex);
         }
 

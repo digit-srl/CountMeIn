@@ -34,6 +34,7 @@ mixin _$CMIEvent {
   GenderCount? get genderCount => throw _privateConstructorUsedError;
   String? get activeSessionId => throw _privateConstructorUsedError;
   String? get aim => throw _privateConstructorUsedError;
+  Map<String, String>? get managers => throw _privateConstructorUsedError;
   @EventAccessTypeConverter()
   EventAccessType get accessType => throw _privateConstructorUsedError;
   int get maxWomCount => throw _privateConstructorUsedError;
@@ -77,6 +78,7 @@ abstract class $CMIEventCopyWith<$Res> {
       GenderCount? genderCount,
       String? activeSessionId,
       String? aim,
+      Map<String, String>? managers,
       @EventAccessTypeConverter() EventAccessType accessType,
       int maxWomCount,
       @EventStatusConverter() EventStatus? status,
@@ -116,6 +118,7 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
     Object? genderCount = freezed,
     Object? activeSessionId = freezed,
     Object? aim = freezed,
+    Object? managers = freezed,
     Object? accessType = null,
     Object? maxWomCount = null,
     Object? status = freezed,
@@ -179,6 +182,10 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
           ? _value.aim
           : aim // ignore: cast_nullable_to_non_nullable
               as String?,
+      managers: freezed == managers
+          ? _value.managers
+          : managers // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
       accessType: null == accessType
           ? _value.accessType
           : accessType // ignore: cast_nullable_to_non_nullable
@@ -253,6 +260,7 @@ abstract class _$$CMIEventImplCopyWith<$Res>
       GenderCount? genderCount,
       String? activeSessionId,
       String? aim,
+      Map<String, String>? managers,
       @EventAccessTypeConverter() EventAccessType accessType,
       int maxWomCount,
       @EventStatusConverter() EventStatus? status,
@@ -291,6 +299,7 @@ class __$$CMIEventImplCopyWithImpl<$Res>
     Object? genderCount = freezed,
     Object? activeSessionId = freezed,
     Object? aim = freezed,
+    Object? managers = freezed,
     Object? accessType = null,
     Object? maxWomCount = null,
     Object? status = freezed,
@@ -354,6 +363,10 @@ class __$$CMIEventImplCopyWithImpl<$Res>
           ? _value.aim
           : aim // ignore: cast_nullable_to_non_nullable
               as String?,
+      managers: freezed == managers
+          ? _value._managers
+          : managers // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
       accessType: null == accessType
           ? _value.accessType
           : accessType // ignore: cast_nullable_to_non_nullable
@@ -411,6 +424,7 @@ class _$CMIEventImpl implements _CMIEvent {
       this.genderCount,
       this.activeSessionId,
       this.aim,
+      final Map<String, String>? managers = const <String, String>{},
       @EventAccessTypeConverter() required this.accessType,
       required this.maxWomCount,
       @EventStatusConverter() this.status,
@@ -420,7 +434,8 @@ class _$CMIEventImpl implements _CMIEvent {
       @MyDateTimeConverter() required this.createdOn,
       @MyDateTimeConverter() this.subEventDeadline,
       @MyDateTimeConverter() required this.startAt,
-      @GeoPointConverter() this.position});
+      @GeoPointConverter() this.position})
+      : _managers = managers;
 
   factory _$CMIEventImpl.fromJson(Map<String, dynamic> json) =>
       _$$CMIEventImplFromJson(json);
@@ -457,6 +472,17 @@ class _$CMIEventImpl implements _CMIEvent {
   final String? activeSessionId;
   @override
   final String? aim;
+  final Map<String, String>? _managers;
+  @override
+  @JsonKey()
+  Map<String, String>? get managers {
+    final value = _managers;
+    if (value == null) return null;
+    if (_managers is EqualUnmodifiableMapView) return _managers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
   @EventAccessTypeConverter()
   final EventAccessType accessType;
@@ -487,7 +513,7 @@ class _$CMIEventImpl implements _CMIEvent {
 
   @override
   String toString() {
-    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, activeSessionId: $activeSessionId, aim: $aim, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, type: $type, acceptedCardType: $acceptedCardType, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt, position: $position)';
+    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, activeSessionId: $activeSessionId, aim: $aim, managers: $managers, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, type: $type, acceptedCardType: $acceptedCardType, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt, position: $position)';
   }
 
   @override
@@ -518,6 +544,7 @@ class _$CMIEventImpl implements _CMIEvent {
             (identical(other.activeSessionId, activeSessionId) ||
                 other.activeSessionId == activeSessionId) &&
             (identical(other.aim, aim) || other.aim == aim) &&
+            const DeepCollectionEquality().equals(other._managers, _managers) &&
             (identical(other.accessType, accessType) ||
                 other.accessType == accessType) &&
             (identical(other.maxWomCount, maxWomCount) ||
@@ -552,6 +579,7 @@ class _$CMIEventImpl implements _CMIEvent {
         genderCount,
         activeSessionId,
         aim,
+        const DeepCollectionEquality().hash(_managers),
         accessType,
         maxWomCount,
         status,
@@ -592,6 +620,7 @@ abstract class _CMIEvent implements CMIEvent {
       final GenderCount? genderCount,
       final String? activeSessionId,
       final String? aim,
+      final Map<String, String>? managers,
       @EventAccessTypeConverter() required final EventAccessType accessType,
       required final int maxWomCount,
       @EventStatusConverter() final EventStatus? status,
@@ -632,6 +661,8 @@ abstract class _CMIEvent implements CMIEvent {
   String? get activeSessionId;
   @override
   String? get aim;
+  @override
+  Map<String, String>? get managers;
   @override
   @EventAccessTypeConverter()
   EventAccessType get accessType;

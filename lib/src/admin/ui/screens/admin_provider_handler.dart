@@ -241,8 +241,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
-                        if (userRole == UserRole.scanner ||
-                            userRole == UserRole.eventManager)
+                        if (userRole == UserRole.collaborator)
                           Text(
                             'Sei ${userRole.text.toUpperCase()} quindi non puoi creare un nuovo evento',
                             textAlign: TextAlign.center,

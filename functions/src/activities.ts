@@ -24,7 +24,7 @@ export const onActivityRequested = functions
         provider.adminEmail
     );
 
-    const link = "https://cmi.digit.srl/adminPendingProviders";
+    const link = "https://cmi.digit.srl/admin/pending-providers";
 
     await Email.sendNewActivityRequestedToUser(
       provider.name,

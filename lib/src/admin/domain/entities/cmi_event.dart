@@ -129,6 +129,7 @@ class CMIEvent with _$CMIEvent {
     GenderCount? genderCount,
     String? activeSessionId,
     String? aim,
+    @Default(<String,String>{}) Map<String,String>? managers,
     @EventAccessTypeConverter() required EventAccessType accessType,
     required int maxWomCount,
     @EventStatusConverter() EventStatus? status,

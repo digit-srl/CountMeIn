@@ -1,4 +1,7 @@
+import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/my_logger.dart';
+import 'package:countmein/src/admin/application/events_stream.dart';
+import 'package:countmein/ui/screens/user_event.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -94,10 +97,6 @@ final platformUserRoleProvider = Provider<PlatformRole>((ref) {
       );
 });
 
-final isUserScannerProvider = Provider.family<bool, String>((ref, providerId) {
-  return ref.watch(userRoleProvider(providerId)) == UserRole.scanner;
-});
-
 final userRoleProvider = Provider.family<UserRole, String>((ref, providerId) {
   final state = ref.watch(authStateProvider);
   var role = UserRole.unknown;
@@ -105,10 +104,28 @@ final userRoleProvider = Provider.family<UserRole, String>((ref, providerId) {
     if (state.user.role == PlatformRole.cmi) {
       return UserRole.admin;
     }
-    final provider = ref.watch(singleCMIProviderProvider(providerId)).valueOrNull;
+    final provider =
+        ref.watch(singleCMIProviderProvider(providerId)).valueOrNull;
     final manager = provider?.managers.values
         .firstWhereOrNull((element) => element.id == state.user.uid);
     role = manager?.role ?? UserRole.unknown;
+  }
+  return role;
+});
+
+final userRoleEventProvider =
+    Provider.family.autoDispose<UserRole, EventIds>((ref, ids) {
+  final state = ref.watch(authStateProvider);
+  var role = UserRole.unknown;
+  if (state is Authenticated) {
+    if (state.user.role == PlatformRole.cmi) {
+      return UserRole.admin;
+    }
+    final event = ref.watch(eventProvider(ids)).valueOrNull;
+    final manager = event?.managers?[state.user.uid] ?? 'admin';
+    role = UserRole.values
+            .firstWhereOrNull((element) => element.name == manager) ??
+        UserRole.admin;
   }
   return role;
 });

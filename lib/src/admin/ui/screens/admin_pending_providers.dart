@@ -9,8 +9,7 @@ import '../widgets/grid_providers.dart';
 class AdminPendingProvidersScreen extends ConsumerWidget {
   static const String routeName = 'pending-providers';
 
-  const AdminPendingProvidersScreen({Key? key})
-      : super(key: key);
+  const AdminPendingProvidersScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

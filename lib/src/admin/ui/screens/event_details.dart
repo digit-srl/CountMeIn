@@ -134,7 +134,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
     final eventData = eventState.asData?.valueOrNull;
     final provider =
         ref.watch(singleCMIProviderProvider(widget.providerId)).valueOrNull;
-    final role = ref.watch(userRoleProvider(widget.providerId));
+    final role = ref.watch(userRoleEventProvider(ids));
 
     final sessions = ref.watch(sessionsStreamProvider(ids)).asData?.value ?? [];
     final isUserScanner = role == UserRole.scanner;
