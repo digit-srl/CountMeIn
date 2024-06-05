@@ -203,10 +203,17 @@ class _NewTotemDialogWidget extends HookConsumerWidget {
                     isStatic: isStatic.value,
                     requestId: isStatic.value ? null : 'abcded',
                     position: position,
+                    eventId: totem?.eventId,
+                    sessionId: totem?.sessionId,
+                    eventName: totem?.eventName,
+                    sessionName: totem?.sessionName,
+                    totalCount: totem?.totalCount ?? 0,
+                    count: totem?.count ?? 0,
                     updatedOn: DateTime.now(),
-                    dedicated: false,
+                    dedicated: totem?.dedicated ?? false,
                     radius: int.parse(radiusController.text.trim()),
                   );
+
                   final navigator = Navigator.of(context);
 
                   final batch = FirebaseFirestore.instance.batch();
@@ -217,6 +224,7 @@ class _NewTotemDialogWidget extends HookConsumerWidget {
                       t.id,
                     ),
                     t.toJson(),
+                    SetOptions(merge: true),
                   );
 
                   await batch.commit();
