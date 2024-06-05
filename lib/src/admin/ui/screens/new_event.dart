@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/my_logger.dart';
+import 'package:countmein/src/totem/util.dart';
 import 'package:dart_wom_connector/dart_wom_connector.dart';
 import 'package:countmein/src/admin/application/aim_notifier.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
@@ -11,6 +12,7 @@ import 'package:countmein/src/common/ui/widgets/cmi_dropdown.dart';
 import 'package:countmein/src/totem/data/embedded_data.dart';
 import 'package:countmein/ui/widgets/my_text_field.dart';
 import 'package:countmein/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -511,19 +513,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                             double.parse(longController.text.trim()))
                         : null;
 
-                    // if (totemEnabled.value && position == null) {
-                    //   CoolAlert.show(
-                    //     context: context,
-                    //     type: CoolAlertType.error,
-                    //     title: 'Posizione obbligatoria',
-                    //     text:
-                    //         'Con i totem abilitati devi inserire una posizione valida',
-                    //     width: 300,
-                    //   );
-                    //   return;
-                    // }
-
-                    final s = CMIEvent(
+                    final newEvent = CMIEvent(
                       id: eventId,
                       type: eventType.value,
                       activeSessionId: currentSubEventId,
@@ -571,10 +561,15 @@ class NewEventFormScreen extends HookConsumerWidget {
                       }
                     }
 
+                    // batchCreation(newEvent, session, t.first);
+                    // return;
+
                     final navigator = Navigator.of(context);
 
                     final batch = FirebaseFirestore.instance.batch();
-                    batch.set(Cloud.eventDoc(providerId, eventId), s.toJson());
+
+                    batch.set(
+                        Cloud.eventDoc(providerId, eventId), newEvent.toJson());
                     batch.set(
                         Cloud.sessionDoc(EventIds(
                             providerId: providerId,
@@ -631,6 +626,58 @@ class NewEventFormScreen extends HookConsumerWidget {
           : form,
     );
   }
+
+  Future<void> batchCreation(
+    CMIEvent event,
+    CMISubEvent session,
+    EmbeddedData embeddedData,
+  ) async {
+    if (!kDebugMode) return;
+    final batch = FirebaseFirestore.instance.batch();
+
+    for (int i = 0; i < listEvents.length; i++) {
+      final element = listEvents[i];
+      final newEvent = event.copyWith(
+        name: element,
+        id: const Uuid().v4(),
+        maxWomCount: listWom[i],
+      );
+      batch.set(Cloud.eventDoc(providerId, newEvent.id), newEvent.toJson());
+
+      final newTotem = embeddedData.copyWith(
+        id: const Uuid().v4(),
+        name: element,
+        eventId: newEvent.id,
+        sessionId: session.id,
+      );
+      batch.set(
+        Cloud.totemDoc(
+          providerId,
+          newTotem.id,
+        ),
+        newTotem.toJson(),
+      );
+
+      batch.set(
+        Cloud.sessionDoc(
+          EventIds(
+              providerId: providerId,
+              eventId: newEvent.id,
+              sessionId: session.id),
+        ),
+        session.toJson(),
+      );
+
+      final qr = getTotemQRCode(
+        providerId,
+        newTotem.id,
+        null,
+      );
+      https: //link.wom.social/cmi/UNIURB/63919008-6ad4-434a-ab1d-bf9084cf7db8
+      print(qr);
+    }
+    await batch.commit();
+  }
 }
 
 class OptionSelector extends StatelessWidget {
@@ -652,3 +699,26 @@ class OptionSelector extends StatelessWidget {
     );
   }
 }
+
+const listEvents = [
+
+];
+
+const listWom = [
+];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

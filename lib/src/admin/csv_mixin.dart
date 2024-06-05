@@ -36,7 +36,7 @@ mixin CSVMixin {
   String _buildCsv(List<EventUser> users) {
     final data = users.map((e) => e.toCsvList()).toList();
     final csv = const ListToCsvConverter().convert([
-      ['Id', 'Name', 'Surname', 'CF'],
+      ['Id', 'Name', 'Surname', 'CF', 'Lat', 'Long'],
       ...data
     ]);
     return csv;

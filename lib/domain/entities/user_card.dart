@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:countmein/domain/entities/geopoint_converter.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -101,6 +102,7 @@ class EventUser with _$EventUser {
     int? participationCount,
     double? womanPercentage,
     double? manPercentage,
+    @GeoPointConverter() GeoPoint? position,
   }) = _EventUser;
 
   factory EventUser.fromJson(Map<String, Object?> json) =>
@@ -121,6 +123,8 @@ extension EventUserX on EventUser {
       name,
       surname,
       cf,
+      position?.latitude,
+      position?.longitude,
     ];
   }
 }

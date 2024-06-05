@@ -90,7 +90,7 @@ class _NewTotemDialogWidget extends HookConsumerWidget {
                 child: TextFormField(
                   controller: totemController,
                   validator: nameSurnameValidator,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       hintText: 'Inserisci il nome per il tuo totem'),
                 ),
               ),
@@ -101,9 +101,11 @@ class _NewTotemDialogWidget extends HookConsumerWidget {
                   const Text('Statico'),
                   Switch(
                     value: isStatic.value,
-                    onChanged: (value) {
-                      isStatic.value = value;
-                    },
+                    onChanged: totem != null
+                        ? null
+                        : (value) {
+                            isStatic.value = value;
+                          },
                   ),
                 ],
               ),

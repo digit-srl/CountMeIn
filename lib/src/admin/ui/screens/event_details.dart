@@ -669,7 +669,6 @@ class SessionItem extends StatelessWidget {
                         Cloud.eventDoc(providerId, eventId),
                         {
                           'activeSessionId': null,
-                          'status': EventStatus.archived.name
                         },
                         SetOptions(merge: true));
                     batch.set(
@@ -716,7 +715,6 @@ class SessionItem extends StatelessWidget {
                       if (isActive) {
                         batch.update(Cloud.eventDoc(providerId, eventId), {
                           'activeSessionId': null,
-                          'status': EventStatus.archived.name
                         });
                       }
                       await batch.commit();

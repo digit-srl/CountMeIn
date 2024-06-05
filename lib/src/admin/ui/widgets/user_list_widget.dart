@@ -1,7 +1,6 @@
 import 'package:countmein/domain/entities/user_card.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/admin/ui/widgets/gender_card.dart';
-import 'package:countmein/src/totem/ui/embedded_screen.dart';
 import 'package:countmein/ui/screens/admin_user_details.dart';
 import 'package:countmein/ui/widgets/loading.dart';
 import 'package:countmein/utils.dart';

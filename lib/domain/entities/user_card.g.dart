@@ -69,6 +69,8 @@ _$EventUserImpl _$$EventUserImplFromJson(Map<String, dynamic> json) =>
       participationCount: json['participationCount'] as int?,
       womanPercentage: (json['womanPercentage'] as num?)?.toDouble(),
       manPercentage: (json['manPercentage'] as num?)?.toDouble(),
+      position: _$JsonConverterFromJson<GeoPoint, GeoPoint>(
+          json['position'], const GeoPointConverter().fromJson),
     );
 
 Map<String, dynamic> _$$EventUserImplToJson(_$EventUserImpl instance) =>
@@ -94,4 +96,6 @@ Map<String, dynamic> _$$EventUserImplToJson(_$EventUserImpl instance) =>
       'participationCount': instance.participationCount,
       'womanPercentage': instance.womanPercentage,
       'manPercentage': instance.manPercentage,
+      'position': _$JsonConverterToJson<GeoPoint, GeoPoint>(
+          instance.position, const GeoPointConverter().toJson),
     };

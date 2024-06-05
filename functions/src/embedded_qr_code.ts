@@ -460,7 +460,10 @@ export const scan2 = functions
             " is not equal to totem sessionId " +
             sessionId;
           console.log(message);
-          response.status(400).send(message);
+          response.status(200).send({
+            status: "totemSessionInactive",
+            sessionId: eventData.activeSessionId,
+          });
           return;
         }
 

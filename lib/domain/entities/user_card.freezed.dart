@@ -346,6 +346,8 @@ mixin _$EventUser {
   int? get participationCount => throw _privateConstructorUsedError;
   double? get womanPercentage => throw _privateConstructorUsedError;
   double? get manPercentage => throw _privateConstructorUsedError;
+  @GeoPointConverter()
+  GeoPoint? get position => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -377,7 +379,8 @@ abstract class $EventUserCopyWith<$Res> {
       int? groupCount,
       int? participationCount,
       double? womanPercentage,
-      double? manPercentage});
+      double? manPercentage,
+      @GeoPointConverter() GeoPoint? position});
 }
 
 /// @nodoc
@@ -412,6 +415,7 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
     Object? participationCount = freezed,
     Object? womanPercentage = freezed,
     Object? manPercentage = freezed,
+    Object? position = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -490,6 +494,10 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
           ? _value.manPercentage
           : manPercentage // ignore: cast_nullable_to_non_nullable
               as double?,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as GeoPoint?,
     ) as $Val);
   }
 }
@@ -521,7 +529,8 @@ abstract class _$$EventUserImplCopyWith<$Res>
       int? groupCount,
       int? participationCount,
       double? womanPercentage,
-      double? manPercentage});
+      double? manPercentage,
+      @GeoPointConverter() GeoPoint? position});
 }
 
 /// @nodoc
@@ -554,6 +563,7 @@ class __$$EventUserImplCopyWithImpl<$Res>
     Object? participationCount = freezed,
     Object? womanPercentage = freezed,
     Object? manPercentage = freezed,
+    Object? position = freezed,
   }) {
     return _then(_$EventUserImpl(
       id: null == id
@@ -632,6 +642,10 @@ class __$$EventUserImplCopyWithImpl<$Res>
           ? _value.manPercentage
           : manPercentage // ignore: cast_nullable_to_non_nullable
               as double?,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as GeoPoint?,
     ));
   }
 }
@@ -658,7 +672,8 @@ class _$EventUserImpl implements _EventUser {
       this.groupCount,
       this.participationCount,
       this.womanPercentage,
-      this.manPercentage});
+      this.manPercentage,
+      @GeoPointConverter() this.position});
 
   factory _$EventUserImpl.fromJson(Map<String, dynamic> json) =>
       _$$EventUserImplFromJson(json);
@@ -703,10 +718,13 @@ class _$EventUserImpl implements _EventUser {
   final double? womanPercentage;
   @override
   final double? manPercentage;
+  @override
+  @GeoPointConverter()
+  final GeoPoint? position;
 
   @override
   String toString() {
-    return 'EventUser(id: $id, providerId: $providerId, userCardProviderId: $userCardProviderId, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, isGroup: $isGroup, isAnonymous: $isAnonymous, checkInAt: $checkInAt, checkOutAt: $checkOutAt, groupName: $groupName, averageAge: $averageAge, groupCount: $groupCount, participationCount: $participationCount, womanPercentage: $womanPercentage, manPercentage: $manPercentage)';
+    return 'EventUser(id: $id, providerId: $providerId, userCardProviderId: $userCardProviderId, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, isGroup: $isGroup, isAnonymous: $isAnonymous, checkInAt: $checkInAt, checkOutAt: $checkOutAt, groupName: $groupName, averageAge: $averageAge, groupCount: $groupCount, participationCount: $participationCount, womanPercentage: $womanPercentage, manPercentage: $manPercentage, position: $position)';
   }
 
   @override
@@ -746,7 +764,9 @@ class _$EventUserImpl implements _EventUser {
             (identical(other.womanPercentage, womanPercentage) ||
                 other.womanPercentage == womanPercentage) &&
             (identical(other.manPercentage, manPercentage) ||
-                other.manPercentage == manPercentage));
+                other.manPercentage == manPercentage) &&
+            (identical(other.position, position) ||
+                other.position == position));
   }
 
   @JsonKey(ignore: true)
@@ -771,7 +791,8 @@ class _$EventUserImpl implements _EventUser {
         groupCount,
         participationCount,
         womanPercentage,
-        manPercentage
+        manPercentage,
+        position
       ]);
 
   @JsonKey(ignore: true)
@@ -808,7 +829,8 @@ abstract class _EventUser implements EventUser {
       final int? groupCount,
       final int? participationCount,
       final double? womanPercentage,
-      final double? manPercentage}) = _$EventUserImpl;
+      final double? manPercentage,
+      @GeoPointConverter() final GeoPoint? position}) = _$EventUserImpl;
 
   factory _EventUser.fromJson(Map<String, dynamic> json) =
       _$EventUserImpl.fromJson;
@@ -853,6 +875,9 @@ abstract class _EventUser implements EventUser {
   double? get womanPercentage;
   @override
   double? get manPercentage;
+  @override
+  @GeoPointConverter()
+  GeoPoint? get position;
   @override
   @JsonKey(ignore: true)
   _$$EventUserImplCopyWith<_$EventUserImpl> get copyWith =>
