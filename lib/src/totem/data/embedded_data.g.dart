@@ -22,6 +22,8 @@ _$EmbeddedDataImpl _$$EmbeddedDataImplFromJson(Map<String, dynamic> json) =>
       totalCount: json['totalCount'] as int? ?? 0,
       updatedOn:
           const MyDateTimeConverter().fromJson(json['updatedOn'] as Timestamp),
+      createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['createdAt'], const MyDateTimeConverter().fromJson),
       position: _$JsonConverterFromJson<GeoPoint, GeoPoint>(
           json['position'], const GeoPointConverter().fromJson),
     );
@@ -41,6 +43,8 @@ Map<String, dynamic> _$$EmbeddedDataImplToJson(_$EmbeddedDataImpl instance) =>
       'count': instance.count,
       'totalCount': instance.totalCount,
       'updatedOn': const MyDateTimeConverter().toJson(instance.updatedOn),
+      'createdAt': _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.createdAt, const MyDateTimeConverter().toJson),
       'position': _$JsonConverterToJson<GeoPoint, GeoPoint>(
           instance.position, const GeoPointConverter().toJson),
     };

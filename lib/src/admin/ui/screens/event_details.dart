@@ -13,7 +13,6 @@ import 'package:countmein/src/admin/ui/screens/admin_providers.dart';
 import 'package:countmein/src/admin/ui/screens/event_users.dart';
 import 'package:countmein/src/admin/ui/screens/session_details.dart';
 import 'package:countmein/src/admin/ui/widgets/add_scanner.dart';
-import 'package:countmein/src/admin/ui/widgets/assign_totem_dialog.dart';
 import 'package:countmein/src/admin/ui/widgets/info_text.dart';
 import 'package:countmein/src/admin/ui/widgets/start_end_date_form.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';

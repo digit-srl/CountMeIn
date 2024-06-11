@@ -34,6 +34,8 @@ mixin _$EmbeddedData {
   int get totalCount => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime get updatedOn => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @GeoPointConverter()
   GeoPoint? get position => throw _privateConstructorUsedError;
 
@@ -63,6 +65,7 @@ abstract class $EmbeddedDataCopyWith<$Res> {
       int count,
       int totalCount,
       @MyDateTimeConverter() DateTime updatedOn,
+      @MyDateTimeConverter() DateTime? createdAt,
       @GeoPointConverter() GeoPoint? position});
 }
 
@@ -92,6 +95,7 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
     Object? count = null,
     Object? totalCount = null,
     Object? updatedOn = null,
+    Object? createdAt = freezed,
     Object? position = freezed,
   }) {
     return _then(_value.copyWith(
@@ -147,6 +151,10 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
           ? _value.updatedOn
           : updatedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       position: freezed == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
@@ -177,6 +185,7 @@ abstract class _$$EmbeddedDataImplCopyWith<$Res>
       int count,
       int totalCount,
       @MyDateTimeConverter() DateTime updatedOn,
+      @MyDateTimeConverter() DateTime? createdAt,
       @GeoPointConverter() GeoPoint? position});
 }
 
@@ -204,6 +213,7 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
     Object? count = null,
     Object? totalCount = null,
     Object? updatedOn = null,
+    Object? createdAt = freezed,
     Object? position = freezed,
   }) {
     return _then(_$EmbeddedDataImpl(
@@ -259,6 +269,10 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
           ? _value.updatedOn
           : updatedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       position: freezed == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
@@ -284,6 +298,7 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
       this.count = 0,
       this.totalCount = 0,
       @MyDateTimeConverter() required this.updatedOn,
+      @MyDateTimeConverter() this.createdAt,
       @GeoPointConverter() this.position});
 
   factory _$EmbeddedDataImpl.fromJson(Map<String, dynamic> json) =>
@@ -321,12 +336,15 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
   @MyDateTimeConverter()
   final DateTime updatedOn;
   @override
+  @MyDateTimeConverter()
+  final DateTime? createdAt;
+  @override
   @GeoPointConverter()
   final GeoPoint? position;
 
   @override
   String toString() {
-    return 'EmbeddedData(name: $name, id: $id, requestId: $requestId, eventName: $eventName, eventId: $eventId, sessionId: $sessionId, sessionName: $sessionName, radius: $radius, isStatic: $isStatic, dedicated: $dedicated, count: $count, totalCount: $totalCount, updatedOn: $updatedOn, position: $position)';
+    return 'EmbeddedData(name: $name, id: $id, requestId: $requestId, eventName: $eventName, eventId: $eventId, sessionId: $sessionId, sessionName: $sessionName, radius: $radius, isStatic: $isStatic, dedicated: $dedicated, count: $count, totalCount: $totalCount, updatedOn: $updatedOn, createdAt: $createdAt, position: $position)';
   }
 
   @override
@@ -355,6 +373,8 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
                 other.totalCount == totalCount) &&
             (identical(other.updatedOn, updatedOn) ||
                 other.updatedOn == updatedOn) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.position, position) ||
                 other.position == position));
   }
@@ -376,6 +396,7 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
       count,
       totalCount,
       updatedOn,
+      createdAt,
       position);
 
   @JsonKey(ignore: true)
@@ -407,6 +428,7 @@ abstract class _EmbeddedData implements EmbeddedData {
       final int count,
       final int totalCount,
       @MyDateTimeConverter() required final DateTime updatedOn,
+      @MyDateTimeConverter() final DateTime? createdAt,
       @GeoPointConverter() final GeoPoint? position}) = _$EmbeddedDataImpl;
 
   factory _EmbeddedData.fromJson(Map<String, dynamic> json) =
@@ -439,6 +461,9 @@ abstract class _EmbeddedData implements EmbeddedData {
   @override
   @MyDateTimeConverter()
   DateTime get updatedOn;
+  @override
+  @MyDateTimeConverter()
+  DateTime? get createdAt;
   @override
   @GeoPointConverter()
   GeoPoint? get position;

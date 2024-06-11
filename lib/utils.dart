@@ -8,10 +8,8 @@ import 'package:oktoast/oktoast.dart';
 final dateFormat = DateFormat('dd MMMM yyyy HH:mm');
 
 extension DateTimeX on DateTime {
-  DateTime get midnight => DateTime(this.year, this.month, this.day);
+  DateTime get midnight => DateTime(year, month, day);
   String get format => dateFormat.format(this);
-
-  DateTime get midnightUTC => DateTime.utc(this.year, this.month, this.day);
 }
 
 int calculateCrossAxisCount(double maxWidth) => maxWidth < 415

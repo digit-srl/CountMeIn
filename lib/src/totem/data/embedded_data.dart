@@ -23,6 +23,7 @@ class EmbeddedData with _$EmbeddedData {
     @Default(0) int count,
     @Default(0) int totalCount,
     @MyDateTimeConverter() required DateTime updatedOn,
+    @MyDateTimeConverter() DateTime? createdAt,
     @GeoPointConverter() GeoPoint? position,
   }) = _EmbeddedData;
 

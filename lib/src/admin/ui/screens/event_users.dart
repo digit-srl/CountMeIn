@@ -1,32 +1,18 @@
-import 'dart:convert';
 
 import 'package:countmein/cloud.dart';
 import 'package:countmein/domain/entities/event_ids.dart';
-import 'package:countmein/domain/entities/user_card.dart';
-import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/session_notifier.dart';
 import 'package:countmein/src/admin/application/users_stream.dart';
 import 'package:countmein/src/admin/csv_mixin.dart';
 import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
-import 'package:countmein/src/admin/ui/widgets/gender_card.dart';
 import 'package:countmein/src/admin/ui/widgets/user_list_widget.dart';
-import 'package:countmein/ui/screens/admin_user_details.dart';
-import 'package:countmein/ui/widgets/loading.dart';
-import 'package:csv/csv.dart';
-import 'package:file_saver/file_saver.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:universal_io/io.dart';
 import 'package:intl/intl.dart';
 
 class EventUsersScreen extends StatefulHookConsumerWidget {

@@ -1,11 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/my_logger.dart';
-import 'package:countmein/src/admin/application/providers_stream.dart';
 import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
-import 'package:countmein/src/auth/application/auth_notifier.dart';
-import 'package:countmein/src/auth/application/auth_state.dart';
-import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

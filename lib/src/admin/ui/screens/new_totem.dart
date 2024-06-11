@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:countmein/cloud.dart';
-import 'package:countmein/src/admin/application/events_stream.dart';
-import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/admin/ui/screens/new_event.dart';
 import 'package:countmein/src/admin/ui/widgets/info_text.dart';
-import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/totem/application/totems_notifier.dart';
 import 'package:countmein/src/totem/data/embedded_data.dart';
 import 'package:countmein/ui/validators.dart';
@@ -15,7 +12,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:uuid/uuid.dart';
-import 'package:collection/collection.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

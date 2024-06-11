@@ -113,7 +113,7 @@ class NewEventFormScreen extends HookConsumerWidget {
     final selectedFrequency = useState<FrequencyType>(FrequencyType.daily);
     final titleStyle = Theme.of(context).textTheme.headline6;
     final selectedAim = useState<String?>(null);
-    final aims = ref.watch(getAimsProvider)?.valueOrNull;
+    final aims = ref.watch(getAimsProvider).valueOrNull;
 
     final form = Form(
       key: _formKey,
@@ -497,8 +497,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                         ? int.tryParse(repsController.text.trim()) ?? 1
                         : 1;
 
-                    final sessionStartAt = startAt.value.midnightUTC;
-                    // final end = sessionStartAt.add(const Duration(days: 1));
+                    final sessionStartAt = startAt.value.midnight;
 
                     // Data di fine prima sessione
                     final sessionEndAt = isRecurring
@@ -516,8 +515,9 @@ class NewEventFormScreen extends HookConsumerWidget {
                     final newEvent = CMIEvent(
                       id: eventId,
                       type: eventType.value,
-                      activeSessionId: currentSubEventId,
                       recurrence: recurrence,
+                      activeSessionId: currentSubEventId,
+                      startAt: sessionStartAt,
                       subEventDeadline: sessionEndAt,
                       name: nameController.text.trim(),
                       acceptPassepartout: acceptPassepartout,
@@ -529,8 +529,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                       accessType: accessType.value,
                       maxWomCount: releaseWom.value ? womCount : 0,
                       status: EventStatus.live,
-                      createdOn: DateTime.now().toUtc(),
-                      startAt: sessionStartAt,
+                      createdOn: DateTime.now(),
                       acceptedCardType: acceptedCardType.value,
                       position: position,
                       aim: selectedAim.value,
@@ -552,6 +551,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                           requestId: totems.value[i].$2 ? null : 'abcded',
                           position: position,
                           updatedOn: DateTime.now(),
+                          createdAt: DateTime.now(),
                           radius: int.parse(radiusController.text.trim()),
                           dedicated: true,
                           eventId: eventId,
