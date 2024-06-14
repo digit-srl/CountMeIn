@@ -105,15 +105,19 @@ export function providerTotemDocRef(
   return providerDocRef(providerId).collection("totems").doc(totemId);
 }
 
+export function sessionsCollection(
+  providerId: string,
+  eventId: string
+): FirebaseFirestore.CollectionReference {
+  return eventCollectionRef(providerId).doc(eventId).collection("sessions");
+}
+
 export function sessionDocRef(
   providerId: string,
   eventId: string,
   sessionId: string
 ): FirebaseFirestore.DocumentReference {
-  return eventCollectionRef(providerId)
-    .doc(eventId)
-    .collection("sessions")
-    .doc(sessionId);
+  return sessionsCollection(providerId, eventId).doc(sessionId);
 }
 
 export function sessionPrivateUsersCollection(

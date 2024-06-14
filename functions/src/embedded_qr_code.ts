@@ -13,6 +13,7 @@ import {
   providerTotemDocRef,
   sessionDocRef,
   sessionPrivateUsersDoc,
+  sessionsCollection,
 } from "./firestore_references";
 import { generateSecret, generateWom } from "./utils";
 const circleToPolygon = require("circle-to-polygon");
@@ -538,7 +539,11 @@ export const scan2 = functions
         if (isExpired) {
           response.status(200).send({
             status: "sessionExpired",
+            eventId: eventId,
+            eventName: eventData.name,
             sessionId: eventData.activeSessionId,
+            sessionName: sessionData.name,
+            totemName: totemData.name,
           });
           return;
         }
@@ -546,7 +551,11 @@ export const scan2 = functions
         if (!isStarted) {
           response.status(200).send({
             status: "sessionNotStarted",
+            eventId: eventId,
+            eventName: eventData.name,
             sessionId: eventData.activeSessionId,
+            sessionName: sessionData.name,
+            totemName: totemData.name,
           });
           return;
         }
@@ -571,8 +580,12 @@ export const scan2 = functions
           if (!isInside) {
             response.status(200).send({
               status: "outOfPolygon",
-              sessionId: eventData.activeSessionId,
               polygon: polygon.coordinates[0],
+              eventId: eventId,
+              eventName: eventData.name,
+              sessionId: eventData.activeSessionId,
+              sessionName: sessionData.name,
+              totemName: totemData.name,
             });
             return;
           }
@@ -679,7 +692,10 @@ export const scan2 = functions
           pin: wom.pin,
           aim: aim,
           eventId: eventId,
+          eventName: eventData.name,
           sessionId: eventData.activeSessionId,
+          sessionName: sessionData.name,
+          totemName: totemData.name,
         });
       });
     }
