@@ -13,7 +13,6 @@ import {
   providerTotemDocRef,
   sessionDocRef,
   sessionPrivateUsersDoc,
-  sessionsCollection,
 } from "./firestore_references";
 import { generateSecret, generateWom } from "./utils";
 const circleToPolygon = require("circle-to-polygon");
@@ -696,6 +695,7 @@ export const scan2 = functions
           sessionId: eventData.activeSessionId,
           sessionName: sessionData.name,
           totemName: totemData.name,
+          providerName: providerData.name,
         });
       });
     }
