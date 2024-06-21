@@ -696,6 +696,7 @@ export const scan2 = functions
           sessionId: eventData.activeSessionId,
           sessionName: sessionData.name,
           totemName: totemData.name,
+          providerName: providerData.name,
         });
       });
     }
