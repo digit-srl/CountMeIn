@@ -14,7 +14,6 @@ enum PlatformRole {
 enum UserRole {
   owner,
   admin,
-  collaborator,
   scanner,
   eventManager,
   unknown;
@@ -25,8 +24,6 @@ enum UserRole {
         return 'Proprietario';
       case UserRole.admin:
         return 'Amministratore';
-      case UserRole.collaborator:
-        return 'Collaboratore';
       case UserRole.scanner:
         return 'Scanner';
       case UserRole.eventManager:
@@ -36,8 +33,10 @@ enum UserRole {
     }
   }
 
-  bool get canSeeAllEvents =>
-      switch (this) { UserRole.owner || UserRole.admin => true, _ => false };
+  bool get canSeeAllEvents => switch (this) {
+        UserRole.owner || UserRole.admin => true,
+        _ => false,
+      };
 }
 
 const collaboratorsEventRole = [

@@ -18,7 +18,7 @@ final scannersProvider = Provider.family
       ref.watch(singleCMIProviderProvider(providerId)).valueOrNull?.managers ??
           {};
   return managers.values
-      .where((element) => element.role == UserRole.collaborator)
+      .where((element) => collaboratorsEventRole.contains(element.role))
       .toList();
 });
 
@@ -68,10 +68,10 @@ class AddScannerWidget extends HookConsumerWidget {
               items: collaboratorsEventRole
                   .map(
                     (e) => DropdownMenuItem<UserRole>(
-                  value: e,
-                  child: Text(e.text),
-                ),
-              )
+                      value: e,
+                      child: Text(e.text),
+                    ),
+                  )
                   .toList(),
             ),
             const SizedBox(height: 16),

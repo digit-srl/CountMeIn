@@ -685,9 +685,12 @@ class OptionSelector extends StatelessWidget {
   final String text;
   final ValueChanged<bool?>? onChanged;
 
-  const OptionSelector(
-      {Key? key, required this.value, required this.text, this.onChanged})
-      : super(key: key);
+  const OptionSelector({
+    super.key,
+    required this.value,
+    required this.text,
+    this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {

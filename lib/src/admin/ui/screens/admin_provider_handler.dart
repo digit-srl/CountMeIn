@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
@@ -13,6 +12,7 @@ import 'package:countmein/src/admin/ui/widgets/provider_totems.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
+import 'package:countmein/src/features/create_events_batch/ui/create_events_batch_screen.dart';
 import 'package:countmein/ui/widgets/cmi_chip.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -177,7 +177,20 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
             providerId: providerId,
           ),
           const SizedBox(height: 16),
-          const Text('Eventi'),
+          Row(
+            children: [
+              const Text('Eventi'),
+              const Spacer(),
+              TextButton(
+                  onPressed: () {
+                    final path =
+                        '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${provider!.id}/${CreateEventsBatchScreen.routeName}';
+
+                    context.go(path);
+                  },
+                  child: const Text('Crea eventi in batch')),
+            ],
+          ),
           CMICard(
             child: Consumer(builder: (context, ref, child) {
               final eventFilter = ref.watch(eventFilterNotifierProvider);
@@ -241,11 +254,11 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
-                        if (userRole == UserRole.collaborator)
-                          Text(
-                            'Sei ${userRole.text.toUpperCase()} quindi non puoi creare un nuovo evento',
+                        if (userRole != UserRole.admin)
+                          const Text(
+                            'Solo gli amministratori possono creare un nuovo evento',
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.grey,
                             ),
                           )

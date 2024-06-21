@@ -41,10 +41,6 @@ final pendingInviteStreamProvider =
   }
 });
 
-final selectedRoleProvider = StateProvider.autoDispose<UserRole>((ref) {
-  return UserRole.collaborator;
-});
-
 class ManagersHandlerScreen extends StatefulHookConsumerWidget {
   static const String routeName = 'managers';
   final String providerId;
@@ -65,7 +61,8 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
   Widget build(BuildContext context) {
     final emailController = useTextEditingController();
     final nameController = useTextEditingController();
-    final selectedRole = ref.watch(selectedRoleProvider);
+
+    final selectedRole = useState(UserRole.scanner);
     final provider =
         ref.watch(singleCMIProviderProvider(widget.providerId)).valueOrNull;
     final state = ref.watch(pendingInviteStreamProvider(widget.providerId));
@@ -153,7 +150,7 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                       child: SizedBox(
                                         width: 300,
                                         child: CMIDropdownButton<UserRole>(
-                                          value: selectedRole,
+                                          value: selectedRole.value,
                                           items: UserRole.values
                                               .sublist(0, 3)
                                               .map(
@@ -166,10 +163,7 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                               .toList(),
                                           onChanged: (role) {
                                             if (role == null) return;
-                                            ref
-                                                .read(selectedRoleProvider
-                                                    .notifier)
-                                                .state = role;
+                                            selectedRole.value = role;
                                           },
                                         ),
                                       ),
@@ -197,7 +191,7 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                               final newManager =
                                                   PendingProviderManager(
                                                 id: const Uuid().v4(),
-                                                role: selectedRole,
+                                                role: selectedRole.value,
                                                 name: name,
                                                 status: ProviderManagerStatus
                                                     .pending,
@@ -234,7 +228,8 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                           const Divider(),
                           if (pendingInvites.isEmpty &&
                               provider.managers.isEmpty)
-                            const Text('Non ci sono managers per questo provider')
+                            const Text(
+                                'Non ci sono managers per questo provider')
                           else ...[
                             for (final m in pendingInvites)
                               MemberRow(
