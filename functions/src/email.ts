@@ -1,4 +1,4 @@
-import * as functions from "firebase-functions";
+import { HttpsError } from "firebase-functions/v2/https";
 const draw = require("./draw");
 import formData = require("form-data");
 import Mailgun from "mailgun.js";
@@ -45,7 +45,7 @@ export function sendEmail(
     }) // logs response data
     .catch((err: any) => {
       console.log(err);
-      throw new functions.https.HttpsError("aborted", err);
+      throw new HttpsError("aborted", err);
     });
 }
 
@@ -121,7 +121,7 @@ export function sendUserCardEmail(
     }) // logs response data
     .catch((err: any) => {
       console.log(err);
-      throw new functions.https.HttpsError("aborted", err);
+      throw new HttpsError("aborted", err);
     });
 }
 
@@ -393,6 +393,6 @@ export function sendGroupCardEmail(
     }) // logs response data
     .catch((err: any) => {
       console.log(err);
-      throw new functions.https.HttpsError("aborted", err);
+      throw new HttpsError("aborted", err);
     });
 }

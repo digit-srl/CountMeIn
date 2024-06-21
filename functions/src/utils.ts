@@ -1,7 +1,6 @@
 import * as firestore from "@google-cloud/firestore";
 const admin = require("firebase-admin");
 import Email = require("./email");
-//const bodyParser = require("body-parser");
 import * as dotenv from "dotenv";
 dotenv.config();
 const db = admin.firestore();

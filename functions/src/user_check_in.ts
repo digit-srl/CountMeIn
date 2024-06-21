@@ -1,8 +1,8 @@
-import * as functions from "firebase-functions";
 const admin = require("firebase-admin");
 const db = admin.firestore();
 import * as firestore from "@google-cloud/firestore";
 import Email = require("./email");
+import { onDocumentWritten } from "firebase-functions/v2/firestore";
 const axios = require("axios").default;
 import {
   eventDocRef,
@@ -11,17 +11,21 @@ import {
   privateUserDocRef,
 } from "./firestore_references";
 
-exports.onPrivateSessionUserCheckIn = functions
-  .region("europe-west3")
-  .firestore.document(
-    "providers/{providerId}/events/{eventId}/sessions/{sessionId}/privateUsers/{userDocId}"
-  )
-  .onWrite(async (snap, context) => {
+exports.onPrivateSessionUserCheckIn = onDocumentWritten(
+  "providers/{providerId}/events/{eventId}/sessions/{sessionId}/privateUsers/{userDocId}",
+  async (event) => {
     try {
-      const userDocId = context.params.userDocId;
+      const userDocId = event.params.userDocId;
+
+      if (event.data == null) {
+        console.log(
+          "onPrivateSessionUserCheckIn: data null on " + "eventId: " + userDocId
+        );
+        return;
+      }
 
       //utente cancellato
-      if (!snap.after.exists) {
+      if (!event.data.after.exists) {
         console.log(
           "onPrivateSessionUserCheckIn: utente rimosso da " +
             "eventId: " +
@@ -31,7 +35,7 @@ exports.onPrivateSessionUserCheckIn = functions
       }
 
       const privateEventUserData: FirebaseFirestore.DocumentData | undefined =
-        snap.after.data();
+        event.data.after.data();
       console.log(
         "onPrivateSessionUserCheckIn: user check in private id: " +
           privateEventUserData?.id
@@ -55,11 +59,11 @@ exports.onPrivateSessionUserCheckIn = functions
 
         const gender = userData.gender;
         if (gender != null) {
-          const countRef = snap.after.ref.parent.parent;
+          const countRef = event.data.after.ref.parent.parent;
           if (countRef != null) {
             await updateGender(
-              snap.after.exists,
-              snap.before.exists,
+              event.data.after.exists,
+              event.data.before.exists,
               gender,
               countRef
             );
@@ -72,11 +76,11 @@ exports.onPrivateSessionUserCheckIn = functions
       } else if (genderWithoutCard != null) {
         console.log("onPrivateSessionUserCheckIn: gender from pocket scan");
 
-        const countRef = snap.after.ref.parent.parent;
+        const countRef = event.data.after.ref.parent.parent;
         if (countRef != null) {
           await updateGender(
-            snap.after.exists,
-            snap.before.exists,
+            event.data.after.exists,
+            event.data.before.exists,
             genderWithoutCard,
             countRef
           );
@@ -92,7 +96,8 @@ exports.onPrivateSessionUserCheckIn = functions
       console.log(ex);
       return null;
     }
-  });
+  }
+);
 
 async function updateGender(
   snapAfterExists: boolean,
@@ -127,22 +132,27 @@ async function updateGender(
     );
     if (countRef != null) {
       await updateCounts(countRef, 1, m, f, nb, na);
-      functions.logger.log("Gender counter updated.");
+      console.log("Gender counter updated.");
     }
   }
 }
 
-export const onSessionUserCheckIn = functions
-  .region("europe-west3")
-  .firestore.document(
-    "providers/{providerId}/events/{eventId}/sessions/{sessionId}/users/{userDocId}"
-  )
-  .onWrite(async (snap, context) => {
+export const onSessionUserCheckIn = onDocumentWritten(
+  "providers/{providerId}/events/{eventId}/sessions/{sessionId}/users/{userDocId}",
+  async (firestoreEvent) => {
     try {
-      const eventId = context.params.eventId;
-      const sessionId = context.params.sessionId;
-      const providerId = context.params.providerId;
-      const userDocId = context.params.userDocId;
+      const eventId = firestoreEvent.params.eventId;
+      const sessionId = firestoreEvent.params.sessionId;
+      const providerId = firestoreEvent.params.providerId;
+      const userDocId = firestoreEvent.params.userDocId;
+
+      const snap = firestoreEvent.data;
+
+      if (snap == null) {
+        console.log("onSessionUserCheckIn data is null");
+        return;
+      }
+
       const eventRef = snap.after.ref.parent.parent;
 
       console.log(
@@ -385,17 +395,20 @@ export const onSessionUserCheckIn = functions
       console.log(ex);
       return null;
     }
-  });
+  }
+);
 
-exports.onGlobalPrivateUserCheckIn = functions
-  .region("europe-west3")
-  .firestore.document(
-    "providers/{providerId}/events/{eventId}/privateUsers/{userDocId}"
-  )
-  .onWrite(async (snap, context) => {
+exports.onGlobalPrivateUserCheckIn = onDocumentWritten(
+  "providers/{providerId}/events/{eventId}/privateUsers/{userDocId}",
+  async (firestoreEvent) => {
     try {
-      const userDocId = context.params.userDocId;
+      const userDocId = firestoreEvent.params.userDocId;
 
+      const snap = firestoreEvent.data;
+      if (snap == null) {
+        console.log("onGlobalPrivateUserCheckIn data is null");
+        return;
+      }
       //utente cancellato
       if (!snap.after.exists) {
         console.log(
@@ -466,18 +479,24 @@ exports.onGlobalPrivateUserCheckIn = functions
       console.log(ex);
       return new Promise((resolve, reject) => {});
     }
-  });
+  }
+);
 
-export const onGlobalUserCheckIn = functions
-  .region("europe-west3")
-  .firestore.document(
-    "providers/{providerId}/events/{eventId}/users/{userDocId}"
-  )
-  .onWrite(async (snap, context) => {
+export const onGlobalUserCheckIn = onDocumentWritten(
+  "providers/{providerId}/events/{eventId}/users/{userDocId}",
+  async (firestoreEvent) => {
     try {
-      const eventId = context.params.eventId;
-      const providerId = context.params.providerId;
-      const userDocId = context.params.userDocId;
+      const eventId = firestoreEvent.params.eventId;
+      const providerId = firestoreEvent.params.providerId;
+      const userDocId = firestoreEvent.params.userDocId;
+
+      const snap = firestoreEvent.data;
+
+      if (snap == null) {
+        console.log("onGlobalUserCheckIn data is null");
+        return;
+      }
+
       const eventRef = snap.after.ref.parent.parent;
 
       console.log(
@@ -554,7 +573,8 @@ export const onGlobalUserCheckIn = functions
       console.log(ex);
       return null;
     }
-  });
+  }
+);
 
 async function updateCounts(
   reference: FirebaseFirestore.DocumentReference,

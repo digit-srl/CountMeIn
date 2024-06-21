@@ -1,4 +1,4 @@
-import * as functions from "firebase-functions";
+const { onSchedule } = require("firebase-functions/v2/scheduler");
 const admin = require("firebase-admin");
 admin.initializeApp();
 import * as dotenv from "dotenv";
@@ -176,14 +176,9 @@ export const onUserVerificationDone = functions
   });
 */
 
-export const updateSubEventsCron = functions
-  .region("europe-west3")
-  .pubsub.schedule("*/30 * * * *")
-  //.pubsub.schedule("0 0 * * *")
-  .timeZone("Etc/UTC")
-  .onRun(async (_) => {
-    return updateSubEvent();
-  });
+export const updateSubEventsCron = onSchedule("*/30 * * * *", async () => {
+  return updateSubEvent();
+});
 
 async function updateSubEvent(): Promise<void> {
   const now = new Date();

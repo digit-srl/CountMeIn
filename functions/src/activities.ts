@@ -1,18 +1,26 @@
-import * as functions from "firebase-functions";
+import {
+  onDocumentCreated,
+  onDocumentUpdated,
+} from "firebase-functions/v2/firestore";
 const admin = require("firebase-admin");
 import Email = require("./email");
-//const bodyParser = require("body-parser");
 import * as dotenv from "dotenv";
 dotenv.config();
 import { createNewAdminForProvider, generateSecret } from "./utils";
-//import { FirebaseError } from "@firebase/util";
+import { HttpsError } from "firebase-functions/v2/https";
 import { UserRecord } from "firebase-functions/v1/auth";
 import { providerDocRef } from "./firestore_references";
 
-export const onActivityRequested = functions
-  .region("europe-west3")
-  .firestore.document("providerRequests/{docId}")
-  .onCreate(async (snap, context) => {
+export const onActivityRequested = onDocumentCreated(
+  "providerRequests/{docId}",
+  async (event) => {
+    const snap = event.data;
+
+    if (snap == null) {
+      console.log("onActivityRequested event data null");
+      return;
+    }
+
     const provider: FirebaseFirestore.DocumentData = snap.data();
     const adminFullName = provider.adminName + " " + provider.adminSurname;
     console.log(
@@ -37,14 +45,20 @@ export const onActivityRequested = functions
       adminFullName,
       link
     );
-  });
+  }
+);
 
-export const onActivityRequestedUpdated = functions
-  .region("europe-west3")
-  .firestore.document("providerRequests/{docId}")
-  .onUpdate(async (change, context) => {
-    // Get an object representing the document
-    // e.g. {'name': 'Marie', 'age': 66}
+export const onActivityRequestedUpdated = onDocumentUpdated(
+  "providerRequests/{docId}",
+  async (event) => {
+    const requestId = event.params.docId;
+    const change = event.data;
+
+    if (change == null) {
+      console.log("onActivityRequested event data null");
+      return;
+    }
+
     const provider: FirebaseFirestore.DocumentData = change.after.data();
     const previousProvider: FirebaseFirestore.DocumentData =
       change.before.data();
@@ -89,12 +103,8 @@ export const onActivityRequestedUpdated = functions
       }
 
       if (user === undefined || user === null) {
-        throw new functions.https.HttpsError(
-          "aborted",
-          "user not exist or creation failed"
-        );
+        throw new HttpsError("aborted", "user not exist or creation failed");
       }
-      const requestId = context.params.docId;
 
       let map = {
         id: user.uid,
@@ -116,4 +126,5 @@ export const onActivityRequestedUpdated = functions
         password
       );
     }
-  });
+  }
+);
