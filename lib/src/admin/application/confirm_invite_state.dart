@@ -37,17 +37,14 @@ class ConfirmInviteState with _$ConfirmInviteState {
   const factory ConfirmInviteState.response(ConfirmInviteResponseStatus status) = ConfirmResponse;
 
   const factory ConfirmInviteState.error(Object error,
-      StackTrace st) = ConfirmInviteError;
+      StackTrace st,) = ConfirmInviteError;
 }
 
 @freezed
 class InviteRequest with _$InviteRequest {
   const factory InviteRequest({
     required String providerId,
-    String? userId,
-    required String inviteId,
-    required String providerName,
-    required String secret,
+    required String inviteId, required String providerName, required String secret, String? userId,
   }) = _InviteRequest;
 
 }

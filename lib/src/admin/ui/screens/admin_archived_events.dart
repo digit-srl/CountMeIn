@@ -16,13 +16,13 @@ class ArchivedEventsScreen extends ConsumerWidget {
   static const String routeName = 'archived';
   final String providerId;
 
-  const ArchivedEventsScreen({super.key, required this.providerId});
+  const ArchivedEventsScreen({required this.providerId, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final eventsState = ref
             .watch(
-                eventsStreamProvider(providerId, status: EventStatus.archived))
+                eventsStreamProvider(providerId, status: EventStatus.archived),)
             .valueOrNull ??
         [];
     return Scaffold(
@@ -48,13 +48,13 @@ class ArchivedEventsScreen extends ConsumerWidget {
               children: [
                 Text(
                   event.name,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 if (kDebugMode)
                   FittedBox(
                     child: Text(
                       event.id,
-                      style: Theme.of(context).textTheme.caption,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
               ],

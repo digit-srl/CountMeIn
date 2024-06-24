@@ -9,7 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class QrCodeValidationScreen extends StatefulHookConsumerWidget {
   static const String routeName = 'qr-code-validation';
-  const QrCodeValidationScreen({Key? key}) : super(key: key);
+  const QrCodeValidationScreen({super.key});
 
   @override
   ConsumerState<QrCodeValidationScreen> createState() => _State();
@@ -23,17 +23,17 @@ class _State extends ConsumerState<QrCodeValidationScreen> {
   Widget build(BuildContext context) {
     final controller = useTextEditingController();
     return Scaffold(
-      appBar: AdminAppBar(title: 'Valida qr code',),
+      appBar: const AdminAppBar(title: 'Valida qr code',),
       body: Center(
         child: CMICard(
-          constraints: BoxConstraints(maxWidth: 700),
+          constraints: const BoxConstraints(maxWidth: 700),
           child: Form(
             key: formKey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 CMITextField(
-                  textStyle:Theme.of(context).textTheme.bodyText2,
+                  textStyle:Theme.of(context).textTheme.bodyMedium,
                   controller: controller,
                   hintText: 'Ex: providerId;name;surname;cf;extra;email',
                   validator: (value) {
@@ -50,7 +50,7 @@ class _State extends ConsumerState<QrCodeValidationScreen> {
                   onPressed: () {
                     if (formKey.currentState?.validate() ?? false) {}
                   },
-                  child: Text('Valida'),
+                  child: const Text('Valida'),
                 ),
               ],
             ),

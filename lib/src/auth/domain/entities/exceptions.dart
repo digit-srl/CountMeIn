@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../common/errors/mu_exceptions.dart';
+import 'package:countmein/src/common/errors/mu_exceptions.dart';
 
 class SignInException extends MUException {
 
@@ -15,7 +15,7 @@ class SignInException extends MUException {
         return InvalidEmailOrPasswordException('Email o password errate');
       case 'user-disabled':
         return UserDisabledException(
-            'L\'utente non è più abilitato a accedere a questo servizio');
+            'L\'utente non è più abilitato a accedere a questo servizio',);
       case 'user-not-found':
         return UserNotFoundException('Email o password errate');
       default:

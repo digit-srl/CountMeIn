@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../my_logger.dart';
+import 'package:countmein/my_logger.dart';
 
 part 'reset_password_notifier.freezed.dart';
 
@@ -77,7 +77,7 @@ class ResetPasswordNotifier extends StateNotifier<ResetPasswordState> {
     try {
       logger.i(resetPasswordRequest.oobCode);
       await FirebaseAuth.instance.confirmPasswordReset(
-          code: resetPasswordRequest.oobCode, newPassword: newPassword);
+          code: resetPasswordRequest.oobCode, newPassword: newPassword,);
       FirebaseFirestore.instance
           .collection('/credentials')
           .doc(resetPasswordRequest.userId)

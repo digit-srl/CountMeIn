@@ -12,17 +12,15 @@ class EmbeddedData with _$EmbeddedData {
   const factory EmbeddedData({
     required String name,
     required String id,
-    String? requestId,
+    required int radius, @MyDateTimeConverter() required DateTime updatedOn, String? requestId,
     String? eventName,
     String? eventId,
     String? sessionId,
     String? sessionName,
-    required int radius,
     @Default(false) bool isStatic,
     @Default(false) bool dedicated,
     @Default(0) int count,
     @Default(0) int totalCount,
-    @MyDateTimeConverter() required DateTime updatedOn,
     @MyDateTimeConverter() DateTime? createdAt,
     @GeoPointConverter() GeoPoint? position,
   }) = _EmbeddedData;

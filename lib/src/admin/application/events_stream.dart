@@ -6,17 +6,16 @@ import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../cloud.dart';
+import 'package:countmein/cloud.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 
 part 'events_stream.g.dart';
 
 @riverpod
 Stream<List<CMIEvent>> eventsStream(EventsStreamRef ref, String providerId,
-    {EventStatus status = EventStatus.live}) async* {
+    {EventStatus status = EventStatus.live,}) async* {
   final authUserState = ref.watch(authStateProvider);
   final filter = ref.watch(eventFilterNotifierProvider);
   final isCMIAdmin = ref.watch(platformUserRoleProvider) == PlatformRole.cmi;
@@ -35,8 +34,8 @@ Stream<List<CMIEvent>> eventsStream(EventsStreamRef ref, String providerId,
 
       if (status == EventStatus.archived) {
         query = Cloud.eventsCollection(providerId).where(Filter.or(
-            Filter("status", isEqualTo: EventStatus.archived.name),
-            Filter("status", isEqualTo: EventStatus.closed.name)));
+            Filter('status', isEqualTo: EventStatus.archived.name),
+            Filter('status', isEqualTo: EventStatus.closed.name),),);
       } else {
         query = Cloud.eventsCollection(providerId)
             .where('status', isEqualTo: status.name);
@@ -46,9 +45,9 @@ Stream<List<CMIEvent>> eventsStream(EventsStreamRef ref, String providerId,
         query = query.where(
           Filter.or(
               Filter('managers.${user.uid}',
-                  isEqualTo: UserRole.scanner.name),
+                  isEqualTo: UserRole.scanner.name,),
               Filter('managers.${user.uid}',
-                  isEqualTo: UserRole.eventManager.name)),
+                  isEqualTo: UserRole.eventManager.name,),),
         );
       }
 
@@ -74,7 +73,7 @@ Stream<List<CMIEvent>> eventsStream(EventsStreamRef ref, String providerId,
           list.sort((a, b) => a.createdOn.compareTo(b.createdOn));
         } else {
           list.sort(
-              (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+              (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),);
         }
         yield list;
       }
@@ -84,7 +83,7 @@ Stream<List<CMIEvent>> eventsStream(EventsStreamRef ref, String providerId,
     }
   } else {
     logger.i(
-        'eventsStreamProvider: user is not manager of this provider $providerId');
+        'eventsStreamProvider: user is not manager of this provider $providerId',);
     yield <CMIEvent>[];
   }
 }
@@ -111,12 +110,12 @@ Stream<CMIEvent> event(EventRef ref, EventIds ids) async* {
   final eventId = ids.eventId;
 
   if (ref.exists(eventsStreamProvider(providerId))) {
-    logger.i("eventProvider: eventsStreamProvider exists ");
+    logger.i('eventProvider: eventsStreamProvider exists ');
     final itemFromItemList = await ref.watch(eventsStreamProvider(providerId)
         .selectAsync(
-            (list) => list.firstWhereOrNull((event) => event.id == eventId)));
+            (list) => list.firstWhereOrNull((event) => event.id == eventId),),);
     if (itemFromItemList != null) {
-      logger.i("eventProvider: emit from existing provider");
+      logger.i('eventProvider: emit from existing provider');
       yield itemFromItemList;
       return;
     }

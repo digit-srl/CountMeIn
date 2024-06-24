@@ -30,13 +30,13 @@ import 'package:countmein/ui/screens/email_verification.dart';
 import 'package:countmein/ui/screens/request_activity.dart';
 import 'package:flutter/material.dart';
 
-import 'src/admin/ui/screens/admin_dashboard.dart';
-import 'src/admin/ui/screens/admin_providers.dart';
-import 'src/auth/domain/entities/user.dart';
-import 'src/auth/ui/screens/sign_in.dart';
-import 'ui/screens/admin_user_details.dart';
-import 'ui/screens/error.dart';
-import 'ui/screens/user_event.dart';
+import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
+import 'package:countmein/src/admin/ui/screens/admin_providers.dart';
+import 'package:countmein/src/auth/domain/entities/user.dart';
+import 'package:countmein/src/auth/ui/screens/sign_in.dart';
+import 'package:countmein/ui/screens/admin_user_details.dart';
+import 'package:countmein/ui/screens/error.dart';
+import 'package:countmein/ui/screens/user_event.dart';
 
 /// Caches and Exposes a [GoRouter]
 final routerProvider = Provider<GoRouter>((ref) {
@@ -257,7 +257,7 @@ class RouterNotifier extends ChangeNotifier {
                               );
                             },
                           ),
-                        ]),
+                        ],),
                     GoRoute(
                       path: ArchivedEventsScreen.routeName,
                       builder: (context, state) {

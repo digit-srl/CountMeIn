@@ -11,7 +11,7 @@ class UserConsoleScreen extends ConsumerStatefulWidget {
   static const routeName = '/profile';
   final UserIds userIds;
 
-  const UserConsoleScreen({Key? key, required this.userIds}) : super(key: key);
+  const UserConsoleScreen({required this.userIds, super.key});
 
   @override
   ConsumerState<UserConsoleScreen> createState() => _UserConsoleScreenState();
@@ -34,16 +34,16 @@ class _UserConsoleScreenState extends ConsumerState<UserConsoleScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Text(
-                          'Richiedi il codice otp per accedere al tuo profilo'),
+                          'Richiedi il codice otp per accedere al tuo profilo',),
                       const SizedBox(height: 16),
                       ElevatedButton(
                           onPressed: () {
                             ref
                                 .read(userProfileNotifierProvider(widget.userIds)
-                                    .notifier)
+                                    .notifier,)
                                 .getOtpCode();
                           },
-                          child: const Text('Richiedi codice')),
+                          child: const Text('Richiedi codice'),),
                     ],
                   ),
                 );
@@ -61,7 +61,7 @@ class _UserConsoleScreenState extends ConsumerState<UserConsoleScreen> {
                       ref
                           .read(userProfileNotifierProvider(widget.userIds).notifier)
                           .verifyOtpCode(otpCode);
-                    }
+                    },
                 );
               },
               wrongCode: () {
@@ -73,10 +73,10 @@ class _UserConsoleScreenState extends ConsumerState<UserConsoleScreen> {
                         onPressed: () {
                           ref
                               .read(userProfileNotifierProvider(widget.userIds)
-                                  .notifier)
+                                  .notifier,)
                               .reset();
                         },
-                        child: const Text('Riprova')),
+                        child: const Text('Riprova'),),
                   ],
                 );
               },

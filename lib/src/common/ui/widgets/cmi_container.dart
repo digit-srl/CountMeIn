@@ -17,8 +17,7 @@ class CMICard extends StatefulWidget {
   final Widget? leading;
 
   const CMICard({
-    super.key,
-    required this.child,
+    required this.child, super.key,
     this.iconBadge,
     this.onTap,
     this.margin,
@@ -58,7 +57,7 @@ class _CMICardState extends State<CMICard> {
               children: [
                 if (widget.leading != null) widget.leading!,
                 const Spacer(),
-                if (widget.trailing != null) widget.trailing!
+                if (widget.trailing != null) widget.trailing!,
               ],
             ),
           ),
@@ -80,11 +79,11 @@ class _CMICardState extends State<CMICard> {
                   },
                   icon: Icon(opened
                       ? Icons.keyboard_arrow_up
-                      : Icons.keyboard_arrow_down),
+                      : Icons.keyboard_arrow_down,),
                 ),
-              )
+              ),
           ],
-        )
+        ),
       ],
     );
 

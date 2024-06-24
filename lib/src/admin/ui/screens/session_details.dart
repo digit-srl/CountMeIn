@@ -17,7 +17,6 @@ import 'package:countmein/src/totem/ui/totem_card.dart';
 import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -28,10 +27,7 @@ class SessionDetailsScreen extends HookConsumerWidget with CSVMixin {
   final String sessionId;
 
   const SessionDetailsScreen({
-    super.key,
-    required this.providerId,
-    required this.eventId,
-    required this.sessionId,
+    required this.providerId, required this.eventId, required this.sessionId, super.key,
   });
 
   setDateTime(BuildContext context, CMISubEvent? session) async {
@@ -45,7 +41,7 @@ class SessionDetailsScreen extends HookConsumerWidget with CSVMixin {
 
     if (a != null) {
       Cloud.sessionDoc(EventIds(
-              providerId: providerId, eventId: eventId, sessionId: sessionId))
+              providerId: providerId, eventId: eventId, sessionId: sessionId,),)
           .update({
         'startAt': Timestamp.fromDate(a.$1),
         'endAt': a.$2 != null ? Timestamp.fromDate(a.$2!) : null,
@@ -100,7 +96,7 @@ class SessionDetailsScreen extends HookConsumerWidget with CSVMixin {
                       iconButton: editDateButton,
                     ),
                   ],
-                )),
+                ),),
                 SessionTotemsCardWidget(
                   providerId: providerId,
                   eventId: eventId,
@@ -130,7 +126,7 @@ class SessionDetailsScreen extends HookConsumerWidget with CSVMixin {
                         } catch (ex) {
                           isLoading.value = false;
                           showToast('Si è verificato un errore!',
-                              position: ToastPosition.bottom);
+                              position: ToastPosition.bottom,);
                         }
                       }
                     },
@@ -152,12 +148,7 @@ class SessionTotemsCardWidget extends ConsumerWidget {
   final String? sessionName;
 
   const SessionTotemsCardWidget({
-    super.key,
-    required this.providerId,
-    required this.eventId,
-    required this.sessionId,
-    required this.eventName,
-    required this.sessionName,
+    required this.providerId, required this.eventId, required this.sessionId, required this.eventName, required this.sessionName, super.key,
   });
 
   void assignTotem(BuildContext context) {
@@ -171,7 +162,7 @@ class SessionTotemsCardWidget extends ConsumerWidget {
             eventName: eventName,
             sessionName: sessionName,
           );
-        });
+        },);
   }
 
   @override

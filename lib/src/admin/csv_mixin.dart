@@ -17,14 +17,14 @@ mixin CSVMixin {
     if (kIsWeb) {
       final bytes = getCsvBytes(list, fileName);
       final path = await FileSaver.instance.saveFile(
-          name: fileName, bytes: bytes, mimeType: MimeType.csv, ext: 'csv');
+          name: fileName, bytes: bytes, mimeType: MimeType.csv, ext: 'csv',);
       logger.i(path);
     } else {
       final file = await getCsv(list, fileName);
       if (file != null) {
         if (Platform.isMacOS) {
           final path = await FileSaver.instance.saveFile(
-              name: fileName, file: file, mimeType: MimeType.csv, ext: 'csv');
+              name: fileName, file: file, mimeType: MimeType.csv, ext: 'csv',);
           logger.i(path);
         } else {
           Share.shareFiles([file.path]);
@@ -37,7 +37,7 @@ mixin CSVMixin {
     final data = users.map((e) => e.toCsvList()).toList();
     final csv = const ListToCsvConverter().convert([
       ['Id', 'Name', 'Surname', 'CF', 'Lat', 'Long'],
-      ...data
+      ...data,
     ]);
     return csv;
   }
@@ -61,7 +61,7 @@ mixin CSVMixin {
         ].request();
         if (await Permission.storage.request().isGranted) {
           final dir =
-              "${(await getExternalStorageDirectory())!.path}/$filename.csv";
+              '${(await getExternalStorageDirectory())!.path}/$filename.csv';
 
           final f = File(dir);
 

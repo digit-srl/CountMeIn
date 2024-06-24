@@ -17,16 +17,14 @@ import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class UserProfileDataWidget extends HookConsumerWidget {
   final UserIds userIds;
 
   const UserProfileDataWidget({
-    Key? key,
-    required this.userIds,
-  }) : super(key: key);
+    required this.userIds, super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,13 +52,13 @@ class UserProfileDataWidget extends HookConsumerWidget {
                     final res = await ref.read(dioProvider).post(
                       groupCardUrl,
                       data: {
-                        "groupName": groupName,
-                        "providerId": userIds.providerId,
-                        "userId": userIds.userId,
-                        "groupCount": groupCount,
-                        "averageAge": averageAge,
-                        "maleCount":maleCount,
-                        "femaleCount":femaleCount,
+                        'groupName': groupName,
+                        'providerId': userIds.providerId,
+                        'userId': userIds.userId,
+                        'groupCount': groupCount,
+                        'averageAge': averageAge,
+                        'maleCount':maleCount,
+                        'femaleCount':femaleCount,
                       },
                     );
 
@@ -109,7 +107,7 @@ class UserProfileDataWidget extends HookConsumerWidget {
                                     return const Dialog(
                                       child: GenderRequestWidget(),
                                     );
-                                  });
+                                  },);
                               if (gender != null) {
                                 loading.value = true;
                                 try {
@@ -119,7 +117,7 @@ class UserProfileDataWidget extends HookConsumerWidget {
                                       'userId': userIds.userId,
                                       'providerId': userIds.providerId,
                                       'cf': userData.cf,
-                                      'gender': enumToString(gender)
+                                      'gender': enumToString(gender),
                                     },
                                   );
                                   loading.value = false;
@@ -132,13 +130,13 @@ class UserProfileDataWidget extends HookConsumerWidget {
                                         context: context,
                                         type: CoolAlertType.success,
                                         title: 'Tesserino inviato',
-                                        width: 300);
+                                        width: 300,);
                                   } else {
                                     CoolAlert.show(
                                         context: context,
                                         type: CoolAlertType.error,
                                         title: 'Si è verificato un errore',
-                                        width: 300);
+                                        width: 300,);
                                   }
                                 } catch (ex, st) {
                                   logger.i(ex);
@@ -158,7 +156,7 @@ class UserProfileDataWidget extends HookConsumerWidget {
                             }
                           : null,
                       child: const Text('Richiedi tesserino da accompagnatore'),
-                    )
+                    ),
                   ],
                 ),
     );
@@ -166,7 +164,7 @@ class UserProfileDataWidget extends HookConsumerWidget {
 }
 
 class GenderRequestWidget extends HookConsumerWidget {
-  const GenderRequestWidget({Key? key}) : super(key: key);
+  const GenderRequestWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -194,7 +192,7 @@ class GenderRequestWidget extends HookConsumerWidget {
             },
             items: Gender.values
                 .map((e) =>
-                    DropdownMenuItem<Gender>(value: e, child: Text(e.text)))
+                    DropdownMenuItem<Gender>(value: e, child: Text(e.text)),)
                 .toList(),
           ),
           const SizedBox(height: 16),
@@ -204,7 +202,7 @@ class GenderRequestWidget extends HookConsumerWidget {
                       Navigator.of(context).pop(selectedGender.value);
                     }
                   : null,
-              child: const Text('Conferma')),
+              child: const Text('Conferma'),),
         ],
       ),
     );
@@ -224,10 +222,10 @@ class GroupCardForm extends StatefulHookConsumerWidget {
   )? onSubmit;
 
   const GroupCardForm({
-    Key? key,
+    super.key,
     this.onCancel,
     this.onSubmit,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<GroupCardForm> createState() => _GroupFormCardState();
@@ -258,22 +256,22 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
           children: [
             Text(
               'Tesserino di gruppo',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
-            Text(
-                'Ricorda che il tesserino di gruppo è valido solo se accompagnato dal tuo tesserino personale!'),
+            const Text(
+                'Ricorda che il tesserino di gruppo è valido solo se accompagnato dal tuo tesserino personale!',),
             const SizedBox(height: 32),
             CMITextField(
               controller: groupNameController,
               hintText: 'Nome del gruppo',
-              validator: nameSurnameValidator,
+              validator: nameSurnameValidator.call,
             ),
             const SizedBox(height: 16),
             CMITextField(
               controller: averageAgeController,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              validator: averageAgeValidator,
+              validator: averageAgeValidator.call,
               hintText: 'Età media',
             ),
             const SizedBox(height: 16),
@@ -281,7 +279,7 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
               controller: groupCountController,
               keyboardType: TextInputType.number,
               hintText: 'Numero di partecipanti',
-              validator: maxGroupCountValidator,
+              validator: maxGroupCountValidator.call,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               onChanged: (v) {
                 sliderDivisions.value = int.tryParse(v);
@@ -300,7 +298,7 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
                     onChanged: (v) {
                       if (v == null) return;
                       sliderEnabled.value = v;
-                    }),
+                    },),
                 const SizedBox(width: 16),
                 const Text('Aggiungi info sul genere dei partecipanti'),
               ],
@@ -355,7 +353,7 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
                     'Maschi: $maleCount',
                     // 'Maschi: ${(manPercentage.value * 100).toStringAsFixed(0)} %',
                     textAlign: TextAlign.center,
-                  )),
+                  ),),
                   Expanded(
                     child: Text(
                       'Femmine: $femaleCount',
@@ -410,6 +408,6 @@ class _GroupFormCardState extends ConsumerState<GroupCardForm> {
 
   double roundDouble(double value, int places) {
     num mod = pow(10.0, places);
-    return ((value * mod).round().toDouble() / mod);
+    return (value * mod).round().toDouble() / mod;
   }
 }

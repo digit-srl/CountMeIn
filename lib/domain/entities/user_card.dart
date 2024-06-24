@@ -3,8 +3,8 @@ import 'package:countmein/domain/entities/geopoint_converter.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../constants.dart';
-import 'date_time_converter.dart';
+import 'package:countmein/constants.dart';
+import 'package:countmein/domain/entities/date_time_converter.dart';
 
 part 'user_card.freezed.dart';
 
@@ -85,15 +85,12 @@ class EventUser with _$EventUser {
   const factory EventUser({
     required String id,
     required String providerId,
-    String? userCardProviderId,
+    required bool fromExternalOrganization, required bool isGroup, required bool isAnonymous, String? userCardProviderId,
     String? name,
     String? surname,
     String? cf,
     String? email,
     String? privateId,
-    required bool fromExternalOrganization,
-    required bool isGroup,
-    required bool isAnonymous,
     @MyDateTimeConverter() DateTime? checkInAt,
     @MyDateTimeConverter() DateTime? checkOutAt,
     String? groupName,

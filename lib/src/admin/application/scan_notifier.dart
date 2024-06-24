@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:countmein/constants.dart';
 import 'package:countmein/domain/entities/cmi_provider.dart';
@@ -320,7 +319,7 @@ class ScanController {
         );
 
         if (!alreadyScannedUser.contains(
-            eventUser.isAnonymous ? eventUser.privateId! : eventUser.id)) {
+            eventUser.isAnonymous ? eventUser.privateId! : eventUser.id,)) {
           logger.i('onProcessing new user id on local list');
           processing = true;
 
@@ -354,7 +353,7 @@ class ScanController {
             onMessage?.call(eventUser, ScanStatus.fromString(status));
             logger.i(status);
             alreadyScannedUser.add(
-                eventUser.isAnonymous ? eventUser.privateId! : eventUser.id);
+                eventUser.isAnonymous ? eventUser.privateId! : eventUser.id,);
           } else {
             logger.e(res);
             throw Exception(res.statusCode);

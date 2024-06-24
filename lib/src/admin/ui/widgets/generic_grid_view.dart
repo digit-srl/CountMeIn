@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../utils.dart';
+import 'package:countmein/utils.dart';
 
 class GenericGridViewBuilder extends StatelessWidget {
   final int itemCount;
@@ -9,10 +9,8 @@ class GenericGridViewBuilder extends StatelessWidget {
   final Widget Function(BuildContext context, int index) itemBuilder;
 
   const GenericGridViewBuilder({
-    super.key,
-    required this.itemCount,
+    required this.itemCount, required this.itemBuilder, super.key,
     this.padding,
-    required this.itemBuilder,
     this.scroolEnabled = false,
   });
 
@@ -33,7 +31,7 @@ class GenericGridViewBuilder extends StatelessWidget {
         ),
         itemBuilder: itemBuilder,
       );
-    });
+    },);
   }
 }
 
@@ -42,8 +40,7 @@ class GenericGridView extends StatelessWidget {
   final List<Widget> children;
 
   const GenericGridView(
-      {Key? key, required this.children, this.scroolEnabled = false})
-      : super(key: key);
+      {required this.children, super.key, this.scroolEnabled = false,});
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +56,6 @@ class GenericGridView extends StatelessWidget {
         childAspectRatio: crossAxisCount == 1 ? 3 : 4 / 3,
         children: children,
       );
-    });
+    },);
   }
 }

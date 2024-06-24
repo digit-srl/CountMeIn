@@ -8,13 +8,12 @@ class CMIDropdownButton<T> extends StatelessWidget {
   final FormFieldValidator<T>? validator;
 
   const CMIDropdownButton({
-    Key? key,
-    required this.items,
+    required this.items, super.key,
     this.onChanged,
     this.value,
     this.label,
     this.validator,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

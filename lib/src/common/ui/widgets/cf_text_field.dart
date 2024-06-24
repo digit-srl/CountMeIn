@@ -7,7 +7,7 @@ class CFTextField extends StatelessWidget {
   final String? labelText;
   final String? hintText;
   final TextEditingController controller;
-  const CFTextField({Key? key, required this.controller, this.labelText, this.hintText}) : super(key: key);
+  const CFTextField({required this.controller, super.key, this.labelText, this.hintText});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +16,10 @@ class CFTextField extends StatelessWidget {
       hintText: hintText ?? 'Codice Fiscale',
       labelText: labelText ?? 'Digita il codice fiscale',
       inputFormatters: [
-        UpperCaseTextFormatter()
+        UpperCaseTextFormatter(),
       ],
       textCapitalization: TextCapitalization.characters,
-      validator: cfMultiValidator,
+      validator: cfMultiValidator.call,
     );
   }
 }

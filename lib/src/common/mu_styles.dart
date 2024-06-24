@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -36,23 +35,18 @@ class Themes {
 
 final theme = ThemeData();
 final darkTheme = ThemeData(
-  backgroundColor: Palette.backgroundColor,
   scaffoldBackgroundColor: Palette.backgroundColor,
   indicatorColor: Palette.accent,
   hintColor: Palette.accent,
   primaryColor: Colors.red,
-  colorScheme: theme.colorScheme.copyWith(
-    secondary: Colors.orange,
-    primary: Colors.white,
-  ),
-  textTheme: const TextTheme(bodyText1: TextStyle(color: Colors.white)),
+  textTheme: const TextTheme(bodyLarge: TextStyle(color: Colors.white)),
   textSelectionTheme: const TextSelectionThemeData(
     cursorColor: Palette.accent,
   ),
   dividerColor: Palette.accent,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      primary: Palette.accent,
+      backgroundColor: Palette.accent,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       textStyle: const TextStyle(
         fontStyle: FontStyle.italic,
@@ -103,7 +97,10 @@ final darkTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     backgroundColor: Palette.backgroundColor,
     elevation: 0.0,
-  ),
+  ), colorScheme: theme.colorScheme.copyWith(
+    secondary: Colors.orange,
+    primary: Colors.white,
+  ).copyWith(background: Palette.backgroundColor),
 );
 
 extension TextSyleX on TextStyle {

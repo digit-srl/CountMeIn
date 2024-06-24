@@ -28,7 +28,7 @@ class UserCardRecoveringNotifier
         recoverUserUrl,
         data: <String, dynamic>{
           'cf': cf.toUpperCase(),
-          'providerId': providerId
+          'providerId': providerId,
         },
       );
       if (res.statusCode == 200) {
@@ -46,10 +46,10 @@ class UserCardRecoveringNotifier
             );
             break;
           case 'invalid_fiscal_code':
-            state = UserCardRecoveringInvalidFiscalCode();
+            state = const UserCardRecoveringInvalidFiscalCode();
             break;
           case 'user_not_exists':
-            state = UserCardRecoveringUserNotExists();
+            state = const UserCardRecoveringUserNotExists();
             break;
           default:
             state = const UserCardRecoveringError();

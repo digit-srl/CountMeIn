@@ -13,14 +13,13 @@ import 'package:countmein/src/common/ui/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../cloud.dart';
-import '../../../../ui/widgets/loading.dart';
-import '../../../../utils.dart';
-import '../../../common/ui/widgets/cmi_container.dart';
+import 'package:countmein/cloud.dart';
+import 'package:countmein/ui/widgets/loading.dart';
+import 'package:countmein/utils.dart';
+import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 
 final pendingInviteStreamProvider =
     StreamProvider.family<List<PendingProviderManager>, String>(
@@ -137,7 +136,7 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                             hintText: 'Nome',
                                             maxLines: 1,
                                             controller: nameController,
-                                            validator: textValidator,
+                                            validator: textValidator.call,
                                           ),
                                         ),
                                         const SizedBox(width: 16),
@@ -148,7 +147,7 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                             hintText: 'Email',
                                             maxLines: 1,
                                             controller: emailController,
-                                            validator: emailValidator,
+                                            validator: emailValidator.call,
                                           ),
                                         ),
                                       ],
@@ -382,16 +381,11 @@ class MemberRow extends StatelessWidget {
   final ProviderManagerStatus status;
 
   const MemberRow({
-    Key? key,
-    required this.name,
-    required this.eventId,
+    required this.name, required this.eventId, required this.email, required this.status, required this.role, super.key,
     this.pending = false,
-    required this.email,
     this.onDelete,
     this.subtitle,
-    required this.status,
-    required this.role,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -443,7 +437,7 @@ class MemberRow extends StatelessWidget {
                       value: ManagerAction.delete,
                       textStyle: Theme.of(context)
                           .textTheme
-                          .bodyText1
+                          .bodyLarge
                           ?.copyWith(color: Colors.red),
                       child: Text(pending ? 'Revoca invito' : 'Elimina'),
                     ),
@@ -455,12 +449,12 @@ class MemberRow extends StatelessWidget {
             Text(
               name,
               textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             Text(
               email,
               textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
         ),
@@ -506,7 +500,7 @@ class MemberRow extends StatelessWidget {
             backgroundColor: status.color,
             label: Text(
               enumToString(status) ?? '-',
-              style: Theme.of(context).textTheme.caption,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
         IconButton(

@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-import '../../../constants.dart';
-import 'confirm_invite_state.dart';
+import 'package:countmein/constants.dart';
+import 'package:countmein/src/admin/application/confirm_invite_state.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
@@ -54,9 +54,9 @@ class ConfirmInviteNotifier extends StateNotifier<ConfirmInviteState> {
   }
 
   void confirmInviteNewUser(
-      String name, String surname, String email, String cf) {}
+      String name, String surname, String email, String cf,) {}
 
-  void confirmInvite({String? name, String? surname, String? cf}) async {
+  Future<void> confirmInvite({String? name, String? surname, String? cf}) async {
     final data = <String, dynamic>{};
     final currentState = state;
     state = const ConfirmInviteLoading();
@@ -73,7 +73,7 @@ class ConfirmInviteNotifier extends StateNotifier<ConfirmInviteState> {
         'providerId': request.providerId,
         'name': name,
         'surname': surname,
-        'cf': cf
+        'cf': cf,
       });
     }
 

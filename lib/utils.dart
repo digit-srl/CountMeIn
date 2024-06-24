@@ -28,7 +28,7 @@ T enumFromString<T extends Object>(String key, List<T> values) => values
     .firstWhere((v) => key.toLowerCase() == enumToString(v)?.toLowerCase());
 
 Future<bool?> ask(BuildContext context, String question) async {
-  return (await showDialog(
+  return await showDialog(
     context: context,
     builder: (c) {
       return Dialog(
@@ -51,12 +51,12 @@ Future<bool?> ask(BuildContext context, String question) async {
                       onPressed: () {
                         Navigator.of(c).pop(false);
                       },
-                      child: const Text('Annulla')),
+                      child: const Text('Annulla'),),
                   ElevatedButton(
                       onPressed: () {
                         Navigator.of(c).pop(true);
                       },
-                      child: const Text('Sì'))
+                      child: const Text('Sì'),),
                 ],
               ),
             ],
@@ -64,7 +64,7 @@ Future<bool?> ask(BuildContext context, String question) async {
         ),
       );
     },
-  ));
+  );
 }
 
 Future<void> showError(
@@ -95,7 +95,7 @@ Future<void> showError(
                 Text(
                   description,
                   style: const TextStyle(fontSize: 14),
-                )
+                ),
             ],
           ),
         ),
@@ -164,7 +164,7 @@ QrCodeData? validateCustomQrCode(String qrCode) {
 
 QrCodeData? decodePrivateQrCode(String code) {
   try {
-    const regex = r"^cmi://(.*)/(.*)/(.*)$";
+    const regex = r'^cmi://(.*)/(.*)/(.*)$';
     final regexp = RegExp(regex);
 
     if (regexp.hasMatch(code)) {
@@ -185,7 +185,7 @@ QrCodeData? decodePrivateQrCode(String code) {
           providerId: providerId,
           userId: userId,
           privateId: privateUserId,
-          isAnonymous: true);
+          isAnonymous: true,);
     }
     return null;
   } catch (ex) {

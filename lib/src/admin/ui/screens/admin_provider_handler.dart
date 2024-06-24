@@ -18,11 +18,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../cloud.dart';
-import 'event_details.dart';
-import '../widgets/generic_grid_view.dart';
-import '../widgets/info_text.dart';
-import 'managers.dart';
+import 'package:countmein/cloud.dart';
+import 'package:countmein/src/admin/ui/screens/event_details.dart';
+import 'package:countmein/src/admin/ui/widgets/generic_grid_view.dart';
+import 'package:countmein/src/admin/ui/widgets/info_text.dart';
+import 'package:countmein/src/admin/ui/screens/managers.dart';
 
 class AdminProviderHandlerScreen extends ConsumerWidget {
   static const String routeName = 'dashboard';
@@ -31,9 +31,8 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
   final CMIProvider? extraProvider;
 
   const AdminProviderHandlerScreen({
-    super.key,
+    required this.providerId, super.key,
     this.extraProvider,
-    required this.providerId,
   });
 
   @override
@@ -107,7 +106,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                 ),
                 InfoText(
                   label: 'Tesserino',
-                  value: "https://cmi.digit.srl/provider/$providerId",
+                  value: 'https://cmi.digit.srl/provider/$providerId',
                   copyable: true,
                 ),
                 InfoText(
@@ -119,7 +118,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                     labelWidget: IconButton(
                       icon: Icon((provider?.managers.isEmpty ?? true)
                           ? Icons.add
-                          : Icons.edit),
+                          : Icons.edit,),
                       onPressed: provider?.managers != null &&
                               userRole == UserRole.admin
                           ? () {
@@ -141,14 +140,14 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                                 child: Chip(
                                   label: Text(
                                     e.name,
-                                    style: Theme.of(context).textTheme.caption,
+                                    style: Theme.of(context).textTheme.bodySmall,
                                   ),
                                 ),
                               ),
                             ),
                           ),
                       ],
-                    )),
+                    ),),
                 if (provider?.status == CMIProviderStatus.pending &&
                     platformUserRole == PlatformRole.cmi)
                   ElevatedButton(
@@ -179,7 +178,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
 
                     context.go(path);
                   },
-                  child: const Text('Crea eventi in batch')),
+                  child: const Text('Crea eventi in batch'),),
             ],
           ),
           CMICard(
@@ -208,11 +207,11 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                           final path =
                               '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${provider!.id}/${ArchivedEventsScreen.routeName}';
                           context.go(path, extra: provider);
-                        }),
+                        },),
                   ),
                 ],
               );
-            }),
+            },),
           ),
           const SizedBox(height: 16),
           if (provider?.status == CMIProviderStatus.live &&
@@ -243,7 +242,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                         Text(
                           'Crea nuovo evento',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         if (userRole != UserRole.admin)
                           const Text(
@@ -252,7 +251,7 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                             style: TextStyle(
                               color: Colors.grey,
                             ),
-                          )
+                          ),
                       ],
                     ),
                   );
@@ -279,13 +278,13 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                     children: [
                       Text(
                         event.name,
-                        style: Theme.of(context).textTheme.subtitle1,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       if (kDebugMode)
                         FittedBox(
                           child: Text(
                             event.id,
-                            style: Theme.of(context).textTheme.caption,
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ),
                     ],

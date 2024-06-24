@@ -5,10 +5,10 @@ import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'info_text.dart';
+import 'package:countmein/src/admin/ui/widgets/info_text.dart';
 
 class AdminInfoWidget extends ConsumerWidget {
-  const AdminInfoWidget({Key? key}) : super(key: key);
+  const AdminInfoWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

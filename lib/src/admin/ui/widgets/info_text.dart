@@ -8,9 +8,7 @@ class InfoText extends StatelessWidget {
   final Widget? iconButton;
 
   const InfoText({
-    super.key,
-    required this.label,
-    required this.value,
+    required this.label, required this.value, super.key,
     this.copyable = false,
     this.iconButton,
   });
@@ -27,7 +25,7 @@ class InfoText extends StatelessWidget {
             label,
             style: Theme.of(context)
                 .textTheme
-                .bodyText1
+                .bodyLarge
                 ?.copyWith(color: Colors.grey),
           ),
           const SizedBox(height: 4),
@@ -37,7 +35,7 @@ class InfoText extends StatelessWidget {
               Flexible(
                 child: Text(
                   value ?? '-',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               if (iconButton != null) iconButton!,
@@ -48,8 +46,8 @@ class InfoText extends StatelessWidget {
                     color: Colors.grey,
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: value!));
-                    }),
-              ]
+                    },),
+              ],
             ],
           ),
         ],
@@ -66,9 +64,7 @@ class InfoText2 extends StatelessWidget {
   final Widget? labelWidget;
 
   const InfoText2({
-    super.key,
-    required this.label,
-    required this.value,
+    required this.label, required this.value, super.key,
     this.copyable = false,
     this.iconButton,
     this.labelWidget,
@@ -89,11 +85,11 @@ class InfoText2 extends StatelessWidget {
                   label,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1
+                      .bodyLarge
                       ?.copyWith(color: Colors.grey),
                 ),
               ),
-              if (labelWidget != null) labelWidget!
+              if (labelWidget != null) labelWidget!,
             ],
           ),
           const SizedBox(height: 4),

@@ -4,15 +4,14 @@ import 'package:countmein/src/admin/ui/widgets/generic_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../domain/entities/cmi_provider.dart';
-import '../../../common/ui/widgets/cmi_container.dart';
-import '../screens/admin_provider_handler.dart';
+import 'package:countmein/domain/entities/cmi_provider.dart';
+import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
+import 'package:countmein/src/admin/ui/screens/admin_provider_handler.dart';
 
 class GridProvidersWidget extends StatelessWidget {
   final List<CMIProvider> providers;
 
-  const GridProvidersWidget({Key? key, required this.providers})
-      : super(key: key);
+  const GridProvidersWidget({required this.providers, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class GridProvidersWidget extends StatelessWidget {
           center: true,
           onTap: () {
             context.go('${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${p.id}',
-                extra: p.status == CMIProviderStatus.pending ? p : null);
+                extra: p.status == CMIProviderStatus.pending ? p : null,);
             // params: {'providerId': p.id});
           },
           child: Text(

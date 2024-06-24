@@ -9,7 +9,7 @@ class Cloud {
       FirebaseFirestore.instance.collection('providerRequests');
 
   static CollectionReference<Map<String, dynamic>> eventsCollection(
-          String providerId) =>
+          String providerId,) =>
       providerDoc(providerId).collection('events');
 
   static CollectionReference<Map<String, dynamic>> totemCollection(
@@ -24,22 +24,22 @@ class Cloud {
       totemCollection(providerId).doc(totemId);
 
   static DocumentReference<Map<String, dynamic>> providerDoc(
-          String providerId) =>
+          String providerId,) =>
       providerCollection.doc(providerId);
 
   static CollectionReference<Map<String, dynamic>> usersCollection(
-          String providerId) =>
+          String providerId,) =>
       providerDoc(providerId).collection('users');
 
   static final CollectionReference<Map<String, dynamic>> providerCollection =
       FirebaseFirestore.instance.collection('providers');
 
   static CollectionReference<Map<String, dynamic>> pendingInviteCollection(
-          String providerId) =>
+          String providerId,) =>
       providerDoc(providerId).collection('pendingInvite');
 
   static CollectionReference<Map<String, dynamic>> eventUsersCollection(
-      EventIds ids) {
+      EventIds ids,) {
     if (ids.sessionId != null) {
       return sessionDoc(ids).collection('users');
     }
@@ -47,7 +47,7 @@ class Cloud {
   }
 
   static CollectionReference<Map<String, dynamic>> sessionCollection(
-      EventIds ids) {
+      EventIds ids,) {
     return eventDoc(ids.providerId, ids.eventId).collection('sessions');
   }
 
@@ -55,10 +55,10 @@ class Cloud {
       sessionCollection(ids).doc(ids.sessionId);
 
   static DocumentReference<Map<String, dynamic>> eventDoc(
-          String providerId, String eventId) =>
+          String providerId, String eventId,) =>
       eventsCollection(providerId).doc(eventId);
 
   static DocumentReference<Map<String, dynamic>> userProfileDoc(
-          String providerId, String userId) =>
+          String providerId, String userId,) =>
       usersCollection(providerId).doc(userId);
 }

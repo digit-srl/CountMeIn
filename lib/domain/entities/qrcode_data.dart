@@ -1,7 +1,7 @@
 import 'package:countmein/my_logger.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../utils.dart';
+import 'package:countmein/utils.dart';
 
 part 'qrcode_data.freezed.dart';
 
@@ -78,7 +78,7 @@ class QrCodeData with _$QrCodeData {
             params.containsKey('gId') &&
             params.containsKey('gC') &&
             params.containsKey('gN')) {
-          logger.i("this qrcode is a group card");
+          logger.i('this qrcode is a group card');
           return QrCodeData(
             userId: userId,
             name: params['name'] as String,
@@ -98,7 +98,7 @@ class QrCodeData with _$QrCodeData {
             params.containsKey('surname') &&
             params.containsKey('cf') &&
             params.containsKey('pId')) {
-          logger.i("this qrcode is a simple card");
+          logger.i('this qrcode is a simple card');
           return QrCodeData(
             userId: userId,
             name: params['name'] as String,

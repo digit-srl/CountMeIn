@@ -4,8 +4,7 @@ import 'package:flutter_codice_fiscale/models/city.dart';
 
 final allCities = CityDao().cities.map((c)=>MyCity(c.name, c.province, c.regione, c.code)).toList();
 class MyCity extends City {
-  MyCity(String name, String province, String regione, String code)
-      : super(name, province, regione, code);
+  MyCity(super.name, super.province, super.regione, super.code);
 
   @override
   String toString() {
@@ -14,5 +13,5 @@ class MyCity extends City {
 }
 
 class Nation extends MyCity {
-  Nation(String name, String code) : super(name, "", "", code);
+  Nation(String name, String code) : super(name, '', '', code);
 }

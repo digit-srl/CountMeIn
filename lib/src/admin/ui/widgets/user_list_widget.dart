@@ -14,10 +14,8 @@ class UsersListWidget extends ConsumerWidget {
   final AsyncValue<List<EventUser>> usersState;
 
   const UsersListWidget({
-    super.key,
+    required this.usersState, required this.anonymous, super.key,
     this.genderCount,
-    required this.usersState,
-    required this.anonymous,
   });
 
   @override
@@ -32,7 +30,7 @@ class UsersListWidget extends ConsumerWidget {
         const SizedBox(height: 8),
         Text(
           'Utenti',
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         const SizedBox(height: 16),
         usersState.when(
@@ -46,7 +44,7 @@ class UsersListWidget extends ConsumerWidget {
                 : anonymous
                     ? Text(list.length == 1
                         ? 'C\'è un iscritto'
-                        : 'Ci sono ${list.length} iscritti')
+                        : 'Ci sono ${list.length} iscritti',)
                     : ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: list.length,
@@ -57,7 +55,7 @@ class UsersListWidget extends ConsumerWidget {
                           return ListTile(
                             onTap: () {
                               context.push(UserDetailsScreen.routeName,
-                                  extra: user);
+                                  extra: user,);
                             },
                             title: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -76,7 +74,7 @@ class UsersListWidget extends ConsumerWidget {
                                       label: Text(
                                         'GROUP',
                                         style:
-                                            Theme.of(context).textTheme.caption,
+                                            Theme.of(context).textTheme.bodySmall,
                                       ),
                                       backgroundColor: Colors.green,
                                       padding: const EdgeInsets.symmetric(
@@ -94,14 +92,14 @@ class UsersListWidget extends ConsumerWidget {
                             subtitle: user.isGroup
                                 ? Text(
                                     '${user.groupCount} persone',
-                                    style: Theme.of(context).textTheme.caption,
+                                    style: Theme.of(context).textTheme.bodySmall,
                                   )
                                 : anonymous
                                     ? null
                                     : Text(
                                         user.cf ?? '-',
                                         style:
-                                            Theme.of(context).textTheme.caption,
+                                            Theme.of(context).textTheme.bodySmall,
                                       ),
                             leading: Text('${index + 1}'),
                             trailing: Row(
@@ -129,7 +127,7 @@ class UsersListWidget extends ConsumerWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 8.0),
                                     child: Text(
-                                        '[${user.participationCount} presenze]'),
+                                        '[${user.participationCount} presenze]',),
                                   ),
                               ],
                             ),

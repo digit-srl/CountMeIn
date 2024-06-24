@@ -8,7 +8,7 @@ class ResetPasswordState with _$ResetPasswordState {
   const factory ResetPasswordState.complete() = ResetPasswordComplete;
 
   const factory ResetPasswordState.firebaseException(
-      ResetPasswordException exception) = ResetPasswordFirebaseException;
+      ResetPasswordException exception,) = ResetPasswordFirebaseException;
 
   const factory ResetPasswordState.weakPassword() = ResetPasswordWeakPassword;
   const factory ResetPasswordState.loading() = ResetPasswordLoading;

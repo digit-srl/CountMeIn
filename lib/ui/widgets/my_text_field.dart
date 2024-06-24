@@ -14,7 +14,7 @@ class CMITextField extends StatelessWidget {
   final bool enabled;
 
   const CMITextField({
-    Key? key,
+    super.key,
     this.controller,
     this.hintText,
     this.labelText,
@@ -25,7 +25,7 @@ class CMITextField extends StatelessWidget {
     this.inputFormatters,
     this.onChanged,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

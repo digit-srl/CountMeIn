@@ -11,10 +11,8 @@ class WaitingOtpCode extends StatefulHookConsumerWidget {
   final Function(String otpCode)? verify;
 
   const WaitingOtpCode({
-    Key? key,
-    required this.userIds,
-    required this.verify,
-  }) : super(key: key);
+    required this.userIds, required this.verify, super.key,
+  });
 
   @override
   ConsumerState createState() => _WaitingOtpCodeState();
@@ -32,7 +30,7 @@ class _WaitingOtpCodeState extends ConsumerState<WaitingOtpCode> {
       mainAxisSize: MainAxisSize.min,
       children: [
         const Text(
-            'Inserisci il codice OTP ricevuto per email'),
+            'Inserisci il codice OTP ricevuto per email',),
         const SizedBox(height: 24),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -73,7 +71,7 @@ class _WaitingOtpCodeState extends ConsumerState<WaitingOtpCode> {
               ),
               cursorColor: Colors.black,
               animationDuration: const Duration(milliseconds: 300),
-              textStyle: Theme.of(context).textTheme.headline6?.copyWith(color: Colors.black),
+              textStyle: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.black),
               // backgroundColor: Colors.blue.shade50,
               enableActiveFill: true,
               errorAnimationController: errorController,
@@ -87,7 +85,7 @@ class _WaitingOtpCodeState extends ConsumerState<WaitingOtpCode> {
                 )
               ],*/
               onCompleted: (v) {
-                logger.i("Completed");
+                logger.i('Completed');
               },
               // onTap: () {
               //   logger.i("Pressed");
@@ -96,7 +94,7 @@ class _WaitingOtpCodeState extends ConsumerState<WaitingOtpCode> {
                 logger.i(value);
               },
               beforeTextPaste: (text) {
-                logger.i("Allowing to paste $text");
+                logger.i('Allowing to paste $text');
                 //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
                 //but you can show anything you want here, like your pop up saying wrong paste format or etc
                 return true;
@@ -107,9 +105,9 @@ class _WaitingOtpCodeState extends ConsumerState<WaitingOtpCode> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Text(
-            hasError.value ? "Inserisci il codice OTP di 5 cifre" : "",
+            hasError.value ? 'Inserisci il codice OTP di 5 cifre' : '',
             style: const TextStyle(
-                color: Colors.red, fontSize: 12, fontWeight: FontWeight.w400),
+                color: Colors.red, fontSize: 12, fontWeight: FontWeight.w400,),
           ),
         ),
         const SizedBox(height: 24),
@@ -137,7 +135,7 @@ class _WaitingOtpCodeState extends ConsumerState<WaitingOtpCode> {
               final currentText = textController.text.trim();
               if (currentText.length != 5) {
                 errorController.add(ErrorAnimationType
-                    .shake); // Triggering error shake animation
+                    .shake,); // Triggering error shake animation
                 hasError.value = true;
               } else {
                 hasError.value = false;
@@ -146,9 +144,9 @@ class _WaitingOtpCodeState extends ConsumerState<WaitingOtpCode> {
             }
           },
           child: Text(
-            "Verifica".toUpperCase(),
+            'Verifica'.toUpperCase(),
             style: const TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold,),
           ),
         ),
         const SizedBox(height: 16),

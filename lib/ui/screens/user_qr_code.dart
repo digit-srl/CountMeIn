@@ -7,18 +7,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:ui' as ui;
-import '../../domain/entities/cmi_provider.dart';
-import '../../domain/entities/user_card.dart';
+import 'package:countmein/domain/entities/cmi_provider.dart';
+import 'package:countmein/domain/entities/user_card.dart';
 
 class UserQRCodeScreen extends ConsumerWidget {
   final UserCard user;
   final CMIProvider session;
 
   const UserQRCodeScreen({
-    Key? key,
-    required this.user,
-    required this.session,
-  }) : super(key: key);
+    required this.user, required this.session, super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,7 +27,7 @@ class UserQRCodeScreen extends ConsumerWidget {
           const SizedBox(height: 32),
           Text(
             session.name,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
@@ -42,7 +40,7 @@ class UserQRCodeScreen extends ConsumerWidget {
                 onPressed: () {
                   Hive.box('user').clear();
                 },
-                child: Text('Resetta utente')),
+                child: const Text('Resetta utente'),),
           ),
           /*TextButton(
               onPressed: () {
@@ -67,8 +65,7 @@ class UserCardDialog extends StatefulWidget {
   final UserCard user;
   final CMIProvider activity;
 
-  const UserCardDialog({Key? key, required this.user, required this.activity})
-      : super(key: key);
+  const UserCardDialog({required this.user, required this.activity, super.key});
 
   @override
   State<UserCardDialog> createState() => _UserCardDialogState();
@@ -104,7 +101,7 @@ class _UserCardDialogState extends State<UserCardDialog> {
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Text(
                             widget.activity.name,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                         Expanded(
@@ -127,14 +124,14 @@ class _UserCardDialogState extends State<UserCardDialog> {
                                     // crossAxisAlignment:
                                     //     CrossAxisAlignment.stretch,
                                     children: [
-                                      Text('Nome', style: labelStyle),
+                                      const Text('Nome', style: labelStyle),
                                       Text(widget.user.name, style: dataStyle),
                                       const SizedBox(height: 8),
-                                      Text('Cognome', style: labelStyle),
+                                      const Text('Cognome', style: labelStyle),
                                       Text(widget.user.surname,
-                                          style: dataStyle),
+                                          style: dataStyle,),
                                       const SizedBox(height: 8),
-                                      Text('C.F.', style: labelStyle),
+                                      const Text('C.F.', style: labelStyle),
                                       Text(
                                         widget.user.cf.toUpperCase(),
                                         style: dataStyle,
@@ -178,7 +175,7 @@ class _UserCardDialogState extends State<UserCardDialog> {
 
                 saveFile();*/
               },
-              child: Text('Download card')),
+              child: const Text('Download card'),),
         ],
       ),
     );
@@ -195,7 +192,7 @@ class _UserCardDialogState extends State<UserCardDialog> {
       Uint8List? pngBytes = byteData?.buffer.asUint8List();
       return pngBytes;
     } catch (e) {
-      logger.e("$e");
+      logger.e('$e');
       return null;
     }
   }

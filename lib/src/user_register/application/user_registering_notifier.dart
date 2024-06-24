@@ -8,7 +8,7 @@ import 'package:countmein/src/user_register/application/user_registering_state.d
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../../cloud.dart';
+import 'package:countmein/cloud.dart';
 
 final userRegisteringProvider = StateNotifierProvider.autoDispose<
     UserRegisteringNotifier, UserRegisteringState>((ref) {
@@ -81,11 +81,11 @@ class UserRegisteringNotifier extends StateNotifier<UserRegisteringState> {
   sendVerificationEmail() async {}
 
   Future sendUserCardByEmail(
-      String userId, String providerId, String providerName) async {
+      String userId, String providerId, String providerName,) async {
     //TODO creare function per invio tesserino email da app
     await Cloud.usersCollection(providerId).doc(userId).update({
       'providerName': providerName,
-      "providerId": providerId,
+      'providerId': providerId,
     });
   }
 }

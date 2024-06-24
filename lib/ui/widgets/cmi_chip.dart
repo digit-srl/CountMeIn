@@ -4,7 +4,7 @@ class CMIChip extends StatelessWidget {
   final String text;
   final Color? color;
 
-  const CMIChip({super.key, required this.text, this.color = Colors.green});
+  const CMIChip({required this.text, super.key, this.color = Colors.green});
 
   @override
   Widget build(BuildContext context) {

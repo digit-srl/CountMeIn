@@ -15,9 +15,8 @@ class RecoverUserCard extends StatefulHookConsumerWidget {
   final String providerId;
 
   const RecoverUserCard({
-    Key? key,
-    required this.providerId,
-  }) : super(key: key);
+    required this.providerId, super.key,
+  });
 
   @override
   ConsumerState createState() => _RestoreUserCardState();
@@ -44,7 +43,7 @@ class _RestoreUserCardState extends ConsumerState<RecoverUserCard> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
-                        'Recupera il tuo tesserino inserendo il tuo codice fiscale!'),
+                        'Recupera il tuo tesserino inserendo il tuo codice fiscale!',),
                     const SizedBox(height: 16),
                     Row(
                       children: [
@@ -81,7 +80,7 @@ class _RestoreUserCardState extends ConsumerState<RecoverUserCard> {
                             }
                           },
                           child: const Text('Controlla'),
-                        )
+                        ),
                       ],
                     ),
                   ],
@@ -109,7 +108,7 @@ class _RestoreUserCardState extends ConsumerState<RecoverUserCard> {
                     ref
                         .read(userCardRecoveringProvider.notifier)
                         .verifyOtpCode(ids, otpCode);
-                  });
+                  },);
             },
             userNotExists: () => CMIWarningWidget(
               message: 'Non esiste nessun utente verificato con questo codice fiscale!',

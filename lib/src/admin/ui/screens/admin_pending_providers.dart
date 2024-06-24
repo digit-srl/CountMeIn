@@ -3,8 +3,8 @@ import 'package:countmein/ui/screens/error.dart';
 import 'package:countmein/ui/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../application/providers_stream.dart';
-import '../widgets/grid_providers.dart';
+import 'package:countmein/src/admin/application/providers_stream.dart';
+import 'package:countmein/src/admin/ui/widgets/grid_providers.dart';
 
 class AdminPendingProvidersScreen extends ConsumerWidget {
   static const String routeName = 'pending-providers';

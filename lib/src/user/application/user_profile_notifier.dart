@@ -5,8 +5,8 @@ import 'package:countmein/src/user/application/user_profile_state.dart';
 import 'package:countmein/src/user/data/dto/user_profile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../constants.dart';
-import '../../admin/application/confirm_invite.dart';
+import 'package:countmein/constants.dart';
+import 'package:countmein/src/admin/application/confirm_invite.dart';
 
 final userProfileStreamProvider = StreamProvider.autoDispose
     .family<UserProfile, UserIds>((ref, userIds) async* {
@@ -15,7 +15,7 @@ final userProfileStreamProvider = StreamProvider.autoDispose
 
   await for (final snap in stream) {
     if (snap.exists) {
-      yield (UserProfile.fromJson(snap.data()!));
+      yield UserProfile.fromJson(snap.data()!);
     }
   }
 });
@@ -54,7 +54,7 @@ class UserProfileNotifier extends StateNotifier<UserProfileState> {
         data: {
           'userId': userIds.userId,
           'otpCode': otpCode,
-          'providerId': userIds.providerId
+          'providerId': userIds.providerId,
         },
       );
       if (res.statusCode == 200) {

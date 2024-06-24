@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:countmein/src/admin/application/scan_notifier.dart';
 import 'package:countmein/src/admin/application/users_stream.dart';
@@ -13,9 +12,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:soundpool/soundpool.dart';
 
-import '../../domain/entities/cmi_provider.dart';
-import '../../domain/entities/event_ids.dart';
-import '../../domain/entities/user_card.dart';
+import 'package:countmein/domain/entities/cmi_provider.dart';
+import 'package:countmein/domain/entities/event_ids.dart';
+import 'package:countmein/domain/entities/user_card.dart';
 import 'package:collection/collection.dart';
 
 final mobileScannerControllerProvider =
@@ -40,11 +39,8 @@ class ScanScreen extends ConsumerStatefulWidget {
   final ScanMode scanMode;
 
   const ScanScreen({
-    Key? key,
-    required this.event,
-    required this.provider,
-    required this.scanMode,
-  }) : super(key: key);
+    required this.event, required this.provider, required this.scanMode, super.key,
+  });
 
   @override
   ConsumerState<ScanScreen> createState() => _ScanScreenState();
@@ -158,7 +154,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
   loadSound() async {
     pool = Soundpool.fromOptions(options: SoundpoolOptions.kDefault);
     soundId =
-        await rootBundle.load("assets/beep.mp3").then((ByteData soundData) {
+        await rootBundle.load('assets/beep.mp3').then((ByteData soundData) {
       return pool.load(soundData);
     });
   }
@@ -182,7 +178,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                       return Center(
                           child: Text(
                               exception.errorDetails?.message.toString() ??
-                                  ''));
+                                  '',),);
                     },
                     onDetect: (BarcodeCapture barcodeCapture) {
                       if (waitingTimer) return;
@@ -217,7 +213,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                       children: [
                         if (!kDebugMode && result != null)
                           Text(
-                              'Barcode Type: ${describeEnum(result!.format)}  Data: ${result!.rawValue}'),
+                              'Barcode Type: ${describeEnum(result!.format)}  Data: ${result!.rawValue}',),
                         const SizedBox(height: 8),
                         if (scanStatus != null) ...[
                           Text(scanStatus!.message),
@@ -234,7 +230,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
-                            )
+                            ),
                         ] else
                           Text(
                             'Scansiona il tesserino',
@@ -284,7 +280,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
             if (kDebugMode)
@@ -325,8 +321,8 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Chip(
                       label: Text(
-                          enumToString(widget.scanMode)?.toUpperCase() ?? ''),
-                    )),
+                          enumToString(widget.scanMode)?.toUpperCase() ?? '',),
+                    ),),
               ),
             Align(
               alignment: Alignment.topRight,
@@ -336,7 +332,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                   child: Text(count.toString()),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

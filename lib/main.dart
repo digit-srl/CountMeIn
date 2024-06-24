@@ -6,11 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'app.dart';
+import 'package:countmein/app.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'package:countmein/firebase_options.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -40,7 +39,7 @@ void main() async {
 
   initializeDateFormatting('it_IT');
   if (Environment.isEmulator) {
-    final d = "localhost";
+    const d = 'localhost';
     await FirebaseAuth.instance.useAuthEmulator(d, 9099);
     FirebaseFirestore.instance.useFirestoreEmulator(d, 8082);
   }
@@ -57,5 +56,5 @@ void main() async {
 
   await Hive.openBox('user');
   setPathUrlStrategy();
-  runApp(ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }

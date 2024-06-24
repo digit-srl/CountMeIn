@@ -9,7 +9,6 @@ import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/admin/ui/widgets/user_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:oktoast/oktoast.dart';
@@ -23,9 +22,7 @@ class EventUsersScreen extends StatefulHookConsumerWidget {
   final String? sessionId;
 
   const EventUsersScreen({
-    super.key,
-    required this.eventId,
-    required this.providerId,
+    required this.eventId, required this.providerId, super.key,
     this.sessionId,
   });
 
@@ -100,7 +97,7 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen>
                         } catch (ex) {
                           isLoading.value = false;
                           showToast('Si è verificato un errore!',
-                              position: ToastPosition.bottom);
+                              position: ToastPosition.bottom,);
                         }
                       }
                     },
@@ -136,22 +133,22 @@ class _EventUsersScreenState extends ConsumerState<EventUsersScreen>
                           onPressed: () {
                             Navigator.of(c).pop();
                           },
-                          child: const Text('Annulla')),
+                          child: const Text('Annulla'),),
                       ElevatedButton(
                           onPressed: () {
                             Navigator.of(c).pop(true);
                           },
-                          child: const Text('Sì'))
+                          child: const Text('Sì'),),
                     ],
                   ),
                 ],
               ),
             ),
           );
-        });
+        },);
     if (answer ?? false) {
       Cloud.eventUsersCollection(
-              EventIds(providerId: widget.providerId, eventId: widget.eventId))
+              EventIds(providerId: widget.providerId, eventId: widget.eventId),)
           .doc(userId)
           .delete();
     }

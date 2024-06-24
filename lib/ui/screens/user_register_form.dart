@@ -20,9 +20,9 @@ import 'package:flutter_codice_fiscale/codice_fiscale.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../src/common/mu_styles.dart';
-import '../validators.dart';
-import '../widgets/my_text_field.dart';
+import 'package:countmein/src/common/mu_styles.dart';
+import 'package:countmein/ui/validators.dart';
+import 'package:countmein/ui/widgets/my_text_field.dart';
 
 final nameControllerProvider =
     Provider.autoDispose<TextEditingController>((ref) {
@@ -70,9 +70,8 @@ class UserFormScreen extends ConsumerStatefulWidget {
   final String providerId;
 
   const UserFormScreen({
-    Key? key,
-    required this.providerId,
-  }) : super(key: key);
+    required this.providerId, super.key,
+  });
 
   @override
   ConsumerState createState() => _State();
@@ -102,7 +101,7 @@ class _State extends ConsumerState<UserFormScreen> {
             context: context,
             builder: (c) => const Dialog(
                   child: UserRegisteringDialog(),
-                ));
+                ),);
       } else if (next is UserRegisteringUserAlreadySubscribed) {
         context.go('${UserConsoleScreen.routeName}/${next.providerId}/${next.userId}');
       } else if (next is UserRegisteringVerificationEmailSent) {
@@ -133,20 +132,20 @@ class _State extends ConsumerState<UserFormScreen> {
                   CMITextField(
                     controller: nameController,
                     hintText: 'Nome',
-                    validator: nameSurnameValidator,
+                    validator: nameSurnameValidator.call,
                   ),
                   const SizedBox(height: 16),
                   CMITextField(
                     controller: surnameController,
                     hintText: 'Cognome',
-                    validator: nameSurnameValidator,
+                    validator: nameSurnameValidator.call,
                   ),
                   const SizedBox(height: 16),
                   // if (cmiProvider.releaseWom)
                   CMITextField(
                     controller: emailController,
                     hintText: 'Email',
-                    validator: MyEmailValidator(errorText: 'Email non valida'),
+                    validator: MyEmailValidator(errorText: 'Email non valida').call,
                   ),
                   const SizedBox(height: 16),
                   // CMIDropdownButton<Gender>(
@@ -177,7 +176,7 @@ class _State extends ConsumerState<UserFormScreen> {
                           hintText: 'Codice Fiscale',
                           inputFormatters: [UpperCaseTextFormatter()],
                           textCapitalization: TextCapitalization.characters,
-                          validator: cfMultiValidator,
+                          validator: cfMultiValidator.call,
                         ),
                       ),
                       TextButton(
@@ -188,8 +187,8 @@ class _State extends ConsumerState<UserFormScreen> {
                                     child: Container(
                                         constraints:
                                             const BoxConstraints(maxWidth: 500),
-                                        child: const FormCodiceFiscale()),
-                                  ));
+                                        child: const FormCodiceFiscale(),),
+                                  ),);
 
                           if (cf != null && cf is String && cf.isNotEmpty) {
                             cfController.text = cf;
@@ -244,7 +243,7 @@ class _State extends ConsumerState<UserFormScreen> {
                           // }
                         }
                       },
-                      child: const Text('Iscriviti')),
+                      child: const Text('Iscriviti'),),
                   const SizedBox(height: 16),
                   // TextButton(
                   //     onPressed: () {},
@@ -261,7 +260,7 @@ class _State extends ConsumerState<UserFormScreen> {
 }
 
 class UserRegisteringDialog extends ConsumerWidget {
-  const UserRegisteringDialog({Key? key}) : super(key: key);
+  const UserRegisteringDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -276,14 +275,14 @@ class UserRegisteringDialog extends ConsumerWidget {
             const SizedBox(height: 100, width: 100, child: LoadingWidget()),
         userAlreadySubscribed: (email, cf, userId, providerId) {
           return EasyRichText(
-            "Sei gìà iscritto con il codice fiscale $cf.\nTorna indietro e recupera il tuo tesserino",
+            'Sei gìà iscritto con il codice fiscale $cf.\nTorna indietro e recupera il tuo tesserino',
             // "Potrai scaricare il tuo tesserino dall'email che abbiamo inviato all'indirizzo $email. ",
-            defaultStyle: Theme.of(context).textTheme.bodyText1,
+            defaultStyle: Theme.of(context).textTheme.bodyLarge,
             patternList: [
               EasyRichTextPattern(
                   targetString: email,
                   recognizer: TapGestureRecognizer()..onTap = () {},
-                  style: Theme.of(context).textTheme.bodyText1?.bold.underline),
+                  style: Theme.of(context).textTheme.bodyLarge?.bold.underline,),
             ],
           );
         },
@@ -291,15 +290,15 @@ class UserRegisteringDialog extends ConsumerWidget {
           return EasyRichText(
             newUser
                 ? "Abbiamo inviato una email di verifica all'indirizzo $email. "
-                    "Una volta verificata la tua identità riceverai una mail con il tuo tesserino.\n\n"
+                    'Una volta verificata la tua identità riceverai una mail con il tuo tesserino.\n\n'
                 // "Non ha ricevuto la nostra email di verifica? Invia di nuovo"
-                : "Non hai ancora verificato la tua email $email, controlla la tua casella postale e completa la verifica",
-            defaultStyle: Theme.of(context).textTheme.bodyText1,
+                : 'Non hai ancora verificato la tua email $email, controlla la tua casella postale e completa la verifica',
+            defaultStyle: Theme.of(context).textTheme.bodyLarge,
             patternList: [
               EasyRichTextPattern(
                   targetString: email,
                   recognizer: TapGestureRecognizer()..onTap = () {},
-                  style: Theme.of(context).textTheme.bodyText1?.bold.underline),
+                  style: Theme.of(context).textTheme.bodyLarge?.bold.underline,),
               // EasyRichTextPattern(
               //     targetString: 'Invia di nuovo',
               //     recognizer: TapGestureRecognizer()..onTap = () {},
@@ -309,9 +308,9 @@ class UserRegisteringDialog extends ConsumerWidget {
         },
         error: (ex, st) => ErrorWidget(ex),
         invalidFiscalCode: () {
-          return Column(
+          return const Column(
             children: [
-              const Text('Attenzione: il codice fiscale inserito non è valido!')
+              Text('Attenzione: il codice fiscale inserito non è valido!'),
             ],
           );
         },
@@ -322,8 +321,8 @@ class UserRegisteringDialog extends ConsumerWidget {
 
 class FormCodiceFiscale extends HookConsumerWidget {
   const FormCodiceFiscale({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -342,13 +341,13 @@ class FormCodiceFiscale extends HookConsumerWidget {
           CMITextField(
             controller: nameController,
             hintText: 'Nome',
-            validator: nameSurnameValidator,
+            validator: nameSurnameValidator.call,
           ),
           const SizedBox(height: 16),
           CMITextField(
             controller: surnameController,
             hintText: 'Cognome',
-            validator: nameSurnameValidator,
+            validator: nameSurnameValidator.call,
           ),
           const SizedBox(height: 16),
           CMIDropdownButton<CodiceFiscaleGender>(
@@ -366,7 +365,7 @@ class FormCodiceFiscale extends HookConsumerWidget {
             },
             items: CodiceFiscaleGender.values
                 .map((e) => DropdownMenuItem<CodiceFiscaleGender>(
-                    value: e, child: Text(enumToString(e) ?? '')))
+                    value: e, child: Text(enumToString(e) ?? ''),),)
                 .toList(),
           ),
           const SizedBox(height: 16),
@@ -414,7 +413,7 @@ class FormCodiceFiscale extends HookConsumerWidget {
             },
             popupProps: const PopupProps.menu(
               searchFieldProps: TextFieldProps(
-                  decoration: InputDecoration(hintText: 'Cerca qui')),
+                  decoration: InputDecoration(hintText: 'Cerca qui'),),
               showSelectedItems: true, showSearchBox: true,
               // disabledItemFn: (String s) => s.startsWith('I'),
             ),

@@ -3,7 +3,7 @@ import 'package:countmein/src/auth/data/dto/cmi_role_converter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' show Timestamp;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../domain/entities/user.dart';
+import 'package:countmein/src/auth/domain/entities/user.dart';
 
 part 'user.freezed.dart';
 
@@ -17,10 +17,8 @@ class AuthUserDTO with _$AuthUserDTO {
     required String surname,
     required String email,
     required bool emailVerified,
-    @Default(true) bool temporaryPassword,
-    @CMIRoleConverter() required PlatformRole role,
-    // Map<String, String>? providersRole,
-    @MyDateTimeConverter() required DateTime createdOn,
+    @CMIRoleConverter() required PlatformRole role, // Map<String, String>? providersRole,
+    @MyDateTimeConverter() required DateTime createdOn, @Default(true) bool temporaryPassword,
   }) = _AuthUserDTO;
 
   factory AuthUserDTO.fromJson(Map<String, dynamic> json) =>

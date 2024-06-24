@@ -15,7 +15,7 @@ class MyEmailValidator extends EmailValidator{
 }
 class CFLengthValidator extends TextFieldValidator {
   CFLengthValidator(
-      {String errorText = 'Il codice fiscale è composto da 16 caratteri'})
+      {String errorText = 'Il codice fiscale è composto da 16 caratteri',})
       : super(errorText);
 
   @override
@@ -40,7 +40,7 @@ class CFLengthValidator extends TextFieldValidator {
 
 class CFValidator extends TextFieldValidator {
   CFValidator(
-      {String errorText = 'Il codice fiscale non è valido'})
+      {String errorText = 'Il codice fiscale non è valido',})
       : super(errorText);
 
   @override
@@ -77,20 +77,20 @@ final nameSurnameValidator = MultiValidator([
 final numberValidator = MultiValidator([
   RequiredValidator(errorText: 'Campo obbligatorio'),
   RangeValidator(
-      min: 1, max: 365, errorText: 'Il valore inserito non è valido'),
+      min: 1, max: 365, errorText: 'Il valore inserito non è valido',),
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
 ]);
 
 final averageAgeValidator = MultiValidator([
   // RequiredValidator(errorText: 'Campo obbligatorio'),
   RangeValidator(
-      min: 3, max: 99, errorText: 'Il valore deve essere compreso tra 3 e 99'),
+      min: 3, max: 99, errorText: 'Il valore deve essere compreso tra 3 e 99',),
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
 ]);
 
 final maxGroupCountValidator = MultiValidator([
   RequiredValidator(errorText: 'Campo obbligatorio'),
   RangeValidator(
-      min: 2, max: 40, errorText: 'Il valore deve essere compreso tra 2 e 40'),
+      min: 2, max: 40, errorText: 'Il valore deve essere compreso tra 2 e 40',),
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
 ]);

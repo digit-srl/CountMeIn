@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/entities/cmi_provider.dart';
+import 'package:countmein/domain/entities/cmi_provider.dart';
 
 final adminProvider =
     StateNotifierProvider<AdminNotifier, AsyncValue<List<CMIProvider>>>((ref) {
@@ -164,8 +164,7 @@ class ItemSelection extends StatelessWidget {
   final Function()? onPressed;
 
   const ItemSelection(
-      {Key? key, required this.icon, this.onPressed, required this.text})
-      : super(key: key);
+      {required this.icon, required this.text, super.key, this.onPressed,});
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +179,7 @@ class ItemSelection extends StatelessWidget {
             Text(
               text,
               style: const TextStyle(),
-            )
+            ),
           ],
         ),
       ),

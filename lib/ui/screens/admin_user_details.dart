@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/user_card.dart';
+import 'package:countmein/domain/entities/user_card.dart';
 
 class UserDetailsScreen extends StatelessWidget {
   static const routeName = '/userDetails';
@@ -9,10 +9,9 @@ class UserDetailsScreen extends StatelessWidget {
   final EventUser user;
 
   const UserDetailsScreen({
-    Key? key,
-    required this.user,
+    required this.user, super.key,
     this.onDelete,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +73,7 @@ class UserField extends StatelessWidget {
   final String field;
   final String? value;
 
-  const UserField({Key? key, required this.field, required this.value})
-      : super(key: key);
+  const UserField({required this.field, required this.value, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -87,11 +85,11 @@ class UserField extends StatelessWidget {
         children: [
           Text(
             field,
-            style: TextStyle(color: Colors.grey),
+            style: const TextStyle(color: Colors.grey),
           ),
           Text(
             value ?? '-',
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
           ),
         ],
       ),

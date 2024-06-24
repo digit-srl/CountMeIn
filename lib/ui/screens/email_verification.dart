@@ -17,11 +17,8 @@ class EmailVerificationScreen extends ConsumerStatefulWidget {
   // final String privateId;
 
   const EmailVerificationScreen({
-    Key? key,
-    required this.userId,
-    required this.secret,
-    required this.providerId,
-  }) : super(key: key);
+    required this.userId, required this.secret, required this.providerId, super.key,
+  });
 
   @override
   ConsumerState createState() => _EmailVerificationScreenState();
@@ -50,7 +47,7 @@ class _EmailVerificationScreenState
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text(
-                      'Clicca il pulsante per verificare il tuo indirizzo email'),
+                      'Clicca il pulsante per verificare il tuo indirizzo email',),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
@@ -62,7 +59,7 @@ class _EmailVerificationScreenState
                               providerId: widget.providerId,
                               // privateId: widget.privateId,
                             ),
-                          ).notifier)
+                          ).notifier,)
                           .verify();
                     },
                     child: const Text('Verifica'),

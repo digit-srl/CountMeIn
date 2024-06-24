@@ -9,9 +9,8 @@ class GenderCard extends ConsumerWidget {
   final GenderCount genderCount;
 
   const GenderCard({
-    Key? key,
-    required this.genderCount,
-  }) : super(key: key);
+    required this.genderCount, super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -75,7 +74,7 @@ class GenderCard extends ConsumerWidget {
                         const SizedBox(width: 8),
                         Text(
                           genderCount.male.toStringAsFixed(0),
-                        )
+                        ),
                       ],
                     ),
                     const SizedBox(height: 8),
@@ -137,10 +136,10 @@ class GenderCard extends ConsumerWidget {
     final naPercentage = na / total * 100;
     return List.generate(4, (i) {
       // final isTouched = i == touchedIndex;
-      final isTouched = false;
-      final fontSize = isTouched ? 20.0 : 16.0;
-      final radius = isTouched ? 110.0 : 100.0;
-      final widgetSize = isTouched ? 55.0 : 40.0;
+      const isTouched = false;
+      const fontSize = isTouched ? 20.0 : 16.0;
+      const radius = isTouched ? 110.0 : 100.0;
+      const widgetSize = isTouched ? 55.0 : 40.0;
 
       switch (i) {
         case 0:
@@ -149,10 +148,10 @@ class GenderCard extends ConsumerWidget {
             value: mPercentage,
             title: '${mPercentage.toStringAsFixed(1)}%',
             radius: radius,
-            titleStyle: TextStyle(
+            titleStyle: const TextStyle(
                 fontSize: fontSize,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+                color: Color(0xffffffff),),
             badgeWidget:
                 const CircleAvatar(radius: 20, child: Icon(Icons.male)),
             badgePositionPercentageOffset: .98,
@@ -163,10 +162,10 @@ class GenderCard extends ConsumerWidget {
             value: fPercentage,
             title: '${fPercentage.toStringAsFixed(1)}%',
             radius: radius,
-            titleStyle: TextStyle(
+            titleStyle: const TextStyle(
                 fontSize: fontSize,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+                color: Color(0xffffffff),),
             badgeWidget:
                 const CircleAvatar(radius: 20, child: Icon(Icons.female)),
             badgePositionPercentageOffset: .98,
@@ -177,10 +176,10 @@ class GenderCard extends ConsumerWidget {
             value: nbPercentage,
             title: '${nbPercentage.toStringAsFixed(1)}%',
             radius: radius,
-            titleStyle: TextStyle(
+            titleStyle: const TextStyle(
                 fontSize: fontSize,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+                color: Color(0xffffffff),),
             badgeWidget: Icon(MdiIcons.genderNonBinary),
             badgePositionPercentageOffset: .98,
           );
@@ -190,10 +189,10 @@ class GenderCard extends ConsumerWidget {
             value: naPercentage,
             title: '${naPercentage.toStringAsFixed(1)}%',
             radius: radius,
-            titleStyle: TextStyle(
+            titleStyle: const TextStyle(
                 fontSize: fontSize,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+                color: Color(0xffffffff),),
             badgeWidget: const Icon(Icons.not_interested),
             badgePositionPercentageOffset: .98,
           );

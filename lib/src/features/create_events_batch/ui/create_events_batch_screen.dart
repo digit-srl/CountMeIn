@@ -11,8 +11,7 @@ class CreateEventsBatchScreen extends ConsumerWidget {
   final String providerId;
 
   const CreateEventsBatchScreen({
-    super.key,
-    required this.providerId,
+    required this.providerId, super.key,
   });
 
   @override
@@ -125,7 +124,7 @@ class _CSVEventsLoaded extends ConsumerWidget {
                   child: const Text('Importa CSV sessioni'),
                 ),
               ),
-            )
+            ),
         ],
       ),
     );
@@ -159,9 +158,9 @@ class _EventsGenerated extends ConsumerWidget {
                 title: Row(
                   children: [
                     Text(state.list[i].event.name),
-                    Text(' | '),
+                    const Text(' | '),
                     Text('${state.list[i].event.maxWomCount.toString()} WOM'),
-                    Text(' | '),
+                    const Text(' | '),
                     Text(state.list[i].event.aim ?? '-'),
                   ],
                 ),
@@ -171,9 +170,9 @@ class _EventsGenerated extends ConsumerWidget {
                   runSpacing: 8,
                   children: [
                     ...state.list[i].sessions
-                        .map((e) => Chip(label: Text(e.name ?? '')))
+                        .map((e) => Chip(label: Text(e.name ?? ''))),
                   ],
-                )),
+                ),),
           Center(
             child: ElevatedButton(
               onPressed: () {
@@ -190,12 +189,12 @@ class _EventsGenerated extends ConsumerWidget {
           ),
         ],
       ),
-    ));
+    ),);
   }
 }
 
 class _CreationComplete extends ConsumerWidget {
-  const _CreationComplete({super.key});
+  const _CreationComplete();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -219,7 +218,7 @@ class _CreationComplete extends ConsumerWidget {
 class _BaseContainer extends StatelessWidget {
   final Widget child;
 
-  const _BaseContainer({super.key, required this.child});
+  const _BaseContainer({required this.child});
 
   @override
   Widget build(BuildContext context) {

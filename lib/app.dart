@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
 
 class MyApp extends ConsumerWidget {
+  const MyApp({super.key});
+
   // const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -47,8 +49,8 @@ class MyApp extends ConsumerWidget {
         ),
         builder: (context, child) => MediaQuery(
             data: MediaQuery.of(context)
-                .copyWith(alwaysUse24HourFormat: true, textScaleFactor: 1),
-            child: child!),
+                .copyWith(alwaysUse24HourFormat: true, textScaler: const TextScaler.linear(1)),
+            child: child!,),
         themeMode: ThemeMode.dark,
         routeInformationProvider: router.routeInformationProvider,
         routeInformationParser: router.routeInformationParser,

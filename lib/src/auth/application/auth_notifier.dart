@@ -1,18 +1,17 @@
 import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
-import 'package:countmein/ui/screens/user_event.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../cloud.dart';
-import '../../admin/application/providers_stream.dart';
-import '../data/dto/user.dart';
-import '../domain/entities/exceptions.dart';
-import '../domain/entities/user.dart';
-import '../domain/repositories/i_auth_repository.dart';
-import 'auth_state.dart';
+import 'package:countmein/cloud.dart';
+import 'package:countmein/src/admin/application/providers_stream.dart';
+import 'package:countmein/src/auth/data/dto/user.dart';
+import 'package:countmein/src/auth/domain/entities/exceptions.dart';
+import 'package:countmein/src/auth/domain/entities/user.dart';
+import 'package:countmein/src/auth/domain/repositories/i_auth_repository.dart';
+import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:collection/collection.dart';
 
 final signInErrorProvider = StateProvider.autoDispose<SignInException?>((ref) {
@@ -197,7 +196,7 @@ class SignUpNotifier extends StateNotifier<bool> {
   SignUpNotifier(this.ref) : super(false);
 
   Future<void> signUp(
-      String name, String surname, String email, String password) async {
+      String name, String surname, String email, String password,) async {
     state = true;
     try {
       await ref

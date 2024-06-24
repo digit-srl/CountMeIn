@@ -1,20 +1,15 @@
-import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
-import 'package:countmein/src/admin/ui/screens/admin_provider_handler.dart';
-import 'package:countmein/src/admin/ui/screens/admin_providers.dart';
 import 'package:countmein/src/admin/ui/screens/new_totem.dart';
 import 'package:countmein/src/admin/ui/widgets/generic_grid_view.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/totem/application/totems_notifier.dart';
 import 'package:countmein/src/totem/ui/totem_card.dart';
-import 'package:countmein/ui/widgets/cmi_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class ProviderTotemsWidget extends ConsumerWidget {
   final String providerId;
 
-  const ProviderTotemsWidget({super.key, required this.providerId});
+  const ProviderTotemsWidget({required this.providerId, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,7 +26,7 @@ class ProviderTotemsWidget extends ConsumerWidget {
             onTap: () {
               showDialog(
                   context: context,
-                  builder: (context) => NewTotemDialog(providerId: providerId));
+                  builder: (context) => NewTotemDialog(providerId: providerId),);
               // final path =
               //     '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/$providerId/${NewTotemScreen.routeName}';
               // context.go(path);

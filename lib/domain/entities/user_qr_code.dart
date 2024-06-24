@@ -2,7 +2,7 @@ import 'package:countmein/domain/entities/user_card.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../constants.dart';
+import 'package:countmein/constants.dart';
 
 part 'user_qr_code.freezed.dart';
 
@@ -81,6 +81,6 @@ extension UserQrCodeX on UserQrCode {
         name: name,
         surname: surname,
         cf: cf,
-        email: email);
+        email: email,);
   }
 }

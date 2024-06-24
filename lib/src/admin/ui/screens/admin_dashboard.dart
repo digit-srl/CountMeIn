@@ -9,16 +9,15 @@ import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_overlay/loading_overlay.dart';
-import '../../../../utils.dart';
-import '../../../auth/application/auth_notifier.dart';
-import '../../../auth/domain/entities/user.dart';
-import '../widgets/active_providers.dart';
-import '../widgets/admin_info.dart';
-import '../widgets/pending_providers.dart';
+import 'package:countmein/utils.dart';
+import 'package:countmein/src/auth/application/auth_notifier.dart';
+import 'package:countmein/src/auth/domain/entities/user.dart';
+import 'package:countmein/src/admin/ui/widgets/active_providers.dart';
+import 'package:countmein/src/admin/ui/widgets/admin_info.dart';
+import 'package:countmein/src/admin/ui/widgets/pending_providers.dart';
 
 class AdminDashboardScreen extends HookConsumerWidget {
   static const String routeName = 'admin';
@@ -49,7 +48,7 @@ class AdminDashboardScreen extends HookConsumerWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('Benvenuto, aggiorna la tua password.'),
+                      const Text('Benvenuto, aggiorna la tua password.'),
                       ResetPasswordForm(
                         onSave: (newPassword) async {
                           try {
@@ -61,8 +60,8 @@ class AdminDashboardScreen extends HookConsumerWidget {
                                 .read(dioProvider)
                                 .post(changePasswordUrl, data: {
                               'newPassword': newPassword,
-                              'token': token
-                            });
+                              'token': token,
+                            },);
                             isLoading.value = false;
                             if (response.statusCode == 200) {
                               await FirebaseAuth.instance
@@ -114,7 +113,7 @@ class AdminDashboardScreen extends HookConsumerWidget {
                     const QrCodeValidationWidget(),
                   ],
                 );
-              }),
+              },),
             ],
           );
         },
@@ -143,12 +142,12 @@ class QrCodeValidationWidget extends ConsumerWidget {
     return CMICard(
       onTap: () {
         context.go(
-            '${AdminDashboardScreen.path}/${QrCodeValidationScreen.routeName}');
+            '${AdminDashboardScreen.path}/${QrCodeValidationScreen.routeName}',);
       },
       child: Center(
         child: Text(
           'Valida QrCode',
-          style: Theme.of(context).textTheme.subtitle1,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
     );

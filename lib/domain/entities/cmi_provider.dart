@@ -4,8 +4,8 @@ import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart' show Color, Colors;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../src/auth/domain/entities/user.dart';
-import 'date_time_converter.dart';
+import 'package:countmein/src/auth/domain/entities/user.dart';
+import 'package:countmein/domain/entities/date_time_converter.dart';
 
 part 'cmi_provider.freezed.dart';
 
@@ -23,7 +23,7 @@ class CMIProvider with _$CMIProvider {
     required String adminName,
     required String adminSurname,
     required String adminEmail,
-    @Default(<String, ProviderManager>{}) Map<String, ProviderManager> managers,
+    @MyDateTimeConverter() required DateTime requestedOn, @Default(<String, ProviderManager>{}) Map<String, ProviderManager> managers,
     String? apiKey,
     List<String>? aims,
     String? aim,
@@ -31,7 +31,6 @@ class CMIProvider with _$CMIProvider {
     @Default(false) bool releaseWom,
     @CMIProviderStatusConverter() CMIProviderStatus? status,
     @MyDateTimeConverter() DateTime? createdOn,
-    @MyDateTimeConverter() required DateTime requestedOn,
   }) = _CMIProvider;
 
   factory CMIProvider.fromJson(Map<String, Object?> json) =>

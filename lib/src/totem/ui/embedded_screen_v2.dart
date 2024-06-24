@@ -21,9 +21,7 @@ class EmbeddedScreen2 extends ConsumerStatefulWidget {
   final String providerId;
 
   const EmbeddedScreen2({
-    super.key,
-    required this.totemId,
-    required this.providerId,
+    required this.totemId, required this.providerId, super.key,
   });
 
   @override
@@ -44,7 +42,7 @@ class _EmbeddedScreen2State extends ConsumerState<EmbeddedScreen2> {
 
         if (Platform.isMacOS || kIsWeb) {
           final path = await FileSaver.instance.saveFile(
-              name: totemId, bytes: bytes, mimeType: MimeType.png, ext: 'png');
+              name: totemId, bytes: bytes, mimeType: MimeType.png, ext: 'png',);
           logger.i(path);
         } else {
           throw Exception('only macos and web are supported');
@@ -79,7 +77,7 @@ class _EmbeddedScreen2State extends ConsumerState<EmbeddedScreen2> {
               onPressed: () {
                 Clipboard.setData(ClipboardData(
                     text: getTotemQRCode(
-                        widget.providerId, totem.id, totem.requestId)));
+                        widget.providerId, totem.id, totem.requestId,),),);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
@@ -112,7 +110,7 @@ class _EmbeddedScreen2State extends ConsumerState<EmbeddedScreen2> {
                     backgroundColor: Colors.white,
                     padding: const EdgeInsets.all(16),
                     data: getTotemQRCode(
-                        widget.providerId, widget.totemId, data.requestId),
+                        widget.providerId, widget.totemId, data.requestId,),
                   ),
                 ),
               ),

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../domain/entities/user.dart';
+import 'package:countmein/src/auth/domain/entities/user.dart';
 
 part 'auth_state.freezed.dart';
 

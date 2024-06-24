@@ -8,18 +8,18 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 
-import '../../../admin/application/confirm_invite.dart';
-import '../../../admin/ui/screens/admin_dashboard.dart';
-import '../../../common/ui/widgets/cmi_container.dart';
-import '../../../common/ui/widgets/my_button.dart';
-import '../../../common/ui/widgets/my_text_field.dart';
+import 'package:countmein/src/admin/application/confirm_invite.dart';
+import 'package:countmein/src/admin/ui/screens/admin_dashboard.dart';
+import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
+import 'package:countmein/src/common/ui/widgets/my_button.dart';
+import 'package:countmein/src/common/ui/widgets/my_text_field.dart';
 
 class InviteFormConfirmScreen extends HookConsumerWidget {
   static const routeName = '/confirmInvite';
 
   final InviteRequest request;
 
-  InviteFormConfirmScreen({super.key, required this.request});
+  InviteFormConfirmScreen({required this.request, super.key});
 
   final _formKey = GlobalKey<FormState>();
 
@@ -50,7 +50,7 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
                       padding: const EdgeInsets.all(24),
                       child: Text(
                         'Sei invitato a gestire il provider ${request.providerName}.',
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
                     state.when(
@@ -64,7 +64,7 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
                               onPressed: () {
                                 ref
                                     .read(
-                                        confirmInviteProvider(request).notifier)
+                                        confirmInviteProvider(request).notifier,)
                                     .confirmInvite();
                               },
                               child: const Text('Conferma invito'),
@@ -81,17 +81,17 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 const Text(
-                                    'Registrati alla piattaforma per confermare l\'invito.'),
+                                    'Registrati alla piattaforma per confermare l\'invito.',),
                                 const SizedBox(height: 16),
                                 MUTextField(
                                   controller: nameController,
                                   labelText: 'Nome',
-                                  validator: textValidator,
+                                  validator: textValidator.call,
                                 ),
                                 MUTextField(
                                   controller: surnameController,
                                   labelText: 'Cognome',
-                                  validator: textValidator,
+                                  validator: textValidator.call,
                                 ),
                                 CFTextField(
                                   controller: adminCfController,
@@ -110,11 +110,11 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
 
                                         ref
                                             .read(confirmInviteProvider(request)
-                                                .notifier)
+                                                .notifier,)
                                             .confirmInvite(
                                                 name: name,
                                                 surname: surname,
-                                                cf: cf);
+                                                cf: cf,);
                                       }
                                     },
                                   ),
@@ -130,7 +130,7 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
                           children: [
                             Text(
                               status.message,
-                              style: Theme.of(context).textTheme.bodyText1,
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             if (status ==
                                     ConfirmInviteResponseStatus.completed ||
@@ -144,7 +144,7 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
                                   context.go(AdminDashboardScreen.path);
                                 },
                               ),
-                            ]
+                            ],
                           ],
                         );
                       },

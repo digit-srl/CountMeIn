@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:countmein/ui/screens/user_qr_code.dart';
 import 'package:countmein/ui/widgets/loading.dart';
-import '../../domain/entities/user_card.dart';
+import 'package:countmein/domain/entities/user_card.dart';
 
 final singleCMIProvider = StreamProvider.autoDispose
     .family<CMIProvider, String>((ref, providerId) async* {
@@ -39,8 +39,7 @@ class UserProviderScreen extends ConsumerWidget {
   final String providerId;
 
   const UserProviderScreen({
-    super.key,
-    required this.providerId,
+    required this.providerId, super.key,
   });
 
   @override
@@ -103,6 +102,6 @@ class UserProviderScreen extends ConsumerWidget {
           return UserFormScreen(
             providerId: providerId,
           );
-        });
+        },);
   }
 }

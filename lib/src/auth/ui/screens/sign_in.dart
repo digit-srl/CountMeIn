@@ -10,16 +10,15 @@ import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_overlay/loading_overlay.dart';
-import '../../../common/ui/widgets/my_button.dart';
-import '../../../common/ui/widgets/my_text_field.dart';
-import '../../../common/mu_styles.dart';
-import '../../application/auth_notifier.dart';
-import '../../domain/entities/exceptions.dart';
+import 'package:countmein/src/common/ui/widgets/my_button.dart';
+import 'package:countmein/src/common/ui/widgets/my_text_field.dart';
+import 'package:countmein/src/common/mu_styles.dart';
+import 'package:countmein/src/auth/application/auth_notifier.dart';
+import 'package:countmein/src/auth/domain/entities/exceptions.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 final textValidator = MultiValidator([
@@ -29,7 +28,7 @@ final textValidator = MultiValidator([
 
 final emailValidator = MultiValidator([
   RequiredValidator(errorText: 'Campo obbligatorio'),
-  EmailValidator(errorText: 'enter a valid email address')
+  EmailValidator(errorText: 'enter a valid email address'),
 ]);
 
 final passwordValidator = MultiValidator([
@@ -42,7 +41,7 @@ final passwordValidator = MultiValidator([
 class SignInScreen extends HookConsumerWidget {
   static const routeName = '/signIn';
 
-  SignInScreen({Key? key}) : super(key: key);
+  SignInScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
 
@@ -98,7 +97,7 @@ class SignInScreen extends HookConsumerWidget {
                   children: [
                     Text(
                       'Accedi',
-                      style: Theme.of(context).textTheme.headline4,
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     /*SignInButton(
                       Buttons.Facebook,
@@ -123,7 +122,7 @@ class SignInScreen extends HookConsumerWidget {
                     MUTextField(
                       controller: emailController,
                       labelText: 'Email',
-                      validator: emailValidator,
+                      validator: emailValidator.call,
                       maxLines: 1,
                     ),
                     MUTextField(
@@ -131,7 +130,7 @@ class SignInScreen extends HookConsumerWidget {
                       controller: passwordController,
                       obscureText: true,
                       labelText: 'Password',
-                      validator: passwordValidator,
+                      validator: passwordValidator.call,
                     ),
                     const SizedBox(height: 32),
                     Center(
@@ -149,8 +148,8 @@ class SignInScreen extends HookConsumerWidget {
                     // if (isWebDevice) ...[
                     const SizedBox(height: 32),
                     EasyRichText(
-                      "Vuoi registrare un tuo provider? Clicca qui",
-                      defaultStyle: Theme.of(context).textTheme.bodyText1,
+                      'Vuoi registrare un tuo provider? Clicca qui',
+                      defaultStyle: Theme.of(context).textTheme.bodyLarge,
                       patternList: [
                         EasyRichTextPattern(
                             targetString: 'qui',
@@ -164,16 +163,16 @@ class SignInScreen extends HookConsumerWidget {
                               },
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyLarge
                                 ?.bold
-                                .underline),
+                                .underline,),
                       ],
                     ),
                     const SizedBox(height: 8),
                     // ],
                     EasyRichText(
-                      "Hai dimenticato la password? Clicca qui",
-                      defaultStyle: Theme.of(context).textTheme.bodyText1,
+                      'Hai dimenticato la password? Clicca qui',
+                      defaultStyle: Theme.of(context).textTheme.bodyLarge,
                       patternList: [
                         // EasyRichTextPattern(
                         //   targetString: 'https://pub.dev/packages/easy_rich_text',
@@ -191,13 +190,13 @@ class SignInScreen extends HookConsumerWidget {
                                 await showDialog(
                                     context: context,
                                     builder: (_) => const Dialog(
-                                        child: ResetPasswordRequestDialog()));
+                                        child: ResetPasswordRequestDialog(),),);
                               },
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyLarge
                                 ?.bold
-                                .underline),
+                                .underline,),
                       ],
                     ),
                   ],
@@ -212,7 +211,7 @@ class SignInScreen extends HookConsumerWidget {
 }
 
 class ResetPasswordRequestDialog extends HookConsumerWidget {
-  const ResetPasswordRequestDialog({Key? key}) : super(key: key);
+  const ResetPasswordRequestDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -240,7 +239,7 @@ class ResetPasswordRequestDialog extends HookConsumerWidget {
               maxLines: 1,
               controller: emailController,
               labelText: 'Email',
-              validator: emailValidator,
+              validator: emailValidator.call,
             ),
           if (!isCompleted.value)
             Padding(
@@ -254,7 +253,7 @@ class ResetPasswordRequestDialog extends HookConsumerWidget {
                             await ref.read(dioProvider).post(
                               sendResetPasswordUrl,
                               data: <String, dynamic>{
-                                'email': emailController.text.trim()
+                                'email': emailController.text.trim(),
                               },
                             );
                             isLoading.value = false;
@@ -267,8 +266,8 @@ class ResetPasswordRequestDialog extends HookConsumerWidget {
                             isLoading.value = false;
                           }
                         },
-                  child: const Text('Richiedi')),
-            )
+                  child: const Text('Richiedi'),),
+            ),
         ],
       ),
     );

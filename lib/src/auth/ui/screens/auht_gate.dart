@@ -1,20 +1,19 @@
 
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../ui/screens/home.dart';
+import 'package:countmein/ui/screens/home.dart';
 
 class AuthGate extends ConsumerWidget {
   static const routeName = '/';
 
-  const AuthGate({Key? key}) : super(key: key);
+  const AuthGate({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    return HomeWebScreen();
+    return const HomeWebScreen();
 
     // if(kIsWeb || Platform.isMacOS){
     //   return HomeWebScreen();

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 class EmailNotVerifiedScreen extends StatelessWidget {
 
-  const EmailNotVerifiedScreen({Key? key})
-      : super(key: key);
+  const EmailNotVerifiedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +14,13 @@ class EmailNotVerifiedScreen extends StatelessWidget {
             onPressed: () {
               FirebaseAuth.instance.currentUser?.reload();
             },
-            child: const Text('RELOAD')),
+            child: const Text('RELOAD'),),
         const SizedBox(height: 16),
         ElevatedButton(
             onPressed: () {
               FirebaseAuth.instance.signOut();
             },
-            child: const Text('LOGOUT'))
+            child: const Text('LOGOUT'),),
       ],
     );
   }

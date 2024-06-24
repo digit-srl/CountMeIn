@@ -1,5 +1,4 @@
 import 'package:countmein/src/admin/ui/screens/new_totem.dart';
-import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/totem/data/embedded_data.dart';
 import 'package:countmein/src/totem/ui/totems.dart';
 import 'package:countmein/ui/widgets/cmi_chip.dart';
@@ -9,7 +8,7 @@ import 'package:countmein/src/totem/util.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../utils.dart';
+import 'package:countmein/utils.dart';
 
 class TotemCardWidget extends StatelessWidget {
   final EmbeddedData totem;
@@ -17,9 +16,7 @@ class TotemCardWidget extends StatelessWidget {
   final bool deleteEnabled;
 
   const TotemCardWidget({
-    super.key,
-    required this.providerId,
-    required this.totem,
+    required this.providerId, required this.totem, super.key,
     this.deleteEnabled = false,
   });
 
@@ -63,7 +60,7 @@ class TotemCardWidget extends StatelessWidget {
                         child: const Text('Copia link pagina'),
                         onTap: () {
                           Clipboard.setData(ClipboardData(
-                              text: getTotemScreenURL(providerId, totem.id)));
+                              text: getTotemScreenURL(providerId, totem.id),),);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
@@ -78,14 +75,14 @@ class TotemCardWidget extends StatelessWidget {
                         child: const Text('Copia QR-Code'),
                         onTap: () {
                           final qr = getTotemQRCode(
-                              providerId, totem.id, totem.requestId);
+                              providerId, totem.id, totem.requestId,);
                           Clipboard.setData(ClipboardData(
                             text: qr,
-                          ));
+                          ),);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                  'QR-Code ${totem.name} copiato negli appunti'),
+                                  'QR-Code ${totem.name} copiato negli appunti',),
                             ),
                           );
                         },
@@ -108,7 +105,7 @@ class TotemCardWidget extends StatelessWidget {
                           child: const Text('Rimuovi collegamento'),
                           onTap: () async {
                             final res = await ask(context,
-                                'Sicuro di voler rimuove il collegamento dell\'evento?');
+                                'Sicuro di voler rimuove il collegamento dell\'evento?',);
                             if (res ?? false) {
                               Cloud.totemDoc(providerId, totem.id).update({
                                 'eventId': null,
@@ -129,7 +126,7 @@ class TotemCardWidget extends StatelessWidget {
                           ),
                           onTap: () async {
                             final res = await ask(context,
-                                'Sicuro di voler eliminare questo totem?');
+                                'Sicuro di voler eliminare questo totem?',);
                             if (res ?? false) {
                               Cloud.totemDoc(providerId, totem.id).delete();
                             }
@@ -146,14 +143,14 @@ class TotemCardWidget extends StatelessWidget {
               Row(
                 children: [
                   if (totem.isStatic) ...[
-                    CMIChip(
+                    const CMIChip(
                       text: 'Statico',
                       color: Colors.purple,
                     ),
                     const SizedBox(width: 4),
                   ],
                   if (!totem.dedicated && totem.eventId != null)
-                    CMIChip(
+                    const CMIChip(
                       text: 'Assegnato',
                     ),
                 ],

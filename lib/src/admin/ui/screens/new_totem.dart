@@ -9,12 +9,9 @@ import 'package:countmein/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NewTotemDialog extends ConsumerWidget {
   final String providerId;
@@ -51,7 +48,7 @@ class NewTotemDialog extends ConsumerWidget {
 class _NewTotemDialogWidget extends HookConsumerWidget {
   final String providerId;
   final EmbeddedData? totem;
-  static const String routeName = "new-totem";
+  static const String routeName = 'new-totem';
 
   const _NewTotemDialogWidget({
     required this.providerId,
@@ -78,16 +75,16 @@ class _NewTotemDialogWidget extends HookConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-              '${totem != null ? '' : 'Nuovo '}Totem ${totem != null ? totem!.dedicated ? 'Dedicato' : 'Indipendente' : ''}'),
+              '${totem != null ? '' : 'Nuovo '}Totem ${totem != null ? totem!.dedicated ? 'Dedicato' : 'Indipendente' : ''}',),
           const SizedBox(height: 16),
           Row(
             children: [
               Flexible(
                 child: TextFormField(
                   controller: totemController,
-                  validator: nameSurnameValidator,
+                  validator: nameSurnameValidator.call,
                   decoration: const InputDecoration(
-                      hintText: 'Inserisci il nome per il tuo totem'),
+                      hintText: 'Inserisci il nome per il tuo totem',),
                 ),
               ),
               const SizedBox(width: 16),
@@ -116,7 +113,7 @@ class _NewTotemDialogWidget extends HookConsumerWidget {
                     controller: latController,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(
-                          RegExp(r'^(\d+)?\.?\d{0,8}'))
+                          RegExp(r'^(\d+)?\.?\d{0,8}'),),
                     ],
                     decoration: const InputDecoration(hintText: 'Latitude'),
                     validator: latitudeValidator,
@@ -128,7 +125,7 @@ class _NewTotemDialogWidget extends HookConsumerWidget {
                     controller: longController,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(
-                          RegExp(r'^(\d+)?\.?\d{0,8}'))
+                          RegExp(r'^(\d+)?\.?\d{0,8}'),),
                     ],
                     decoration: const InputDecoration(hintText: 'Longitude'),
                     validator: longitudeValidator,
@@ -140,7 +137,7 @@ class _NewTotemDialogWidget extends HookConsumerWidget {
                     controller: radiusController,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: const InputDecoration(
-                        hintText: 'Raggio', suffixText: 'metri'),
+                        hintText: 'Raggio', suffixText: 'metri',),
                     validator: radiusValidator,
                   ),
                 ),
@@ -168,7 +165,7 @@ class _NewTotemDialogWidget extends HookConsumerWidget {
                 onPressed: () async {
                   if (totem?.id == null) return;
                   final res = await ask(context,
-                      'Sicuro di voler rimuove il collegamento dell\'evento?');
+                      'Sicuro di voler rimuove il collegamento dell\'evento?',);
                   if (res ?? false) {
                     isLinked.value = false;
                     Cloud.totemDoc(providerId, totem!.id).update({
@@ -190,7 +187,7 @@ class _NewTotemDialogWidget extends HookConsumerWidget {
                   final position = latController.text.trim().isNotEmpty &&
                           longController.text.trim().isNotEmpty
                       ? GeoPoint(double.parse(latController.text.trim()),
-                          double.parse(longController.text.trim()))
+                          double.parse(longController.text.trim()),)
                       : null;
 
                   final t = EmbeddedData(

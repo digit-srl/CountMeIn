@@ -49,7 +49,7 @@ enum AcceptedCardType {
   String get text {
     switch (this) {
       case AcceptedCardType.mine:
-        return "Solo miei";
+        return 'Solo miei';
       case AcceptedCardType.passpartoutAndMine:
         return 'Count Me In e miei';
       case AcceptedCardType.all:
@@ -118,7 +118,7 @@ class CMIEvent with _$CMIEvent {
   const factory CMIEvent({
     required String id,
     required String name,
-    @Default(true) bool acceptPassepartout,
+    @EventAccessTypeConverter() required EventAccessType accessType, required int maxWomCount, @EventTypeConverter() required EventType type, @MyDateTimeConverter() required DateTime createdOn, @MyDateTimeConverter() required DateTime startAt, @Default(true) bool acceptPassepartout,
     @Default(true) bool anonymous,
     @Default(true) bool recurring,
     @Default(false) bool emailShowed,
@@ -130,16 +130,11 @@ class CMIEvent with _$CMIEvent {
     String? activeSessionId,
     String? aim,
     @Default(<String,String>{}) Map<String,String>? managers,
-    @EventAccessTypeConverter() required EventAccessType accessType,
-    required int maxWomCount,
     @EventStatusConverter() EventStatus? status,
-    @EventTypeConverter() required EventType type,
     @Default(AcceptedCardType.passpartoutAndMine)
     @AcceptedCardTypeConverted()
     AcceptedCardType acceptedCardType,
-    @MyDateTimeConverter() required DateTime createdOn,
     @MyDateTimeConverter() DateTime? subEventDeadline,
-    @MyDateTimeConverter() required DateTime startAt,
     @GeoPointConverter() GeoPoint? position,
   }) = _CMIEvent;
 
@@ -162,10 +157,9 @@ extension CMIEventX on CMIEvent {
 class CMISubEvent with _$CMISubEvent {
   const factory CMISubEvent({
     required String id,
-    String? name,
+    @MyDateTimeConverter() required DateTime startAt, String? name,
     GenderCount? genderCount,
     @Default(0) num totalUsers,
-    @MyDateTimeConverter() required DateTime startAt,
     @MyDateTimeConverter() DateTime? endAt,
   }) = _CMISubEvent;
 

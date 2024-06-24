@@ -21,7 +21,7 @@ import 'package:countmein/cloud.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:collection/collection.dart';
-import '../../../../ui/validators.dart';
+import 'package:countmein/ui/validators.dart';
 import 'package:intl/intl.dart';
 
 final womValidator = MultiValidator([
@@ -29,7 +29,7 @@ final womValidator = MultiValidator([
   RangeValidator(
       min: 1,
       max: 1000,
-      errorText: 'Il valore deve essere compreso tra 1 e 100'),
+      errorText: 'Il valore deve essere compreso tra 1 e 100',),
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
 ]);
 
@@ -77,12 +77,11 @@ final acceptPassepartoutProvider = StateProvider.autoDispose<bool>((ref) {
 });
 
 class NewEventFormScreen extends HookConsumerWidget {
-  static const String routeName = "create-event";
+  static const String routeName = 'create-event';
   final String providerId;
 
   NewEventFormScreen({
-    super.key,
-    required this.providerId,
+    required this.providerId, super.key,
   });
 
   final _formKey = GlobalKey<FormState>();
@@ -93,7 +92,7 @@ class NewEventFormScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final provider =
         ref.watch(singleCMIProviderProvider(providerId)).valueOrNull;
-    final repsController = useTextEditingController(text: "2");
+    final repsController = useTextEditingController(text: '2');
     final latController = useTextEditingController();
     final longController = useTextEditingController();
     final radiusController = useTextEditingController(text: '100');
@@ -111,7 +110,7 @@ class NewEventFormScreen extends HookConsumerWidget {
     final startAt = useState<DateTime>(DateTime.now());
     final acceptPassepartout = ref.watch(acceptPassepartoutProvider);
     final selectedFrequency = useState<FrequencyType>(FrequencyType.daily);
-    final titleStyle = Theme.of(context).textTheme.headline6;
+    final titleStyle = Theme.of(context).textTheme.titleLarge;
     final selectedAim = useState<String?>(null);
     final aims = ref.watch(getAimsProvider).valueOrNull;
 
@@ -122,13 +121,13 @@ class NewEventFormScreen extends HookConsumerWidget {
         children: [
           Text(
             'Crea un nuovo evento',
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 48),
           CMITextField(
             controller: nameController,
             hintText: 'Nome evento',
-            validator: nameSurnameValidator,
+            validator: nameSurnameValidator.call,
           ),
           const SizedBox(height: 16),
           Row(
@@ -179,7 +178,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                   value: anonymous.value,
                   onChanged: (v) {
                     anonymous.value = v;
-                  }),
+                  },),
             ],
           ),
           if (!anonymous.value) ...[
@@ -199,7 +198,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                 if (v == null) return;
                 emailEnabled.value = v;
               },
-            )
+            ),
           ],
           const SizedBox(height: 16),
           const Divider(),
@@ -269,7 +268,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                     },
                     items: FrequencyType.values
                         .map((e) => DropdownMenuItem<FrequencyType>(
-                            value: e, child: Text(e.text)))
+                            value: e, child: Text(e.text),),)
                         .toList(),
                   ),
                 ),
@@ -278,7 +277,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                   child: CMITextField(
                     controller: repsController,
                     hintText: 'Numero di ripetizioni',
-                    validator: numberValidator,
+                    validator: numberValidator.call,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     onChanged: (v) {
                       final value = int.tryParse(v.trim());
@@ -292,7 +291,7 @@ class NewEventFormScreen extends HookConsumerWidget {
             ),
             const SizedBox(height: 8),
             Text(
-                'L\'evento si ripeterà ogni ${selectedFrequency.value == FrequencyType.weekly ? dayFormat.format(startAt.value) : 'giorno'} per ${repsCount.value} volte'),
+                'L\'evento si ripeterà ogni ${selectedFrequency.value == FrequencyType.weekly ? dayFormat.format(startAt.value) : 'giorno'} per ${repsCount.value} volte',),
           ],
           const SizedBox(height: 16),
           const Divider(),
@@ -306,7 +305,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                   controller: latController,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(
-                        RegExp(r'^(\d+)?\.?\d{0,8}'))
+                        RegExp(r'^(\d+)?\.?\d{0,8}'),),
                   ],
                   decoration: const InputDecoration(hintText: 'Latitude'),
                   validator: latitudeValidator,
@@ -318,7 +317,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                   controller: longController,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(
-                        RegExp(r'^(\d+)?\.?\d{0,8}'))
+                        RegExp(r'^(\d+)?\.?\d{0,8}'),),
                   ],
                   decoration: const InputDecoration(hintText: 'Longitude'),
                   validator: longitudeValidator,
@@ -330,7 +329,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                   controller: radiusController,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(
-                      hintText: 'Raggio', suffixText: 'metri'),
+                      hintText: 'Raggio', suffixText: 'metri',),
                   validator: radiusValidator,
                 ),
               ),
@@ -349,7 +348,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                         }
                         totemEnabled.value = v;
                         totems.value = [
-                          (TextEditingController(text: 'Totem 1'), true)
+                          (TextEditingController(text: 'Totem 1'), true),
                         ];
                       }
                     : null,
@@ -373,7 +372,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                     Flexible(
                       child: TextFormField(
                         controller: totems.value[i].$1,
-                        validator: nameSurnameValidator,
+                        validator: nameSurnameValidator.call,
                         decoration: InputDecoration(
                           suffix: totems.value.length == 1
                               ? null
@@ -410,17 +409,19 @@ class NewEventFormScreen extends HookConsumerWidget {
               ),
             ElevatedButton(
                 onPressed: () {
-                  totems.value.forEach((element) => print(element.$1.text));
+                  for (final element in totems.value) {
+                    print(element.$1.text);
+                  }
                   totems.value = [
                     ...totems.value,
                     (
                       TextEditingController(
-                          text: 'Totem ${totems.value.length + 1}'),
+                          text: 'Totem ${totems.value.length + 1}',),
                       true
-                    )
+                    ),
                   ];
                 },
-                child: const Text('Nuovo totem'))
+                child: const Text('Nuovo totem'),),
           ],
           const SizedBox(height: 16),
           Row(
@@ -432,7 +433,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                       ? null
                       : (v) {
                           releaseWom.value = v;
-                        }),
+                        },),
             ],
           ),
           if (totemEnabled.value)
@@ -451,7 +452,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                     hintText: accessType.value == EventAccessType.inOut
                         ? 'Numero max di wom da rilasciare'
                         : 'Quanti wom rilasciare?',
-                    validator: womValidator,
+                    validator: womValidator.call,
                   ),
                 ),
                 if (provider?.aims != null && provider!.aims!.isNotEmpty) ...[
@@ -466,7 +467,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                               child: Text(aims
                                       ?.firstWhereOrNull((a) => a.code == e)
                                       ?.title(languageCode: 'it') ??
-                                  e)))
+                                  e,),),)
                           .toList(),
                       onChanged: (item) {
                         selectedAim.value = item;
@@ -509,7 +510,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                     final position = latController.text.trim().isNotEmpty &&
                             longController.text.trim().isNotEmpty
                         ? GeoPoint(double.parse(latController.text.trim()),
-                            double.parse(longController.text.trim()))
+                            double.parse(longController.text.trim()),)
                         : null;
 
                     final newEvent = CMIEvent(
@@ -569,13 +570,13 @@ class NewEventFormScreen extends HookConsumerWidget {
                     final batch = FirebaseFirestore.instance.batch();
 
                     batch.set(
-                        Cloud.eventDoc(providerId, eventId), newEvent.toJson());
+                        Cloud.eventDoc(providerId, eventId), newEvent.toJson(),);
                     batch.set(
                         Cloud.sessionDoc(EventIds(
                             providerId: providerId,
                             eventId: eventId,
-                            sessionId: session.id)),
-                        session.toJson());
+                            sessionId: session.id,),),
+                        session.toJson(),);
                     for (int i = 0; i < t.length; i++) {
                       batch.set(
                         Cloud.totemDoc(
@@ -663,7 +664,7 @@ class NewEventFormScreen extends HookConsumerWidget {
           EventIds(
               providerId: providerId,
               eventId: newEvent.id,
-              sessionId: session.id),
+              sessionId: session.id,),
         ),
         session.toJson(),
       );
@@ -686,9 +687,7 @@ class OptionSelector extends StatelessWidget {
   final ValueChanged<bool?>? onChanged;
 
   const OptionSelector({
-    super.key,
-    required this.value,
-    required this.text,
+    required this.value, required this.text, super.key,
     this.onChanged,
   });
 

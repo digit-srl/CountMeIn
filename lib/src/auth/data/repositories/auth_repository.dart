@@ -1,8 +1,8 @@
 import 'package:countmein/my_logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../domain/entities/exceptions.dart';
-import '../../domain/repositories/i_auth_repository.dart';
+import 'package:countmein/src/auth/domain/entities/exceptions.dart';
+import 'package:countmein/src/auth/domain/repositories/i_auth_repository.dart';
 
 class AuthRepository extends IAuthRepository {
   @override
@@ -23,7 +23,7 @@ class AuthRepository extends IAuthRepository {
 
   @override
   Future<void> signUp(
-      String name, String surname, String email, String password) async {
+      String name, String surname, String email, String password,) async {
     try {
       /*final authUser = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);

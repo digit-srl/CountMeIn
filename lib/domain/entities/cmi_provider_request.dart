@@ -1,7 +1,7 @@
 import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' show Timestamp;
-import 'date_time_converter.dart';
+import 'package:countmein/domain/entities/date_time_converter.dart';
 
 part 'cmi_provider_request.freezed.dart';
 
@@ -21,10 +21,9 @@ class CMIProviderRequest with _$CMIProviderRequest {
     required String pIva,
     required Map<String, ProviderManager> managers,
     @CMIProviderStatusConverter() required CMIProviderStatus status,
-    String? apiKey,
+    @MyDateTimeConverter() required DateTime requestedOn, String? apiKey,
     List<String>? aims,
     String? domainRequirement,
-    @MyDateTimeConverter() required DateTime requestedOn,
   }) = _CMIProviderRequest;
 
   factory CMIProviderRequest.fromJson(Map<String, Object?> json) =>

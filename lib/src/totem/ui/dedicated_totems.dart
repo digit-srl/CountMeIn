@@ -12,10 +12,7 @@ class DedicatedTotemsCardWidget extends ConsumerWidget {
   final String? sessionId;
 
   const DedicatedTotemsCardWidget({
-    super.key,
-    required this.providerId,
-    required this.eventId,
-    required this.sessionId,
+    required this.providerId, required this.eventId, required this.sessionId, super.key,
   });
 
   @override

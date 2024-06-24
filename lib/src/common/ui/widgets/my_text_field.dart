@@ -15,7 +15,7 @@ class MUTextField extends HookConsumerWidget {
   final bool obscureText;
 
   const MUTextField({
-    Key? key,
+    super.key,
     this.controller,
     this.validator,
     this.labelText,
@@ -26,7 +26,7 @@ class MUTextField extends HookConsumerWidget {
     this.paddingTop,
     this.keyboardType,
     this.obscureText = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,7 +41,7 @@ class MUTextField extends HookConsumerWidget {
         maxLines: obscureText ? 1 : maxLines,
         minLines: minLines,
         keyboardType: keyboardType,
-        style: Theme.of(context).textTheme.bodyText2,
+        style: Theme.of(context).textTheme.bodyMedium,
         obscureText: !showPassword.value,
         decoration: InputDecoration(
           labelText: labelText,

@@ -27,9 +27,7 @@ class AddScannerWidget extends HookConsumerWidget {
   final CMIEvent event;
 
   const AddScannerWidget({
-    super.key,
-    required this.provider,
-    required this.event,
+    required this.provider, required this.event, super.key,
   });
 
   @override
@@ -54,7 +52,7 @@ class AddScannerWidget extends HookConsumerWidget {
           children: [
             Text(
               'Nuovo collaboratore',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 32),
             const Text(
@@ -126,7 +124,7 @@ class AddScannerWidget extends HookConsumerWidget {
                     controller: nameController,
                     hintText: 'Nome',
                     enabled: selectedScanner.value == null,
-                    validator: nameSurnameValidator,
+                    validator: nameSurnameValidator.call,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -135,7 +133,7 @@ class AddScannerWidget extends HookConsumerWidget {
                     controller: emailController,
                     hintText: 'Email',
                     enabled: selectedScanner.value == null,
-                    validator: emailValidator,
+                    validator: emailValidator.call,
                   ),
                 ),
               ],

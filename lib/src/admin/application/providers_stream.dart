@@ -3,8 +3,8 @@ import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../cloud.dart';
-import '../../../domain/entities/cmi_provider.dart';
+import 'package:countmein/cloud.dart';
+import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 
 
@@ -78,12 +78,12 @@ final singleCMIProviderProvider =
 
 
   if (ref.exists(activeProvidersStreamProvider)) {
-    logger.i("singleCMIProviderProvider: eventsStreamProvider exists ");
+    logger.i('singleCMIProviderProvider: eventsStreamProvider exists ');
     final itemFromItemList = await ref.watch(activeProvidersStreamProvider
         .selectAsync(
-            (list) => list.firstWhereOrNull((element) => element.id == providerId)));
+            (list) => list.firstWhereOrNull((element) => element.id == providerId),),);
     if (itemFromItemList != null) {
-      logger.i("singleCMIProviderProvider: emit from existing provider");
+      logger.i('singleCMIProviderProvider: emit from existing provider');
       yield itemFromItemList;
       return;
     }

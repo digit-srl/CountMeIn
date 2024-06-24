@@ -10,8 +10,7 @@ class CMIDatePicker extends HookWidget {
   final String? labelText;
 
   CMIDatePicker({
-    super.key,
-    required this.onChanged,
+    required this.onChanged, super.key,
     this.initialDate,
     this.firstDate,
     this.hintText,
@@ -28,7 +27,7 @@ class CMIDatePicker extends HookWidget {
     final dateTimeState = useState<DateTime?>(initialDate);
     final dateTime = dateTimeState.value;
     final controller = useTextEditingController(
-        text: dateTime != null ? dateFormat.format(dateTime) : '');
+        text: dateTime != null ? dateFormat.format(dateTime) : '',);
     return Flexible(
       child: TextFormField(
         controller: controller,
@@ -41,7 +40,7 @@ class CMIDatePicker extends HookWidget {
               context: context,
               initialDate: initialDate,
               firstDate: firstDate ?? DateTime(1920),
-              lastDate: DateTime.now().add(const Duration(days: 365)));
+              lastDate: DateTime.now().add(const Duration(days: 365)),);
           if (newDateTime == null) return;
           controller.text = dateFormat.format(newDateTime);
           dateTimeState.value = newDateTime;
@@ -58,8 +57,7 @@ class CMITimePicker extends HookWidget {
   final bool enabled;
 
   CMITimePicker({
-    super.key,
-    required this.onChanged,
+    required this.onChanged, super.key,
     this.initialValue,
     this.enabled = true,
   });
@@ -71,10 +69,10 @@ class CMITimePicker extends HookWidget {
   Widget build(BuildContext context) {
     final timeState = useState<TimeOfDay?>(initialValue != null
         ? TimeOfDay.fromDateTime(initialValue!)
-        : const TimeOfDay(hour: 0, minute: 0));
+        : const TimeOfDay(hour: 0, minute: 0),);
     final time = timeState.value;
     final controller = useTextEditingController(
-        text: time?.format(context) ?? 'Imposta orario');
+        text: time?.format(context) ?? 'Imposta orario',);
     return Flexible(
       child: TextFormField(
         enabled: enabled,

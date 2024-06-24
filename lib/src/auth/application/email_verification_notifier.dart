@@ -1,9 +1,9 @@
 import 'package:countmein/my_logger.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../constants.dart';
-import '../../admin/application/confirm_invite.dart';
-import 'email_verification_state.dart';
+import 'package:countmein/constants.dart';
+import 'package:countmein/src/admin/application/confirm_invite.dart';
+import 'package:countmein/src/auth/application/email_verification_state.dart';
 
 final emailVerificationProvider = StateNotifierProvider.autoDispose.family<
     EmailVerificationNotifier,
@@ -49,7 +49,7 @@ class EmailVerificationNotifier extends StateNotifier<EmailVerificationState> {
     }
   }*/
 
-  void verify() async {
+  Future<void> verify() async {
     try {
       state = const EmailVerificationLoading();
       final res =

@@ -1,7 +1,6 @@
 import 'package:countmein/src/common/ui/cmi_date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class StartEndDateForm extends HookConsumerWidget {
@@ -20,10 +19,10 @@ class StartEndDateForm extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final startDate = useState<DateTime?>(startAt);
     final startTime = useState<TimeOfDay?>(
-        startAt != null ? TimeOfDay.fromDateTime(startAt!) : null);
+        startAt != null ? TimeOfDay.fromDateTime(startAt!) : null,);
     final endDate = useState<DateTime?>(endAt);
     final endTime = useState<TimeOfDay?>(
-        endAt != null ? TimeOfDay.fromDateTime(endAt!) : null);
+        endAt != null ? TimeOfDay.fromDateTime(endAt!) : null,);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -47,7 +46,7 @@ class StartEndDateForm extends HookConsumerWidget {
                     minute: startDate.value?.minute ?? 0,
                   );
                   onChanged?.call(startDate.value, endDate.value);
-                }),
+                },),
             const SizedBox(width: 16),
             CMITimePicker(
               initialValue: startDate.value,
@@ -89,7 +88,7 @@ class StartEndDateForm extends HookConsumerWidget {
                     minute: endDate.value?.minute ?? 0,
                   );
                   onChanged?.call(startDate.value, endDate.value);
-                }),
+                },),
             const SizedBox(width: 16),
             CMITimePicker(
               initialValue: endDate.value,

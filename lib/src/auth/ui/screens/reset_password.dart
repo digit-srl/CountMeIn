@@ -1,16 +1,14 @@
 import 'package:countmein/src/auth/ui/screens/sign_in.dart';
 import 'package:countmein/src/common/ui/widgets/my_button.dart';
 import 'package:countmein/src/common/ui/widgets/my_text_field.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../ui/screens/error.dart';
-import '../../../../ui/widgets/loading.dart';
-import '../../application/reset_password_state.dart';
-import '../../application/reset_password_notifier.dart';
+import 'package:countmein/ui/screens/error.dart';
+import 'package:countmein/ui/widgets/loading.dart';
+import 'package:countmein/src/auth/application/reset_password_state.dart';
+import 'package:countmein/src/auth/application/reset_password_notifier.dart';
 
 //http://localhost:9099/emulator/action?mode=resetPassword&lang=en&oobCode=oocUYJyjjtVPHftvDw1JLVNb9CsRjtTitXkNGxYio35MWE-SW3ekES&apiKey=fake-api-key
 class ResetPasswordScreen extends HookConsumerWidget {
@@ -19,9 +17,8 @@ class ResetPasswordScreen extends HookConsumerWidget {
   final ResetPasswordRequest resetPasswordRequest;
 
   const ResetPasswordScreen({
-    Key? key,
-    required this.resetPasswordRequest,
-  }) : super(key: key);
+    required this.resetPasswordRequest, super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,14 +32,14 @@ class ResetPasswordScreen extends HookConsumerWidget {
             child: state.when(
               complete: () {
                 return const Text(
-                    'La password è stata reimpostata correttamente');
+                    'La password è stata reimpostata correttamente',);
               },
               data: () {
                 return ResetPasswordForm(
                   onSave: (newPassword) async {
                     ref
                         .read(resetPasswordProvider(resetPasswordRequest)
-                            .notifier)
+                            .notifier,)
                         .confirmNewPassword(newPassword);
                   },
                   fullName: resetPasswordRequest.fullName,
@@ -71,31 +68,29 @@ class ResetPasswordForm extends HookConsumerWidget {
   final String fullName;
 
   const ResetPasswordForm({
-    Key? key,
-    required this.onSave,
-    required this.fullName,
-  }) : super(key: key);
+    required this.onSave, required this.fullName, super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _formKey = useMemoized(GlobalKey<FormState>.new, const []);
+    final formKey = useMemoized(GlobalKey<FormState>.new, const []);
     final controller = useTextEditingController();
     final confirmPasswordController = useTextEditingController();
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             fullName,
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           MUTextField(
             controller: controller,
             keyboardType: TextInputType.visiblePassword,
             obscureText: true,
             hintText: 'Inserisci la nuova password',
-            validator: passwordValidator,
+            validator: passwordValidator.call,
           ),
           MUTextField(
             controller: confirmPasswordController,
@@ -107,13 +102,14 @@ class ResetPasswordForm extends HookConsumerWidget {
               if (value.trim() != controller.text.trim()) {
                 return 'Le password non corrispondono';
               }
+              return null;
             },
           ),
           const SizedBox(height: 16),
           MUButton(
             text: 'Reimposta',
             onPressed: () {
-              if (_formKey.currentState!.validate()) {
+              if (formKey.currentState!.validate()) {
                 final newPassword = controller.text.trim();
                 final confirmPassword = controller.text.trim();
                 if (newPassword == confirmPassword) {
@@ -121,7 +117,7 @@ class ResetPasswordForm extends HookConsumerWidget {
                 }
               }
             },
-          )
+          ),
         ],
       ),
     );

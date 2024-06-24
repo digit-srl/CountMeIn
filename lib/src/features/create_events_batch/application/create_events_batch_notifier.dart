@@ -264,7 +264,7 @@ class CreateEventsBatchNotifier extends _$CreateEventsBatchNotifier {
               id: const Uuid().v4(),
               startAt: events[i].$2.startAt,
               name: DateFormat('y-MM-dd').format(events[i].$2.startAt),
-            )
+            ),
           ];
       sessions.sort((a, b) => a.startAt.compareTo(b.startAt));
 
@@ -304,7 +304,7 @@ class CreateEventsBatchNotifier extends _$CreateEventsBatchNotifier {
     state = const CreateEventsBatchStateInitial();
   }
 
-  void upload(String providerId) async {
+  Future<void> upload(String providerId) async {
     try {
       final currentState = state;
       if (currentState is! CreateEventsBatchStateGenerated) {
@@ -333,7 +333,7 @@ class CreateEventsBatchNotifier extends _$CreateEventsBatchNotifier {
                   sessionId: session.id,
                 ),
               ),
-              session.toJson());
+              session.toJson(),);
         }
 
         batch.set(

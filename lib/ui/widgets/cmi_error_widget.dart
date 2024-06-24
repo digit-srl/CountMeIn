@@ -6,8 +6,7 @@ class CMIErrorWidget extends StatelessWidget {
   final StackTrace? stacktrace;
   final Function()? tryAgain;
 
-  const CMIErrorWidget({Key? key, this.message, this.stacktrace, this.tryAgain})
-      : super(key: key);
+  const CMIErrorWidget({super.key, this.message, this.stacktrace, this.tryAgain});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class CMIErrorWidget extends StatelessWidget {
           children: [
             Text(
               'Si è verificato un errrore!',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             if (message != null) Padding(
               padding: const EdgeInsets.only(top:24.0),
@@ -35,8 +34,8 @@ class CMIErrorWidget extends StatelessWidget {
                   onPressed: () {
                     tryAgain?.call();
                   },
-                  child: Text('Riprova')),
-            ]
+                  child: const Text('Riprova'),),
+            ],
           ],
         ),
       ),
@@ -48,8 +47,7 @@ class CMIWarningWidget extends StatelessWidget {
   final String message;
   final Function()? tryAgain;
 
-  const CMIWarningWidget({Key? key, required this.message, this.tryAgain})
-      : super(key: key);
+  const CMIWarningWidget({required this.message, super.key, this.tryAgain});
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +67,9 @@ class CMIWarningWidget extends StatelessWidget {
                     onPressed: () {
                       tryAgain?.call();
                     },
-                    child: Text('Riprova')),
+                    child: const Text('Riprova'),),
               ),
-            ]
+            ],
           ],
         ),
       ),

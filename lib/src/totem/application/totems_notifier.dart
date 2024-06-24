@@ -42,7 +42,7 @@ Stream<List<EmbeddedData>> getTotemsByEvent(
   final totems = ref.watch(getTotemsProvider(providerId)).valueOrNull ?? [];
   final output = totems
       .where((element) =>
-          element.eventId == eventId && element.dedicated == dedicated)
+          element.eventId == eventId && element.dedicated == dedicated,)
       .toList();
   yield* Stream.value(output);
 }
@@ -59,27 +59,27 @@ Stream<List<EmbeddedData>> getFreeTotems(
 
 @riverpod
 Stream<List<EmbeddedData>> getAvailableTotems(
-    GetAvailableTotemsRef ref, String providerId) async* {
+    GetAvailableTotemsRef ref, String providerId,) async* {
   final totems = ref.watch(getTotemsProvider(providerId)).valueOrNull ?? [];
   yield* Stream.value(
-      totems.where((element) => element.eventId == null).toList());
+      totems.where((element) => element.eventId == null).toList(),);
 }
 
 @riverpod
 Stream<List<EmbeddedData>> getSessionTotems(GetSessionTotemsRef ref,
-    String providerId, String eventId, String sessionId) async* {
+    String providerId, String eventId, String sessionId,) async* {
   final totems = ref.watch(getTotemsProvider(providerId)).valueOrNull ?? [];
   yield* Stream.value(totems
       .where((element) =>
           element.eventId == eventId &&
           element.sessionId == sessionId &&
-          element.dedicated == false)
-      .toList());
+          element.dedicated == false,)
+      .toList(),);
 }
 
 @riverpod
 Stream<EmbeddedData> getTotemData(
-    GetTotemDataRef ref, String providerId, String totemId) async* {
+    GetTotemDataRef ref, String providerId, String totemId,) async* {
   if (ref.exists(getTotemsProvider(providerId))) {
     final totems = ref.watch(getTotemsProvider(providerId)).valueOrNull ?? [];
     final t = totems.firstWhereOrNull((element) => element.id == totemId);
