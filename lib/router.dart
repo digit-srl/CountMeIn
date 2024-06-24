@@ -205,6 +205,8 @@ class RouterNotifier extends ChangeNotifier {
                       builder: (context, state) => ManagersHandlerScreen(
                         providerId:
                             state.pathParameters['providerId'] as String,
+                        providerName:
+                            state.queryParameters['providerName'] as String,
                       ),
                     ),
                     GoRoute(

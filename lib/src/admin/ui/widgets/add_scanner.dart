@@ -37,9 +37,11 @@ class AddScannerWidget extends HookConsumerWidget {
     final formKey = useMemoized(GlobalKey<FormState>.new, const []);
     final nameController = useTextEditingController();
     final emailController = useTextEditingController();
-    final scanners = ref.watch(scannersProvider(provider.id));
     final selectedScanner = useState<ProviderManager?>(null);
     final selectedRole = useState<UserRole>(UserRole.scanner);
+    final providerCollaborators = ref.watch(scannersProvider(provider.id));
+    final eventCollaborators = providerCollaborators
+        .where((c) => !(event.managers?.keys.contains(c.id) ?? false));
 
     return Form(
       key: formKey,
@@ -75,7 +77,7 @@ class AddScannerWidget extends HookConsumerWidget {
                   .toList(),
             ),
             const SizedBox(height: 16),
-            if (scanners.isNotEmpty) ...[
+            if (eventCollaborators.isNotEmpty) ...[
               const Text(
                 'Seleziona uno scanner esistente',
               ),
@@ -91,7 +93,7 @@ class AddScannerWidget extends HookConsumerWidget {
                         emailController.text = value?.email ?? '';
                         formKey.currentState!.validate();
                       },
-                      items: scanners
+                      items: eventCollaborators
                           .map(
                             (e) => DropdownMenuItem<ProviderManager?>(
                               value: e,

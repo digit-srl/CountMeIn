@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:countmein/domain/entities/cmi_provider.dart';
 import 'package:countmein/my_logger.dart';
+import 'package:countmein/src/admin/application/events_stream.dart';
 import 'package:countmein/src/admin/application/providers_stream.dart';
+import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/admin/ui/widgets/admin_app_bar.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/auth/ui/screens/sign_in.dart';
@@ -44,9 +47,13 @@ final pendingInviteStreamProvider =
 class ManagersHandlerScreen extends StatefulHookConsumerWidget {
   static const String routeName = 'managers';
   final String providerId;
+  final String providerName;
 
-  const ManagersHandlerScreen({Key? key, required this.providerId})
-      : super(key: key);
+  const ManagersHandlerScreen({
+    required this.providerId,
+    required this.providerName,
+    super.key,
+  });
 
   @override
   ConsumerState<ManagersHandlerScreen> createState() =>
@@ -62,11 +69,13 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
     final emailController = useTextEditingController();
     final nameController = useTextEditingController();
 
-    final selectedRole = useState(UserRole.scanner);
+    final selectedRole = useState(UserRole.admin);
+    final selectedEvent = useState<CMIEvent?>(null);
     final provider =
         ref.watch(singleCMIProviderProvider(widget.providerId)).valueOrNull;
     final state = ref.watch(pendingInviteStreamProvider(widget.providerId));
-
+    final events =
+        ref.watch(eventsStreamProvider(widget.providerId)).valueOrNull ?? [];
     return Scaffold(
       appBar: const AdminAppBar(
         title: 'Managers',
@@ -152,7 +161,6 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                         child: CMIDropdownButton<UserRole>(
                                           value: selectedRole.value,
                                           items: UserRole.values
-                                              .sublist(0, 3)
                                               .map(
                                                 (e) =>
                                                     DropdownMenuItem<UserRole>(
@@ -163,57 +171,94 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                               .toList(),
                                           onChanged: (role) {
                                             if (role == null) return;
+                                            if (!collaboratorsEventRole
+                                                .contains(role)) {
+                                              selectedEvent.value = null;
+                                            }
                                             selectedRole.value = role;
                                           },
                                         ),
                                       ),
                                     ),
+                                    if (selectedRole.value ==
+                                            UserRole.eventManager ||
+                                        selectedRole.value ==
+                                            UserRole.scanner) ...[
+                                      const SizedBox(height: 16),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: SizedBox(
+                                          width: 300,
+                                          child: CMIDropdownButton<CMIEvent>(
+                                            value: selectedEvent.value,
+                                            label: 'Seleziona l\'evento',
+                                            items: events
+                                                .map(
+                                                  (e) => DropdownMenuItem<
+                                                      CMIEvent>(
+                                                    value: e,
+                                                    child: Text(e.name),
+                                                  ),
+                                                )
+                                                .toList(),
+                                            onChanged: (event) {
+                                              if (event == null) return;
+                                              selectedEvent.value = event;
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                      if (selectedEvent.value == null)
+                                        const Text(
+                                          'Per i ruoli manager e scanner è obbligatorio selezionare l\'evento!',
+                                          style: TextStyle(
+                                            color: Colors.orange,
+                                          ),
+                                        ),
+                                    ],
                                     const SizedBox(height: 32),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         TextButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                addingMode = !addingMode;
-                                              });
-                                            },
-                                            child: const Text('Annulla')),
+                                          onPressed: () {
+                                            setState(() {
+                                              addingMode = !addingMode;
+                                            });
+                                          },
+                                          child: const Text('Annulla'),
+                                        ),
                                         MUButton(
                                           text: 'Invita',
                                           onPressed: () async {
                                             if (_formKey.currentState!
                                                 .validate()) {
+                                              if (collaboratorsEventRole
+                                                      .contains(
+                                                    selectedRole.value,
+                                                  ) &&
+                                                  selectedEvent.value == null) {
+                                                return;
+                                              }
+
                                               final email =
                                                   emailController.text.trim();
                                               final name =
                                                   nameController.text.trim();
-                                              final newManager =
-                                                  PendingProviderManager(
-                                                id: const Uuid().v4(),
-                                                role: selectedRole.value,
-                                                name: name,
-                                                status: ProviderManagerStatus
-                                                    .pending,
-                                                invitedOn: DateTime.now(),
-                                                email: email,
-                                                secret: '',
-                                                providerName: provider.name,
-                                              );
-
                                               try {
-                                                await Cloud
-                                                        .pendingInviteCollection(
-                                                            provider.id)
-                                                    .doc(newManager.id)
-                                                    .set(newManager.toJson());
+                                                await addCollaborator(
+                                                  name,
+                                                  email,
+                                                  selectedRole.value,
+                                                  selectedEvent.value?.id,
+                                                );
                                                 setState(() {
                                                   addingMode = false;
                                                 });
                                                 nameController.clear();
                                                 emailController.clear();
                                               } catch (ex) {
-                                                logger.i(ex);
+                                                logger.e(ex);
                                               }
                                             }
                                           },
@@ -229,13 +274,15 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                           if (pendingInvites.isEmpty &&
                               provider.managers.isEmpty)
                             const Text(
-                                'Non ci sono managers per questo provider')
+                              'Non ci sono managers per questo provider',
+                            )
                           else ...[
                             for (final m in pendingInvites)
                               MemberRow(
                                 name: m.name,
                                 email: m.email,
                                 role: m.role,
+                                eventId: m.eventId,
                                 pending: true,
                                 subtitle:
                                     m.status == ProviderManagerStatus.pending
@@ -252,8 +299,20 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                               MemberRow(
                                 name: m.name,
                                 role: m.role,
+                                eventId: null,
                                 email: m.email,
                                 onDelete: () {
+                                  final batch =
+                                      FirebaseFirestore.instance.batch();
+                                  // Se il ruole è relativo all'evento bisogna rimuovere
+                                  // il manager anche dal doc dell'evento
+                                  // if (collaboratorsEventRole.contains(m.role)) {
+                                  //   batch.update(
+                                  //     Cloud.eventDoc(provider.id, m.eventId),
+                                  //     {'managers.${m.id}': null},
+                                  //   );
+                                  // }
+
                                   final managers = <String, ProviderManager>{};
                                   managers.addAll(provider.managers);
                                   managers
@@ -262,13 +321,15 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
                                   for (final k in managers.keys) {
                                     map[k] = managers[k]!.toJson();
                                   }
-                                  Cloud.providerCollection
-                                      .doc(provider.id)
-                                      .update({'managers': map});
+                                  batch.update(
+                                    Cloud.providerCollection.doc(provider.id),
+                                    {'managers': map},
+                                  );
+                                  batch.commit();
                                 },
                                 status: ProviderManagerStatus.completed,
                               ),
-                          ]
+                          ],
                         ],
                       ),
                     );
@@ -283,6 +344,29 @@ class _ManagersHandlerScreenState extends ConsumerState<ManagersHandlerScreen> {
       ),
     );
   }
+
+  Future<void> addCollaborator(
+    String name,
+    String email,
+    UserRole role,
+    String? eventId,
+  ) async {
+    final newManager = PendingProviderManager(
+      id: const Uuid().v4(),
+      role: role,
+      name: name,
+      status: ProviderManagerStatus.pending,
+      invitedOn: DateTime.now(),
+      email: email,
+      secret: '',
+      providerName: widget.providerName,
+      eventId: eventId,
+    );
+
+    await Cloud.pendingInviteCollection(
+      widget.providerId,
+    ).doc(newManager.id).set(newManager.toJson());
+  }
 }
 
 enum ManagerAction { copyEmail, delete }
@@ -292,6 +376,7 @@ class MemberRow extends StatelessWidget {
   final String? subtitle;
   final String name;
   final String email;
+  final String? eventId;
   final UserRole role;
   final bool pending;
   final ProviderManagerStatus status;
@@ -299,6 +384,7 @@ class MemberRow extends StatelessWidget {
   const MemberRow({
     Key? key,
     required this.name,
+    required this.eventId,
     this.pending = false,
     required this.email,
     this.onDelete,
@@ -337,8 +423,10 @@ class MemberRow extends StatelessWidget {
                         showCustomToast('Email copiata negli appunti');
                         return;
                       case ManagerAction.delete:
-                        final res = await ask(context,
-                            'Sicuro di voler ${pending ? 'revocare l\'invito di' : 'rimuovere'} $name dai manager?');
+                        final res = await ask(
+                          context,
+                          'Sicuro di voler ${pending ? 'revocare l\'invito di' : 'rimuovere'} $name dai manager?',
+                        );
                         if (res ?? false) {
                           onDelete?.call();
                         }
@@ -351,6 +439,7 @@ class MemberRow extends StatelessWidget {
                       child: Text('Copia email'),
                     ),
                     PopupMenuItem<ManagerAction>(
+                      enabled: !collaboratorsEventRole.contains(role),
                       value: ManagerAction.delete,
                       textStyle: Theme.of(context)
                           .textTheme
@@ -359,7 +448,7 @@ class MemberRow extends StatelessWidget {
                       child: Text(pending ? 'Revoca invito' : 'Elimina'),
                     ),
                   ],
-                )
+                ),
               ],
             ),
             const SizedBox(height: 8),
@@ -381,27 +470,31 @@ class MemberRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-            flex: 2,
-            child: Text(
-              name,
-              textAlign: TextAlign.start,
-            )),
+          flex: 2,
+          child: Text(
+            name,
+            textAlign: TextAlign.start,
+          ),
+        ),
         Expanded(
-            flex: 1,
-            child: Text(
-              enumToString(role) ?? '-',
-              textAlign: TextAlign.start,
-            )),
+          flex: 1,
+          child: Text(
+            enumToString(role) ?? '-',
+            textAlign: TextAlign.start,
+          ),
+        ),
         Expanded(
-            flex: 2,
-            child: InkWell(
-                onTap: () {
-                  Clipboard.setData(ClipboardData(text: email));
-                },
-                child: Text(
-                  email,
-                  textAlign: TextAlign.start,
-                ))),
+          flex: 2,
+          child: InkWell(
+            onTap: () {
+              Clipboard.setData(ClipboardData(text: email));
+            },
+            child: Text(
+              email,
+              textAlign: TextAlign.start,
+            ),
+          ),
+        ),
         const SizedBox(width: 16),
         const Spacer(
           flex: 1,

@@ -77,6 +77,13 @@ export const confirmPendingInviteSecondGen = onRequest(
         })
         .end();
       return;
+    } else if (status === "invalid") {
+      response
+        .send({
+          status: "deletedFromOwner",
+        })
+        .end();
+      return;
     }
 
     console.log(inviteData);
@@ -243,6 +250,7 @@ export const onInviteToCollaborate = onDocumentCreated(
     const email = invite.email;
     const providerName = invite.providerName;
     const fullName = invite.name;
+    const eventId = invite.eventId;
     console.log(
       "new invite to collaborate " +
         providerName +
@@ -257,6 +265,17 @@ export const onInviteToCollaborate = onDocumentCreated(
     // TODO check that all field is valid
 
     const requestRef = providerPendingInviteDocRef(providerId, inviteId);
+
+    // scanner e manager di eventi devono avere sempre eventId != null
+    if ((role == "scanner" || role == "eventManager") && eventId == null) {
+      console.log("this invite is invalid, role: " + role + " without eventId");
+
+      await requestRef.update({
+        status: "invalid",
+      });
+      return;
+    }
+
     var secret = generateSecret();
 
     await requestRef.update({

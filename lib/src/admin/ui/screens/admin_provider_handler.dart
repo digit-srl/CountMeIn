@@ -124,17 +124,8 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                               userRole == UserRole.admin
                           ? () {
                               final path =
-                                  '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${provider!.id}/${ManagersHandlerScreen.routeName}';
+                                  '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${provider!.id}/${ManagersHandlerScreen.routeName}?providerName=${provider.name}';
                               context.go(path, extra: provider);
-                              /* showDialog(
-                                    context: context,
-                                    builder: (c) {
-                                      return Dialog(
-                                        child: ManagersHandlerDialog(
-                                            provider: provider),
-                                      );
-                                    },
-                                  );*/
                             }
                           : null,
                     ),

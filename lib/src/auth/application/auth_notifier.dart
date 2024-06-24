@@ -142,68 +142,6 @@ final userIdProvider = Provider<String?>((ref) {
   return null;
 });
 
-/*
-final authStateProvider =
-    StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
-  final userAsync = ref.watch(_authStateChangesProvider);
-  return AuthStateNotifier(const AuthState.loading(), userAsync.asData?.value);
-});
-
-class AuthStateNotifier extends StateNotifier<AuthState> {
-  final AuthState initialState;
-  final User? user;
-
-  AuthStateNotifier(this.initialState, this.user) : super(initialState) {
-    _init();
-  }
-
-  _init() async{
-    if (user != null) {
-      if (!user!.emailVerified) {
-        return EmailNotVerified(user!);
-      } else {
-        final idToken = await user!.getIdTokenResult();
-        final userFromFirestore = ref.watch(_userProvider(user.uid));
-        return userFromFirestore.when(
-            data: (data) {
-              if (data != null) {
-                final map = <String,dynamic>{};
-                map.addAll(data);
-                map['role'] =
-                final dto = AuthUserDTO.fromJson(map);
-                return AuthState.authenticated(dto.toDomain());
-              } else {
-                return const Unauthenticated();
-              }
-            },
-            error: (err, stack) => AuthError(err, stack),
-            loading: () => const AuthLoading());
-      }
-    } else {
-      return const Unauthenticated();
-    }
-
-    if(user!= null){
-      if(!user!.emailVerified){
-        state = Email
-      }
-    }else{
-      state = const AuthState.loading();
-    }
-  }
-}*/
-
-/*class AuthChangeNotifier extends ChangeNotifier {
-  bool _isLogged = false;
-
-  bool get isLogged => _isLogged;
-
-  set isLogged(bool value) {
-    _isLogged = value;
-    notifyListeners();
-  }
-}*/
-
 final signInNotifierProvider =
     StateNotifierProvider.autoDispose<SignInNotifier, bool>((ref) {
   return SignInNotifier(ref);

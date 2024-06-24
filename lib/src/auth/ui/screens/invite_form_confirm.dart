@@ -49,11 +49,14 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.all(24),
                       child: Text(
-                          'Sei invitato a gestire il provider ${request.providerName}.',style: Theme.of(context).textTheme.headline6,),
+                        'Sei invitato a gestire il provider ${request.providerName}.',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
                     ),
                     state.when(
-                      loading: () => LoadingWidget(),
-                      inviteExpired: () => Text('Il tuo invito è scaduto.'),
+                      loading: () => const LoadingWidget(),
+                      inviteExpired: () =>
+                          const Text('Il tuo invito è scaduto.'),
                       userAlreadyRegistered: () {
                         return Column(
                           children: [
@@ -64,7 +67,7 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
                                         confirmInviteProvider(request).notifier)
                                     .confirmInvite();
                               },
-                              child: Text('Conferma invito'),
+                              child: const Text('Conferma invito'),
                             ),
                           ],
                         );
@@ -77,7 +80,7 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                Text(
+                                const Text(
                                     'Registrati alla piattaforma per confermare l\'invito.'),
                                 const SizedBox(height: 16),
                                 MUTextField(
@@ -133,17 +136,15 @@ class InviteFormConfirmScreen extends HookConsumerWidget {
                                     ConfirmInviteResponseStatus.completed ||
                                 status ==
                                     ConfirmInviteResponseStatus
-                                        .alreadyConfirmed)
-                              ...[
-
-                                 const SizedBox(height: 16),
-                                MUButton(
+                                        .alreadyConfirmed) ...[
+                              const SizedBox(height: 16),
+                              MUButton(
                                 text: 'Vai alla dashboard',
                                 onPressed: () {
                                   context.go(AdminDashboardScreen.path);
                                 },
                               ),
-                        ]
+                            ]
                           ],
                         );
                       },

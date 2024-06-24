@@ -11,6 +11,11 @@ enum PlatformRole {
   }
 }
 
+const providerRoles = [
+  UserRole.owner,
+  UserRole.admin,
+];
+
 enum UserRole {
   owner,
   admin,

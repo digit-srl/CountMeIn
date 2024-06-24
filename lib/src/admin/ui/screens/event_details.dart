@@ -135,6 +135,11 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
         ref.watch(singleCMIProviderProvider(widget.providerId)).valueOrNull;
     final role = ref.watch(userRoleEventProvider(ids));
 
+    final providerCollaborators =
+        ref.watch(scannersProvider(widget.providerId));
+    final eventCollaborators = providerCollaborators
+        .where((c) => eventData?.managers?.keys.contains(c.id) ?? false);
+
     final sessions = ref.watch(sessionsStreamProvider(ids)).asData?.value ?? [];
     final isUserScanner = role == UserRole.scanner;
     final isManager = role == UserRole.eventManager;
@@ -261,6 +266,27 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                   InfoText(
                     label: 'Stato',
                     value: eventData?.status?.text,
+                  ),
+                  InfoText2(
+                    label: 'Collaboratori',
+                    value: eventCollaborators.isEmpty
+                        ? const Text('-')
+                        : Wrap(
+                            children: eventCollaborators
+                                .map(
+                                  (e) => Tooltip(
+                                    message: e.email,
+                                    child: Chip(
+                                      label: Text(
+                                        e.name,
+                                        style:
+                                            Theme.of(context).textTheme.caption,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
                   ),
                   Align(
                     alignment: Alignment.bottomRight,

@@ -13,7 +13,7 @@ part 'cmi_provider.g.dart';
 
 enum CMIProviderStatus { unknown, pending, live, archived }
 
-enum ProviderManagerStatus { unknown, pending, completed, deleted, expired }
+enum ProviderManagerStatus { unknown, pending, completed, deleted, expired, invalid }
 
 @freezed
 class CMIProvider with _$CMIProvider {
@@ -132,6 +132,8 @@ extension ProviderManagerStatusX on ProviderManagerStatus {
         return Colors.red;
       case ProviderManagerStatus.completed:
         return Colors.green;
+      case ProviderManagerStatus.invalid:
+        return Colors.grey;
     }
   }
 }
