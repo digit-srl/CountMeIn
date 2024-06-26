@@ -19,7 +19,7 @@ mixin _$UserRegisteringState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(bool newUser, String email) verificationEmailSent,
+    required TResult Function(String email, bool newUser) verificationEmailSent,
     required TResult Function(
             String email, String cf, String userId, String providerId)
         userAlreadySubscribed,
@@ -31,7 +31,7 @@ mixin _$UserRegisteringState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email, bool newUser)? verificationEmailSent,
     TResult? Function(
             String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
@@ -43,7 +43,7 @@ mixin _$UserRegisteringState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
+    TResult Function(String email, bool newUser)? verificationEmailSent,
     TResult Function(String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
     TResult Function()? loading,
@@ -155,7 +155,7 @@ class _$UserRegisteringInitialImpl implements UserRegisteringInitial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(bool newUser, String email) verificationEmailSent,
+    required TResult Function(String email, bool newUser) verificationEmailSent,
     required TResult Function(
             String email, String cf, String userId, String providerId)
         userAlreadySubscribed,
@@ -170,7 +170,7 @@ class _$UserRegisteringInitialImpl implements UserRegisteringInitial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email, bool newUser)? verificationEmailSent,
     TResult? Function(
             String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
@@ -185,7 +185,7 @@ class _$UserRegisteringInitialImpl implements UserRegisteringInitial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
+    TResult Function(String email, bool newUser)? verificationEmailSent,
     TResult Function(String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
     TResult Function()? loading,
@@ -262,7 +262,7 @@ abstract class _$$UserRegisteringVerificationEmailSentImplCopyWith<$Res> {
           $Res Function(_$UserRegisteringVerificationEmailSentImpl) then) =
       __$$UserRegisteringVerificationEmailSentImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({bool newUser, String email});
+  $Res call({String email, bool newUser});
 }
 
 /// @nodoc
@@ -278,18 +278,18 @@ class __$$UserRegisteringVerificationEmailSentImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? newUser = null,
     Object? email = null,
+    Object? newUser = null,
   }) {
     return _then(_$UserRegisteringVerificationEmailSentImpl(
-      newUser: null == newUser
-          ? _value.newUser
-          : newUser // ignore: cast_nullable_to_non_nullable
-              as bool,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      newUser: null == newUser
+          ? _value.newUser
+          : newUser // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -299,17 +299,17 @@ class __$$UserRegisteringVerificationEmailSentImplCopyWithImpl<$Res>
 class _$UserRegisteringVerificationEmailSentImpl
     implements UserRegisteringVerificationEmailSent {
   const _$UserRegisteringVerificationEmailSentImpl(
-      {this.newUser = false, required this.email});
+      {required this.email, this.newUser = false});
 
+  @override
+  final String email;
   @override
   @JsonKey()
   final bool newUser;
-  @override
-  final String email;
 
   @override
   String toString() {
-    return 'UserRegisteringState.verificationEmailSent(newUser: $newUser, email: $email)';
+    return 'UserRegisteringState.verificationEmailSent(email: $email, newUser: $newUser)';
   }
 
   @override
@@ -317,12 +317,12 @@ class _$UserRegisteringVerificationEmailSentImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserRegisteringVerificationEmailSentImpl &&
-            (identical(other.newUser, newUser) || other.newUser == newUser) &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.newUser, newUser) || other.newUser == newUser));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, newUser, email);
+  int get hashCode => Object.hash(runtimeType, email, newUser);
 
   @JsonKey(ignore: true)
   @override
@@ -336,7 +336,7 @@ class _$UserRegisteringVerificationEmailSentImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(bool newUser, String email) verificationEmailSent,
+    required TResult Function(String email, bool newUser) verificationEmailSent,
     required TResult Function(
             String email, String cf, String userId, String providerId)
         userAlreadySubscribed,
@@ -344,14 +344,14 @@ class _$UserRegisteringVerificationEmailSentImpl
     required TResult Function() invalidFiscalCode,
     required TResult Function(Object error, StackTrace st) error,
   }) {
-    return verificationEmailSent(newUser, email);
+    return verificationEmailSent(email, newUser);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email, bool newUser)? verificationEmailSent,
     TResult? Function(
             String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
@@ -359,14 +359,14 @@ class _$UserRegisteringVerificationEmailSentImpl
     TResult? Function()? invalidFiscalCode,
     TResult? Function(Object error, StackTrace st)? error,
   }) {
-    return verificationEmailSent?.call(newUser, email);
+    return verificationEmailSent?.call(email, newUser);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
+    TResult Function(String email, bool newUser)? verificationEmailSent,
     TResult Function(String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
     TResult Function()? loading,
@@ -375,7 +375,7 @@ class _$UserRegisteringVerificationEmailSentImpl
     required TResult orElse(),
   }) {
     if (verificationEmailSent != null) {
-      return verificationEmailSent(newUser, email);
+      return verificationEmailSent(email, newUser);
     }
     return orElse();
   }
@@ -435,11 +435,11 @@ class _$UserRegisteringVerificationEmailSentImpl
 abstract class UserRegisteringVerificationEmailSent
     implements UserRegisteringState {
   const factory UserRegisteringVerificationEmailSent(
-          {final bool newUser, required final String email}) =
-      _$UserRegisteringVerificationEmailSentImpl;
+      {required final String email,
+      final bool newUser}) = _$UserRegisteringVerificationEmailSentImpl;
 
-  bool get newUser;
   String get email;
+  bool get newUser;
   @JsonKey(ignore: true)
   _$$UserRegisteringVerificationEmailSentImplCopyWith<
           _$UserRegisteringVerificationEmailSentImpl>
@@ -546,7 +546,7 @@ class _$UserRegisteringUserAlreadySubscribedImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(bool newUser, String email) verificationEmailSent,
+    required TResult Function(String email, bool newUser) verificationEmailSent,
     required TResult Function(
             String email, String cf, String userId, String providerId)
         userAlreadySubscribed,
@@ -561,7 +561,7 @@ class _$UserRegisteringUserAlreadySubscribedImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email, bool newUser)? verificationEmailSent,
     TResult? Function(
             String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
@@ -576,7 +576,7 @@ class _$UserRegisteringUserAlreadySubscribedImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
+    TResult Function(String email, bool newUser)? verificationEmailSent,
     TResult Function(String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
     TResult Function()? loading,
@@ -704,7 +704,7 @@ class _$UserRegisteringLoadingImpl implements UserRegisteringLoading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(bool newUser, String email) verificationEmailSent,
+    required TResult Function(String email, bool newUser) verificationEmailSent,
     required TResult Function(
             String email, String cf, String userId, String providerId)
         userAlreadySubscribed,
@@ -719,7 +719,7 @@ class _$UserRegisteringLoadingImpl implements UserRegisteringLoading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email, bool newUser)? verificationEmailSent,
     TResult? Function(
             String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
@@ -734,7 +734,7 @@ class _$UserRegisteringLoadingImpl implements UserRegisteringLoading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
+    TResult Function(String email, bool newUser)? verificationEmailSent,
     TResult Function(String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
     TResult Function()? loading,
@@ -848,7 +848,7 @@ class _$UserRegisteringInvalidFiscalCodeImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(bool newUser, String email) verificationEmailSent,
+    required TResult Function(String email, bool newUser) verificationEmailSent,
     required TResult Function(
             String email, String cf, String userId, String providerId)
         userAlreadySubscribed,
@@ -863,7 +863,7 @@ class _$UserRegisteringInvalidFiscalCodeImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email, bool newUser)? verificationEmailSent,
     TResult? Function(
             String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
@@ -878,7 +878,7 @@ class _$UserRegisteringInvalidFiscalCodeImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
+    TResult Function(String email, bool newUser)? verificationEmailSent,
     TResult Function(String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
     TResult Function()? loading,
@@ -1023,7 +1023,7 @@ class _$UserRegisteringErrorImpl implements UserRegisteringError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(bool newUser, String email) verificationEmailSent,
+    required TResult Function(String email, bool newUser) verificationEmailSent,
     required TResult Function(
             String email, String cf, String userId, String providerId)
         userAlreadySubscribed,
@@ -1038,7 +1038,7 @@ class _$UserRegisteringErrorImpl implements UserRegisteringError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(bool newUser, String email)? verificationEmailSent,
+    TResult? Function(String email, bool newUser)? verificationEmailSent,
     TResult? Function(
             String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
@@ -1053,7 +1053,7 @@ class _$UserRegisteringErrorImpl implements UserRegisteringError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(bool newUser, String email)? verificationEmailSent,
+    TResult Function(String email, bool newUser)? verificationEmailSent,
     TResult Function(String email, String cf, String userId, String providerId)?
         userAlreadySubscribed,
     TResult Function()? loading,

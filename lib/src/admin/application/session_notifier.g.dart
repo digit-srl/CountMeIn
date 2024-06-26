@@ -157,7 +157,7 @@ class _SessionsStreamProviderElement
   EventIds get ids => (origin as SessionsStreamProvider).ids;
 }
 
-String _$getSessionHash() => r'472639b77eeeeba928645b90cc80213abc3c17cb';
+String _$getSessionHash() => r'13b15b23b5b4802b58e2bc1aa3b9ddbefb3d0530';
 
 /// See also [getSession].
 @ProviderFor(getSession)

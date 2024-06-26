@@ -327,15 +327,15 @@ EventUser _$EventUserFromJson(Map<String, dynamic> json) {
 mixin _$EventUser {
   String get id => throw _privateConstructorUsedError;
   String get providerId => throw _privateConstructorUsedError;
+  bool get fromExternalOrganization => throw _privateConstructorUsedError;
+  bool get isGroup => throw _privateConstructorUsedError;
+  bool get isAnonymous => throw _privateConstructorUsedError;
   String? get userCardProviderId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get surname => throw _privateConstructorUsedError;
   String? get cf => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get privateId => throw _privateConstructorUsedError;
-  bool get fromExternalOrganization => throw _privateConstructorUsedError;
-  bool get isGroup => throw _privateConstructorUsedError;
-  bool get isAnonymous => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get checkInAt => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
@@ -363,15 +363,15 @@ abstract class $EventUserCopyWith<$Res> {
   $Res call(
       {String id,
       String providerId,
+      bool fromExternalOrganization,
+      bool isGroup,
+      bool isAnonymous,
       String? userCardProviderId,
       String? name,
       String? surname,
       String? cf,
       String? email,
       String? privateId,
-      bool fromExternalOrganization,
-      bool isGroup,
-      bool isAnonymous,
       @MyDateTimeConverter() DateTime? checkInAt,
       @MyDateTimeConverter() DateTime? checkOutAt,
       String? groupName,
@@ -398,15 +398,15 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
   $Res call({
     Object? id = null,
     Object? providerId = null,
+    Object? fromExternalOrganization = null,
+    Object? isGroup = null,
+    Object? isAnonymous = null,
     Object? userCardProviderId = freezed,
     Object? name = freezed,
     Object? surname = freezed,
     Object? cf = freezed,
     Object? email = freezed,
     Object? privateId = freezed,
-    Object? fromExternalOrganization = null,
-    Object? isGroup = null,
-    Object? isAnonymous = null,
     Object? checkInAt = freezed,
     Object? checkOutAt = freezed,
     Object? groupName = freezed,
@@ -426,6 +426,18 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
+      fromExternalOrganization: null == fromExternalOrganization
+          ? _value.fromExternalOrganization
+          : fromExternalOrganization // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isGroup: null == isGroup
+          ? _value.isGroup
+          : isGroup // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAnonymous: null == isAnonymous
+          ? _value.isAnonymous
+          : isAnonymous // ignore: cast_nullable_to_non_nullable
+              as bool,
       userCardProviderId: freezed == userCardProviderId
           ? _value.userCardProviderId
           : userCardProviderId // ignore: cast_nullable_to_non_nullable
@@ -450,18 +462,6 @@ class _$EventUserCopyWithImpl<$Res, $Val extends EventUser>
           ? _value.privateId
           : privateId // ignore: cast_nullable_to_non_nullable
               as String?,
-      fromExternalOrganization: null == fromExternalOrganization
-          ? _value.fromExternalOrganization
-          : fromExternalOrganization // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isGroup: null == isGroup
-          ? _value.isGroup
-          : isGroup // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isAnonymous: null == isAnonymous
-          ? _value.isAnonymous
-          : isAnonymous // ignore: cast_nullable_to_non_nullable
-              as bool,
       checkInAt: freezed == checkInAt
           ? _value.checkInAt
           : checkInAt // ignore: cast_nullable_to_non_nullable
@@ -513,15 +513,15 @@ abstract class _$$EventUserImplCopyWith<$Res>
   $Res call(
       {String id,
       String providerId,
+      bool fromExternalOrganization,
+      bool isGroup,
+      bool isAnonymous,
       String? userCardProviderId,
       String? name,
       String? surname,
       String? cf,
       String? email,
       String? privateId,
-      bool fromExternalOrganization,
-      bool isGroup,
-      bool isAnonymous,
       @MyDateTimeConverter() DateTime? checkInAt,
       @MyDateTimeConverter() DateTime? checkOutAt,
       String? groupName,
@@ -546,15 +546,15 @@ class __$$EventUserImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? providerId = null,
+    Object? fromExternalOrganization = null,
+    Object? isGroup = null,
+    Object? isAnonymous = null,
     Object? userCardProviderId = freezed,
     Object? name = freezed,
     Object? surname = freezed,
     Object? cf = freezed,
     Object? email = freezed,
     Object? privateId = freezed,
-    Object? fromExternalOrganization = null,
-    Object? isGroup = null,
-    Object? isAnonymous = null,
     Object? checkInAt = freezed,
     Object? checkOutAt = freezed,
     Object? groupName = freezed,
@@ -574,6 +574,18 @@ class __$$EventUserImplCopyWithImpl<$Res>
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
+      fromExternalOrganization: null == fromExternalOrganization
+          ? _value.fromExternalOrganization
+          : fromExternalOrganization // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isGroup: null == isGroup
+          ? _value.isGroup
+          : isGroup // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAnonymous: null == isAnonymous
+          ? _value.isAnonymous
+          : isAnonymous // ignore: cast_nullable_to_non_nullable
+              as bool,
       userCardProviderId: freezed == userCardProviderId
           ? _value.userCardProviderId
           : userCardProviderId // ignore: cast_nullable_to_non_nullable
@@ -598,18 +610,6 @@ class __$$EventUserImplCopyWithImpl<$Res>
           ? _value.privateId
           : privateId // ignore: cast_nullable_to_non_nullable
               as String?,
-      fromExternalOrganization: null == fromExternalOrganization
-          ? _value.fromExternalOrganization
-          : fromExternalOrganization // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isGroup: null == isGroup
-          ? _value.isGroup
-          : isGroup // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isAnonymous: null == isAnonymous
-          ? _value.isAnonymous
-          : isAnonymous // ignore: cast_nullable_to_non_nullable
-              as bool,
       checkInAt: freezed == checkInAt
           ? _value.checkInAt
           : checkInAt // ignore: cast_nullable_to_non_nullable
@@ -656,15 +656,15 @@ class _$EventUserImpl implements _EventUser {
   const _$EventUserImpl(
       {required this.id,
       required this.providerId,
+      required this.fromExternalOrganization,
+      required this.isGroup,
+      required this.isAnonymous,
       this.userCardProviderId,
       this.name,
       this.surname,
       this.cf,
       this.email,
       this.privateId,
-      required this.fromExternalOrganization,
-      required this.isGroup,
-      required this.isAnonymous,
       @MyDateTimeConverter() this.checkInAt,
       @MyDateTimeConverter() this.checkOutAt,
       this.groupName,
@@ -683,6 +683,12 @@ class _$EventUserImpl implements _EventUser {
   @override
   final String providerId;
   @override
+  final bool fromExternalOrganization;
+  @override
+  final bool isGroup;
+  @override
+  final bool isAnonymous;
+  @override
   final String? userCardProviderId;
   @override
   final String? name;
@@ -694,12 +700,6 @@ class _$EventUserImpl implements _EventUser {
   final String? email;
   @override
   final String? privateId;
-  @override
-  final bool fromExternalOrganization;
-  @override
-  final bool isGroup;
-  @override
-  final bool isAnonymous;
   @override
   @MyDateTimeConverter()
   final DateTime? checkInAt;
@@ -724,7 +724,7 @@ class _$EventUserImpl implements _EventUser {
 
   @override
   String toString() {
-    return 'EventUser(id: $id, providerId: $providerId, userCardProviderId: $userCardProviderId, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, fromExternalOrganization: $fromExternalOrganization, isGroup: $isGroup, isAnonymous: $isAnonymous, checkInAt: $checkInAt, checkOutAt: $checkOutAt, groupName: $groupName, averageAge: $averageAge, groupCount: $groupCount, participationCount: $participationCount, womanPercentage: $womanPercentage, manPercentage: $manPercentage, position: $position)';
+    return 'EventUser(id: $id, providerId: $providerId, fromExternalOrganization: $fromExternalOrganization, isGroup: $isGroup, isAnonymous: $isAnonymous, userCardProviderId: $userCardProviderId, name: $name, surname: $surname, cf: $cf, email: $email, privateId: $privateId, checkInAt: $checkInAt, checkOutAt: $checkOutAt, groupName: $groupName, averageAge: $averageAge, groupCount: $groupCount, participationCount: $participationCount, womanPercentage: $womanPercentage, manPercentage: $manPercentage, position: $position)';
   }
 
   @override
@@ -735,6 +735,12 @@ class _$EventUserImpl implements _EventUser {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.providerId, providerId) ||
                 other.providerId == providerId) &&
+            (identical(
+                    other.fromExternalOrganization, fromExternalOrganization) ||
+                other.fromExternalOrganization == fromExternalOrganization) &&
+            (identical(other.isGroup, isGroup) || other.isGroup == isGroup) &&
+            (identical(other.isAnonymous, isAnonymous) ||
+                other.isAnonymous == isAnonymous) &&
             (identical(other.userCardProviderId, userCardProviderId) ||
                 other.userCardProviderId == userCardProviderId) &&
             (identical(other.name, name) || other.name == name) &&
@@ -743,12 +749,6 @@ class _$EventUserImpl implements _EventUser {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.privateId, privateId) ||
                 other.privateId == privateId) &&
-            (identical(
-                    other.fromExternalOrganization, fromExternalOrganization) ||
-                other.fromExternalOrganization == fromExternalOrganization) &&
-            (identical(other.isGroup, isGroup) || other.isGroup == isGroup) &&
-            (identical(other.isAnonymous, isAnonymous) ||
-                other.isAnonymous == isAnonymous) &&
             (identical(other.checkInAt, checkInAt) ||
                 other.checkInAt == checkInAt) &&
             (identical(other.checkOutAt, checkOutAt) ||
@@ -775,15 +775,15 @@ class _$EventUserImpl implements _EventUser {
         runtimeType,
         id,
         providerId,
+        fromExternalOrganization,
+        isGroup,
+        isAnonymous,
         userCardProviderId,
         name,
         surname,
         cf,
         email,
         privateId,
-        fromExternalOrganization,
-        isGroup,
-        isAnonymous,
         checkInAt,
         checkOutAt,
         groupName,
@@ -813,15 +813,15 @@ abstract class _EventUser implements EventUser {
   const factory _EventUser(
       {required final String id,
       required final String providerId,
+      required final bool fromExternalOrganization,
+      required final bool isGroup,
+      required final bool isAnonymous,
       final String? userCardProviderId,
       final String? name,
       final String? surname,
       final String? cf,
       final String? email,
       final String? privateId,
-      required final bool fromExternalOrganization,
-      required final bool isGroup,
-      required final bool isAnonymous,
       @MyDateTimeConverter() final DateTime? checkInAt,
       @MyDateTimeConverter() final DateTime? checkOutAt,
       final String? groupName,
@@ -840,6 +840,12 @@ abstract class _EventUser implements EventUser {
   @override
   String get providerId;
   @override
+  bool get fromExternalOrganization;
+  @override
+  bool get isGroup;
+  @override
+  bool get isAnonymous;
+  @override
   String? get userCardProviderId;
   @override
   String? get name;
@@ -851,12 +857,6 @@ abstract class _EventUser implements EventUser {
   String? get email;
   @override
   String? get privateId;
-  @override
-  bool get fromExternalOrganization;
-  @override
-  bool get isGroup;
-  @override
-  bool get isAnonymous;
   @override
   @MyDateTimeConverter()
   DateTime? get checkInAt;

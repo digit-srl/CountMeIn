@@ -121,6 +121,7 @@ class CMIEvent with _$CMIEvent {
     @EventAccessTypeConverter() required EventAccessType accessType, required int maxWomCount, @EventTypeConverter() required EventType type, @MyDateTimeConverter() required DateTime createdOn, @MyDateTimeConverter() required DateTime startAt, @Default(true) bool acceptPassepartout,
     @Default(true) bool anonymous,
     @Default(true) bool recurring,
+    @Default(true) bool mutexTotemsEnabled,
     @Default(false) bool emailShowed,
     @FrequencyTypeConverter() FrequencyType? frequency,
     int? recurrence,

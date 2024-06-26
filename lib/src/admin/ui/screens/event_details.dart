@@ -264,6 +264,10 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                     label: 'Stato',
                     value: eventData?.status?.text,
                   ),
+                  InfoText(
+                    label: 'Mutex totem',
+                    value: eventData?.mutexTotemsEnabled.toString() ?? 'True',
+                  ),
                   InfoText2(
                     label: 'Collaboratori',
                     value: eventCollaborators.isEmpty

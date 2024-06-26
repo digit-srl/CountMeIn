@@ -70,7 +70,8 @@ class UserFormScreen extends ConsumerStatefulWidget {
   final String providerId;
 
   const UserFormScreen({
-    required this.providerId, super.key,
+    required this.providerId,
+    super.key,
   });
 
   @override
@@ -98,12 +99,14 @@ class _State extends ConsumerState<UserFormScreen> {
     ref.listen(userRegisteringProvider, (previous, next) {
       if (next is UserRegisteringLoading) {
         showDialog(
-            context: context,
-            builder: (c) => const Dialog(
-                  child: UserRegisteringDialog(),
-                ),);
+          context: context,
+          builder: (c) => const Dialog(
+            child: UserRegisteringDialog(),
+          ),
+        );
       } else if (next is UserRegisteringUserAlreadySubscribed) {
-        context.go('${UserConsoleScreen.routeName}/${next.providerId}/${next.userId}');
+        context.go(
+            '${UserConsoleScreen.routeName}/${next.providerId}/${next.userId}');
       } else if (next is UserRegisteringVerificationEmailSent) {
         nameController.clear();
         surnameController.clear();
@@ -145,7 +148,8 @@ class _State extends ConsumerState<UserFormScreen> {
                   CMITextField(
                     controller: emailController,
                     hintText: 'Email',
-                    validator: MyEmailValidator(errorText: 'Email non valida').call,
+                    validator:
+                        MyEmailValidator(errorText: 'Email non valida').call,
                   ),
                   const SizedBox(height: 16),
                   // CMIDropdownButton<Gender>(
@@ -182,13 +186,15 @@ class _State extends ConsumerState<UserFormScreen> {
                       TextButton(
                         onPressed: () async {
                           final cf = await showDialog(
-                              context: context,
-                              builder: (c) => Dialog(
-                                    child: Container(
-                                        constraints:
-                                            const BoxConstraints(maxWidth: 500),
-                                        child: const FormCodiceFiscale(),),
-                                  ),);
+                            context: context,
+                            builder: (c) => Dialog(
+                              child: Container(
+                                constraints:
+                                    const BoxConstraints(maxWidth: 500),
+                                child: const FormCodiceFiscale(),
+                              ),
+                            ),
+                          );
 
                           if (cf != null && cf is String && cf.isNotEmpty) {
                             cfController.text = cf;
@@ -202,48 +208,49 @@ class _State extends ConsumerState<UserFormScreen> {
                   // const FormCodiceFiscale(),
                   const SizedBox(height: 32),
                   ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          final name = nameController.text.trim();
-                          final surname = surnameController.text.trim();
-                          final email = emailController.text.trim();
-                          final cf = cfController.text.trim().toUpperCase();
-                          // final gender =
-                          //     enumToString(selectedGender) ?? 'notBinary';
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        final name = nameController.text.trim();
+                        final surname = surnameController.text.trim();
+                        final email = emailController.text.trim();
+                        final cf = cfController.text.trim().toUpperCase();
+                        // final gender =
+                        //     enumToString(selectedGender) ?? 'notBinary';
 
-                          // if(cmiProvider.releaseWom){
-                          if (email.isNotEmpty) {
-                            ref.read(userRegisteringProvider.notifier).register(
-                                  UserRequest(
-                                    name: name,
-                                    surname: surname,
-                                    cf: cf,
-                                    email: email,
-                                    providerId: cmiProvider.id,
-                                    providerName: cmiProvider.name,
-                                    // gender: gender,
-                                  ),
-                                );
-                          }
-                          // } else {
-                          //   var user = UserCard(
-                          //     id: const Uuid().v4(),
-                          //     name: name,
-                          //     surname: surname,
-                          //     cf: cf,
-                          //     email: email,
-                          //     gender: gender,
-                          //     addedOn: DateTime.now(),
-                          //     secret: const Uuid().v4().substring(0, 8),
-                          //   );
-                          //
-                          //   ref
-                          //       .read(userRegisteringProvider.notifier)
-                          //       .registerLocalUser(user);
-                          // }
+                        // if(cmiProvider.releaseWom){
+                        if (email.isNotEmpty) {
+                          ref.read(userRegisteringProvider.notifier).register(
+                                UserRequest(
+                                  name: name,
+                                  surname: surname,
+                                  cf: cf,
+                                  email: email,
+                                  providerId: cmiProvider.id,
+                                  providerName: cmiProvider.name,
+                                  // gender: gender,
+                                ),
+                              );
                         }
-                      },
-                      child: const Text('Iscriviti'),),
+                        // } else {
+                        //   var user = UserCard(
+                        //     id: const Uuid().v4(),
+                        //     name: name,
+                        //     surname: surname,
+                        //     cf: cf,
+                        //     email: email,
+                        //     gender: gender,
+                        //     addedOn: DateTime.now(),
+                        //     secret: const Uuid().v4().substring(0, 8),
+                        //   );
+                        //
+                        //   ref
+                        //       .read(userRegisteringProvider.notifier)
+                        //       .registerLocalUser(user);
+                        // }
+                      }
+                    },
+                    child: const Text('Iscriviti'),
+                  ),
                   const SizedBox(height: 16),
                   // TextButton(
                   //     onPressed: () {},
@@ -280,13 +287,14 @@ class UserRegisteringDialog extends ConsumerWidget {
             defaultStyle: Theme.of(context).textTheme.bodyLarge,
             patternList: [
               EasyRichTextPattern(
-                  targetString: email,
-                  recognizer: TapGestureRecognizer()..onTap = () {},
-                  style: Theme.of(context).textTheme.bodyLarge?.bold.underline,),
+                targetString: email,
+                recognizer: TapGestureRecognizer()..onTap = () {},
+                style: Theme.of(context).textTheme.bodyLarge?.bold.underline,
+              ),
             ],
           );
         },
-        verificationEmailSent: (bool newUser, String email) {
+        verificationEmailSent: (email, newUser) {
           return EasyRichText(
             newUser
                 ? "Abbiamo inviato una email di verifica all'indirizzo $email. "
@@ -296,9 +304,10 @@ class UserRegisteringDialog extends ConsumerWidget {
             defaultStyle: Theme.of(context).textTheme.bodyLarge,
             patternList: [
               EasyRichTextPattern(
-                  targetString: email,
-                  recognizer: TapGestureRecognizer()..onTap = () {},
-                  style: Theme.of(context).textTheme.bodyLarge?.bold.underline,),
+                targetString: email,
+                recognizer: TapGestureRecognizer()..onTap = () {},
+                style: Theme.of(context).textTheme.bodyLarge?.bold.underline,
+              ),
               // EasyRichTextPattern(
               //     targetString: 'Invia di nuovo',
               //     recognizer: TapGestureRecognizer()..onTap = () {},
@@ -364,8 +373,12 @@ class FormCodiceFiscale extends HookConsumerWidget {
               selectedGender.value = v;
             },
             items: CodiceFiscaleGender.values
-                .map((e) => DropdownMenuItem<CodiceFiscaleGender>(
-                    value: e, child: Text(enumToString(e) ?? ''),),)
+                .map(
+                  (e) => DropdownMenuItem<CodiceFiscaleGender>(
+                    value: e,
+                    child: Text(enumToString(e) ?? ''),
+                  ),
+                )
                 .toList(),
           ),
           const SizedBox(height: 16),
@@ -413,7 +426,8 @@ class FormCodiceFiscale extends HookConsumerWidget {
             },
             popupProps: const PopupProps.menu(
               searchFieldProps: TextFieldProps(
-                  decoration: InputDecoration(hintText: 'Cerca qui'),),
+                decoration: InputDecoration(hintText: 'Cerca qui'),
+              ),
               showSelectedItems: true, showSearchBox: true,
               // disabledItemFn: (String s) => s.startsWith('I'),
             ),

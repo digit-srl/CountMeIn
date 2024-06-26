@@ -24,11 +24,11 @@ _$CMIProviderRequestImpl _$$CMIProviderRequestImplFromJson(
       ),
       status:
           const CMIProviderStatusConverter().fromJson(json['status'] as String),
+      requestedOn: const MyDateTimeConverter()
+          .fromJson(json['requestedOn'] as Timestamp),
       apiKey: json['apiKey'] as String?,
       aims: (json['aims'] as List<dynamic>?)?.map((e) => e as String).toList(),
       domainRequirement: json['domainRequirement'] as String?,
-      requestedOn: const MyDateTimeConverter()
-          .fromJson(json['requestedOn'] as Timestamp),
     );
 
 Map<String, dynamic> _$$CMIProviderRequestImplToJson(
@@ -45,8 +45,8 @@ Map<String, dynamic> _$$CMIProviderRequestImplToJson(
       'pIva': instance.pIva,
       'managers': instance.managers,
       'status': const CMIProviderStatusConverter().toJson(instance.status),
+      'requestedOn': const MyDateTimeConverter().toJson(instance.requestedOn),
       'apiKey': instance.apiKey,
       'aims': instance.aims,
       'domainRequirement': instance.domainRequirement,
-      'requestedOn': const MyDateTimeConverter().toJson(instance.requestedOn),
     };

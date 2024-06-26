@@ -25,6 +25,8 @@ mixin _$CMIProvider {
   String get adminName => throw _privateConstructorUsedError;
   String get adminSurname => throw _privateConstructorUsedError;
   String get adminEmail => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
+  DateTime get requestedOn => throw _privateConstructorUsedError;
   Map<String, ProviderManager> get managers =>
       throw _privateConstructorUsedError;
   String? get apiKey => throw _privateConstructorUsedError;
@@ -36,8 +38,6 @@ mixin _$CMIProvider {
   CMIProviderStatus? get status => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get createdOn => throw _privateConstructorUsedError;
-  @MyDateTimeConverter()
-  DateTime get requestedOn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -57,6 +57,7 @@ abstract class $CMIProviderCopyWith<$Res> {
       String adminName,
       String adminSurname,
       String adminEmail,
+      @MyDateTimeConverter() DateTime requestedOn,
       Map<String, ProviderManager> managers,
       String? apiKey,
       List<String>? aims,
@@ -64,8 +65,7 @@ abstract class $CMIProviderCopyWith<$Res> {
       String? domainRequirement,
       bool releaseWom,
       @CMIProviderStatusConverter() CMIProviderStatus? status,
-      @MyDateTimeConverter() DateTime? createdOn,
-      @MyDateTimeConverter() DateTime requestedOn});
+      @MyDateTimeConverter() DateTime? createdOn});
 }
 
 /// @nodoc
@@ -86,6 +86,7 @@ class _$CMIProviderCopyWithImpl<$Res, $Val extends CMIProvider>
     Object? adminName = null,
     Object? adminSurname = null,
     Object? adminEmail = null,
+    Object? requestedOn = null,
     Object? managers = null,
     Object? apiKey = freezed,
     Object? aims = freezed,
@@ -94,7 +95,6 @@ class _$CMIProviderCopyWithImpl<$Res, $Val extends CMIProvider>
     Object? releaseWom = null,
     Object? status = freezed,
     Object? createdOn = freezed,
-    Object? requestedOn = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -117,6 +117,10 @@ class _$CMIProviderCopyWithImpl<$Res, $Val extends CMIProvider>
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
+      requestedOn: null == requestedOn
+          ? _value.requestedOn
+          : requestedOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       managers: null == managers
           ? _value.managers
           : managers // ignore: cast_nullable_to_non_nullable
@@ -149,10 +153,6 @@ class _$CMIProviderCopyWithImpl<$Res, $Val extends CMIProvider>
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      requestedOn: null == requestedOn
-          ? _value.requestedOn
-          : requestedOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ) as $Val);
   }
 }
@@ -171,6 +171,7 @@ abstract class _$$CMIProviderImplCopyWith<$Res>
       String adminName,
       String adminSurname,
       String adminEmail,
+      @MyDateTimeConverter() DateTime requestedOn,
       Map<String, ProviderManager> managers,
       String? apiKey,
       List<String>? aims,
@@ -178,8 +179,7 @@ abstract class _$$CMIProviderImplCopyWith<$Res>
       String? domainRequirement,
       bool releaseWom,
       @CMIProviderStatusConverter() CMIProviderStatus? status,
-      @MyDateTimeConverter() DateTime? createdOn,
-      @MyDateTimeConverter() DateTime requestedOn});
+      @MyDateTimeConverter() DateTime? createdOn});
 }
 
 /// @nodoc
@@ -198,6 +198,7 @@ class __$$CMIProviderImplCopyWithImpl<$Res>
     Object? adminName = null,
     Object? adminSurname = null,
     Object? adminEmail = null,
+    Object? requestedOn = null,
     Object? managers = null,
     Object? apiKey = freezed,
     Object? aims = freezed,
@@ -206,7 +207,6 @@ class __$$CMIProviderImplCopyWithImpl<$Res>
     Object? releaseWom = null,
     Object? status = freezed,
     Object? createdOn = freezed,
-    Object? requestedOn = null,
   }) {
     return _then(_$CMIProviderImpl(
       id: null == id
@@ -229,6 +229,10 @@ class __$$CMIProviderImplCopyWithImpl<$Res>
           ? _value.adminEmail
           : adminEmail // ignore: cast_nullable_to_non_nullable
               as String,
+      requestedOn: null == requestedOn
+          ? _value.requestedOn
+          : requestedOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       managers: null == managers
           ? _value._managers
           : managers // ignore: cast_nullable_to_non_nullable
@@ -261,10 +265,6 @@ class __$$CMIProviderImplCopyWithImpl<$Res>
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      requestedOn: null == requestedOn
-          ? _value.requestedOn
-          : requestedOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ));
   }
 }
@@ -278,6 +278,7 @@ class _$CMIProviderImpl implements _CMIProvider {
       required this.adminName,
       required this.adminSurname,
       required this.adminEmail,
+      @MyDateTimeConverter() required this.requestedOn,
       final Map<String, ProviderManager> managers =
           const <String, ProviderManager>{},
       this.apiKey,
@@ -286,8 +287,7 @@ class _$CMIProviderImpl implements _CMIProvider {
       this.domainRequirement,
       this.releaseWom = false,
       @CMIProviderStatusConverter() this.status,
-      @MyDateTimeConverter() this.createdOn,
-      @MyDateTimeConverter() required this.requestedOn})
+      @MyDateTimeConverter() this.createdOn})
       : _managers = managers,
         _aims = aims;
 
@@ -304,6 +304,9 @@ class _$CMIProviderImpl implements _CMIProvider {
   final String adminSurname;
   @override
   final String adminEmail;
+  @override
+  @MyDateTimeConverter()
+  final DateTime requestedOn;
   final Map<String, ProviderManager> _managers;
   @override
   @JsonKey()
@@ -338,13 +341,10 @@ class _$CMIProviderImpl implements _CMIProvider {
   @override
   @MyDateTimeConverter()
   final DateTime? createdOn;
-  @override
-  @MyDateTimeConverter()
-  final DateTime requestedOn;
 
   @override
   String toString() {
-    return 'CMIProvider(id: $id, name: $name, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, managers: $managers, apiKey: $apiKey, aims: $aims, aim: $aim, domainRequirement: $domainRequirement, releaseWom: $releaseWom, status: $status, createdOn: $createdOn, requestedOn: $requestedOn)';
+    return 'CMIProvider(id: $id, name: $name, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, requestedOn: $requestedOn, managers: $managers, apiKey: $apiKey, aims: $aims, aim: $aim, domainRequirement: $domainRequirement, releaseWom: $releaseWom, status: $status, createdOn: $createdOn)';
   }
 
   @override
@@ -360,6 +360,8 @@ class _$CMIProviderImpl implements _CMIProvider {
                 other.adminSurname == adminSurname) &&
             (identical(other.adminEmail, adminEmail) ||
                 other.adminEmail == adminEmail) &&
+            (identical(other.requestedOn, requestedOn) ||
+                other.requestedOn == requestedOn) &&
             const DeepCollectionEquality().equals(other._managers, _managers) &&
             (identical(other.apiKey, apiKey) || other.apiKey == apiKey) &&
             const DeepCollectionEquality().equals(other._aims, _aims) &&
@@ -370,9 +372,7 @@ class _$CMIProviderImpl implements _CMIProvider {
                 other.releaseWom == releaseWom) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.createdOn, createdOn) ||
-                other.createdOn == createdOn) &&
-            (identical(other.requestedOn, requestedOn) ||
-                other.requestedOn == requestedOn));
+                other.createdOn == createdOn));
   }
 
   @JsonKey(ignore: true)
@@ -384,6 +384,7 @@ class _$CMIProviderImpl implements _CMIProvider {
       adminName,
       adminSurname,
       adminEmail,
+      requestedOn,
       const DeepCollectionEquality().hash(_managers),
       apiKey,
       const DeepCollectionEquality().hash(_aims),
@@ -391,8 +392,7 @@ class _$CMIProviderImpl implements _CMIProvider {
       domainRequirement,
       releaseWom,
       status,
-      createdOn,
-      requestedOn);
+      createdOn);
 
   @JsonKey(ignore: true)
   @override
@@ -410,21 +410,20 @@ class _$CMIProviderImpl implements _CMIProvider {
 
 abstract class _CMIProvider implements CMIProvider {
   const factory _CMIProvider(
-          {required final String id,
-          required final String name,
-          required final String adminName,
-          required final String adminSurname,
-          required final String adminEmail,
-          final Map<String, ProviderManager> managers,
-          final String? apiKey,
-          final List<String>? aims,
-          final String? aim,
-          final String? domainRequirement,
-          final bool releaseWom,
-          @CMIProviderStatusConverter() final CMIProviderStatus? status,
-          @MyDateTimeConverter() final DateTime? createdOn,
-          @MyDateTimeConverter() required final DateTime requestedOn}) =
-      _$CMIProviderImpl;
+      {required final String id,
+      required final String name,
+      required final String adminName,
+      required final String adminSurname,
+      required final String adminEmail,
+      @MyDateTimeConverter() required final DateTime requestedOn,
+      final Map<String, ProviderManager> managers,
+      final String? apiKey,
+      final List<String>? aims,
+      final String? aim,
+      final String? domainRequirement,
+      final bool releaseWom,
+      @CMIProviderStatusConverter() final CMIProviderStatus? status,
+      @MyDateTimeConverter() final DateTime? createdOn}) = _$CMIProviderImpl;
 
   factory _CMIProvider.fromJson(Map<String, dynamic> json) =
       _$CMIProviderImpl.fromJson;
@@ -439,6 +438,9 @@ abstract class _CMIProvider implements CMIProvider {
   String get adminSurname;
   @override
   String get adminEmail;
+  @override
+  @MyDateTimeConverter()
+  DateTime get requestedOn;
   @override
   Map<String, ProviderManager> get managers;
   @override
@@ -457,9 +459,6 @@ abstract class _CMIProvider implements CMIProvider {
   @override
   @MyDateTimeConverter()
   DateTime? get createdOn;
-  @override
-  @MyDateTimeConverter()
-  DateTime get requestedOn;
   @override
   @JsonKey(ignore: true)
   _$$CMIProviderImplCopyWith<_$CMIProviderImpl> get copyWith =>

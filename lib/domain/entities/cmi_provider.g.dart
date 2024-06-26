@@ -13,6 +13,8 @@ _$CMIProviderImpl _$$CMIProviderImplFromJson(Map<String, dynamic> json) =>
       adminName: json['adminName'] as String,
       adminSurname: json['adminSurname'] as String,
       adminEmail: json['adminEmail'] as String,
+      requestedOn: const MyDateTimeConverter()
+          .fromJson(json['requestedOn'] as Timestamp),
       managers: (json['managers'] as Map<String, dynamic>?)?.map(
             (k, e) => MapEntry(
                 k, ProviderManager.fromJson(e as Map<String, dynamic>)),
@@ -27,8 +29,6 @@ _$CMIProviderImpl _$$CMIProviderImplFromJson(Map<String, dynamic> json) =>
           json['status'], const CMIProviderStatusConverter().fromJson),
       createdOn: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['createdOn'], const MyDateTimeConverter().fromJson),
-      requestedOn: const MyDateTimeConverter()
-          .fromJson(json['requestedOn'] as Timestamp),
     );
 
 Map<String, dynamic> _$$CMIProviderImplToJson(_$CMIProviderImpl instance) =>
@@ -38,6 +38,7 @@ Map<String, dynamic> _$$CMIProviderImplToJson(_$CMIProviderImpl instance) =>
       'adminName': instance.adminName,
       'adminSurname': instance.adminSurname,
       'adminEmail': instance.adminEmail,
+      'requestedOn': const MyDateTimeConverter().toJson(instance.requestedOn),
       'managers': instance.managers,
       'apiKey': instance.apiKey,
       'aims': instance.aims,
@@ -48,7 +49,6 @@ Map<String, dynamic> _$$CMIProviderImplToJson(_$CMIProviderImpl instance) =>
           instance.status, const CMIProviderStatusConverter().toJson),
       'createdOn': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.createdOn, const MyDateTimeConverter().toJson),
-      'requestedOn': const MyDateTimeConverter().toJson(instance.requestedOn),
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

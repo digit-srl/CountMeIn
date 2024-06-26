@@ -22,9 +22,19 @@ CMIEvent _$CMIEventFromJson(Map<String, dynamic> json) {
 mixin _$CMIEvent {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  @EventAccessTypeConverter()
+  EventAccessType get accessType => throw _privateConstructorUsedError;
+  int get maxWomCount => throw _privateConstructorUsedError;
+  @EventTypeConverter()
+  EventType get type => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
+  DateTime get createdOn => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
+  DateTime get startAt => throw _privateConstructorUsedError;
   bool get acceptPassepartout => throw _privateConstructorUsedError;
   bool get anonymous => throw _privateConstructorUsedError;
   bool get recurring => throw _privateConstructorUsedError;
+  bool get mutexTotemsEnabled => throw _privateConstructorUsedError;
   bool get emailShowed => throw _privateConstructorUsedError;
   @FrequencyTypeConverter()
   FrequencyType? get frequency => throw _privateConstructorUsedError;
@@ -35,21 +45,12 @@ mixin _$CMIEvent {
   String? get activeSessionId => throw _privateConstructorUsedError;
   String? get aim => throw _privateConstructorUsedError;
   Map<String, String>? get managers => throw _privateConstructorUsedError;
-  @EventAccessTypeConverter()
-  EventAccessType get accessType => throw _privateConstructorUsedError;
-  int get maxWomCount => throw _privateConstructorUsedError;
   @EventStatusConverter()
   EventStatus? get status => throw _privateConstructorUsedError;
-  @EventTypeConverter()
-  EventType get type => throw _privateConstructorUsedError;
   @AcceptedCardTypeConverted()
   AcceptedCardType get acceptedCardType => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
-  DateTime get createdOn => throw _privateConstructorUsedError;
-  @MyDateTimeConverter()
   DateTime? get subEventDeadline => throw _privateConstructorUsedError;
-  @MyDateTimeConverter()
-  DateTime get startAt => throw _privateConstructorUsedError;
   @GeoPointConverter()
   GeoPoint? get position => throw _privateConstructorUsedError;
 
@@ -67,9 +68,15 @@ abstract class $CMIEventCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
+      @EventAccessTypeConverter() EventAccessType accessType,
+      int maxWomCount,
+      @EventTypeConverter() EventType type,
+      @MyDateTimeConverter() DateTime createdOn,
+      @MyDateTimeConverter() DateTime startAt,
       bool acceptPassepartout,
       bool anonymous,
       bool recurring,
+      bool mutexTotemsEnabled,
       bool emailShowed,
       @FrequencyTypeConverter() FrequencyType? frequency,
       int? recurrence,
@@ -79,14 +86,9 @@ abstract class $CMIEventCopyWith<$Res> {
       String? activeSessionId,
       String? aim,
       Map<String, String>? managers,
-      @EventAccessTypeConverter() EventAccessType accessType,
-      int maxWomCount,
       @EventStatusConverter() EventStatus? status,
-      @EventTypeConverter() EventType type,
       @AcceptedCardTypeConverted() AcceptedCardType acceptedCardType,
-      @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime? subEventDeadline,
-      @MyDateTimeConverter() DateTime startAt,
       @GeoPointConverter() GeoPoint? position});
 
   $GenderCountCopyWith<$Res>? get genderCount;
@@ -107,9 +109,15 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? accessType = null,
+    Object? maxWomCount = null,
+    Object? type = null,
+    Object? createdOn = null,
+    Object? startAt = null,
     Object? acceptPassepartout = null,
     Object? anonymous = null,
     Object? recurring = null,
+    Object? mutexTotemsEnabled = null,
     Object? emailShowed = null,
     Object? frequency = freezed,
     Object? recurrence = freezed,
@@ -119,14 +127,9 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
     Object? activeSessionId = freezed,
     Object? aim = freezed,
     Object? managers = freezed,
-    Object? accessType = null,
-    Object? maxWomCount = null,
     Object? status = freezed,
-    Object? type = null,
     Object? acceptedCardType = null,
-    Object? createdOn = null,
     Object? subEventDeadline = freezed,
-    Object? startAt = null,
     Object? position = freezed,
   }) {
     return _then(_value.copyWith(
@@ -138,6 +141,26 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      accessType: null == accessType
+          ? _value.accessType
+          : accessType // ignore: cast_nullable_to_non_nullable
+              as EventAccessType,
+      maxWomCount: null == maxWomCount
+          ? _value.maxWomCount
+          : maxWomCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as EventType,
+      createdOn: null == createdOn
+          ? _value.createdOn
+          : createdOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      startAt: null == startAt
+          ? _value.startAt
+          : startAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       acceptPassepartout: null == acceptPassepartout
           ? _value.acceptPassepartout
           : acceptPassepartout // ignore: cast_nullable_to_non_nullable
@@ -149,6 +172,10 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
       recurring: null == recurring
           ? _value.recurring
           : recurring // ignore: cast_nullable_to_non_nullable
+              as bool,
+      mutexTotemsEnabled: null == mutexTotemsEnabled
+          ? _value.mutexTotemsEnabled
+          : mutexTotemsEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
       emailShowed: null == emailShowed
           ? _value.emailShowed
@@ -186,38 +213,18 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
           ? _value.managers
           : managers // ignore: cast_nullable_to_non_nullable
               as Map<String, String>?,
-      accessType: null == accessType
-          ? _value.accessType
-          : accessType // ignore: cast_nullable_to_non_nullable
-              as EventAccessType,
-      maxWomCount: null == maxWomCount
-          ? _value.maxWomCount
-          : maxWomCount // ignore: cast_nullable_to_non_nullable
-              as int,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as EventStatus?,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as EventType,
       acceptedCardType: null == acceptedCardType
           ? _value.acceptedCardType
           : acceptedCardType // ignore: cast_nullable_to_non_nullable
               as AcceptedCardType,
-      createdOn: null == createdOn
-          ? _value.createdOn
-          : createdOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       subEventDeadline: freezed == subEventDeadline
           ? _value.subEventDeadline
           : subEventDeadline // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      startAt: null == startAt
-          ? _value.startAt
-          : startAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       position: freezed == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
@@ -249,9 +256,15 @@ abstract class _$$CMIEventImplCopyWith<$Res>
   $Res call(
       {String id,
       String name,
+      @EventAccessTypeConverter() EventAccessType accessType,
+      int maxWomCount,
+      @EventTypeConverter() EventType type,
+      @MyDateTimeConverter() DateTime createdOn,
+      @MyDateTimeConverter() DateTime startAt,
       bool acceptPassepartout,
       bool anonymous,
       bool recurring,
+      bool mutexTotemsEnabled,
       bool emailShowed,
       @FrequencyTypeConverter() FrequencyType? frequency,
       int? recurrence,
@@ -261,14 +274,9 @@ abstract class _$$CMIEventImplCopyWith<$Res>
       String? activeSessionId,
       String? aim,
       Map<String, String>? managers,
-      @EventAccessTypeConverter() EventAccessType accessType,
-      int maxWomCount,
       @EventStatusConverter() EventStatus? status,
-      @EventTypeConverter() EventType type,
       @AcceptedCardTypeConverted() AcceptedCardType acceptedCardType,
-      @MyDateTimeConverter() DateTime createdOn,
       @MyDateTimeConverter() DateTime? subEventDeadline,
-      @MyDateTimeConverter() DateTime startAt,
       @GeoPointConverter() GeoPoint? position});
 
   @override
@@ -288,9 +296,15 @@ class __$$CMIEventImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? accessType = null,
+    Object? maxWomCount = null,
+    Object? type = null,
+    Object? createdOn = null,
+    Object? startAt = null,
     Object? acceptPassepartout = null,
     Object? anonymous = null,
     Object? recurring = null,
+    Object? mutexTotemsEnabled = null,
     Object? emailShowed = null,
     Object? frequency = freezed,
     Object? recurrence = freezed,
@@ -300,14 +314,9 @@ class __$$CMIEventImplCopyWithImpl<$Res>
     Object? activeSessionId = freezed,
     Object? aim = freezed,
     Object? managers = freezed,
-    Object? accessType = null,
-    Object? maxWomCount = null,
     Object? status = freezed,
-    Object? type = null,
     Object? acceptedCardType = null,
-    Object? createdOn = null,
     Object? subEventDeadline = freezed,
-    Object? startAt = null,
     Object? position = freezed,
   }) {
     return _then(_$CMIEventImpl(
@@ -319,6 +328,26 @@ class __$$CMIEventImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      accessType: null == accessType
+          ? _value.accessType
+          : accessType // ignore: cast_nullable_to_non_nullable
+              as EventAccessType,
+      maxWomCount: null == maxWomCount
+          ? _value.maxWomCount
+          : maxWomCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as EventType,
+      createdOn: null == createdOn
+          ? _value.createdOn
+          : createdOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      startAt: null == startAt
+          ? _value.startAt
+          : startAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       acceptPassepartout: null == acceptPassepartout
           ? _value.acceptPassepartout
           : acceptPassepartout // ignore: cast_nullable_to_non_nullable
@@ -330,6 +359,10 @@ class __$$CMIEventImplCopyWithImpl<$Res>
       recurring: null == recurring
           ? _value.recurring
           : recurring // ignore: cast_nullable_to_non_nullable
+              as bool,
+      mutexTotemsEnabled: null == mutexTotemsEnabled
+          ? _value.mutexTotemsEnabled
+          : mutexTotemsEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
       emailShowed: null == emailShowed
           ? _value.emailShowed
@@ -367,38 +400,18 @@ class __$$CMIEventImplCopyWithImpl<$Res>
           ? _value._managers
           : managers // ignore: cast_nullable_to_non_nullable
               as Map<String, String>?,
-      accessType: null == accessType
-          ? _value.accessType
-          : accessType // ignore: cast_nullable_to_non_nullable
-              as EventAccessType,
-      maxWomCount: null == maxWomCount
-          ? _value.maxWomCount
-          : maxWomCount // ignore: cast_nullable_to_non_nullable
-              as int,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as EventStatus?,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as EventType,
       acceptedCardType: null == acceptedCardType
           ? _value.acceptedCardType
           : acceptedCardType // ignore: cast_nullable_to_non_nullable
               as AcceptedCardType,
-      createdOn: null == createdOn
-          ? _value.createdOn
-          : createdOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       subEventDeadline: freezed == subEventDeadline
           ? _value.subEventDeadline
           : subEventDeadline // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      startAt: null == startAt
-          ? _value.startAt
-          : startAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       position: freezed == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
@@ -413,9 +426,15 @@ class _$CMIEventImpl implements _CMIEvent {
   const _$CMIEventImpl(
       {required this.id,
       required this.name,
+      @EventAccessTypeConverter() required this.accessType,
+      required this.maxWomCount,
+      @EventTypeConverter() required this.type,
+      @MyDateTimeConverter() required this.createdOn,
+      @MyDateTimeConverter() required this.startAt,
       this.acceptPassepartout = true,
       this.anonymous = true,
       this.recurring = true,
+      this.mutexTotemsEnabled = true,
       this.emailShowed = false,
       @FrequencyTypeConverter() this.frequency,
       this.recurrence,
@@ -425,15 +444,10 @@ class _$CMIEventImpl implements _CMIEvent {
       this.activeSessionId,
       this.aim,
       final Map<String, String>? managers = const <String, String>{},
-      @EventAccessTypeConverter() required this.accessType,
-      required this.maxWomCount,
       @EventStatusConverter() this.status,
-      @EventTypeConverter() required this.type,
       @AcceptedCardTypeConverted()
       this.acceptedCardType = AcceptedCardType.passpartoutAndMine,
-      @MyDateTimeConverter() required this.createdOn,
       @MyDateTimeConverter() this.subEventDeadline,
-      @MyDateTimeConverter() required this.startAt,
       @GeoPointConverter() this.position})
       : _managers = managers;
 
@@ -445,6 +459,20 @@ class _$CMIEventImpl implements _CMIEvent {
   @override
   final String name;
   @override
+  @EventAccessTypeConverter()
+  final EventAccessType accessType;
+  @override
+  final int maxWomCount;
+  @override
+  @EventTypeConverter()
+  final EventType type;
+  @override
+  @MyDateTimeConverter()
+  final DateTime createdOn;
+  @override
+  @MyDateTimeConverter()
+  final DateTime startAt;
+  @override
   @JsonKey()
   final bool acceptPassepartout;
   @override
@@ -453,6 +481,9 @@ class _$CMIEventImpl implements _CMIEvent {
   @override
   @JsonKey()
   final bool recurring;
+  @override
+  @JsonKey()
+  final bool mutexTotemsEnabled;
   @override
   @JsonKey()
   final bool emailShowed;
@@ -484,36 +515,22 @@ class _$CMIEventImpl implements _CMIEvent {
   }
 
   @override
-  @EventAccessTypeConverter()
-  final EventAccessType accessType;
-  @override
-  final int maxWomCount;
-  @override
   @EventStatusConverter()
   final EventStatus? status;
-  @override
-  @EventTypeConverter()
-  final EventType type;
   @override
   @JsonKey()
   @AcceptedCardTypeConverted()
   final AcceptedCardType acceptedCardType;
   @override
   @MyDateTimeConverter()
-  final DateTime createdOn;
-  @override
-  @MyDateTimeConverter()
   final DateTime? subEventDeadline;
-  @override
-  @MyDateTimeConverter()
-  final DateTime startAt;
   @override
   @GeoPointConverter()
   final GeoPoint? position;
 
   @override
   String toString() {
-    return 'CMIEvent(id: $id, name: $name, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, activeSessionId: $activeSessionId, aim: $aim, managers: $managers, accessType: $accessType, maxWomCount: $maxWomCount, status: $status, type: $type, acceptedCardType: $acceptedCardType, createdOn: $createdOn, subEventDeadline: $subEventDeadline, startAt: $startAt, position: $position)';
+    return 'CMIEvent(id: $id, name: $name, accessType: $accessType, maxWomCount: $maxWomCount, type: $type, createdOn: $createdOn, startAt: $startAt, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, mutexTotemsEnabled: $mutexTotemsEnabled, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, activeSessionId: $activeSessionId, aim: $aim, managers: $managers, status: $status, acceptedCardType: $acceptedCardType, subEventDeadline: $subEventDeadline, position: $position)';
   }
 
   @override
@@ -523,12 +540,22 @@ class _$CMIEventImpl implements _CMIEvent {
             other is _$CMIEventImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.accessType, accessType) ||
+                other.accessType == accessType) &&
+            (identical(other.maxWomCount, maxWomCount) ||
+                other.maxWomCount == maxWomCount) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.createdOn, createdOn) ||
+                other.createdOn == createdOn) &&
+            (identical(other.startAt, startAt) || other.startAt == startAt) &&
             (identical(other.acceptPassepartout, acceptPassepartout) ||
                 other.acceptPassepartout == acceptPassepartout) &&
             (identical(other.anonymous, anonymous) ||
                 other.anonymous == anonymous) &&
             (identical(other.recurring, recurring) ||
                 other.recurring == recurring) &&
+            (identical(other.mutexTotemsEnabled, mutexTotemsEnabled) ||
+                other.mutexTotemsEnabled == mutexTotemsEnabled) &&
             (identical(other.emailShowed, emailShowed) ||
                 other.emailShowed == emailShowed) &&
             (identical(other.frequency, frequency) ||
@@ -545,19 +572,11 @@ class _$CMIEventImpl implements _CMIEvent {
                 other.activeSessionId == activeSessionId) &&
             (identical(other.aim, aim) || other.aim == aim) &&
             const DeepCollectionEquality().equals(other._managers, _managers) &&
-            (identical(other.accessType, accessType) ||
-                other.accessType == accessType) &&
-            (identical(other.maxWomCount, maxWomCount) ||
-                other.maxWomCount == maxWomCount) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.type, type) || other.type == type) &&
             (identical(other.acceptedCardType, acceptedCardType) ||
                 other.acceptedCardType == acceptedCardType) &&
-            (identical(other.createdOn, createdOn) ||
-                other.createdOn == createdOn) &&
             (identical(other.subEventDeadline, subEventDeadline) ||
                 other.subEventDeadline == subEventDeadline) &&
-            (identical(other.startAt, startAt) || other.startAt == startAt) &&
             (identical(other.position, position) ||
                 other.position == position));
   }
@@ -568,9 +587,15 @@ class _$CMIEventImpl implements _CMIEvent {
         runtimeType,
         id,
         name,
+        accessType,
+        maxWomCount,
+        type,
+        createdOn,
+        startAt,
         acceptPassepartout,
         anonymous,
         recurring,
+        mutexTotemsEnabled,
         emailShowed,
         frequency,
         recurrence,
@@ -580,14 +605,9 @@ class _$CMIEventImpl implements _CMIEvent {
         activeSessionId,
         aim,
         const DeepCollectionEquality().hash(_managers),
-        accessType,
-        maxWomCount,
         status,
-        type,
         acceptedCardType,
-        createdOn,
         subEventDeadline,
-        startAt,
         position
       ]);
 
@@ -609,9 +629,15 @@ abstract class _CMIEvent implements CMIEvent {
   const factory _CMIEvent(
       {required final String id,
       required final String name,
+      @EventAccessTypeConverter() required final EventAccessType accessType,
+      required final int maxWomCount,
+      @EventTypeConverter() required final EventType type,
+      @MyDateTimeConverter() required final DateTime createdOn,
+      @MyDateTimeConverter() required final DateTime startAt,
       final bool acceptPassepartout,
       final bool anonymous,
       final bool recurring,
+      final bool mutexTotemsEnabled,
       final bool emailShowed,
       @FrequencyTypeConverter() final FrequencyType? frequency,
       final int? recurrence,
@@ -621,14 +647,9 @@ abstract class _CMIEvent implements CMIEvent {
       final String? activeSessionId,
       final String? aim,
       final Map<String, String>? managers,
-      @EventAccessTypeConverter() required final EventAccessType accessType,
-      required final int maxWomCount,
       @EventStatusConverter() final EventStatus? status,
-      @EventTypeConverter() required final EventType type,
       @AcceptedCardTypeConverted() final AcceptedCardType acceptedCardType,
-      @MyDateTimeConverter() required final DateTime createdOn,
       @MyDateTimeConverter() final DateTime? subEventDeadline,
-      @MyDateTimeConverter() required final DateTime startAt,
       @GeoPointConverter() final GeoPoint? position}) = _$CMIEventImpl;
 
   factory _CMIEvent.fromJson(Map<String, dynamic> json) =
@@ -639,11 +660,27 @@ abstract class _CMIEvent implements CMIEvent {
   @override
   String get name;
   @override
+  @EventAccessTypeConverter()
+  EventAccessType get accessType;
+  @override
+  int get maxWomCount;
+  @override
+  @EventTypeConverter()
+  EventType get type;
+  @override
+  @MyDateTimeConverter()
+  DateTime get createdOn;
+  @override
+  @MyDateTimeConverter()
+  DateTime get startAt;
+  @override
   bool get acceptPassepartout;
   @override
   bool get anonymous;
   @override
   bool get recurring;
+  @override
+  bool get mutexTotemsEnabled;
   @override
   bool get emailShowed;
   @override
@@ -664,28 +701,14 @@ abstract class _CMIEvent implements CMIEvent {
   @override
   Map<String, String>? get managers;
   @override
-  @EventAccessTypeConverter()
-  EventAccessType get accessType;
-  @override
-  int get maxWomCount;
-  @override
   @EventStatusConverter()
   EventStatus? get status;
-  @override
-  @EventTypeConverter()
-  EventType get type;
   @override
   @AcceptedCardTypeConverted()
   AcceptedCardType get acceptedCardType;
   @override
   @MyDateTimeConverter()
-  DateTime get createdOn;
-  @override
-  @MyDateTimeConverter()
   DateTime? get subEventDeadline;
-  @override
-  @MyDateTimeConverter()
-  DateTime get startAt;
   @override
   @GeoPointConverter()
   GeoPoint? get position;
@@ -702,11 +725,11 @@ CMISubEvent _$CMISubEventFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CMISubEvent {
   String get id => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
+  DateTime get startAt => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   GenderCount? get genderCount => throw _privateConstructorUsedError;
   num get totalUsers => throw _privateConstructorUsedError;
-  @MyDateTimeConverter()
-  DateTime get startAt => throw _privateConstructorUsedError;
   @MyDateTimeConverter()
   DateTime? get endAt => throw _privateConstructorUsedError;
 
@@ -724,10 +747,10 @@ abstract class $CMISubEventCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      @MyDateTimeConverter() DateTime startAt,
       String? name,
       GenderCount? genderCount,
       num totalUsers,
-      @MyDateTimeConverter() DateTime startAt,
       @MyDateTimeConverter() DateTime? endAt});
 
   $GenderCountCopyWith<$Res>? get genderCount;
@@ -747,10 +770,10 @@ class _$CMISubEventCopyWithImpl<$Res, $Val extends CMISubEvent>
   @override
   $Res call({
     Object? id = null,
+    Object? startAt = null,
     Object? name = freezed,
     Object? genderCount = freezed,
     Object? totalUsers = null,
-    Object? startAt = null,
     Object? endAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -758,6 +781,10 @@ class _$CMISubEventCopyWithImpl<$Res, $Val extends CMISubEvent>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      startAt: null == startAt
+          ? _value.startAt
+          : startAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -770,10 +797,6 @@ class _$CMISubEventCopyWithImpl<$Res, $Val extends CMISubEvent>
           ? _value.totalUsers
           : totalUsers // ignore: cast_nullable_to_non_nullable
               as num,
-      startAt: null == startAt
-          ? _value.startAt
-          : startAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       endAt: freezed == endAt
           ? _value.endAt
           : endAt // ignore: cast_nullable_to_non_nullable
@@ -804,10 +827,10 @@ abstract class _$$CMISubEventImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
+      @MyDateTimeConverter() DateTime startAt,
       String? name,
       GenderCount? genderCount,
       num totalUsers,
-      @MyDateTimeConverter() DateTime startAt,
       @MyDateTimeConverter() DateTime? endAt});
 
   @override
@@ -826,10 +849,10 @@ class __$$CMISubEventImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? startAt = null,
     Object? name = freezed,
     Object? genderCount = freezed,
     Object? totalUsers = null,
-    Object? startAt = null,
     Object? endAt = freezed,
   }) {
     return _then(_$CMISubEventImpl(
@@ -837,6 +860,10 @@ class __$$CMISubEventImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      startAt: null == startAt
+          ? _value.startAt
+          : startAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -849,10 +876,6 @@ class __$$CMISubEventImplCopyWithImpl<$Res>
           ? _value.totalUsers
           : totalUsers // ignore: cast_nullable_to_non_nullable
               as num,
-      startAt: null == startAt
-          ? _value.startAt
-          : startAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       endAt: freezed == endAt
           ? _value.endAt
           : endAt // ignore: cast_nullable_to_non_nullable
@@ -866,10 +889,10 @@ class __$$CMISubEventImplCopyWithImpl<$Res>
 class _$CMISubEventImpl implements _CMISubEvent {
   const _$CMISubEventImpl(
       {required this.id,
+      @MyDateTimeConverter() required this.startAt,
       this.name,
       this.genderCount,
       this.totalUsers = 0,
-      @MyDateTimeConverter() required this.startAt,
       @MyDateTimeConverter() this.endAt});
 
   factory _$CMISubEventImpl.fromJson(Map<String, dynamic> json) =>
@@ -877,6 +900,9 @@ class _$CMISubEventImpl implements _CMISubEvent {
 
   @override
   final String id;
+  @override
+  @MyDateTimeConverter()
+  final DateTime startAt;
   @override
   final String? name;
   @override
@@ -886,14 +912,11 @@ class _$CMISubEventImpl implements _CMISubEvent {
   final num totalUsers;
   @override
   @MyDateTimeConverter()
-  final DateTime startAt;
-  @override
-  @MyDateTimeConverter()
   final DateTime? endAt;
 
   @override
   String toString() {
-    return 'CMISubEvent(id: $id, name: $name, genderCount: $genderCount, totalUsers: $totalUsers, startAt: $startAt, endAt: $endAt)';
+    return 'CMISubEvent(id: $id, startAt: $startAt, name: $name, genderCount: $genderCount, totalUsers: $totalUsers, endAt: $endAt)';
   }
 
   @override
@@ -902,19 +925,19 @@ class _$CMISubEventImpl implements _CMISubEvent {
         (other.runtimeType == runtimeType &&
             other is _$CMISubEventImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.startAt, startAt) || other.startAt == startAt) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.genderCount, genderCount) ||
                 other.genderCount == genderCount) &&
             (identical(other.totalUsers, totalUsers) ||
                 other.totalUsers == totalUsers) &&
-            (identical(other.startAt, startAt) || other.startAt == startAt) &&
             (identical(other.endAt, endAt) || other.endAt == endAt));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, genderCount, totalUsers, startAt, endAt);
+      runtimeType, id, startAt, name, genderCount, totalUsers, endAt);
 
   @JsonKey(ignore: true)
   @override
@@ -933,10 +956,10 @@ class _$CMISubEventImpl implements _CMISubEvent {
 abstract class _CMISubEvent implements CMISubEvent {
   const factory _CMISubEvent(
       {required final String id,
+      @MyDateTimeConverter() required final DateTime startAt,
       final String? name,
       final GenderCount? genderCount,
       final num totalUsers,
-      @MyDateTimeConverter() required final DateTime startAt,
       @MyDateTimeConverter() final DateTime? endAt}) = _$CMISubEventImpl;
 
   factory _CMISubEvent.fromJson(Map<String, dynamic> json) =
@@ -945,14 +968,14 @@ abstract class _CMISubEvent implements CMISubEvent {
   @override
   String get id;
   @override
+  @MyDateTimeConverter()
+  DateTime get startAt;
+  @override
   String? get name;
   @override
   GenderCount? get genderCount;
   @override
   num get totalUsers;
-  @override
-  @MyDateTimeConverter()
-  DateTime get startAt;
   @override
   @MyDateTimeConverter()
   DateTime? get endAt;

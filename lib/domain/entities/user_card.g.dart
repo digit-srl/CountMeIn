@@ -50,15 +50,15 @@ _$EventUserImpl _$$EventUserImplFromJson(Map<String, dynamic> json) =>
     _$EventUserImpl(
       id: json['id'] as String,
       providerId: json['providerId'] as String,
+      fromExternalOrganization: json['fromExternalOrganization'] as bool,
+      isGroup: json['isGroup'] as bool,
+      isAnonymous: json['isAnonymous'] as bool,
       userCardProviderId: json['userCardProviderId'] as String?,
       name: json['name'] as String?,
       surname: json['surname'] as String?,
       cf: json['cf'] as String?,
       email: json['email'] as String?,
       privateId: json['privateId'] as String?,
-      fromExternalOrganization: json['fromExternalOrganization'] as bool,
-      isGroup: json['isGroup'] as bool,
-      isAnonymous: json['isAnonymous'] as bool,
       checkInAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['checkInAt'], const MyDateTimeConverter().fromJson),
       checkOutAt: _$JsonConverterFromJson<Timestamp, DateTime>(
@@ -77,15 +77,15 @@ Map<String, dynamic> _$$EventUserImplToJson(_$EventUserImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'providerId': instance.providerId,
+      'fromExternalOrganization': instance.fromExternalOrganization,
+      'isGroup': instance.isGroup,
+      'isAnonymous': instance.isAnonymous,
       'userCardProviderId': instance.userCardProviderId,
       'name': instance.name,
       'surname': instance.surname,
       'cf': instance.cf,
       'email': instance.email,
       'privateId': instance.privateId,
-      'fromExternalOrganization': instance.fromExternalOrganization,
-      'isGroup': instance.isGroup,
-      'isAnonymous': instance.isAnonymous,
       'checkInAt': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.checkInAt, const MyDateTimeConverter().toJson),
       'checkOutAt': _$JsonConverterToJson<Timestamp, DateTime>(

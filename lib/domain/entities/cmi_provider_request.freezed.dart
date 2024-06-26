@@ -33,11 +33,11 @@ mixin _$CMIProviderRequest {
       throw _privateConstructorUsedError;
   @CMIProviderStatusConverter()
   CMIProviderStatus get status => throw _privateConstructorUsedError;
+  @MyDateTimeConverter()
+  DateTime get requestedOn => throw _privateConstructorUsedError;
   String? get apiKey => throw _privateConstructorUsedError;
   List<String>? get aims => throw _privateConstructorUsedError;
   String? get domainRequirement => throw _privateConstructorUsedError;
-  @MyDateTimeConverter()
-  DateTime get requestedOn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -63,10 +63,10 @@ abstract class $CMIProviderRequestCopyWith<$Res> {
       String pIva,
       Map<String, ProviderManager> managers,
       @CMIProviderStatusConverter() CMIProviderStatus status,
+      @MyDateTimeConverter() DateTime requestedOn,
       String? apiKey,
       List<String>? aims,
-      String? domainRequirement,
-      @MyDateTimeConverter() DateTime requestedOn});
+      String? domainRequirement});
 }
 
 /// @nodoc
@@ -93,10 +93,10 @@ class _$CMIProviderRequestCopyWithImpl<$Res, $Val extends CMIProviderRequest>
     Object? pIva = null,
     Object? managers = null,
     Object? status = null,
+    Object? requestedOn = null,
     Object? apiKey = freezed,
     Object? aims = freezed,
     Object? domainRequirement = freezed,
-    Object? requestedOn = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -143,6 +143,10 @@ class _$CMIProviderRequestCopyWithImpl<$Res, $Val extends CMIProviderRequest>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as CMIProviderStatus,
+      requestedOn: null == requestedOn
+          ? _value.requestedOn
+          : requestedOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       apiKey: freezed == apiKey
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
@@ -155,10 +159,6 @@ class _$CMIProviderRequestCopyWithImpl<$Res, $Val extends CMIProviderRequest>
           ? _value.domainRequirement
           : domainRequirement // ignore: cast_nullable_to_non_nullable
               as String?,
-      requestedOn: null == requestedOn
-          ? _value.requestedOn
-          : requestedOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ) as $Val);
   }
 }
@@ -183,10 +183,10 @@ abstract class _$$CMIProviderRequestImplCopyWith<$Res>
       String pIva,
       Map<String, ProviderManager> managers,
       @CMIProviderStatusConverter() CMIProviderStatus status,
+      @MyDateTimeConverter() DateTime requestedOn,
       String? apiKey,
       List<String>? aims,
-      String? domainRequirement,
-      @MyDateTimeConverter() DateTime requestedOn});
+      String? domainRequirement});
 }
 
 /// @nodoc
@@ -211,10 +211,10 @@ class __$$CMIProviderRequestImplCopyWithImpl<$Res>
     Object? pIva = null,
     Object? managers = null,
     Object? status = null,
+    Object? requestedOn = null,
     Object? apiKey = freezed,
     Object? aims = freezed,
     Object? domainRequirement = freezed,
-    Object? requestedOn = null,
   }) {
     return _then(_$CMIProviderRequestImpl(
       id: null == id
@@ -261,6 +261,10 @@ class __$$CMIProviderRequestImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as CMIProviderStatus,
+      requestedOn: null == requestedOn
+          ? _value.requestedOn
+          : requestedOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       apiKey: freezed == apiKey
           ? _value.apiKey
           : apiKey // ignore: cast_nullable_to_non_nullable
@@ -273,10 +277,6 @@ class __$$CMIProviderRequestImplCopyWithImpl<$Res>
           ? _value.domainRequirement
           : domainRequirement // ignore: cast_nullable_to_non_nullable
               as String?,
-      requestedOn: null == requestedOn
-          ? _value.requestedOn
-          : requestedOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ));
   }
 }
@@ -296,10 +296,10 @@ class _$CMIProviderRequestImpl implements _CMIProviderRequest {
       required this.pIva,
       required final Map<String, ProviderManager> managers,
       @CMIProviderStatusConverter() required this.status,
+      @MyDateTimeConverter() required this.requestedOn,
       this.apiKey,
       final List<String>? aims,
-      this.domainRequirement,
-      @MyDateTimeConverter() required this.requestedOn})
+      this.domainRequirement})
       : _managers = managers,
         _aims = aims;
 
@@ -336,6 +336,9 @@ class _$CMIProviderRequestImpl implements _CMIProviderRequest {
   @CMIProviderStatusConverter()
   final CMIProviderStatus status;
   @override
+  @MyDateTimeConverter()
+  final DateTime requestedOn;
+  @override
   final String? apiKey;
   final List<String>? _aims;
   @override
@@ -349,13 +352,10 @@ class _$CMIProviderRequestImpl implements _CMIProviderRequest {
 
   @override
   final String? domainRequirement;
-  @override
-  @MyDateTimeConverter()
-  final DateTime requestedOn;
 
   @override
   String toString() {
-    return 'CMIProviderRequest(id: $id, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, adminCf: $adminCf, name: $name, aim: $aim, releaseWom: $releaseWom, pIva: $pIva, managers: $managers, status: $status, apiKey: $apiKey, aims: $aims, domainRequirement: $domainRequirement, requestedOn: $requestedOn)';
+    return 'CMIProviderRequest(id: $id, adminName: $adminName, adminSurname: $adminSurname, adminEmail: $adminEmail, adminCf: $adminCf, name: $name, aim: $aim, releaseWom: $releaseWom, pIva: $pIva, managers: $managers, status: $status, requestedOn: $requestedOn, apiKey: $apiKey, aims: $aims, domainRequirement: $domainRequirement)';
   }
 
   @override
@@ -378,12 +378,12 @@ class _$CMIProviderRequestImpl implements _CMIProviderRequest {
             (identical(other.pIva, pIva) || other.pIva == pIva) &&
             const DeepCollectionEquality().equals(other._managers, _managers) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.requestedOn, requestedOn) ||
+                other.requestedOn == requestedOn) &&
             (identical(other.apiKey, apiKey) || other.apiKey == apiKey) &&
             const DeepCollectionEquality().equals(other._aims, _aims) &&
             (identical(other.domainRequirement, domainRequirement) ||
-                other.domainRequirement == domainRequirement) &&
-            (identical(other.requestedOn, requestedOn) ||
-                other.requestedOn == requestedOn));
+                other.domainRequirement == domainRequirement));
   }
 
   @JsonKey(ignore: true)
@@ -401,10 +401,10 @@ class _$CMIProviderRequestImpl implements _CMIProviderRequest {
       pIva,
       const DeepCollectionEquality().hash(_managers),
       status,
+      requestedOn,
       apiKey,
       const DeepCollectionEquality().hash(_aims),
-      domainRequirement,
-      requestedOn);
+      domainRequirement);
 
   @JsonKey(ignore: true)
   @override
@@ -423,22 +423,21 @@ class _$CMIProviderRequestImpl implements _CMIProviderRequest {
 
 abstract class _CMIProviderRequest implements CMIProviderRequest {
   const factory _CMIProviderRequest(
-          {required final String id,
-          required final String adminName,
-          required final String adminSurname,
-          required final String adminEmail,
-          required final String adminCf,
-          required final String name,
-          required final String aim,
-          required final bool releaseWom,
-          required final String pIva,
-          required final Map<String, ProviderManager> managers,
-          @CMIProviderStatusConverter() required final CMIProviderStatus status,
-          final String? apiKey,
-          final List<String>? aims,
-          final String? domainRequirement,
-          @MyDateTimeConverter() required final DateTime requestedOn}) =
-      _$CMIProviderRequestImpl;
+      {required final String id,
+      required final String adminName,
+      required final String adminSurname,
+      required final String adminEmail,
+      required final String adminCf,
+      required final String name,
+      required final String aim,
+      required final bool releaseWom,
+      required final String pIva,
+      required final Map<String, ProviderManager> managers,
+      @CMIProviderStatusConverter() required final CMIProviderStatus status,
+      @MyDateTimeConverter() required final DateTime requestedOn,
+      final String? apiKey,
+      final List<String>? aims,
+      final String? domainRequirement}) = _$CMIProviderRequestImpl;
 
   factory _CMIProviderRequest.fromJson(Map<String, dynamic> json) =
       _$CMIProviderRequestImpl.fromJson;
@@ -467,14 +466,14 @@ abstract class _CMIProviderRequest implements CMIProviderRequest {
   @CMIProviderStatusConverter()
   CMIProviderStatus get status;
   @override
+  @MyDateTimeConverter()
+  DateTime get requestedOn;
+  @override
   String? get apiKey;
   @override
   List<String>? get aims;
   @override
   String? get domainRequirement;
-  @override
-  @MyDateTimeConverter()
-  DateTime get requestedOn;
   @override
   @JsonKey(ignore: true)
   _$$CMIProviderRequestImplCopyWith<_$CMIProviderRequestImpl> get copyWith =>

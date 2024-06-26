@@ -214,6 +214,7 @@ class CreateEventsBatchNotifier extends _$CreateEventsBatchNotifier {
       acceptedCardType: AcceptedCardType.passpartoutAndMine,
       position: position,
       aim: aim,
+      mutexTotemsEnabled: true,
     );
 
     return (key, newEvent);
@@ -326,14 +327,15 @@ class CreateEventsBatchNotifier extends _$CreateEventsBatchNotifier {
         for (int i = 0; i < sessions.length; i++) {
           final session = sessions[i];
           batch.set(
-              Cloud.sessionDoc(
-                EventIds(
-                  providerId: providerId,
-                  eventId: event.id,
-                  sessionId: session.id,
-                ),
+            Cloud.sessionDoc(
+              EventIds(
+                providerId: providerId,
+                eventId: event.id,
+                sessionId: session.id,
               ),
-              session.toJson(),);
+            ),
+            session.toJson(),
+          );
         }
 
         batch.set(

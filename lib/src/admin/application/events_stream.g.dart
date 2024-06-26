@@ -6,7 +6,7 @@ part of 'events_stream.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$eventsStreamHash() => r'ec667748749e7e92a99717aa3511f387c2128ffa';
+String _$eventsStreamHash() => r'7fe144c60bedebcc11b688159faa4c1a2f4068d2';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -173,7 +173,7 @@ class _EventsStreamProviderElement
   EventStatus get status => (origin as EventsStreamProvider).status;
 }
 
-String _$eventHash() => r'05d661212bfb806282e0f2f4fe8184507fa80413';
+String _$eventHash() => r'148f47bb53718bb04d0450094e939cef968ec81f';
 
 /// See also [event].
 @ProviderFor(event)

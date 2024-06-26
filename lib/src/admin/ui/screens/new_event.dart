@@ -27,9 +27,10 @@ import 'package:intl/intl.dart';
 final womValidator = MultiValidator([
   RequiredValidator(errorText: 'Campo obbligatorio'),
   RangeValidator(
-      min: 1,
-      max: 1000,
-      errorText: 'Il valore deve essere compreso tra 1 e 100',),
+    min: 1,
+    max: 1000,
+    errorText: 'Il valore deve essere compreso tra 1 e 100',
+  ),
   // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character')
 ]);
 
@@ -81,7 +82,8 @@ class NewEventFormScreen extends HookConsumerWidget {
   final String providerId;
 
   NewEventFormScreen({
-    required this.providerId, super.key,
+    required this.providerId,
+    super.key,
   });
 
   final _formKey = GlobalKey<FormState>();
@@ -104,6 +106,7 @@ class NewEventFormScreen extends HookConsumerWidget {
     final acceptedCardType = useState<AcceptedCardType>(AcceptedCardType.mine);
     final anonymous = useState<bool>(false);
     final totemEnabled = useState<bool>(false);
+    final mutexTotemsEnabled = useState<bool>(true);
     final totems = useState<List<(TextEditingController, bool)>>([]);
     final releaseWom = useState<bool>(false);
     final emailEnabled = useState<bool>(false);
@@ -175,10 +178,11 @@ class NewEventFormScreen extends HookConsumerWidget {
             children: [
               Text('Anonimo', style: titleStyle),
               Switch(
-                  value: anonymous.value,
-                  onChanged: (v) {
-                    anonymous.value = v;
-                  },),
+                value: anonymous.value,
+                onChanged: (v) {
+                  anonymous.value = v;
+                },
+              ),
             ],
           ),
           if (!anonymous.value) ...[
@@ -267,8 +271,12 @@ class NewEventFormScreen extends HookConsumerWidget {
                       selectedFrequency.value = f;
                     },
                     items: FrequencyType.values
-                        .map((e) => DropdownMenuItem<FrequencyType>(
-                            value: e, child: Text(e.text),),)
+                        .map(
+                          (e) => DropdownMenuItem<FrequencyType>(
+                            value: e,
+                            child: Text(e.text),
+                          ),
+                        )
                         .toList(),
                   ),
                 ),
@@ -291,7 +299,8 @@ class NewEventFormScreen extends HookConsumerWidget {
             ),
             const SizedBox(height: 8),
             Text(
-                'L\'evento si ripeterà ogni ${selectedFrequency.value == FrequencyType.weekly ? dayFormat.format(startAt.value) : 'giorno'} per ${repsCount.value} volte',),
+              'L\'evento si ripeterà ogni ${selectedFrequency.value == FrequencyType.weekly ? dayFormat.format(startAt.value) : 'giorno'} per ${repsCount.value} volte',
+            ),
           ],
           const SizedBox(height: 16),
           const Divider(),
@@ -305,7 +314,8 @@ class NewEventFormScreen extends HookConsumerWidget {
                   controller: latController,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(
-                        RegExp(r'^(\d+)?\.?\d{0,8}'),),
+                      RegExp(r'^(\d+)?\.?\d{0,8}'),
+                    ),
                   ],
                   decoration: const InputDecoration(hintText: 'Latitude'),
                   validator: latitudeValidator,
@@ -317,7 +327,8 @@ class NewEventFormScreen extends HookConsumerWidget {
                   controller: longController,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(
-                        RegExp(r'^(\d+)?\.?\d{0,8}'),),
+                      RegExp(r'^(\d+)?\.?\d{0,8}'),
+                    ),
                   ],
                   decoration: const InputDecoration(hintText: 'Longitude'),
                   validator: longitudeValidator,
@@ -329,7 +340,9 @@ class NewEventFormScreen extends HookConsumerWidget {
                   controller: radiusController,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(
-                      hintText: 'Raggio', suffixText: 'metri',),
+                    hintText: 'Raggio',
+                    suffixText: 'metri',
+                  ),
                   validator: radiusValidator,
                 ),
               ),
@@ -352,6 +365,17 @@ class NewEventFormScreen extends HookConsumerWidget {
                         ];
                       }
                     : null,
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Text('Mutex Totem', style: titleStyle),
+              Switch(
+                value: mutexTotemsEnabled.value,
+                onChanged: (v) {
+                  mutexTotemsEnabled.value = v;
+                },
               ),
             ],
           ),
@@ -408,32 +432,35 @@ class NewEventFormScreen extends HookConsumerWidget {
                 ),
               ),
             ElevatedButton(
-                onPressed: () {
-                  for (final element in totems.value) {
-                    print(element.$1.text);
-                  }
-                  totems.value = [
-                    ...totems.value,
-                    (
-                      TextEditingController(
-                          text: 'Totem ${totems.value.length + 1}',),
-                      true
+              onPressed: () {
+                for (final element in totems.value) {
+                  print(element.$1.text);
+                }
+                totems.value = [
+                  ...totems.value,
+                  (
+                    TextEditingController(
+                      text: 'Totem ${totems.value.length + 1}',
                     ),
-                  ];
-                },
-                child: const Text('Nuovo totem'),),
+                    true
+                  ),
+                ];
+              },
+              child: const Text('Nuovo totem'),
+            ),
           ],
           const SizedBox(height: 16),
           Row(
             children: [
               Text('WOM', style: titleStyle),
               Switch(
-                  value: releaseWom.value,
-                  onChanged: totemEnabled.value
-                      ? null
-                      : (v) {
-                          releaseWom.value = v;
-                        },),
+                value: releaseWom.value,
+                onChanged: totemEnabled.value
+                    ? null
+                    : (v) {
+                        releaseWom.value = v;
+                      },
+              ),
             ],
           ),
           if (totemEnabled.value)
@@ -462,12 +489,17 @@ class NewEventFormScreen extends HookConsumerWidget {
                       label: 'Seleziona l\'AIM',
                       value: selectedAim.value,
                       items: provider.aims!
-                          .map((e) => DropdownMenuItem<String>(
+                          .map(
+                            (e) => DropdownMenuItem<String>(
                               value: e,
-                              child: Text(aims
-                                      ?.firstWhereOrNull((a) => a.code == e)
-                                      ?.title(languageCode: 'it') ??
-                                  e,),),)
+                              child: Text(
+                                aims
+                                        ?.firstWhereOrNull((a) => a.code == e)
+                                        ?.title(languageCode: 'it') ??
+                                    e,
+                              ),
+                            ),
+                          )
                           .toList(),
                       onChanged: (item) {
                         selectedAim.value = item;
@@ -509,8 +541,10 @@ class NewEventFormScreen extends HookConsumerWidget {
 
                     final position = latController.text.trim().isNotEmpty &&
                             longController.text.trim().isNotEmpty
-                        ? GeoPoint(double.parse(latController.text.trim()),
-                            double.parse(longController.text.trim()),)
+                        ? GeoPoint(
+                            double.parse(latController.text.trim()),
+                            double.parse(longController.text.trim()),
+                          )
                         : null;
 
                     final newEvent = CMIEvent(
@@ -534,6 +568,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                       acceptedCardType: acceptedCardType.value,
                       position: position,
                       aim: selectedAim.value,
+                      mutexTotemsEnabled: mutexTotemsEnabled.value,
                     );
 
                     final session = CMISubEvent(
@@ -570,13 +605,19 @@ class NewEventFormScreen extends HookConsumerWidget {
                     final batch = FirebaseFirestore.instance.batch();
 
                     batch.set(
-                        Cloud.eventDoc(providerId, eventId), newEvent.toJson(),);
+                      Cloud.eventDoc(providerId, eventId),
+                      newEvent.toJson(),
+                    );
                     batch.set(
-                        Cloud.sessionDoc(EventIds(
-                            providerId: providerId,
-                            eventId: eventId,
-                            sessionId: session.id,),),
-                        session.toJson(),);
+                      Cloud.sessionDoc(
+                        EventIds(
+                          providerId: providerId,
+                          eventId: eventId,
+                          sessionId: session.id,
+                        ),
+                      ),
+                      session.toJson(),
+                    );
                     for (int i = 0; i < t.length; i++) {
                       batch.set(
                         Cloud.totemDoc(
@@ -662,9 +703,10 @@ class NewEventFormScreen extends HookConsumerWidget {
       batch.set(
         Cloud.sessionDoc(
           EventIds(
-              providerId: providerId,
-              eventId: newEvent.id,
-              sessionId: session.id,),
+            providerId: providerId,
+            eventId: newEvent.id,
+            sessionId: session.id,
+          ),
         ),
         session.toJson(),
       );
@@ -687,7 +729,9 @@ class OptionSelector extends StatelessWidget {
   final ValueChanged<bool?>? onChanged;
 
   const OptionSelector({
-    required this.value, required this.text, super.key,
+    required this.value,
+    required this.text,
+    super.key,
     this.onChanged,
   });
 
@@ -702,25 +746,6 @@ class OptionSelector extends StatelessWidget {
   }
 }
 
-const listEvents = [
+const listEvents = [];
 
-];
-
-const listWom = [
-];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const listWom = [];

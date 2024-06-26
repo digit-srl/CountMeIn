@@ -940,10 +940,10 @@ abstract class ConfirmInviteError implements ConfirmInviteState {
 /// @nodoc
 mixin _$InviteRequest {
   String get providerId => throw _privateConstructorUsedError;
-  String? get userId => throw _privateConstructorUsedError;
   String get inviteId => throw _privateConstructorUsedError;
   String get providerName => throw _privateConstructorUsedError;
   String get secret => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $InviteRequestCopyWith<InviteRequest> get copyWith =>
@@ -958,10 +958,10 @@ abstract class $InviteRequestCopyWith<$Res> {
   @useResult
   $Res call(
       {String providerId,
-      String? userId,
       String inviteId,
       String providerName,
-      String secret});
+      String secret,
+      String? userId});
 }
 
 /// @nodoc
@@ -978,20 +978,16 @@ class _$InviteRequestCopyWithImpl<$Res, $Val extends InviteRequest>
   @override
   $Res call({
     Object? providerId = null,
-    Object? userId = freezed,
     Object? inviteId = null,
     Object? providerName = null,
     Object? secret = null,
+    Object? userId = freezed,
   }) {
     return _then(_value.copyWith(
       providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
       inviteId: null == inviteId
           ? _value.inviteId
           : inviteId // ignore: cast_nullable_to_non_nullable
@@ -1004,6 +1000,10 @@ class _$InviteRequestCopyWithImpl<$Res, $Val extends InviteRequest>
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
               as String,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -1018,10 +1018,10 @@ abstract class _$$InviteRequestImplCopyWith<$Res>
   @useResult
   $Res call(
       {String providerId,
-      String? userId,
       String inviteId,
       String providerName,
-      String secret});
+      String secret,
+      String? userId});
 }
 
 /// @nodoc
@@ -1036,20 +1036,16 @@ class __$$InviteRequestImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? providerId = null,
-    Object? userId = freezed,
     Object? inviteId = null,
     Object? providerName = null,
     Object? secret = null,
+    Object? userId = freezed,
   }) {
     return _then(_$InviteRequestImpl(
       providerId: null == providerId
           ? _value.providerId
           : providerId // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
       inviteId: null == inviteId
           ? _value.inviteId
           : inviteId // ignore: cast_nullable_to_non_nullable
@@ -1062,6 +1058,10 @@ class __$$InviteRequestImplCopyWithImpl<$Res>
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
               as String,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -1071,25 +1071,25 @@ class __$$InviteRequestImplCopyWithImpl<$Res>
 class _$InviteRequestImpl implements _InviteRequest {
   const _$InviteRequestImpl(
       {required this.providerId,
-      this.userId,
       required this.inviteId,
       required this.providerName,
-      required this.secret});
+      required this.secret,
+      this.userId});
 
   @override
   final String providerId;
-  @override
-  final String? userId;
   @override
   final String inviteId;
   @override
   final String providerName;
   @override
   final String secret;
+  @override
+  final String? userId;
 
   @override
   String toString() {
-    return 'InviteRequest(providerId: $providerId, userId: $userId, inviteId: $inviteId, providerName: $providerName, secret: $secret)';
+    return 'InviteRequest(providerId: $providerId, inviteId: $inviteId, providerName: $providerName, secret: $secret, userId: $userId)';
   }
 
   @override
@@ -1099,17 +1099,17 @@ class _$InviteRequestImpl implements _InviteRequest {
             other is _$InviteRequestImpl &&
             (identical(other.providerId, providerId) ||
                 other.providerId == providerId) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.inviteId, inviteId) ||
                 other.inviteId == inviteId) &&
             (identical(other.providerName, providerName) ||
                 other.providerName == providerName) &&
-            (identical(other.secret, secret) || other.secret == secret));
+            (identical(other.secret, secret) || other.secret == secret) &&
+            (identical(other.userId, userId) || other.userId == userId));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, providerId, userId, inviteId, providerName, secret);
+      runtimeType, providerId, inviteId, providerName, secret, userId);
 
   @JsonKey(ignore: true)
   @override
@@ -1121,21 +1121,21 @@ class _$InviteRequestImpl implements _InviteRequest {
 abstract class _InviteRequest implements InviteRequest {
   const factory _InviteRequest(
       {required final String providerId,
-      final String? userId,
       required final String inviteId,
       required final String providerName,
-      required final String secret}) = _$InviteRequestImpl;
+      required final String secret,
+      final String? userId}) = _$InviteRequestImpl;
 
   @override
   String get providerId;
-  @override
-  String? get userId;
   @override
   String get inviteId;
   @override
   String get providerName;
   @override
   String get secret;
+  @override
+  String? get userId;
   @override
   @JsonKey(ignore: true)
   _$$InviteRequestImplCopyWith<_$InviteRequestImpl> get copyWith =>
