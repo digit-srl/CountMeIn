@@ -7,7 +7,7 @@ part of 'create_events_batch_notifier.dart';
 // **************************************************************************
 
 String _$createEventsBatchNotifierHash() =>
-    r'378a5827b4f3efbc4e956bcc3f64ea2136e8ef4d';
+    r'751c9b6a3e4f49c6f50ec8ab3f8c4c0207ce75bc';
 
 /// See also [CreateEventsBatchNotifier].
 @ProviderFor(CreateEventsBatchNotifier)

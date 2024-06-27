@@ -38,6 +38,7 @@ mixin _$EmbeddedData {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @GeoPointConverter()
   GeoPoint? get position => throw _privateConstructorUsedError;
+  EmbeddedMetaData? get metadata => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -66,7 +67,10 @@ abstract class $EmbeddedDataCopyWith<$Res> {
       int count,
       int totalCount,
       @MyDateTimeConverter() DateTime? createdAt,
-      @GeoPointConverter() GeoPoint? position});
+      @GeoPointConverter() GeoPoint? position,
+      EmbeddedMetaData? metadata});
+
+  $EmbeddedMetaDataCopyWith<$Res>? get metadata;
 }
 
 /// @nodoc
@@ -97,6 +101,7 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
     Object? totalCount = null,
     Object? createdAt = freezed,
     Object? position = freezed,
+    Object? metadata = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -159,7 +164,23 @@ class _$EmbeddedDataCopyWithImpl<$Res, $Val extends EmbeddedData>
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
               as GeoPoint?,
+      metadata: freezed == metadata
+          ? _value.metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as EmbeddedMetaData?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $EmbeddedMetaDataCopyWith<$Res>? get metadata {
+    if (_value.metadata == null) {
+      return null;
+    }
+
+    return $EmbeddedMetaDataCopyWith<$Res>(_value.metadata!, (value) {
+      return _then(_value.copyWith(metadata: value) as $Val);
+    });
   }
 }
 
@@ -186,7 +207,11 @@ abstract class _$$EmbeddedDataImplCopyWith<$Res>
       int count,
       int totalCount,
       @MyDateTimeConverter() DateTime? createdAt,
-      @GeoPointConverter() GeoPoint? position});
+      @GeoPointConverter() GeoPoint? position,
+      EmbeddedMetaData? metadata});
+
+  @override
+  $EmbeddedMetaDataCopyWith<$Res>? get metadata;
 }
 
 /// @nodoc
@@ -215,6 +240,7 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
     Object? totalCount = null,
     Object? createdAt = freezed,
     Object? position = freezed,
+    Object? metadata = freezed,
   }) {
     return _then(_$EmbeddedDataImpl(
       name: null == name
@@ -277,12 +303,17 @@ class __$$EmbeddedDataImplCopyWithImpl<$Res>
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
               as GeoPoint?,
+      metadata: freezed == metadata
+          ? _value.metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as EmbeddedMetaData?,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$EmbeddedDataImpl implements _EmbeddedData {
   const _$EmbeddedDataImpl(
       {required this.name,
@@ -299,7 +330,8 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
       this.count = 0,
       this.totalCount = 0,
       @MyDateTimeConverter() this.createdAt,
-      @GeoPointConverter() this.position});
+      @GeoPointConverter() this.position,
+      this.metadata});
 
   factory _$EmbeddedDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$EmbeddedDataImplFromJson(json);
@@ -341,10 +373,12 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
   @override
   @GeoPointConverter()
   final GeoPoint? position;
+  @override
+  final EmbeddedMetaData? metadata;
 
   @override
   String toString() {
-    return 'EmbeddedData(name: $name, id: $id, radius: $radius, updatedOn: $updatedOn, requestId: $requestId, eventName: $eventName, eventId: $eventId, sessionId: $sessionId, sessionName: $sessionName, isStatic: $isStatic, dedicated: $dedicated, count: $count, totalCount: $totalCount, createdAt: $createdAt, position: $position)';
+    return 'EmbeddedData(name: $name, id: $id, radius: $radius, updatedOn: $updatedOn, requestId: $requestId, eventName: $eventName, eventId: $eventId, sessionId: $sessionId, sessionName: $sessionName, isStatic: $isStatic, dedicated: $dedicated, count: $count, totalCount: $totalCount, createdAt: $createdAt, position: $position, metadata: $metadata)';
   }
 
   @override
@@ -376,7 +410,9 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.position, position) ||
-                other.position == position));
+                other.position == position) &&
+            (identical(other.metadata, metadata) ||
+                other.metadata == metadata));
   }
 
   @JsonKey(ignore: true)
@@ -397,7 +433,8 @@ class _$EmbeddedDataImpl implements _EmbeddedData {
       count,
       totalCount,
       createdAt,
-      position);
+      position,
+      metadata);
 
   @JsonKey(ignore: true)
   @override
@@ -429,7 +466,8 @@ abstract class _EmbeddedData implements EmbeddedData {
       final int count,
       final int totalCount,
       @MyDateTimeConverter() final DateTime? createdAt,
-      @GeoPointConverter() final GeoPoint? position}) = _$EmbeddedDataImpl;
+      @GeoPointConverter() final GeoPoint? position,
+      final EmbeddedMetaData? metadata}) = _$EmbeddedDataImpl;
 
   factory _EmbeddedData.fromJson(Map<String, dynamic> json) =
       _$EmbeddedDataImpl.fromJson;
@@ -468,7 +506,166 @@ abstract class _EmbeddedData implements EmbeddedData {
   @GeoPointConverter()
   GeoPoint? get position;
   @override
+  EmbeddedMetaData? get metadata;
+  @override
   @JsonKey(ignore: true)
   _$$EmbeddedDataImplCopyWith<_$EmbeddedDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+EmbeddedMetaData _$EmbeddedMetaDataFromJson(Map<String, dynamic> json) {
+  return _EmbeddedMetaData.fromJson(json);
+}
+
+/// @nodoc
+mixin _$EmbeddedMetaData {
+  String? get email => throw _privateConstructorUsedError;
+  String? get phoneNumber => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $EmbeddedMetaDataCopyWith<EmbeddedMetaData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EmbeddedMetaDataCopyWith<$Res> {
+  factory $EmbeddedMetaDataCopyWith(
+          EmbeddedMetaData value, $Res Function(EmbeddedMetaData) then) =
+      _$EmbeddedMetaDataCopyWithImpl<$Res, EmbeddedMetaData>;
+  @useResult
+  $Res call({String? email, String? phoneNumber});
+}
+
+/// @nodoc
+class _$EmbeddedMetaDataCopyWithImpl<$Res, $Val extends EmbeddedMetaData>
+    implements $EmbeddedMetaDataCopyWith<$Res> {
+  _$EmbeddedMetaDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = freezed,
+    Object? phoneNumber = freezed,
+  }) {
+    return _then(_value.copyWith(
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$EmbeddedMetaDataImplCopyWith<$Res>
+    implements $EmbeddedMetaDataCopyWith<$Res> {
+  factory _$$EmbeddedMetaDataImplCopyWith(_$EmbeddedMetaDataImpl value,
+          $Res Function(_$EmbeddedMetaDataImpl) then) =
+      __$$EmbeddedMetaDataImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? email, String? phoneNumber});
+}
+
+/// @nodoc
+class __$$EmbeddedMetaDataImplCopyWithImpl<$Res>
+    extends _$EmbeddedMetaDataCopyWithImpl<$Res, _$EmbeddedMetaDataImpl>
+    implements _$$EmbeddedMetaDataImplCopyWith<$Res> {
+  __$$EmbeddedMetaDataImplCopyWithImpl(_$EmbeddedMetaDataImpl _value,
+      $Res Function(_$EmbeddedMetaDataImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = freezed,
+    Object? phoneNumber = freezed,
+  }) {
+    return _then(_$EmbeddedMetaDataImpl(
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(explicitToJson: true)
+class _$EmbeddedMetaDataImpl implements _EmbeddedMetaData {
+  const _$EmbeddedMetaDataImpl({this.email, this.phoneNumber});
+
+  factory _$EmbeddedMetaDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EmbeddedMetaDataImplFromJson(json);
+
+  @override
+  final String? email;
+  @override
+  final String? phoneNumber;
+
+  @override
+  String toString() {
+    return 'EmbeddedMetaData(email: $email, phoneNumber: $phoneNumber)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EmbeddedMetaDataImpl &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, email, phoneNumber);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EmbeddedMetaDataImplCopyWith<_$EmbeddedMetaDataImpl> get copyWith =>
+      __$$EmbeddedMetaDataImplCopyWithImpl<_$EmbeddedMetaDataImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$EmbeddedMetaDataImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _EmbeddedMetaData implements EmbeddedMetaData {
+  const factory _EmbeddedMetaData(
+      {final String? email,
+      final String? phoneNumber}) = _$EmbeddedMetaDataImpl;
+
+  factory _EmbeddedMetaData.fromJson(Map<String, dynamic> json) =
+      _$EmbeddedMetaDataImpl.fromJson;
+
+  @override
+  String? get email;
+  @override
+  String? get phoneNumber;
+  @override
+  @JsonKey(ignore: true)
+  _$$EmbeddedMetaDataImplCopyWith<_$EmbeddedMetaDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

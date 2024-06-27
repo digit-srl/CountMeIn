@@ -26,6 +26,9 @@ _$EmbeddedDataImpl _$$EmbeddedDataImplFromJson(Map<String, dynamic> json) =>
           json['createdAt'], const MyDateTimeConverter().fromJson),
       position: _$JsonConverterFromJson<GeoPoint, GeoPoint>(
           json['position'], const GeoPointConverter().fromJson),
+      metadata: json['metadata'] == null
+          ? null
+          : EmbeddedMetaData.fromJson(json['metadata'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$EmbeddedDataImplToJson(_$EmbeddedDataImpl instance) =>
@@ -47,6 +50,7 @@ Map<String, dynamic> _$$EmbeddedDataImplToJson(_$EmbeddedDataImpl instance) =>
           instance.createdAt, const MyDateTimeConverter().toJson),
       'position': _$JsonConverterToJson<GeoPoint, GeoPoint>(
           instance.position, const GeoPointConverter().toJson),
+      'metadata': instance.metadata?.toJson(),
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(
@@ -60,3 +64,17 @@ Json? _$JsonConverterToJson<Json, Value>(
   Json? Function(Value value) toJson,
 ) =>
     value == null ? null : toJson(value);
+
+_$EmbeddedMetaDataImpl _$$EmbeddedMetaDataImplFromJson(
+        Map<String, dynamic> json) =>
+    _$EmbeddedMetaDataImpl(
+      email: json['email'] as String?,
+      phoneNumber: json['phoneNumber'] as String?,
+    );
+
+Map<String, dynamic> _$$EmbeddedMetaDataImplToJson(
+        _$EmbeddedMetaDataImpl instance) =>
+    <String, dynamic>{
+      'email': instance.email,
+      'phoneNumber': instance.phoneNumber,
+    };

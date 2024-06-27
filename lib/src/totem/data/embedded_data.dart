@@ -9,10 +9,13 @@ part 'embedded_data.g.dart';
 
 @freezed
 class EmbeddedData with _$EmbeddedData {
+  @JsonSerializable(explicitToJson: true)
   const factory EmbeddedData({
     required String name,
     required String id,
-    required int radius, @MyDateTimeConverter() required DateTime updatedOn, String? requestId,
+    required int radius,
+    @MyDateTimeConverter() required DateTime updatedOn,
+    String? requestId,
     String? eventName,
     String? eventId,
     String? sessionId,
@@ -23,8 +26,21 @@ class EmbeddedData with _$EmbeddedData {
     @Default(0) int totalCount,
     @MyDateTimeConverter() DateTime? createdAt,
     @GeoPointConverter() GeoPoint? position,
+    EmbeddedMetaData? metadata,
   }) = _EmbeddedData;
 
   factory EmbeddedData.fromJson(Map<String, dynamic> json) =>
       _$EmbeddedDataFromJson(json);
+}
+
+@freezed
+class EmbeddedMetaData with _$EmbeddedMetaData {
+  @JsonSerializable(explicitToJson: true)
+  const factory EmbeddedMetaData({
+    String? email,
+    String? phoneNumber,
+  }) = _EmbeddedMetaData;
+
+  factory EmbeddedMetaData.fromJson(Map<String, dynamic> json) =>
+      _$EmbeddedMetaDataFromJson(json);
 }

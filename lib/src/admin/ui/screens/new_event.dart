@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:countmein/domain/entities/event_ids.dart';
 import 'package:countmein/my_logger.dart';
+import 'package:countmein/src/auth/ui/screens/sign_in.dart';
 import 'package:countmein/src/totem/util.dart';
 import 'package:dart_wom_connector/dart_wom_connector.dart';
 import 'package:countmein/src/admin/application/aim_notifier.dart';
@@ -107,7 +108,14 @@ class NewEventFormScreen extends HookConsumerWidget {
     final anonymous = useState<bool>(false);
     final totemEnabled = useState<bool>(false);
     final mutexTotemsEnabled = useState<bool>(true);
-    final totems = useState<List<(TextEditingController, bool)>>([]);
+    final totems = useState<
+        List<
+            (
+              TextEditingController,
+              bool,
+              TextEditingController,
+              TextEditingController
+            )>>([]);
     final releaseWom = useState<bool>(false);
     final emailEnabled = useState<bool>(false);
     final startAt = useState<DateTime>(DateTime.now());
@@ -352,31 +360,41 @@ class NewEventFormScreen extends HookConsumerWidget {
           Row(
             children: [
               Text('Totem', style: titleStyle),
+              const SizedBox(width: 8),
               Switch(
                 value: totemEnabled.value,
                 onChanged: accessType.value == EventAccessType.single
                     ? (v) {
                         if (v) {
                           releaseWom.value = true;
+                          mutexTotemsEnabled.value = true;
                         }
                         totemEnabled.value = v;
                         totems.value = [
-                          (TextEditingController(text: 'Totem 1'), true),
+                          (
+                            TextEditingController(text: 'Totem 1'),
+                            true,
+                            TextEditingController(),
+                            TextEditingController()
+                          ),
                         ];
                       }
                     : null,
               ),
-            ],
-          ),
-          Row(
-            children: [
-              Text('Mutex Totem', style: titleStyle),
-              Switch(
-                value: mutexTotemsEnabled.value,
-                onChanged: (v) {
-                  mutexTotemsEnabled.value = v;
-                },
-              ),
+              const SizedBox(width: 24),
+              if (totemEnabled.value)
+                Row(
+                  children: [
+                    Text('Mutex Totem', style: titleStyle),
+                    const SizedBox(width: 8),
+                    Switch(
+                      value: mutexTotemsEnabled.value,
+                      onChanged: (v) {
+                        mutexTotemsEnabled.value = v;
+                      },
+                    ),
+                  ],
+                ),
             ],
           ),
           if (accessType.value == EventAccessType.inOut)
@@ -387,50 +405,94 @@ class NewEventFormScreen extends HookConsumerWidget {
           if (totemEnabled.value) ...[
             const SizedBox(height: 8),
             for (int i = 0; i < totems.value.length; i++)
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Row(
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(16),
+                  color: Theme.of(context).secondaryHeaderColor,
+                ),
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    CircleAvatar(child: Text('${i + 1}')),
-                    const SizedBox(width: 16),
-                    Flexible(
-                      child: TextFormField(
-                        controller: totems.value[i].$1,
-                        validator: nameSurnameValidator.call,
-                        decoration: InputDecoration(
-                          suffix: totems.value.length == 1
-                              ? null
-                              : IconButton(
-                                  icon: const Icon(Icons.clear),
-                                  color: Colors.red,
-                                  onPressed: () {
-                                    final tmp = totems.value.toList();
-                                    tmp.removeAt(i);
-                                    totems.value = tmp;
-                                  },
-                                ),
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                              backgroundColor: Theme.of(context).primaryColor,
+                              child: Text(
+                                '${i + 1}',
+                                style: TextStyle(
+                                    color: Theme.of(context).canvasColor),
+                              )),
+                          const SizedBox(width: 16),
+                          Flexible(
+                            child: TextFormField(
+                              controller: totems.value[i].$1,
+                              validator: nameSurnameValidator.call,
+                              decoration: InputDecoration(
+                                suffix: totems.value.length == 1
+                                    ? null
+                                    : IconButton(
+                                        icon: const Icon(Icons.clear),
+                                        color: Colors.red,
+                                        onPressed: () {
+                                          final tmp = totems.value.toList();
+                                          tmp.removeAt(i);
+                                          totems.value = tmp;
+                                        },
+                                      ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text('Statico'),
+                              Switch(
+                                value: totems.value[i].$2,
+                                onChanged: (value) {
+                                  final tmp = totems.value.toList();
+                                  final o = tmp.removeAt(i);
+                                  tmp.insert(i, (o.$1, value, o.$3, o.$4));
+                                  totems.value = tmp;
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 16),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text('Statico'),
-                        Switch(
-                          value: totems.value[i].$2,
-                          onChanged: (value) {
-                            final tmp = totems.value.toList();
-                            final o = tmp.removeAt(i);
-                            tmp.insert(i, (o.$1, value));
-                            totems.value = tmp;
-                          },
-                        ),
-                      ],
+                    const SizedBox(height: 16),
+                    Text(
+                      'Metadata',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 8),
+                    TextFormField(
+                      controller: totems.value[i].$3,
+                      validator: emailValidator.call,
+                      decoration: const InputDecoration(
+                        hintText: 'Email',
+                        labelText: 'Email',
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: totems.value[i].$4,
+                      decoration: const InputDecoration(
+                        hintText: 'Phone number',
+                        labelText: 'Phone number',
+                      ),
                     ),
                   ],
                 ),
               ),
+            const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
                 for (final element in totems.value) {
@@ -442,7 +504,9 @@ class NewEventFormScreen extends HookConsumerWidget {
                     TextEditingController(
                       text: 'Totem ${totems.value.length + 1}',
                     ),
-                    true
+                    true,
+                    TextEditingController(),
+                    TextEditingController(),
                   ),
                 ];
               },
@@ -580,6 +644,17 @@ class NewEventFormScreen extends HookConsumerWidget {
                     final t = <EmbeddedData>[];
                     if (totemEnabled.value) {
                       for (int i = 0; i < totems.value.length; i++) {
+                        final email = totems.value[i].$3.text.trim();
+                        final phoneNumber = totems.value[i].$4.text.trim();
+
+                        EmbeddedMetaData? metadata;
+                        if (email.isNotEmpty || phoneNumber.isNotEmpty) {
+                          metadata = EmbeddedMetaData(
+                            email: email.isEmpty ? null : email,
+                            phoneNumber:
+                                phoneNumber.isEmpty ? null : phoneNumber,
+                          );
+                        }
                         final tmp = EmbeddedData(
                           name: totems.value[i].$1.text.trim(),
                           id: const Uuid().v4(),
@@ -592,6 +667,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                           dedicated: true,
                           eventId: eventId,
                           sessionId: session.id,
+                          metadata: metadata,
                         );
                         t.add(tmp);
                       }

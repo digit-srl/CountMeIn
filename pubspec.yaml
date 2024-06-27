@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 0.2.2+82
 
 environment:
-  sdk: ">=3.2.0 <4.0.0"
+  sdk: ">=3.3.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -84,8 +84,6 @@ dependencies:
   intl:
   auto_size_text: ^3.0.0
   screenshot: ^2.1.0
-#  file_saver:
-#    git: https://github.com/incrediblezayed/file_saver
 
 dev_dependencies:
   flutter_test:
@@ -97,10 +95,10 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
 
-  flutter_lints: ^3.0.1
+  flutter_lints: ^4.0.0
   hive_generator:
-  build_runner: ^2.4.8
-  freezed: ^2.4.7
+  build_runner: ^2.4.9
+  freezed: ^2.5.2
   json_serializable: ^6.7.1
   riverpod_generator:
   soundpool: ^2.4.1
