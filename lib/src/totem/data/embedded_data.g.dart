@@ -10,7 +10,7 @@ _$EmbeddedDataImpl _$$EmbeddedDataImplFromJson(Map<String, dynamic> json) =>
     _$EmbeddedDataImpl(
       name: json['name'] as String,
       id: json['id'] as String,
-      radius: json['radius'] as int,
+      radius: (json['radius'] as num).toInt(),
       updatedOn:
           const MyDateTimeConverter().fromJson(json['updatedOn'] as Timestamp),
       requestId: json['requestId'] as String?,
@@ -20,8 +20,8 @@ _$EmbeddedDataImpl _$$EmbeddedDataImplFromJson(Map<String, dynamic> json) =>
       sessionName: json['sessionName'] as String?,
       isStatic: json['isStatic'] as bool? ?? false,
       dedicated: json['dedicated'] as bool? ?? false,
-      count: json['count'] as int? ?? 0,
-      totalCount: json['totalCount'] as int? ?? 0,
+      count: (json['count'] as num?)?.toInt() ?? 0,
+      totalCount: (json['totalCount'] as num?)?.toInt() ?? 0,
       createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['createdAt'], const MyDateTimeConverter().fromJson),
       position: _$JsonConverterFromJson<GeoPoint, GeoPoint>(

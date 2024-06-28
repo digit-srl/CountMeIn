@@ -1,6 +1,7 @@
 import 'package:countmein/domain/entities/user_ids.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/confirm_invite_state.dart';
+import 'package:countmein/src/admin/domain/entities/cmi_event.dart';
 import 'package:countmein/src/admin/ui/screens/admin_archived_events.dart';
 import 'package:countmein/src/admin/ui/screens/event_users.dart';
 import 'package:countmein/src/admin/ui/screens/managers.dart';
@@ -12,6 +13,7 @@ import 'package:countmein/src/auth/application/auth_state.dart';
 import 'package:countmein/src/auth/application/reset_password_notifier.dart';
 import 'package:countmein/src/auth/ui/screens/invite_form_confirm.dart';
 import 'package:countmein/src/features/create_events_batch/ui/create_events_batch_screen.dart';
+import 'package:countmein/src/features/create_events_batch/ui/create_sessions_batch_screen.dart';
 import 'package:countmein/src/totem/ui/embedded_screen_v2.dart';
 import 'package:countmein/src/user/ui/screens/recover_user_card.dart';
 import 'package:countmein/src/user/ui/screens/user_dashboard.dart';
@@ -210,54 +212,69 @@ class RouterNotifier extends ChangeNotifier {
                       ),
                     ),
                     GoRoute(
-                        name: EventDetailsScreen.routeName,
-                        path: '${EventDetailsScreen.routeName}/:eventId',
-                        builder: (context, state) {
-                          final eventId =
-                              state.pathParameters['eventId'] as String;
-                          final providerId =
-                              state.pathParameters['providerId'] as String;
-                          return EventDetailsScreen(
-                            eventId: eventId,
-                            providerId: providerId,
-                          );
-                        },
-                        routes: [
-                          GoRoute(
-                            name: EventUsersScreen.routeName,
-                            path: EventUsersScreen.routeName,
-                            builder: (context, state) {
-                              final eventId =
-                                  state.pathParameters['eventId'] as String;
-                              final providerId =
-                                  state.pathParameters['providerId'] as String;
-                              final sessionId = state.queryParameters['s'];
-                              return EventUsersScreen(
-                                eventId: eventId,
-                                providerId: providerId,
-                                sessionId: sessionId,
-                              );
-                            },
-                          ),
-                          GoRoute(
-                            name: SessionDetailsScreen.routeName,
-                            path:
-                                '${SessionDetailsScreen.routeName}/:sessionId',
-                            builder: (context, state) {
-                              final eventId =
-                                  state.pathParameters['eventId'] as String;
-                              final providerId =
-                                  state.pathParameters['providerId'] as String;
-                              final sessionId =
-                                  state.pathParameters['sessionId'] as String;
-                              return SessionDetailsScreen(
-                                eventId: eventId,
-                                providerId: providerId,
-                                sessionId: sessionId,
-                              );
-                            },
-                          ),
-                        ],),
+                      name: EventDetailsScreen.routeName,
+                      path: '${EventDetailsScreen.routeName}/:eventId',
+                      builder: (context, state) {
+                        final eventId =
+                            state.pathParameters['eventId'] as String;
+                        final providerId =
+                            state.pathParameters['providerId'] as String;
+                        return EventDetailsScreen(
+                          eventId: eventId,
+                          providerId: providerId,
+                        );
+                      },
+                      routes: [
+                        GoRoute(
+                          name: EventUsersScreen.routeName,
+                          path: EventUsersScreen.routeName,
+                          builder: (context, state) {
+                            final eventId =
+                                state.pathParameters['eventId'] as String;
+                            final providerId =
+                                state.pathParameters['providerId'] as String;
+                            final sessionId = state.queryParameters['s'];
+                            return EventUsersScreen(
+                              eventId: eventId,
+                              providerId: providerId,
+                              sessionId: sessionId,
+                            );
+                          },
+                        ),
+                        GoRoute(
+                          name: SessionDetailsScreen.routeName,
+                          path: '${SessionDetailsScreen.routeName}/:sessionId',
+                          builder: (context, state) {
+                            final eventId =
+                                state.pathParameters['eventId'] as String;
+                            final providerId =
+                                state.pathParameters['providerId'] as String;
+                            final sessionId =
+                                state.pathParameters['sessionId'] as String;
+                            return SessionDetailsScreen(
+                              eventId: eventId,
+                              providerId: providerId,
+                              sessionId: sessionId,
+                            );
+                          },
+                        ),
+                        GoRoute(
+                          name: CreateSessionsBatchScreen.routeName,
+                          path:
+                              '${CreateSessionsBatchScreen.routeName}',
+                          builder: (context, state) {
+                            final eventId =
+                                state.pathParameters['eventId'] as String;
+                            final providerId =
+                                state.pathParameters['providerId'] as String;
+                            return CreateSessionsBatchScreen(
+                              providerId: providerId,
+                              eventId: eventId,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                     GoRoute(
                       path: ArchivedEventsScreen.routeName,
                       builder: (context, state) {

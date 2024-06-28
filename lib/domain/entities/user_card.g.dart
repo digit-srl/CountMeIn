@@ -64,9 +64,9 @@ _$EventUserImpl _$$EventUserImplFromJson(Map<String, dynamic> json) =>
       checkOutAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['checkOutAt'], const MyDateTimeConverter().fromJson),
       groupName: json['groupName'] as String?,
-      averageAge: json['averageAge'] as int?,
-      groupCount: json['groupCount'] as int?,
-      participationCount: json['participationCount'] as int?,
+      averageAge: (json['averageAge'] as num?)?.toInt(),
+      groupCount: (json['groupCount'] as num?)?.toInt(),
+      participationCount: (json['participationCount'] as num?)?.toInt(),
       womanPercentage: (json['womanPercentage'] as num?)?.toDouble(),
       manPercentage: (json['manPercentage'] as num?)?.toDouble(),
       position: _$JsonConverterFromJson<GeoPoint, GeoPoint>(

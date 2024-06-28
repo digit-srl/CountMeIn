@@ -11,7 +11,7 @@ _$CMIEventImpl _$$CMIEventImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       name: json['name'] as String,
       accessType: $enumDecode(_$EventAccessTypeEnumMap, json['accessType']),
-      maxWomCount: json['maxWomCount'] as int,
+      maxWomCount: (json['maxWomCount'] as num).toInt(),
       type: $enumDecode(_$EventTypeEnumMap, json['type']),
       createdOn:
           const MyDateTimeConverter().fromJson(json['createdOn'] as Timestamp),
@@ -24,8 +24,8 @@ _$CMIEventImpl _$$CMIEventImplFromJson(Map<String, dynamic> json) =>
       emailShowed: json['emailShowed'] as bool? ?? false,
       frequency:
           const FrequencyTypeConverter().fromJson(json['frequency'] as String?),
-      recurrence: json['recurrence'] as int?,
-      remaining: json['remaining'] as int?,
+      recurrence: (json['recurrence'] as num?)?.toInt(),
+      remaining: (json['remaining'] as num?)?.toInt(),
       totalUsers: json['totalUsers'] as num? ?? 0,
       genderCount: json['genderCount'] == null
           ? null

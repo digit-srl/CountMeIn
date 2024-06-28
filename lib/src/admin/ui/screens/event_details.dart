@@ -18,6 +18,7 @@ import 'package:countmein/src/admin/ui/widgets/start_end_date_form.dart';
 import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
+import 'package:countmein/src/features/create_events_batch/ui/create_sessions_batch_screen.dart';
 import 'package:countmein/src/totem/ui/dedicated_totems.dart';
 import 'package:countmein/src/totem/ui/totems.dart';
 import 'package:countmein/ui/validators.dart';
@@ -55,7 +56,9 @@ class EventDetailsScreen extends ConsumerStatefulWidget {
   final String providerId;
 
   const EventDetailsScreen({
-    required this.eventId, required this.providerId, super.key,
+    required this.eventId,
+    required this.providerId,
+    super.key,
   });
 
   @override
@@ -85,8 +88,10 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 8),
-                  Text('Scegli il tipo di scansione',
-                      style: Theme.of(context).textTheme.titleLarge,),
+                  Text(
+                    'Scegli il tipo di scansione',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
                   CMICard(
                     onTap: () {
                       Navigator.of(c).pop(ScanMode.checkIn);
@@ -154,17 +159,18 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
           title: Text(eventState.asData?.value.name ?? ''),
           actions: [
             IconButton(
-                icon: const Icon(Icons.share),
-                color: Colors.white,
-                onPressed: () {
-                  final linkEvent =
-                      'http://cmi.digit.srl/admin/providers/dashboard/${widget.providerId}/event/${widget.eventId}';
-                  Share.share(linkEvent);
-                  // Clipboard.setData(ClipboardData(text: linkEvent));
-                  // showCustomToast(
-                  //   'Link evento copiato negli appunti',
-                  // );
-                },),
+              icon: const Icon(Icons.share),
+              color: Colors.white,
+              onPressed: () {
+                final linkEvent =
+                    'http://cmi.digit.srl/admin/providers/dashboard/${widget.providerId}/event/${widget.eventId}';
+                Share.share(linkEvent);
+                // Clipboard.setData(ClipboardData(text: linkEvent));
+                // showCustomToast(
+                //   'Link evento copiato negli appunti',
+                // );
+              },
+            ),
             IconButton(
               icon: const Icon(Icons.qr_code_scanner),
               onPressed: eventData != null &&
@@ -212,16 +218,20 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                       ),
                       const SizedBox(width: 24),
                       Flexible(
-                        child: Consumer(builder: (context, ref, child) {
-                          final aims =
-                              ref.watch(getAimsProvider).valueOrNull ?? [];
-                          final aim = aims.firstWhereOrNull((Aim a) =>
-                              a.code == (eventData?.aim ?? provider?.aim),);
-                          return InfoText(
-                            label: 'AIM',
-                            value: aim?.title(languageCode: 'it'),
-                          );
-                        },),
+                        child: Consumer(
+                          builder: (context, ref, child) {
+                            final aims =
+                                ref.watch(getAimsProvider).valueOrNull ?? [];
+                            final aim = aims.firstWhereOrNull(
+                              (Aim a) =>
+                                  a.code == (eventData?.aim ?? provider?.aim),
+                            );
+                            return InfoText(
+                              label: 'AIM',
+                              value: aim?.title(languageCode: 'it'),
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -229,8 +239,9 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                     children: [
                       Flexible(
                         child: InfoText(
-                            label: 'Anonimo',
-                            value: eventData?.anonymous.toString(),),
+                          label: 'Anonimo',
+                          value: eventData?.anonymous.toString(),
+                        ),
                       ),
                       const SizedBox(width: 24),
                       Flexible(
@@ -280,8 +291,9 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                                     child: Chip(
                                       label: Text(
                                         e.name,
-                                        style:
-                                            Theme.of(context).textTheme.bodySmall,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
                                       ),
                                     ),
                                   ),
@@ -320,8 +332,9 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                               onPressed: () async {
                                 final n = Navigator.of(context);
                                 await Cloud.eventDoc(
-                                        widget.providerId, widget.eventId,)
-                                    .update({
+                                  widget.providerId,
+                                  widget.eventId,
+                                ).update({
                                   'status': EventStatus.archived.name,
                                   'activeSessionId': null,
                                 });
@@ -335,16 +348,23 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                             const SizedBox(width: 16),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.red,),
+                                backgroundColor: Colors.red,
+                              ),
                               onPressed: () async {
                                 final n = Navigator.of(context);
-                                final res = await ask(context,
-                                    'Sicuro di voler eliminare questo evento',);
+                                final res = await ask(
+                                  context,
+                                  'Sicuro di voler eliminare questo evento',
+                                );
                                 if (res ?? false) {
                                   final batch =
                                       FirebaseFirestore.instance.batch();
-                                  batch.delete(Cloud.eventDoc(
-                                      widget.providerId, widget.eventId,),);
+                                  batch.delete(
+                                    Cloud.eventDoc(
+                                      widget.providerId,
+                                      widget.eventId,
+                                    ),
+                                  );
                                   await batch.commit();
                                   n.pop();
                                 }
@@ -568,6 +588,19 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                 providerId: ids.providerId,
                 eventId: ids.eventId,
               ),
+              if (role != UserRole.scanner)
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        final path =
+                            '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${widget.providerId}/${EventDetailsScreen.routeName}/${widget.eventId}/${CreateSessionsBatchScreen.routeName}';
+                        context.go(path);
+                      },
+                      child: Text('Crea sessioni in batch'),
+                    ),
+                  ],
+                ),
               GenericGridView(
                 children: [
                   if ((isAdmin || isManager) && eventData.isManual)
@@ -575,36 +608,44 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                       center: true,
                       onTap: () {
                         showDialog(
-                            context: context,
-                            builder: (c) {
-                              return NewSessionDialog(
-                                onSave: (name, createAndEnable, startDate,
-                                    endDate,) async {
-                                  final subEv = CMISubEvent(
-                                    id: const Uuid().v4(),
-                                    name: name,
-                                    startAt: startDate,
-                                    endAt: endDate,
-                                  );
-                                  final batch =
-                                      FirebaseFirestore.instance.batch();
+                          context: context,
+                          builder: (c) {
+                            return NewSessionDialog(
+                              onSave: (
+                                name,
+                                createAndEnable,
+                                startDate,
+                                endDate,
+                              ) async {
+                                final subEv = CMISubEvent(
+                                  id: const Uuid().v4(),
+                                  name: name,
+                                  startAt: startDate,
+                                  endAt: endDate,
+                                );
+                                final batch =
+                                    FirebaseFirestore.instance.batch();
+                                batch.set(
+                                  Cloud.sessionCollection(ids).doc(subEv.id),
+                                  subEv.toJson(),
+                                );
+                                if (createAndEnable) {
                                   batch.set(
-                                      Cloud.sessionCollection(ids)
-                                          .doc(subEv.id),
-                                      subEv.toJson(),);
-                                  if (createAndEnable) {
-                                    batch.set(
-                                        Cloud.eventDoc(
-                                            widget.providerId, widget.eventId,),
-                                        {
-                                          'activeSessionId': subEv.id,
-                                        },
-                                        SetOptions(merge: true),);
-                                  }
-                                  await batch.commit();
-                                },
-                              );
-                            },);
+                                    Cloud.eventDoc(
+                                      widget.providerId,
+                                      widget.eventId,
+                                    ),
+                                    {
+                                      'activeSessionId': subEv.id,
+                                    },
+                                    SetOptions(merge: true),
+                                  );
+                                }
+                                await batch.commit();
+                              },
+                            );
+                          },
+                        );
                       },
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -666,7 +707,12 @@ class SessionItem extends StatelessWidget {
   final bool isAdmin;
 
   const SessionItem({
-    required this.session, required this.manualEvent, required this.isActive, required this.ids, required this.isAdmin, super.key,
+    required this.session,
+    required this.manualEvent,
+    required this.isActive,
+    required this.ids,
+    required this.isAdmin,
+    super.key,
   });
 
   static final formatter = DateFormat('EEEE,d MMMM, yyyy', 'it_IT');
@@ -687,52 +733,61 @@ class SessionItem extends StatelessWidget {
                   case SessionAction.close:
                     final batch = FirebaseFirestore.instance.batch();
                     batch.set(
-                        Cloud.eventDoc(providerId, eventId),
-                        {
-                          'activeSessionId': null,
-                        },
-                        SetOptions(merge: true),);
+                      Cloud.eventDoc(providerId, eventId),
+                      {
+                        'activeSessionId': null,
+                      },
+                      SetOptions(merge: true),
+                    );
                     batch.set(
-                        Cloud.sessionDoc(
-                          EventIds(
-                            providerId: providerId,
-                            eventId: eventId,
-                            sessionId: session.id,
-                          ),
+                      Cloud.sessionDoc(
+                        EventIds(
+                          providerId: providerId,
+                          eventId: eventId,
+                          sessionId: session.id,
                         ),
-                        {'endAt': Timestamp.fromDate(DateTime.now())},
-                        SetOptions(merge: true),);
+                      ),
+                      {'endAt': Timestamp.fromDate(DateTime.now())},
+                      SetOptions(merge: true),
+                    );
                     batch.commit();
                     return;
                   case SessionAction.open:
                     final batch = FirebaseFirestore.instance.batch();
                     batch.set(
-                        Cloud.eventDoc(providerId, eventId),
-                        {
-                          'activeSessionId': session.id,
-                          'status': EventStatus.live.name,
-                        },
-                        SetOptions(merge: true),);
+                      Cloud.eventDoc(providerId, eventId),
+                      {
+                        'activeSessionId': session.id,
+                        'status': EventStatus.live.name,
+                      },
+                      SetOptions(merge: true),
+                    );
                     batch.set(
-                        Cloud.sessionDoc(
-                          EventIds(
-                            providerId: providerId,
-                            eventId: eventId,
-                            sessionId: session.id,
-                          ),
+                      Cloud.sessionDoc(
+                        EventIds(
+                          providerId: providerId,
+                          eventId: eventId,
+                          sessionId: session.id,
                         ),
-                        {'endAt': null},
-                        SetOptions(merge: true),);
+                      ),
+                      {'endAt': null},
+                      SetOptions(merge: true),
+                    );
                     batch.commit();
 
                     return;
                   case SessionAction.delete:
-                    final res = await ask(context,
-                        'Sicuro di voler eliminare la sessione ${session.name}?',);
+                    final res = await ask(
+                      context,
+                      'Sicuro di voler eliminare la sessione ${session.name}?',
+                    );
                     if (res ?? false) {
                       final batch = FirebaseFirestore.instance.batch();
-                      batch.delete(Cloud.sessionDoc(
-                          ids.copyWith(sessionId: session.id),),);
+                      batch.delete(
+                        Cloud.sessionDoc(
+                          ids.copyWith(sessionId: session.id),
+                        ),
+                      );
                       if (isActive) {
                         batch.update(Cloud.eventDoc(providerId, eventId), {
                           'activeSessionId': null,
@@ -814,7 +869,10 @@ class ScanSimulationWidget extends HookConsumerWidget {
   final Function(String) onScan;
 
   const ScanSimulationWidget({
-    required this.event, required this.onScan, required this.provider, super.key,
+    required this.event,
+    required this.onScan,
+    required this.provider,
+    super.key,
   });
 
   @override
@@ -827,15 +885,19 @@ class ScanSimulationWidget extends HookConsumerWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Prova la scansione',
-              style: Theme.of(context).textTheme.titleLarge,),
+          Text(
+            'Prova la scansione',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           CMITextField(
             controller: dataController,
             hintText: 'Qr Code data',
           ),
           const SizedBox(height: 8),
-          Text('Scegli il tipo di scansione',
-              style: Theme.of(context).textTheme.titleLarge,),
+          Text(
+            'Scegli il tipo di scansione',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           const SizedBox(height: 16),
           ToggleButtons(
             isSelected:
@@ -858,10 +920,11 @@ class ScanSimulationWidget extends HookConsumerWidget {
           ),
           const SizedBox(height: 16),
           ElevatedButton(
-              onPressed: () {
-                onScan(dataController.text.trim());
-              },
-              child: const Text('Try'),),
+            onPressed: () {
+              onScan(dataController.text.trim());
+            },
+            child: const Text('Try'),
+          ),
         ],
       ),
     );
@@ -913,11 +976,12 @@ class NewSessionDialog extends HookConsumerWidget {
               Row(
                 children: [
                   Checkbox(
-                      value: createAndEnabled.value,
-                      onChanged: (value) {
-                        if (value == null) return;
-                        createAndEnabled.value = value;
-                      },),
+                    value: createAndEnabled.value,
+                    onChanged: (value) {
+                      if (value == null) return;
+                      createAndEnabled.value = value;
+                    },
+                  ),
                   const SizedBox(width: 16),
                   const Text('Attiva sessione alla creazione'),
                 ],
@@ -928,8 +992,12 @@ class NewSessionDialog extends HookConsumerWidget {
                   if (formKey.currentState!.validate()) {
                     logger.i(start.value.toString());
                     logger.i(end.value);
-                    onSave(controller.text.trim(), createAndEnabled.value,
-                        start.value, end.value,);
+                    onSave(
+                      controller.text.trim(),
+                      createAndEnabled.value,
+                      start.value,
+                      end.value,
+                    );
                     Navigator.of(context).pop();
                   }
                 },

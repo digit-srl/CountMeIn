@@ -475,7 +475,9 @@ class NewEventFormScreen extends HookConsumerWidget {
                     const SizedBox(height: 8),
                     TextFormField(
                       controller: totems.value[i].$3,
-                      validator: emailValidator.call,
+                      validator: EmailValidator(
+                              errorText: 'enter a valid email address')
+                          .call,
                       decoration: const InputDecoration(
                         hintText: 'Email',
                         labelText: 'Email',
