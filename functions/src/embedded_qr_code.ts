@@ -1031,7 +1031,7 @@ export const scan3SecondGen = onRequest(
       userLong
     );
 
-    response.status(200).send({
+    const output = {
       status: "success",
       link: wom.link,
       pin: wom.pin,
@@ -1043,7 +1043,9 @@ export const scan3SecondGen = onRequest(
       totemName: totemData.name,
       providerName: providerData.name,
       metadata: totemData.metadata,
-    });
+    };
+    console.log(output);
+    response.status(200).send(output);
   }
 );
 
