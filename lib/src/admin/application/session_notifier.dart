@@ -10,10 +10,10 @@ part 'session_notifier.g.dart';
 
 @riverpod
 Stream<List<CMISubEvent>> sessionsStream(
-    SessionsStreamRef ref, EventIds ids,) async* {
-  // final providerId = ids.providerId;
-  // final eventId = ids.eventId;
-  final stream = Cloud.sessionCollection(ids).snapshots();
+  SessionsStreamRef ref,
+  EventIds ids,
+) async* {
+  final stream = Cloud.sessionCollection(ids).orderBy('startAt').snapshots();
 
   await for (final snap in stream) {
     logger.i('sessionsStreamProvider: ${snap.docs.length} sessioni trovate');
@@ -29,7 +29,8 @@ Stream<List<CMISubEvent>> sessionsStream(
       }
     }
     logger.i(
-        'sessionsStreamProvider: mostrate ${list.length}/${snap.docs.length}',);
+      'sessionsStreamProvider: mostrate ${list.length}/${snap.docs.length}',
+    );
     yield list;
   }
 }
@@ -40,9 +41,11 @@ Stream<CMISubEvent> getSession(GetSessionRef ref, EventIds ids) async* {
 
   if (ref.exists(sessionsStreamProvider(ids))) {
     logger.i('subEventProvider: subEventsStreamProvider exists');
-    final itemFromItemList = await ref.watch(sessionsStreamProvider(ids)
-        .selectAsync((list) =>
-        list.firstWhereOrNull((event) => event.id == subEventId),),);
+    final itemFromItemList = await ref.watch(
+      sessionsStreamProvider(ids).selectAsync(
+        (list) => list.firstWhereOrNull((event) => event.id == subEventId),
+      ),
+    );
     if (itemFromItemList != null) {
       logger.i('subEventProvider: emit from existing provider');
       yield itemFromItemList;

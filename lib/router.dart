@@ -14,6 +14,7 @@ import 'package:countmein/src/auth/application/reset_password_notifier.dart';
 import 'package:countmein/src/auth/ui/screens/invite_form_confirm.dart';
 import 'package:countmein/src/features/create_events_batch/ui/create_events_batch_screen.dart';
 import 'package:countmein/src/features/create_events_batch/ui/create_sessions_batch_screen.dart';
+import 'package:countmein/src/features/create_events_batch/ui/create_totems_batch_screen.dart';
 import 'package:countmein/src/totem/ui/embedded_screen_v2.dart';
 import 'package:countmein/src/user/ui/screens/recover_user_card.dart';
 import 'package:countmein/src/user/ui/screens/user_dashboard.dart';
@@ -260,14 +261,27 @@ class RouterNotifier extends ChangeNotifier {
                         ),
                         GoRoute(
                           name: CreateSessionsBatchScreen.routeName,
-                          path:
-                              '${CreateSessionsBatchScreen.routeName}',
+                          path: CreateSessionsBatchScreen.routeName,
                           builder: (context, state) {
                             final eventId =
                                 state.pathParameters['eventId'] as String;
                             final providerId =
                                 state.pathParameters['providerId'] as String;
                             return CreateSessionsBatchScreen(
+                              providerId: providerId,
+                              eventId: eventId,
+                            );
+                          },
+                        ),
+                        GoRoute(
+                          name: CreateTotemsBatchScreen.routeName,
+                          path: CreateTotemsBatchScreen.routeName,
+                          builder: (context, state) {
+                            final eventId =
+                                state.pathParameters['eventId'] as String;
+                            final providerId =
+                                state.pathParameters['providerId'] as String;
+                            return CreateTotemsBatchScreen(
                               providerId: providerId,
                               eventId: eventId,
                             );

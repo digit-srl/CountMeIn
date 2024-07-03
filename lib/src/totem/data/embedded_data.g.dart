@@ -68,6 +68,7 @@ Json? _$JsonConverterToJson<Json, Value>(
 _$EmbeddedMetaDataImpl _$$EmbeddedMetaDataImplFromJson(
         Map<String, dynamic> json) =>
     _$EmbeddedMetaDataImpl(
+      url: json['url'] as String?,
       email: json['email'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
     );
@@ -75,6 +76,7 @@ _$EmbeddedMetaDataImpl _$$EmbeddedMetaDataImplFromJson(
 Map<String, dynamic> _$$EmbeddedMetaDataImplToJson(
         _$EmbeddedMetaDataImpl instance) =>
     <String, dynamic>{
+      'url': instance.url,
       'email': instance.email,
       'phoneNumber': instance.phoneNumber,
     };

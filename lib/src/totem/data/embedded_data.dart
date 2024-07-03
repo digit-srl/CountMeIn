@@ -37,6 +37,7 @@ class EmbeddedData with _$EmbeddedData {
 class EmbeddedMetaData with _$EmbeddedMetaData {
   @JsonSerializable(explicitToJson: true)
   const factory EmbeddedMetaData({
+    String? url,
     String? email,
     String? phoneNumber,
   }) = _EmbeddedMetaData;

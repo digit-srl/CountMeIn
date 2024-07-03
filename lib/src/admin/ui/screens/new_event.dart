@@ -114,7 +114,8 @@ class NewEventFormScreen extends HookConsumerWidget {
               TextEditingController,
               bool,
               TextEditingController,
-              TextEditingController
+              TextEditingController,
+              TextEditingController,
             )>>([]);
     final releaseWom = useState<bool>(false);
     final emailEnabled = useState<bool>(false);
@@ -375,6 +376,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                             TextEditingController(text: 'Totem 1'),
                             true,
                             TextEditingController(),
+                            TextEditingController(),
                             TextEditingController()
                           ),
                         ];
@@ -422,12 +424,14 @@ class NewEventFormScreen extends HookConsumerWidget {
                       child: Row(
                         children: [
                           CircleAvatar(
-                              backgroundColor: Theme.of(context).primaryColor,
-                              child: Text(
-                                '${i + 1}',
-                                style: TextStyle(
-                                    color: Theme.of(context).canvasColor),
-                              )),
+                            backgroundColor: Theme.of(context).primaryColor,
+                            child: Text(
+                              '${i + 1}',
+                              style: TextStyle(
+                                color: Theme.of(context).canvasColor,
+                              ),
+                            ),
+                          ),
                           const SizedBox(width: 16),
                           Flexible(
                             child: TextFormField(
@@ -458,7 +462,8 @@ class NewEventFormScreen extends HookConsumerWidget {
                                 onChanged: (value) {
                                   final tmp = totems.value.toList();
                                   final o = tmp.removeAt(i);
-                                  tmp.insert(i, (o.$1, value, o.$3, o.$4));
+                                  tmp.insert(
+                                      i, (o.$1, value, o.$3, o.$4, o.$5));
                                   totems.value = tmp;
                                 },
                               ),
@@ -476,8 +481,8 @@ class NewEventFormScreen extends HookConsumerWidget {
                     TextFormField(
                       controller: totems.value[i].$3,
                       validator: EmailValidator(
-                              errorText: 'enter a valid email address')
-                          .call,
+                        errorText: 'enter a valid email address',
+                      ).call,
                       decoration: const InputDecoration(
                         hintText: 'Email',
                         labelText: 'Email',
@@ -489,6 +494,14 @@ class NewEventFormScreen extends HookConsumerWidget {
                       decoration: const InputDecoration(
                         hintText: 'Phone number',
                         labelText: 'Phone number',
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: totems.value[i].$5,
+                      decoration: const InputDecoration(
+                        hintText: 'URL',
+                        labelText: 'URL',
                       ),
                     ),
                   ],
@@ -507,6 +520,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                       text: 'Totem ${totems.value.length + 1}',
                     ),
                     true,
+                    TextEditingController(),
                     TextEditingController(),
                     TextEditingController(),
                   ),
@@ -641,6 +655,7 @@ class NewEventFormScreen extends HookConsumerWidget {
                       id: currentSubEventId,
                       startAt: sessionStartAt,
                       endAt: sessionEndAt,
+                      name: currentSubEventId,
                     );
 
                     final t = <EmbeddedData>[];
@@ -648,15 +663,22 @@ class NewEventFormScreen extends HookConsumerWidget {
                       for (int i = 0; i < totems.value.length; i++) {
                         final email = totems.value[i].$3.text.trim();
                         final phoneNumber = totems.value[i].$4.text.trim();
+                        final url = totems.value[i].$5.text.trim();
 
                         EmbeddedMetaData? metadata;
-                        if (email.isNotEmpty || phoneNumber.isNotEmpty) {
+                        if (email.isNotEmpty ||
+                            phoneNumber.isNotEmpty ||
+                            url.isNotEmpty) {
                           metadata = EmbeddedMetaData(
                             email: email.isEmpty ? null : email,
                             phoneNumber:
                                 phoneNumber.isEmpty ? null : phoneNumber,
+                            url: url.isEmpty ? null : url,
                           );
                         }
+                        // Per i totem dedicati non ha senso inserire la sessionId
+                        // in quanto il totem si adatta alle sessioni attive dell'
+                        // evento
                         final tmp = EmbeddedData(
                           name: totems.value[i].$1.text.trim(),
                           id: const Uuid().v4(),

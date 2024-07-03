@@ -19,6 +19,7 @@ import 'package:countmein/src/auth/application/auth_notifier.dart';
 import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/features/create_events_batch/ui/create_sessions_batch_screen.dart';
+import 'package:countmein/src/features/create_events_batch/ui/create_totems_batch_screen.dart';
 import 'package:countmein/src/totem/ui/dedicated_totems.dart';
 import 'package:countmein/src/totem/ui/totems.dart';
 import 'package:countmein/ui/validators.dart';
@@ -330,7 +331,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                                 backgroundColor: Colors.green,
                               ),
                               onPressed: () async {
-                                final n = Navigator.of(context);
+                                // final n = Navigator.of(context);
                                 await Cloud.eventDoc(
                                   widget.providerId,
                                   widget.eventId,
@@ -383,206 +384,29 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            /* if (eventData != null)
-              GenericGridViewBuilder(
-                itemCount: eventData.isPeriodic
-                    ? subEvents.length + 1
-                    : eventData.isManual
-                        ? subEvents.length + 2
-                        : 1,
-                itemBuilder: (c, index) {
-                  if (eventData.isManual && index == 0) {
-                    return CMICard(
-                      center: true,
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (c) {
-                              return Dialog(
-                                child: NewSession(
-                                    onSave: (name, createAndEnable) async {
-                                  final subEv = CMISubEvent(
-                                    id: const Uuid().v4(),
-                                    name: name,
-                                    startAt: DateTime.now(),
-                                  );
-                                  await Cloud.sessionCollection(ids)
-                                      .doc(subEv.id)
-                                      .set(subEv.toJson());
-                                  if (createAndEnable) {
-                                    Cloud.eventDoc(
-                                            widget.providerId, widget.eventId)
-                                        .update({
-                                      'activeSessionId': subEv.id,
-                                    });
-                                  }
-                                }),
-                              );
-                            });
-                      },
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.add),
-                          Text(
-                            'Nuova Sessione',
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                  if ((eventData.isPeriodic && index == 0) ||
-                      (eventData.isManual && index == 1)) {
-                    return CMICard(
-                      center: true,
-                      onTap: () {
+            if (eventData != null) ...[
+              if (role != UserRole.scanner)
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () {
                         final path =
-                            '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${widget.providerId}/${EventDetailsScreen.routeName}/${widget.eventId}/${EventUsersScreen.routeName}';
+                            '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${widget.providerId}/${EventDetailsScreen.routeName}/${widget.eventId}/${CreateTotemsBatchScreen.routeName}';
                         context.go(path);
                       },
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Utenti unici',
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                          if (eventData.totalUsers != null &&
-                              eventData.totalUsers! > 0)
-                            Text(
-                              // subEvent.id,
-                              '${eventData.totalUsers} utenti',
-                              style: Theme.of(context).textTheme.caption,
-                            ),
-                        ],
-                      ),
-                    );
-                  }
-                  final realIndex = index -
-                      (eventData.isPeriodic
-                          ? 1
-                          : eventData.isManual
-                              ? 2
-                              : 0);
-                  final subEvent = subEvents[realIndex];
-                  return CMICard(
-                    center: true,
-                    trailing: eventData.isManual
-                        ? PopupMenuButton(
-                            icon: const Icon(Icons.more_vert),
-                            onSelected: (SessionAction item) async {
-                              switch (item) {
-                                case SessionAction.close:
-                                  Cloud.eventDoc(
-                                          widget.providerId, widget.eventId)
-                                      .update({
-                                    'activeSessionId': null,
-                                  });
-                                  return;
-                                case SessionAction.open:
-                                  Cloud.eventDoc(
-                                          widget.providerId, widget.eventId)
-                                      .update({
-                                    'activeSessionId': subEvent.id,
-                                  });
-                                  return;
-                                case SessionAction.delete:
-                                  final res = await ask(context,
-                                      'Sicuro di voler eliminare la sessione ${subEvent.name}?');
-                                  if (res ?? false) {
-                                    await Cloud.sessionDoc(ids.copyWith(
-                                            sessionId: subEvent.id))
-                                        .delete();
-                                    if (eventData.activeSessionId ==
-                                        subEvent.id) {
-                                      await Cloud.eventDoc(
-                                              widget.providerId, widget.eventId)
-                                          .update({'activeSessionId': null});
-                                    }
-                                  }
-                              }
-                            },
-                            itemBuilder: (BuildContext context) =>
-                                <PopupMenuEntry<SessionAction>>[
-                              if (eventData.activeSessionId == subEvent.id)
-                                const PopupMenuItem<SessionAction>(
-                                  value: SessionAction.close,
-                                  child: Text('Chiudi sessione'),
-                                )
-                              else
-                                PopupMenuItem<SessionAction>(
-                                  value: SessionAction.open,
-                                  textStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.copyWith(color: Colors.green),
-                                  child: Text('Attiva sessione'),
-                                ),
-                              PopupMenuItem<SessionAction>(
-                                value: SessionAction.delete,
-                                textStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1
-                                    ?.copyWith(color: Colors.red),
-                                child: Text(
-                                  'Elimina sessione',
-                                ),
-                              ),
-                            ],
-                          )
-                        : null,
-                    leading: subEvent.id == eventData.activeSessionId
-                        ? const CMIChip(
-                            text: 'ATTIVO',
-                          )
-                        : null,
-                    onTap: () {
-                      final path =
-                          '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${widget.providerId}/${EventDetailsScreen.routeName}/${widget.eventId}/${EventUsersScreen.routeName}?s=${subEvent.id}';
-                      context.go(path);
-                      // context.pushNamed(
-                      //   EventUsersScreen.routeName,
-                      //   queryParams: {
-                      //     'subEventId': subEvent.id,
-                      //   },
-                      //   params: {
-                      //     'eventId': widget.eventId,
-                      //     'providerId': widget.providerId,
-                      //   },
-                      // );
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          // subEvent.id,
-                          subEvent.name ?? formatter.format(subEvent.startAt),
-                          style: Theme.of(context).textTheme.subtitle1,
-                        ),
-                        Text(
-                          // subEvent.id,
-                          '${subEvent.totalUsers} utenti',
-                          style: Theme.of(context).textTheme.caption,
-                        ),
-                        if (kDebugMode)
-                          FittedBox(
-                            child: Text(
-                              subEvent.id,
-                              style: Theme.of(context).textTheme.caption,
-                            ),
-                          ),
-                      ],
+                      child: const Text('Crea totems in batch'),
                     ),
-                  );
-                },
-              ),*/
-
-            if (eventData != null) ...[
+                  ],
+                ),
               DedicatedTotemsCardWidget(
                 providerId: ids.providerId,
                 eventId: ids.eventId,
-                sessionId: eventData.activeSessionId,
+                activeSessionId: eventData.activeSessionId,
+                eventName: eventData.name,
+                womCount: eventData.maxWomCount,
+                activeSessionName: sessions
+                    .firstWhereOrNull((s) => s.id == eventData.activeSessionId)
+                    ?.name,
               ),
               AssignedTotemsWidget(
                 providerId: ids.providerId,
@@ -597,7 +421,7 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                             '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${widget.providerId}/${EventDetailsScreen.routeName}/${widget.eventId}/${CreateSessionsBatchScreen.routeName}';
                         context.go(path);
                       },
-                      child: Text('Crea sessioni in batch'),
+                      child: const Text('Crea sessioni in batch'),
                     ),
                   ],
                 ),
@@ -841,12 +665,12 @@ class SessionItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            // subEvent.id,
-            session.name ?? formatter.format(session.startAt),
+            session.name == null || session.name!.isEmpty
+                ? formatter.format(session.startAt)
+                : session.name!,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           Text(
-            // subEvent.id,
             '${session.totalUsers.toStringAsFixed(0)} utent${session.totalUsers > 1 ? 'i' : 'e'}',
             style: Theme.of(context).textTheme.bodySmall,
           ),

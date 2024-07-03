@@ -754,10 +754,11 @@ export const scan3SecondGen = onRequest(
 
     console.log(totemData);
     const eventId = totemData.eventId;
-    const sessionId = totemData.sessionId;
     const dedicated = totemData.dedicated;
 
-    if (eventId == null || sessionId == null) {
+    // I totem dedicati possono avere la session id a null, mentre quelli assegnati
+    // devono avere sia event id che session id impostati correttamente
+    if (eventId == null || (!dedicated && totemData.sessionId == null)) {
       response.status(200).send({
         status: "totemDisabled",
         message: "eventId or sessionId is missing",
@@ -783,12 +784,13 @@ export const scan3SecondGen = onRequest(
       return;
     }
 
-    if (!dedicated && eventData.activeSessionId != sessionId) {
+    // Se il totem non è dedicato deve essere allineato con l session id attiva
+    if (!dedicated && eventData.activeSessionId != totemData.sessionId) {
       const message =
         "event activeSessionId " +
         eventData.activeSessionId +
         " is not equal to totem sessionId " +
-        sessionId;
+        totemData.sessionId;
       console.log(message);
       response.status(200).send({
         status: "totemSessionInactive",
@@ -1040,10 +1042,12 @@ export const scan3SecondGen = onRequest(
       sessionName: sessionData.name,
       totemName: totemData.name,
       providerName: providerData.name,
+      metadata: totemData.metadata,
     });
   }
 );
 
+/// WIP: Nuova versione con controllo automatico delle sessioni da gestire
 export const scan3 = onRequest({ cors: true }, async (request, response) => {
   console.log(request.body);
 

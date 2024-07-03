@@ -17,7 +17,8 @@ class CMICard extends StatefulWidget {
   final Widget? leading;
 
   const CMICard({
-    required this.child, super.key,
+    required this.child,
+    super.key,
     this.iconBadge,
     this.onTap,
     this.margin,
@@ -52,7 +53,7 @@ class _CMICardState extends State<CMICard> {
       children: [
         if (widget.trailing != null || widget.leading != null)
           Padding(
-            padding: const EdgeInsets.symmetric(vertical:4.0),
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Row(
               children: [
                 if (widget.leading != null) widget.leading!,
@@ -77,9 +78,11 @@ class _CMICardState extends State<CMICard> {
                       opened = !opened;
                     });
                   },
-                  icon: Icon(opened
-                      ? Icons.keyboard_arrow_up
-                      : Icons.keyboard_arrow_down,),
+                  icon: Icon(
+                    opened
+                        ? Icons.keyboard_arrow_up
+                        : Icons.keyboard_arrow_down,
+                  ),
                 ),
               ),
           ],
@@ -128,13 +131,13 @@ class _CMICardState extends State<CMICard> {
           ),
       ],
     );*/
-    if (!widget.enabled) {
-      return child2;
-    }
+    // if (!widget.enabled) {
+    //   return child2;
+    // }
 
     return customBadge.Badge(
       badgeStyle: const customBadge.BadgeStyle(
-      badgeColor: Colors.orange,
+        badgeColor: Colors.orange,
       ),
       showBadge: widget.iconBadge != null,
       badgeContent: widget.iconBadge != null
@@ -144,13 +147,15 @@ class _CMICardState extends State<CMICard> {
             )
           : null,
       child: InkWell(
-        onTap: opened
-            ? widget.onTap
-            : () {
-                setState(() {
-                  opened = !opened;
-                });
-              },
+        onTap: widget.enabled
+            ? opened
+                ? widget.onTap
+                : () {
+                    setState(() {
+                      opened = !opened;
+                    });
+                  }
+            : null,
         child: Card(
           color: widget.inverseColor
               ? Theme.of(context).colorScheme.inversePrimary

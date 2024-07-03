@@ -44,36 +44,6 @@ class ProviderTotemsWidget extends ConsumerWidget {
         }
         final totem = totems[index - 1];
         return TotemCardWidget(providerId: providerId, totem: totem,deleteEnabled: true,);
-       /* return CMICard(
-          onTap: () {
-            showDialog(
-                context: context,
-                builder: (context) => NewTotemScreen(
-                      providerId: providerId,
-                      totemId: totem.id,
-                    ));
-            // final path =
-            //     '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/$providerId/${NewTotemScreen.routeName}?totemId=${totem.id}';
-            // context.go(path);
-          },
-          leading: totem.eventId != null ? const CMIChip(text: 'Attivo') : null,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Spacer(),
-                ],
-              ),
-              Text(totem.name),
-              Text('${totem.count}/${totem.totalCount}'),
-              if (totem.isStatic)
-                const CMIChip(
-                  text: 'STATICO',
-                  color: Colors.purple,
-                ),
-            ],
-          ),
-        );*/
       },
     );
   }

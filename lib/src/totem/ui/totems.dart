@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum QrCodeAction {
-  goToQrCode,
+  edit,
   copyQrCodeLink,
   copyQrCode,
   resetCounters,

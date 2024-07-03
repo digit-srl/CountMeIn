@@ -24,13 +24,7 @@ class TotemCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        showDialog(
-          context: context,
-          builder: (context) => NewTotemDialog(
-            providerId: providerId,
-            totemId: totem.id,
-          ),
-        );
+        context.go('/embedded/$providerId/${totem.id}');
       },
       child: Card(
         color: Colors.blueGrey[600],
@@ -47,11 +41,17 @@ class TotemCardWidget extends StatelessWidget {
                     itemBuilder: (BuildContext context) =>
                         <PopupMenuEntry<QrCodeAction>>[
                       PopupMenuItem<QrCodeAction>(
-                        value: QrCodeAction.goToQrCode,
+                        value: QrCodeAction.edit,
                         enabled: true,
-                        child: const Text('Vai alla pagina'),
+                        child: const Text('Modifica'),
                         onTap: () {
-                          context.go('/embedded/$providerId/${totem.id}');
+                          showDialog(
+                            context: context,
+                            builder: (context) => NewTotemDialog(
+                              providerId: providerId,
+                              totemId: totem.id,
+                            ),
+                          );
                         },
                       ),
                       PopupMenuItem<QrCodeAction>(
@@ -72,7 +72,7 @@ class TotemCardWidget extends StatelessWidget {
                       ),
                       PopupMenuItem<QrCodeAction>(
                         value: QrCodeAction.copyQrCode,
-                        child: const Text('Copia QR-Code'),
+                        child: const Text('Copia QR-Code URL'),
                         onTap: () {
                           final qr = getTotemQRCode(
                               providerId, totem.id, totem.requestId,);
@@ -92,7 +92,6 @@ class TotemCardWidget extends StatelessWidget {
                           value: QrCodeAction.resetCounters,
                           child: const Text('Reset contatori'),
                           onTap: () {
-                            //TODO dobbiamo scollegare il totem dalla sessione?
                             Cloud.totemDoc(providerId, totem.id).update({
                               'count': 0,
                               'totalCount': 0,

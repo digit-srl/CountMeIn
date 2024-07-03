@@ -519,6 +519,7 @@ EmbeddedMetaData _$EmbeddedMetaDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$EmbeddedMetaData {
+  String? get url => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
 
@@ -534,7 +535,7 @@ abstract class $EmbeddedMetaDataCopyWith<$Res> {
           EmbeddedMetaData value, $Res Function(EmbeddedMetaData) then) =
       _$EmbeddedMetaDataCopyWithImpl<$Res, EmbeddedMetaData>;
   @useResult
-  $Res call({String? email, String? phoneNumber});
+  $Res call({String? url, String? email, String? phoneNumber});
 }
 
 /// @nodoc
@@ -550,10 +551,15 @@ class _$EmbeddedMetaDataCopyWithImpl<$Res, $Val extends EmbeddedMetaData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? url = freezed,
     Object? email = freezed,
     Object? phoneNumber = freezed,
   }) {
     return _then(_value.copyWith(
+      url: freezed == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -574,7 +580,7 @@ abstract class _$$EmbeddedMetaDataImplCopyWith<$Res>
       __$$EmbeddedMetaDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? email, String? phoneNumber});
+  $Res call({String? url, String? email, String? phoneNumber});
 }
 
 /// @nodoc
@@ -588,10 +594,15 @@ class __$$EmbeddedMetaDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? url = freezed,
     Object? email = freezed,
     Object? phoneNumber = freezed,
   }) {
     return _then(_$EmbeddedMetaDataImpl(
+      url: freezed == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -608,11 +619,13 @@ class __$$EmbeddedMetaDataImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$EmbeddedMetaDataImpl implements _EmbeddedMetaData {
-  const _$EmbeddedMetaDataImpl({this.email, this.phoneNumber});
+  const _$EmbeddedMetaDataImpl({this.url, this.email, this.phoneNumber});
 
   factory _$EmbeddedMetaDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$EmbeddedMetaDataImplFromJson(json);
 
+  @override
+  final String? url;
   @override
   final String? email;
   @override
@@ -620,7 +633,7 @@ class _$EmbeddedMetaDataImpl implements _EmbeddedMetaData {
 
   @override
   String toString() {
-    return 'EmbeddedMetaData(email: $email, phoneNumber: $phoneNumber)';
+    return 'EmbeddedMetaData(url: $url, email: $email, phoneNumber: $phoneNumber)';
   }
 
   @override
@@ -628,6 +641,7 @@ class _$EmbeddedMetaDataImpl implements _EmbeddedMetaData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EmbeddedMetaDataImpl &&
+            (identical(other.url, url) || other.url == url) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber));
@@ -635,7 +649,7 @@ class _$EmbeddedMetaDataImpl implements _EmbeddedMetaData {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, email, phoneNumber);
+  int get hashCode => Object.hash(runtimeType, url, email, phoneNumber);
 
   @JsonKey(ignore: true)
   @override
@@ -654,12 +668,15 @@ class _$EmbeddedMetaDataImpl implements _EmbeddedMetaData {
 
 abstract class _EmbeddedMetaData implements EmbeddedMetaData {
   const factory _EmbeddedMetaData(
-      {final String? email,
+      {final String? url,
+      final String? email,
       final String? phoneNumber}) = _$EmbeddedMetaDataImpl;
 
   factory _EmbeddedMetaData.fromJson(Map<String, dynamic> json) =
       _$EmbeddedMetaDataImpl.fromJson;
 
+  @override
+  String? get url;
   @override
   String? get email;
   @override

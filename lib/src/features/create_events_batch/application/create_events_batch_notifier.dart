@@ -275,6 +275,9 @@ class CreateEventsBatchNotifier extends _$CreateEventsBatchNotifier {
           );
       print('for eventId: $id there are ${sessions.length} sessions');
 
+      // Per i totem dedicati non ha senso inserire la sessionId
+      // in quanto il totem si adatta alle sessioni attive dell'
+      // evento
       final totem = EmbeddedData(
         name: 'Totem',
         id: const Uuid().v4(),
