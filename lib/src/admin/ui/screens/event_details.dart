@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:countmein/cloud.dart';
+import 'package:countmein/core/utils/alert_utils.dart';
 import 'package:countmein/my_logger.dart';
 import 'package:countmein/src/admin/application/aim_notifier.dart';
 import 'package:countmein/src/admin/application/events_stream.dart';
@@ -20,13 +23,18 @@ import 'package:countmein/src/auth/domain/entities/user.dart';
 import 'package:countmein/src/common/ui/widgets/cmi_container.dart';
 import 'package:countmein/src/features/create_events_batch/ui/create_sessions_batch_screen.dart';
 import 'package:countmein/src/features/create_events_batch/ui/create_totems_batch_screen.dart';
+import 'package:countmein/src/totem/application/totems_notifier.dart';
 import 'package:countmein/src/totem/ui/dedicated_totems.dart';
+import 'package:countmein/src/totem/ui/export_totems_screen.dart';
 import 'package:countmein/src/totem/ui/totems.dart';
+import 'package:countmein/src/totem/util.dart';
 import 'package:countmein/ui/validators.dart';
 import 'package:countmein/ui/widgets/cmi_chip.dart';
 import 'package:countmein/ui/widgets/my_text_field.dart';
 import 'package:countmein/utils.dart';
+import 'package:csv/csv.dart';
 import 'package:dart_wom_connector/dart_wom_connector.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -396,6 +404,53 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                       },
                       child: const Text('Crea totems in batch'),
                     ),
+                    TextButton(
+                      onPressed: () async {
+                        final totems = await ref.read(
+                          getTotemsByEventProvider(
+                            widget.providerId,
+                            widget.eventId,
+                            true,
+                          ).future,
+                        );
+                        final List<List<dynamic>> tmp = <List<dynamic>>[
+                          [
+                            'Nome',
+                            'QR-Code',
+                            'Email',
+                            'Telefono',
+                            'URL',
+                          ]
+                        ];
+
+                        for (final totem in totems) {
+                          tmp.add([
+                            totem.name,
+                            getTotemQRCode(
+                              widget.providerId,
+                              totem.id,
+                              totem.requestId,
+                            ),
+                            totem.metadata?.email,
+                            totem.metadata?.phoneNumber,
+                            totem.metadata?.url,
+                          ]);
+                        }
+                        String csv = const ListToCsvConverter().convert(tmp);
+                        await FileSaver.instance.saveFile(
+                          name:
+                              '${widget.eventId}_totems_${DateTime.now().millisecondsSinceEpoch}',
+                          bytes: Uint8List.fromList(utf8.encode(csv)),
+                          ext: 'csv',
+                        );
+                        if (!mounted) return;
+                        AlertUtils.showStandardMessage(
+                          context,
+                          'Csv salvato nella cartella dei downloads',
+                        );
+                      },
+                      child: const Text('Esporta totems'),
+                    ),
                   ],
                 ),
               DedicatedTotemsCardWidget(
@@ -586,17 +641,17 @@ class SessionItem extends StatelessWidget {
                       },
                       SetOptions(merge: true),
                     );
-                    batch.set(
-                      Cloud.sessionDoc(
-                        EventIds(
-                          providerId: providerId,
-                          eventId: eventId,
-                          sessionId: session.id,
-                        ),
-                      ),
-                      {'endAt': null},
-                      SetOptions(merge: true),
-                    );
+                    // batch.set(
+                    //   Cloud.sessionDoc(
+                    //     EventIds(
+                    //       providerId: providerId,
+                    //       eventId: eventId,
+                    //       sessionId: session.id,
+                    //     ),
+                    //   ),
+                    //   {'endAt': null},
+                    //   SetOptions(merge: true),
+                    // );
                     batch.commit();
 
                     return;

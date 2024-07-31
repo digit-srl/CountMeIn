@@ -16,6 +16,7 @@ import 'package:countmein/src/features/create_events_batch/ui/create_events_batc
 import 'package:countmein/src/features/create_events_batch/ui/create_sessions_batch_screen.dart';
 import 'package:countmein/src/features/create_events_batch/ui/create_totems_batch_screen.dart';
 import 'package:countmein/src/totem/ui/embedded_screen_v2.dart';
+import 'package:countmein/src/totem/ui/export_totems_screen.dart';
 import 'package:countmein/src/user/ui/screens/recover_user_card.dart';
 import 'package:countmein/src/user/ui/screens/user_dashboard.dart';
 import 'package:countmein/src/admin/ui/screens/event_details.dart';
@@ -282,6 +283,20 @@ class RouterNotifier extends ChangeNotifier {
                             final providerId =
                                 state.pathParameters['providerId'] as String;
                             return CreateTotemsBatchScreen(
+                              providerId: providerId,
+                              eventId: eventId,
+                            );
+                          },
+                        ),
+                        GoRoute(
+                          name: ExportTotemsScreen.routeName,
+                          path: ExportTotemsScreen.routeName,
+                          builder: (context, state) {
+                            final eventId =
+                            state.pathParameters['eventId'] as String;
+                            final providerId =
+                            state.pathParameters['providerId'] as String;
+                            return ExportTotemsScreen(
                               providerId: providerId,
                               eventId: eventId,
                             );
