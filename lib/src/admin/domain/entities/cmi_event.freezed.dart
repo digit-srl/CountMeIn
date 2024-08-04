@@ -36,6 +36,7 @@ mixin _$CMIEvent {
   bool get recurring => throw _privateConstructorUsedError;
   bool get mutexTotemsEnabled => throw _privateConstructorUsedError;
   bool get emailShowed => throw _privateConstructorUsedError;
+  bool get dynamicActivation => throw _privateConstructorUsedError;
   @FrequencyTypeConverter()
   FrequencyType? get frequency => throw _privateConstructorUsedError;
   int? get recurrence => throw _privateConstructorUsedError;
@@ -78,6 +79,7 @@ abstract class $CMIEventCopyWith<$Res> {
       bool recurring,
       bool mutexTotemsEnabled,
       bool emailShowed,
+      bool dynamicActivation,
       @FrequencyTypeConverter() FrequencyType? frequency,
       int? recurrence,
       int? remaining,
@@ -119,6 +121,7 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
     Object? recurring = null,
     Object? mutexTotemsEnabled = null,
     Object? emailShowed = null,
+    Object? dynamicActivation = null,
     Object? frequency = freezed,
     Object? recurrence = freezed,
     Object? remaining = freezed,
@@ -180,6 +183,10 @@ class _$CMIEventCopyWithImpl<$Res, $Val extends CMIEvent>
       emailShowed: null == emailShowed
           ? _value.emailShowed
           : emailShowed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      dynamicActivation: null == dynamicActivation
+          ? _value.dynamicActivation
+          : dynamicActivation // ignore: cast_nullable_to_non_nullable
               as bool,
       frequency: freezed == frequency
           ? _value.frequency
@@ -266,6 +273,7 @@ abstract class _$$CMIEventImplCopyWith<$Res>
       bool recurring,
       bool mutexTotemsEnabled,
       bool emailShowed,
+      bool dynamicActivation,
       @FrequencyTypeConverter() FrequencyType? frequency,
       int? recurrence,
       int? remaining,
@@ -306,6 +314,7 @@ class __$$CMIEventImplCopyWithImpl<$Res>
     Object? recurring = null,
     Object? mutexTotemsEnabled = null,
     Object? emailShowed = null,
+    Object? dynamicActivation = null,
     Object? frequency = freezed,
     Object? recurrence = freezed,
     Object? remaining = freezed,
@@ -367,6 +376,10 @@ class __$$CMIEventImplCopyWithImpl<$Res>
       emailShowed: null == emailShowed
           ? _value.emailShowed
           : emailShowed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      dynamicActivation: null == dynamicActivation
+          ? _value.dynamicActivation
+          : dynamicActivation // ignore: cast_nullable_to_non_nullable
               as bool,
       frequency: freezed == frequency
           ? _value.frequency
@@ -436,6 +449,7 @@ class _$CMIEventImpl implements _CMIEvent {
       this.recurring = true,
       this.mutexTotemsEnabled = true,
       this.emailShowed = false,
+      this.dynamicActivation = false,
       @FrequencyTypeConverter() this.frequency,
       this.recurrence,
       this.remaining,
@@ -488,6 +502,9 @@ class _$CMIEventImpl implements _CMIEvent {
   @JsonKey()
   final bool emailShowed;
   @override
+  @JsonKey()
+  final bool dynamicActivation;
+  @override
   @FrequencyTypeConverter()
   final FrequencyType? frequency;
   @override
@@ -530,7 +547,7 @@ class _$CMIEventImpl implements _CMIEvent {
 
   @override
   String toString() {
-    return 'CMIEvent(id: $id, name: $name, accessType: $accessType, maxWomCount: $maxWomCount, type: $type, createdOn: $createdOn, startAt: $startAt, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, mutexTotemsEnabled: $mutexTotemsEnabled, emailShowed: $emailShowed, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, activeSessionId: $activeSessionId, aim: $aim, managers: $managers, status: $status, acceptedCardType: $acceptedCardType, subEventDeadline: $subEventDeadline, position: $position)';
+    return 'CMIEvent(id: $id, name: $name, accessType: $accessType, maxWomCount: $maxWomCount, type: $type, createdOn: $createdOn, startAt: $startAt, acceptPassepartout: $acceptPassepartout, anonymous: $anonymous, recurring: $recurring, mutexTotemsEnabled: $mutexTotemsEnabled, emailShowed: $emailShowed, dynamicActivation: $dynamicActivation, frequency: $frequency, recurrence: $recurrence, remaining: $remaining, totalUsers: $totalUsers, genderCount: $genderCount, activeSessionId: $activeSessionId, aim: $aim, managers: $managers, status: $status, acceptedCardType: $acceptedCardType, subEventDeadline: $subEventDeadline, position: $position)';
   }
 
   @override
@@ -558,6 +575,8 @@ class _$CMIEventImpl implements _CMIEvent {
                 other.mutexTotemsEnabled == mutexTotemsEnabled) &&
             (identical(other.emailShowed, emailShowed) ||
                 other.emailShowed == emailShowed) &&
+            (identical(other.dynamicActivation, dynamicActivation) ||
+                other.dynamicActivation == dynamicActivation) &&
             (identical(other.frequency, frequency) ||
                 other.frequency == frequency) &&
             (identical(other.recurrence, recurrence) ||
@@ -597,6 +616,7 @@ class _$CMIEventImpl implements _CMIEvent {
         recurring,
         mutexTotemsEnabled,
         emailShowed,
+        dynamicActivation,
         frequency,
         recurrence,
         remaining,
@@ -639,6 +659,7 @@ abstract class _CMIEvent implements CMIEvent {
       final bool recurring,
       final bool mutexTotemsEnabled,
       final bool emailShowed,
+      final bool dynamicActivation,
       @FrequencyTypeConverter() final FrequencyType? frequency,
       final int? recurrence,
       final int? remaining,
@@ -683,6 +704,8 @@ abstract class _CMIEvent implements CMIEvent {
   bool get mutexTotemsEnabled;
   @override
   bool get emailShowed;
+  @override
+  bool get dynamicActivation;
   @override
   @FrequencyTypeConverter()
   FrequencyType? get frequency;

@@ -261,6 +261,26 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                       ),
                     ],
                   ),
+                  InfoText2(
+                    label: 'Attivazione Dinamica',
+                    value: Row(
+                      children: [
+                        Switch(
+                          value: eventData?.dynamicActivation ?? false,
+                          onChanged: eventData?.recurring != true
+                              ? (v) {
+                                  Cloud.eventDoc(
+                                    widget.providerId,
+                                    widget.eventId,
+                                  ).update({
+                                    'dynamicActivation': v,
+                                  });
+                                }
+                              : null,
+                        ),
+                      ],
+                    ),
+                  ),
                   Row(
                     children: [
                       Flexible(

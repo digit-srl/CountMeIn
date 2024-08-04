@@ -123,6 +123,7 @@ class CMIEvent with _$CMIEvent {
     @Default(true) bool recurring,
     @Default(true) bool mutexTotemsEnabled,
     @Default(false) bool emailShowed,
+    @Default(false) bool dynamicActivation,
     @FrequencyTypeConverter() FrequencyType? frequency,
     int? recurrence,
     int? remaining,

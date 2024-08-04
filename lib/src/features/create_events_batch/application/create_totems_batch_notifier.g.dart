@@ -7,7 +7,7 @@ part of 'create_totems_batch_notifier.dart';
 // **************************************************************************
 
 String _$createTotemsBatchNotifierHash() =>
-    r'25ca340532f08bd7fc4c1e434455171ad162c0a2';
+    r'2443aa9b8119b5c01f1fa98e46b928eead348052';
 
 /// Copied from Dart SDK
 class _SystemHash {

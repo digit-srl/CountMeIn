@@ -22,6 +22,7 @@ _$CMIEventImpl _$$CMIEventImplFromJson(Map<String, dynamic> json) =>
       recurring: json['recurring'] as bool? ?? true,
       mutexTotemsEnabled: json['mutexTotemsEnabled'] as bool? ?? true,
       emailShowed: json['emailShowed'] as bool? ?? false,
+      dynamicActivation: json['dynamicActivation'] as bool? ?? false,
       frequency:
           const FrequencyTypeConverter().fromJson(json['frequency'] as String?),
       recurrence: (json['recurrence'] as num?)?.toInt(),
@@ -62,6 +63,7 @@ Map<String, dynamic> _$$CMIEventImplToJson(_$CMIEventImpl instance) =>
       'recurring': instance.recurring,
       'mutexTotemsEnabled': instance.mutexTotemsEnabled,
       'emailShowed': instance.emailShowed,
+      'dynamicActivation': instance.dynamicActivation,
       'frequency': const FrequencyTypeConverter().toJson(instance.frequency),
       'recurrence': instance.recurrence,
       'remaining': instance.remaining,
