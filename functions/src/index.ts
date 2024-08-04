@@ -19,6 +19,7 @@ exports.managers = require("./provider_managers");
 exports.activity = require("./activities");
 exports.embedded = require("./embedded_qr_code");
 exports.session = require("./session");
+exports.cron = require("./dynamic_event_activation");
 
 /*
 export const drawCard = functions.region('europe-west3').https.onRequest((request, response) => {

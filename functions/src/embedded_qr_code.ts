@@ -1434,6 +1434,7 @@ export const moveTotems = functions
   );
 */
 
+/*
 export const tryQuery = onRequest(async (request, response) => {
   if (request.method !== "POST") {
     response.status(403).send("Forbidden!");
@@ -1443,9 +1444,16 @@ export const tryQuery = onRequest(async (request, response) => {
   const data = request.body;
   const providerId = data.providerId;
   const eventId = data.eventId;
-  const now = Date();
+  const now = new Date();
+  const firestoreNow = firestore.Timestamp.fromDate(now);
   console.log(now);
-  const sessions = await sessionsCollection(providerId, eventId).get();
+
+  // Trova le sessioni che dovrebbero essere attive ora
+  const sessions = await sessionsCollection(providerId, eventId)
+    .where("startAt", "<=", firestoreNow)
+    .where("endAt", ">", firestoreNow)
+    .limit(1)
+    .get();
 
   if (sessions.docs.length == 0) {
     response.status(200).send({
@@ -1455,8 +1463,10 @@ export const tryQuery = onRequest(async (request, response) => {
     return;
   }
 
+  console.log(sessions.docs[0].data().name);
   console.log(sessions.docs[0].createTime);
   console.log(sessions.docs[0].data().startAt.toDate());
+  console.log(sessions.docs[0].data().endAt.toDate());
 
   response.status(200).send({
     status: "success",
@@ -1465,3 +1475,4 @@ export const tryQuery = onRequest(async (request, response) => {
     now: now,
   });
 });
+*/
