@@ -18,6 +18,7 @@ import {
 import { generateSecret, generateWom } from "./utils";
 const circleToPolygon = require("circle-to-polygon");
 
+// Deprecata
 export const scanSecondGen = onRequest(
   { cors: true },
   async (request, response) => {
@@ -341,13 +342,12 @@ export const verifyTotemSecondGen = onRequest(
 
     console.log(totemData);
     const eventId = totemData.eventId;
-    const sessionId = totemData.sessionId;
     const dedicated = totemData.dedicated;
 
-    if (eventId == null || sessionId == null) {
+    if (eventId == null) {
       response.status(200).send({
         status: "totemDisabled",
-        message: "eventId or sessionId is missing",
+        message: "eventId is missing",
       });
       return;
     }
@@ -355,12 +355,12 @@ export const verifyTotemSecondGen = onRequest(
     response.status(200).send({
       status: "success",
       eventId: eventId,
-      sessionId: sessionId,
       dedicated: dedicated,
     });
   }
 );
 
+// Deprecata
 export const scan2SecondGen = onRequest(
   { cors: true },
   async (request, response) => {
@@ -784,7 +784,7 @@ export const scan3SecondGen = onRequest(
       return;
     }
 
-    // Se il totem non è dedicato deve essere allineato con l session id attiva
+    // Se il totem non è dedicato deve essere allineato con la session id attiva
     if (!dedicated && eventData.activeSessionId != totemData.sessionId) {
       const message =
         "event activeSessionId " +
@@ -1049,7 +1049,7 @@ export const scan3SecondGen = onRequest(
   }
 );
 
-/// WIP: Nuova versione con controllo automatico delle sessioni da gestire
+// Deprecata in favore di scan3SecondGen
 export const scan3 = onRequest({ cors: true }, async (request, response) => {
   console.log(request.body);
 

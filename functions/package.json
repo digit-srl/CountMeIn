@@ -29,7 +29,8 @@
     "mailgun.js": "^10.2.1",
     "npm": "^10.3.0",
     "qrcode": "1.4.2",
-    "randomstring": "^1.2.2"
+    "randomstring": "^1.2.2",
+    "smartbuffer": "^0.0.1"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
