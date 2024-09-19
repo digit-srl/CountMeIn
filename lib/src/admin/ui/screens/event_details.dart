@@ -471,6 +471,41 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                       },
                       child: const Text('Esporta totems'),
                     ),
+                    TextButton(
+                      onPressed: () async {
+                        final totems = await ref.read(
+                          getTotemsByEventProvider(
+                            widget.providerId,
+                            widget.eventId,
+                            true,
+                          ).future,
+                        );
+                        final List<List<dynamic>> tmp = <List<dynamic>>[
+                          [
+                            'name',
+                            'latitude',
+                            'longitude',
+                            'radius',
+                            'email',
+                            'phone',
+                            'url',
+                          ]
+                        ];
+
+                        String csv = const ListToCsvConverter().convert(tmp);
+                        await FileSaver.instance.saveFile(
+                          name: 'template',
+                          bytes: Uint8List.fromList(utf8.encode(csv)),
+                          ext: 'csv',
+                        );
+                        if (!mounted) return;
+                        AlertUtils.showStandardMessage(
+                          context,
+                          'Template salvato nella cartella dei downloads',
+                        );
+                      },
+                      child: const Text('Scarica template'),
+                    ),
                   ],
                 ),
               DedicatedTotemsCardWidget(

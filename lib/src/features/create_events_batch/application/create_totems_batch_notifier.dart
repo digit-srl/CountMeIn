@@ -174,6 +174,8 @@ class CreateTotemsBatchNotifier extends _$CreateTotemsBatchNotifier {
     // Per i totem dedicati non ha senso inserire la sessionId
     // in quanto il totem si adatta alle sessioni attive dell'
     // evento
+    // I totem che non sono dedicati devo avere la sessionId sincronizzata con
+    // quella attiva nell evento
     return EmbeddedData(
       name: name,
       id: const Uuid().v4(),
