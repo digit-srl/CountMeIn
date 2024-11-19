@@ -109,7 +109,7 @@ class CreateTotemsBatchNotifier extends _$CreateTotemsBatchNotifier {
             rowsAsListOfValues.getRange(1, rowsAsListOfValues.length).toList(),
       );
     } else {
-      logger.w('il formato del csv non è validos');
+      logger.w('il formato del csv non è valido');
     }
   }
 
