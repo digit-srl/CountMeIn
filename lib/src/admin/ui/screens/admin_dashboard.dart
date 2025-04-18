@@ -110,7 +110,7 @@ class AdminDashboardScreen extends HookConsumerWidget {
                     const ActiveProviders(),
                     if (platformUserRole == PlatformRole.cmi)
                       const PendingProviders(),
-                    const QrCodeValidationWidget(),
+                    // const QrCodeValidationWidget(),
                   ],
                 );
               },),

@@ -304,9 +304,23 @@ class _EventDetailsScreenState extends ConsumerState<EventDetailsScreen> {
                     label: 'Stato',
                     value: eventData?.status?.text,
                   ),
-                  InfoText(
+                  InfoText2(
                     label: 'Mutex totem',
-                    value: eventData?.mutexTotemsEnabled.toString() ?? 'True',
+                    value: Row(
+                      children: [
+                        Switch(
+                          value: eventData?.mutexTotemsEnabled ?? false,
+                          onChanged: (v) {
+                            Cloud.eventDoc(
+                              widget.providerId,
+                              widget.eventId,
+                            ).update({
+                              'mutexTotemsEnabled': v,
+                            });
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                   InfoText2(
                     label: 'Collaboratori',

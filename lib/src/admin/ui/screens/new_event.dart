@@ -758,7 +758,7 @@ class NewEventFormScreen extends HookConsumerWidget {
               // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                  constraints: const BoxConstraints(maxWidth: 700),
+                  constraints: const BoxConstraints(maxWidth: 600),
                   // padding: const EdgeInsets.all(16.0),
                   // alignment: Alignment.center,
                   child: Card(child: form),

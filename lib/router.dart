@@ -160,10 +160,14 @@ class RouterNotifier extends ChangeNotifier {
   List<GoRoute> get _routes => [
         GoRoute(
           path: AuthGate.routeName,
+          redirect: (context,state){
+
+            return '/admin';
+          },
           builder: (context, state) => const AuthGate(),
         ),
         GoRoute(
-          name: AdminDashboardScreen.routeName,
+          // name: AdminDashboardScreen.routeName,
           path: AdminDashboardScreen.path,
           builder: (context, state) => const AdminDashboardScreen(),
           routes: [

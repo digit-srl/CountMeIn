@@ -31,7 +31,8 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
   final CMIProvider? extraProvider;
 
   const AdminProviderHandlerScreen({
-    required this.providerId, super.key,
+    required this.providerId,
+    super.key,
     this.extraProvider,
   });
 
@@ -114,40 +115,43 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                   value: userRole.text,
                 ),
                 InfoText2(
-                    label: 'Managers',
-                    labelWidget: IconButton(
-                      icon: Icon((provider?.managers.isEmpty ?? true)
+                  label: 'Managers',
+                  labelWidget: IconButton(
+                    icon: Icon(
+                      (provider?.managers.isEmpty ?? true)
                           ? Icons.add
-                          : Icons.edit,),
-                      onPressed: provider?.managers != null &&
-                              userRole == UserRole.admin
-                          ? () {
-                              final path =
-                                  '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${provider!.id}/${ManagersHandlerScreen.routeName}?providerName=${provider.name}';
-                              context.go(path, extra: provider);
-                            }
-                          : null,
+                          : Icons.edit,
                     ),
-                    value: Wrap(
-                      runSpacing: 4,
-                      children: [
-                        if (provider?.managers != null)
-                          ...provider!.managers.values.map(
-                            (e) => Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Tooltip(
-                                message: e.email,
-                                child: Chip(
-                                  label: Text(
-                                    e.name,
-                                    style: Theme.of(context).textTheme.bodySmall,
-                                  ),
+                    onPressed:
+                        provider?.managers != null && userRole == UserRole.admin
+                            ? () {
+                                final path =
+                                    '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${provider!.id}/${ManagersHandlerScreen.routeName}?providerName=${provider.name}';
+                                context.go(path, extra: provider);
+                              }
+                            : null,
+                  ),
+                  value: Wrap(
+                    runSpacing: 4,
+                    children: [
+                      if (provider?.managers != null)
+                        ...provider!.managers.values.map(
+                          (e) => Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Tooltip(
+                              message: e.email,
+                              child: Chip(
+                                label: Text(
+                                  e.name,
+                                  style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ),
                             ),
                           ),
-                      ],
-                    ),),
+                        ),
+                    ],
+                  ),
+                ),
                 if (provider?.status == CMIProviderStatus.pending &&
                     platformUserRole == PlatformRole.cmi)
                   ElevatedButton(
@@ -162,66 +166,71 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text('Totems'),
-          ProviderTotemsWidget(
-            providerId: providerId,
-          ),
-          const SizedBox(height: 16),
+          // const Text('Totems'),
+          // ProviderTotemsWidget(
+          //   providerId: providerId,
+          // ),
+          // const SizedBox(height: 16),
           Row(
             children: [
               const Text('Eventi'),
               const Spacer(),
               TextButton(
-                  onPressed: () {
-                    final path =
-                        '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${provider!.id}/${CreateEventsBatchScreen.routeName}';
+                onPressed: () {
+                  final path =
+                      '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${provider!.id}/${CreateEventsBatchScreen.routeName}';
 
-                    context.go(path);
-                  },
-                  child: const Text('Crea eventi in batch'),),
+                  context.go(path);
+                },
+                child: const Text('Crea eventi in batch'),
+              ),
             ],
           ),
           CMICard(
-            child: Consumer(builder: (context, ref, child) {
-              final eventFilter = ref.watch(eventFilterNotifierProvider);
-              return Row(
-                children: [
-                  const Text('Sort by'),
-                  ...EventFilter.values.map(
-                    (e) => RadioMenuButton<EventFilter>(
-                      value: e,
-                      groupValue: eventFilter,
-                      onChanged: ref
-                          .read(eventFilterNotifierProvider.notifier)
-                          .onChanged,
-                      child: Text(e.name),
+            child: Consumer(
+              builder: (context, ref, child) {
+                final eventFilter = ref.watch(eventFilterNotifierProvider);
+                return Row(
+                  children: [
+                    const Text('Sort by'),
+                    ...EventFilter.values.map(
+                      (e) => RadioMenuButton<EventFilter>(
+                        value: e,
+                        groupValue: eventFilter,
+                        onChanged: ref
+                            .read(eventFilterNotifierProvider.notifier)
+                            .onChanged,
+                        child: Text(e.name),
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  Tooltip(
-                    message: 'Archiviati',
-                    child: IconButton(
+                    const Spacer(),
+                    Tooltip(
+                      message: 'Archiviati',
+                      child: IconButton(
                         icon: const Icon(Icons.archive),
                         color: Colors.white,
                         onPressed: () {
                           final path =
                               '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/${provider!.id}/${ArchivedEventsScreen.routeName}';
                           context.go(path, extra: provider);
-                        },),
-                  ),
-                ],
-              );
-            },),
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
           const SizedBox(height: 16),
           if (provider?.status == CMIProviderStatus.live &&
               eventsState is AsyncData<List<CMIEvent>>)
-            GenericGridViewBuilder(
+            ListView.builder(
+              shrinkWrap: true,
               itemCount: eventsState.asData!.value.length + 1,
               itemBuilder: (BuildContext context, int index) {
                 if (index == 0) {
                   return CMICard(
-                    center: true,
+                    // center: true,
                     onTap: platformUserRole == PlatformRole.cmi ||
                             userRole == UserRole.admin
                         ? () {
@@ -231,9 +240,10 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                             context.go(path, extra: provider);
                           }
                         : null,
-                    child: Column(
+                    child: Row(
+                      // mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Icon(
                           Icons.add,
@@ -257,8 +267,8 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                   );
                 }
                 final event = eventsState.asData!.value[index - 1];
-                return CMICard(
-                  center: true,
+                return ListTile(
+                  // center: true,
                   leading: event.isActive
                       ? const CMIChip(text: 'ATTIVO')
                       : event.isClosed
@@ -273,8 +283,9 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
 
                     context.go(path);
                   },
-                  child: Column(
+                  title: Column(
                     mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         event.name,
@@ -292,6 +303,82 @@ class AdminProviderHandlerScreen extends ConsumerWidget {
                 );
               },
             ),
+          // GenericGridViewBuilder(
+          //   itemCount: eventsState.asData!.value.length + 1,
+          //   itemBuilder: (BuildContext context, int index) {
+          //     if (index == 0) {
+          //       return CMICard(
+          //         center: true,
+          //         onTap: platformUserRole == PlatformRole.cmi ||
+          //                 userRole == UserRole.admin
+          //             ? () {
+          //                 if (provider == null) return;
+          //                 final path =
+          //                     '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/$providerId/${NewEventFormScreen.routeName}';
+          //                 context.go(path, extra: provider);
+          //               }
+          //             : null,
+          //         child: Column(
+          //           mainAxisAlignment: MainAxisAlignment.center,
+          //           crossAxisAlignment: CrossAxisAlignment.stretch,
+          //           children: [
+          //             const Icon(
+          //               Icons.add,
+          //               size: 50,
+          //             ),
+          //             Text(
+          //               'Crea nuovo evento',
+          //               textAlign: TextAlign.center,
+          //               style: Theme.of(context).textTheme.titleMedium,
+          //             ),
+          //             if (userRole != UserRole.admin)
+          //               const Text(
+          //                 'Solo gli amministratori possono creare un nuovo evento',
+          //                 textAlign: TextAlign.center,
+          //                 style: TextStyle(
+          //                   color: Colors.grey,
+          //                 ),
+          //               ),
+          //           ],
+          //         ),
+          //       );
+          //     }
+          //     final event = eventsState.asData!.value[index - 1];
+          //     return CMICard(
+          //       center: true,
+          //       leading: event.isActive
+          //           ? const CMIChip(text: 'ATTIVO')
+          //           : event.isClosed
+          //               ? const CMIChip(
+          //                   text: 'Terminato',
+          //                   color: Colors.red,
+          //                 )
+          //               : null,
+          //       onTap: () {
+          //         final path =
+          //             '${AdminDashboardScreen.path}/${AdminProvidersScreen.routeName}/${AdminProviderHandlerScreen.routeName}/$providerId/${EventDetailsScreen.routeName}/${event.id}';
+          //
+          //         context.go(path);
+          //       },
+          //       child: Column(
+          //         mainAxisSize: MainAxisSize.min,
+          //         children: [
+          //           Text(
+          //             event.name,
+          //             style: Theme.of(context).textTheme.titleMedium,
+          //           ),
+          //           if (kDebugMode)
+          //             FittedBox(
+          //               child: Text(
+          //                 event.id,
+          //                 style: Theme.of(context).textTheme.bodySmall,
+          //               ),
+          //             ),
+          //         ],
+          //       ),
+          //     );
+          //   },
+          // ),
         ],
       ),
     );

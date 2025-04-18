@@ -48,3 +48,6 @@ app.*.map.json
 /lib/firebase_options.dart
 /node_modules/
 /emulator_backup/
+
+# FVM Version Cache
+.fvm/
