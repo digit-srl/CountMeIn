@@ -314,7 +314,9 @@ class _NewTotemDialogWidget extends HookConsumerWidget {
                   navigator.pop();
                 }
               },
-              child: Text(totem != null ? 'Salva' : 'Crea totem'),
+              child: Text(
+                totem != null ? 'Salva' : 'Crea totem',
+              ),
             ),
           ),
         ],
