@@ -23,6 +23,49 @@ async function getLastAccessRequest(
   return accesses.docs;
 }
 
+/*
+exports.testEmail = onRequest({ cors: true }, async (request, response) => {
+  const email = "difrancescogianmarco@gmail.com";
+  const cf = "DFRGMR89M02I348U";
+  const url =
+    "https://cmi.digit.srl/profile/" +
+    "userId" +
+    "?" +
+    "upid=" +
+    "privateId" +
+    "&name=" +
+    "name" +
+    "&surname=" +
+    "surname" +
+    "&cf=" +
+    cf +
+    "&pId=" +
+    "providerId";
+
+  const buffer: string = await draw.drawUserCard(
+    "providerName",
+    "name",
+    "Surname",
+    cf,
+    email,
+    encodeURI(url),
+    "userId",
+    "privateId",
+    "providerId"
+  );
+
+  console.log(buffer);
+  await Email.sendUserCardEmail(
+    "Gian Marco Di Francesco",
+    "difrancescogianmarco@gmail.com",
+    cf,
+    buffer,
+    "PROVIDER NAME"
+  );
+  response.status(200);
+});
+*/
+
 exports.requestOtpCodeSecondGen = onRequest(
   { cors: true },
   async (request, response) => {

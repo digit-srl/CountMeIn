@@ -24,7 +24,7 @@ export async function drawUserCard(
   userId: string,
   privateId: string,
   providerId: string
-): Promise<Buffer> {
+): Promise<string> {
   const height = 800;
   const width = height * 1.6;
   const canvas = createCanvas(width, height);
@@ -191,6 +191,7 @@ export async function drawUserCard(
       .createPNGStream()
       .pipe(fs.createWriteStream(path.join(__dirname, "image-src-svg.png")));
 */
+  return canvas.toDataURL();
   return canvas.toBuffer("image/png");
 }
 
@@ -210,7 +211,7 @@ export async function drawGroupCard(
   averageAge: string | undefined,
   manPercentage: number | undefined,
   womanPercentage: number | undefined
-): Promise<Buffer> {
+): Promise<string> {
   const height = 800;
   const width = height * 1.6;
   const canvas = createCanvas(width, height);
@@ -278,10 +279,11 @@ export async function drawGroupCard(
   const padding = 40;
   ctx.drawImage(img, width - imgWidth - padding, padding, imgWidth, imgHeight);
 
+  return canvas.toDataURL();
   return canvas.toBuffer("image/png");
 }
 
-export async function getQrCode(value: string) {
+export async function getQrCode(value: string): Promise<string> {
   const height = 600;
   const width = height;
   const canvas = createCanvas(width, height);
@@ -291,6 +293,7 @@ export async function getQrCode(value: string) {
   ctx.fillStyle = "black";
   const qrCode = await QRCode.toCanvas(canvas, value || "", { margin: 1 });
   ctx.drawImage(qrCode, height, width);
+  return canvas.toDataURL();
   return canvas.toBuffer("image/png");
 }
 

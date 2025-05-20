@@ -2,6 +2,7 @@ import { HttpsError } from "firebase-functions/v2/https";
 const draw = require("./draw");
 import formData = require("form-data");
 import Mailgun from "mailgun.js";
+import { sendEmailWithBrevo } from "./email_service";
 const mailgun = new Mailgun(formData);
 
 const k = process.env.MG_API_KEY ?? "adsfghjkl";
@@ -57,10 +58,7 @@ export function sendVerificationEmail(
   userId: string,
   secret: string,
   providerId: string
-  //privateId: string
 ) {
-  const emails = [email];
-
   const url =
     "https://cmi.digit.srl/verification/" +
     userId +
@@ -68,54 +66,44 @@ export function sendVerificationEmail(
     secret +
     "/" +
     providerId;
+  const data = {
+    to: email,
+    subject: "Verifica email",
+    toName: fullName,
+    params: { fullName: fullName, verificationUrl: encodeURI(url) },
+    templateId: 76,
+  };
 
-  const json = JSON.stringify({
-    fullName: fullName,
-    verificationUrl: encodeURI(url),
-  });
-
-  return sendEmail(
-    emails,
-    "Verifica email",
-    "email_verification",
-    json,
-    [],
-    null
-  );
+  return sendEmailWithBrevo(data)
+    .then(() => {
+      return true;
+    }) // logs response data
+    .catch((err: any) => {
+      console.log(err);
+      throw new HttpsError("aborted", err);
+    });
 }
 
-// "fullName"
-// "qrCodeUrl"
-// "cf"
 export function sendUserCardEmail(
   fullName: string,
   email: string,
   cf: string,
-  buffer: Buffer,
+  buffer: any,
   providerName: string
 ) {
-  const emails = [email];
-
-  const json = JSON.stringify({
-    fullName: fullName,
-    cf: cf,
-    provider: providerName,
-  });
-
   const filename = "tesserino.png";
-  const attachment = {
-    data: buffer,
-    filename: filename,
+
+  const data = {
+    to: email,
+    subject: "Il tuo tesserino",
+    toName: fullName,
+    params: { fullName: fullName, provider: providerName, cf: cf },
+    attachmentName: filename,
+    attachmentContent: buffer,
+    templateId: 77,
   };
 
-  return sendEmail(
-    emails,
-    "Il tuo tesserino",
-    "card_template",
-    json,
-    attachment,
-    null
-  )
+  return sendEmailWithBrevo(data)
     .then(() => {
       return true;
     }) // logs response data
@@ -133,8 +121,6 @@ export function sendResetPasswordEmail(
   userId: string,
   oobCode: string
 ) {
-  const emails = [email];
-
   const url =
     "https://cmi.digit.srl/reset?n=" +
     fullName +
@@ -143,12 +129,24 @@ export function sendResetPasswordEmail(
     "&uid=" +
     userId;
 
-  const json = JSON.stringify({
-    fullName: fullName,
-    url: encodeURI(url),
-  });
+  const data = {
+    to: email,
+    subject: "Reset password",
+    toName: fullName,
+    params: { fullName: fullName, url: encodeURI(url) },
+    templateId: 69,
+  };
 
-  return sendEmail(emails, "Reset password", "reset_password", json, [], null);
+  return sendEmailWithBrevo(data)
+    .then(() => {
+      return true;
+    }) // logs response data
+    .catch((err: any) => {
+      console.log(err);
+      throw new HttpsError("aborted", err);
+    });
+
+  //return sendEmail(emails, "Reset password", "reset_password", json, [], null);
 }
 
 // "fullName": "test_fullName",
@@ -159,8 +157,6 @@ export function sendResetPasswordEmailForNotSignedUser(
   userId: string,
   oobCode: string
 ) {
-  const emails = [email];
-
   const url =
     "https://cmi.digit.srl/reset?n=" +
     fullName +
@@ -169,12 +165,22 @@ export function sendResetPasswordEmailForNotSignedUser(
     "&uid=" +
     userId;
 
-  const json = JSON.stringify({
-    fullName: fullName,
-    url: encodeURI(url),
-  });
+  const data = {
+    to: email,
+    subject: "Reset password",
+    toName: fullName,
+    params: { fullName: fullName, url: encodeURI(url) },
+    templateId: 69,
+  };
 
-  return sendEmail(emails, "Reset password", "reset_password", json, [], null);
+  return sendEmailWithBrevo(data)
+    .then(() => {
+      return true;
+    }) // logs response data
+    .catch((err: any) => {
+      console.log(err);
+      throw new HttpsError("aborted", err);
+    });
 }
 
 // "fullName": "test_fullName",
@@ -188,8 +194,6 @@ export async function sendWomEmail(
   providerName: string,
   eventName: string
 ) {
-  const emails = [email];
-
   if (link === undefined || link === null) {
     throw Error("link is " + link);
   }
@@ -200,29 +204,32 @@ export async function sendWomEmail(
 
   const filename = "wom.png";
   const buffer = await draw.getQrCode(link);
-  const attachment = {
-    data: buffer,
-    filename: filename,
+
+  const data = {
+    to: email,
+    subject: "Ecco i tuoi wom",
+    toName: userName,
+    params: {
+      link: link,
+      womCount: womCount,
+      pin: pin,
+      provider: providerName,
+      event: eventName,
+      user: userName,
+    },
+    attachmentName: filename,
+    attachmentContent: buffer,
+    templateId: 78,
   };
 
-  const json = JSON.stringify({
-    link: link,
-    womCount: womCount,
-    pin: pin,
-    provider: providerName,
-    event: eventName,
-    user: userName,
-  });
-
-  console.log(json);
-  return sendEmail(
-    emails,
-    "Ecco i tuoi wom",
-    "wom_template",
-    json,
-    null,
-    attachment
-  );
+  return sendEmailWithBrevo(data)
+    .then(() => {
+      return true;
+    }) // logs response data
+    .catch((err: any) => {
+      console.log(err);
+      throw new HttpsError("aborted", err);
+    });
 }
 
 export async function sendNewActivityRequested(
@@ -231,47 +238,54 @@ export async function sendNewActivityRequested(
   adminFullName: string,
   link: string
 ) {
-  const emails = ["info@digit.srl", "difrancescogianmarco@gmail.com"];
+  const data = {
+    to: "info@digit.srl",
+    subject: "Nuovo Provider in attesa di verifica",
+    toName: adminFullName,
+    params: {
+      adminFullName: adminFullName,
+      provider: providerName,
+      adminEmail: adminEmail,
+      link: encodeURI(link),
+    },
+    templateId: 70,
+  };
 
-  const json = JSON.stringify({
-    adminFullName: adminFullName,
-    provider: providerName,
-    adminEmail: adminEmail,
-    link: encodeURI(link),
-  });
-
-  console.log(json);
-  return sendEmail(
-    emails,
-    "Nuovo Provider in attesa di verifica",
-    "new_provider_request",
-    json,
-    null,
-    null
-  );
+  return sendEmailWithBrevo(data)
+    .then(() => {
+      return true;
+    }) // logs response data
+    .catch((err: any) => {
+      console.log(err);
+      throw new HttpsError("aborted", err);
+    });
 }
+
 export async function sendNewActivityRequestedToUser(
   providerName: string,
   adminEmail: string,
   adminFullName: string
 ) {
-  const emails = [adminEmail];
+  const data = {
+    to: adminEmail,
+    subject: "La tua richiesta è in attesa di verifica",
+    toName: adminFullName,
+    params: {
+      adminFullName: adminFullName,
+      provider: providerName,
+      adminEmail: adminEmail,
+    },
+    templateId: 72,
+  };
 
-  const json = JSON.stringify({
-    adminFullName: adminFullName,
-    provider: providerName,
-    adminEmail: adminEmail,
-  });
-
-  console.log(json);
-  return sendEmail(
-    emails,
-    "La tua richiesta è in attesa di verifica",
-    "new_provider_request_to_user",
-    json,
-    null,
-    null
-  );
+  return sendEmailWithBrevo(data)
+    .then(() => {
+      return true;
+    }) // logs response data
+    .catch((err: any) => {
+      console.log(err);
+      throw new HttpsError("aborted", err);
+    });
 }
 
 export async function sendWelcomeNewProvider(
@@ -281,25 +295,28 @@ export async function sendWelcomeNewProvider(
   role: string,
   temporaryPassword: string | undefined
 ) {
-  const emails = [adminEmail];
+  const data = {
+    to: adminEmail,
+    subject: "Ora sei parte di " + providerName,
+    toName: adminFullName,
+    params: {
+      adminFullName: adminFullName,
+      provider: providerName,
+      adminEmail: adminEmail,
+      role: role,
+      temporaryPassword: temporaryPassword,
+    },
+    templateId: 71,
+  };
 
-  const json = JSON.stringify({
-    adminFullName: adminFullName,
-    provider: providerName,
-    adminEmail: adminEmail,
-    role: role,
-    temporaryPassword: temporaryPassword,
-  });
-
-  console.log(json);
-  return sendEmail(
-    emails,
-    "Ora sei parte di " + providerName,
-    "welcome_new_provider",
-    json,
-    null,
-    null
-  );
+  return sendEmailWithBrevo(data)
+    .then(() => {
+      return true;
+    }) // logs response data
+    .catch((err: any) => {
+      console.log(err);
+      throw new HttpsError("aborted", err);
+    });
 }
 
 export async function sendInvite(
@@ -309,8 +326,6 @@ export async function sendInvite(
   role: string,
   link: string
 ) {
-  const emails = [email];
-
   const json = JSON.stringify({
     adminFullname: adminFullname,
     provider: providerName,
@@ -320,14 +335,29 @@ export async function sendInvite(
   });
 
   console.log(json);
-  return sendEmail(
-    emails,
-    "Invito gestione " + providerName,
-    "invite_to_manage_provider",
-    json,
-    null,
-    null
-  );
+
+  const data = {
+    to: email,
+    subject: "Invito gestione " + providerName,
+    toName: adminFullname,
+    params: {
+      adminFullname: adminFullname,
+      provider: providerName,
+      email: email,
+      role: role,
+      link: encodeURI(link),
+    },
+    templateId: 73,
+  };
+
+  return sendEmailWithBrevo(data)
+    .then(() => {
+      return true;
+    }) // logs response data
+    .catch((err: any) => {
+      console.log(err);
+      throw new HttpsError("aborted", err);
+    });
 }
 
 export async function sentUserProfileOtpCode(
@@ -335,23 +365,26 @@ export async function sentUserProfileOtpCode(
   otpCode: string,
   email: string
 ) {
-  const emails = [email];
+  const data = {
+    to: email,
+    subject: "OTP code",
+    toName: fullName,
+    params: {
+      fullName: fullName,
+      otpCode: otpCode,
+      email: email,
+    },
+    templateId: 75,
+  };
 
-  const json = JSON.stringify({
-    fullName: fullName,
-    otpCode: otpCode,
-    email: email,
-  });
-
-  console.log(json);
-  return sendEmail(
-    emails,
-    "Otp code",
-    "user_profile_otp_code",
-    json,
-    null,
-    null
-  );
+  return sendEmailWithBrevo(data)
+    .then(() => {
+      return true;
+    }) // logs response data
+    .catch((err: any) => {
+      console.log(err);
+      throw new HttpsError("aborted", err);
+    });
 }
 
 // "fullName"
@@ -361,33 +394,28 @@ export function sendGroupCardEmail(
   fullName: string,
   email: string,
   cf: string,
-  buffer: Buffer,
+  buffer: any,
   providerName: string,
   groupName: string
 ) {
-  const emails = [email];
-
-  const json = JSON.stringify({
-    fullName: fullName,
-    cf: cf,
-    provider: providerName,
-    groupName: groupName,
-  });
-
   const filename = "tesserino.png";
-  const attachment = {
-    data: buffer,
-    filename: filename,
+
+  const data = {
+    to: email,
+    subject: "Il tuo tesserino di gruppo",
+    toName: fullName,
+    params: {
+      fullName: fullName,
+      cf: cf,
+      provider: providerName,
+      groupName: groupName,
+    },
+    attachmentName: filename,
+    attachmentContent: buffer,
+    templateId: 74,
   };
 
-  return sendEmail(
-    emails,
-    "Il tuo tesserino di gruppo",
-    "group_card_template",
-    json,
-    attachment,
-    null
-  )
+  return sendEmailWithBrevo(data)
     .then(() => {
       return true;
     }) // logs response data
