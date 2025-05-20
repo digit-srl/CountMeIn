@@ -10,6 +10,7 @@ import {
   eventPrivateUsersCollection,
   eventPrivateUsersDoc,
   providerDocRef,
+  providerTotemCollectionRef,
   providerTotemDocRef,
   sessionDocRef,
   sessionPrivateUsersDoc,
@@ -1476,3 +1477,71 @@ export const tryQuery = onRequest(async (request, response) => {
   });
 });
 */
+
+export const generatePersonalTotem = onRequest(
+  { cors: true },
+  async (request, response) => {
+    console.log(request.body);
+
+    /*if (!request.auth) {
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "You have to be signed in to view this resource"
+      );
+    }*/
+
+    if (request.method !== "POST") {
+      response.status(403).send("Forbidden!");
+      return;
+    }
+
+    const data = request.body;
+    const name = data.name;
+    const email = data.email;
+    const phone = data.phone;
+    const website = data.website;
+    const totemId = data.totemId;
+
+    if (name == null || name.length == 0) {
+      response.status(400).send("name is required");
+      return;
+    }
+
+    const providerId = "e3441c34-b02c-4bd9-8de5-9e312468ca69";
+    const eventId = "f3cfd410-09cc-4b34-8b00-e4f9e0bf1420";
+    const collectionRef = providerTotemCollectionRef(providerId);
+    let ref;
+    if (totemId == null) {
+      ref = collectionRef.doc();
+    } else {
+      ref = collectionRef.doc(totemId);
+    }
+    const now = new Date();
+    await ref.set(
+      {
+        name: name,
+        id: ref.id,
+        isStatic: true,
+        requestId: null,
+        position: null,
+        eventId: eventId,
+        //sessionId: "",
+        eventName: "eventName",
+        sessionName: "sessionName",
+        updatedOn: firestore.Timestamp.fromDate(now),
+        dedicated: true,
+        radius: null,
+        metadata: {
+          email: email,
+          phoneNumber: phone,
+          url: website,
+        },
+      },
+      {
+        merge: true,
+      }
+    );
+
+    response.send({ id: ref.id, eventId: eventId });
+  }
+);
